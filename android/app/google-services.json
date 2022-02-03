@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "11012056131",
+    "project_id": "carbonfight-89af6",
+    "storage_bucket": "carbonfight-89af6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:11012056131:android:510921951af1c94fda60f6",
+        "android_client_info": {
+          "package_name": "com.flutterflow.carbonfight"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "11012056131-782euk8tuaq5bcgvh00dgf2iv0i8dh80.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.flutterflow.carbonfight",
+            "certificate_hash": "9bbb3186b2189ef16d8f272bdab59362c395cbb4"
+          }
+        },
+        {
+          "client_id": "11012056131-8d5vhts7n73m773c1hj4bibbcimndmgk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAaHqQOPkRnkmq17hA-eorRmAj5iETLS8k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "11012056131-8d5vhts7n73m773c1hj4bibbcimndmgk.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "11012056131-k5gj2mgml1hv7m8slekmrlfjdtrbqeh7.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.flutterflow.carbonfight"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
