@@ -1,4 +1,4 @@
-package com.flutterflow.carbonfight
+package app.carbonfight
 
 import io.flutter.embedding.android.FlutterActivity
 

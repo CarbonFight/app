@@ -4,29 +4,66 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 import '../flutter_flow/flutter_flow_util.dart';
 
-import 'schema/actions_car_record.dart';
+import 'schema/scores_record.dart';
+import 'schema/transport_actions_record.dart';
+import 'schema/energy_actions_record.dart';
 import 'schema/serializers.dart';
 
 export 'package:cloud_firestore/cloud_firestore.dart';
 export 'schema/index.dart';
 export 'schema/serializers.dart';
 
-export 'schema/actions_car_record.dart';
+export 'schema/scores_record.dart';
+export 'schema/transport_actions_record.dart';
+export 'schema/energy_actions_record.dart';
 
-/// Functions to query ActionsCarRecords (as a Stream and as a Future).
-Stream<List<ActionsCarRecord>> queryActionsCarRecord(
+/// Functions to query ScoresRecords (as a Stream and as a Future).
+Stream<List<ScoresRecord>> queryScoresRecord(
         {Query Function(Query) queryBuilder,
         int limit = -1,
         bool singleRecord = false}) =>
-    queryCollection(ActionsCarRecord.collection, ActionsCarRecord.serializer,
+    queryCollection(ScoresRecord.collection, ScoresRecord.serializer,
         queryBuilder: queryBuilder, limit: limit, singleRecord: singleRecord);
 
-Future<List<ActionsCarRecord>> queryActionsCarRecordOnce(
+Future<List<ScoresRecord>> queryScoresRecordOnce(
+        {Query Function(Query) queryBuilder,
+        int limit = -1,
+        bool singleRecord = false}) =>
+    queryCollectionOnce(ScoresRecord.collection, ScoresRecord.serializer,
+        queryBuilder: queryBuilder, limit: limit, singleRecord: singleRecord);
+
+/// Functions to query TransportActionsRecords (as a Stream and as a Future).
+Stream<List<TransportActionsRecord>> queryTransportActionsRecord(
+        {Query Function(Query) queryBuilder,
+        int limit = -1,
+        bool singleRecord = false}) =>
+    queryCollection(
+        TransportActionsRecord.collection, TransportActionsRecord.serializer,
+        queryBuilder: queryBuilder, limit: limit, singleRecord: singleRecord);
+
+Future<List<TransportActionsRecord>> queryTransportActionsRecordOnce(
         {Query Function(Query) queryBuilder,
         int limit = -1,
         bool singleRecord = false}) =>
     queryCollectionOnce(
-        ActionsCarRecord.collection, ActionsCarRecord.serializer,
+        TransportActionsRecord.collection, TransportActionsRecord.serializer,
+        queryBuilder: queryBuilder, limit: limit, singleRecord: singleRecord);
+
+/// Functions to query EnergyActionsRecords (as a Stream and as a Future).
+Stream<List<EnergyActionsRecord>> queryEnergyActionsRecord(
+        {Query Function(Query) queryBuilder,
+        int limit = -1,
+        bool singleRecord = false}) =>
+    queryCollection(
+        EnergyActionsRecord.collection, EnergyActionsRecord.serializer,
+        queryBuilder: queryBuilder, limit: limit, singleRecord: singleRecord);
+
+Future<List<EnergyActionsRecord>> queryEnergyActionsRecordOnce(
+        {Query Function(Query) queryBuilder,
+        int limit = -1,
+        bool singleRecord = false}) =>
+    queryCollectionOnce(
+        EnergyActionsRecord.collection, EnergyActionsRecord.serializer,
         queryBuilder: queryBuilder, limit: limit, singleRecord: singleRecord);
 
 Stream<List<T>> queryCollection<T>(

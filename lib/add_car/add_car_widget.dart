@@ -1,13 +1,9 @@
-import '../auth/auth_util.dart';
-import '../backend/backend.dart';
 import '../flutter_flow/flutter_flow_count_controller.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_radio_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
-import '../custom_code/actions/index.dart' as actions;
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -25,7 +21,6 @@ class _AddCarWidgetState extends State<AddCarWidget> {
   String ownershipValue;
   String powertypeValue;
   TextEditingController distanceController;
-  int co2car;
   int passengersValue;
   final formKey = GlobalKey<FormState>();
   final scaffoldKey = GlobalKey<ScaffoldState>();
@@ -78,7 +73,7 @@ class _AddCarWidgetState extends State<AddCarWidget> {
                 Text(
                   'Car travel',
                   style: FlutterFlowTheme.title1.override(
-                    fontFamily: 'Poppins',
+                    fontFamily: 'Montserrat',
                     color: FlutterFlowTheme.secondaryColor,
                   ),
                 ),
@@ -104,7 +99,7 @@ class _AddCarWidgetState extends State<AddCarWidget> {
                         obscureText: false,
                         decoration: InputDecoration(
                           labelStyle: FlutterFlowTheme.bodyText1.override(
-                            fontFamily: 'Poppins',
+                            fontFamily: 'Montserrat',
                             color: Color(0xFF5E6572),
                           ),
                           hintText: 'Distance (Kms)',
@@ -153,18 +148,8 @@ class _AddCarWidgetState extends State<AddCarWidget> {
                   Padding(
                     padding: EdgeInsetsDirectional.fromSTEB(0, 0, 10, 0),
                     child: FFButtonWidget(
-                      onPressed: () async {
-                        if (!formKey.currentState.validate()) {
-                          return;
-                        }
-                        co2car = await actions.updateCO2(
-                          int.parse(distanceController.text),
-                          powertypeValue,
-                          passengersValue,
-                          ownershipValue,
-                        );
-
-                        setState(() {});
+                      onPressed: () {
+                        print('Button pressed ...');
                       },
                       text: '',
                       icon: Icon(
@@ -176,7 +161,7 @@ class _AddCarWidgetState extends State<AddCarWidget> {
                         height: 60,
                         color: FlutterFlowTheme.primaryColor,
                         textStyle: FlutterFlowTheme.subtitle2.override(
-                          fontFamily: 'Poppins',
+                          fontFamily: 'Montserrat',
                           color: Colors.white,
                         ),
                         elevation: 0,
@@ -191,24 +176,10 @@ class _AddCarWidgetState extends State<AddCarWidget> {
                   Align(
                     alignment: AlignmentDirectional(0, 0.05),
                     child: FFButtonWidget(
-                      onPressed: () async {
-                        if (!formKey.currentState.validate()) {
-                          return;
-                        }
-                        final actionsCarCreateData = createActionsCarRecordData(
-                          distance: int.parse(distanceController.text),
-                          date: getCurrentTimestamp,
-                          co2e: co2car,
-                          ownership: ownershipValue,
-                          passengers: passengersValue,
-                          powertype: powertypeValue,
-                          userId: currentUserUid,
-                        );
-                        await ActionsCarRecord.collection
-                            .doc()
-                            .set(actionsCarCreateData);
+                      onPressed: () {
+                        print('Button pressed ...');
                       },
-                      text: co2car.toString(),
+                      text: 'Add',
                       icon: Icon(
                         Icons.add,
                         size: 15,
@@ -218,7 +189,7 @@ class _AddCarWidgetState extends State<AddCarWidget> {
                         height: 60,
                         color: FlutterFlowTheme.primaryColor,
                         textStyle: FlutterFlowTheme.subtitle2.override(
-                          fontFamily: 'Poppins',
+                          fontFamily: 'Montserrat',
                           color: FlutterFlowTheme.secondaryColor,
                         ),
                         elevation: 2,
@@ -242,7 +213,7 @@ class _AddCarWidgetState extends State<AddCarWidget> {
                   Text(
                     'Options',
                     style: FlutterFlowTheme.title2.override(
-                      fontFamily: 'Poppins',
+                      fontFamily: 'Montserrat',
                       color: FlutterFlowTheme.secondaryColor,
                     ),
                   ),
@@ -262,7 +233,7 @@ class _AddCarWidgetState extends State<AddCarWidget> {
                       Text(
                         'Ownership',
                         style: FlutterFlowTheme.title3.override(
-                          fontFamily: 'Poppins',
+                          fontFamily: 'Montserrat',
                           color: FlutterFlowTheme.secondaryColor,
                         ),
                       ),
@@ -274,11 +245,11 @@ class _AddCarWidgetState extends State<AddCarWidget> {
                         },
                         optionHeight: 25,
                         textStyle: FlutterFlowTheme.bodyText1.override(
-                          fontFamily: 'Poppins',
+                          fontFamily: 'Montserrat',
                           color: FlutterFlowTheme.tertiaryColor,
                         ),
                         selectedTextStyle: FlutterFlowTheme.bodyText1.override(
-                          fontFamily: 'Poppins',
+                          fontFamily: 'Montserrat',
                           color: FlutterFlowTheme.secondaryColor,
                         ),
                         buttonPosition: RadioButtonPosition.left,
@@ -301,7 +272,7 @@ class _AddCarWidgetState extends State<AddCarWidget> {
                       Text(
                         'Power Type',
                         style: FlutterFlowTheme.title3.override(
-                          fontFamily: 'Poppins',
+                          fontFamily: 'Montserrat',
                           color: FlutterFlowTheme.secondaryColor,
                         ),
                       ),
@@ -313,11 +284,11 @@ class _AddCarWidgetState extends State<AddCarWidget> {
                         },
                         optionHeight: 25,
                         textStyle: FlutterFlowTheme.bodyText1.override(
-                          fontFamily: 'Poppins',
+                          fontFamily: 'Montserrat',
                           color: Color(0xFFFCFCFC),
                         ),
                         selectedTextStyle: FlutterFlowTheme.bodyText1.override(
-                          fontFamily: 'Poppins',
+                          fontFamily: 'Montserrat',
                           color: FlutterFlowTheme.secondaryColor,
                         ),
                         buttonPosition: RadioButtonPosition.left,
@@ -346,7 +317,7 @@ class _AddCarWidgetState extends State<AddCarWidget> {
                       Text(
                         'Passengers',
                         style: FlutterFlowTheme.title3.override(
-                          fontFamily: 'Poppins',
+                          fontFamily: 'Montserrat',
                           color: FlutterFlowTheme.secondaryColor,
                         ),
                       ),

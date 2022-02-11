@@ -24,7 +24,7 @@ class _HelpWidgetState extends State<HelpWidget> {
         title: Text(
           'CarbonFight',
           style: FlutterFlowTheme.title3.override(
-            fontFamily: 'Poppins',
+            fontFamily: 'Montserrat',
             color: FlutterFlowTheme.tertiaryColor,
           ),
         ),
