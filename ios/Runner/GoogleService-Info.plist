@@ -3,11 +3,11 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>11012056131-k5gj2mgml1hv7m8slekmrlfjdtrbqeh7.apps.googleusercontent.com</string>
+	<string>11012056131-ciq3vki8qino45qc2ku5ml00e6domjab.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.11012056131-k5gj2mgml1hv7m8slekmrlfjdtrbqeh7</string>
+	<string>com.googleusercontent.apps.11012056131-ciq3vki8qino45qc2ku5ml00e6domjab</string>
 	<key>ANDROID_CLIENT_ID</key>
-	<string>11012056131-782euk8tuaq5bcgvh00dgf2iv0i8dh80.apps.googleusercontent.com</string>
+	<string>11012056131-2759pjp7dspbqbvu8qrsv1k89ouo6am7.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
 	<string>AIzaSyBNYNwpbWySrTY14IpKaK1FGivkPan2icc</string>
 	<key>GCM_SENDER_ID</key>
@@ -15,7 +15,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.flutterflow.carbonfight</string>
+	<string>app.carbonfight</string>
 	<key>PROJECT_ID</key>
 	<string>carbonfight-89af6</string>
 	<key>STORAGE_BUCKET</key>
@@ -31,6 +31,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:11012056131:ios:de0d324a8ac3ec9ada60f6</string>
+	<string>1:11012056131:ios:804cbfa35bda6a9bda60f6</string>
 </dict>
 </plist>

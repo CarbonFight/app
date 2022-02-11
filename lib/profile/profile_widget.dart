@@ -24,7 +24,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
         title: Text(
           'CarbonFight',
           style: FlutterFlowTheme.title3.override(
-            fontFamily: 'Poppins',
+            fontFamily: 'Montserrat',
             color: FlutterFlowTheme.tertiaryColor,
           ),
         ),
@@ -44,7 +44,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                 '1.45',
                 textAlign: TextAlign.start,
                 style: FlutterFlowTheme.title1.override(
-                  fontFamily: 'Poppins',
+                  fontFamily: 'Montserrat',
                   color: FlutterFlowTheme.tertiaryColor,
                   fontSize: 50,
                 ),
@@ -58,7 +58,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
               Text(
                 'TCO2e',
                 style: FlutterFlowTheme.bodyText1.override(
-                  fontFamily: 'Poppins',
+                  fontFamily: 'Montserrat',
                   color: FlutterFlowTheme.tertiaryColor,
                 ),
               ),
@@ -82,7 +82,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                       Text(
                         'Vous avez émis 12 Kg de CO2',
                         style: FlutterFlowTheme.subtitle2.override(
-                          fontFamily: 'Poppins',
+                          fontFamily: 'Montserrat',
                           color: FlutterFlowTheme.tertiaryColor,
                         ),
                       ),
@@ -124,7 +124,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                             'Pierre',
                             textAlign: TextAlign.center,
                             style: FlutterFlowTheme.title1.override(
-                              fontFamily: 'Poppins',
+                              fontFamily: 'Montserrat',
                               color: Colors.white,
                             ),
                           ),
@@ -136,7 +136,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                           Text(
                             'Classement : 12/240',
                             style: FlutterFlowTheme.bodyText1.override(
-                              fontFamily: 'Poppins',
+                              fontFamily: 'Montserrat',
                               color: FlutterFlowTheme.tertiaryColor,
                             ),
                           ),
@@ -148,7 +148,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                           Text(
                             'Niveau : 12',
                             style: FlutterFlowTheme.bodyText1.override(
-                              fontFamily: 'Poppins',
+                              fontFamily: 'Montserrat',
                               color: FlutterFlowTheme.tertiaryColor,
                             ),
                           ),
@@ -169,7 +169,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                   'Quelques statistiques\n                    \nAujourd\'hui, vous avez émis 12 Kg de CO2.\nLa moyenne des Français est de 12 Kg.\nLes 10 pays les plus poluants émettent en moyenne \nentre 40 Kg (USA/Canada) et 80 Kg (Quatar)\n de CO2 par habitant et par jour\nPour atteindre l\'équilibre de notre planète, il faudrait \némettre moins de 6 Kg par habitant.',
                   textAlign: TextAlign.start,
                   style: FlutterFlowTheme.bodyText1.override(
-                    fontFamily: 'Poppins',
+                    fontFamily: 'Montserrat',
                     color: FlutterFlowTheme.tertiaryColor,
                   ),
                 ),

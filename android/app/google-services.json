@@ -7,17 +7,17 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:11012056131:android:510921951af1c94fda60f6",
+        "mobilesdk_app_id": "1:11012056131:android:9004a2373406cf0dda60f6",
         "android_client_info": {
-          "package_name": "com.flutterflow.carbonfight"
+          "package_name": "app.carbonfight"
         }
       },
       "oauth_client": [
         {
-          "client_id": "11012056131-782euk8tuaq5bcgvh00dgf2iv0i8dh80.apps.googleusercontent.com",
+          "client_id": "11012056131-697iqlin4n25evv7u5dc592dhgugo1ov.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.flutterflow.carbonfight",
+            "package_name": "app.carbonfight",
             "certificate_hash": "9bbb3186b2189ef16d8f272bdab59362c395cbb4"
           }
         },
@@ -39,10 +39,10 @@
               "client_type": 3
             },
             {
-              "client_id": "11012056131-k5gj2mgml1hv7m8slekmrlfjdtrbqeh7.apps.googleusercontent.com",
+              "client_id": "11012056131-8e61e4sklscf3h5qrgi1mkt9a9sktg5u.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.flutterflow.carbonfight"
+                "bundle_id": "io.carbonfight"
               }
             }
           ]

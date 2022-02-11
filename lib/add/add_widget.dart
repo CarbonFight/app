@@ -1,7 +1,7 @@
+import '../add_car/add_car_widget.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
-import '../main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -27,7 +27,7 @@ class _AddWidgetState extends State<AddWidget> {
         title: Text(
           'CarbonFight',
           style: FlutterFlowTheme.title3.override(
-            fontFamily: 'Poppins',
+            fontFamily: 'Montserrat',
             color: FlutterFlowTheme.tertiaryColor,
           ),
         ),
@@ -72,7 +72,7 @@ class _AddWidgetState extends State<AddWidget> {
                           type: PageTransitionType.fade,
                           duration: Duration(milliseconds: 0),
                           reverseDuration: Duration(milliseconds: 0),
-                          child: NavBarPage(initialPage: 'AddCar'),
+                          child: AddCarWidget(),
                         ),
                       );
                     },
