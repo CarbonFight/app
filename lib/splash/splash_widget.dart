@@ -21,7 +21,7 @@ class _SplashWidgetState extends State<SplashWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: scaffoldKey,
-      backgroundColor: FlutterFlowTheme.secondaryColor,
+      backgroundColor: FlutterFlowTheme.of(context).secondaryColor,
       body: GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),
         child: Container(
@@ -83,12 +83,14 @@ class _SplashWidgetState extends State<SplashWidget> {
                                         Expanded(
                                           child: Text(
                                             'Lorem ipsum dolor',
-                                            style: FlutterFlowTheme.title1
+                                            style: FlutterFlowTheme.of(context)
+                                                .title1
                                                 .override(
-                                              fontFamily: 'Montserrat',
-                                              color: FlutterFlowTheme
-                                                  .tertiaryColor,
-                                            ),
+                                                  fontFamily: 'Montserrat',
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .tertiaryColor,
+                                                ),
                                           ),
                                         ),
                                       ],
@@ -102,12 +104,15 @@ class _SplashWidgetState extends State<SplashWidget> {
                                           Expanded(
                                             child: Text(
                                               'Est exercitationem quod sed molestiae aut autem magni est consectetur architecto ut dolore quidem. Aut nisi illum cum sint.',
-                                              style: FlutterFlowTheme.bodyText1
+                                              style: FlutterFlowTheme.of(
+                                                      context)
+                                                  .bodyText1
                                                   .override(
-                                                fontFamily: 'Montserrat',
-                                                color: FlutterFlowTheme
-                                                    .tertiaryColor,
-                                              ),
+                                                    fontFamily: 'Montserrat',
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
+                                                        .tertiaryColor,
+                                                  ),
                                             ),
                                           ),
                                         ],
@@ -143,8 +148,9 @@ class _SplashWidgetState extends State<SplashWidget> {
                           radius: 16,
                           dotWidth: 6,
                           dotHeight: 6,
-                          dotColor: FlutterFlowTheme.gronyLight,
-                          activeDotColor: FlutterFlowTheme.tertiaryColor,
+                          dotColor: FlutterFlowTheme.of(context).gronyLight,
+                          activeDotColor:
+                              FlutterFlowTheme.of(context).tertiaryColor,
                           paintStyle: PaintingStyle.fill,
                         ),
                       ),
@@ -157,8 +163,8 @@ class _SplashWidgetState extends State<SplashWidget> {
                 child: Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(60, 0, 60, 0),
                   child: IconButtonWidget(
-                    fillColor: FlutterFlowTheme.tertiaryColor,
-                    fontColor: FlutterFlowTheme.secondaryColor,
+                    fillColor: FlutterFlowTheme.of(context).tertiaryColor,
+                    fontColor: FlutterFlowTheme.of(context).secondaryColor,
                     icon: Icon(
                       Icons.arrow_right_alt,
                     ),

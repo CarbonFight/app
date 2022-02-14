@@ -28,7 +28,7 @@ class _AddActionWidgetState extends State<AddActionWidget> {
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height * 1,
         decoration: BoxDecoration(
-          color: FlutterFlowTheme.tertiaryColor,
+          color: FlutterFlowTheme.of(context).tertiaryColor,
           boxShadow: [
             BoxShadow(
               blurRadius: 10,
@@ -49,7 +49,7 @@ class _AddActionWidgetState extends State<AddActionWidget> {
                 children: [
                   Text(
                     widget.list,
-                    style: FlutterFlowTheme.subtitle1,
+                    style: FlutterFlowTheme.of(context).subtitle1,
                   ),
                   FlutterFlowIconButton(
                     borderColor: Colors.transparent,
@@ -105,7 +105,7 @@ class _AddActionWidgetState extends State<AddActionWidget> {
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(15),
                                 border: Border.all(
-                                  color: FlutterFlowTheme.grayLight,
+                                  color: FlutterFlowTheme.of(context).grayLight,
                                 ),
                               ),
                               child: Padding(
@@ -127,7 +127,8 @@ class _AddActionWidgetState extends State<AddActionWidget> {
                                         child: Text(
                                           'Trajet en voiture',
                                           textAlign: TextAlign.center,
-                                          style: FlutterFlowTheme.bodyText1,
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyText1,
                                         ),
                                       ),
                                     ),
@@ -163,7 +164,7 @@ class _AddActionWidgetState extends State<AddActionWidget> {
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(15),
                                 border: Border.all(
-                                  color: FlutterFlowTheme.grayLight,
+                                  color: FlutterFlowTheme.of(context).grayLight,
                                 ),
                               ),
                               child: Padding(
@@ -185,7 +186,8 @@ class _AddActionWidgetState extends State<AddActionWidget> {
                                         child: Text(
                                           'Autobus',
                                           textAlign: TextAlign.center,
-                                          style: FlutterFlowTheme.bodyText1,
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyText1,
                                         ),
                                       ),
                                     ),
@@ -230,7 +232,7 @@ class _AddActionWidgetState extends State<AddActionWidget> {
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(15),
                                 border: Border.all(
-                                  color: FlutterFlowTheme.grayLight,
+                                  color: FlutterFlowTheme.of(context).grayLight,
                                 ),
                               ),
                               child: Padding(
@@ -252,7 +254,8 @@ class _AddActionWidgetState extends State<AddActionWidget> {
                                         child: Text(
                                           'Scooter et moto légère',
                                           textAlign: TextAlign.center,
-                                          style: FlutterFlowTheme.bodyText1,
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyText1,
                                         ),
                                       ),
                                     ),
@@ -288,7 +291,7 @@ class _AddActionWidgetState extends State<AddActionWidget> {
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(15),
                                 border: Border.all(
-                                  color: FlutterFlowTheme.grayLight,
+                                  color: FlutterFlowTheme.of(context).grayLight,
                                 ),
                               ),
                               child: Padding(
@@ -310,7 +313,8 @@ class _AddActionWidgetState extends State<AddActionWidget> {
                                         child: Text(
                                           'Trajet en TGV',
                                           textAlign: TextAlign.center,
-                                          style: FlutterFlowTheme.bodyText1,
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyText1,
                                         ),
                                       ),
                                     ),
@@ -355,7 +359,7 @@ class _AddActionWidgetState extends State<AddActionWidget> {
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(15),
                                 border: Border.all(
-                                  color: FlutterFlowTheme.grayLight,
+                                  color: FlutterFlowTheme.of(context).grayLight,
                                 ),
                               ),
                               child: Padding(
@@ -377,7 +381,8 @@ class _AddActionWidgetState extends State<AddActionWidget> {
                                         child: Text(
                                           'Train régional',
                                           textAlign: TextAlign.center,
-                                          style: FlutterFlowTheme.bodyText1,
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyText1,
                                         ),
                                       ),
                                     ),
@@ -413,7 +418,7 @@ class _AddActionWidgetState extends State<AddActionWidget> {
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(15),
                                 border: Border.all(
-                                  color: FlutterFlowTheme.grayLight,
+                                  color: FlutterFlowTheme.of(context).grayLight,
                                 ),
                               ),
                               child: Padding(
@@ -435,7 +440,8 @@ class _AddActionWidgetState extends State<AddActionWidget> {
                                         child: Text(
                                           'Trajet en Métro',
                                           textAlign: TextAlign.center,
-                                          style: FlutterFlowTheme.bodyText1,
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyText1,
                                         ),
                                       ),
                                     ),

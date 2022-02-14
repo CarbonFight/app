@@ -1,6 +1,8 @@
+import '../auth/auth_util.dart';
 import '../flutter_flow/flutter_flow_animations.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
+import '../login/login_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -69,7 +71,7 @@ class _DrawerWidgetState extends State<DrawerWidget>
               width: MediaQuery.of(context).size.width * 0.75,
               height: MediaQuery.of(context).size.height * 1,
               decoration: BoxDecoration(
-                color: FlutterFlowTheme.tertiaryColor,
+                color: FlutterFlowTheme.of(context).tertiaryColor,
                 boxShadow: [
                   BoxShadow(
                     blurRadius: 25,
@@ -127,7 +129,7 @@ class _DrawerWidgetState extends State<DrawerWidget>
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(15),
                               border: Border.all(
-                                color: FlutterFlowTheme.grayLight,
+                                color: FlutterFlowTheme.of(context).grayLight,
                               ),
                             ),
                             child: Padding(
@@ -143,7 +145,8 @@ class _DrawerWidgetState extends State<DrawerWidget>
                                       width: 60,
                                       height: 60,
                                       decoration: BoxDecoration(
-                                        color: FlutterFlowTheme.tertiaryColor,
+                                        color: FlutterFlowTheme.of(context)
+                                            .tertiaryColor,
                                         boxShadow: [
                                           BoxShadow(
                                             blurRadius: 25,
@@ -175,19 +178,21 @@ class _DrawerWidgetState extends State<DrawerWidget>
                                       children: [
                                         Text(
                                           'David Farmer',
-                                          style: FlutterFlowTheme.bodyText2
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyText2
                                               .override(
-                                            fontFamily: 'Montserrat',
-                                            fontWeight: FontWeight.w600,
-                                          ),
+                                                fontFamily: 'Montserrat',
+                                                fontWeight: FontWeight.w600,
+                                              ),
                                         ),
                                         Text(
                                           'david@example.com',
-                                          style: FlutterFlowTheme.bodyText2
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyText2
                                               .override(
-                                            fontFamily: 'Montserrat',
-                                            fontSize: 11,
-                                          ),
+                                                fontFamily: 'Montserrat',
+                                                fontSize: 11,
+                                              ),
                                         ),
                                         Padding(
                                           padding:
@@ -195,12 +200,14 @@ class _DrawerWidgetState extends State<DrawerWidget>
                                                   0, 5, 0, 0),
                                           child: Text(
                                             'Change Password',
-                                            style: FlutterFlowTheme.bodyText2
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyText2
                                                 .override(
-                                              fontFamily: 'Montserrat',
-                                              color: FlutterFlowTheme
-                                                  .secondaryColor,
-                                            ),
+                                                  fontFamily: 'Montserrat',
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .secondaryColor,
+                                                ),
                                           ),
                                         ),
                                       ],
@@ -235,11 +242,14 @@ class _DrawerWidgetState extends State<DrawerWidget>
                                       10, 0, 0, 0),
                                   child: Text(
                                     'Feedback',
-                                    style: FlutterFlowTheme.bodyText2.override(
-                                      fontFamily: 'Montserrat',
-                                      color: FlutterFlowTheme.primaryColor,
-                                      fontWeight: FontWeight.w500,
-                                    ),
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyText2
+                                        .override(
+                                          fontFamily: 'Montserrat',
+                                          color: FlutterFlowTheme.of(context)
+                                              .primaryColor,
+                                          fontWeight: FontWeight.w500,
+                                        ),
                                   ),
                                 ),
                               ],
@@ -266,11 +276,14 @@ class _DrawerWidgetState extends State<DrawerWidget>
                                       10, 0, 0, 0),
                                   child: Text(
                                     'Help',
-                                    style: FlutterFlowTheme.bodyText2.override(
-                                      fontFamily: 'Montserrat',
-                                      color: FlutterFlowTheme.primaryColor,
-                                      fontWeight: FontWeight.w500,
-                                    ),
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyText2
+                                        .override(
+                                          fontFamily: 'Montserrat',
+                                          color: FlutterFlowTheme.of(context)
+                                              .primaryColor,
+                                          fontWeight: FontWeight.w500,
+                                        ),
                                   ),
                                 ),
                               ],
@@ -297,11 +310,14 @@ class _DrawerWidgetState extends State<DrawerWidget>
                                       10, 0, 0, 0),
                                   child: Text(
                                     'FAQ',
-                                    style: FlutterFlowTheme.bodyText2.override(
-                                      fontFamily: 'Montserrat',
-                                      color: FlutterFlowTheme.primaryColor,
-                                      fontWeight: FontWeight.w500,
-                                    ),
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyText2
+                                        .override(
+                                          fontFamily: 'Montserrat',
+                                          color: FlutterFlowTheme.of(context)
+                                              .primaryColor,
+                                          fontWeight: FontWeight.w500,
+                                        ),
                                   ),
                                 ),
                               ],
@@ -328,11 +344,14 @@ class _DrawerWidgetState extends State<DrawerWidget>
                                       10, 0, 0, 0),
                                   child: Text(
                                     'Terms',
-                                    style: FlutterFlowTheme.bodyText2.override(
-                                      fontFamily: 'Montserrat',
-                                      color: FlutterFlowTheme.primaryColor,
-                                      fontWeight: FontWeight.w500,
-                                    ),
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyText2
+                                        .override(
+                                          fontFamily: 'Montserrat',
+                                          color: FlutterFlowTheme.of(context)
+                                              .primaryColor,
+                                          fontWeight: FontWeight.w500,
+                                        ),
                                   ),
                                 ),
                               ],
@@ -356,10 +375,25 @@ class _DrawerWidgetState extends State<DrawerWidget>
                                 color: Color(0x42E25606),
                               ),
                             ),
-                            child: Icon(
-                              Icons.power_settings_new,
-                              color: FlutterFlowTheme.redi,
-                              size: 24,
+                            child: InkWell(
+                              onTap: () async {
+                                await signOut();
+                                await Navigator.pushAndRemoveUntil(
+                                  context,
+                                  PageTransition(
+                                    type: PageTransitionType.fade,
+                                    duration: Duration(milliseconds: 0),
+                                    reverseDuration: Duration(milliseconds: 0),
+                                    child: LoginWidget(),
+                                  ),
+                                  (r) => false,
+                                );
+                              },
+                              child: Icon(
+                                Icons.power_settings_new,
+                                color: FlutterFlowTheme.of(context).redi,
+                                size: 24,
+                              ),
                             ),
                           ),
                           Expanded(
@@ -378,12 +412,13 @@ class _DrawerWidgetState extends State<DrawerWidget>
                                         Expanded(
                                           child: Text(
                                             'Carbonfight Copyright 2022',
-                                            style: FlutterFlowTheme.bodyText2
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyText2
                                                 .override(
-                                              fontFamily: 'Montserrat',
-                                              fontSize: 11,
-                                              fontWeight: FontWeight.w500,
-                                            ),
+                                                  fontFamily: 'Montserrat',
+                                                  fontSize: 11,
+                                                  fontWeight: FontWeight.w500,
+                                                ),
                                           ),
                                         ),
                                       ],
@@ -398,12 +433,16 @@ class _DrawerWidgetState extends State<DrawerWidget>
                                                     0, 3, 0, 0),
                                             child: Text(
                                               'Version 1.0.2 Build 34',
-                                              style: FlutterFlowTheme.bodyText2
+                                              style: FlutterFlowTheme.of(
+                                                      context)
+                                                  .bodyText2
                                                   .override(
-                                                fontFamily: 'Montserrat',
-                                                color: FlutterFlowTheme.gray,
-                                                fontSize: 11,
-                                              ),
+                                                    fontFamily: 'Montserrat',
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
+                                                        .gray,
+                                                    fontSize: 11,
+                                                  ),
                                             ),
                                           ),
                                         ),

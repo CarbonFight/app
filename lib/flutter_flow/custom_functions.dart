@@ -275,30 +275,3 @@ int energyActions(
 
   return co2e.round();
 }
-
-int dayScore(
-  DocumentReference transportActions,
-  DocumentReference energyActions,
-) {
-  return 1;
-}
-
-String transportScore() {
-  CollectionReference scores = FirebaseFirestore.instance.collection('scores');
-
-  scores
-      .add({
-        'userId': "ahah1", // John Doe
-        'userLevel': 1111, // Stokes and Sons
-        'userScore': 1234, // 42
-        'userPseudo': "ahahohoh2"
-      })
-      .then((value) => print("User Added"))
-      .catchError((error) => print("Failed to add user: $error"));
-
-  return "toto";
-}
-
-int energyScore() {
-  return 2;
-}

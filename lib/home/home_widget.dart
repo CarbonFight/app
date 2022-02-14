@@ -5,8 +5,10 @@ import '../drawer/drawer_widget.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
+import '../custom_code/actions/index.dart' as actions;
 import '../flutter_flow/custom_functions.dart' as functions;
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -21,12 +23,24 @@ class HomeWidget extends StatefulWidget {
 
 class _HomeWidgetState extends State<HomeWidget> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  int daySocre;
+
+  @override
+  void initState() {
+    super.initState();
+    // On page load action.
+    SchedulerBinding.instance.addPostFrameCallback((_) async {
+      daySocre = await actions.dayScore(
+        currentUserUid,
+      );
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       key: scaffoldKey,
-      backgroundColor: FlutterFlowTheme.primaryColor,
+      backgroundColor: FlutterFlowTheme.of(context).primaryColor,
       body: GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),
         child: Container(
@@ -132,7 +146,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                           width: 300,
                           height: 60,
                           decoration: BoxDecoration(
-                            color: FlutterFlowTheme.tertiaryColor,
+                            color: FlutterFlowTheme.of(context).tertiaryColor,
                             boxShadow: [
                               BoxShadow(
                                 blurRadius: 40,
@@ -147,7 +161,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                           width: 310,
                           height: 60,
                           decoration: BoxDecoration(
-                            color: FlutterFlowTheme.tertiaryColor,
+                            color: FlutterFlowTheme.of(context).tertiaryColor,
                             boxShadow: [
                               BoxShadow(
                                 blurRadius: 4,
@@ -164,7 +178,8 @@ class _HomeWidgetState extends State<HomeWidget> {
                             Container(
                               height: 50,
                               decoration: BoxDecoration(
-                                color: FlutterFlowTheme.tertiaryColor,
+                                color:
+                                    FlutterFlowTheme.of(context).tertiaryColor,
                                 borderRadius: BorderRadius.circular(100),
                               ),
                               child: Padding(
@@ -184,12 +199,15 @@ class _HomeWidgetState extends State<HomeWidget> {
                                           10, 0, 0, 0),
                                       child: Text(
                                         'Actions',
-                                        style:
-                                            FlutterFlowTheme.subtitle2.override(
-                                          fontFamily: 'Montserrat',
-                                          color: FlutterFlowTheme.gronyLight,
-                                          fontWeight: FontWeight.w800,
-                                        ),
+                                        style: FlutterFlowTheme.of(context)
+                                            .subtitle2
+                                            .override(
+                                              fontFamily: 'Montserrat',
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .gronyLight,
+                                              fontWeight: FontWeight.w800,
+                                            ),
                                       ),
                                     ),
                                   ],
@@ -199,7 +217,8 @@ class _HomeWidgetState extends State<HomeWidget> {
                             Container(
                               height: 50,
                               decoration: BoxDecoration(
-                                color: FlutterFlowTheme.tertiaryColor,
+                                color:
+                                    FlutterFlowTheme.of(context).tertiaryColor,
                                 borderRadius: BorderRadius.circular(100),
                               ),
                               child: Padding(
@@ -219,12 +238,15 @@ class _HomeWidgetState extends State<HomeWidget> {
                                           10, 0, 0, 0),
                                       child: Text(
                                         'Statistiques',
-                                        style:
-                                            FlutterFlowTheme.subtitle2.override(
-                                          fontFamily: 'Montserrat',
-                                          color: FlutterFlowTheme.gronyLight,
-                                          fontWeight: FontWeight.w800,
-                                        ),
+                                        style: FlutterFlowTheme.of(context)
+                                            .subtitle2
+                                            .override(
+                                              fontFamily: 'Montserrat',
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .gronyLight,
+                                              fontWeight: FontWeight.w800,
+                                            ),
                                       ),
                                     ),
                                   ],
@@ -266,7 +288,8 @@ class _HomeWidgetState extends State<HomeWidget> {
                                       width: 100,
                                       height: 100,
                                       decoration: BoxDecoration(
-                                        color: FlutterFlowTheme.tertiaryColor,
+                                        color: FlutterFlowTheme.of(context)
+                                            .tertiaryColor,
                                         boxShadow: [
                                           BoxShadow(
                                             blurRadius: 25,
@@ -283,18 +306,22 @@ class _HomeWidgetState extends State<HomeWidget> {
                                       lineWidth: 18,
                                       animation: true,
                                       progressColor:
-                                          FlutterFlowTheme.gronyLight,
+                                          FlutterFlowTheme.of(context)
+                                              .gronyLight,
                                       backgroundColor:
-                                          FlutterFlowTheme.tertiaryColor,
+                                          FlutterFlowTheme.of(context)
+                                              .tertiaryColor,
                                     ),
                                     Container(
                                       width: 80,
                                       height: 80,
                                       decoration: BoxDecoration(
-                                        color: FlutterFlowTheme.tertiaryColor,
+                                        color: FlutterFlowTheme.of(context)
+                                            .tertiaryColor,
                                         shape: BoxShape.circle,
                                         border: Border.all(
-                                          color: FlutterFlowTheme.grayLight,
+                                          color: FlutterFlowTheme.of(context)
+                                              .grayLight,
                                           width: 1,
                                         ),
                                       ),
@@ -335,8 +362,9 @@ class _HomeWidgetState extends State<HomeWidget> {
                                               width: 50,
                                               height: 50,
                                               child: SpinKitRipple(
-                                                color: FlutterFlowTheme
-                                                    .primaryColor,
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .primaryColor,
                                                 size: 50,
                                               ),
                                             ),
@@ -356,13 +384,15 @@ class _HomeWidgetState extends State<HomeWidget> {
                                         return Text(
                                           functions.globalScore(
                                               textScoresRecord.userScore),
-                                          style:
-                                              FlutterFlowTheme.title3.override(
-                                            fontFamily: 'Montserrat',
-                                            color:
-                                                FlutterFlowTheme.tertiaryColor,
-                                            fontSize: 46,
-                                          ),
+                                          style: FlutterFlowTheme.of(context)
+                                              .title3
+                                              .override(
+                                                fontFamily: 'Montserrat',
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .tertiaryColor,
+                                                fontSize: 46,
+                                              ),
                                         );
                                       },
                                     ),
@@ -373,18 +403,21 @@ class _HomeWidgetState extends State<HomeWidget> {
                                   children: [
                                     Text(
                                       'CO2e',
-                                      style:
-                                          FlutterFlowTheme.bodyText1.override(
-                                        fontFamily: 'Montserrat',
-                                        color: FlutterFlowTheme.gronyLighter,
-                                      ),
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyText1
+                                          .override(
+                                            fontFamily: 'Montserrat',
+                                            color: FlutterFlowTheme.of(context)
+                                                .gronyLighter,
+                                          ),
                                     ),
                                     Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
                                           5, 0, 0, 0),
                                       child: Icon(
                                         Icons.info_outline,
-                                        color: FlutterFlowTheme.gronyLighter,
+                                        color: FlutterFlowTheme.of(context)
+                                            .gronyLighter,
                                         size: 18,
                                       ),
                                     ),
@@ -414,58 +447,24 @@ class _HomeWidgetState extends State<HomeWidget> {
                                           CrossAxisAlignment.start,
                                       children: [
                                         Expanded(
-                                          child: StreamBuilder<
-                                              List<TransportActionsRecord>>(
-                                            stream: queryTransportActionsRecord(
-                                              queryBuilder:
-                                                  (transportActionsRecord) =>
-                                                      transportActionsRecord
-                                                          .where('userId',
-                                                              isEqualTo:
-                                                                  currentUserUid),
-                                              singleRecord: true,
-                                            ),
-                                            builder: (context, snapshot) {
-                                              // Customize what your widget looks like when it's loading.
-                                              if (!snapshot.hasData) {
-                                                return Center(
-                                                  child: SizedBox(
-                                                    width: 50,
-                                                    height: 50,
-                                                    child: SpinKitRipple(
-                                                      color: FlutterFlowTheme
-                                                          .primaryColor,
-                                                      size: 50,
-                                                    ),
-                                                  ),
-                                                );
-                                              }
-                                              List<TransportActionsRecord>
-                                                  textTransportActionsRecordList =
-                                                  snapshot.data;
-                                              // Return an empty Container when the document does not exist.
-                                              if (snapshot.data.isEmpty) {
-                                                return Container();
-                                              }
-                                              final textTransportActionsRecord =
-                                                  textTransportActionsRecordList
-                                                          .isNotEmpty
-                                                      ? textTransportActionsRecordList
-                                                          .first
-                                                      : null;
-                                              return Text(
-                                                textTransportActionsRecord
-                                                    .distance
-                                                    .toString(),
-                                                style: FlutterFlowTheme
-                                                    .subtitle2
-                                                    .override(
-                                                  fontFamily: 'Montserrat',
-                                                  color: FlutterFlowTheme
-                                                      .tertiaryColor,
-                                                ),
+                                          child: InkWell(
+                                            onTap: () async {
+                                              await actions.dayScore(
+                                                currentUserUid,
                                               );
                                             },
+                                            child: Text(
+                                              'Votre score du jour : ${daySocre.toString()}',
+                                              style: FlutterFlowTheme.of(
+                                                      context)
+                                                  .subtitle2
+                                                  .override(
+                                                    fontFamily: 'Montserrat',
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
+                                                        .tertiaryColor,
+                                                  ),
+                                            ),
                                           ),
                                         ),
                                       ],
@@ -513,13 +512,15 @@ class _HomeWidgetState extends State<HomeWidget> {
                                           ),
                                           Text(
                                             '38%',
-                                            style: FlutterFlowTheme.bodyText1
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyText1
                                                 .override(
-                                              fontFamily: 'Montserrat',
-                                              color:
-                                                  FlutterFlowTheme.gronyLighter,
-                                              fontWeight: FontWeight.bold,
-                                            ),
+                                                  fontFamily: 'Montserrat',
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .gronyLighter,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
                                           ),
                                         ],
                                       ),
@@ -577,7 +578,8 @@ class _HomeWidgetState extends State<HomeWidget> {
                                     width: 70,
                                     height: 70,
                                     decoration: BoxDecoration(
-                                      color: FlutterFlowTheme.tertiaryColor,
+                                      color: FlutterFlowTheme.of(context)
+                                          .tertiaryColor,
                                       boxShadow: [
                                         BoxShadow(
                                           blurRadius: 25,
@@ -606,11 +608,12 @@ class _HomeWidgetState extends State<HomeWidget> {
                                         ),
                                         Text(
                                           'Transport',
-                                          style: FlutterFlowTheme.bodyText2
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyText2
                                               .override(
-                                            fontFamily: 'Montserrat',
-                                            fontSize: 11,
-                                          ),
+                                                fontFamily: 'Montserrat',
+                                                fontSize: 11,
+                                              ),
                                         ),
                                       ],
                                     ),
@@ -645,7 +648,8 @@ class _HomeWidgetState extends State<HomeWidget> {
                                     width: 70,
                                     height: 70,
                                     decoration: BoxDecoration(
-                                      color: FlutterFlowTheme.tertiaryColor,
+                                      color: FlutterFlowTheme.of(context)
+                                          .tertiaryColor,
                                       boxShadow: [
                                         BoxShadow(
                                           blurRadius: 25,
@@ -674,11 +678,12 @@ class _HomeWidgetState extends State<HomeWidget> {
                                         ),
                                         Text(
                                           'Repas',
-                                          style: FlutterFlowTheme.bodyText2
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyText2
                                               .override(
-                                            fontFamily: 'Montserrat',
-                                            fontSize: 11,
-                                          ),
+                                                fontFamily: 'Montserrat',
+                                                fontSize: 11,
+                                              ),
                                         ),
                                       ],
                                     ),
@@ -713,7 +718,8 @@ class _HomeWidgetState extends State<HomeWidget> {
                                     width: 70,
                                     height: 70,
                                     decoration: BoxDecoration(
-                                      color: FlutterFlowTheme.tertiaryColor,
+                                      color: FlutterFlowTheme.of(context)
+                                          .tertiaryColor,
                                       boxShadow: [
                                         BoxShadow(
                                           blurRadius: 25,
@@ -742,11 +748,12 @@ class _HomeWidgetState extends State<HomeWidget> {
                                         ),
                                         Text(
                                           'Energies',
-                                          style: FlutterFlowTheme.bodyText2
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyText2
                                               .override(
-                                            fontFamily: 'Montserrat',
-                                            fontSize: 11,
-                                          ),
+                                                fontFamily: 'Montserrat',
+                                                fontSize: 11,
+                                              ),
                                         ),
                                       ],
                                     ),
@@ -781,7 +788,8 @@ class _HomeWidgetState extends State<HomeWidget> {
                                     width: 70,
                                     height: 70,
                                     decoration: BoxDecoration(
-                                      color: FlutterFlowTheme.tertiaryColor,
+                                      color: FlutterFlowTheme.of(context)
+                                          .tertiaryColor,
                                       boxShadow: [
                                         BoxShadow(
                                           blurRadius: 25,
@@ -810,11 +818,12 @@ class _HomeWidgetState extends State<HomeWidget> {
                                         ),
                                         Text(
                                           'Favorites',
-                                          style: FlutterFlowTheme.bodyText2
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyText2
                                               .override(
-                                            fontFamily: 'Montserrat',
-                                            fontSize: 11,
-                                          ),
+                                                fontFamily: 'Montserrat',
+                                                fontSize: 11,
+                                              ),
                                         ),
                                       ],
                                     ),
@@ -828,7 +837,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                         width: 85,
                         height: 85,
                         decoration: BoxDecoration(
-                          color: FlutterFlowTheme.tertiaryColor,
+                          color: FlutterFlowTheme.of(context).tertiaryColor,
                           boxShadow: [
                             BoxShadow(
                               blurRadius: 35,
@@ -839,14 +848,15 @@ class _HomeWidgetState extends State<HomeWidget> {
                           shape: BoxShape.circle,
                         ),
                         child: FlutterFlowIconButton(
-                          borderColor: FlutterFlowTheme.tertiaryColor,
+                          borderColor:
+                              FlutterFlowTheme.of(context).tertiaryColor,
                           borderRadius: 50,
                           borderWidth: 10,
                           buttonSize: 50,
-                          fillColor: FlutterFlowTheme.gronyLight,
+                          fillColor: FlutterFlowTheme.of(context).gronyLight,
                           icon: Icon(
                             Icons.add,
-                            color: FlutterFlowTheme.tertiaryColor,
+                            color: FlutterFlowTheme.of(context).tertiaryColor,
                             size: 30,
                           ),
                           onPressed: () async {
