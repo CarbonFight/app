@@ -33,19 +33,20 @@ class _AddCarWidgetState extends State<AddCarWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Form(
-      key: formKey,
-      child: Scaffold(
-        key: scaffoldKey,
-        appBar: AppBar(
-          backgroundColor: Colors.black,
-          automaticallyImplyLeading: false,
-          actions: [],
-          centerTitle: false,
-          elevation: 2,
-        ),
+    return Scaffold(
+      key: scaffoldKey,
+      appBar: AppBar(
         backgroundColor: Colors.black,
-        body: Column(
+        automaticallyImplyLeading: false,
+        actions: [],
+        centerTitle: false,
+        elevation: 2,
+      ),
+      backgroundColor: Colors.black,
+      body: Form(
+        key: formKey,
+        autovalidateMode: AutovalidateMode.disabled,
+        child: Column(
           mainAxisSize: MainAxisSize.max,
           children: [
             Row(
@@ -72,10 +73,10 @@ class _AddCarWidgetState extends State<AddCarWidget> {
                 ),
                 Text(
                   'Car travel',
-                  style: FlutterFlowTheme.title1.override(
-                    fontFamily: 'Montserrat',
-                    color: FlutterFlowTheme.secondaryColor,
-                  ),
+                  style: FlutterFlowTheme.of(context).title1.override(
+                        fontFamily: 'Montserrat',
+                        color: FlutterFlowTheme.of(context).secondaryColor,
+                      ),
                 ),
               ],
             ),
@@ -98,17 +99,19 @@ class _AddCarWidgetState extends State<AddCarWidget> {
                         controller: distanceController,
                         obscureText: false,
                         decoration: InputDecoration(
-                          labelStyle: FlutterFlowTheme.bodyText1.override(
-                            fontFamily: 'Montserrat',
-                            color: Color(0xFF5E6572),
-                          ),
+                          labelStyle:
+                              FlutterFlowTheme.of(context).bodyText1.override(
+                                    fontFamily: 'Montserrat',
+                                    color: Color(0xFF5E6572),
+                                  ),
                           hintText: 'Distance (Kms)',
-                          hintStyle: FlutterFlowTheme.bodyText1.override(
-                            fontFamily: 'Lexend Deca',
-                            color: Color(0xFF95A1AC),
-                            fontSize: 14,
-                            fontWeight: FontWeight.normal,
-                          ),
+                          hintStyle:
+                              FlutterFlowTheme.of(context).bodyText1.override(
+                                    fontFamily: 'Lexend Deca',
+                                    color: Color(0xFF95A1AC),
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.normal,
+                                  ),
                           enabledBorder: OutlineInputBorder(
                             borderSide: BorderSide(
                               color: Color(0xFFDBE2E7),
@@ -128,12 +131,12 @@ class _AddCarWidgetState extends State<AddCarWidget> {
                           contentPadding:
                               EdgeInsetsDirectional.fromSTEB(20, 24, 0, 24),
                         ),
-                        style: FlutterFlowTheme.bodyText1.override(
-                          fontFamily: 'Lexend Deca',
-                          color: Color(0xFF14181B),
-                          fontSize: 14,
-                          fontWeight: FontWeight.normal,
-                        ),
+                        style: FlutterFlowTheme.of(context).bodyText1.override(
+                              fontFamily: 'Lexend Deca',
+                              color: Color(0xFF14181B),
+                              fontSize: 14,
+                              fontWeight: FontWeight.normal,
+                            ),
                         keyboardType: TextInputType.number,
                         validator: (val) {
                           if (val.isEmpty) {
@@ -159,11 +162,12 @@ class _AddCarWidgetState extends State<AddCarWidget> {
                       options: FFButtonOptions(
                         width: 50,
                         height: 60,
-                        color: FlutterFlowTheme.primaryColor,
-                        textStyle: FlutterFlowTheme.subtitle2.override(
-                          fontFamily: 'Montserrat',
-                          color: Colors.white,
-                        ),
+                        color: FlutterFlowTheme.of(context).primaryColor,
+                        textStyle:
+                            FlutterFlowTheme.of(context).subtitle2.override(
+                                  fontFamily: 'Montserrat',
+                                  color: Colors.white,
+                                ),
                         elevation: 0,
                         borderSide: BorderSide(
                           color: Colors.transparent,
@@ -187,11 +191,14 @@ class _AddCarWidgetState extends State<AddCarWidget> {
                       options: FFButtonOptions(
                         width: 100,
                         height: 60,
-                        color: FlutterFlowTheme.primaryColor,
-                        textStyle: FlutterFlowTheme.subtitle2.override(
-                          fontFamily: 'Montserrat',
-                          color: FlutterFlowTheme.secondaryColor,
-                        ),
+                        color: FlutterFlowTheme.of(context).primaryColor,
+                        textStyle: FlutterFlowTheme.of(context)
+                            .subtitle2
+                            .override(
+                              fontFamily: 'Montserrat',
+                              color:
+                                  FlutterFlowTheme.of(context).secondaryColor,
+                            ),
                         elevation: 2,
                         borderSide: BorderSide(
                           color: Colors.transparent,
@@ -212,10 +219,10 @@ class _AddCarWidgetState extends State<AddCarWidget> {
                 children: [
                   Text(
                     'Options',
-                    style: FlutterFlowTheme.title2.override(
-                      fontFamily: 'Montserrat',
-                      color: FlutterFlowTheme.secondaryColor,
-                    ),
+                    style: FlutterFlowTheme.of(context).title2.override(
+                          fontFamily: 'Montserrat',
+                          color: FlutterFlowTheme.of(context).secondaryColor,
+                        ),
                   ),
                 ],
               ),
@@ -232,10 +239,11 @@ class _AddCarWidgetState extends State<AddCarWidget> {
                     children: [
                       Text(
                         'Ownership',
-                        style: FlutterFlowTheme.title3.override(
-                          fontFamily: 'Montserrat',
-                          color: FlutterFlowTheme.secondaryColor,
-                        ),
+                        style: FlutterFlowTheme.of(context).title3.override(
+                              fontFamily: 'Montserrat',
+                              color:
+                                  FlutterFlowTheme.of(context).secondaryColor,
+                            ),
                       ),
                       FlutterFlowRadioButton(
                         options: ['Owner', 'Long rent', 'Short rent', 'Taxi'],
@@ -244,19 +252,25 @@ class _AddCarWidgetState extends State<AddCarWidget> {
                           setState(() => ownershipValue = value);
                         },
                         optionHeight: 25,
-                        textStyle: FlutterFlowTheme.bodyText1.override(
-                          fontFamily: 'Montserrat',
-                          color: FlutterFlowTheme.tertiaryColor,
-                        ),
-                        selectedTextStyle: FlutterFlowTheme.bodyText1.override(
-                          fontFamily: 'Montserrat',
-                          color: FlutterFlowTheme.secondaryColor,
-                        ),
+                        textStyle: FlutterFlowTheme.of(context)
+                            .bodyText1
+                            .override(
+                              fontFamily: 'Montserrat',
+                              color: FlutterFlowTheme.of(context).tertiaryColor,
+                            ),
+                        selectedTextStyle: FlutterFlowTheme.of(context)
+                            .bodyText1
+                            .override(
+                              fontFamily: 'Montserrat',
+                              color:
+                                  FlutterFlowTheme.of(context).secondaryColor,
+                            ),
                         buttonPosition: RadioButtonPosition.left,
                         direction: Axis.vertical,
-                        radioButtonColor: FlutterFlowTheme.secondaryColor,
+                        radioButtonColor:
+                            FlutterFlowTheme.of(context).secondaryColor,
                         inactiveRadioButtonColor:
-                            FlutterFlowTheme.tertiaryColor,
+                            FlutterFlowTheme.of(context).tertiaryColor,
                         toggleable: false,
                         horizontalAlignment: WrapAlignment.start,
                         verticalAlignment: WrapCrossAlignment.start,
@@ -271,10 +285,11 @@ class _AddCarWidgetState extends State<AddCarWidget> {
                     children: [
                       Text(
                         'Power Type',
-                        style: FlutterFlowTheme.title3.override(
-                          fontFamily: 'Montserrat',
-                          color: FlutterFlowTheme.secondaryColor,
-                        ),
+                        style: FlutterFlowTheme.of(context).title3.override(
+                              fontFamily: 'Montserrat',
+                              color:
+                                  FlutterFlowTheme.of(context).secondaryColor,
+                            ),
                       ),
                       FlutterFlowRadioButton(
                         options: ['Thermic', 'Hybrid', 'Electricity'],
@@ -283,19 +298,24 @@ class _AddCarWidgetState extends State<AddCarWidget> {
                           setState(() => powertypeValue = value);
                         },
                         optionHeight: 25,
-                        textStyle: FlutterFlowTheme.bodyText1.override(
-                          fontFamily: 'Montserrat',
-                          color: Color(0xFFFCFCFC),
-                        ),
-                        selectedTextStyle: FlutterFlowTheme.bodyText1.override(
-                          fontFamily: 'Montserrat',
-                          color: FlutterFlowTheme.secondaryColor,
-                        ),
+                        textStyle:
+                            FlutterFlowTheme.of(context).bodyText1.override(
+                                  fontFamily: 'Montserrat',
+                                  color: Color(0xFFFCFCFC),
+                                ),
+                        selectedTextStyle: FlutterFlowTheme.of(context)
+                            .bodyText1
+                            .override(
+                              fontFamily: 'Montserrat',
+                              color:
+                                  FlutterFlowTheme.of(context).secondaryColor,
+                            ),
                         buttonPosition: RadioButtonPosition.left,
                         direction: Axis.vertical,
-                        radioButtonColor: FlutterFlowTheme.secondaryColor,
+                        radioButtonColor:
+                            FlutterFlowTheme.of(context).secondaryColor,
                         inactiveRadioButtonColor:
-                            FlutterFlowTheme.tertiaryColor,
+                            FlutterFlowTheme.of(context).tertiaryColor,
                         toggleable: false,
                         horizontalAlignment: WrapAlignment.start,
                         verticalAlignment: WrapCrossAlignment.start,
@@ -316,10 +336,11 @@ class _AddCarWidgetState extends State<AddCarWidget> {
                     children: [
                       Text(
                         'Passengers',
-                        style: FlutterFlowTheme.title3.override(
-                          fontFamily: 'Montserrat',
-                          color: FlutterFlowTheme.secondaryColor,
-                        ),
+                        style: FlutterFlowTheme.of(context).title3.override(
+                              fontFamily: 'Montserrat',
+                              color:
+                                  FlutterFlowTheme.of(context).secondaryColor,
+                            ),
                       ),
                       Padding(
                         padding: EdgeInsetsDirectional.fromSTEB(0, 5, 0, 0),
@@ -339,14 +360,14 @@ class _AddCarWidgetState extends State<AddCarWidget> {
                             decrementIconBuilder: (enabled) => FaIcon(
                               FontAwesomeIcons.minus,
                               color: enabled
-                                  ? FlutterFlowTheme.primaryColor
+                                  ? FlutterFlowTheme.of(context).primaryColor
                                   : Color(0xFFEEEEEE),
                               size: 20,
                             ),
                             incrementIconBuilder: (enabled) => FaIcon(
                               FontAwesomeIcons.plus,
                               color: enabled
-                                  ? FlutterFlowTheme.primaryColor
+                                  ? FlutterFlowTheme.of(context).primaryColor
                                   : Color(0xFFEEEEEE),
                               size: 20,
                             ),

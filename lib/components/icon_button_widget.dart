@@ -64,10 +64,10 @@ class _IconButtonWidgetState extends State<IconButtonWidget> {
               children: [
                 Text(
                   widget.text,
-                  style: FlutterFlowTheme.subtitle2.override(
-                    fontFamily: 'Montserrat',
-                    color: widget.fontColor,
-                  ),
+                  style: FlutterFlowTheme.of(context).subtitle2.override(
+                        fontFamily: 'Montserrat',
+                        color: widget.fontColor,
+                      ),
                 ),
                 widget.icon,
               ],

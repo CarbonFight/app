@@ -35,7 +35,7 @@ class _LoginWidgetState extends State<LoginWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: scaffoldKey,
-      backgroundColor: FlutterFlowTheme.secondaryColor,
+      backgroundColor: FlutterFlowTheme.of(context).secondaryColor,
       body: Container(
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height * 1,
@@ -84,7 +84,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                         width: MediaQuery.of(context).size.width,
                         height: 50,
                         decoration: BoxDecoration(
-                          color: FlutterFlowTheme.tertiaryColor,
+                          color: FlutterFlowTheme.of(context).tertiaryColor,
                           boxShadow: [
                             BoxShadow(
                               blurRadius: 4,
@@ -105,11 +105,13 @@ class _LoginWidgetState extends State<LoginWidget> {
                                   obscureText: false,
                                   decoration: InputDecoration(
                                     hintText: 'Email Address',
-                                    hintStyle:
-                                        FlutterFlowTheme.bodyText1.override(
-                                      fontFamily: 'Montserrat',
-                                      color: FlutterFlowTheme.gray,
-                                    ),
+                                    hintStyle: FlutterFlowTheme.of(context)
+                                        .bodyText1
+                                        .override(
+                                          fontFamily: 'Montserrat',
+                                          color:
+                                              FlutterFlowTheme.of(context).gray,
+                                        ),
                                     enabledBorder: UnderlineInputBorder(
                                       borderSide: BorderSide(
                                         color: Color(0x00000000),
@@ -135,14 +137,18 @@ class _LoginWidgetState extends State<LoginWidget> {
                                             0, 15, 0, 0),
                                     prefixIcon: Icon(
                                       Icons.email_outlined,
-                                      color: FlutterFlowTheme.gronyLight,
+                                      color: FlutterFlowTheme.of(context)
+                                          .gronyLight,
                                       size: 18,
                                     ),
                                   ),
-                                  style: FlutterFlowTheme.bodyText1.override(
-                                    fontFamily: 'Montserrat',
-                                    color: FlutterFlowTheme.primaryColor,
-                                  ),
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyText1
+                                      .override(
+                                        fontFamily: 'Montserrat',
+                                        color: FlutterFlowTheme.of(context)
+                                            .primaryColor,
+                                      ),
                                   textAlign: TextAlign.start,
                                   keyboardType: TextInputType.emailAddress,
                                 ),
@@ -158,7 +164,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                         width: MediaQuery.of(context).size.width,
                         height: 50,
                         decoration: BoxDecoration(
-                          color: FlutterFlowTheme.tertiaryColor,
+                          color: FlutterFlowTheme.of(context).tertiaryColor,
                           boxShadow: [
                             BoxShadow(
                               blurRadius: 4,
@@ -179,11 +185,13 @@ class _LoginWidgetState extends State<LoginWidget> {
                                   obscureText: !passwordVisibility,
                                   decoration: InputDecoration(
                                     hintText: 'Password',
-                                    hintStyle:
-                                        FlutterFlowTheme.bodyText1.override(
-                                      fontFamily: 'Montserrat',
-                                      color: FlutterFlowTheme.gray,
-                                    ),
+                                    hintStyle: FlutterFlowTheme.of(context)
+                                        .bodyText1
+                                        .override(
+                                          fontFamily: 'Montserrat',
+                                          color:
+                                              FlutterFlowTheme.of(context).gray,
+                                        ),
                                     enabledBorder: UnderlineInputBorder(
                                       borderSide: BorderSide(
                                         color: Color(0x00000000),
@@ -209,7 +217,8 @@ class _LoginWidgetState extends State<LoginWidget> {
                                             0, 15, 0, 0),
                                     prefixIcon: Icon(
                                       Icons.vpn_key_outlined,
-                                      color: FlutterFlowTheme.gronyLight,
+                                      color: FlutterFlowTheme.of(context)
+                                          .gronyLight,
                                       size: 18,
                                     ),
                                     suffixIcon: InkWell(
@@ -221,15 +230,19 @@ class _LoginWidgetState extends State<LoginWidget> {
                                         passwordVisibility
                                             ? Icons.visibility_outlined
                                             : Icons.visibility_off_outlined,
-                                        color: FlutterFlowTheme.gronyLighter,
+                                        color: FlutterFlowTheme.of(context)
+                                            .gronyLighter,
                                         size: 22,
                                       ),
                                     ),
                                   ),
-                                  style: FlutterFlowTheme.bodyText1.override(
-                                    fontFamily: 'Montserrat',
-                                    color: FlutterFlowTheme.primaryColor,
-                                  ),
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyText1
+                                      .override(
+                                        fontFamily: 'Montserrat',
+                                        color: FlutterFlowTheme.of(context)
+                                            .primaryColor,
+                                      ),
                                   textAlign: TextAlign.start,
                                 ),
                               ),
@@ -246,11 +259,14 @@ class _LoginWidgetState extends State<LoginWidget> {
                         children: [
                           Expanded(
                             child: IconButtonWidget(
-                              fillColor: FlutterFlowTheme.secondaryColor,
-                              fontColor: FlutterFlowTheme.tertiaryColor,
+                              fillColor:
+                                  FlutterFlowTheme.of(context).secondaryColor,
+                              fontColor:
+                                  FlutterFlowTheme.of(context).tertiaryColor,
                               icon: Icon(
                                 Icons.login_outlined,
-                                color: FlutterFlowTheme.tertiaryColor,
+                                color:
+                                    FlutterFlowTheme.of(context).tertiaryColor,
                                 size: 26,
                               ),
                               text: 'Login',
@@ -290,11 +306,14 @@ class _LoginWidgetState extends State<LoginWidget> {
                                 AutoSizeText(
                                   'Or Use Social Login',
                                   textAlign: TextAlign.center,
-                                  style: FlutterFlowTheme.subtitle2.override(
-                                    fontFamily: 'Montserrat',
-                                    color: FlutterFlowTheme.tertiaryColor,
-                                    fontWeight: FontWeight.bold,
-                                  ),
+                                  style: FlutterFlowTheme.of(context)
+                                      .subtitle2
+                                      .override(
+                                        fontFamily: 'Montserrat',
+                                        color: FlutterFlowTheme.of(context)
+                                            .tertiaryColor,
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                 ),
                               ],
                             ),
@@ -308,7 +327,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                                     EdgeInsetsDirectional.fromSTEB(0, 0, 8, 0),
                                 child: Card(
                                   clipBehavior: Clip.antiAliasWithSaveLayer,
-                                  color: FlutterFlowTheme.blue,
+                                  color: FlutterFlowTheme.of(context).blue,
                                   elevation: 3,
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(50),
@@ -355,7 +374,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                                     EdgeInsetsDirectional.fromSTEB(0, 0, 8, 0),
                                 child: Card(
                                   clipBehavior: Clip.antiAliasWithSaveLayer,
-                                  color: FlutterFlowTheme.orange,
+                                  color: FlutterFlowTheme.of(context).orange,
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(50),
                                   ),
@@ -398,7 +417,8 @@ class _LoginWidgetState extends State<LoginWidget> {
                               ),
                               Card(
                                 clipBehavior: Clip.antiAliasWithSaveLayer,
-                                color: FlutterFlowTheme.primaryColor,
+                                color:
+                                    FlutterFlowTheme.of(context).primaryColor,
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(50),
                                 ),
@@ -452,10 +472,12 @@ class _LoginWidgetState extends State<LoginWidget> {
                         children: [
                           Text(
                             'Don\'t have an account?',
-                            style: FlutterFlowTheme.subtitle2.override(
-                              fontFamily: 'Montserrat',
-                              color: FlutterFlowTheme.tertiaryColor,
-                            ),
+                            style:
+                                FlutterFlowTheme.of(context).subtitle2.override(
+                                      fontFamily: 'Montserrat',
+                                      color: FlutterFlowTheme.of(context)
+                                          .tertiaryColor,
+                                    ),
                           ),
                           FFButtonWidget(
                             onPressed: () {
@@ -466,10 +488,13 @@ class _LoginWidgetState extends State<LoginWidget> {
                               width: 90,
                               height: 30,
                               color: Color(0x00FFFFFF),
-                              textStyle: FlutterFlowTheme.subtitle2.override(
-                                fontFamily: 'Montserrat',
-                                color: FlutterFlowTheme.gronyLight,
-                              ),
+                              textStyle: FlutterFlowTheme.of(context)
+                                  .subtitle2
+                                  .override(
+                                    fontFamily: 'Montserrat',
+                                    color:
+                                        FlutterFlowTheme.of(context).gronyLight,
+                                  ),
                               elevation: 0,
                               borderSide: BorderSide(
                                 color: Colors.transparent,

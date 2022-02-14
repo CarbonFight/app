@@ -23,10 +23,10 @@ class _HelpWidgetState extends State<HelpWidget> {
         automaticallyImplyLeading: false,
         title: Text(
           'CarbonFight',
-          style: FlutterFlowTheme.title3.override(
-            fontFamily: 'Montserrat',
-            color: FlutterFlowTheme.tertiaryColor,
-          ),
+          style: FlutterFlowTheme.of(context).title3.override(
+                fontFamily: 'Montserrat',
+                color: FlutterFlowTheme.of(context).tertiaryColor,
+              ),
         ),
         actions: [],
         centerTitle: false,

@@ -41,7 +41,7 @@ class _AddActionFormWidgetState extends State<AddActionFormWidget> {
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height * 1,
         decoration: BoxDecoration(
-          color: FlutterFlowTheme.tertiaryColor,
+          color: FlutterFlowTheme.of(context).tertiaryColor,
           boxShadow: [
             BoxShadow(
               blurRadius: 10,
@@ -74,7 +74,7 @@ class _AddActionFormWidgetState extends State<AddActionFormWidget> {
                       ),
                       Text(
                         'Add ${widget.actionName}',
-                        style: FlutterFlowTheme.subtitle1,
+                        style: FlutterFlowTheme.of(context).subtitle1,
                       ),
                     ],
                   ),
@@ -111,14 +111,14 @@ class _AddActionFormWidgetState extends State<AddActionFormWidget> {
                               hintText: 'Distance Parcourue (en km )',
                               enabledBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
-                                  color: FlutterFlowTheme.grayLight,
+                                  color: FlutterFlowTheme.of(context).grayLight,
                                   width: 1,
                                 ),
                                 borderRadius: BorderRadius.circular(100),
                               ),
                               focusedBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
-                                  color: FlutterFlowTheme.grayLight,
+                                  color: FlutterFlowTheme.of(context).grayLight,
                                   width: 1,
                                 ),
                                 borderRadius: BorderRadius.circular(100),
@@ -127,14 +127,16 @@ class _AddActionFormWidgetState extends State<AddActionFormWidget> {
                               fillColor: Color(0x40EEF1F0),
                               prefixIcon: Icon(
                                 Icons.directions_walk,
-                                color: FlutterFlowTheme.secondaryColor,
+                                color:
+                                    FlutterFlowTheme.of(context).secondaryColor,
                                 size: 16,
                               ),
                             ),
-                            style: FlutterFlowTheme.bodyText2.override(
-                              fontFamily: 'Montserrat',
-                              fontWeight: FontWeight.w500,
-                            ),
+                            style:
+                                FlutterFlowTheme.of(context).bodyText2.override(
+                                      fontFamily: 'Montserrat',
+                                      fontWeight: FontWeight.w500,
+                                    ),
                           ),
                         ),
                       ],
@@ -161,16 +163,19 @@ class _AddActionFormWidgetState extends State<AddActionFormWidget> {
                               width: double.infinity,
                               height: 20,
                               decoration: BoxDecoration(
-                                color: FlutterFlowTheme.tertiaryColor,
+                                color:
+                                    FlutterFlowTheme.of(context).tertiaryColor,
                               ),
                               child: Text(
                                 'More Options',
                                 textAlign: TextAlign.center,
-                                style: FlutterFlowTheme.bodyText2.override(
-                                  fontFamily: 'Montserrat',
-                                  fontSize: 11,
-                                  fontWeight: FontWeight.w500,
-                                ),
+                                style: FlutterFlowTheme.of(context)
+                                    .bodyText2
+                                    .override(
+                                      fontFamily: 'Montserrat',
+                                      fontSize: 11,
+                                      fontWeight: FontWeight.w500,
+                                    ),
                               ),
                             ),
                           ),
@@ -192,14 +197,17 @@ class _AddActionFormWidgetState extends State<AddActionFormWidget> {
                                     setState(() => dropDownValue1 = val),
                                 width: 180,
                                 height: 50,
-                                textStyle: FlutterFlowTheme.bodyText2.override(
-                                  fontFamily: 'Montserrat',
-                                  fontWeight: FontWeight.w500,
-                                ),
+                                textStyle: FlutterFlowTheme.of(context)
+                                    .bodyText2
+                                    .override(
+                                      fontFamily: 'Montserrat',
+                                      fontWeight: FontWeight.w500,
+                                    ),
                                 hintText: 'Cylindre',
                                 fillColor: Color(0xFFFAFAFA),
                                 elevation: 2,
-                                borderColor: FlutterFlowTheme.grayLight,
+                                borderColor:
+                                    FlutterFlowTheme.of(context).grayLight,
                                 borderWidth: 1,
                                 borderRadius: 100,
                                 margin: EdgeInsetsDirectional.fromSTEB(
@@ -215,14 +223,17 @@ class _AddActionFormWidgetState extends State<AddActionFormWidget> {
                                   setState(() => dropDownValue2 = val),
                               width: 180,
                               height: 50,
-                              textStyle: FlutterFlowTheme.bodyText2.override(
-                                fontFamily: 'Montserrat',
-                                fontWeight: FontWeight.w500,
-                              ),
+                              textStyle: FlutterFlowTheme.of(context)
+                                  .bodyText2
+                                  .override(
+                                    fontFamily: 'Montserrat',
+                                    fontWeight: FontWeight.w500,
+                                  ),
                               hintText: 'Passagers',
                               fillColor: Color(0xFFFAFAFA),
                               elevation: 2,
-                              borderColor: FlutterFlowTheme.grayLight,
+                              borderColor:
+                                  FlutterFlowTheme.of(context).grayLight,
                               borderWidth: 1,
                               borderRadius: 100,
                               margin:
@@ -245,14 +256,17 @@ class _AddActionFormWidgetState extends State<AddActionFormWidget> {
                                   setState(() => dropDownValue3 = val),
                               width: 180,
                               height: 50,
-                              textStyle: FlutterFlowTheme.bodyText2.override(
-                                fontFamily: 'Montserrat',
-                                fontWeight: FontWeight.w500,
-                              ),
+                              textStyle: FlutterFlowTheme.of(context)
+                                  .bodyText2
+                                  .override(
+                                    fontFamily: 'Montserrat',
+                                    fontWeight: FontWeight.w500,
+                                  ),
                               hintText: 'Cylindre',
                               fillColor: Color(0xFFFAFAFA),
                               elevation: 2,
-                              borderColor: FlutterFlowTheme.grayLight,
+                              borderColor:
+                                  FlutterFlowTheme.of(context).grayLight,
                               borderWidth: 1,
                               borderRadius: 100,
                               margin:
@@ -275,14 +289,17 @@ class _AddActionFormWidgetState extends State<AddActionFormWidget> {
                                   setState(() => dropDownValue4 = val),
                               width: 180,
                               height: 50,
-                              textStyle: FlutterFlowTheme.bodyText2.override(
-                                fontFamily: 'Montserrat',
-                                fontWeight: FontWeight.w500,
-                              ),
+                              textStyle: FlutterFlowTheme.of(context)
+                                  .bodyText2
+                                  .override(
+                                    fontFamily: 'Montserrat',
+                                    fontWeight: FontWeight.w500,
+                                  ),
                               hintText: 'Energie',
                               fillColor: Color(0xFFFAFAFA),
                               elevation: 2,
-                              borderColor: FlutterFlowTheme.grayLight,
+                              borderColor:
+                                  FlutterFlowTheme.of(context).grayLight,
                               borderWidth: 1,
                               borderRadius: 100,
                               margin:
@@ -304,11 +321,14 @@ class _AddActionFormWidgetState extends State<AddActionFormWidget> {
                                 Navigator.pop(context);
                               },
                               child: IconButtonWidget(
-                                fillColor: FlutterFlowTheme.secondaryColor,
-                                fontColor: FlutterFlowTheme.tertiaryColor,
+                                fillColor:
+                                    FlutterFlowTheme.of(context).secondaryColor,
+                                fontColor:
+                                    FlutterFlowTheme.of(context).tertiaryColor,
                                 icon: Icon(
                                   Icons.save_outlined,
-                                  color: FlutterFlowTheme.tertiaryColor,
+                                  color: FlutterFlowTheme.of(context)
+                                      .tertiaryColor,
                                   size: 18,
                                 ),
                                 text: 'Save',
