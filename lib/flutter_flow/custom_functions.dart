@@ -181,24 +181,24 @@ int transportActions(
   return co2e.round();
 }
 
-String globalScore(int userScore) {
+String printScore(int score) {
   String co2 = "0";
   String unit = "g";
 
-  if (userScore < 1000) {
-    co2 = userScore.toString();
+  if (score < 1000) {
+    co2 = score.toString();
     unit = "g";
-  } else if (userScore >= 1000 && userScore < 10000) {
-    co2 = (userScore / 1000).toStringAsFixed(2);
+  } else if (score >= 1000 && score < 10000) {
+    co2 = (score / 1000).toStringAsFixed(2);
     unit = "kg";
-  } else if (userScore >= 10000 && userScore < 20000) {
-    co2 = (userScore / 1000).toStringAsFixed(1);
+  } else if (score >= 10000 && score < 20000) {
+    co2 = (score / 1000).toStringAsFixed(1);
     unit = "kg";
-  } else if (userScore >= 20000 && userScore < 1000000) {
-    co2 = (userScore / 1000).toStringAsFixed(0);
+  } else if (score >= 20000 && score < 1000000) {
+    co2 = (score / 1000).toStringAsFixed(0);
     unit = "kg";
-  } else if (userScore >= 1000000) {
-    co2 = (userScore / 1000000).toStringAsFixed(2);
+  } else if (score >= 1000000) {
+    co2 = (score / 1000000).toStringAsFixed(2);
     unit = "T";
   }
   return co2 + " " + unit;

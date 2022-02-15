@@ -5,7 +5,7 @@ import '../../flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
 
 // Begin custom action code
-Future<int> dayScore(String userId) async {
+Future<int> updateDayScore(String userId) async {
   // Add your function code here!
 
   int dayScore = 0;
@@ -32,6 +32,5 @@ Future<int> dayScore(String userId) async {
     });
   });
 
-  print("Transport + energy: " + dayScore.toString());
   return dayScore;
 }

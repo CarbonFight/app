@@ -20,7 +20,10 @@ abstract class ScoresRecord
   String get userPseudo;
 
   @nullable
-  int get userScore;
+  int get globalScore;
+
+  @nullable
+  int get dayScore;
 
   @nullable
   @BuiltValueField(wireName: kDocumentReferenceField)
@@ -30,7 +33,8 @@ abstract class ScoresRecord
     ..userId = ''
     ..userLevel = 0
     ..userPseudo = ''
-    ..userScore = 0;
+    ..globalScore = 0
+    ..dayScore = 0;
 
   static CollectionReference get collection =>
       FirebaseFirestore.instance.collection('scores');
@@ -57,7 +61,8 @@ Map<String, dynamic> createScoresRecordData({
   String userId,
   int userLevel,
   String userPseudo,
-  int userScore,
+  int globalScore,
+  int dayScore,
 }) =>
     serializers.toFirestore(
         ScoresRecord.serializer,
@@ -65,4 +70,5 @@ Map<String, dynamic> createScoresRecordData({
           ..userId = userId
           ..userLevel = userLevel
           ..userPseudo = userPseudo
-          ..userScore = userScore));
+          ..globalScore = globalScore
+          ..dayScore = dayScore));
