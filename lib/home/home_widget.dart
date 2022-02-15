@@ -30,7 +30,7 @@ class _HomeWidgetState extends State<HomeWidget> {
     super.initState();
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      daySocre = await actions.dayScore(
+      daySocre = await actions.updateDayScore(
         currentUserUid,
       );
     });
@@ -301,7 +301,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                       ),
                                     ),
                                     CircularPercentIndicator(
-                                      percent: 0.38,
+                                      percent: 0.25,
                                       radius: 50,
                                       lineWidth: 18,
                                       animation: true,
@@ -382,8 +382,8 @@ class _HomeWidgetState extends State<HomeWidget> {
                                                 ? textScoresRecordList.first
                                                 : null;
                                         return Text(
-                                          functions.globalScore(
-                                              textScoresRecord.userScore),
+                                          functions.printScore(
+                                              textScoresRecord.globalScore),
                                           style: FlutterFlowTheme.of(context)
                                               .title3
                                               .override(
@@ -447,24 +447,59 @@ class _HomeWidgetState extends State<HomeWidget> {
                                           CrossAxisAlignment.start,
                                       children: [
                                         Expanded(
-                                          child: InkWell(
-                                            onTap: () async {
-                                              await actions.dayScore(
-                                                currentUserUid,
+                                          child:
+                                              StreamBuilder<List<ScoresRecord>>(
+                                            stream: queryScoresRecord(
+                                              queryBuilder: (scoresRecord) =>
+                                                  scoresRecord.where('userId',
+                                                      isEqualTo:
+                                                          currentUserUid),
+                                              singleRecord: true,
+                                            ),
+                                            builder: (context, snapshot) {
+                                              // Customize what your widget looks like when it's loading.
+                                              if (!snapshot.hasData) {
+                                                return Center(
+                                                  child: SizedBox(
+                                                    width: 50,
+                                                    height: 50,
+                                                    child: SpinKitRipple(
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .primaryColor,
+                                                      size: 50,
+                                                    ),
+                                                  ),
+                                                );
+                                              }
+                                              List<ScoresRecord>
+                                                  textScoresRecordList =
+                                                  snapshot.data;
+                                              // Return an empty Container when the document does not exist.
+                                              if (snapshot.data.isEmpty) {
+                                                return Container();
+                                              }
+                                              final textScoresRecord =
+                                                  textScoresRecordList
+                                                          .isNotEmpty
+                                                      ? textScoresRecordList
+                                                          .first
+                                                      : null;
+                                              return Text(
+                                                'Vos émissions du jour : ${functions.printScore(textScoresRecord.dayScore)}',
+                                                style: FlutterFlowTheme.of(
+                                                        context)
+                                                    .subtitle2
+                                                    .override(
+                                                      fontFamily: 'Montserrat',
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .tertiaryColor,
+                                                    ),
                                               );
                                             },
-                                            child: Text(
-                                              'Votre score du jour : ${daySocre.toString()}',
-                                              style: FlutterFlowTheme.of(
-                                                      context)
-                                                  .subtitle2
-                                                  .override(
-                                                    fontFamily: 'Montserrat',
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .tertiaryColor,
-                                                  ),
-                                            ),
                                           ),
                                         ),
                                       ],
