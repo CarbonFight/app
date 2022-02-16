@@ -1,10 +1,12 @@
 import '../auth/auth_util.dart';
 import '../backend/backend.dart';
 import '../components/add_action_widget.dart';
+import '../components/info_widget.dart';
 import '../drawer/drawer_widget.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
+import '../statistiques/statistiques_widget.dart';
 import '../custom_code/actions/index.dart' as actions;
 import '../flutter_flow/custom_functions.dart' as functions;
 import 'package:flutter/material.dart';
@@ -178,8 +180,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                             Container(
                               height: 50,
                               decoration: BoxDecoration(
-                                color:
-                                    FlutterFlowTheme.of(context).tertiaryColor,
+                                color: FlutterFlowTheme.of(context).gronyLight,
                                 borderRadius: BorderRadius.circular(100),
                               ),
                               child: Padding(
@@ -189,7 +190,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                   mainAxisSize: MainAxisSize.max,
                                   children: [
                                     SvgPicture.asset(
-                                      'assets/images/actions_green.svg',
+                                      'assets/images/actions.svg',
                                       width: 18,
                                       height: 18,
                                       fit: BoxFit.cover,
@@ -205,7 +206,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                               fontFamily: 'Montserrat',
                                               color:
                                                   FlutterFlowTheme.of(context)
-                                                      .gronyLight,
+                                                      .tertiaryColor,
                                               fontWeight: FontWeight.w800,
                                             ),
                                       ),
@@ -236,17 +237,32 @@ class _HomeWidgetState extends State<HomeWidget> {
                                     Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
                                           10, 0, 0, 0),
-                                      child: Text(
-                                        'Statistiques',
-                                        style: FlutterFlowTheme.of(context)
-                                            .subtitle2
-                                            .override(
-                                              fontFamily: 'Montserrat',
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .gronyLight,
-                                              fontWeight: FontWeight.w800,
+                                      child: InkWell(
+                                        onTap: () async {
+                                          await Navigator.push(
+                                            context,
+                                            PageTransition(
+                                              type: PageTransitionType.fade,
+                                              duration:
+                                                  Duration(milliseconds: 0),
+                                              reverseDuration:
+                                                  Duration(milliseconds: 0),
+                                              child: StatistiquesWidget(),
                                             ),
+                                          );
+                                        },
+                                        child: Text(
+                                          'Statistiques',
+                                          style: FlutterFlowTheme.of(context)
+                                              .subtitle2
+                                              .override(
+                                                fontFamily: 'Montserrat',
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .gronyLight,
+                                                fontWeight: FontWeight.w800,
+                                              ),
+                                        ),
                                       ),
                                     ),
                                   ],
@@ -341,62 +357,62 @@ class _HomeWidgetState extends State<HomeWidget> {
                               ],
                             ),
                             Column(
-                              mainAxisSize: MainAxisSize.max,
+                              mainAxisSize: MainAxisSize.min,
                               crossAxisAlignment: CrossAxisAlignment.end,
                               children: [
-                                Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  children: [
-                                    StreamBuilder<List<ScoresRecord>>(
-                                      stream: queryScoresRecord(
-                                        queryBuilder: (scoresRecord) =>
-                                            scoresRecord.where('userId',
-                                                isEqualTo: currentUserUid),
-                                        singleRecord: true,
-                                      ),
-                                      builder: (context, snapshot) {
-                                        // Customize what your widget looks like when it's loading.
-                                        if (!snapshot.hasData) {
-                                          return Center(
-                                            child: SizedBox(
-                                              width: 50,
-                                              height: 50,
-                                              child: SpinKitRipple(
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .primaryColor,
-                                                size: 50,
-                                              ),
-                                            ),
-                                          );
-                                        }
-                                        List<ScoresRecord>
-                                            textScoresRecordList =
-                                            snapshot.data;
-                                        // Return an empty Container when the document does not exist.
-                                        if (snapshot.data.isEmpty) {
-                                          return Container();
-                                        }
-                                        final textScoresRecord =
-                                            textScoresRecordList.isNotEmpty
-                                                ? textScoresRecordList.first
-                                                : null;
-                                        return Text(
-                                          functions.printScore(
-                                              textScoresRecord.globalScore),
-                                          style: FlutterFlowTheme.of(context)
-                                              .title3
-                                              .override(
-                                                fontFamily: 'Montserrat',
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .tertiaryColor,
-                                                fontSize: 46,
-                                              ),
-                                        );
-                                      },
-                                    ),
-                                  ],
+                                StreamBuilder<List<ScoresRecord>>(
+                                  stream: queryScoresRecord(
+                                    queryBuilder: (scoresRecord) =>
+                                        scoresRecord.where('userId',
+                                            isEqualTo: currentUserUid),
+                                    singleRecord: true,
+                                  ),
+                                  builder: (context, snapshot) {
+                                    // Customize what your widget looks like when it's loading.
+                                    if (!snapshot.hasData) {
+                                      return Center(
+                                        child: SizedBox(
+                                          width: 50,
+                                          height: 50,
+                                          child: SpinKitRipple(
+                                            color: FlutterFlowTheme.of(context)
+                                                .primaryColor,
+                                            size: 50,
+                                          ),
+                                        ),
+                                      );
+                                    }
+                                    List<ScoresRecord> textScoresRecordList =
+                                        snapshot.data;
+                                    // Return an empty Container when the document does not exist.
+                                    if (snapshot.data.isEmpty) {
+                                      return Container();
+                                    }
+                                    final textScoresRecord =
+                                        textScoresRecordList.isNotEmpty
+                                            ? textScoresRecordList.first
+                                            : null;
+                                    return Text(
+                                      functions.printScore(
+                                          textScoresRecord.globalScore),
+                                      style: FlutterFlowTheme.of(context)
+                                          .title3
+                                          .override(
+                                            fontFamily: 'Montserrat',
+                                            color: FlutterFlowTheme.of(context)
+                                                .tertiaryColor,
+                                            fontSize: 46,
+                                          ),
+                                    );
+                                  },
+                                ),
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      10, 0, 0, 0),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [],
+                                  ),
                                 ),
                                 Row(
                                   mainAxisSize: MainAxisSize.max,
@@ -446,6 +462,55 @@ class _HomeWidgetState extends State<HomeWidget> {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
+                                        InkWell(
+                                          onTap: () async {
+                                            await showModalBottomSheet(
+                                              isScrollControlled: true,
+                                              backgroundColor:
+                                                  Colors.transparent,
+                                              barrierColor: Color(0xBF000000),
+                                              context: context,
+                                              builder: (context) {
+                                                return Padding(
+                                                  padding:
+                                                      MediaQuery.of(context)
+                                                          .viewInsets,
+                                                  child: Container(
+                                                    height: 375,
+                                                    child: InfoWidget(
+                                                      title: 'Some statistics',
+                                                      body:
+                                                          'The French average is 12.5 kg. The 10 most polluting countries emit on average between 40 kg (USA/Canada) and 83 kg (Quatar) of CO2 per capita per day. To reach the balance of our planet, it would be necessary to emit less than 3.30 kg per inhabitant.',
+                                                    ),
+                                                  ),
+                                                );
+                                              },
+                                            );
+                                          },
+                                          child: Container(
+                                            width: 35,
+                                            height: 35,
+                                            decoration: BoxDecoration(
+                                              boxShadow: [
+                                                BoxShadow(
+                                                  blurRadius: 10,
+                                                  color: Color(0x13000000),
+                                                  offset: Offset(0, 8),
+                                                )
+                                              ],
+                                              shape: BoxShape.circle,
+                                            ),
+                                            alignment:
+                                                AlignmentDirectional(0, 0),
+                                            child: Icon(
+                                              Icons.info_outline_rounded,
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .tertiaryColor,
+                                              size: 22,
+                                            ),
+                                          ),
+                                        ),
                                         Expanded(
                                           child:
                                               StreamBuilder<List<ScoresRecord>>(
@@ -783,76 +848,6 @@ class _HomeWidgetState extends State<HomeWidget> {
                                         ),
                                         Text(
                                           'Energies',
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodyText2
-                                              .override(
-                                                fontFamily: 'Montserrat',
-                                                fontSize: 11,
-                                              ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(5, 0, 0, 0),
-                                child: InkWell(
-                                  onTap: () async {
-                                    await showModalBottomSheet(
-                                      isScrollControlled: true,
-                                      backgroundColor: Colors.transparent,
-                                      barrierColor: Color(0xBF000000),
-                                      context: context,
-                                      builder: (context) {
-                                        return Padding(
-                                          padding:
-                                              MediaQuery.of(context).viewInsets,
-                                          child: Container(
-                                            height: 500,
-                                            child: AddActionWidget(
-                                              list: 'Favorites',
-                                            ),
-                                          ),
-                                        );
-                                      },
-                                    );
-                                  },
-                                  child: Container(
-                                    width: 70,
-                                    height: 70,
-                                    decoration: BoxDecoration(
-                                      color: FlutterFlowTheme.of(context)
-                                          .tertiaryColor,
-                                      boxShadow: [
-                                        BoxShadow(
-                                          blurRadius: 25,
-                                          color: Color(0x0D000000),
-                                          offset: Offset(0, 10),
-                                        )
-                                      ],
-                                      shape: BoxShape.circle,
-                                    ),
-                                    alignment: AlignmentDirectional(0, 0),
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.max,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  0, 0, 0, 5),
-                                          child: SvgPicture.asset(
-                                            'assets/images/fav.svg',
-                                            width: 25,
-                                            height: 25,
-                                            fit: BoxFit.cover,
-                                          ),
-                                        ),
-                                        Text(
-                                          'Favorites',
                                           style: FlutterFlowTheme.of(context)
                                               .bodyText2
                                               .override(

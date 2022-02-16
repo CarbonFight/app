@@ -1,0 +1,118 @@
+import '../flutter_flow/flutter_flow_icon_button.dart';
+import '../flutter_flow/flutter_flow_theme.dart';
+import '../flutter_flow/flutter_flow_util.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:google_fonts/google_fonts.dart';
+
+class InfoWidget extends StatefulWidget {
+  const InfoWidget({
+    Key key,
+    this.title,
+    this.body,
+  }) : super(key: key);
+
+  final String title;
+  final String body;
+
+  @override
+  _InfoWidgetState createState() => _InfoWidgetState();
+}
+
+class _InfoWidgetState extends State<InfoWidget> {
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsetsDirectional.fromSTEB(20, 20, 20, 20),
+      child: Container(
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height * 1,
+        decoration: BoxDecoration(
+          color: FlutterFlowTheme.of(context).tertiaryColor,
+          boxShadow: [
+            BoxShadow(
+              blurRadius: 10,
+              color: Color(0x25000000),
+              offset: Offset(0, 0),
+            )
+          ],
+          borderRadius: BorderRadius.circular(15),
+        ),
+        child: Padding(
+          padding: EdgeInsetsDirectional.fromSTEB(20, 10, 20, 10),
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              Row(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      Icon(
+                        Icons.info_outline,
+                        color: FlutterFlowTheme.of(context).secondaryColor,
+                        size: 24,
+                      ),
+                      Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(10, 0, 0, 0),
+                        child: Text(
+                          widget.title,
+                          style: FlutterFlowTheme.of(context).subtitle1,
+                        ),
+                      ),
+                    ],
+                  ),
+                  FlutterFlowIconButton(
+                    borderColor: Colors.transparent,
+                    borderRadius: 30,
+                    borderWidth: 1,
+                    buttonSize: 46,
+                    icon: Icon(
+                      Icons.close,
+                      color: Colors.black,
+                      size: 24,
+                    ),
+                    onPressed: () async {
+                      Navigator.pop(context);
+                    },
+                  ),
+                ],
+              ),
+              Divider(),
+              SingleChildScrollView(
+                child: Column(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 20),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          Expanded(
+                            child: Text(
+                              widget.body,
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyText1
+                                  .override(
+                                    fontFamily: 'Montserrat',
+                                    color: FlutterFlowTheme.of(context)
+                                        .primaryColor,
+                                    fontWeight: FontWeight.normal,
+                                  ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
