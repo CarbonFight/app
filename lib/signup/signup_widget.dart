@@ -48,7 +48,7 @@ class _SignupWidgetState extends State<SignupWidget> {
         height: MediaQuery.of(context).size.height * 1,
         decoration: BoxDecoration(
           image: DecorationImage(
-            fit: BoxFit.fitHeight,
+            fit: BoxFit.fill,
             image: Image.asset(
               'assets/images/mobile_cover.jpg',
             ).image,
@@ -77,12 +77,11 @@ class _SignupWidgetState extends State<SignupWidget> {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(0, 80, 0, 60),
+                      padding: EdgeInsetsDirectional.fromSTEB(50, 40, 50, 40),
                       child: Image.asset(
                         'assets/images/logo_light.png',
-                        width: 100,
-                        height: MediaQuery.of(context).size.height * 0.1,
-                        fit: BoxFit.fitHeight,
+                        height: 100,
+                        fit: BoxFit.fitWidth,
                       ),
                     ),
                     Padding(
@@ -467,255 +466,284 @@ class _SignupWidgetState extends State<SignupWidget> {
                         ],
                       ),
                     ),
-                  ],
-                ),
-              ),
-            ),
-            Align(
-              alignment: AlignmentDirectional(0, 1),
-              child: Container(
-                width: MediaQuery.of(context).size.width,
-                height: 250,
-                decoration: BoxDecoration(),
-                alignment: AlignmentDirectional(0, 0),
-                child: Column(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 60),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          Padding(
-                            padding:
-                                EdgeInsetsDirectional.fromSTEB(0, 0, 0, 10),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.max,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                AutoSizeText(
-                                  'Or Use Social Signup',
-                                  textAlign: TextAlign.center,
-                                  style: FlutterFlowTheme.of(context)
-                                      .subtitle2
-                                      .override(
-                                        fontFamily: 'Montserrat',
-                                        color: FlutterFlowTheme.of(context)
-                                            .tertiaryColor,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          Row(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(0, 0, 8, 0),
-                                child: Card(
-                                  clipBehavior: Clip.antiAliasWithSaveLayer,
-                                  color: FlutterFlowTheme.of(context).blue,
-                                  elevation: 3,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(50),
-                                  ),
-                                  child: Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        2, 2, 2, 2),
-                                    child: InkWell(
-                                      onTap: () async {
-                                        final user =
-                                            await signInWithFacebook(context);
-                                        if (user == null) {
-                                          return;
-                                        }
-                                        await Navigator.pushAndRemoveUntil(
-                                          context,
-                                          PageTransition(
-                                            type: PageTransitionType.fade,
-                                            duration: Duration(milliseconds: 0),
-                                            reverseDuration:
-                                                Duration(milliseconds: 0),
-                                            child: HomeWidget(),
-                                          ),
-                                          (r) => false,
-                                        );
-                                      },
-                                      child: Container(
-                                        width: 50,
-                                        height: 50,
-                                        clipBehavior: Clip.antiAlias,
-                                        decoration: BoxDecoration(
-                                          shape: BoxShape.circle,
-                                        ),
-                                        child: SvgPicture.asset(
-                                          'assets/images/social_facebook.svg',
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(0, 0, 8, 0),
-                                child: Card(
-                                  clipBehavior: Clip.antiAliasWithSaveLayer,
-                                  color: FlutterFlowTheme.of(context).orange,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(50),
-                                  ),
-                                  child: Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        2, 2, 2, 2),
-                                    child: InkWell(
-                                      onTap: () async {
-                                        final user =
-                                            await signInWithGoogle(context);
-                                        if (user == null) {
-                                          return;
-                                        }
-                                        await Navigator.pushAndRemoveUntil(
-                                          context,
-                                          PageTransition(
-                                            type: PageTransitionType.fade,
-                                            duration: Duration(milliseconds: 0),
-                                            reverseDuration:
-                                                Duration(milliseconds: 0),
-                                            child: HomeWidget(),
-                                          ),
-                                          (r) => false,
-                                        );
-                                      },
-                                      child: Container(
-                                        width: 50,
-                                        height: 50,
-                                        clipBehavior: Clip.antiAlias,
-                                        decoration: BoxDecoration(
-                                          shape: BoxShape.circle,
-                                        ),
-                                        child: SvgPicture.asset(
-                                          'assets/images/social_GoogleWhite.svg',
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              Card(
-                                clipBehavior: Clip.antiAliasWithSaveLayer,
-                                color:
-                                    FlutterFlowTheme.of(context).primaryColor,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(50),
-                                ),
-                                child: Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      2, 2, 2, 2),
-                                  child: InkWell(
-                                    onTap: () async {
-                                      final user =
-                                          await signInWithApple(context);
-                                      if (user == null) {
-                                        return;
-                                      }
-                                      await Navigator.pushAndRemoveUntil(
-                                        context,
-                                        PageTransition(
-                                          type: PageTransitionType.fade,
-                                          duration: Duration(milliseconds: 0),
-                                          reverseDuration:
-                                              Duration(milliseconds: 0),
-                                          child: HomeWidget(),
-                                        ),
-                                        (r) => false,
-                                      );
-                                    },
-                                    child: Container(
-                                      width: 50,
-                                      height: 50,
-                                      clipBehavior: Clip.antiAlias,
-                                      decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                      ),
-                                      child: SvgPicture.asset(
-                                        'assets/images/social_Apple.svg',
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 40),
-                      child: InkWell(
-                        onTap: () async {
-                          await Navigator.push(
-                            context,
-                            PageTransition(
-                              type: PageTransitionType.fade,
-                              duration: Duration(milliseconds: 0),
-                              reverseDuration: Duration(milliseconds: 0),
-                              child: LoginWidget(),
-                            ),
-                          );
-                        },
-                        child: Row(
+                    Align(
+                      alignment: AlignmentDirectional(0, 1),
+                      child: Container(
+                        width: MediaQuery.of(context).size.width,
+                        height: 250,
+                        decoration: BoxDecoration(),
+                        alignment: AlignmentDirectional(0, 0),
+                        child: Column(
                           mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
-                            Text(
-                              'Have an account?',
-                              style: FlutterFlowTheme.of(context)
-                                  .subtitle2
-                                  .override(
-                                    fontFamily: 'Montserrat',
-                                    color: FlutterFlowTheme.of(context)
-                                        .tertiaryColor,
-                                  ),
-                            ),
-                            FFButtonWidget(
-                              onPressed: () async {
-                                await Navigator.push(
-                                  context,
-                                  PageTransition(
-                                    type: PageTransitionType.fade,
-                                    duration: Duration(milliseconds: 0),
-                                    reverseDuration: Duration(milliseconds: 0),
-                                    child: LoginWidget(),
-                                  ),
-                                );
-                              },
-                              text: 'Login',
-                              options: FFButtonOptions(
-                                width: 90,
-                                height: 30,
-                                color: Color(0x00FFFFFF),
-                                textStyle: FlutterFlowTheme.of(context)
-                                    .subtitle2
-                                    .override(
-                                      fontFamily: 'Montserrat',
-                                      color: FlutterFlowTheme.of(context)
-                                          .gronyLight,
+                            Padding(
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 60),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.max,
+                                children: [
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        0, 0, 0, 10),
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        AutoSizeText(
+                                          'Or Use Social Signup',
+                                          textAlign: TextAlign.center,
+                                          style: FlutterFlowTheme.of(context)
+                                              .subtitle2
+                                              .override(
+                                                fontFamily: 'Montserrat',
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .tertiaryColor,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                        ),
+                                      ],
                                     ),
-                                elevation: 0,
-                                borderSide: BorderSide(
-                                  color: Colors.transparent,
-                                  width: 1,
-                                ),
-                                borderRadius: 0,
+                                  ),
+                                  Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            0, 0, 8, 0),
+                                        child: Card(
+                                          clipBehavior:
+                                              Clip.antiAliasWithSaveLayer,
+                                          color:
+                                              FlutterFlowTheme.of(context).blue,
+                                          elevation: 3,
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(50),
+                                          ),
+                                          child: Padding(
+                                            padding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    2, 2, 2, 2),
+                                            child: InkWell(
+                                              onTap: () async {
+                                                final user =
+                                                    await signInWithFacebook(
+                                                        context);
+                                                if (user == null) {
+                                                  return;
+                                                }
+                                                await Navigator
+                                                    .pushAndRemoveUntil(
+                                                  context,
+                                                  PageTransition(
+                                                    type:
+                                                        PageTransitionType.fade,
+                                                    duration: Duration(
+                                                        milliseconds: 0),
+                                                    reverseDuration: Duration(
+                                                        milliseconds: 0),
+                                                    child: HomeWidget(),
+                                                  ),
+                                                  (r) => false,
+                                                );
+                                              },
+                                              child: Container(
+                                                width: 50,
+                                                height: 50,
+                                                clipBehavior: Clip.antiAlias,
+                                                decoration: BoxDecoration(
+                                                  shape: BoxShape.circle,
+                                                ),
+                                                child: SvgPicture.asset(
+                                                  'assets/images/social_facebook.svg',
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            0, 0, 8, 0),
+                                        child: Card(
+                                          clipBehavior:
+                                              Clip.antiAliasWithSaveLayer,
+                                          color: FlutterFlowTheme.of(context)
+                                              .orange,
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(50),
+                                          ),
+                                          child: Padding(
+                                            padding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    2, 2, 2, 2),
+                                            child: InkWell(
+                                              onTap: () async {
+                                                final user =
+                                                    await signInWithGoogle(
+                                                        context);
+                                                if (user == null) {
+                                                  return;
+                                                }
+                                                await Navigator
+                                                    .pushAndRemoveUntil(
+                                                  context,
+                                                  PageTransition(
+                                                    type:
+                                                        PageTransitionType.fade,
+                                                    duration: Duration(
+                                                        milliseconds: 0),
+                                                    reverseDuration: Duration(
+                                                        milliseconds: 0),
+                                                    child: HomeWidget(),
+                                                  ),
+                                                  (r) => false,
+                                                );
+                                              },
+                                              child: Container(
+                                                width: 50,
+                                                height: 50,
+                                                clipBehavior: Clip.antiAlias,
+                                                decoration: BoxDecoration(
+                                                  shape: BoxShape.circle,
+                                                ),
+                                                child: SvgPicture.asset(
+                                                  'assets/images/social_GoogleWhite.svg',
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      Card(
+                                        clipBehavior:
+                                            Clip.antiAliasWithSaveLayer,
+                                        color: FlutterFlowTheme.of(context)
+                                            .primaryColor,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(50),
+                                        ),
+                                        child: Padding(
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  2, 2, 2, 2),
+                                          child: InkWell(
+                                            onTap: () async {
+                                              final user =
+                                                  await signInWithApple(
+                                                      context);
+                                              if (user == null) {
+                                                return;
+                                              }
+                                              await Navigator
+                                                  .pushAndRemoveUntil(
+                                                context,
+                                                PageTransition(
+                                                  type: PageTransitionType.fade,
+                                                  duration:
+                                                      Duration(milliseconds: 0),
+                                                  reverseDuration:
+                                                      Duration(milliseconds: 0),
+                                                  child: HomeWidget(),
+                                                ),
+                                                (r) => false,
+                                              );
+                                            },
+                                            child: Container(
+                                              width: 50,
+                                              height: 50,
+                                              clipBehavior: Clip.antiAlias,
+                                              decoration: BoxDecoration(
+                                                shape: BoxShape.circle,
+                                              ),
+                                              child: SvgPicture.asset(
+                                                'assets/images/social_Apple.svg',
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
                               ),
-                              showLoadingIndicator: false,
+                            ),
+                            Padding(
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 40),
+                              child: InkWell(
+                                onTap: () async {
+                                  await Navigator.push(
+                                    context,
+                                    PageTransition(
+                                      type: PageTransitionType.fade,
+                                      duration: Duration(milliseconds: 0),
+                                      reverseDuration:
+                                          Duration(milliseconds: 0),
+                                      child: LoginWidget(),
+                                    ),
+                                  );
+                                },
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      'Have an account?',
+                                      style: FlutterFlowTheme.of(context)
+                                          .subtitle2
+                                          .override(
+                                            fontFamily: 'Montserrat',
+                                            color: FlutterFlowTheme.of(context)
+                                                .tertiaryColor,
+                                          ),
+                                    ),
+                                    FFButtonWidget(
+                                      onPressed: () async {
+                                        await Navigator.push(
+                                          context,
+                                          PageTransition(
+                                            type: PageTransitionType.fade,
+                                            duration: Duration(milliseconds: 0),
+                                            reverseDuration:
+                                                Duration(milliseconds: 0),
+                                            child: LoginWidget(),
+                                          ),
+                                        );
+                                      },
+                                      text: 'Login',
+                                      options: FFButtonOptions(
+                                        width: 90,
+                                        height: 30,
+                                        color: Color(0x00FFFFFF),
+                                        textStyle: FlutterFlowTheme.of(context)
+                                            .subtitle2
+                                            .override(
+                                              fontFamily: 'Montserrat',
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .gronyLight,
+                                            ),
+                                        elevation: 0,
+                                        borderSide: BorderSide(
+                                          color: Colors.transparent,
+                                          width: 1,
+                                        ),
+                                        borderRadius: 0,
+                                      ),
+                                      showLoadingIndicator: false,
+                                    ),
+                                  ],
+                                ),
+                              ),
                             ),
                           ],
                         ),

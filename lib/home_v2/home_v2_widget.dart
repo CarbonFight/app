@@ -15,15 +15,17 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:percent_indicator/percent_indicator.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
-class HomeWidget extends StatefulWidget {
-  const HomeWidget({Key key}) : super(key: key);
+class HomeV2Widget extends StatefulWidget {
+  const HomeV2Widget({Key key}) : super(key: key);
 
   @override
-  _HomeWidgetState createState() => _HomeWidgetState();
+  _HomeV2WidgetState createState() => _HomeV2WidgetState();
 }
 
-class _HomeWidgetState extends State<HomeWidget> {
+class _HomeV2WidgetState extends State<HomeV2Widget> {
+  PageController pageViewController;
   final scaffoldKey = GlobalKey<ScaffoldState>();
   int daySocre;
 
@@ -57,7 +59,7 @@ class _HomeWidgetState extends State<HomeWidget> {
             image: DecorationImage(
               fit: BoxFit.cover,
               image: Image.asset(
-                'assets/images/Final_Concept_1.jpg',
+                'assets/images/background.png',
               ).image,
             ),
           ),
@@ -136,6 +138,34 @@ class _HomeWidgetState extends State<HomeWidget> {
                             fit: BoxFit.fitHeight,
                           ),
                         ],
+                      ),
+                      Container(
+                        width: 50,
+                        height: 50,
+                        decoration: BoxDecoration(
+                          color: FlutterFlowTheme.of(context).tertiaryColor,
+                          boxShadow: [
+                            BoxShadow(
+                              blurRadius: 10,
+                              color: Color(0x2C000000),
+                              offset: Offset(0, 4),
+                            )
+                          ],
+                          shape: BoxShape.circle,
+                          border: Border.all(
+                            color: FlutterFlowTheme.of(context).grayLight,
+                            width: 1,
+                          ),
+                        ),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(100),
+                          child: Image.asset(
+                            'assets/images/default_avatar_3d.png',
+                            width: 70,
+                            height: 70,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
                       ),
                     ],
                   ),
@@ -286,174 +316,536 @@ class _HomeWidgetState extends State<HomeWidget> {
                 alignment: AlignmentDirectional(0, -0.35),
                 child: Container(
                   width: MediaQuery.of(context).size.width,
-                  height: 400,
+                  height: 500,
                   decoration: BoxDecoration(),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(40, 0, 40, 0),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Column(
-                              mainAxisSize: MainAxisSize.min,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Stack(
-                                  alignment: AlignmentDirectional(0, 0),
+                      Expanded(
+                        child: Container(
+                          width: double.infinity,
+                          height: 300,
+                          child: Stack(
+                            children: [
+                              Padding(
+                                padding:
+                                    EdgeInsetsDirectional.fromSTEB(0, 0, 0, 50),
+                                child: PageView(
+                                  controller: pageViewController ??=
+                                      PageController(initialPage: 0),
+                                  scrollDirection: Axis.horizontal,
                                   children: [
                                     Container(
-                                      width: 100,
-                                      height: 100,
+                                      width: 220,
+                                      height: 220,
                                       decoration: BoxDecoration(
-                                        color: FlutterFlowTheme.of(context)
-                                            .tertiaryColor,
+                                        color: Color(0x23FFFFFF),
                                         boxShadow: [
                                           BoxShadow(
-                                            blurRadius: 25,
-                                            color: Color(0x1C000000),
-                                            offset: Offset(0, 12),
+                                            blurRadius: 35,
+                                            color: Color(0x0E000000),
+                                            offset: Offset(0, 10),
                                           )
                                         ],
                                         shape: BoxShape.circle,
                                       ),
-                                    ),
-                                    CircularPercentIndicator(
-                                      percent: 0.25,
-                                      radius: 50,
-                                      lineWidth: 18,
-                                      animation: true,
-                                      progressColor:
-                                          FlutterFlowTheme.of(context)
-                                              .gronyLight,
-                                      backgroundColor:
-                                          FlutterFlowTheme.of(context)
-                                              .tertiaryColor,
+                                      child: Stack(
+                                        alignment: AlignmentDirectional(0, 0),
+                                        children: [
+                                          CircularPercentIndicator(
+                                              percent: 0.25,
+                                              radius: 100,
+                                              lineWidth: 18,
+                                              animation: true,
+                                              progressColor:
+                                                  FlutterFlowTheme.of(context)
+                                                      .redi,
+                                              backgroundColor:
+                                                  FlutterFlowTheme.of(context)
+                                                      .tertiaryColor,
+                                              center: Text(
+                                                '71%',
+                                                textAlign: TextAlign.start,
+                                                style: FlutterFlowTheme.of(
+                                                        context)
+                                                    .title1
+                                                    .override(
+                                                      fontFamily: 'Montserrat',
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .tertiaryColor,
+                                                      fontSize: 46,
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                    ),
+                                              ),
+                                              startAngle: 0),
+                                          Align(
+                                            alignment:
+                                                AlignmentDirectional(0, -0.4),
+                                            child: Padding(
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(45, 0, 45, 0),
+                                              child: Row(
+                                                mainAxisSize: MainAxisSize.max,
+                                                children: [
+                                                  Expanded(
+                                                    child: Text(
+                                                      'You\'re on track to decrease emissions by',
+                                                      textAlign:
+                                                          TextAlign.center,
+                                                      style:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .bodyText1
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Montserrat',
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .gronyLighter,
+                                                                fontSize: 11,
+                                                              ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                          Align(
+                                            alignment:
+                                                AlignmentDirectional(0, 0.4),
+                                            child: Padding(
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(45, 0, 45, 0),
+                                              child: Row(
+                                                mainAxisSize: MainAxisSize.max,
+                                                children: [
+                                                  Expanded(
+                                                    child: Text(
+                                                      'This Month',
+                                                      textAlign:
+                                                          TextAlign.center,
+                                                      style:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .bodyText1
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Montserrat',
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .gronyLighter,
+                                                              ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                     Container(
-                                      width: 80,
-                                      height: 80,
+                                      width: 220,
+                                      height: 220,
                                       decoration: BoxDecoration(
-                                        color: FlutterFlowTheme.of(context)
-                                            .tertiaryColor,
+                                        color: Color(0x23FFFFFF),
+                                        boxShadow: [
+                                          BoxShadow(
+                                            blurRadius: 35,
+                                            color: Color(0x0E000000),
+                                            offset: Offset(0, 10),
+                                          )
+                                        ],
                                         shape: BoxShape.circle,
-                                        border: Border.all(
-                                          color: FlutterFlowTheme.of(context)
-                                              .grayLight,
-                                          width: 1,
-                                        ),
                                       ),
-                                      child: ClipRRect(
-                                        borderRadius:
-                                            BorderRadius.circular(100),
-                                        child: Image.asset(
-                                          'assets/images/default_avatar_3d.png',
-                                          width: 70,
-                                          height: 70,
-                                          fit: BoxFit.cover,
-                                        ),
+                                      child: Stack(
+                                        alignment: AlignmentDirectional(0, 0),
+                                        children: [
+                                          CircularPercentIndicator(
+                                              percent: 0.25,
+                                              radius: 100,
+                                              lineWidth: 18,
+                                              animation: true,
+                                              progressColor:
+                                                  FlutterFlowTheme.of(context)
+                                                      .redi,
+                                              backgroundColor:
+                                                  FlutterFlowTheme.of(context)
+                                                      .tertiaryColor,
+                                              center: Text(
+                                                '71%',
+                                                textAlign: TextAlign.start,
+                                                style: FlutterFlowTheme.of(
+                                                        context)
+                                                    .title1
+                                                    .override(
+                                                      fontFamily: 'Montserrat',
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .tertiaryColor,
+                                                      fontSize: 46,
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                    ),
+                                              ),
+                                              startAngle: 0),
+                                          Align(
+                                            alignment:
+                                                AlignmentDirectional(0, -0.4),
+                                            child: Padding(
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(45, 0, 45, 0),
+                                              child: Row(
+                                                mainAxisSize: MainAxisSize.max,
+                                                children: [
+                                                  Expanded(
+                                                    child: Text(
+                                                      'You\'re on track to decrease emissions by',
+                                                      textAlign:
+                                                          TextAlign.center,
+                                                      style:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .bodyText1
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Montserrat',
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .gronyLighter,
+                                                                fontSize: 11,
+                                                              ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                          Align(
+                                            alignment:
+                                                AlignmentDirectional(0, 0.4),
+                                            child: Padding(
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(45, 0, 45, 0),
+                                              child: Row(
+                                                mainAxisSize: MainAxisSize.max,
+                                                children: [
+                                                  Expanded(
+                                                    child: Text(
+                                                      'This Month',
+                                                      textAlign:
+                                                          TextAlign.center,
+                                                      style:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .bodyText1
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Montserrat',
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .gronyLighter,
+                                                              ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Container(
+                                      width: 220,
+                                      height: 220,
+                                      decoration: BoxDecoration(
+                                        color: Color(0x23FFFFFF),
+                                        boxShadow: [
+                                          BoxShadow(
+                                            blurRadius: 35,
+                                            color: Color(0x0E000000),
+                                            offset: Offset(0, 10),
+                                          )
+                                        ],
+                                        shape: BoxShape.circle,
+                                      ),
+                                      child: Stack(
+                                        alignment: AlignmentDirectional(0, 0),
+                                        children: [
+                                          CircularPercentIndicator(
+                                              percent: 0.25,
+                                              radius: 100,
+                                              lineWidth: 18,
+                                              animation: true,
+                                              progressColor:
+                                                  FlutterFlowTheme.of(context)
+                                                      .redi,
+                                              backgroundColor:
+                                                  FlutterFlowTheme.of(context)
+                                                      .tertiaryColor,
+                                              center: Text(
+                                                '71%',
+                                                textAlign: TextAlign.start,
+                                                style: FlutterFlowTheme.of(
+                                                        context)
+                                                    .title1
+                                                    .override(
+                                                      fontFamily: 'Montserrat',
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .tertiaryColor,
+                                                      fontSize: 46,
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                    ),
+                                              ),
+                                              startAngle: 0),
+                                          Align(
+                                            alignment:
+                                                AlignmentDirectional(0, -0.4),
+                                            child: Padding(
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(120, 0, 120, 0),
+                                              child: Row(
+                                                mainAxisSize: MainAxisSize.max,
+                                                children: [
+                                                  Expanded(
+                                                    child: Text(
+                                                      'You\'re on track to decrease emissions by',
+                                                      textAlign:
+                                                          TextAlign.center,
+                                                      style:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .bodyText1
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Montserrat',
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .gronyLighter,
+                                                                fontSize: 11,
+                                                              ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                          Align(
+                                            alignment:
+                                                AlignmentDirectional(0, 0.4),
+                                            child: Padding(
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(45, 0, 45, 0),
+                                              child: Row(
+                                                mainAxisSize: MainAxisSize.max,
+                                                children: [
+                                                  Expanded(
+                                                    child: Text(
+                                                      'This Month',
+                                                      textAlign:
+                                                          TextAlign.center,
+                                                      style:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .bodyText1
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Montserrat',
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .gronyLighter,
+                                                              ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        ],
                                       ),
                                     ),
                                   ],
                                 ),
-                              ],
-                            ),
-                            Column(
-                              mainAxisSize: MainAxisSize.min,
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              children: [
-                                StreamBuilder<List<ScoresRecord>>(
-                                  stream: queryScoresRecord(
-                                    queryBuilder: (scoresRecord) =>
-                                        scoresRecord.where('userId',
-                                            isEqualTo: currentUserUid),
-                                    singleRecord: true,
-                                  ),
-                                  builder: (context, snapshot) {
-                                    // Customize what your widget looks like when it's loading.
-                                    if (!snapshot.hasData) {
-                                      return Center(
-                                        child: SizedBox(
-                                          width: 50,
-                                          height: 50,
-                                          child: SpinKitRipple(
-                                            color: FlutterFlowTheme.of(context)
-                                                .primaryColor,
-                                            size: 50,
-                                          ),
-                                        ),
+                              ),
+                              Align(
+                                alignment: AlignmentDirectional(0, 1),
+                                child: Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0, 0, 0, 10),
+                                  child: SmoothPageIndicator(
+                                    controller: pageViewController ??=
+                                        PageController(initialPage: 0),
+                                    count: 3,
+                                    axisDirection: Axis.horizontal,
+                                    onDotClicked: (i) {
+                                      pageViewController.animateToPage(
+                                        i,
+                                        duration: Duration(milliseconds: 500),
+                                        curve: Curves.ease,
                                       );
-                                    }
-                                    List<ScoresRecord> textScoresRecordList =
-                                        snapshot.data;
-                                    // Return an empty Container when the document does not exist.
-                                    if (snapshot.data.isEmpty) {
-                                      return Container();
-                                    }
-                                    final textScoresRecord =
-                                        textScoresRecordList.isNotEmpty
-                                            ? textScoresRecordList.first
-                                            : null;
-                                    return Text(
-                                      functions.printScore(
-                                          textScoresRecord.globalScore),
-                                      style: FlutterFlowTheme.of(context)
-                                          .title3
-                                          .override(
-                                            fontFamily: 'Montserrat',
+                                    },
+                                    effect: ExpandingDotsEffect(
+                                      expansionFactor: 4,
+                                      spacing: 8,
+                                      radius: 16,
+                                      dotWidth: 8,
+                                      dotHeight: 8,
+                                      dotColor: FlutterFlowTheme.of(context)
+                                          .gronyLighter,
+                                      activeDotColor:
+                                          FlutterFlowTheme.of(context)
+                                              .tertiaryColor,
+                                      paintStyle: PaintingStyle.fill,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(40, 0, 40, 0),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Expanded(
+                              child: Column(
+                                mainAxisSize: MainAxisSize.max,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  StreamBuilder<List<ScoresRecord>>(
+                                    stream: queryScoresRecord(
+                                      queryBuilder: (scoresRecord) =>
+                                          scoresRecord.where('userId',
+                                              isEqualTo: currentUserUid),
+                                      singleRecord: true,
+                                    ),
+                                    builder: (context, snapshot) {
+                                      // Customize what your widget looks like when it's loading.
+                                      if (!snapshot.hasData) {
+                                        return Center(
+                                          child: SizedBox(
+                                            width: 50,
+                                            height: 50,
+                                            child: SpinKitRipple(
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .primaryColor,
+                                              size: 50,
+                                            ),
+                                          ),
+                                        );
+                                      }
+                                      List<ScoresRecord> textScoresRecordList =
+                                          snapshot.data;
+                                      // Return an empty Container when the document does not exist.
+                                      if (snapshot.data.isEmpty) {
+                                        return Container();
+                                      }
+                                      final textScoresRecord =
+                                          textScoresRecordList.isNotEmpty
+                                              ? textScoresRecordList.first
+                                              : null;
+                                      return Text(
+                                        functions.printScore(
+                                            textScoresRecord.globalScore),
+                                        textAlign: TextAlign.center,
+                                        style: FlutterFlowTheme.of(context)
+                                            .title3
+                                            .override(
+                                              fontFamily: 'Montserrat',
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .tertiaryColor,
+                                              fontSize: 46,
+                                            ),
+                                      );
+                                    },
+                                  ),
+                                  Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        'CO2e',
+                                        style: FlutterFlowTheme.of(context)
+                                            .subtitle2
+                                            .override(
+                                              fontFamily: 'Montserrat',
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .tertiaryColor,
+                                            ),
+                                      ),
+                                      InkWell(
+                                        onTap: () async {
+                                          await showModalBottomSheet(
+                                            isScrollControlled: true,
+                                            backgroundColor: Colors.transparent,
+                                            barrierColor: Color(0xBF000000),
+                                            context: context,
+                                            builder: (context) {
+                                              return Padding(
+                                                padding: MediaQuery.of(context)
+                                                    .viewInsets,
+                                                child: Container(
+                                                  height: 375,
+                                                  child: InfoWidget(
+                                                    title: 'Some statistics',
+                                                    body:
+                                                        'The French average is 12.5 kg. The 10 most polluting countries emit on average between 40 kg (USA/Canada) and 83 kg (Quatar) of CO2 per capita per day. To reach the balance of our planet, it would be necessary to emit less than 3.30 kg per inhabitant.',
+                                                  ),
+                                                ),
+                                              );
+                                            },
+                                          );
+                                        },
+                                        child: Container(
+                                          width: 35,
+                                          height: 35,
+                                          decoration: BoxDecoration(
+                                            boxShadow: [
+                                              BoxShadow(
+                                                blurRadius: 10,
+                                                color: Color(0x13000000),
+                                                offset: Offset(0, 8),
+                                              )
+                                            ],
+                                            shape: BoxShape.circle,
+                                          ),
+                                          alignment: AlignmentDirectional(0, 0),
+                                          child: Icon(
+                                            Icons.info_outline_rounded,
                                             color: FlutterFlowTheme.of(context)
                                                 .tertiaryColor,
-                                            fontSize: 46,
+                                            size: 22,
                                           ),
-                                    );
-                                  },
-                                ),
-                                Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      10, 0, 0, 0),
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.max,
-                                    children: [],
-                                  ),
-                                ),
-                                Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  children: [
-                                    Text(
-                                      'CO2e',
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyText1
-                                          .override(
-                                            fontFamily: 'Montserrat',
-                                            color: FlutterFlowTheme.of(context)
-                                                .gronyLighter,
-                                          ),
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          5, 0, 0, 0),
-                                      child: Icon(
-                                        Icons.info_outline,
-                                        color: FlutterFlowTheme.of(context)
-                                            .gronyLighter,
-                                        size: 18,
+                                        ),
                                       ),
-                                    ),
-                                  ],
-                                ),
-                              ],
+                                    ],
+                                  ),
+                                ],
+                              ),
                             ),
                           ],
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(160, 20, 40, 0),
+                        padding: EdgeInsetsDirectional.fromSTEB(40, 20, 40, 0),
                         child: Row(
                           mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Expanded(
                               child: Container(
@@ -466,7 +858,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                     Row(
                                       mainAxisSize: MainAxisSize.max,
                                       crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                                          CrossAxisAlignment.center,
                                       children: [
                                         InkWell(
                                           onTap: () async {
@@ -643,7 +1035,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                 ),
               ),
               Align(
-                alignment: AlignmentDirectional(0, 0.2),
+                alignment: AlignmentDirectional(0, 0),
                 child: Container(
                   width: MediaQuery.of(context).size.width,
                   height: 400,
