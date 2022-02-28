@@ -21,14 +21,13 @@ class StatistiquesWidget extends StatefulWidget {
 
 class _StatistiquesWidgetState extends State<StatistiquesWidget> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
-  int daySocre;
 
   @override
   void initState() {
     super.initState();
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      daySocre = await actions.updateDayScore(
+      await actions.updateUserScores(
         currentUserUid,
       );
     });

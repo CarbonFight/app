@@ -1,2 +1,1 @@
-export 'update_day_score.dart' show updateDayScore;
-export 'update_global_score.dart' show updateGlobalScore;
+export 'update_user_scores.dart' show updateUserScores;
