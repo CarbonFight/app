@@ -3,6 +3,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'auth/firebase_user_provider.dart';
+import 'auth/auth_util.dart';
 
 import 'flutter_flow/flutter_flow_theme.dart';
 import 'flutter_flow/internationalization.dart';
@@ -33,6 +34,7 @@ class _MyAppState extends State<MyApp> {
   Stream<CarbonFightFirebaseUser> userStream;
   CarbonFightFirebaseUser initialUser;
   bool displaySplashImage = true;
+  final authUserSub = authenticatedUserStream.listen((_) {});
 
   void setLocale(Locale value) => setState(() => _locale = value);
   void setThemeMode(ThemeMode mode) => setState(() {
@@ -46,6 +48,13 @@ class _MyAppState extends State<MyApp> {
       ..listen((user) => initialUser ?? setState(() => initialUser = user));
     Future.delayed(
         Duration(seconds: 1), () => setState(() => displaySplashImage = false));
+  }
+
+  @override
+  void dispose() {
+    authUserSub.cancel();
+
+    super.dispose();
   }
 
   @override
