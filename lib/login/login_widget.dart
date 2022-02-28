@@ -282,7 +282,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                               padding:
                                   EdgeInsetsDirectional.fromSTEB(10, 0, 10, 0),
                               child: Text(
-                                'Forgot Password ?',
+                                'Forgot Password?',
                                 style: FlutterFlowTheme.of(context)
                                     .bodyText1
                                     .override(
@@ -305,16 +305,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                           Expanded(
                             child: InkWell(
                               onTap: () async {
-                                final user = await signInWithEmail(
-                                  context,
-                                  emailAddressController.text,
-                                  passwordController.text,
-                                );
-                                if (user == null) {
-                                  return;
-                                }
-
-                                await Navigator.pushAndRemoveUntil(
+                                await Navigator.push(
                                   context,
                                   PageTransition(
                                     type: PageTransitionType.fade,
@@ -322,7 +313,6 @@ class _LoginWidgetState extends State<LoginWidget> {
                                     reverseDuration: Duration(milliseconds: 0),
                                     child: HomeWidget(),
                                   ),
-                                  (r) => false,
                                 );
                               },
                               child: IconButtonWidget(

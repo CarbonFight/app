@@ -1,4 +1,5 @@
 import '../auth/auth_util.dart';
+import '../backend/backend.dart';
 import '../components/add_action_widget.dart';
 import '../components/info_widget.dart';
 import '../drawer/drawer_widget.dart';
@@ -365,19 +366,51 @@ class _HomeWidgetState extends State<HomeWidget> {
                               mainAxisSize: MainAxisSize.min,
                               crossAxisAlignment: CrossAxisAlignment.end,
                               children: [
-                                AuthUserStreamWidget(
-                                  child: Text(
-                                    functions.printScore(
-                                        currentUserDocument?.globalScore),
-                                    style: FlutterFlowTheme.of(context)
-                                        .title3
-                                        .override(
-                                          fontFamily: 'Montserrat',
-                                          color: FlutterFlowTheme.of(context)
-                                              .tertiaryColor,
-                                          fontSize: 46,
-                                        ),
+                                StreamBuilder<List<ScoresRecord>>(
+                                  stream: queryScoresRecord(
+                                    queryBuilder: (scoresRecord) =>
+                                        scoresRecord.where('userId',
+                                            isEqualTo: currentUserUid),
+                                    singleRecord: true,
                                   ),
+                                  builder: (context, snapshot) {
+                                    // Customize what your widget looks like when it's loading.
+                                    if (!snapshot.hasData) {
+                                      return Center(
+                                        child: SizedBox(
+                                          width: 50,
+                                          height: 50,
+                                          child: SpinKitRipple(
+                                            color: FlutterFlowTheme.of(context)
+                                                .primaryColor,
+                                            size: 50,
+                                          ),
+                                        ),
+                                      );
+                                    }
+                                    List<ScoresRecord> textScoresRecordList =
+                                        snapshot.data;
+                                    // Return an empty Container when the document does not exist.
+                                    if (snapshot.data.isEmpty) {
+                                      return Container();
+                                    }
+                                    final textScoresRecord =
+                                        textScoresRecordList.isNotEmpty
+                                            ? textScoresRecordList.first
+                                            : null;
+                                    return Text(
+                                      functions.printScore(
+                                          textScoresRecord.globalScore),
+                                      style: FlutterFlowTheme.of(context)
+                                          .title3
+                                          .override(
+                                            fontFamily: 'Montserrat',
+                                            color: FlutterFlowTheme.of(context)
+                                                .tertiaryColor,
+                                            fontSize: 46,
+                                          ),
+                                    );
+                                  },
                                 ),
                                 Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
@@ -485,19 +518,59 @@ class _HomeWidgetState extends State<HomeWidget> {
                                           ),
                                         ),
                                         Expanded(
-                                          child: AuthUserStreamWidget(
-                                            child: Text(
-                                              'Vos émissions du jour : ${functions.printScore(currentUserDocument?.dayScore)}',
-                                              style: FlutterFlowTheme.of(
-                                                      context)
-                                                  .subtitle2
-                                                  .override(
-                                                    fontFamily: 'Montserrat',
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .tertiaryColor,
-                                                  ),
+                                          child:
+                                              StreamBuilder<List<ScoresRecord>>(
+                                            stream: queryScoresRecord(
+                                              queryBuilder: (scoresRecord) =>
+                                                  scoresRecord.where('userId',
+                                                      isEqualTo:
+                                                          currentUserUid),
+                                              singleRecord: true,
                                             ),
+                                            builder: (context, snapshot) {
+                                              // Customize what your widget looks like when it's loading.
+                                              if (!snapshot.hasData) {
+                                                return Center(
+                                                  child: SizedBox(
+                                                    width: 50,
+                                                    height: 50,
+                                                    child: SpinKitRipple(
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .primaryColor,
+                                                      size: 50,
+                                                    ),
+                                                  ),
+                                                );
+                                              }
+                                              List<ScoresRecord>
+                                                  textScoresRecordList =
+                                                  snapshot.data;
+                                              // Return an empty Container when the document does not exist.
+                                              if (snapshot.data.isEmpty) {
+                                                return Container();
+                                              }
+                                              final textScoresRecord =
+                                                  textScoresRecordList
+                                                          .isNotEmpty
+                                                      ? textScoresRecordList
+                                                          .first
+                                                      : null;
+                                              return Text(
+                                                'Vos émissions du jour : ${functions.printScore(textScoresRecord.dayScore)}',
+                                                style: FlutterFlowTheme.of(
+                                                        context)
+                                                    .subtitle2
+                                                    .override(
+                                                      fontFamily: 'Montserrat',
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .tertiaryColor,
+                                                    ),
+                                              );
+                                            },
                                           ),
                                         ),
                                       ],
