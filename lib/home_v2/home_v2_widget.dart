@@ -26,14 +26,13 @@ class HomeV2Widget extends StatefulWidget {
 class _HomeV2WidgetState extends State<HomeV2Widget> {
   PageController pageViewController;
   final scaffoldKey = GlobalKey<ScaffoldState>();
-  int daySocre;
 
   @override
   void initState() {
     super.initState();
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      daySocre = await actions.updateDayScore(
+      await actions.updateUserScores(
         currentUserUid,
       );
     });

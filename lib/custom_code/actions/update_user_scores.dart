@@ -5,10 +5,11 @@ import '../../flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
 
 // Begin custom action code
-Future<int> updateDayScore(String userId) async {
+Future updateUserScores(String userId) async {
   // Add your function code here!
 
   int dayScore = 0;
+  int globalScore = 0;
 
   // Transports of the day
   await FirebaseFirestore.instance
@@ -18,6 +19,7 @@ Future<int> updateDayScore(String userId) async {
       .then((QuerySnapshot querySnapshot) {
     querySnapshot.docs.forEach((doc) {
       dayScore += doc["co2e"];
+      globalScore += doc["co2e"];
     });
   });
 
@@ -29,8 +31,17 @@ Future<int> updateDayScore(String userId) async {
       .then((QuerySnapshot querySnapshot) {
     querySnapshot.docs.forEach((doc) {
       dayScore += doc["co2e"];
+      globalScore += doc["co2e"];
     });
   });
 
-  return dayScore;
+  // Update Scores
+  QuerySnapshot querySnap = await FirebaseFirestore.instance
+      .collection('scores')
+      .where("userId", isEqualTo: userId)
+      .get();
+  QueryDocumentSnapshot doc = querySnap.docs[0];
+  DocumentReference docRef = doc.reference;
+  await docRef.update({'day_Score': dayScore});
+  await docRef.update({'global_Score': globalScore});
 }
