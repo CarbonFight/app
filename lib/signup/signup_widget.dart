@@ -1,5 +1,4 @@
 import '../auth/auth_util.dart';
-import '../backend/backend.dart';
 import '../components/icon_button_widget.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
@@ -21,7 +20,7 @@ class SignupWidget extends StatefulWidget {
 
 class _SignupWidgetState extends State<SignupWidget> {
   TextEditingController emailAddressController;
-  TextEditingController nameController;
+  TextEditingController fullNameController;
   TextEditingController passwordController;
   bool passwordVisibility;
   TextEditingController retypepasswordController;
@@ -32,7 +31,7 @@ class _SignupWidgetState extends State<SignupWidget> {
   void initState() {
     super.initState();
     emailAddressController = TextEditingController();
-    nameController = TextEditingController();
+    fullNameController = TextEditingController();
     passwordController = TextEditingController();
     passwordVisibility = false;
     retypepasswordController = TextEditingController();
@@ -108,10 +107,10 @@ class _SignupWidgetState extends State<SignupWidget> {
                             children: [
                               Expanded(
                                 child: TextFormField(
-                                  controller: nameController,
+                                  controller: fullNameController,
                                   obscureText: false,
                                   decoration: InputDecoration(
-                                    hintText: 'Name',
+                                    hintText: 'Full Name',
                                     hintStyle: FlutterFlowTheme.of(context)
                                         .bodyText1
                                         .override(
@@ -143,7 +142,7 @@ class _SignupWidgetState extends State<SignupWidget> {
                                         EdgeInsetsDirectional.fromSTEB(
                                             0, 15, 0, 0),
                                     prefixIcon: Icon(
-                                      Icons.person,
+                                      Icons.email_outlined,
                                       color: FlutterFlowTheme.of(context)
                                           .gronyLight,
                                       size: 18,
@@ -363,7 +362,7 @@ class _SignupWidgetState extends State<SignupWidget> {
                                   controller: retypepasswordController,
                                   obscureText: !retypepasswordVisibility,
                                   decoration: InputDecoration(
-                                    hintText: 'Retype Password',
+                                    hintText: 'Retpe Password',
                                     hintStyle: FlutterFlowTheme.of(context)
                                         .bodyText1
                                         .override(
@@ -439,47 +438,13 @@ class _SignupWidgetState extends State<SignupWidget> {
                           Expanded(
                             child: InkWell(
                               onTap: () async {
-                                if (passwordController.text !=
-                                    retypepasswordController.text) {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
-                                      content: Text(
-                                        'Passwords don\'t match!',
-                                      ),
-                                    ),
-                                  );
-                                  return;
-                                }
-
-                                final user = await createAccountWithEmail(
-                                  context,
-                                  emailAddressController.text,
-                                  passwordController.text,
-                                );
-                                if (user == null) {
-                                  return;
-                                }
-
-                                final usersCreateData = createUsersRecordData(
-                                  createdTime: getCurrentTimestamp,
-                                  dayScore: 0,
-                                  displayName: nameController.text,
-                                  email: emailAddressController.text,
-                                  globalScore: 0,
-                                  level: 0,
-                                );
-                                await UsersRecord.collection
-                                    .doc(user.uid)
-                                    .update(usersCreateData);
-
-                                await sendEmailVerification();
                                 await Navigator.push(
                                   context,
                                   PageTransition(
                                     type: PageTransitionType.fade,
                                     duration: Duration(milliseconds: 0),
                                     reverseDuration: Duration(milliseconds: 0),
-                                    child: LoginWidget(),
+                                    child: HomeWidget(),
                                   ),
                                 );
                               },
