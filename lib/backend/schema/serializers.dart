@@ -3,6 +3,7 @@ import 'package:built_value/standard_json_plugin.dart';
 import 'transport_actions_record.dart';
 import 'energy_actions_record.dart';
 import 'users_record.dart';
+import 'energy_periodics_record.dart';
 
 import 'index.dart';
 
@@ -16,6 +17,7 @@ const kDocumentReferenceField = 'Document__Reference__Field';
   TransportActionsRecord,
   EnergyActionsRecord,
   UsersRecord,
+  EnergyPeriodicsRecord,
 ])
 final Serializers serializers = (_$serializers.toBuilder()
       ..add(DocumentReferenceSerializer())
