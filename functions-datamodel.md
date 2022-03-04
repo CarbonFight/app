@@ -82,7 +82,7 @@ Calculate CO2e for food. Some of these actions only need "foodType", like "drink
 
 Required parameters :
 
-* **foodType** : 
+* **food** : 
     * starter
     * main
     * desert
@@ -106,11 +106,11 @@ This functions is a filter for UI. You can pass the score in parameter in grams,
 
 # Custom Actions
 
-## updateUserScores
-
-(Maybe it should not be a custom action)
+## updateUserScores (Deprecated)
 
 It should be executed every time a new action is created. Re-calculates and updates global_score and day_scaore for a specific user.
+
+(will be automatic by a custom function)
 
 Required parameters :
 
