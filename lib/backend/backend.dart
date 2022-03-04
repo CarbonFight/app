@@ -7,6 +7,7 @@ import '../flutter_flow/flutter_flow_util.dart';
 import 'schema/transport_actions_record.dart';
 import 'schema/energy_actions_record.dart';
 import 'schema/users_record.dart';
+import 'schema/energy_periodics_record.dart';
 import 'schema/serializers.dart';
 
 export 'package:cloud_firestore/cloud_firestore.dart';
@@ -16,6 +17,7 @@ export 'schema/serializers.dart';
 export 'schema/transport_actions_record.dart';
 export 'schema/energy_actions_record.dart';
 export 'schema/users_record.dart';
+export 'schema/energy_periodics_record.dart';
 
 /// Functions to query TransportActionsRecords (as a Stream and as a Future).
 Stream<List<TransportActionsRecord>> queryTransportActionsRecord(
@@ -64,6 +66,23 @@ Future<List<UsersRecord>> queryUsersRecordOnce(
         int limit = -1,
         bool singleRecord = false}) =>
     queryCollectionOnce(UsersRecord.collection, UsersRecord.serializer,
+        queryBuilder: queryBuilder, limit: limit, singleRecord: singleRecord);
+
+/// Functions to query EnergyPeriodicsRecords (as a Stream and as a Future).
+Stream<List<EnergyPeriodicsRecord>> queryEnergyPeriodicsRecord(
+        {Query Function(Query) queryBuilder,
+        int limit = -1,
+        bool singleRecord = false}) =>
+    queryCollection(
+        EnergyPeriodicsRecord.collection, EnergyPeriodicsRecord.serializer,
+        queryBuilder: queryBuilder, limit: limit, singleRecord: singleRecord);
+
+Future<List<EnergyPeriodicsRecord>> queryEnergyPeriodicsRecordOnce(
+        {Query Function(Query) queryBuilder,
+        int limit = -1,
+        bool singleRecord = false}) =>
+    queryCollectionOnce(
+        EnergyPeriodicsRecord.collection, EnergyPeriodicsRecord.serializer,
         queryBuilder: queryBuilder, limit: limit, singleRecord: singleRecord);
 
 Stream<List<T>> queryCollection<T>(

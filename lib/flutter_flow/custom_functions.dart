@@ -275,3 +275,206 @@ int energyActions(
 
   return co2e.round();
 }
+
+int foodActions(
+  String foodType,
+  String mainComponent,
+  String sideComponent,
+) {
+  double co2e = 0.0;
+
+  // FRUITS & SEEDS
+  // Fruit : 0.27 g.co2e / g | 85g / portion
+  double co2eFruit = 0.27 * 85;
+  // Transformed fruit (compote) : 0.68 g.co2e / g | 85g  / portion
+  double co2eTransformedFruit = 0.68 * 85;
+  // Seed : 1.33 g.co2e / g |  40g / portion
+  double co2eSeed = 1.33 * 40;
+
+  // PROTEIN
+  // Fish : 6.18 g.co2e / g | 110g / portion
+  double co2eFish = 6.18 * 110;
+  // Shellfish : 10.7 g.co2e / g | 110g / portion
+  double co2eShellfish = 10.7 * 110;
+  // Egg : 2.61 g.co2e / g | 50g / portion
+  double co2eEgg = 2.61 * 50;
+  // Meat : 21.78 g.co2e / g | 110g / portion
+  double co2eMeat = 21.78 * 110;
+  // Poultry : 5.91 g.co2e / g | 110g / portion
+  double co2ePoultry = 5.91 * 110;
+  // Deli : 7 g.co2e / g | 110g / portion
+  double co2eDeli = 7.0 * 110;
+  // Offal : 7.36 g.co2e / g | 110g / portion
+  double co2eOffal = 7.36 * 110;
+
+  // VEGETABLES / CEREALS / STARCHES
+  // Breakfast cereals : 0.34 g.co2e / g | 80g / portion
+  double co2eBreakfastCereals = 0.34 * 80;
+  // Rice / Pasta / Wheat / Cereals : 0.71 g.co2e / g | 170g / portion
+  double co2eRicePastaWheat = 0.71 * 170;
+  // Legume (beans, because) : 0.79 g.co2e / g | 70g / portion
+  double co2eLegume = 0.79 * 70;
+  // Potatoes : 0.60 g.co2e / g | 170g / portion
+  double co2ePotatoes = 0.60 * 170;
+  // Vegetables : 1.29 g.co2e / g | 250g / portion
+  double co2eVegetables = 1.29 * 250;
+
+  // DAIRY
+  // Glass of milk : 1.22 g.co2e / g | 250g / portion
+  double co2eGlassMilk = 1.22 * 250;
+  // Yogurt : 2.88 g.co2e / g | 100g / portion
+  double co2eYogurt = 2.88 * 100;
+  // Cheese  : 4.94 g.co2e / g | 30g / portion
+  double co2eCheese = 4.94 * 30;
+
+  // DESERT / CAKE
+  // Cake / Pastry : 2.87 g.co2e / g | 40g / portion
+  double co2eCakePastry = 2.87 * 40;
+  // Icecream : 2.81 g.co2e / g | 50g / portion
+  double co2eIcecream = 2.81 * 50;
+  // Custard  : 1.51 g.co2e / g | 100g / portion
+  double co2eCustard = 1.51 * 100;
+  // Chocolate / Sweets  : 5.63 g.co2e / g |  ?
+
+  // DRINKS
+  // Bottle of Water  : 0.40 g.co2e / g | 250g / portion
+  double co2eBottleWater = 0.40 * 250;
+  // Tap Water : 0 g.co2e / g | 250g / portion
+  double co2eTapWater = 0.0 * 250;
+  // Fruit juice  : 1.90 g.co2e / g | 250g / portion
+  double co2eFruitJuice = 1.90 * 250;
+  // Soup : 0.95 g.co2e / g | 250g / portion
+  double co2eSoup = 0.95 * 250;
+  // Alcohol : 2.05 g.co2e / g | 250g / portion
+  double co2eAlcohol = 2.05 * 250;
+  // Hot drink  : 1.34 g.co2e / g | 250g / portion
+  double co2eHotDrink = 1.34 * 250;
+
+  // Bread
+  // Bread  : 1.52 g.co2e / g | 50g / portion
+  double co2eBread = 1.52 * 50;
+
+  // Coffee
+  // http://www.bco2.fr/dt_cafe_875.htm 1 cup per day un g
+  double co2eCoffeeFilter = 57;
+  double co2eCoffeeExpresso = 44;
+  double co2eCoffeeCapsule = 74;
+
+  // JUNK FOOD needs portions
+
+  if (foodType == "starter") {
+    switch (mainComponent) {
+      case "vegy":
+        co2e += 75;
+        break;
+      case "nonvegy":
+        co2e += 150;
+        break;
+      case "meat":
+        co2e += 300;
+        break;
+    }
+  } else if (foodType == "main") {
+    switch (mainComponent) {
+      case "egg":
+        co2e += co2eEgg;
+        break;
+      case "fish":
+        co2e += co2eFish;
+        break;
+      case "meat":
+        co2e += co2eMeat;
+        break;
+      case "poultry":
+        co2e += co2ePoultry;
+        break;
+      case "deli":
+        co2e += co2eDeli;
+        break;
+    }
+
+    switch (sideComponent) {
+      case "ricePastaWheat":
+        co2e += co2eRicePastaWheat;
+        break;
+      case "legume":
+        co2e += co2eLegume;
+        break;
+      case "vegetables":
+        co2e += co2eVegetables;
+        break;
+      case "potatoes":
+        co2e += co2ePotatoes;
+        break;
+      case "deli":
+        co2e += co2eDeli;
+        break;
+    }
+
+    if (mainComponent == "vegy") {
+      co2e = co2e * 2;
+    }
+  } else if (foodType == "desert") {
+    switch (mainComponent) {
+      case "fruit":
+        co2e += co2eFruit;
+        break;
+      case "transformedFruit":
+        co2e += co2eTransformedFruit;
+        break;
+      case "yogurt":
+        co2e += co2eYogurt;
+        break;
+      case "cakePastry":
+        co2e += co2eCakePastry;
+        break;
+      case "icecream":
+        co2e += co2eIcecream;
+        break;
+      case "custard":
+        co2e += co2eCustard;
+        break;
+    }
+  } else if (foodType == "drinks") {
+    switch (mainComponent) {
+      case "bottleWater":
+        co2e += co2eBottleWater;
+        break;
+      case "tapWater":
+        co2e += co2eTapWater;
+        break;
+      case "fruitJuice":
+        co2e += co2eFruitJuice;
+        break;
+      case "soup":
+        co2e += co2eSoup;
+        break;
+      case "alcohol":
+        co2e += co2eAlcohol;
+        break;
+      case "hotDrink":
+        co2e += co2eHotDrink;
+        break;
+    }
+  } else if (foodType == "cheese") {
+    co2e += co2eCheese;
+  } else if (foodType == "bread") {
+    co2e += co2eBread;
+  } else if (foodType == "coffee") {
+    switch (mainComponent) {
+      case "coffeeFilter":
+        co2e += co2eCoffeeFilter;
+        break;
+      case "coffeeExpresso":
+        co2e += co2eCoffeeExpresso;
+        break;
+      case "coffeeCapsule":
+        co2e += co2eCoffeeCapsule;
+        break;
+    }
+  }
+
+  // Breakfast
+
+  return co2e.round();
+}
