@@ -33,6 +33,10 @@ abstract class TransportActionsRecord
   int get co2e;
 
   @nullable
+  @BuiltValueField(wireName: 'created_time')
+  DateTime get createdTime;
+
+  @nullable
   @BuiltValueField(wireName: kDocumentReferenceField)
   DocumentReference get reference;
 
@@ -77,6 +81,7 @@ Map<String, dynamic> createTransportActionsRecordData({
   String ownership,
   String userId,
   int co2e,
+  DateTime createdTime,
 }) =>
     serializers.toFirestore(
         TransportActionsRecord.serializer,
@@ -87,4 +92,5 @@ Map<String, dynamic> createTransportActionsRecordData({
           ..passengers = passengers
           ..ownership = ownership
           ..userId = userId
-          ..co2e = co2e));
+          ..co2e = co2e
+          ..createdTime = createdTime));
