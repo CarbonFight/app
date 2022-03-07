@@ -30,7 +30,8 @@ abstract class EnergyActionsRecord
   int get co2e;
 
   @nullable
-  DateTime get timestamp;
+  @BuiltValueField(wireName: 'created_time')
+  DateTime get createdTime;
 
   @nullable
   @BuiltValueField(wireName: kDocumentReferenceField)
@@ -73,7 +74,7 @@ Map<String, dynamic> createEnergyActionsRecordData({
   int peopleSharing,
   String userId,
   int co2e,
-  DateTime timestamp,
+  DateTime createdTime,
 }) =>
     serializers.toFirestore(
         EnergyActionsRecord.serializer,
@@ -84,4 +85,4 @@ Map<String, dynamic> createEnergyActionsRecordData({
           ..peopleSharing = peopleSharing
           ..userId = userId
           ..co2e = co2e
-          ..timestamp = timestamp));
+          ..createdTime = createdTime));

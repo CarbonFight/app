@@ -1,8 +1,9 @@
+import '../auth/auth_util.dart';
+import '../backend/api_requests/api_calls.dart';
 import '../components/icon_button_widget.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
-import '../home/home_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -15,15 +16,14 @@ class FeedbackWidget extends StatefulWidget {
 }
 
 class _FeedbackWidgetState extends State<FeedbackWidget> {
-  TextEditingController fullNameController1;
-  TextEditingController fullNameController2;
+  ApiCallResponse apiCallOutput2;
+  TextEditingController messageController;
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
     super.initState();
-    fullNameController1 = TextEditingController();
-    fullNameController2 = TextEditingController();
+    messageController = TextEditingController();
   }
 
   @override
@@ -61,13 +61,13 @@ class _FeedbackWidgetState extends State<FeedbackWidget> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Your idea matter:',
+                          'Votre retour compte.',
                           style: FlutterFlowTheme.of(context).subtitle1,
                         ),
                         Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
                           child: Text(
-                            'We will response in fast possble way, please describe the issue very clear so we can address that.',
+                            'Une remarque, un bug, une fonctionnalité manquante ?',
                             style:
                                 FlutterFlowTheme.of(context).bodyText1.override(
                                       fontFamily: 'Montserrat',
@@ -76,79 +76,6 @@ class _FeedbackWidgetState extends State<FeedbackWidget> {
                           ),
                         ),
                       ],
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 15),
-                    child: Container(
-                      width: MediaQuery.of(context).size.width,
-                      height: 50,
-                      decoration: BoxDecoration(
-                        color: FlutterFlowTheme.of(context).tertiaryColor,
-                        boxShadow: [
-                          BoxShadow(
-                            blurRadius: 4,
-                            color: Color(0x27000000),
-                            offset: Offset(0, 0),
-                          )
-                        ],
-                        borderRadius: BorderRadius.circular(100),
-                      ),
-                      child: Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(10, 0, 10, 0),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            Expanded(
-                              child: TextFormField(
-                                controller: fullNameController1,
-                                obscureText: false,
-                                decoration: InputDecoration(
-                                  hintText: 'Subject',
-                                  hintStyle: FlutterFlowTheme.of(context)
-                                      .bodyText1
-                                      .override(
-                                        fontFamily: 'Montserrat',
-                                        color:
-                                            FlutterFlowTheme.of(context).gray,
-                                      ),
-                                  enabledBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Color(0x00000000),
-                                      width: 1,
-                                    ),
-                                    borderRadius: const BorderRadius.only(
-                                      topLeft: Radius.circular(4.0),
-                                      topRight: Radius.circular(4.0),
-                                    ),
-                                  ),
-                                  focusedBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Color(0x00000000),
-                                      width: 1,
-                                    ),
-                                    borderRadius: const BorderRadius.only(
-                                      topLeft: Radius.circular(4.0),
-                                      topRight: Radius.circular(4.0),
-                                    ),
-                                  ),
-                                  contentPadding:
-                                      EdgeInsetsDirectional.fromSTEB(
-                                          10, 0, 10, 0),
-                                ),
-                                style: FlutterFlowTheme.of(context)
-                                    .bodyText1
-                                    .override(
-                                      fontFamily: 'Montserrat',
-                                      color: FlutterFlowTheme.of(context)
-                                          .primaryColor,
-                                    ),
-                                textAlign: TextAlign.start,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
                     ),
                   ),
                   Padding(
@@ -174,7 +101,7 @@ class _FeedbackWidgetState extends State<FeedbackWidget> {
                           children: [
                             Expanded(
                               child: TextFormField(
-                                controller: fullNameController2,
+                                controller: messageController,
                                 obscureText: false,
                                 decoration: InputDecoration(
                                   hintText: 'Message',
@@ -234,15 +161,49 @@ class _FeedbackWidgetState extends State<FeedbackWidget> {
                         Expanded(
                           child: InkWell(
                             onTap: () async {
-                              await Navigator.push(
-                                context,
-                                PageTransition(
-                                  type: PageTransitionType.fade,
-                                  duration: Duration(milliseconds: 0),
-                                  reverseDuration: Duration(milliseconds: 0),
-                                  child: HomeWidget(),
-                                ),
+                              apiCallOutput2 = await SendEmailCall.call(
+                                emailbody: messageController.text,
+                                emailsendername: currentUserDisplayName,
                               );
+                              if (apiCallOutput2.succeeded) {
+                                await showDialog(
+                                  context: context,
+                                  builder: (alertDialogContext) {
+                                    return AlertDialog(
+                                      title: Text('Message envoyé !'),
+                                      content:
+                                          Text('Merci pour votre message.'),
+                                      actions: [
+                                        TextButton(
+                                          onPressed: () =>
+                                              Navigator.pop(alertDialogContext),
+                                          child: Text('OK'),
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                );
+                              } else {
+                                await showDialog(
+                                  context: context,
+                                  builder: (alertDialogContext) {
+                                    return AlertDialog(
+                                      title: Text('Problème'),
+                                      content: Text(
+                                          'C\'est bizarre, le message n\'a pas été envoyé. Merci d\'envoyer votre message par mail ou téléphone !'),
+                                      actions: [
+                                        TextButton(
+                                          onPressed: () =>
+                                              Navigator.pop(alertDialogContext),
+                                          child: Text('OK'),
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                );
+                              }
+
+                              setState(() {});
                             },
                             child: IconButtonWidget(
                               fillColor:
@@ -255,7 +216,7 @@ class _FeedbackWidgetState extends State<FeedbackWidget> {
                                     FlutterFlowTheme.of(context).tertiaryColor,
                                 size: 26,
                               ),
-                              text: 'Send',
+                              text: 'Envoyer',
                             ),
                           ),
                         ),
@@ -292,7 +253,7 @@ class _FeedbackWidgetState extends State<FeedbackWidget> {
                     Padding(
                       padding: EdgeInsetsDirectional.fromSTEB(10, 0, 0, 0),
                       child: Text(
-                        'Feedback',
+                        'Contactez-nous',
                         style: FlutterFlowTheme.of(context).title2.override(
                               fontFamily: 'Montserrat',
                               color: FlutterFlowTheme.of(context).primaryColor,

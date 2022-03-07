@@ -76,7 +76,7 @@ class _FaqWidgetState extends State<FaqWidget> {
                                 children: [
                                   Expanded(
                                     child: Text(
-                                      'Title will show here in faq',
+                                      'Faut-il compter les enfants dans le foyer ?',
                                       style: FlutterFlowTheme.of(context)
                                           .bodyText1
                                           .override(
@@ -103,7 +103,7 @@ class _FaqWidgetState extends State<FaqWidget> {
                                   children: [
                                     Expanded(
                                       child: Text(
-                                        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+                                        'Oui. Vous pouvez compter vos enfants dans le nombre de personnes du foyer pour certaines actions comme l\'énergie. \nIl est toutefois inutile d\'ajouter leurs émissions en CO2. CarbonFight calcule vos émissions de CO2 personnelles, et non ceux du foyer.\n',
                                         style: FlutterFlowTheme.of(context)
                                             .bodyText2
                                             .override(
@@ -154,7 +154,7 @@ class _FaqWidgetState extends State<FaqWidget> {
                                 children: [
                                   Expanded(
                                     child: Text(
-                                      'Title will show here in faq',
+                                      'Comment supprimer mes données ?',
                                       style: FlutterFlowTheme.of(context)
                                           .bodyText1
                                           .override(
@@ -181,7 +181,7 @@ class _FaqWidgetState extends State<FaqWidget> {
                                   children: [
                                     Expanded(
                                       child: Text(
-                                        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. unt in culpa qui officia deserunt mollit anim id est laborum.',
+                                        'Pour supprimer toutes vos données, écrivez simplement un e-mail à l\'adresse : dpo@carbonfight.app, avec comme sujet \"Supprimer mes données\".',
                                         style: FlutterFlowTheme.of(context)
                                             .bodyText2
                                             .override(
@@ -232,7 +232,7 @@ class _FaqWidgetState extends State<FaqWidget> {
                                 children: [
                                   Expanded(
                                     child: Text(
-                                      'Title will show here in faq',
+                                      'Comment contribuer ?',
                                       style: FlutterFlowTheme.of(context)
                                           .bodyText1
                                           .override(
@@ -259,7 +259,7 @@ class _FaqWidgetState extends State<FaqWidget> {
                                   children: [
                                     Expanded(
                                       child: Text(
-                                        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+                                        'Si vous cherchez une information, vous pouvez rejoindre notre discord : https://discord.gg/e7weuGA4UW',
                                         style: FlutterFlowTheme.of(context)
                                             .bodyText2
                                             .override(

@@ -257,7 +257,7 @@ class _DrawerWidgetState extends State<DrawerWidget>
                                       );
                                     },
                                     child: Text(
-                                      'Feedback',
+                                      'Contacter l\'équipe',
                                       style: FlutterFlowTheme.of(context)
                                           .bodyText2
                                           .override(

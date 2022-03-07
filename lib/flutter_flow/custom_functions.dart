@@ -9,7 +9,7 @@ import '../backend/backend.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../auth/auth_util.dart';
 
-int transportActions(
+int transportActionsCO2e(
   int distance,
   int passengers,
   String ownership,
@@ -204,7 +204,7 @@ String printScore(int score) {
   return co2 + " " + unit;
 }
 
-int energyActions(
+int energyPeriodicsCO2e(
   String energy,
   int volume,
   String powertype,
@@ -276,8 +276,8 @@ int energyActions(
   return co2e.round();
 }
 
-int foodActions(
-  String foodType,
+int foodActionsCO2e(
+  String food,
   String mainComponent,
   String sideComponent,
 ) {
@@ -362,7 +362,7 @@ int foodActions(
 
   // JUNK FOOD needs portions
 
-  if (foodType == "starter") {
+  if (food == "starter") {
     switch (mainComponent) {
       case "vegy":
         co2e += 75;
@@ -374,7 +374,7 @@ int foodActions(
         co2e += 300;
         break;
     }
-  } else if (foodType == "main") {
+  } else if (food == "main") {
     switch (mainComponent) {
       case "egg":
         co2e += co2eEgg;
@@ -414,7 +414,7 @@ int foodActions(
     if (mainComponent == "vegy") {
       co2e = co2e * 2;
     }
-  } else if (foodType == "desert") {
+  } else if (food == "desert") {
     switch (mainComponent) {
       case "fruit":
         co2e += co2eFruit;
@@ -435,7 +435,7 @@ int foodActions(
         co2e += co2eCustard;
         break;
     }
-  } else if (foodType == "drinks") {
+  } else if (food == "drinks") {
     switch (mainComponent) {
       case "bottleWater":
         co2e += co2eBottleWater;
@@ -456,11 +456,11 @@ int foodActions(
         co2e += co2eHotDrink;
         break;
     }
-  } else if (foodType == "cheese") {
+  } else if (food == "cheese") {
     co2e += co2eCheese;
-  } else if (foodType == "bread") {
+  } else if (food == "bread") {
     co2e += co2eBread;
-  } else if (foodType == "coffee") {
+  } else if (food == "coffee") {
     switch (mainComponent) {
       case "coffeeFilter":
         co2e += co2eCoffeeFilter;
