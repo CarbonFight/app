@@ -104,14 +104,12 @@ In CarbonFight, all CO2e is stored in database in grams (g). But a normal CO2e p
 This functions is a filter for UI. You can pass the score in parameter in grams, and the result is a human readable score (g / Kg / T).
 
 
-# Custom Actions
+# Firebase Functions
 
-## updateUserScores (Deprecated)
+## updateUserScores
 
-It should be executed every time a new action is created. Re-calculates and updates global_score and day_scaore for a specific user.
+On every write on energyActions / transportActions / energyActions, recalculates day_score and global_score
 
-(will be automatic by a custom function)
+## periodicToActions
 
-Required parameters :
-
-* **userId** 
+Every night, every periodic is converted into action, with the same parameters + timestamp.
