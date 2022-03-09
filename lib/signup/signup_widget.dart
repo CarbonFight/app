@@ -1,11 +1,7 @@
-import '../auth/auth_util.dart';
-import '../backend/backend.dart';
 import '../components/icon_button_widget.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
-import '../home/home_widget.dart';
-import '../login/login_widget.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -437,65 +433,18 @@ class _SignupWidgetState extends State<SignupWidget> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Expanded(
-                            child: InkWell(
-                              onTap: () async {
-                                if (passwordController.text !=
-                                    retypepasswordController.text) {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
-                                      content: Text(
-                                        'Passwords don\'t match!',
-                                      ),
-                                    ),
-                                  );
-                                  return;
-                                }
-
-                                final user = await createAccountWithEmail(
-                                  context,
-                                  emailAddressController.text,
-                                  passwordController.text,
-                                );
-                                if (user == null) {
-                                  return;
-                                }
-
-                                final usersCreateData = createUsersRecordData(
-                                  createdTime: getCurrentTimestamp,
-                                  dayScore: 0,
-                                  displayName: nameController.text,
-                                  email: emailAddressController.text,
-                                  globalScore: 0,
-                                  level: 0,
-                                );
-                                await UsersRecord.collection
-                                    .doc(user.uid)
-                                    .update(usersCreateData);
-
-                                await sendEmailVerification();
-                                await Navigator.push(
-                                  context,
-                                  PageTransition(
-                                    type: PageTransitionType.fade,
-                                    duration: Duration(milliseconds: 0),
-                                    reverseDuration: Duration(milliseconds: 0),
-                                    child: LoginWidget(),
-                                  ),
-                                );
-                              },
-                              child: IconButtonWidget(
-                                fillColor:
-                                    FlutterFlowTheme.of(context).secondaryColor,
-                                fontColor:
+                            child: IconButtonWidget(
+                              fillColor:
+                                  FlutterFlowTheme.of(context).secondaryColor,
+                              fontColor:
+                                  FlutterFlowTheme.of(context).tertiaryColor,
+                              icon: Icon(
+                                Icons.login_outlined,
+                                color:
                                     FlutterFlowTheme.of(context).tertiaryColor,
-                                icon: Icon(
-                                  Icons.login_outlined,
-                                  color: FlutterFlowTheme.of(context)
-                                      .tertiaryColor,
-                                  size: 26,
-                                ),
-                                text: 'Signup',
+                                size: 26,
                               ),
+                              text: 'Signup',
                             ),
                           ),
                         ],
@@ -564,39 +513,15 @@ class _SignupWidgetState extends State<SignupWidget> {
                                             padding:
                                                 EdgeInsetsDirectional.fromSTEB(
                                                     2, 2, 2, 2),
-                                            child: InkWell(
-                                              onTap: () async {
-                                                final user =
-                                                    await signInWithFacebook(
-                                                        context);
-                                                if (user == null) {
-                                                  return;
-                                                }
-                                                await Navigator
-                                                    .pushAndRemoveUntil(
-                                                  context,
-                                                  PageTransition(
-                                                    type:
-                                                        PageTransitionType.fade,
-                                                    duration: Duration(
-                                                        milliseconds: 0),
-                                                    reverseDuration: Duration(
-                                                        milliseconds: 0),
-                                                    child: HomeWidget(),
-                                                  ),
-                                                  (r) => false,
-                                                );
-                                              },
-                                              child: Container(
-                                                width: 50,
-                                                height: 50,
-                                                clipBehavior: Clip.antiAlias,
-                                                decoration: BoxDecoration(
-                                                  shape: BoxShape.circle,
-                                                ),
-                                                child: SvgPicture.asset(
-                                                  'assets/images/social_facebook.svg',
-                                                ),
+                                            child: Container(
+                                              width: 50,
+                                              height: 50,
+                                              clipBehavior: Clip.antiAlias,
+                                              decoration: BoxDecoration(
+                                                shape: BoxShape.circle,
+                                              ),
+                                              child: SvgPicture.asset(
+                                                'assets/images/social_facebook.svg',
                                               ),
                                             ),
                                           ),
@@ -618,39 +543,15 @@ class _SignupWidgetState extends State<SignupWidget> {
                                             padding:
                                                 EdgeInsetsDirectional.fromSTEB(
                                                     2, 2, 2, 2),
-                                            child: InkWell(
-                                              onTap: () async {
-                                                final user =
-                                                    await signInWithGoogle(
-                                                        context);
-                                                if (user == null) {
-                                                  return;
-                                                }
-                                                await Navigator
-                                                    .pushAndRemoveUntil(
-                                                  context,
-                                                  PageTransition(
-                                                    type:
-                                                        PageTransitionType.fade,
-                                                    duration: Duration(
-                                                        milliseconds: 0),
-                                                    reverseDuration: Duration(
-                                                        milliseconds: 0),
-                                                    child: HomeWidget(),
-                                                  ),
-                                                  (r) => false,
-                                                );
-                                              },
-                                              child: Container(
-                                                width: 50,
-                                                height: 50,
-                                                clipBehavior: Clip.antiAlias,
-                                                decoration: BoxDecoration(
-                                                  shape: BoxShape.circle,
-                                                ),
-                                                child: SvgPicture.asset(
-                                                  'assets/images/social_GoogleWhite.svg',
-                                                ),
+                                            child: Container(
+                                              width: 50,
+                                              height: 50,
+                                              clipBehavior: Clip.antiAlias,
+                                              decoration: BoxDecoration(
+                                                shape: BoxShape.circle,
+                                              ),
+                                              child: SvgPicture.asset(
+                                                'assets/images/social_GoogleWhite.svg',
                                               ),
                                             ),
                                           ),
@@ -669,38 +570,15 @@ class _SignupWidgetState extends State<SignupWidget> {
                                           padding:
                                               EdgeInsetsDirectional.fromSTEB(
                                                   2, 2, 2, 2),
-                                          child: InkWell(
-                                            onTap: () async {
-                                              final user =
-                                                  await signInWithApple(
-                                                      context);
-                                              if (user == null) {
-                                                return;
-                                              }
-                                              await Navigator
-                                                  .pushAndRemoveUntil(
-                                                context,
-                                                PageTransition(
-                                                  type: PageTransitionType.fade,
-                                                  duration:
-                                                      Duration(milliseconds: 0),
-                                                  reverseDuration:
-                                                      Duration(milliseconds: 0),
-                                                  child: HomeWidget(),
-                                                ),
-                                                (r) => false,
-                                              );
-                                            },
-                                            child: Container(
-                                              width: 50,
-                                              height: 50,
-                                              clipBehavior: Clip.antiAlias,
-                                              decoration: BoxDecoration(
-                                                shape: BoxShape.circle,
-                                              ),
-                                              child: SvgPicture.asset(
-                                                'assets/images/social_Apple.svg',
-                                              ),
+                                          child: Container(
+                                            width: 50,
+                                            height: 50,
+                                            clipBehavior: Clip.antiAlias,
+                                            decoration: BoxDecoration(
+                                              shape: BoxShape.circle,
+                                            ),
+                                            child: SvgPicture.asset(
+                                              'assets/images/social_Apple.svg',
                                             ),
                                           ),
                                         ),
@@ -713,71 +591,47 @@ class _SignupWidgetState extends State<SignupWidget> {
                             Padding(
                               padding:
                                   EdgeInsetsDirectional.fromSTEB(0, 0, 0, 40),
-                              child: InkWell(
-                                onTap: () async {
-                                  await Navigator.push(
-                                    context,
-                                    PageTransition(
-                                      type: PageTransitionType.fade,
-                                      duration: Duration(milliseconds: 0),
-                                      reverseDuration:
-                                          Duration(milliseconds: 0),
-                                      child: LoginWidget(),
-                                    ),
-                                  );
-                                },
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      'Have an account?',
-                                      style: FlutterFlowTheme.of(context)
+                              child: Row(
+                                mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    'Have an account?',
+                                    style: FlutterFlowTheme.of(context)
+                                        .subtitle2
+                                        .override(
+                                          fontFamily: 'Montserrat',
+                                          color: FlutterFlowTheme.of(context)
+                                              .tertiaryColor,
+                                        ),
+                                  ),
+                                  FFButtonWidget(
+                                    onPressed: () {
+                                      print('Button pressed ...');
+                                    },
+                                    text: 'Login',
+                                    options: FFButtonOptions(
+                                      width: 90,
+                                      height: 30,
+                                      color: Color(0x00FFFFFF),
+                                      textStyle: FlutterFlowTheme.of(context)
                                           .subtitle2
                                           .override(
                                             fontFamily: 'Montserrat',
                                             color: FlutterFlowTheme.of(context)
-                                                .tertiaryColor,
+                                                .gronyLight,
                                           ),
-                                    ),
-                                    FFButtonWidget(
-                                      onPressed: () async {
-                                        await Navigator.push(
-                                          context,
-                                          PageTransition(
-                                            type: PageTransitionType.fade,
-                                            duration: Duration(milliseconds: 0),
-                                            reverseDuration:
-                                                Duration(milliseconds: 0),
-                                            child: LoginWidget(),
-                                          ),
-                                        );
-                                      },
-                                      text: 'Login',
-                                      options: FFButtonOptions(
-                                        width: 90,
-                                        height: 30,
-                                        color: Color(0x00FFFFFF),
-                                        textStyle: FlutterFlowTheme.of(context)
-                                            .subtitle2
-                                            .override(
-                                              fontFamily: 'Montserrat',
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .gronyLight,
-                                            ),
-                                        elevation: 0,
-                                        borderSide: BorderSide(
-                                          color: Colors.transparent,
-                                          width: 1,
-                                        ),
-                                        borderRadius: 0,
+                                      elevation: 0,
+                                      borderSide: BorderSide(
+                                        color: Colors.transparent,
+                                        width: 1,
                                       ),
-                                      showLoadingIndicator: false,
+                                      borderRadius: 0,
                                     ),
-                                  ],
-                                ),
+                                    showLoadingIndicator: false,
+                                  ),
+                                ],
                               ),
                             ),
                           ],

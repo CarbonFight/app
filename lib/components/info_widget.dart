@@ -74,8 +74,8 @@ class _InfoWidgetState extends State<InfoWidget> {
                       color: Colors.black,
                       size: 24,
                     ),
-                    onPressed: () async {
-                      Navigator.pop(context);
+                    onPressed: () {
+                      print('IconButton pressed ...');
                     },
                   ),
                 ],

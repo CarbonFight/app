@@ -1,4 +1,3 @@
-import '../auth/auth_util.dart';
 import '../components/icon_button_widget.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
@@ -69,8 +68,8 @@ class _ForgotPasswordWidgetState extends State<ForgotPasswordWidget> {
                       color: Colors.black,
                       size: 24,
                     ),
-                    onPressed: () async {
-                      Navigator.pop(context);
+                    onPressed: () {
+                      print('IconButton pressed ...');
                     },
                   ),
                 ],
@@ -154,36 +153,18 @@ class _ForgotPasswordWidgetState extends State<ForgotPasswordWidget> {
                         mainAxisSize: MainAxisSize.max,
                         children: [
                           Expanded(
-                            child: InkWell(
-                              onTap: () async {
-                                if (emailController.text.isEmpty) {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
-                                      content: Text(
-                                        'Email required!',
-                                      ),
-                                    ),
-                                  );
-                                  return;
-                                }
-                                await resetPassword(
-                                  email: emailController.text,
-                                  context: context,
-                                );
-                              },
-                              child: IconButtonWidget(
-                                fillColor:
-                                    FlutterFlowTheme.of(context).secondaryColor,
-                                fontColor:
+                            child: IconButtonWidget(
+                              fillColor:
+                                  FlutterFlowTheme.of(context).secondaryColor,
+                              fontColor:
+                                  FlutterFlowTheme.of(context).tertiaryColor,
+                              icon: Icon(
+                                Icons.send_outlined,
+                                color:
                                     FlutterFlowTheme.of(context).tertiaryColor,
-                                icon: Icon(
-                                  Icons.send_outlined,
-                                  color: FlutterFlowTheme.of(context)
-                                      .tertiaryColor,
-                                  size: 18,
-                                ),
-                                text: 'Send Reset Link',
+                                size: 18,
                               ),
+                              text: 'Send Reset Link',
                             ),
                           ),
                         ],
