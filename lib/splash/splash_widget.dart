@@ -130,7 +130,7 @@ class _SplashWidgetState extends State<SplashWidget> {
                                             children: [
                                               Expanded(
                                                 child: Text(
-                                                  'Bienvenue sur l\'application CarbonFight',
+                                                  'Bienvenue sur l\'application CarbonFight.',
                                                   style: FlutterFlowTheme.of(
                                                           context)
                                                       .bodyText1
