@@ -88,8 +88,8 @@ class _AddActionFormWidgetState extends State<AddActionFormWidget> {
                       color: Colors.black,
                       size: 24,
                     ),
-                    onPressed: () {
-                      print('IconButton pressed ...');
+                    onPressed: () async {
+                      Navigator.pop(context);
                     },
                   ),
                 ],
@@ -316,18 +316,23 @@ class _AddActionFormWidgetState extends State<AddActionFormWidget> {
                         mainAxisSize: MainAxisSize.max,
                         children: [
                           Expanded(
-                            child: IconButtonWidget(
-                              fillColor:
-                                  FlutterFlowTheme.of(context).secondaryColor,
-                              fontColor:
-                                  FlutterFlowTheme.of(context).tertiaryColor,
-                              icon: Icon(
-                                Icons.save_outlined,
-                                color:
+                            child: InkWell(
+                              onTap: () async {
+                                Navigator.pop(context);
+                              },
+                              child: IconButtonWidget(
+                                fillColor:
+                                    FlutterFlowTheme.of(context).secondaryColor,
+                                fontColor:
                                     FlutterFlowTheme.of(context).tertiaryColor,
-                                size: 18,
+                                icon: Icon(
+                                  Icons.save_outlined,
+                                  color: FlutterFlowTheme.of(context)
+                                      .tertiaryColor,
+                                  size: 18,
+                                ),
+                                text: 'Save',
                               ),
-                              text: 'Save',
                             ),
                           ),
                         ],

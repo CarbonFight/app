@@ -1,5 +1,8 @@
+import '../components/info_widget.dart';
+import '../drawer/drawer_widget.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
+import '../home/home_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -346,31 +349,62 @@ class _StatistiquesWidgetState extends State<StatistiquesWidget> {
                                                               FontWeight.w600,
                                                         ),
                                                   ),
-                                                  Container(
-                                                    width: 35,
-                                                    height: 35,
-                                                    decoration: BoxDecoration(
-                                                      boxShadow: [
-                                                        BoxShadow(
-                                                          blurRadius: 15,
-                                                          color:
-                                                              Color(0x3A000000),
-                                                          offset: Offset(0, 4),
-                                                        )
-                                                      ],
-                                                      shape: BoxShape.circle,
-                                                    ),
-                                                    alignment:
-                                                        AlignmentDirectional(
-                                                            0, 0),
-                                                    child: Icon(
-                                                      Icons
-                                                          .info_outline_rounded,
-                                                      color:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .tertiaryColor,
-                                                      size: 22,
+                                                  InkWell(
+                                                    onTap: () async {
+                                                      await showModalBottomSheet(
+                                                        isScrollControlled:
+                                                            true,
+                                                        backgroundColor:
+                                                            Colors.transparent,
+                                                        barrierColor:
+                                                            Color(0xBF000000),
+                                                        context: context,
+                                                        builder: (context) {
+                                                          return Padding(
+                                                            padding:
+                                                                MediaQuery.of(
+                                                                        context)
+                                                                    .viewInsets,
+                                                            child: Container(
+                                                              height: 375,
+                                                              child: InfoWidget(
+                                                                title:
+                                                                    'Some statistics',
+                                                                body:
+                                                                    'The French average is 12.5 kg. The 10 most polluting countries emit on average between 40 kg (USA/Canada) and 83 kg (Quatar) of CO2 per capita per day. To reach the balance of our planet, it would be necessary to emit less than 3.30 kg per inhabitant.',
+                                                              ),
+                                                            ),
+                                                          );
+                                                        },
+                                                      );
+                                                    },
+                                                    child: Container(
+                                                      width: 35,
+                                                      height: 35,
+                                                      decoration: BoxDecoration(
+                                                        boxShadow: [
+                                                          BoxShadow(
+                                                            blurRadius: 15,
+                                                            color: Color(
+                                                                0x3A000000),
+                                                            offset:
+                                                                Offset(0, 4),
+                                                          )
+                                                        ],
+                                                        shape: BoxShape.circle,
+                                                      ),
+                                                      alignment:
+                                                          AlignmentDirectional(
+                                                              0, 0),
+                                                      child: Icon(
+                                                        Icons
+                                                            .info_outline_rounded,
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .tertiaryColor,
+                                                        size: 22,
+                                                      ),
                                                     ),
                                                   ),
                                                 ],
@@ -476,32 +510,64 @@ class _StatistiquesWidgetState extends State<StatistiquesWidget> {
                                                                         .w600,
                                                               ),
                                                     ),
-                                                    Container(
-                                                      width: 35,
-                                                      height: 35,
-                                                      decoration: BoxDecoration(
-                                                        boxShadow: [
-                                                          BoxShadow(
-                                                            blurRadius: 15,
-                                                            color: Color(
-                                                                0x3A000000),
-                                                            offset:
-                                                                Offset(0, 4),
-                                                          )
-                                                        ],
-                                                        shape: BoxShape.circle,
-                                                      ),
-                                                      alignment:
-                                                          AlignmentDirectional(
-                                                              0, 0),
-                                                      child: Icon(
-                                                        Icons
-                                                            .info_outline_rounded,
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .tertiaryColor,
-                                                        size: 22,
+                                                    InkWell(
+                                                      onTap: () async {
+                                                        await showModalBottomSheet(
+                                                          isScrollControlled:
+                                                              true,
+                                                          backgroundColor:
+                                                              Colors
+                                                                  .transparent,
+                                                          barrierColor:
+                                                              Color(0xBF000000),
+                                                          context: context,
+                                                          builder: (context) {
+                                                            return Padding(
+                                                              padding: MediaQuery
+                                                                      .of(context)
+                                                                  .viewInsets,
+                                                              child: Container(
+                                                                height: 375,
+                                                                child:
+                                                                    InfoWidget(
+                                                                  title:
+                                                                      'Some statistics',
+                                                                  body:
+                                                                      'The French average is 12.5 kg. The 10 most polluting countries emit on average between 40 kg (USA/Canada) and 83 kg (Quatar) of CO2 per capita per day. To reach the balance of our planet, it would be necessary to emit less than 3.30 kg per inhabitant.',
+                                                                ),
+                                                              ),
+                                                            );
+                                                          },
+                                                        );
+                                                      },
+                                                      child: Container(
+                                                        width: 35,
+                                                        height: 35,
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          boxShadow: [
+                                                            BoxShadow(
+                                                              blurRadius: 15,
+                                                              color: Color(
+                                                                  0x3A000000),
+                                                              offset:
+                                                                  Offset(0, 4),
+                                                            )
+                                                          ],
+                                                          shape:
+                                                              BoxShape.circle,
+                                                        ),
+                                                        alignment:
+                                                            AlignmentDirectional(
+                                                                0, 0),
+                                                        child: Icon(
+                                                          Icons
+                                                              .info_outline_rounded,
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .tertiaryColor,
+                                                          size: 22,
+                                                        ),
                                                       ),
                                                     ),
                                                   ],
@@ -608,32 +674,64 @@ class _StatistiquesWidgetState extends State<StatistiquesWidget> {
                                                                         .w600,
                                                               ),
                                                     ),
-                                                    Container(
-                                                      width: 35,
-                                                      height: 35,
-                                                      decoration: BoxDecoration(
-                                                        boxShadow: [
-                                                          BoxShadow(
-                                                            blurRadius: 15,
-                                                            color: Color(
-                                                                0x3A000000),
-                                                            offset:
-                                                                Offset(0, 4),
-                                                          )
-                                                        ],
-                                                        shape: BoxShape.circle,
-                                                      ),
-                                                      alignment:
-                                                          AlignmentDirectional(
-                                                              0, 0),
-                                                      child: Icon(
-                                                        Icons
-                                                            .info_outline_rounded,
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .tertiaryColor,
-                                                        size: 22,
+                                                    InkWell(
+                                                      onTap: () async {
+                                                        await showModalBottomSheet(
+                                                          isScrollControlled:
+                                                              true,
+                                                          backgroundColor:
+                                                              Colors
+                                                                  .transparent,
+                                                          barrierColor:
+                                                              Color(0xBF000000),
+                                                          context: context,
+                                                          builder: (context) {
+                                                            return Padding(
+                                                              padding: MediaQuery
+                                                                      .of(context)
+                                                                  .viewInsets,
+                                                              child: Container(
+                                                                height: 375,
+                                                                child:
+                                                                    InfoWidget(
+                                                                  title:
+                                                                      'Some statistics',
+                                                                  body:
+                                                                      'The French average is 12.5 kg. The 10 most polluting countries emit on average between 40 kg (USA/Canada) and 83 kg (Quatar) of CO2 per capita per day. To reach the balance of our planet, it would be necessary to emit less than 3.30 kg per inhabitant.',
+                                                                ),
+                                                              ),
+                                                            );
+                                                          },
+                                                        );
+                                                      },
+                                                      child: Container(
+                                                        width: 35,
+                                                        height: 35,
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          boxShadow: [
+                                                            BoxShadow(
+                                                              blurRadius: 15,
+                                                              color: Color(
+                                                                  0x3A000000),
+                                                              offset:
+                                                                  Offset(0, 4),
+                                                            )
+                                                          ],
+                                                          shape:
+                                                              BoxShape.circle,
+                                                        ),
+                                                        alignment:
+                                                            AlignmentDirectional(
+                                                                0, 0),
+                                                        child: Icon(
+                                                          Icons
+                                                              .info_outline_rounded,
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .tertiaryColor,
+                                                          size: 22,
+                                                        ),
                                                       ),
                                                     ),
                                                   ],
@@ -811,16 +909,29 @@ class _StatistiquesWidgetState extends State<StatistiquesWidget> {
                   child: Row(
                     mainAxisSize: MainAxisSize.max,
                     children: [
-                      Container(
-                        width: 50,
-                        height: 50,
-                        decoration: BoxDecoration(),
-                        alignment: AlignmentDirectional(0, 0),
-                        child: SvgPicture.asset(
-                          'assets/images/menu.svg',
-                          width: 24,
-                          height: 24,
-                          fit: BoxFit.fitHeight,
+                      InkWell(
+                        onTap: () async {
+                          await Navigator.push(
+                            context,
+                            PageTransition(
+                              type: PageTransitionType.fade,
+                              duration: Duration(milliseconds: 0),
+                              reverseDuration: Duration(milliseconds: 0),
+                              child: DrawerWidget(),
+                            ),
+                          );
+                        },
+                        child: Container(
+                          width: 50,
+                          height: 50,
+                          decoration: BoxDecoration(),
+                          alignment: AlignmentDirectional(0, 0),
+                          child: SvgPicture.asset(
+                            'assets/images/menu.svg',
+                            width: 24,
+                            height: 24,
+                            fit: BoxFit.fitHeight,
+                          ),
                         ),
                       ),
                       Image.asset(
@@ -897,17 +1008,32 @@ class _StatistiquesWidgetState extends State<StatistiquesWidget> {
                                     Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
                                           10, 0, 0, 0),
-                                      child: Text(
-                                        'Actions',
-                                        style: FlutterFlowTheme.of(context)
-                                            .subtitle2
-                                            .override(
-                                              fontFamily: 'Montserrat',
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .gronyLight,
-                                              fontWeight: FontWeight.w800,
+                                      child: InkWell(
+                                        onTap: () async {
+                                          await Navigator.push(
+                                            context,
+                                            PageTransition(
+                                              type: PageTransitionType.fade,
+                                              duration:
+                                                  Duration(milliseconds: 0),
+                                              reverseDuration:
+                                                  Duration(milliseconds: 0),
+                                              child: HomeWidget(),
                                             ),
+                                          );
+                                        },
+                                        child: Text(
+                                          'Actions',
+                                          style: FlutterFlowTheme.of(context)
+                                              .subtitle2
+                                              .override(
+                                                fontFamily: 'Montserrat',
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .gronyLight,
+                                                fontWeight: FontWeight.w800,
+                                              ),
+                                        ),
                                       ),
                                     ),
                                   ],

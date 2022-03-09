@@ -1,6 +1,11 @@
+import '../auth/auth_util.dart';
+import '../faq/faq_widget.dart';
+import '../feedback/feedback_widget.dart';
 import '../flutter_flow/flutter_flow_animations.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
+import '../login/login_widget.dart';
+import '../splash/splash_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -51,11 +56,16 @@ class _DrawerWidgetState extends State<DrawerWidget>
       backgroundColor: Color(0x00FFFFFF),
       body: Stack(
         children: [
-          Container(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height * 1,
-            decoration: BoxDecoration(
-              color: Color(0xB3000000),
+          InkWell(
+            onTap: () async {
+              Navigator.pop(context);
+            },
+            child: Container(
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height * 1,
+              decoration: BoxDecoration(
+                color: Color(0xB3000000),
+              ),
             ),
           ),
           Padding(
@@ -90,18 +100,23 @@ class _DrawerWidgetState extends State<DrawerWidget>
                             mainAxisSize: MainAxisSize.max,
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
-                              Container(
-                                width: 40,
-                                height: 40,
-                                decoration: BoxDecoration(),
-                                child: Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      10, 10, 10, 10),
-                                  child: SvgPicture.asset(
-                                    'assets/images/arrow_back.svg',
-                                    width: 25,
-                                    height: 25,
-                                    fit: BoxFit.fitWidth,
+                              InkWell(
+                                onTap: () async {
+                                  Navigator.pop(context);
+                                },
+                                child: Container(
+                                  width: 40,
+                                  height: 40,
+                                  decoration: BoxDecoration(),
+                                  child: Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        10, 10, 10, 10),
+                                    child: SvgPicture.asset(
+                                      'assets/images/arrow_back.svg',
+                                      width: 25,
+                                      height: 25,
+                                      fit: BoxFit.fitWidth,
+                                    ),
                                   ),
                                 ),
                               ),
@@ -228,16 +243,30 @@ class _DrawerWidgetState extends State<DrawerWidget>
                                 Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
                                       10, 0, 0, 0),
-                                  child: Text(
-                                    'Contacter l\'équipe',
-                                    style: FlutterFlowTheme.of(context)
-                                        .bodyText2
-                                        .override(
-                                          fontFamily: 'Montserrat',
-                                          color: FlutterFlowTheme.of(context)
-                                              .primaryColor,
-                                          fontWeight: FontWeight.w500,
+                                  child: InkWell(
+                                    onTap: () async {
+                                      await Navigator.push(
+                                        context,
+                                        PageTransition(
+                                          type: PageTransitionType.fade,
+                                          duration: Duration(milliseconds: 0),
+                                          reverseDuration:
+                                              Duration(milliseconds: 0),
+                                          child: FeedbackWidget(),
                                         ),
+                                      );
+                                    },
+                                    child: Text(
+                                      'Contacter l\'équipe',
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyText2
+                                          .override(
+                                            fontFamily: 'Montserrat',
+                                            color: FlutterFlowTheme.of(context)
+                                                .primaryColor,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                    ),
                                   ),
                                 ),
                               ],
@@ -262,16 +291,30 @@ class _DrawerWidgetState extends State<DrawerWidget>
                                 Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
                                       10, 0, 0, 0),
-                                  child: Text(
-                                    'Help',
-                                    style: FlutterFlowTheme.of(context)
-                                        .bodyText2
-                                        .override(
-                                          fontFamily: 'Montserrat',
-                                          color: FlutterFlowTheme.of(context)
-                                              .primaryColor,
-                                          fontWeight: FontWeight.w500,
+                                  child: InkWell(
+                                    onTap: () async {
+                                      await Navigator.push(
+                                        context,
+                                        PageTransition(
+                                          type: PageTransitionType.fade,
+                                          duration: Duration(milliseconds: 0),
+                                          reverseDuration:
+                                              Duration(milliseconds: 0),
+                                          child: SplashWidget(),
                                         ),
+                                      );
+                                    },
+                                    child: Text(
+                                      'Help',
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyText2
+                                          .override(
+                                            fontFamily: 'Montserrat',
+                                            color: FlutterFlowTheme.of(context)
+                                                .primaryColor,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                    ),
                                   ),
                                 ),
                               ],
@@ -296,16 +339,30 @@ class _DrawerWidgetState extends State<DrawerWidget>
                                 Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
                                       10, 0, 0, 0),
-                                  child: Text(
-                                    'FAQ',
-                                    style: FlutterFlowTheme.of(context)
-                                        .bodyText2
-                                        .override(
-                                          fontFamily: 'Montserrat',
-                                          color: FlutterFlowTheme.of(context)
-                                              .primaryColor,
-                                          fontWeight: FontWeight.w500,
+                                  child: InkWell(
+                                    onTap: () async {
+                                      await Navigator.push(
+                                        context,
+                                        PageTransition(
+                                          type: PageTransitionType.fade,
+                                          duration: Duration(milliseconds: 0),
+                                          reverseDuration:
+                                              Duration(milliseconds: 0),
+                                          child: FaqWidget(),
                                         ),
+                                      );
+                                    },
+                                    child: Text(
+                                      'FAQ',
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyText2
+                                          .override(
+                                            fontFamily: 'Montserrat',
+                                            color: FlutterFlowTheme.of(context)
+                                                .primaryColor,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                    ),
                                   ),
                                 ),
                               ],
@@ -363,10 +420,25 @@ class _DrawerWidgetState extends State<DrawerWidget>
                                 color: Color(0x42E25606),
                               ),
                             ),
-                            child: Icon(
-                              Icons.power_settings_new,
-                              color: FlutterFlowTheme.of(context).redi,
-                              size: 24,
+                            child: InkWell(
+                              onTap: () async {
+                                await signOut();
+                                await Navigator.pushAndRemoveUntil(
+                                  context,
+                                  PageTransition(
+                                    type: PageTransitionType.fade,
+                                    duration: Duration(milliseconds: 0),
+                                    reverseDuration: Duration(milliseconds: 0),
+                                    child: LoginWidget(),
+                                  ),
+                                  (r) => false,
+                                );
+                              },
+                              child: Icon(
+                                Icons.power_settings_new,
+                                color: FlutterFlowTheme.of(context).redi,
+                                size: 24,
+                              ),
                             ),
                           ),
                           Expanded(
