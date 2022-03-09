@@ -303,8 +303,8 @@ class _FaqWidgetState extends State<FaqWidget> {
                         color: FlutterFlowTheme.of(context).tertiaryColor,
                         size: 30,
                       ),
-                      onPressed: () {
-                        print('IconButton pressed ...');
+                      onPressed: () async {
+                        Navigator.pop(context);
                       },
                     ),
                     Padding(

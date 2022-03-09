@@ -1,3 +1,5 @@
+import '../auth/auth_util.dart';
+import '../backend/api_requests/api_calls.dart';
 import '../components/icon_button_widget.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
@@ -14,6 +16,7 @@ class FeedbackWidget extends StatefulWidget {
 }
 
 class _FeedbackWidgetState extends State<FeedbackWidget> {
+  ApiCallResponse apiCallOutput2;
   TextEditingController messageController;
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -156,17 +159,65 @@ class _FeedbackWidgetState extends State<FeedbackWidget> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Expanded(
-                          child: IconButtonWidget(
-                            fillColor:
-                                FlutterFlowTheme.of(context).secondaryColor,
-                            fontColor:
-                                FlutterFlowTheme.of(context).tertiaryColor,
-                            icon: Icon(
-                              Icons.send_sharp,
-                              color: FlutterFlowTheme.of(context).tertiaryColor,
-                              size: 26,
+                          child: InkWell(
+                            onTap: () async {
+                              apiCallOutput2 = await SendEmailCall.call(
+                                emailbody: messageController.text,
+                                emailsendername: currentUserDisplayName,
+                              );
+                              if ((apiCallOutput2?.succeeded ?? true)) {
+                                await showDialog(
+                                  context: context,
+                                  builder: (alertDialogContext) {
+                                    return AlertDialog(
+                                      title: Text('Message envoyé !'),
+                                      content:
+                                          Text('Merci pour votre message.'),
+                                      actions: [
+                                        TextButton(
+                                          onPressed: () =>
+                                              Navigator.pop(alertDialogContext),
+                                          child: Text('OK'),
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                );
+                              } else {
+                                await showDialog(
+                                  context: context,
+                                  builder: (alertDialogContext) {
+                                    return AlertDialog(
+                                      title: Text('Problème'),
+                                      content: Text(
+                                          'C\'est bizarre, le message n\'a pas été envoyé. Merci d\'envoyer votre message par mail ou téléphone !'),
+                                      actions: [
+                                        TextButton(
+                                          onPressed: () =>
+                                              Navigator.pop(alertDialogContext),
+                                          child: Text('OK'),
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                );
+                              }
+
+                              setState(() {});
+                            },
+                            child: IconButtonWidget(
+                              fillColor:
+                                  FlutterFlowTheme.of(context).secondaryColor,
+                              fontColor:
+                                  FlutterFlowTheme.of(context).tertiaryColor,
+                              icon: Icon(
+                                Icons.send_sharp,
+                                color:
+                                    FlutterFlowTheme.of(context).tertiaryColor,
+                                size: 26,
+                              ),
+                              text: 'Envoyer',
                             ),
-                            text: 'Envoyer',
                           ),
                         ),
                       ],
@@ -195,8 +246,8 @@ class _FeedbackWidgetState extends State<FeedbackWidget> {
                         color: FlutterFlowTheme.of(context).primaryColor,
                         size: 30,
                       ),
-                      onPressed: () {
-                        print('IconButton pressed ...');
+                      onPressed: () async {
+                        Navigator.pop(context);
                       },
                     ),
                     Padding(

@@ -1,6 +1,7 @@
 import '../components/icon_button_widget.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
+import '../home/home_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -103,7 +104,7 @@ class _SplashWidgetState extends State<SplashWidget> {
                                             children: [
                                               Expanded(
                                                 child: Text(
-                                                  'Welcome',
+                                                  'Bienvenue',
                                                   style: FlutterFlowTheme.of(
                                                           context)
                                                       .title1
@@ -158,17 +159,29 @@ class _SplashWidgetState extends State<SplashWidget> {
                                             child: Padding(
                                               padding: EdgeInsetsDirectional
                                                   .fromSTEB(40, 0, 40, 80),
-                                              child: IconButtonWidget(
-                                                fillColor:
-                                                    FlutterFlowTheme.of(context)
-                                                        .tertiaryColor,
-                                                fontColor:
-                                                    FlutterFlowTheme.of(context)
-                                                        .secondaryColor,
-                                                icon: Icon(
-                                                  Icons.arrow_right_alt,
+                                              child: InkWell(
+                                                onTap: () async {
+                                                  await pageViewController
+                                                      .nextPage(
+                                                    duration: Duration(
+                                                        milliseconds: 300),
+                                                    curve: Curves.ease,
+                                                  );
+                                                },
+                                                child: IconButtonWidget(
+                                                  fillColor:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .tertiaryColor,
+                                                  fontColor:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .secondaryColor,
+                                                  icon: Icon(
+                                                    Icons.arrow_right_alt,
+                                                  ),
+                                                  text: 'Next',
                                                 ),
-                                                text: 'Next',
                                               ),
                                             ),
                                           ),
@@ -299,17 +312,29 @@ class _SplashWidgetState extends State<SplashWidget> {
                                             child: Padding(
                                               padding: EdgeInsetsDirectional
                                                   .fromSTEB(40, 0, 40, 80),
-                                              child: IconButtonWidget(
-                                                fillColor:
-                                                    FlutterFlowTheme.of(context)
-                                                        .tertiaryColor,
-                                                fontColor:
-                                                    FlutterFlowTheme.of(context)
-                                                        .secondaryColor,
-                                                icon: Icon(
-                                                  Icons.arrow_right_alt,
+                                              child: InkWell(
+                                                onTap: () async {
+                                                  await pageViewController
+                                                      .nextPage(
+                                                    duration: Duration(
+                                                        milliseconds: 300),
+                                                    curve: Curves.ease,
+                                                  );
+                                                },
+                                                child: IconButtonWidget(
+                                                  fillColor:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .tertiaryColor,
+                                                  fontColor:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .secondaryColor,
+                                                  icon: Icon(
+                                                    Icons.arrow_right_alt,
+                                                  ),
+                                                  text: 'Next',
                                                 ),
-                                                text: 'Next',
                                               ),
                                             ),
                                           ),
@@ -440,17 +465,35 @@ class _SplashWidgetState extends State<SplashWidget> {
                                             child: Padding(
                                               padding: EdgeInsetsDirectional
                                                   .fromSTEB(40, 0, 40, 80),
-                                              child: IconButtonWidget(
-                                                fillColor:
-                                                    FlutterFlowTheme.of(context)
-                                                        .tertiaryColor,
-                                                fontColor:
-                                                    FlutterFlowTheme.of(context)
-                                                        .secondaryColor,
-                                                icon: Icon(
-                                                  Icons.arrow_right_alt,
+                                              child: InkWell(
+                                                onTap: () async {
+                                                  await Navigator.push(
+                                                    context,
+                                                    PageTransition(
+                                                      type: PageTransitionType
+                                                          .fade,
+                                                      duration: Duration(
+                                                          milliseconds: 0),
+                                                      reverseDuration: Duration(
+                                                          milliseconds: 0),
+                                                      child: HomeWidget(),
+                                                    ),
+                                                  );
+                                                },
+                                                child: IconButtonWidget(
+                                                  fillColor:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .tertiaryColor,
+                                                  fontColor:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .secondaryColor,
+                                                  icon: Icon(
+                                                    Icons.arrow_right_alt,
+                                                  ),
+                                                  text: 'Start Journey',
                                                 ),
-                                                text: 'Start Journey',
                                               ),
                                             ),
                                           ),

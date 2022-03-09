@@ -1,7 +1,11 @@
+import '../auth/auth_util.dart';
+import '../components/forgot_password_widget.dart';
 import '../components/icon_button_widget.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
+import '../home/home_widget.dart';
+import '../signup/signup_widget.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -252,22 +256,41 @@ class _LoginWidgetState extends State<LoginWidget> {
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        Container(
-                          height: 45,
-                          decoration: BoxDecoration(),
-                          alignment: AlignmentDirectional(0, 0),
-                          child: Padding(
-                            padding:
-                                EdgeInsetsDirectional.fromSTEB(10, 0, 10, 0),
-                            child: Text(
-                              'Forgot Password ?',
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyText1
-                                  .override(
-                                    fontFamily: 'Montserrat',
-                                    color: FlutterFlowTheme.of(context)
-                                        .primaryColor,
+                        InkWell(
+                          onTap: () async {
+                            await showModalBottomSheet(
+                              isScrollControlled: true,
+                              backgroundColor: Colors.transparent,
+                              barrierColor: Color(0xBF000000),
+                              context: context,
+                              builder: (context) {
+                                return Padding(
+                                  padding: MediaQuery.of(context).viewInsets,
+                                  child: Container(
+                                    height: 375,
+                                    child: ForgotPasswordWidget(),
                                   ),
+                                );
+                              },
+                            );
+                          },
+                          child: Container(
+                            height: 45,
+                            decoration: BoxDecoration(),
+                            alignment: AlignmentDirectional(0, 0),
+                            child: Padding(
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(10, 0, 10, 0),
+                              child: Text(
+                                'Forgot Password ?',
+                                style: FlutterFlowTheme.of(context)
+                                    .bodyText1
+                                    .override(
+                                      fontFamily: 'Montserrat',
+                                      color: FlutterFlowTheme.of(context)
+                                          .primaryColor,
+                                    ),
+                              ),
                             ),
                           ),
                         ),
@@ -280,18 +303,41 @@ class _LoginWidgetState extends State<LoginWidget> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Expanded(
-                            child: IconButtonWidget(
-                              fillColor:
-                                  FlutterFlowTheme.of(context).secondaryColor,
-                              fontColor:
-                                  FlutterFlowTheme.of(context).tertiaryColor,
-                              icon: Icon(
-                                Icons.login_outlined,
-                                color:
+                            child: InkWell(
+                              onTap: () async {
+                                final user = await signInWithEmail(
+                                  context,
+                                  emailAddressController.text,
+                                  passwordController.text,
+                                );
+                                if (user == null) {
+                                  return;
+                                }
+
+                                await Navigator.pushAndRemoveUntil(
+                                  context,
+                                  PageTransition(
+                                    type: PageTransitionType.fade,
+                                    duration: Duration(milliseconds: 0),
+                                    reverseDuration: Duration(milliseconds: 0),
+                                    child: HomeWidget(),
+                                  ),
+                                  (r) => false,
+                                );
+                              },
+                              child: IconButtonWidget(
+                                fillColor:
+                                    FlutterFlowTheme.of(context).secondaryColor,
+                                fontColor:
                                     FlutterFlowTheme.of(context).tertiaryColor,
-                                size: 26,
+                                icon: Icon(
+                                  Icons.login_outlined,
+                                  color: FlutterFlowTheme.of(context)
+                                      .tertiaryColor,
+                                  size: 26,
+                                ),
+                                text: 'Login',
                               ),
-                              text: 'Login',
                             ),
                           ),
                         ],
@@ -360,15 +406,39 @@ class _LoginWidgetState extends State<LoginWidget> {
                                             padding:
                                                 EdgeInsetsDirectional.fromSTEB(
                                                     2, 2, 2, 2),
-                                            child: Container(
-                                              width: 50,
-                                              height: 50,
-                                              clipBehavior: Clip.antiAlias,
-                                              decoration: BoxDecoration(
-                                                shape: BoxShape.circle,
-                                              ),
-                                              child: SvgPicture.asset(
-                                                'assets/images/social_facebook.svg',
+                                            child: InkWell(
+                                              onTap: () async {
+                                                final user =
+                                                    await signInWithFacebook(
+                                                        context);
+                                                if (user == null) {
+                                                  return;
+                                                }
+                                                await Navigator
+                                                    .pushAndRemoveUntil(
+                                                  context,
+                                                  PageTransition(
+                                                    type:
+                                                        PageTransitionType.fade,
+                                                    duration: Duration(
+                                                        milliseconds: 0),
+                                                    reverseDuration: Duration(
+                                                        milliseconds: 0),
+                                                    child: HomeWidget(),
+                                                  ),
+                                                  (r) => false,
+                                                );
+                                              },
+                                              child: Container(
+                                                width: 50,
+                                                height: 50,
+                                                clipBehavior: Clip.antiAlias,
+                                                decoration: BoxDecoration(
+                                                  shape: BoxShape.circle,
+                                                ),
+                                                child: SvgPicture.asset(
+                                                  'assets/images/social_facebook.svg',
+                                                ),
                                               ),
                                             ),
                                           ),
@@ -390,15 +460,39 @@ class _LoginWidgetState extends State<LoginWidget> {
                                             padding:
                                                 EdgeInsetsDirectional.fromSTEB(
                                                     2, 2, 2, 2),
-                                            child: Container(
-                                              width: 50,
-                                              height: 50,
-                                              clipBehavior: Clip.antiAlias,
-                                              decoration: BoxDecoration(
-                                                shape: BoxShape.circle,
-                                              ),
-                                              child: SvgPicture.asset(
-                                                'assets/images/social_GoogleWhite.svg',
+                                            child: InkWell(
+                                              onTap: () async {
+                                                final user =
+                                                    await signInWithGoogle(
+                                                        context);
+                                                if (user == null) {
+                                                  return;
+                                                }
+                                                await Navigator
+                                                    .pushAndRemoveUntil(
+                                                  context,
+                                                  PageTransition(
+                                                    type:
+                                                        PageTransitionType.fade,
+                                                    duration: Duration(
+                                                        milliseconds: 0),
+                                                    reverseDuration: Duration(
+                                                        milliseconds: 0),
+                                                    child: HomeWidget(),
+                                                  ),
+                                                  (r) => false,
+                                                );
+                                              },
+                                              child: Container(
+                                                width: 50,
+                                                height: 50,
+                                                clipBehavior: Clip.antiAlias,
+                                                decoration: BoxDecoration(
+                                                  shape: BoxShape.circle,
+                                                ),
+                                                child: SvgPicture.asset(
+                                                  'assets/images/social_GoogleWhite.svg',
+                                                ),
                                               ),
                                             ),
                                           ),
@@ -417,15 +511,38 @@ class _LoginWidgetState extends State<LoginWidget> {
                                           padding:
                                               EdgeInsetsDirectional.fromSTEB(
                                                   2, 2, 2, 2),
-                                          child: Container(
-                                            width: 50,
-                                            height: 50,
-                                            clipBehavior: Clip.antiAlias,
-                                            decoration: BoxDecoration(
-                                              shape: BoxShape.circle,
-                                            ),
-                                            child: SvgPicture.asset(
-                                              'assets/images/social_Apple.svg',
+                                          child: InkWell(
+                                            onTap: () async {
+                                              final user =
+                                                  await signInWithApple(
+                                                      context);
+                                              if (user == null) {
+                                                return;
+                                              }
+                                              await Navigator
+                                                  .pushAndRemoveUntil(
+                                                context,
+                                                PageTransition(
+                                                  type: PageTransitionType.fade,
+                                                  duration:
+                                                      Duration(milliseconds: 0),
+                                                  reverseDuration:
+                                                      Duration(milliseconds: 0),
+                                                  child: HomeWidget(),
+                                                ),
+                                                (r) => false,
+                                              );
+                                            },
+                                            child: Container(
+                                              width: 50,
+                                              height: 50,
+                                              clipBehavior: Clip.antiAlias,
+                                              decoration: BoxDecoration(
+                                                shape: BoxShape.circle,
+                                              ),
+                                              child: SvgPicture.asset(
+                                                'assets/images/social_Apple.svg',
+                                              ),
                                             ),
                                           ),
                                         ),
@@ -438,47 +555,71 @@ class _LoginWidgetState extends State<LoginWidget> {
                             Padding(
                               padding:
                                   EdgeInsetsDirectional.fromSTEB(0, 0, 0, 40),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    'Don\'t have an account?',
-                                    style: FlutterFlowTheme.of(context)
-                                        .subtitle2
-                                        .override(
-                                          fontFamily: 'Montserrat',
-                                          color: FlutterFlowTheme.of(context)
-                                              .tertiaryColor,
-                                        ),
-                                  ),
-                                  FFButtonWidget(
-                                    onPressed: () {
-                                      print('Button pressed ...');
-                                    },
-                                    text: 'Register',
-                                    options: FFButtonOptions(
-                                      width: 90,
-                                      height: 30,
-                                      color: Color(0x00FFFFFF),
-                                      textStyle: FlutterFlowTheme.of(context)
+                              child: InkWell(
+                                onTap: () async {
+                                  await Navigator.push(
+                                    context,
+                                    PageTransition(
+                                      type: PageTransitionType.fade,
+                                      duration: Duration(milliseconds: 0),
+                                      reverseDuration:
+                                          Duration(milliseconds: 0),
+                                      child: SignupWidget(),
+                                    ),
+                                  );
+                                },
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      'Don\'t have an account?',
+                                      style: FlutterFlowTheme.of(context)
                                           .subtitle2
                                           .override(
                                             fontFamily: 'Montserrat',
                                             color: FlutterFlowTheme.of(context)
-                                                .gronyLight,
+                                                .tertiaryColor,
                                           ),
-                                      elevation: 0,
-                                      borderSide: BorderSide(
-                                        color: Colors.transparent,
-                                        width: 1,
-                                      ),
-                                      borderRadius: 0,
                                     ),
-                                    showLoadingIndicator: false,
-                                  ),
-                                ],
+                                    FFButtonWidget(
+                                      onPressed: () async {
+                                        await Navigator.push(
+                                          context,
+                                          PageTransition(
+                                            type: PageTransitionType.fade,
+                                            duration: Duration(milliseconds: 0),
+                                            reverseDuration:
+                                                Duration(milliseconds: 0),
+                                            child: SignupWidget(),
+                                          ),
+                                        );
+                                      },
+                                      text: 'Register',
+                                      options: FFButtonOptions(
+                                        width: 90,
+                                        height: 30,
+                                        color: Color(0x00FFFFFF),
+                                        textStyle: FlutterFlowTheme.of(context)
+                                            .subtitle2
+                                            .override(
+                                              fontFamily: 'Montserrat',
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .gronyLight,
+                                            ),
+                                        elevation: 0,
+                                        borderSide: BorderSide(
+                                          color: Colors.transparent,
+                                          width: 1,
+                                        ),
+                                        borderRadius: 0,
+                                      ),
+                                      showLoadingIndicator: false,
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                           ],
