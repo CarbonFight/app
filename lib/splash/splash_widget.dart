@@ -104,7 +104,7 @@ class _SplashWidgetState extends State<SplashWidget> {
                                             children: [
                                               Expanded(
                                                 child: Text(
-                                                  'Welcome',
+                                                  'Bienvenue',
                                                   style: FlutterFlowTheme.of(
                                                           context)
                                                       .title1
@@ -130,7 +130,7 @@ class _SplashWidgetState extends State<SplashWidget> {
                                             children: [
                                               Expanded(
                                                 child: Text(
-                                                  'Est exercitationem quod sed molestiae aut autem magni est consectetur architecto ut dolore quidem. Aut nisi illum cum sint.',
+                                                  'Bienvenue sur l\'application CarbonFight',
                                                   style: FlutterFlowTheme.of(
                                                           context)
                                                       .bodyText1

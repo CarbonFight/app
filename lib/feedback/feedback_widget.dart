@@ -61,7 +61,7 @@ class _FeedbackWidgetState extends State<FeedbackWidget> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Votre retour compte.',
+                          'Vos commentaires comptent.',
                           style: FlutterFlowTheme.of(context).subtitle1,
                         ),
                         Padding(
@@ -165,7 +165,7 @@ class _FeedbackWidgetState extends State<FeedbackWidget> {
                                 emailbody: messageController.text,
                                 emailsendername: currentUserDisplayName,
                               );
-                              if (apiCallOutput2.succeeded) {
+                              if ((apiCallOutput2?.succeeded ?? true)) {
                                 await showDialog(
                                   context: context,
                                   builder: (alertDialogContext) {

@@ -809,13 +809,12 @@ class _HomeWidgetState extends State<HomeWidget> {
                             size: 30,
                           ),
                           onPressed: () async {
-                            if (!(FFAppState().addButtonsHome)) {
-                              setState(
-                                  () => FFAppState().addButtonsHome = true);
-                            }
                             if (FFAppState().addButtonsHome) {
                               setState(
                                   () => FFAppState().addButtonsHome = false);
+                            } else {
+                              setState(
+                                  () => FFAppState().addButtonsHome = true);
                             }
                           },
                         ),

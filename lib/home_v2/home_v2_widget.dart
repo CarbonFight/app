@@ -1199,13 +1199,12 @@ class _HomeV2WidgetState extends State<HomeV2Widget> {
                             size: 30,
                           ),
                           onPressed: () async {
-                            if (!(FFAppState().addButtonsHome)) {
-                              setState(
-                                  () => FFAppState().addButtonsHome = true);
-                            }
                             if (FFAppState().addButtonsHome) {
                               setState(
                                   () => FFAppState().addButtonsHome = false);
+                            } else {
+                              setState(
+                                  () => FFAppState().addButtonsHome = true);
                             }
                           },
                         ),
