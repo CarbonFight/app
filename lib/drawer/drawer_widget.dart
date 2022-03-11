@@ -179,17 +179,19 @@ class _DrawerWidgetState extends State<DrawerWidget>
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        Text(
-                                          'David Farmer',
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodyText2
-                                              .override(
-                                                fontFamily: 'Montserrat',
-                                                fontWeight: FontWeight.w600,
-                                              ),
+                                        AuthUserStreamWidget(
+                                          child: Text(
+                                            currentUserDisplayName,
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyText2
+                                                .override(
+                                                  fontFamily: 'Montserrat',
+                                                  fontWeight: FontWeight.w600,
+                                                ),
+                                          ),
                                         ),
                                         Text(
-                                          'david@example.com',
+                                          currentUserEmail,
                                           style: FlutterFlowTheme.of(context)
                                               .bodyText2
                                               .override(
