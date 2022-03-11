@@ -46,6 +46,14 @@ abstract class UsersRecord implements Built<UsersRecord, UsersRecordBuilder> {
   int get activity;
 
   @nullable
+  @BuiltValueField(wireName: 'month_score')
+  int get monthScore;
+
+  @nullable
+  @BuiltValueField(wireName: 'week_score')
+  int get weekScore;
+
+  @nullable
   @BuiltValueField(wireName: kDocumentReferenceField)
   DocumentReference get reference;
 
@@ -58,7 +66,9 @@ abstract class UsersRecord implements Built<UsersRecord, UsersRecordBuilder> {
     ..phoneNumber = ''
     ..uid = ''
     ..photoUrl = ''
-    ..activity = 0;
+    ..activity = 0
+    ..monthScore = 0
+    ..weekScore = 0;
 
   static CollectionReference get collection =>
       FirebaseFirestore.instance.collection('users');
@@ -92,6 +102,8 @@ Map<String, dynamic> createUsersRecordData({
   String uid,
   String photoUrl,
   int activity,
+  int monthScore,
+  int weekScore,
 }) =>
     serializers.toFirestore(
         UsersRecord.serializer,
@@ -105,4 +117,6 @@ Map<String, dynamic> createUsersRecordData({
           ..phoneNumber = phoneNumber
           ..uid = uid
           ..photoUrl = photoUrl
-          ..activity = activity));
+          ..activity = activity
+          ..monthScore = monthScore
+          ..weekScore = weekScore));

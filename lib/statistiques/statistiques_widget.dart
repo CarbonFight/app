@@ -1,8 +1,10 @@
+import '../auth/auth_util.dart';
 import '../components/info_widget.dart';
 import '../drawer/drawer_widget.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../home/home_widget.dart';
+import '../flutter_flow/custom_functions.dart' as functions;
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -181,15 +183,20 @@ class _StatistiquesWidgetState extends State<StatistiquesWidget> {
                                 mainAxisSize: MainAxisSize.max,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(
-                                    'Pierref',
-                                    style: FlutterFlowTheme.of(context)
-                                        .title2
-                                        .override(
-                                          fontFamily: 'Montserrat',
-                                          color: FlutterFlowTheme.of(context)
-                                              .tertiaryColor,
-                                        ),
+                                  AuthUserStreamWidget(
+                                    child: Text(
+                                      valueOrDefault<String>(
+                                        currentUserDisplayName,
+                                        'Display Name',
+                                      ),
+                                      style: FlutterFlowTheme.of(context)
+                                          .title2
+                                          .override(
+                                            fontFamily: 'Montserrat',
+                                            color: FlutterFlowTheme.of(context)
+                                                .tertiaryColor,
+                                          ),
+                                    ),
                                   ),
                                   Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
@@ -311,7 +318,7 @@ class _StatistiquesWidgetState extends State<StatistiquesWidget> {
                                                         .spaceBetween,
                                                 children: [
                                                   Text(
-                                                    'This Year You emitted ',
+                                                    'Vos émissions du jour : ',
                                                     style: FlutterFlowTheme.of(
                                                             context)
                                                         .bodyText1
@@ -333,21 +340,25 @@ class _StatistiquesWidgetState extends State<StatistiquesWidget> {
                                                     MainAxisAlignment
                                                         .spaceBetween,
                                                 children: [
-                                                  Text(
-                                                    '57.69 kg of CO2.',
-                                                    style: FlutterFlowTheme.of(
-                                                            context)
-                                                        .bodyText1
-                                                        .override(
-                                                          fontFamily:
-                                                              'Montserrat',
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .tertiaryColor,
-                                                          fontSize: 16,
-                                                          fontWeight:
-                                                              FontWeight.w600,
-                                                        ),
+                                                  AuthUserStreamWidget(
+                                                    child: Text(
+                                                      '${functions.printScore(currentUserDocument?.dayScore)} de CO2.',
+                                                      style:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .bodyText1
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Montserrat',
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .tertiaryColor,
+                                                                fontSize: 16,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w600,
+                                                              ),
+                                                    ),
                                                   ),
                                                   InkWell(
                                                     onTap: () async {
@@ -467,7 +478,7 @@ class _StatistiquesWidgetState extends State<StatistiquesWidget> {
                                                           .spaceBetween,
                                                   children: [
                                                     Text(
-                                                      'This Month You emitted ',
+                                                      'Vos émissions des 30 derniers jours : ',
                                                       style:
                                                           FlutterFlowTheme.of(
                                                                   context)
@@ -492,23 +503,25 @@ class _StatistiquesWidgetState extends State<StatistiquesWidget> {
                                                       MainAxisAlignment
                                                           .spaceBetween,
                                                   children: [
-                                                    Text(
-                                                      '7.37 kg of CO2.',
-                                                      style:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .bodyText1
-                                                              .override(
-                                                                fontFamily:
-                                                                    'Montserrat',
-                                                                color: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .tertiaryColor,
-                                                                fontSize: 16,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w600,
-                                                              ),
+                                                    AuthUserStreamWidget(
+                                                      child: Text(
+                                                        '${functions.printScore(currentUserDocument?.monthScore)} de CO2.',
+                                                        style:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .bodyText1
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Montserrat',
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .tertiaryColor,
+                                                                  fontSize: 16,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w600,
+                                                                ),
+                                                      ),
                                                     ),
                                                     InkWell(
                                                       onTap: () async {
@@ -631,7 +644,7 @@ class _StatistiquesWidgetState extends State<StatistiquesWidget> {
                                                           .spaceBetween,
                                                   children: [
                                                     Text(
-                                                      'Today / ${dateTimeFormat('yMMMd', getCurrentTimestamp)}  You emitted ',
+                                                      'Vos émissions des 7 derniers jours : ',
                                                       style:
                                                           FlutterFlowTheme.of(
                                                                   context)
@@ -656,23 +669,25 @@ class _StatistiquesWidgetState extends State<StatistiquesWidget> {
                                                       MainAxisAlignment
                                                           .spaceBetween,
                                                   children: [
-                                                    Text(
-                                                      '3.69 kg of CO2.',
-                                                      style:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .bodyText1
-                                                              .override(
-                                                                fontFamily:
-                                                                    'Montserrat',
-                                                                color: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .tertiaryColor,
-                                                                fontSize: 16,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w600,
-                                                              ),
+                                                    AuthUserStreamWidget(
+                                                      child: Text(
+                                                        '${functions.printScore(currentUserDocument?.weekScore)} de CO2.',
+                                                        style:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .bodyText1
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Montserrat',
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .tertiaryColor,
+                                                                  fontSize: 16,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w600,
+                                                                ),
+                                                      ),
                                                     ),
                                                     InkWell(
                                                       onTap: () async {
