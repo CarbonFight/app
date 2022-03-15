@@ -55,3 +55,5 @@ pubspec.lock
 ios/Runner/GeneratedPluginRegistrant.m
 ios/Runner/GeneratedPluginRegistrant.h
 android/app/src/main/java/io/flutter/plugins/GeneratedPluginRegistrant.java
+firebase/functions/package-lock.json
+firebase/package-lock.json
