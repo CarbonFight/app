@@ -207,3 +207,18 @@ exports.periodicsToActions = functions.region('europe-west6').pubsub.schedule('0
 
     return null;
     });
+
+    // Reset scores every night at midnight (especially day score).
+    exports.resetUsersScores = functions.region('europe-west6').pubsub.schedule('0 0 * * *').onRun(async (context) => {
+    
+      const usersRef = admin.firestore().collection('users');
+      const snapshot = await usersRef.get();
+      snapshot.forEach(async doc => {
+        // Recalculate score for all users
+        
+        var userId = doc.get("uid");
+        await reCalculate(userId);
+      });
+  
+      return null;
+  });
