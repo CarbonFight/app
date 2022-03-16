@@ -11,12 +11,13 @@ import '../../auth/auth_util.dart';
 
 int transportActionsCO2e(
   int distance,
-  int passengers,
+  String passengers,
   String ownership,
   String powertype,
   String transport,
 ) {
   double co2e = 0;
+  var passengersInt = int.parse(passengers);
 
   if (transport == "car") {
     // powertype : CO2 per Km
@@ -53,7 +54,7 @@ int transportActionsCO2e(
     }
 
     // Co2 is distance * co2 per km for powertype * ratio of ownership / nomber of passengers
-    co2e = (distance * co2powertype * co2ownership) / passengers;
+    co2e = (distance * co2powertype * co2ownership) / passengersInt;
   }
 
   // Bike
@@ -175,7 +176,7 @@ int transportActionsCO2e(
     }
 
     // Co2 is distance * co2 per km for powertype * ratio of ownership / nomber of passengers
-    co2e = (distance * co2powertype * co2ownership) / passengers;
+    co2e = (distance * co2powertype * co2ownership) / passengersInt;
   }
 
   return co2e.round();

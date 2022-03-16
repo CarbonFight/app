@@ -5,11 +5,11 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'auth/firebase_user_provider.dart';
 import 'auth/auth_util.dart';
 
+import 'flutter_flow/flutter_flow_util.dart';
 import 'flutter_flow/flutter_flow_theme.dart';
 import 'flutter_flow/internationalization.dart';
 import 'package:carbon_fight/login/login_widget.dart';
 import 'package:carbon_fight/home/home_widget.dart';
-import 'flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 void main() async {
@@ -77,7 +77,7 @@ class _MyAppState extends State<MyApp> {
                 width: 50,
                 height: 50,
                 child: SpinKitRipple(
-                  color: FlutterFlowTheme.of(context).primaryColor,
+                  color: FlutterFlowTheme.of(context).tertiaryColor,
                   size: 50,
                 ),
               ),

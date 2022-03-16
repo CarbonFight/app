@@ -4,6 +4,7 @@ import '../flutter_flow/flutter_flow_util.dart';
 import '../home/home_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
@@ -22,7 +23,6 @@ class _SplashWidgetState extends State<SplashWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: scaffoldKey,
-      backgroundColor: FlutterFlowTheme.of(context).secondaryColor,
       body: GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),
         child: Container(
@@ -48,8 +48,7 @@ class _SplashWidgetState extends State<SplashWidget> {
                             alignment: AlignmentDirectional(0, 0),
                             children: [
                               Image.asset(
-                                'assets/images/co2_illustration.jpg',
-                                width: MediaQuery.of(context).size.width,
+                                'assets/images/onboard1flou.jpg',
                                 height: MediaQuery.of(context).size.height * 1,
                                 fit: BoxFit.fitHeight,
                               ),
@@ -62,8 +61,9 @@ class _SplashWidgetState extends State<SplashWidget> {
                                   decoration: BoxDecoration(
                                     gradient: LinearGradient(
                                       colors: [
-                                        Color(0xBE23D0C1),
-                                        Color(0x0023D0C1)
+                                        FlutterFlowTheme.of(context)
+                                            .primaryColor,
+                                        Color(0x0000A193)
                                       ],
                                       stops: [0, 1],
                                       begin: AlignmentDirectional(0, -1),
@@ -86,28 +86,41 @@ class _SplashWidgetState extends State<SplashWidget> {
                                           MainAxisAlignment.center,
                                       children: [
                                         Image.asset(
-                                          'assets/images/splash_1.png',
-                                          width:
-                                              MediaQuery.of(context).size.width,
-                                          height: MediaQuery.of(context)
-                                                  .size
-                                                  .height *
-                                              0.25,
+                                          'assets/images/logo_light.png',
+                                          height: 75,
                                           fit: BoxFit.fitWidth,
                                         ),
                                         Padding(
                                           padding:
                                               EdgeInsetsDirectional.fromSTEB(
-                                                  0, 20, 0, 0),
+                                                  0, 30, 0, 0),
+                                          child: Row(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              FaIcon(
+                                                FontAwesomeIcons.rocket,
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .tertiaryColor,
+                                                size: 250,
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  0, 70, 0, 0),
                                           child: Row(
                                             mainAxisSize: MainAxisSize.max,
                                             children: [
                                               Expanded(
                                                 child: Text(
-                                                  'Bienvenue',
+                                                  'BIENVENUE',
+                                                  textAlign: TextAlign.center,
                                                   style: FlutterFlowTheme.of(
                                                           context)
-                                                      .title1
+                                                      .title3
                                                       .override(
                                                         fontFamily:
                                                             'Montserrat',
@@ -124,13 +137,13 @@ class _SplashWidgetState extends State<SplashWidget> {
                                         Padding(
                                           padding:
                                               EdgeInsetsDirectional.fromSTEB(
-                                                  0, 10, 0, 0),
+                                                  0, 30, 0, 0),
                                           child: Row(
                                             mainAxisSize: MainAxisSize.max,
                                             children: [
                                               Expanded(
                                                 child: Text(
-                                                  'Bienvenue sur l\'application CarbonFight.',
+                                                  'Merci d\'avoir téléchargé la toute première version de CarbonFight. ',
                                                   style: FlutterFlowTheme.of(
                                                           context)
                                                       .bodyText1
@@ -180,7 +193,7 @@ class _SplashWidgetState extends State<SplashWidget> {
                                                   icon: Icon(
                                                     Icons.arrow_right_alt,
                                                   ),
-                                                  text: 'Next',
+                                                  text: 'Suivant',
                                                 ),
                                               ),
                                             ),
@@ -201,8 +214,7 @@ class _SplashWidgetState extends State<SplashWidget> {
                             alignment: AlignmentDirectional(0, 0),
                             children: [
                               Image.asset(
-                                'assets/images/co2_illustration.jpg',
-                                width: MediaQuery.of(context).size.width,
+                                'assets/images/onboard2flou.jpg',
                                 height: MediaQuery.of(context).size.height * 1,
                                 fit: BoxFit.fitHeight,
                               ),
@@ -215,8 +227,9 @@ class _SplashWidgetState extends State<SplashWidget> {
                                   decoration: BoxDecoration(
                                     gradient: LinearGradient(
                                       colors: [
-                                        Color(0xBE23D0C1),
-                                        Color(0x0023D0C1)
+                                        FlutterFlowTheme.of(context)
+                                            .primaryColor,
+                                        Color(0x0000A193)
                                       ],
                                       stops: [0, 1],
                                       begin: AlignmentDirectional(0, -1),
@@ -239,28 +252,41 @@ class _SplashWidgetState extends State<SplashWidget> {
                                           MainAxisAlignment.center,
                                       children: [
                                         Image.asset(
-                                          'assets/images/splash_1.png',
-                                          width:
-                                              MediaQuery.of(context).size.width,
-                                          height: MediaQuery.of(context)
-                                                  .size
-                                                  .height *
-                                              0.25,
+                                          'assets/images/logo_light.png',
+                                          height: 75,
                                           fit: BoxFit.fitWidth,
                                         ),
                                         Padding(
                                           padding:
                                               EdgeInsetsDirectional.fromSTEB(
-                                                  0, 20, 0, 0),
+                                                  0, 30, 0, 0),
+                                          child: Row(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              Icon(
+                                                Icons.timeline,
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .tertiaryColor,
+                                                size: 250,
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  0, 70, 0, 0),
                                           child: Row(
                                             mainAxisSize: MainAxisSize.max,
                                             children: [
                                               Expanded(
                                                 child: Text(
-                                                  'Welcome',
+                                                  'MESUREZ ',
+                                                  textAlign: TextAlign.center,
                                                   style: FlutterFlowTheme.of(
                                                           context)
-                                                      .title1
+                                                      .title3
                                                       .override(
                                                         fontFamily:
                                                             'Montserrat',
@@ -277,13 +303,13 @@ class _SplashWidgetState extends State<SplashWidget> {
                                         Padding(
                                           padding:
                                               EdgeInsetsDirectional.fromSTEB(
-                                                  0, 10, 0, 0),
+                                                  0, 30, 0, 0),
                                           child: Row(
                                             mainAxisSize: MainAxisSize.max,
                                             children: [
                                               Expanded(
                                                 child: Text(
-                                                  'Est exercitationem quod sed molestiae aut autem magni est consectetur architecto ut dolore quidem. Aut nisi illum cum sint.',
+                                                  'Ajoutez vos activités émetrices de CO2, et mesurez votre impact réel sur la planète.',
                                                   style: FlutterFlowTheme.of(
                                                           context)
                                                       .bodyText1
@@ -333,7 +359,7 @@ class _SplashWidgetState extends State<SplashWidget> {
                                                   icon: Icon(
                                                     Icons.arrow_right_alt,
                                                   ),
-                                                  text: 'Next',
+                                                  text: 'Suivant',
                                                 ),
                                               ),
                                             ),
@@ -354,8 +380,7 @@ class _SplashWidgetState extends State<SplashWidget> {
                             alignment: AlignmentDirectional(0, 0),
                             children: [
                               Image.asset(
-                                'assets/images/co2_illustration.jpg',
-                                width: MediaQuery.of(context).size.width,
+                                'assets/images/onboard3flou.jpg',
                                 height: MediaQuery.of(context).size.height * 1,
                                 fit: BoxFit.fitHeight,
                               ),
@@ -368,8 +393,9 @@ class _SplashWidgetState extends State<SplashWidget> {
                                   decoration: BoxDecoration(
                                     gradient: LinearGradient(
                                       colors: [
-                                        Color(0xBE23D0C1),
-                                        Color(0x0023D0C1)
+                                        FlutterFlowTheme.of(context)
+                                            .primaryColor,
+                                        Color(0x0000A193)
                                       ],
                                       stops: [0, 1],
                                       begin: AlignmentDirectional(0, -1),
@@ -392,28 +418,41 @@ class _SplashWidgetState extends State<SplashWidget> {
                                           MainAxisAlignment.center,
                                       children: [
                                         Image.asset(
-                                          'assets/images/splash_1.png',
-                                          width:
-                                              MediaQuery.of(context).size.width,
-                                          height: MediaQuery.of(context)
-                                                  .size
-                                                  .height *
-                                              0.25,
+                                          'assets/images/logo_light.png',
+                                          height: 75,
                                           fit: BoxFit.fitWidth,
                                         ),
                                         Padding(
                                           padding:
                                               EdgeInsetsDirectional.fromSTEB(
-                                                  0, 20, 0, 0),
+                                                  0, 30, 0, 0),
+                                          child: Row(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              FaIcon(
+                                                FontAwesomeIcons.trophy,
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .tertiaryColor,
+                                                size: 250,
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  0, 70, 0, 0),
                                           child: Row(
                                             mainAxisSize: MainAxisSize.max,
                                             children: [
                                               Expanded(
                                                 child: Text(
-                                                  'Welcome',
+                                                  'AGISSEZ',
+                                                  textAlign: TextAlign.center,
                                                   style: FlutterFlowTheme.of(
                                                           context)
-                                                      .title1
+                                                      .title3
                                                       .override(
                                                         fontFamily:
                                                             'Montserrat',
@@ -430,13 +469,13 @@ class _SplashWidgetState extends State<SplashWidget> {
                                         Padding(
                                           padding:
                                               EdgeInsetsDirectional.fromSTEB(
-                                                  0, 10, 0, 0),
+                                                  0, 30, 0, 0),
                                           child: Row(
                                             mainAxisSize: MainAxisSize.max,
                                             children: [
                                               Expanded(
                                                 child: Text(
-                                                  'Est exercitationem quod sed molestiae aut autem magni est consectetur architecto ut dolore quidem. Aut nisi illum cum sint.',
+                                                  'Identifiez et réduisez vos actions émetrices de CO2, afin d\'améliorer votre score.',
                                                   style: FlutterFlowTheme.of(
                                                           context)
                                                       .bodyText1
@@ -467,16 +506,13 @@ class _SplashWidgetState extends State<SplashWidget> {
                                                   .fromSTEB(40, 0, 40, 80),
                                               child: InkWell(
                                                 onTap: () async {
+                                                  setState(() => FFAppState()
+                                                      .showSplash = false);
                                                   await Navigator.push(
                                                     context,
-                                                    PageTransition(
-                                                      type: PageTransitionType
-                                                          .fade,
-                                                      duration: Duration(
-                                                          milliseconds: 0),
-                                                      reverseDuration: Duration(
-                                                          milliseconds: 0),
-                                                      child: HomeWidget(),
+                                                    MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          HomeWidget(),
                                                     ),
                                                   );
                                                 },
@@ -492,7 +528,7 @@ class _SplashWidgetState extends State<SplashWidget> {
                                                   icon: Icon(
                                                     Icons.arrow_right_alt,
                                                   ),
-                                                  text: 'Start Journey',
+                                                  text: 'C\'est parti ',
                                                 ),
                                               ),
                                             ),
@@ -509,7 +545,7 @@ class _SplashWidgetState extends State<SplashWidget> {
                       ],
                     ),
                     Align(
-                      alignment: AlignmentDirectional(-0.75, -0.4),
+                      alignment: AlignmentDirectional(0, 0),
                       child: SmoothPageIndicator(
                         controller: pageViewController ??=
                             PageController(initialPage: 0),
