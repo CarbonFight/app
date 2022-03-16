@@ -473,13 +473,27 @@ class _SignupWidgetState extends State<SignupWidget> {
                                     .update(usersCreateData);
 
                                 await sendEmailVerification();
+                                await showDialog(
+                                  context: context,
+                                  builder: (alertDialogContext) {
+                                    return AlertDialog(
+                                      title: Text('E-mail envoyé'),
+                                      content: Text(
+                                          'Merci de valider votre compte en cliquant sur le lien reçu par e-mail.'),
+                                      actions: [
+                                        TextButton(
+                                          onPressed: () =>
+                                              Navigator.pop(alertDialogContext),
+                                          child: Text('Ok'),
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                );
                                 await Navigator.push(
                                   context,
-                                  PageTransition(
-                                    type: PageTransitionType.fade,
-                                    duration: Duration(milliseconds: 0),
-                                    reverseDuration: Duration(milliseconds: 0),
-                                    child: LoginWidget(),
+                                  MaterialPageRoute(
+                                    builder: (context) => LoginWidget(),
                                   ),
                                 );
                               },
@@ -575,14 +589,9 @@ class _SignupWidgetState extends State<SignupWidget> {
                                                 await Navigator
                                                     .pushAndRemoveUntil(
                                                   context,
-                                                  PageTransition(
-                                                    type:
-                                                        PageTransitionType.fade,
-                                                    duration: Duration(
-                                                        milliseconds: 0),
-                                                    reverseDuration: Duration(
-                                                        milliseconds: 0),
-                                                    child: HomeWidget(),
+                                                  MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        HomeWidget(),
                                                   ),
                                                   (r) => false,
                                                 );
@@ -629,14 +638,9 @@ class _SignupWidgetState extends State<SignupWidget> {
                                                 await Navigator
                                                     .pushAndRemoveUntil(
                                                   context,
-                                                  PageTransition(
-                                                    type:
-                                                        PageTransitionType.fade,
-                                                    duration: Duration(
-                                                        milliseconds: 0),
-                                                    reverseDuration: Duration(
-                                                        milliseconds: 0),
-                                                    child: HomeWidget(),
+                                                  MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        HomeWidget(),
                                                   ),
                                                   (r) => false,
                                                 );
@@ -680,13 +684,9 @@ class _SignupWidgetState extends State<SignupWidget> {
                                               await Navigator
                                                   .pushAndRemoveUntil(
                                                 context,
-                                                PageTransition(
-                                                  type: PageTransitionType.fade,
-                                                  duration:
-                                                      Duration(milliseconds: 0),
-                                                  reverseDuration:
-                                                      Duration(milliseconds: 0),
-                                                  child: HomeWidget(),
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      HomeWidget(),
                                                 ),
                                                 (r) => false,
                                               );
@@ -717,12 +717,8 @@ class _SignupWidgetState extends State<SignupWidget> {
                                 onTap: () async {
                                   await Navigator.push(
                                     context,
-                                    PageTransition(
-                                      type: PageTransitionType.fade,
-                                      duration: Duration(milliseconds: 0),
-                                      reverseDuration:
-                                          Duration(milliseconds: 0),
-                                      child: LoginWidget(),
+                                    MaterialPageRoute(
+                                      builder: (context) => LoginWidget(),
                                     ),
                                   );
                                 },
@@ -745,12 +741,8 @@ class _SignupWidgetState extends State<SignupWidget> {
                                       onPressed: () async {
                                         await Navigator.push(
                                           context,
-                                          PageTransition(
-                                            type: PageTransitionType.fade,
-                                            duration: Duration(milliseconds: 0),
-                                            reverseDuration:
-                                                Duration(milliseconds: 0),
-                                            child: LoginWidget(),
+                                          MaterialPageRoute(
+                                            builder: (context) => LoginWidget(),
                                           ),
                                         );
                                       },

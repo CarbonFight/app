@@ -928,11 +928,8 @@ class _StatistiquesWidgetState extends State<StatistiquesWidget> {
                         onTap: () async {
                           await Navigator.push(
                             context,
-                            PageTransition(
-                              type: PageTransitionType.fade,
-                              duration: Duration(milliseconds: 0),
-                              reverseDuration: Duration(milliseconds: 0),
-                              child: DrawerWidget(),
+                            MaterialPageRoute(
+                              builder: (context) => DrawerWidget(),
                             ),
                           );
                         },
@@ -1001,42 +998,37 @@ class _StatistiquesWidgetState extends State<StatistiquesWidget> {
                         Row(
                           mainAxisSize: MainAxisSize.max,
                           children: [
-                            Container(
-                              height: 50,
-                              decoration: BoxDecoration(
-                                color:
-                                    FlutterFlowTheme.of(context).tertiaryColor,
-                                borderRadius: BorderRadius.circular(100),
-                              ),
-                              child: Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    20, 0, 20, 0),
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  children: [
-                                    SvgPicture.asset(
-                                      'assets/images/actions_green.svg',
-                                      width: 18,
-                                      height: 18,
-                                      fit: BoxFit.cover,
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          10, 0, 0, 0),
-                                      child: InkWell(
-                                        onTap: () async {
-                                          await Navigator.push(
-                                            context,
-                                            PageTransition(
-                                              type: PageTransitionType.fade,
-                                              duration:
-                                                  Duration(milliseconds: 0),
-                                              reverseDuration:
-                                                  Duration(milliseconds: 0),
-                                              child: HomeWidget(),
-                                            ),
-                                          );
-                                        },
+                            InkWell(
+                              onTap: () async {
+                                await Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => HomeWidget(),
+                                  ),
+                                );
+                              },
+                              child: Container(
+                                height: 50,
+                                decoration: BoxDecoration(
+                                  color: FlutterFlowTheme.of(context)
+                                      .tertiaryColor,
+                                  borderRadius: BorderRadius.circular(100),
+                                ),
+                                child: Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      20, 0, 20, 0),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      SvgPicture.asset(
+                                        'assets/images/actions_green.svg',
+                                        width: 18,
+                                        height: 18,
+                                        fit: BoxFit.cover,
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            10, 0, 0, 0),
                                         child: Text(
                                           'Actions',
                                           style: FlutterFlowTheme.of(context)
@@ -1050,46 +1042,57 @@ class _StatistiquesWidgetState extends State<StatistiquesWidget> {
                                               ),
                                         ),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
-                            Container(
-                              height: 50,
-                              decoration: BoxDecoration(
-                                color: FlutterFlowTheme.of(context).gronyLight,
-                                borderRadius: BorderRadius.circular(100),
-                              ),
-                              child: Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    20, 0, 20, 0),
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  children: [
-                                    SvgPicture.asset(
-                                      'assets/images/statics_white.svg',
-                                      width: 18,
-                                      height: 18,
-                                      fit: BoxFit.cover,
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          10, 0, 0, 0),
-                                      child: Text(
-                                        'Statistiques',
-                                        style: FlutterFlowTheme.of(context)
-                                            .subtitle2
-                                            .override(
-                                              fontFamily: 'Montserrat',
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .tertiaryColor,
-                                              fontWeight: FontWeight.w800,
-                                            ),
+                            InkWell(
+                              onTap: () async {
+                                await Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => StatistiquesWidget(),
+                                  ),
+                                );
+                              },
+                              child: Container(
+                                height: 50,
+                                decoration: BoxDecoration(
+                                  color:
+                                      FlutterFlowTheme.of(context).gronyLight,
+                                  borderRadius: BorderRadius.circular(100),
+                                ),
+                                child: Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      20, 0, 20, 0),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      SvgPicture.asset(
+                                        'assets/images/statics_white.svg',
+                                        width: 18,
+                                        height: 18,
+                                        fit: BoxFit.cover,
                                       ),
-                                    ),
-                                  ],
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            10, 0, 0, 0),
+                                        child: Text(
+                                          'Statistiques',
+                                          style: FlutterFlowTheme.of(context)
+                                              .subtitle2
+                                              .override(
+                                                fontFamily: 'Montserrat',
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .tertiaryColor,
+                                                fontWeight: FontWeight.w800,
+                                              ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),

@@ -1,8 +1,13 @@
+import '../auth/auth_util.dart';
+import '../backend/backend.dart';
 import '../components/icon_button_widget.dart';
 import '../flutter_flow/flutter_flow_drop_down.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
+import '../home/home_widget.dart';
+import '../flutter_flow/custom_functions.dart' as functions;
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -21,11 +26,10 @@ class AddActionFormWidget extends StatefulWidget {
 }
 
 class _AddActionFormWidgetState extends State<AddActionFormWidget> {
-  String dropDownValue1;
-  String dropDownValue2;
+  String energyValue;
+  String ownershipValue;
+  String passengersValue;
   TextEditingController textController;
-  String dropDownValue3;
-  String dropDownValue4;
 
   @override
   void initState() {
@@ -137,6 +141,7 @@ class _AddActionFormWidgetState extends State<AddActionFormWidget> {
                                       fontFamily: 'Montserrat',
                                       fontWeight: FontWeight.w500,
                                     ),
+                            keyboardType: TextInputType.number,
                           ),
                         ),
                       ],
@@ -188,39 +193,62 @@ class _AddActionFormWidgetState extends State<AddActionFormWidget> {
                         mainAxisSize: MainAxisSize.max,
                         children: [
                           Expanded(
-                            child: Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 0, 10, 0),
-                              child: FlutterFlowDropDown(
-                                options: ['Option 1', 'Option 2'].toList(),
-                                onChanged: (val) =>
-                                    setState(() => dropDownValue1 = val),
-                                width: 180,
-                                height: 50,
-                                textStyle: FlutterFlowTheme.of(context)
-                                    .bodyText2
-                                    .override(
-                                      fontFamily: 'Montserrat',
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                hintText: 'Cylindre',
-                                fillColor: Color(0xFFFAFAFA),
-                                elevation: 2,
-                                borderColor:
-                                    FlutterFlowTheme.of(context).grayLight,
-                                borderWidth: 1,
-                                borderRadius: 100,
-                                margin: EdgeInsetsDirectional.fromSTEB(
-                                    12, 4, 12, 4),
-                                hidesUnderline: true,
+                            child: FlutterFlowDropDown(
+                              options: [
+                                '1',
+                                '2',
+                                '3',
+                                '4',
+                                '5',
+                                '6',
+                                '7',
+                                '8',
+                                '9'
+                              ].toList(),
+                              onChanged: (val) =>
+                                  setState(() => passengersValue = val),
+                              width: 180,
+                              height: 50,
+                              textStyle: FlutterFlowTheme.of(context)
+                                  .bodyText2
+                                  .override(
+                                    fontFamily: 'Montserrat',
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                              hintText: 'Nombre de passagers',
+                              icon: Icon(
+                                Icons.family_restroom,
+                                size: 15,
                               ),
+                              fillColor: Color(0xFFFAFAFA),
+                              elevation: 2,
+                              borderColor:
+                                  FlutterFlowTheme.of(context).grayLight,
+                              borderWidth: 1,
+                              borderRadius: 100,
+                              margin:
+                                  EdgeInsetsDirectional.fromSTEB(12, 4, 12, 4),
+                              hidesUnderline: true,
                             ),
                           ),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 10),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
                           Expanded(
                             child: FlutterFlowDropDown(
-                              options: ['Option 1', 'Option 2'].toList(),
+                              options: [
+                                'Owner',
+                                'Short rent',
+                                'Long rent',
+                                'Taxi'
+                              ].toList(),
                               onChanged: (val) =>
-                                  setState(() => dropDownValue2 = val),
+                                  setState(() => ownershipValue = val),
                               width: 180,
                               height: 50,
                               textStyle: FlutterFlowTheme.of(context)
@@ -229,7 +257,11 @@ class _AddActionFormWidgetState extends State<AddActionFormWidget> {
                                     fontFamily: 'Montserrat',
                                     fontWeight: FontWeight.w500,
                                   ),
-                              hintText: 'Passagers',
+                              hintText: 'Type d\'utilisation',
+                              icon: Icon(
+                                Icons.car_rental,
+                                size: 15,
+                              ),
                               fillColor: Color(0xFFFAFAFA),
                               elevation: 2,
                               borderColor:
@@ -253,40 +285,7 @@ class _AddActionFormWidgetState extends State<AddActionFormWidget> {
                             child: FlutterFlowDropDown(
                               options: ['Option 1', 'Option 2'].toList(),
                               onChanged: (val) =>
-                                  setState(() => dropDownValue3 = val),
-                              width: 180,
-                              height: 50,
-                              textStyle: FlutterFlowTheme.of(context)
-                                  .bodyText2
-                                  .override(
-                                    fontFamily: 'Montserrat',
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                              hintText: 'Cylindre',
-                              fillColor: Color(0xFFFAFAFA),
-                              elevation: 2,
-                              borderColor:
-                                  FlutterFlowTheme.of(context).grayLight,
-                              borderWidth: 1,
-                              borderRadius: 100,
-                              margin:
-                                  EdgeInsetsDirectional.fromSTEB(12, 4, 12, 4),
-                              hidesUnderline: true,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 10),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          Expanded(
-                            child: FlutterFlowDropDown(
-                              options: ['Option 1', 'Option 2'].toList(),
-                              onChanged: (val) =>
-                                  setState(() => dropDownValue4 = val),
+                                  setState(() => energyValue = val),
                               width: 180,
                               height: 50,
                               textStyle: FlutterFlowTheme.of(context)
@@ -296,6 +295,10 @@ class _AddActionFormWidgetState extends State<AddActionFormWidget> {
                                     fontWeight: FontWeight.w500,
                                   ),
                               hintText: 'Energie',
+                              icon: Icon(
+                                Icons.electrical_services_rounded,
+                                size: 15,
+                              ),
                               fillColor: Color(0xFFFAFAFA),
                               elevation: 2,
                               borderColor:
@@ -318,7 +321,46 @@ class _AddActionFormWidgetState extends State<AddActionFormWidget> {
                           Expanded(
                             child: InkWell(
                               onTap: () async {
-                                Navigator.pop(context);
+                                setState(() => FFAppState().actionCO2 =
+                                    functions.transportActionsCO2e(
+                                        int.parse(textController.text),
+                                        passengersValue,
+                                        ownershipValue,
+                                        energyValue,
+                                        'car'));
+
+                                final transportActionsCreateData =
+                                    createTransportActionsRecordData(
+                                  transport: 'car',
+                                  distance: int.parse(textController.text),
+                                  userId: currentUserUid,
+                                  powertype: 'electricity',
+                                  passengers: 1,
+                                  ownership: 'owner',
+                                  createdTime: getCurrentTimestamp,
+                                  co2e: FFAppState().actionCO2,
+                                );
+                                await TransportActionsRecord.collection
+                                    .doc()
+                                    .set(transportActionsCreateData);
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text(
+                                      'Vous avez ajouté ${functions.printScore(FFAppState().actionCO2)}de CO2 à votre score.',
+                                      style: GoogleFonts.getFont(
+                                        'Roboto',
+                                      ),
+                                    ),
+                                    duration: Duration(milliseconds: 4000),
+                                    backgroundColor: Color(0x00000000),
+                                  ),
+                                );
+                                await Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => HomeWidget(),
+                                  ),
+                                );
                               },
                               child: IconButtonWidget(
                                 fillColor:
@@ -331,7 +373,7 @@ class _AddActionFormWidgetState extends State<AddActionFormWidget> {
                                       .tertiaryColor,
                                   size: 18,
                                 ),
-                                text: 'Save',
+                                text: 'Ajouter',
                               ),
                             ),
                           ),
