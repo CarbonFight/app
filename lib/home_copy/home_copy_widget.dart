@@ -228,9 +228,7 @@ class _HomeCopyWidgetState extends State<HomeCopyWidget> {
                                         padding: EdgeInsetsDirectional.fromSTEB(
                                             10, 0, 0, 0),
                                         child: Text(
-                                          FFLocalizations.of(context).getText(
-                                            'kwegriu7' /* Actions */,
-                                          ),
+                                          'Actions',
                                           style: FlutterFlowTheme.of(context)
                                               .subtitle2
                                               .override(
@@ -279,9 +277,7 @@ class _HomeCopyWidgetState extends State<HomeCopyWidget> {
                                         padding: EdgeInsetsDirectional.fromSTEB(
                                             10, 0, 0, 0),
                                         child: Text(
-                                          FFLocalizations.of(context).getText(
-                                            'p9kojgwy' /* Statistiques */,
-                                          ),
+                                          'Statistiques',
                                           style: FlutterFlowTheme.of(context)
                                               .subtitle2
                                               .override(
@@ -391,11 +387,7 @@ class _HomeCopyWidgetState extends State<HomeCopyWidget> {
                                                 children: [
                                                   Expanded(
                                                     child: Text(
-                                                      FFLocalizations.of(
-                                                              context)
-                                                          .getText(
-                                                        'rpvkl5uk' /* Vos émissions :  */,
-                                                      ),
+                                                      'Vos émissions : ',
                                                       textAlign:
                                                           TextAlign.center,
                                                       style:
@@ -427,11 +419,7 @@ class _HomeCopyWidgetState extends State<HomeCopyWidget> {
                                                 children: [
                                                   Expanded(
                                                     child: Text(
-                                                      FFLocalizations.of(
-                                                              context)
-                                                          .getText(
-                                                        'qx9ce8ed' /* Aujourd'hui */,
-                                                      ),
+                                                      'Aujourd\'hui',
                                                       textAlign:
                                                           TextAlign.center,
                                                       style:
@@ -483,10 +471,7 @@ class _HomeCopyWidgetState extends State<HomeCopyWidget> {
                                                   FlutterFlowTheme.of(context)
                                                       .tertiaryColor,
                                               center: Text(
-                                                FFLocalizations.of(context)
-                                                    .getText(
-                                                  '8moxnzth' /* 71% */,
-                                                ),
+                                                '71%',
                                                 textAlign: TextAlign.start,
                                                 style: FlutterFlowTheme.of(
                                                         context)
@@ -514,11 +499,7 @@ class _HomeCopyWidgetState extends State<HomeCopyWidget> {
                                                 children: [
                                                   Expanded(
                                                     child: Text(
-                                                      FFLocalizations.of(
-                                                              context)
-                                                          .getText(
-                                                        '4omhto4v' /* You're on track to decrease em... */,
-                                                      ),
+                                                      'You\'re on track to decrease emissions by',
                                                       textAlign:
                                                           TextAlign.center,
                                                       style:
@@ -550,11 +531,7 @@ class _HomeCopyWidgetState extends State<HomeCopyWidget> {
                                                 children: [
                                                   Expanded(
                                                     child: Text(
-                                                      FFLocalizations.of(
-                                                              context)
-                                                          .getText(
-                                                        'vuzgrcno' /* This Month */,
-                                                      ),
+                                                      'This Month',
                                                       textAlign:
                                                           TextAlign.center,
                                                       style:
@@ -606,10 +583,7 @@ class _HomeCopyWidgetState extends State<HomeCopyWidget> {
                                                   FlutterFlowTheme.of(context)
                                                       .tertiaryColor,
                                               center: Text(
-                                                FFLocalizations.of(context)
-                                                    .getText(
-                                                  'dbr151uk' /* 71% */,
-                                                ),
+                                                '71%',
                                                 textAlign: TextAlign.start,
                                                 style: FlutterFlowTheme.of(
                                                         context)
@@ -637,11 +611,7 @@ class _HomeCopyWidgetState extends State<HomeCopyWidget> {
                                                 children: [
                                                   Expanded(
                                                     child: Text(
-                                                      FFLocalizations.of(
-                                                              context)
-                                                          .getText(
-                                                        'vfozqtpg' /* You're on track to decrease em... */,
-                                                      ),
+                                                      'You\'re on track to decrease emissions by',
                                                       textAlign:
                                                           TextAlign.center,
                                                       style:
@@ -673,11 +643,7 @@ class _HomeCopyWidgetState extends State<HomeCopyWidget> {
                                                 children: [
                                                   Expanded(
                                                     child: Text(
-                                                      FFLocalizations.of(
-                                                              context)
-                                                          .getText(
-                                                        'hzpnjyvy' /* This Month */,
-                                                      ),
+                                                      'This Month',
                                                       textAlign:
                                                           TextAlign.center,
                                                       style:
@@ -775,9 +741,7 @@ class _HomeCopyWidgetState extends State<HomeCopyWidget> {
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Text(
-                                        FFLocalizations.of(context).getText(
-                                          'jf8th9g3' /* CO2e */,
-                                        ),
+                                        'CO2e',
                                         style: FlutterFlowTheme.of(context)
                                             .subtitle2
                                             .override(
@@ -910,9 +874,7 @@ class _HomeCopyWidgetState extends State<HomeCopyWidget> {
                                         ),
                                         Expanded(
                                           child: Text(
-                                            FFLocalizations.of(context).getText(
-                                              '77s7833s' /* Les actions du jour :  */,
-                                            ),
+                                            'Les actions du jour : ',
                                             style: FlutterFlowTheme.of(context)
                                                 .subtitle2
                                                 .override(
@@ -967,9 +929,7 @@ class _HomeCopyWidgetState extends State<HomeCopyWidget> {
                                             ),
                                           ),
                                           Text(
-                                            FFLocalizations.of(context).getText(
-                                              '86icisbq' /* 38% */,
-                                            ),
+                                            '38%',
                                             style: FlutterFlowTheme.of(context)
                                                 .bodyText1
                                                 .override(
@@ -1065,9 +1025,7 @@ class _HomeCopyWidgetState extends State<HomeCopyWidget> {
                                           ),
                                         ),
                                         Text(
-                                          FFLocalizations.of(context).getText(
-                                            'vgkc5gef' /* Transport */,
-                                          ),
+                                          'Transport',
                                           style: FlutterFlowTheme.of(context)
                                               .bodyText2
                                               .override(
@@ -1137,9 +1095,7 @@ class _HomeCopyWidgetState extends State<HomeCopyWidget> {
                                           ),
                                         ),
                                         Text(
-                                          FFLocalizations.of(context).getText(
-                                            'epq13808' /* Repas */,
-                                          ),
+                                          'Repas',
                                           style: FlutterFlowTheme.of(context)
                                               .bodyText2
                                               .override(
@@ -1209,9 +1165,7 @@ class _HomeCopyWidgetState extends State<HomeCopyWidget> {
                                           ),
                                         ),
                                         Text(
-                                          FFLocalizations.of(context).getText(
-                                            '549f54dy' /* Energies */,
-                                          ),
+                                          'Energies',
                                           style: FlutterFlowTheme.of(context)
                                               .bodyText2
                                               .override(

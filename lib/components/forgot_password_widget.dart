@@ -54,9 +54,7 @@ class _ForgotPasswordWidgetState extends State<ForgotPasswordWidget> {
                     mainAxisSize: MainAxisSize.max,
                     children: [
                       Text(
-                        FFLocalizations.of(context).getText(
-                          'hp42a316' /* Forgot Password */,
-                        ),
+                        'Forgot Password',
                         style: FlutterFlowTheme.of(context).subtitle1,
                       ),
                     ],
@@ -89,9 +87,7 @@ class _ForgotPasswordWidgetState extends State<ForgotPasswordWidget> {
                         children: [
                           Expanded(
                             child: Text(
-                              FFLocalizations.of(context).getText(
-                                'g101i68r' /* Enter your email address and w... */,
-                              ),
+                              'Enter your email address and we will send a reset password link for you, you can follow the link and set your new password.',
                               style: FlutterFlowTheme.of(context)
                                   .bodyText1
                                   .override(
@@ -113,12 +109,8 @@ class _ForgotPasswordWidgetState extends State<ForgotPasswordWidget> {
                               controller: emailController,
                               obscureText: false,
                               decoration: InputDecoration(
-                                labelText: FFLocalizations.of(context).getText(
-                                  'nloe7roo' /* Your Email */,
-                                ),
-                                hintText: FFLocalizations.of(context).getText(
-                                  'zwxa1so0' /* Your Email */,
-                                ),
+                                labelText: 'Your Email',
+                                hintText: 'Your Email',
                                 enabledBorder: OutlineInputBorder(
                                   borderSide: BorderSide(
                                     color:

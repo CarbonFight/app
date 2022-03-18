@@ -61,17 +61,13 @@ class _FeedbackWidgetState extends State<FeedbackWidget> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          FFLocalizations.of(context).getText(
-                            'nwbq4phz' /* Vos commentaires comptent. */,
-                          ),
+                          'Vos commentaires comptent.',
                           style: FlutterFlowTheme.of(context).subtitle1,
                         ),
                         Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
                           child: Text(
-                            FFLocalizations.of(context).getText(
-                              'kau282i5' /* Une remarque, un bug, une fonc... */,
-                            ),
+                            'Une remarque, un bug, une fonctionnalité manquante ?',
                             style:
                                 FlutterFlowTheme.of(context).bodyText1.override(
                                       fontFamily: 'Montserrat',
@@ -108,9 +104,7 @@ class _FeedbackWidgetState extends State<FeedbackWidget> {
                                 controller: messageController,
                                 obscureText: false,
                                 decoration: InputDecoration(
-                                  hintText: FFLocalizations.of(context).getText(
-                                    'ryktisa6' /* Message */,
-                                  ),
+                                  hintText: 'Message',
                                   hintStyle: FlutterFlowTheme.of(context)
                                       .bodyText1
                                       .override(
@@ -259,9 +253,7 @@ class _FeedbackWidgetState extends State<FeedbackWidget> {
                     Padding(
                       padding: EdgeInsetsDirectional.fromSTEB(10, 0, 0, 0),
                       child: Text(
-                        FFLocalizations.of(context).getText(
-                          'b8mqa92w' /* Contactez-nous */,
-                        ),
+                        'Contactez-nous',
                         style: FlutterFlowTheme.of(context).title2.override(
                               fontFamily: 'Montserrat',
                               color: FlutterFlowTheme.of(context).primaryColor,
