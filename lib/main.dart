@@ -12,9 +12,15 @@ import 'package:carbon_fight/login/login_widget.dart';
 import 'package:carbon_fight/home/home_widget.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
+import 'package:flutter/services.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+
+  // Manual edit : disable screen rotation
+  SystemChrome.setPreferredOrientations(
+      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
 
   runApp(MyApp());
 }
