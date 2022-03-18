@@ -111,7 +111,10 @@ class _SignupWidgetState extends State<SignupWidget> {
                                   controller: nameController,
                                   obscureText: false,
                                   decoration: InputDecoration(
-                                    hintText: 'Name',
+                                    hintText:
+                                        FFLocalizations.of(context).getText(
+                                      'lq908mnj' /* Name */,
+                                    ),
                                     hintStyle: FlutterFlowTheme.of(context)
                                         .bodyText1
                                         .override(
@@ -190,7 +193,10 @@ class _SignupWidgetState extends State<SignupWidget> {
                                   controller: emailAddressController,
                                   obscureText: false,
                                   decoration: InputDecoration(
-                                    hintText: 'Email Address',
+                                    hintText:
+                                        FFLocalizations.of(context).getText(
+                                      '55gwrowl' /* Email Address */,
+                                    ),
                                     hintStyle: FlutterFlowTheme.of(context)
                                         .bodyText1
                                         .override(
@@ -270,7 +276,10 @@ class _SignupWidgetState extends State<SignupWidget> {
                                   controller: passwordController,
                                   obscureText: !passwordVisibility,
                                   decoration: InputDecoration(
-                                    hintText: 'Password',
+                                    hintText:
+                                        FFLocalizations.of(context).getText(
+                                      'v4bol2c6' /* Password */,
+                                    ),
                                     hintStyle: FlutterFlowTheme.of(context)
                                         .bodyText1
                                         .override(
@@ -363,7 +372,10 @@ class _SignupWidgetState extends State<SignupWidget> {
                                   controller: retypepasswordController,
                                   obscureText: !retypepasswordVisibility,
                                   decoration: InputDecoration(
-                                    hintText: 'Retype Password',
+                                    hintText:
+                                        FFLocalizations.of(context).getText(
+                                      'say6ghq2' /* Retype Password */,
+                                    ),
                                     hintStyle: FlutterFlowTheme.of(context)
                                         .bodyText1
                                         .override(
@@ -542,7 +554,9 @@ class _SignupWidgetState extends State<SignupWidget> {
                                           MainAxisAlignment.center,
                                       children: [
                                         AutoSizeText(
-                                          'Or Use Social Signup',
+                                          FFLocalizations.of(context).getText(
+                                            '7q55jp5z' /* Or Use Social Signup */,
+                                          ),
                                           textAlign: TextAlign.center,
                                           style: FlutterFlowTheme.of(context)
                                               .subtitle2
@@ -728,7 +742,9 @@ class _SignupWidgetState extends State<SignupWidget> {
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
                                     Text(
-                                      'Have an account?',
+                                      FFLocalizations.of(context).getText(
+                                        '96yy2ulj' /* Have an account? */,
+                                      ),
                                       style: FlutterFlowTheme.of(context)
                                           .subtitle2
                                           .override(
@@ -746,7 +762,9 @@ class _SignupWidgetState extends State<SignupWidget> {
                                           ),
                                         );
                                       },
-                                      text: 'Login',
+                                      text: FFLocalizations.of(context).getText(
+                                        'nqaxryoo' /* Login */,
+                                      ),
                                       options: FFButtonOptions(
                                         width: 90,
                                         height: 30,

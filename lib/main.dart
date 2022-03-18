@@ -68,7 +68,10 @@ class _MyAppState extends State<MyApp> {
         GlobalCupertinoLocalizations.delegate,
       ],
       locale: _locale,
-      supportedLocales: const [Locale('en', '')],
+      supportedLocales: const [
+        Locale('fr', ''),
+        Locale('en', ''),
+      ],
       theme: ThemeData(brightness: Brightness.light),
       themeMode: _themeMode,
       home: initialUser == null || displaySplashImage

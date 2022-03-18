@@ -116,7 +116,10 @@ class _SplashWidgetState extends State<SplashWidget> {
                                             children: [
                                               Expanded(
                                                 child: Text(
-                                                  'BIENVENUE',
+                                                  FFLocalizations.of(context)
+                                                      .getText(
+                                                    'b697wemi' /* BIENVENUE */,
+                                                  ),
                                                   textAlign: TextAlign.center,
                                                   style: FlutterFlowTheme.of(
                                                           context)
@@ -143,7 +146,10 @@ class _SplashWidgetState extends State<SplashWidget> {
                                             children: [
                                               Expanded(
                                                 child: Text(
-                                                  'Merci d\'avoir téléchargé la toute première version de CarbonFight. ',
+                                                  FFLocalizations.of(context)
+                                                      .getText(
+                                                    '9u2zip1i' /* Merci d'avoir téléchargé la to... */,
+                                                  ),
                                                   style: FlutterFlowTheme.of(
                                                           context)
                                                       .bodyText1
@@ -282,7 +288,10 @@ class _SplashWidgetState extends State<SplashWidget> {
                                             children: [
                                               Expanded(
                                                 child: Text(
-                                                  'MESUREZ ',
+                                                  FFLocalizations.of(context)
+                                                      .getText(
+                                                    'd1vo1jb4' /* MESUREZ  */,
+                                                  ),
                                                   textAlign: TextAlign.center,
                                                   style: FlutterFlowTheme.of(
                                                           context)
@@ -309,7 +318,10 @@ class _SplashWidgetState extends State<SplashWidget> {
                                             children: [
                                               Expanded(
                                                 child: Text(
-                                                  'Ajoutez vos activités émetrices de CO2, et mesurez votre impact réel sur la planète.',
+                                                  FFLocalizations.of(context)
+                                                      .getText(
+                                                    'mw7m3td6' /* Ajoutez vos activités émetrice... */,
+                                                  ),
                                                   style: FlutterFlowTheme.of(
                                                           context)
                                                       .bodyText1
@@ -448,7 +460,10 @@ class _SplashWidgetState extends State<SplashWidget> {
                                             children: [
                                               Expanded(
                                                 child: Text(
-                                                  'AGISSEZ',
+                                                  FFLocalizations.of(context)
+                                                      .getText(
+                                                    'gzncsdp7' /* AGISSEZ */,
+                                                  ),
                                                   textAlign: TextAlign.center,
                                                   style: FlutterFlowTheme.of(
                                                           context)
@@ -475,7 +490,10 @@ class _SplashWidgetState extends State<SplashWidget> {
                                             children: [
                                               Expanded(
                                                 child: Text(
-                                                  'Identifiez et réduisez vos actions émetrices de CO2, afin d\'améliorer votre score.',
+                                                  FFLocalizations.of(context)
+                                                      .getText(
+                                                    'ugmd7bxh' /* Identifiez et réduisez vos act... */,
+                                                  ),
                                                   style: FlutterFlowTheme.of(
                                                           context)
                                                       .bodyText1

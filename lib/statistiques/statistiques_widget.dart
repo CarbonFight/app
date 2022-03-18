@@ -162,7 +162,9 @@ class _StatistiquesWidgetState extends State<StatistiquesWidget> {
                                 Align(
                                   alignment: AlignmentDirectional(0.35, 0),
                                   child: Text(
-                                    '1',
+                                    FFLocalizations.of(context).getText(
+                                      'vxrri8bs' /* 1 */,
+                                    ),
                                     style: FlutterFlowTheme.of(context)
                                         .bodyText1
                                         .override(
@@ -205,7 +207,9 @@ class _StatistiquesWidgetState extends State<StatistiquesWidget> {
                                       mainAxisSize: MainAxisSize.max,
                                       children: [
                                         Text(
-                                          'Niveau: ',
+                                          FFLocalizations.of(context).getText(
+                                            'hmit84j7' /* Niveau:  */,
+                                          ),
                                           style: FlutterFlowTheme.of(context)
                                               .bodyText1
                                               .override(
@@ -217,7 +221,9 @@ class _StatistiquesWidgetState extends State<StatistiquesWidget> {
                                               ),
                                         ),
                                         Text(
-                                          'Mythique',
+                                          FFLocalizations.of(context).getText(
+                                            '7cta44gw' /* Mythique */,
+                                          ),
                                           style: FlutterFlowTheme.of(context)
                                               .bodyText1
                                               .override(
@@ -235,7 +241,9 @@ class _StatistiquesWidgetState extends State<StatistiquesWidget> {
                                     mainAxisSize: MainAxisSize.max,
                                     children: [
                                       Text(
-                                        'Classment: ',
+                                        FFLocalizations.of(context).getText(
+                                          '6o4g9xfj' /* Classment:  */,
+                                        ),
                                         style: FlutterFlowTheme.of(context)
                                             .bodyText1
                                             .override(
@@ -247,7 +255,9 @@ class _StatistiquesWidgetState extends State<StatistiquesWidget> {
                                             ),
                                       ),
                                       Text(
-                                        '#1 / 1',
+                                        FFLocalizations.of(context).getText(
+                                          'me8tqv2t' /* #1 / 1 */,
+                                        ),
                                         style: FlutterFlowTheme.of(context)
                                             .bodyText1
                                             .override(
@@ -318,7 +328,10 @@ class _StatistiquesWidgetState extends State<StatistiquesWidget> {
                                                         .spaceBetween,
                                                 children: [
                                                   Text(
-                                                    'Vos émissions du jour : ',
+                                                    FFLocalizations.of(context)
+                                                        .getText(
+                                                      'pfo25ymo' /* Vos émissions du jour :  */,
+                                                    ),
                                                     style: FlutterFlowTheme.of(
                                                             context)
                                                         .bodyText1
@@ -478,7 +491,11 @@ class _StatistiquesWidgetState extends State<StatistiquesWidget> {
                                                           .spaceBetween,
                                                   children: [
                                                     Text(
-                                                      'Vos émissions des 30 derniers jours : ',
+                                                      FFLocalizations.of(
+                                                              context)
+                                                          .getText(
+                                                        '67ks844v' /* Vos émissions des 30 derniers ... */,
+                                                      ),
                                                       style:
                                                           FlutterFlowTheme.of(
                                                                   context)
@@ -644,7 +661,11 @@ class _StatistiquesWidgetState extends State<StatistiquesWidget> {
                                                           .spaceBetween,
                                                   children: [
                                                     Text(
-                                                      'Vos émissions des 7 derniers jours : ',
+                                                      FFLocalizations.of(
+                                                              context)
+                                                          .getText(
+                                                        '59rd8f26' /* Vos émissions des 7 derniers j... */,
+                                                      ),
                                                       style:
                                                           FlutterFlowTheme.of(
                                                                   context)
@@ -782,7 +803,9 @@ class _StatistiquesWidgetState extends State<StatistiquesWidget> {
                                     size: 24,
                                   ),
                                   Text(
-                                    '2.67 KG',
+                                    FFLocalizations.of(context).getText(
+                                      'sxffyts8' /* 2.67 KG */,
+                                    ),
                                     style: FlutterFlowTheme.of(context)
                                         .bodyText1
                                         .override(
@@ -793,7 +816,9 @@ class _StatistiquesWidgetState extends State<StatistiquesWidget> {
                                         ),
                                   ),
                                   Text(
-                                    '72%',
+                                    FFLocalizations.of(context).getText(
+                                      '01w6g2hc' /* 72% */,
+                                    ),
                                     style: FlutterFlowTheme.of(context)
                                         .bodyText1
                                         .override(
@@ -828,7 +853,9 @@ class _StatistiquesWidgetState extends State<StatistiquesWidget> {
                                     size: 24,
                                   ),
                                   Text(
-                                    '975 KG',
+                                    FFLocalizations.of(context).getText(
+                                      '43l3zjzm' /* 975 KG */,
+                                    ),
                                     style: FlutterFlowTheme.of(context)
                                         .bodyText1
                                         .override(
@@ -839,7 +866,9 @@ class _StatistiquesWidgetState extends State<StatistiquesWidget> {
                                         ),
                                   ),
                                   Text(
-                                    '26%',
+                                    FFLocalizations.of(context).getText(
+                                      'skpu0g15' /* 26% */,
+                                    ),
                                     style: FlutterFlowTheme.of(context)
                                         .bodyText1
                                         .override(
@@ -874,7 +903,9 @@ class _StatistiquesWidgetState extends State<StatistiquesWidget> {
                                     size: 24,
                                   ),
                                   Text(
-                                    '37 KG',
+                                    FFLocalizations.of(context).getText(
+                                      '1byib7gg' /* 37 KG */,
+                                    ),
                                     style: FlutterFlowTheme.of(context)
                                         .bodyText1
                                         .override(
@@ -885,7 +916,9 @@ class _StatistiquesWidgetState extends State<StatistiquesWidget> {
                                         ),
                                   ),
                                   Text(
-                                    '1%',
+                                    FFLocalizations.of(context).getText(
+                                      '381pwcrr' /* 1% */,
+                                    ),
                                     style: FlutterFlowTheme.of(context)
                                         .bodyText1
                                         .override(
@@ -1030,7 +1063,9 @@ class _StatistiquesWidgetState extends State<StatistiquesWidget> {
                                         padding: EdgeInsetsDirectional.fromSTEB(
                                             10, 0, 0, 0),
                                         child: Text(
-                                          'Actions',
+                                          FFLocalizations.of(context).getText(
+                                            'd59etq79' /* Actions */,
+                                          ),
                                           style: FlutterFlowTheme.of(context)
                                               .subtitle2
                                               .override(
@@ -1079,7 +1114,9 @@ class _StatistiquesWidgetState extends State<StatistiquesWidget> {
                                         padding: EdgeInsetsDirectional.fromSTEB(
                                             10, 0, 0, 0),
                                         child: Text(
-                                          'Statistiques',
+                                          FFLocalizations.of(context).getText(
+                                            'i79uxkzr' /* Statistiques */,
+                                          ),
                                           style: FlutterFlowTheme.of(context)
                                               .subtitle2
                                               .override(
