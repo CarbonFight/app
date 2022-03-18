@@ -1,6 +1,7 @@
 import '../auth/auth_util.dart';
 import '../backend/backend.dart';
 import '../components/icon_button_widget.dart';
+import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
@@ -9,7 +10,7 @@ import '../login/login_widget.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class SignupWidget extends StatefulWidget {
@@ -588,88 +589,67 @@ class _SignupWidgetState extends State<SignupWidget> {
                                             borderRadius:
                                                 BorderRadius.circular(50),
                                           ),
-                                          child: Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    2, 2, 2, 2),
-                                            child: InkWell(
-                                              onTap: () async {
-                                                final user =
-                                                    await signInWithFacebook(
-                                                        context);
-                                                if (user == null) {
-                                                  return;
-                                                }
-                                                await Navigator
-                                                    .pushAndRemoveUntil(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        HomeWidget(),
-                                                  ),
-                                                  (r) => false,
-                                                );
-                                              },
-                                              child: Container(
-                                                width: 50,
-                                                height: 50,
-                                                clipBehavior: Clip.antiAlias,
-                                                decoration: BoxDecoration(
-                                                  shape: BoxShape.circle,
-                                                ),
-                                                child: SvgPicture.asset(
-                                                  'assets/images/social_facebook.svg',
-                                                ),
-                                              ),
+                                          child: FlutterFlowIconButton(
+                                            borderColor: Colors.transparent,
+                                            borderRadius: 30,
+                                            borderWidth: 1,
+                                            buttonSize: 60,
+                                            icon: FaIcon(
+                                              FontAwesomeIcons.facebookF,
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .tertiaryColor,
+                                              size: 30,
                                             ),
+                                            onPressed: () {
+                                              print('IconButton pressed ...');
+                                            },
                                           ),
                                         ),
                                       ),
                                       Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(
                                             0, 0, 8, 0),
-                                        child: Card(
-                                          clipBehavior:
-                                              Clip.antiAliasWithSaveLayer,
-                                          color: FlutterFlowTheme.of(context)
-                                              .orange,
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(50),
-                                          ),
-                                          child: Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    2, 2, 2, 2),
-                                            child: InkWell(
-                                              onTap: () async {
-                                                final user =
-                                                    await signInWithGoogle(
-                                                        context);
-                                                if (user == null) {
-                                                  return;
-                                                }
-                                                await Navigator
-                                                    .pushAndRemoveUntil(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        HomeWidget(),
-                                                  ),
-                                                  (r) => false,
-                                                );
-                                              },
-                                              child: Container(
-                                                width: 50,
-                                                height: 50,
-                                                clipBehavior: Clip.antiAlias,
-                                                decoration: BoxDecoration(
-                                                  shape: BoxShape.circle,
-                                                ),
-                                                child: SvgPicture.asset(
-                                                  'assets/images/social_GoogleWhite.svg',
-                                                ),
+                                        child: InkWell(
+                                          onTap: () async {
+                                            final user =
+                                                await signInWithGoogle(context);
+                                            if (user == null) {
+                                              return;
+                                            }
+                                            await Navigator.pushAndRemoveUntil(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) =>
+                                                    HomeWidget(),
                                               ),
+                                              (r) => false,
+                                            );
+                                          },
+                                          child: Card(
+                                            clipBehavior:
+                                                Clip.antiAliasWithSaveLayer,
+                                            color: FlutterFlowTheme.of(context)
+                                                .orange,
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(50),
+                                            ),
+                                            child: FlutterFlowIconButton(
+                                              borderColor: Colors.transparent,
+                                              borderRadius: 30,
+                                              borderWidth: 1,
+                                              buttonSize: 60,
+                                              icon: FaIcon(
+                                                FontAwesomeIcons.google,
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .tertiaryColor,
+                                                size: 30,
+                                              ),
+                                              onPressed: () {
+                                                print('IconButton pressed ...');
+                                              },
                                             ),
                                           ),
                                         ),
@@ -683,40 +663,20 @@ class _SignupWidgetState extends State<SignupWidget> {
                                           borderRadius:
                                               BorderRadius.circular(50),
                                         ),
-                                        child: Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  2, 2, 2, 2),
-                                          child: InkWell(
-                                            onTap: () async {
-                                              final user =
-                                                  await signInWithApple(
-                                                      context);
-                                              if (user == null) {
-                                                return;
-                                              }
-                                              await Navigator
-                                                  .pushAndRemoveUntil(
-                                                context,
-                                                MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      HomeWidget(),
-                                                ),
-                                                (r) => false,
-                                              );
-                                            },
-                                            child: Container(
-                                              width: 50,
-                                              height: 50,
-                                              clipBehavior: Clip.antiAlias,
-                                              decoration: BoxDecoration(
-                                                shape: BoxShape.circle,
-                                              ),
-                                              child: SvgPicture.asset(
-                                                'assets/images/social_Apple.svg',
-                                              ),
-                                            ),
+                                        child: FlutterFlowIconButton(
+                                          borderColor: Colors.transparent,
+                                          borderRadius: 30,
+                                          borderWidth: 1,
+                                          buttonSize: 60,
+                                          icon: FaIcon(
+                                            FontAwesomeIcons.apple,
+                                            color: FlutterFlowTheme.of(context)
+                                                .tertiaryColor,
+                                            size: 30,
                                           ),
+                                          onPressed: () {
+                                            print('IconButton pressed ...');
+                                          },
                                         ),
                                       ),
                                     ],
