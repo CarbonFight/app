@@ -111,8 +111,12 @@ class _AddActionFormWidgetState extends State<AddActionFormWidget> {
                             controller: textController,
                             obscureText: false,
                             decoration: InputDecoration(
-                              labelText: 'Distance Parcourue (en km )',
-                              hintText: 'Distance Parcourue (en km )',
+                              labelText: FFLocalizations.of(context).getText(
+                                '6lo8d8h3' /* Distance Parcourue (en km ) */,
+                              ),
+                              hintText: FFLocalizations.of(context).getText(
+                                '40yz93vs' /* Distance Parcourue (en km ) */,
+                              ),
                               enabledBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
                                   color: FlutterFlowTheme.of(context).grayLight,
@@ -172,7 +176,9 @@ class _AddActionFormWidgetState extends State<AddActionFormWidget> {
                                     FlutterFlowTheme.of(context).tertiaryColor,
                               ),
                               child: Text(
-                                'More Options',
+                                FFLocalizations.of(context).getText(
+                                  'adxea3ud' /* More Options */,
+                                ),
                                 textAlign: TextAlign.center,
                                 style: FlutterFlowTheme.of(context)
                                     .bodyText2
@@ -195,15 +201,33 @@ class _AddActionFormWidgetState extends State<AddActionFormWidget> {
                           Expanded(
                             child: FlutterFlowDropDown(
                               options: [
-                                '1',
-                                '2',
-                                '3',
-                                '4',
-                                '5',
-                                '6',
-                                '7',
-                                '8',
-                                '9'
+                                FFLocalizations.of(context).getText(
+                                  'cdpfiikf' /* 1 */,
+                                ),
+                                FFLocalizations.of(context).getText(
+                                  'a2l56pwj' /* 2 */,
+                                ),
+                                FFLocalizations.of(context).getText(
+                                  '6cb7z5jk' /* 3 */,
+                                ),
+                                FFLocalizations.of(context).getText(
+                                  'kujyfgw9' /* 4 */,
+                                ),
+                                FFLocalizations.of(context).getText(
+                                  'cn09p173' /* 5 */,
+                                ),
+                                FFLocalizations.of(context).getText(
+                                  '50kkt56t' /* 6 */,
+                                ),
+                                FFLocalizations.of(context).getText(
+                                  '8n0r08az' /* 7 */,
+                                ),
+                                FFLocalizations.of(context).getText(
+                                  'ai0f1rbu' /* 8 */,
+                                ),
+                                FFLocalizations.of(context).getText(
+                                  'y8br6d90' /* 9 */,
+                                )
                               ].toList(),
                               onChanged: (val) =>
                                   setState(() => passengersValue = val),
@@ -215,7 +239,9 @@ class _AddActionFormWidgetState extends State<AddActionFormWidget> {
                                     fontFamily: 'Montserrat',
                                     fontWeight: FontWeight.w500,
                                   ),
-                              hintText: 'Nombre de passagers',
+                              hintText: FFLocalizations.of(context).getText(
+                                'v4wtf97t' /* Nombre de passagers */,
+                              ),
                               icon: Icon(
                                 Icons.family_restroom,
                                 size: 15,
@@ -242,10 +268,18 @@ class _AddActionFormWidgetState extends State<AddActionFormWidget> {
                           Expanded(
                             child: FlutterFlowDropDown(
                               options: [
-                                'Owner',
-                                'Short rent',
-                                'Long rent',
-                                'Taxi'
+                                FFLocalizations.of(context).getText(
+                                  'nig8hali' /* Owner */,
+                                ),
+                                FFLocalizations.of(context).getText(
+                                  'cyve5fzh' /* Short rent */,
+                                ),
+                                FFLocalizations.of(context).getText(
+                                  '8ufgtacr' /* Long rent */,
+                                ),
+                                FFLocalizations.of(context).getText(
+                                  'eisc92u4' /* Taxi */,
+                                )
                               ].toList(),
                               onChanged: (val) =>
                                   setState(() => ownershipValue = val),
@@ -257,7 +291,9 @@ class _AddActionFormWidgetState extends State<AddActionFormWidget> {
                                     fontFamily: 'Montserrat',
                                     fontWeight: FontWeight.w500,
                                   ),
-                              hintText: 'Type d\'utilisation',
+                              hintText: FFLocalizations.of(context).getText(
+                                '0p2pexrg' /* Type d'utilisation */,
+                              ),
                               icon: Icon(
                                 Icons.car_rental,
                                 size: 15,
@@ -283,7 +319,14 @@ class _AddActionFormWidgetState extends State<AddActionFormWidget> {
                         children: [
                           Expanded(
                             child: FlutterFlowDropDown(
-                              options: ['Option 1', 'Option 2'].toList(),
+                              options: [
+                                FFLocalizations.of(context).getText(
+                                  'z0v14eq6' /* Option 1 */,
+                                ),
+                                FFLocalizations.of(context).getText(
+                                  'im24654c' /* Option 2 */,
+                                )
+                              ].toList(),
                               onChanged: (val) =>
                                   setState(() => energyValue = val),
                               width: 180,
@@ -294,7 +337,9 @@ class _AddActionFormWidgetState extends State<AddActionFormWidget> {
                                     fontFamily: 'Montserrat',
                                     fontWeight: FontWeight.w500,
                                   ),
-                              hintText: 'Energie',
+                              hintText: FFLocalizations.of(context).getText(
+                                'i1fd3kvi' /* Energie */,
+                              ),
                               icon: Icon(
                                 Icons.electrical_services_rounded,
                                 size: 15,

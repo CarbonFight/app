@@ -226,7 +226,10 @@ class _DrawerWidgetState extends State<DrawerWidget>
                                               );
                                             },
                                             child: Text(
-                                              'Change Password',
+                                              FFLocalizations.of(context)
+                                                  .getText(
+                                                'sbre4wqv' /* Change Password */,
+                                              ),
                                               style: FlutterFlowTheme.of(
                                                       context)
                                                   .bodyText2
@@ -280,7 +283,9 @@ class _DrawerWidgetState extends State<DrawerWidget>
                                       );
                                     },
                                     child: Text(
-                                      'Contacter l\'équipe',
+                                      FFLocalizations.of(context).getText(
+                                        'wtd2lzjb' /* Contacter l'équipe */,
+                                      ),
                                       style: FlutterFlowTheme.of(context)
                                           .bodyText2
                                           .override(
@@ -324,7 +329,9 @@ class _DrawerWidgetState extends State<DrawerWidget>
                                       );
                                     },
                                     child: Text(
-                                      'Help',
+                                      FFLocalizations.of(context).getText(
+                                        'zbqet7oz' /* Help */,
+                                      ),
                                       style: FlutterFlowTheme.of(context)
                                           .bodyText2
                                           .override(
@@ -368,7 +375,9 @@ class _DrawerWidgetState extends State<DrawerWidget>
                                       );
                                     },
                                     child: Text(
-                                      'FAQ',
+                                      FFLocalizations.of(context).getText(
+                                        'pg93sftm' /* FAQ */,
+                                      ),
                                       style: FlutterFlowTheme.of(context)
                                           .bodyText2
                                           .override(
@@ -403,7 +412,9 @@ class _DrawerWidgetState extends State<DrawerWidget>
                                   padding: EdgeInsetsDirectional.fromSTEB(
                                       10, 0, 0, 0),
                                   child: Text(
-                                    'Terms',
+                                    FFLocalizations.of(context).getText(
+                                      '1n0m17tp' /* Terms */,
+                                    ),
                                     style: FlutterFlowTheme.of(context)
                                         .bodyText2
                                         .override(
@@ -468,7 +479,9 @@ class _DrawerWidgetState extends State<DrawerWidget>
                                       children: [
                                         Expanded(
                                           child: Text(
-                                            'Carbonfight Copyright 2022',
+                                            FFLocalizations.of(context).getText(
+                                              'y7jl9opj' /* Carbonfight Copyright 2022 */,
+                                            ),
                                             style: FlutterFlowTheme.of(context)
                                                 .bodyText2
                                                 .override(
@@ -489,7 +502,10 @@ class _DrawerWidgetState extends State<DrawerWidget>
                                                 EdgeInsetsDirectional.fromSTEB(
                                                     0, 3, 0, 0),
                                             child: Text(
-                                              'Version 1.0.2 Build 34',
+                                              FFLocalizations.of(context)
+                                                  .getText(
+                                                'ckga369c' /* Version 1.0.2 Build 34 */,
+                                              ),
                                               style: FlutterFlowTheme.of(
                                                       context)
                                                   .bodyText2
