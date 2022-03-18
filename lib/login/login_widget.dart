@@ -107,10 +107,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                                   controller: emailAddressController,
                                   obscureText: false,
                                   decoration: InputDecoration(
-                                    hintText:
-                                        FFLocalizations.of(context).getText(
-                                      'agtsd4a4' /* Email Address */,
-                                    ),
+                                    hintText: 'Email Address',
                                     hintStyle: FlutterFlowTheme.of(context)
                                         .bodyText1
                                         .override(
@@ -190,10 +187,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                                   controller: passwordController,
                                   obscureText: !passwordVisibility,
                                   decoration: InputDecoration(
-                                    hintText:
-                                        FFLocalizations.of(context).getText(
-                                      'l6e78onj' /* Password */,
-                                    ),
+                                    hintText: 'Password',
                                     hintStyle: FlutterFlowTheme.of(context)
                                         .bodyText1
                                         .override(
@@ -290,9 +284,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                               padding:
                                   EdgeInsetsDirectional.fromSTEB(10, 0, 10, 0),
                               child: Text(
-                                FFLocalizations.of(context).getText(
-                                  'bvbpxghp' /* Forgot Password ? */,
-                                ),
+                                'Forgot Password ?',
                                 style: FlutterFlowTheme.of(context)
                                     .bodyText1
                                     .override(
@@ -405,9 +397,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                                           MainAxisAlignment.center,
                                       children: [
                                         AutoSizeText(
-                                          FFLocalizations.of(context).getText(
-                                            'jq7dkcmx' /* Or Use Social Login */,
-                                          ),
+                                          'Or Use Social Login',
                                           textAlign: TextAlign.center,
                                           style: FlutterFlowTheme.of(context)
                                               .subtitle2
@@ -506,8 +496,30 @@ class _LoginWidgetState extends State<LoginWidget> {
                                                         .tertiaryColor,
                                                 size: 30,
                                               ),
-                                              onPressed: () {
-                                                print('IconButton pressed ...');
+                                              onPressed: () async {
+                                                final user =
+                                                    await signInWithGoogle(
+                                                        context);
+                                                if (user == null) {
+                                                  return;
+                                                }
+                                                if (FFAppState().showSplash) {
+                                                  await Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          SplashWidget(),
+                                                    ),
+                                                  );
+                                                } else {
+                                                  await Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          HomeWidget(),
+                                                    ),
+                                                  );
+                                                }
                                               },
                                             ),
                                           ),
@@ -561,9 +573,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
                                     Text(
-                                      FFLocalizations.of(context).getText(
-                                        '6iqjwn33' /* Don't have an account ? */,
-                                      ),
+                                      'Don\'t have an account ?',
                                       style: FlutterFlowTheme.of(context)
                                           .subtitle2
                                           .override(
@@ -582,9 +592,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                                           ),
                                         );
                                       },
-                                      text: FFLocalizations.of(context).getText(
-                                        'yf3iogt3' /* Register */,
-                                      ),
+                                      text: 'Register',
                                       options: FFButtonOptions(
                                         width: 90,
                                         height: 30,

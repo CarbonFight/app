@@ -187,9 +187,7 @@ class _HomeV0WidgetState extends State<HomeV0Widget> {
                                       padding: EdgeInsetsDirectional.fromSTEB(
                                           10, 0, 0, 0),
                                       child: Text(
-                                        FFLocalizations.of(context).getText(
-                                          'vbhaq7zo' /* Actions */,
-                                        ),
+                                        'Actions',
                                         style: FlutterFlowTheme.of(context)
                                             .subtitle2
                                             .override(
@@ -238,9 +236,7 @@ class _HomeV0WidgetState extends State<HomeV0Widget> {
                                           );
                                         },
                                         child: Text(
-                                          FFLocalizations.of(context).getText(
-                                            'hsuy6qhf' /* Statistiques */,
-                                          ),
+                                          'Statistiques',
                                           style: FlutterFlowTheme.of(context)
                                               .subtitle2
                                               .override(
@@ -374,9 +370,7 @@ class _HomeV0WidgetState extends State<HomeV0Widget> {
                                   mainAxisSize: MainAxisSize.max,
                                   children: [
                                     Text(
-                                      FFLocalizations.of(context).getText(
-                                        'm5qlt1e1' /* CO2e */,
-                                      ),
+                                      'CO2e',
                                       style: FlutterFlowTheme.of(context)
                                           .bodyText1
                                           .override(
@@ -529,9 +523,7 @@ class _HomeV0WidgetState extends State<HomeV0Widget> {
                                             ),
                                           ),
                                           Text(
-                                            FFLocalizations.of(context).getText(
-                                              '76erv5vm' /* 38% */,
-                                            ),
+                                            '38%',
                                             style: FlutterFlowTheme.of(context)
                                                 .bodyText1
                                                 .override(
@@ -627,9 +619,7 @@ class _HomeV0WidgetState extends State<HomeV0Widget> {
                                           ),
                                         ),
                                         Text(
-                                          FFLocalizations.of(context).getText(
-                                            '3nj2syzc' /* Transport */,
-                                          ),
+                                          'Transport',
                                           style: FlutterFlowTheme.of(context)
                                               .bodyText2
                                               .override(
@@ -699,9 +689,7 @@ class _HomeV0WidgetState extends State<HomeV0Widget> {
                                           ),
                                         ),
                                         Text(
-                                          FFLocalizations.of(context).getText(
-                                            'r3p9fm3m' /* Repas */,
-                                          ),
+                                          'Repas',
                                           style: FlutterFlowTheme.of(context)
                                               .bodyText2
                                               .override(
@@ -771,9 +759,7 @@ class _HomeV0WidgetState extends State<HomeV0Widget> {
                                           ),
                                         ),
                                         Text(
-                                          FFLocalizations.of(context).getText(
-                                            '6iuvp3of' /* Energies */,
-                                          ),
+                                          'Energies',
                                           style: FlutterFlowTheme.of(context)
                                               .bodyText2
                                               .override(

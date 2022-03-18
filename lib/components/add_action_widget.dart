@@ -125,9 +125,7 @@ class _AddActionWidgetState extends State<AddActionWidget> {
                                         padding: EdgeInsetsDirectional.fromSTEB(
                                             0, 5, 0, 0),
                                         child: Text(
-                                          FFLocalizations.of(context).getText(
-                                            'vys8qoyc' /* Trajet en voiture */,
-                                          ),
+                                          'Trajet en voiture',
                                           textAlign: TextAlign.center,
                                           style: FlutterFlowTheme.of(context)
                                               .bodyText1,
@@ -186,9 +184,7 @@ class _AddActionWidgetState extends State<AddActionWidget> {
                                         padding: EdgeInsetsDirectional.fromSTEB(
                                             0, 5, 0, 0),
                                         child: Text(
-                                          FFLocalizations.of(context).getText(
-                                            'rmo7s4wk' /* Autobus */,
-                                          ),
+                                          'Autobus',
                                           textAlign: TextAlign.center,
                                           style: FlutterFlowTheme.of(context)
                                               .bodyText1,
@@ -256,9 +252,7 @@ class _AddActionWidgetState extends State<AddActionWidget> {
                                         padding: EdgeInsetsDirectional.fromSTEB(
                                             0, 5, 0, 0),
                                         child: Text(
-                                          FFLocalizations.of(context).getText(
-                                            'c07qzd7p' /* Scooter et moto légère */,
-                                          ),
+                                          'Scooter et moto légère',
                                           textAlign: TextAlign.center,
                                           style: FlutterFlowTheme.of(context)
                                               .bodyText1,
@@ -317,9 +311,7 @@ class _AddActionWidgetState extends State<AddActionWidget> {
                                         padding: EdgeInsetsDirectional.fromSTEB(
                                             0, 5, 0, 0),
                                         child: Text(
-                                          FFLocalizations.of(context).getText(
-                                            'ipinnfus' /* Trajet en TGV */,
-                                          ),
+                                          'Trajet en TGV',
                                           textAlign: TextAlign.center,
                                           style: FlutterFlowTheme.of(context)
                                               .bodyText1,
@@ -387,9 +379,7 @@ class _AddActionWidgetState extends State<AddActionWidget> {
                                         padding: EdgeInsetsDirectional.fromSTEB(
                                             0, 5, 0, 0),
                                         child: Text(
-                                          FFLocalizations.of(context).getText(
-                                            's66exbnx' /* Train régional */,
-                                          ),
+                                          'Train régional',
                                           textAlign: TextAlign.center,
                                           style: FlutterFlowTheme.of(context)
                                               .bodyText1,
@@ -448,9 +438,7 @@ class _AddActionWidgetState extends State<AddActionWidget> {
                                         padding: EdgeInsetsDirectional.fromSTEB(
                                             0, 5, 0, 0),
                                         child: Text(
-                                          FFLocalizations.of(context).getText(
-                                            'bnonnah0' /* Trajet en Métro */,
-                                          ),
+                                          'Trajet en Métro',
                                           textAlign: TextAlign.center,
                                           style: FlutterFlowTheme.of(context)
                                               .bodyText1,

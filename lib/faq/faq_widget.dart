@@ -76,9 +76,7 @@ class _FaqWidgetState extends State<FaqWidget> {
                                 children: [
                                   Expanded(
                                     child: Text(
-                                      FFLocalizations.of(context).getText(
-                                        'i061w019' /* Faut-il compter les enfants da... */,
-                                      ),
+                                      'Faut-il compter les enfants dans le foyer ?',
                                       style: FlutterFlowTheme.of(context)
                                           .bodyText1
                                           .override(
@@ -105,9 +103,7 @@ class _FaqWidgetState extends State<FaqWidget> {
                                   children: [
                                     Expanded(
                                       child: Text(
-                                        FFLocalizations.of(context).getText(
-                                          '2g711uvo' /* Oui. Vous pouvez compter vos e... */,
-                                        ),
+                                        'Oui. Vous pouvez compter vos enfants dans le nombre de personnes du foyer pour certaines actions comme l\'énergie. \nIl est toutefois inutile d\'ajouter leurs émissions en CO2. CarbonFight calcule vos émissions de CO2 personnelles, et non ceux du foyer.\n',
                                         style: FlutterFlowTheme.of(context)
                                             .bodyText2
                                             .override(
@@ -158,9 +154,7 @@ class _FaqWidgetState extends State<FaqWidget> {
                                 children: [
                                   Expanded(
                                     child: Text(
-                                      FFLocalizations.of(context).getText(
-                                        '8cwvw6sn' /* Comment supprimer mes données ... */,
-                                      ),
+                                      'Comment supprimer mes données ?',
                                       style: FlutterFlowTheme.of(context)
                                           .bodyText1
                                           .override(
@@ -187,9 +181,7 @@ class _FaqWidgetState extends State<FaqWidget> {
                                   children: [
                                     Expanded(
                                       child: Text(
-                                        FFLocalizations.of(context).getText(
-                                          '3im0yba2' /* Pour supprimer toutes vos donn... */,
-                                        ),
+                                        'Pour supprimer toutes vos données, écrivez simplement un e-mail à l\'adresse : dpo@carbonfight.app, avec comme sujet \"Supprimer mes données\".',
                                         style: FlutterFlowTheme.of(context)
                                             .bodyText2
                                             .override(
@@ -240,9 +232,7 @@ class _FaqWidgetState extends State<FaqWidget> {
                                 children: [
                                   Expanded(
                                     child: Text(
-                                      FFLocalizations.of(context).getText(
-                                        '3nyn3yqa' /* Comment contribuer ? */,
-                                      ),
+                                      'Comment contribuer ?',
                                       style: FlutterFlowTheme.of(context)
                                           .bodyText1
                                           .override(
@@ -269,9 +259,7 @@ class _FaqWidgetState extends State<FaqWidget> {
                                   children: [
                                     Expanded(
                                       child: Text(
-                                        FFLocalizations.of(context).getText(
-                                          'lv282p00' /* Si vous cherchez une informati... */,
-                                        ),
+                                        'Si vous cherchez une information, vous pouvez rejoindre notre discord : https://discord.gg/e7weuGA4UW',
                                         style: FlutterFlowTheme.of(context)
                                             .bodyText2
                                             .override(
@@ -322,9 +310,7 @@ class _FaqWidgetState extends State<FaqWidget> {
                     Padding(
                       padding: EdgeInsetsDirectional.fromSTEB(10, 0, 0, 0),
                       child: Text(
-                        FFLocalizations.of(context).getText(
-                          'tks8gviw' /* FAQ */,
-                        ),
+                        'FAQ',
                         style: FlutterFlowTheme.of(context).title2.override(
                               fontFamily: 'Montserrat',
                               color: FlutterFlowTheme.of(context).tertiaryColor,
