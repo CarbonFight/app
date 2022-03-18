@@ -140,6 +140,37 @@ final kTranslationsMap = <Map<String, Map<String, String>>>[
       'en': '',
     },
   },
+  // Login
+  {
+    'agtsd4a4': {
+      'fr': 'Email Address',
+      'en': '',
+    },
+    'l6e78onj': {
+      'fr': 'Password',
+      'en': '',
+    },
+    'bvbpxghp': {
+      'fr': 'Forgot Password ?',
+      'en': '',
+    },
+    'jq7dkcmx': {
+      'fr': 'Or Use Social Login',
+      'en': '',
+    },
+    '6iqjwn33': {
+      'fr': 'Don\'t have an account ?',
+      'en': '',
+    },
+    'yf3iogt3': {
+      'fr': 'Register',
+      'en': '',
+    },
+    'b0pwcar5': {
+      'fr': 'Home',
+      'en': '',
+    },
+  },
   // Splash
   {
     'b697wemi': {
@@ -170,37 +201,6 @@ final kTranslationsMap = <Map<String, Map<String, String>>>[
       'en': '',
     },
     'g0wunkr0': {
-      'fr': 'Home',
-      'en': '',
-    },
-  },
-  // Login
-  {
-    'agtsd4a4': {
-      'fr': 'Email Address',
-      'en': '',
-    },
-    'l6e78onj': {
-      'fr': 'Password',
-      'en': '',
-    },
-    'bvbpxghp': {
-      'fr': 'Forgot Password ?',
-      'en': '',
-    },
-    'jq7dkcmx': {
-      'fr': 'Or Use Social Login',
-      'en': '',
-    },
-    '6iqjwn33': {
-      'fr': 'Don\'t have an account ?',
-      'en': '',
-    },
-    'yf3iogt3': {
-      'fr': 'Register',
-      'en': '',
-    },
-    'b0pwcar5': {
       'fr': 'Home',
       'en': '',
     },
