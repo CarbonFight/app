@@ -188,7 +188,7 @@ async function reCalculate(userId) {
 }
 
 
-exports.periodicsToActions = functions.region('europe-west6').pubsub.schedule('0 3 * * *').onRun(async (context) => {
+exports.periodicsToActions = functions.region('europe-west6').pubsub.schedule('0 3 * * *').timeZone('Europe/Paris').onRun(async (context) => {
     
     const energyPeriodicsRef = admin.firestore().collection('energyPeriodics');
     const snapshot = await energyPeriodicsRef.get();
@@ -209,7 +209,7 @@ exports.periodicsToActions = functions.region('europe-west6').pubsub.schedule('0
     });
 
     // Reset scores every night at midnight (especially day score).
-    exports.resetUsersScores = functions.region('europe-west6').pubsub.schedule('0 0 * * *').onRun(async (context) => {
+    exports.resetUsersScores = functions.region('europe-west6').pubsub.schedule('0 0 * * *').timeZone('Europe/Paris').onRun(async (context) => {
     
       const usersRef = admin.firestore().collection('users');
       const snapshot = await usersRef.get();
