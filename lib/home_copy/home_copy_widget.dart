@@ -1,8 +1,11 @@
 import '../auth/auth_util.dart';
 import '../components/add_action_widget.dart';
+import '../components/info_widget.dart';
 import '../drawer/drawer_widget.dart';
+import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
+import '../home/home_widget.dart';
 import '../statistiques/statistiques_widget.dart';
 import '../flutter_flow/custom_functions.dart' as functions;
 import 'package:flutter/material.dart';
@@ -12,14 +15,14 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
-class HomeWidget extends StatefulWidget {
-  const HomeWidget({Key key}) : super(key: key);
+class HomeCopyWidget extends StatefulWidget {
+  const HomeCopyWidget({Key key}) : super(key: key);
 
   @override
-  _HomeWidgetState createState() => _HomeWidgetState();
+  _HomeCopyWidgetState createState() => _HomeCopyWidgetState();
 }
 
-class _HomeWidgetState extends State<HomeWidget> {
+class _HomeCopyWidgetState extends State<HomeCopyWidget> {
   PageController pageViewController;
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -42,7 +45,7 @@ class _HomeWidgetState extends State<HomeWidget> {
             image: DecorationImage(
               fit: BoxFit.cover,
               image: Image.asset(
-                'assets/images/co2_illustration.jpg',
+                'assets/images/background.png',
               ).image,
             ),
           ),
@@ -704,236 +707,99 @@ class _HomeWidgetState extends State<HomeWidget> {
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(40, 20, 40, 0),
+                        padding: EdgeInsetsDirectional.fromSTEB(40, 0, 40, 0),
                         child: Row(
                           mainAxisSize: MainAxisSize.max,
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Column(
-                              mainAxisSize: MainAxisSize.max,
-                              children: [
-                                Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      5, 0, 0, 5),
-                                  child: InkWell(
-                                    onTap: () async {
-                                      await showModalBottomSheet(
-                                        isScrollControlled: true,
-                                        backgroundColor: Colors.transparent,
-                                        barrierColor: Color(0xBF000000),
-                                        context: context,
-                                        builder: (context) {
-                                          return Padding(
-                                            padding: MediaQuery.of(context)
-                                                .viewInsets,
-                                            child: Container(
-                                              height: 500,
-                                              child: AddActionWidget(
-                                                list: 'Transport',
-                                              ),
-                                            ),
-                                          );
-                                        },
-                                      );
-                                    },
-                                    child: Container(
-                                      width: 70,
-                                      height: 70,
-                                      decoration: BoxDecoration(
-                                        color: FlutterFlowTheme.of(context)
-                                            .tertiaryColor,
-                                        boxShadow: [
-                                          BoxShadow(
-                                            blurRadius: 25,
-                                            color: Color(0x0E000000),
-                                            offset: Offset(0, 10),
-                                          )
-                                        ],
-                                        shape: BoxShape.circle,
+                            Expanded(
+                              child: Column(
+                                mainAxisSize: MainAxisSize.max,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  AuthUserStreamWidget(
+                                    child: Text(
+                                      valueOrDefault<String>(
+                                        functions.printScore(
+                                            currentUserDocument?.globalScore),
+                                        '0 g',
                                       ),
-                                      alignment: AlignmentDirectional(0, 0),
-                                      child: Column(
-                                        mainAxisSize: MainAxisSize.max,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    0, 0, 0, 5),
-                                            child: SvgPicture.network(
-                                              'https://twemoji.maxcdn.com/v/13.0.1/svg/1f697.svg',
-                                              width: 25,
-                                              height: 25,
-                                              fit: BoxFit.cover,
-                                            ),
+                                      textAlign: TextAlign.center,
+                                      style: FlutterFlowTheme.of(context)
+                                          .title3
+                                          .override(
+                                            fontFamily: 'Montserrat',
+                                            color: FlutterFlowTheme.of(context)
+                                                .tertiaryColor,
+                                            fontSize: 46,
                                           ),
-                                          Text(
-                                            'Transport',
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodyText2
-                                                .override(
-                                                  fontFamily: 'Montserrat',
-                                                  fontSize: 11,
-                                                ),
-                                          ),
-                                        ],
-                                      ),
                                     ),
                                   ),
-                                ),
-                              ],
-                            ),
-                            Column(
-                              mainAxisSize: MainAxisSize.max,
-                              children: [
-                                Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      5, 0, 0, 5),
-                                  child: InkWell(
-                                    onTap: () async {
-                                      await showModalBottomSheet(
-                                        isScrollControlled: true,
-                                        backgroundColor: Colors.transparent,
-                                        barrierColor: Color(0xBF000000),
-                                        context: context,
-                                        builder: (context) {
-                                          return Padding(
-                                            padding: MediaQuery.of(context)
-                                                .viewInsets,
-                                            child: Container(
-                                              height: 500,
-                                              child: AddActionWidget(
-                                                list: 'Repas',
-                                              ),
+                                  Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        'CO2e',
+                                        style: FlutterFlowTheme.of(context)
+                                            .subtitle2
+                                            .override(
+                                              fontFamily: 'Montserrat',
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .tertiaryColor,
                                             ),
+                                      ),
+                                      InkWell(
+                                        onTap: () async {
+                                          await showModalBottomSheet(
+                                            isScrollControlled: true,
+                                            backgroundColor: Colors.transparent,
+                                            barrierColor: Color(0xBF000000),
+                                            context: context,
+                                            builder: (context) {
+                                              return Padding(
+                                                padding: MediaQuery.of(context)
+                                                    .viewInsets,
+                                                child: Container(
+                                                  height: 375,
+                                                  child: InfoWidget(
+                                                    title: 'Some statistics',
+                                                    body:
+                                                        'The French average is 12.5 kg. The 10 most polluting countries emit on average between 40 kg (USA/Canada) and 83 kg (Quatar) of CO2 per capita per day. To reach the balance of our planet, it would be necessary to emit less than 3.30 kg per inhabitant.',
+                                                  ),
+                                                ),
+                                              );
+                                            },
                                           );
                                         },
-                                      );
-                                    },
-                                    child: Container(
-                                      width: 70,
-                                      height: 70,
-                                      decoration: BoxDecoration(
-                                        color: FlutterFlowTheme.of(context)
-                                            .tertiaryColor,
-                                        boxShadow: [
-                                          BoxShadow(
-                                            blurRadius: 25,
-                                            color: Color(0x0C000000),
-                                            offset: Offset(0, 10),
-                                          )
-                                        ],
-                                        shape: BoxShape.circle,
-                                      ),
-                                      alignment: AlignmentDirectional(0, 0),
-                                      child: Column(
-                                        mainAxisSize: MainAxisSize.max,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    0, 0, 0, 5),
-                                            child: SvgPicture.network(
-                                              'https://twemoji.maxcdn.com/v/13.0.1/svg/1f37d.svg',
-                                              width: 25,
-                                              height: 25,
-                                              fit: BoxFit.cover,
-                                            ),
+                                        child: Container(
+                                          width: 35,
+                                          height: 35,
+                                          decoration: BoxDecoration(
+                                            boxShadow: [
+                                              BoxShadow(
+                                                blurRadius: 10,
+                                                color: Color(0x13000000),
+                                                offset: Offset(0, 8),
+                                              )
+                                            ],
+                                            shape: BoxShape.circle,
                                           ),
-                                          Text(
-                                            'Repas',
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodyText2
-                                                .override(
-                                                  fontFamily: 'Montserrat',
-                                                  fontSize: 11,
-                                                ),
+                                          alignment: AlignmentDirectional(0, 0),
+                                          child: Icon(
+                                            Icons.info_outline_rounded,
+                                            color: FlutterFlowTheme.of(context)
+                                                .tertiaryColor,
+                                            size: 22,
                                           ),
-                                        ],
+                                        ),
                                       ),
-                                    ),
+                                    ],
                                   ),
-                                ),
-                              ],
-                            ),
-                            Column(
-                              mainAxisSize: MainAxisSize.max,
-                              children: [
-                                Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      5, 0, 0, 5),
-                                  child: InkWell(
-                                    onTap: () async {
-                                      await showModalBottomSheet(
-                                        isScrollControlled: true,
-                                        backgroundColor: Colors.transparent,
-                                        barrierColor: Color(0xBF000000),
-                                        context: context,
-                                        builder: (context) {
-                                          return Padding(
-                                            padding: MediaQuery.of(context)
-                                                .viewInsets,
-                                            child: Container(
-                                              height: 500,
-                                              child: AddActionWidget(
-                                                list: 'Energies',
-                                              ),
-                                            ),
-                                          );
-                                        },
-                                      );
-                                    },
-                                    child: Container(
-                                      width: 70,
-                                      height: 70,
-                                      decoration: BoxDecoration(
-                                        color: FlutterFlowTheme.of(context)
-                                            .tertiaryColor,
-                                        boxShadow: [
-                                          BoxShadow(
-                                            blurRadius: 25,
-                                            color: Color(0x0C000000),
-                                            offset: Offset(0, 10),
-                                          )
-                                        ],
-                                        shape: BoxShape.circle,
-                                      ),
-                                      alignment: AlignmentDirectional(0, 0),
-                                      child: Column(
-                                        mainAxisSize: MainAxisSize.max,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    0, 0, 0, 5),
-                                            child: SvgPicture.network(
-                                              'https://twemoji.maxcdn.com/v/13.0.1/svg/26a1.svg',
-                                              width: 25,
-                                              height: 25,
-                                              fit: BoxFit.cover,
-                                            ),
-                                          ),
-                                          Text(
-                                            'Energies',
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodyText2
-                                                .override(
-                                                  fontFamily: 'Montserrat',
-                                                  fontSize: 11,
-                                                ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                           ],
                         ),
@@ -950,96 +816,406 @@ class _HomeWidgetState extends State<HomeWidget> {
                                 decoration: BoxDecoration(),
                                 child: Column(
                                   mainAxisSize: MainAxisSize.min,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
+                                    Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        InkWell(
+                                          onTap: () async {
+                                            await showModalBottomSheet(
+                                              isScrollControlled: true,
+                                              backgroundColor:
+                                                  Colors.transparent,
+                                              barrierColor: Color(0xBF000000),
+                                              context: context,
+                                              builder: (context) {
+                                                return Padding(
+                                                  padding:
+                                                      MediaQuery.of(context)
+                                                          .viewInsets,
+                                                  child: Container(
+                                                    height: 375,
+                                                    child: InfoWidget(
+                                                      title: 'Some statistics',
+                                                      body:
+                                                          'The French average is 12.5 kg. The 10 most polluting countries emit on average between 40 kg (USA/Canada) and 83 kg (Quatar) of CO2 per capita per day. To reach the balance of our planet, it would be necessary to emit less than 3.30 kg per inhabitant.',
+                                                    ),
+                                                  ),
+                                                );
+                                              },
+                                            );
+                                          },
+                                          child: Container(
+                                            width: 35,
+                                            height: 35,
+                                            decoration: BoxDecoration(
+                                              boxShadow: [
+                                                BoxShadow(
+                                                  blurRadius: 10,
+                                                  color: Color(0x13000000),
+                                                  offset: Offset(0, 8),
+                                                )
+                                              ],
+                                              shape: BoxShape.circle,
+                                            ),
+                                            alignment:
+                                                AlignmentDirectional(0, 0),
+                                            child: Icon(
+                                              Icons.info_outline_rounded,
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .tertiaryColor,
+                                              size: 22,
+                                            ),
+                                          ),
+                                        ),
+                                        Expanded(
+                                          child: Text(
+                                            'Les actions du jour : ',
+                                            style: FlutterFlowTheme.of(context)
+                                                .subtitle2
+                                                .override(
+                                                  fontFamily: 'Montserrat',
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .tertiaryColor,
+                                                ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                     Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
-                                          0, 30, 0, 0),
+                                          0, 5, 0, 0),
                                       child: Row(
                                         mainAxisSize: MainAxisSize.max,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
                                         crossAxisAlignment:
                                             CrossAxisAlignment.center,
                                         children: [
-                                          Expanded(
-                                            child: Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(0, 10, 0, 0),
-                                              child: Text(
-                                                'Les actions du jour',
-                                                textAlign: TextAlign.center,
-                                                style: FlutterFlowTheme.of(
-                                                        context)
-                                                    .subtitle2
-                                                    .override(
-                                                      fontFamily: 'Montserrat',
-                                                      color:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .tertiaryColor,
-                                                    ),
-                                              ),
+                                          Padding(
+                                            padding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    0, 0, 10, 0),
+                                            child: SvgPicture.asset(
+                                              'assets/images/01.svg',
+                                              width: 25,
+                                              height: 25,
+                                              fit: BoxFit.cover,
                                             ),
+                                          ),
+                                          Padding(
+                                            padding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    0, 0, 10, 0),
+                                            child: SvgPicture.asset(
+                                              'assets/images/02.svg',
+                                              width: 25,
+                                              height: 25,
+                                              fit: BoxFit.cover,
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    0, 0, 10, 0),
+                                            child: SvgPicture.asset(
+                                              'assets/images/03.svg',
+                                              width: 25,
+                                              height: 25,
+                                              fit: BoxFit.cover,
+                                            ),
+                                          ),
+                                          Text(
+                                            '38%',
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyText1
+                                                .override(
+                                                  fontFamily: 'Montserrat',
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .gronyLighter,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
                                           ),
                                         ],
                                       ),
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          0, 10, 0, 0),
-                                      child: SingleChildScrollView(
-                                        scrollDirection: Axis.horizontal,
-                                        child: Row(
-                                          mainAxisSize: MainAxisSize.max,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          children: [
-                                            Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(0, 0, 10, 0),
-                                              child: SvgPicture.network(
-                                                'https://twemoji.maxcdn.com/v/13.0.1/svg/1f687.svg',
-                                                width: 40,
-                                                height: 40,
-                                                fit: BoxFit.cover,
-                                              ),
-                                            ),
-                                            Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(0, 0, 10, 0),
-                                              child: SvgPicture.network(
-                                                'https://twemoji.maxcdn.com/v/13.0.1/svg/1f525.svg',
-                                                width: 40,
-                                                height: 40,
-                                                fit: BoxFit.cover,
-                                              ),
-                                            ),
-                                            Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(0, 0, 10, 0),
-                                              child: SvgPicture.network(
-                                                'https://twemoji.maxcdn.com/v/13.0.1/svg/2615.svg',
-                                                width: 40,
-                                                height: 40,
-                                                fit: BoxFit.cover,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                    Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      children: [],
                                     ),
                                   ],
                                 ),
                               ),
                             ),
                           ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              Align(
+                alignment: AlignmentDirectional(0, 0),
+                child: Container(
+                  width: MediaQuery.of(context).size.width,
+                  height: 400,
+                  child: Stack(
+                    alignment: AlignmentDirectional(-0.65, -1),
+                    children: [
+                      if (FFAppState().addButtonsHome ?? true)
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(5, 90, 0, 0),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              Padding(
+                                padding:
+                                    EdgeInsetsDirectional.fromSTEB(5, 0, 0, 5),
+                                child: InkWell(
+                                  onTap: () async {
+                                    await showModalBottomSheet(
+                                      isScrollControlled: true,
+                                      backgroundColor: Colors.transparent,
+                                      barrierColor: Color(0xBF000000),
+                                      context: context,
+                                      builder: (context) {
+                                        return Padding(
+                                          padding:
+                                              MediaQuery.of(context).viewInsets,
+                                          child: Container(
+                                            height: 500,
+                                            child: AddActionWidget(
+                                              list: 'Transport',
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                    );
+                                  },
+                                  child: Container(
+                                    width: 70,
+                                    height: 70,
+                                    decoration: BoxDecoration(
+                                      color: FlutterFlowTheme.of(context)
+                                          .tertiaryColor,
+                                      boxShadow: [
+                                        BoxShadow(
+                                          blurRadius: 25,
+                                          color: Color(0x0E000000),
+                                          offset: Offset(0, 10),
+                                        )
+                                      ],
+                                      shape: BoxShape.circle,
+                                    ),
+                                    alignment: AlignmentDirectional(0, 0),
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.max,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Padding(
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  0, 0, 0, 5),
+                                          child: SvgPicture.asset(
+                                            'assets/images/transport.svg',
+                                            width: 25,
+                                            height: 25,
+                                            fit: BoxFit.cover,
+                                          ),
+                                        ),
+                                        Text(
+                                          'Transport',
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyText2
+                                              .override(
+                                                fontFamily: 'Montserrat',
+                                                fontSize: 11,
+                                              ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding:
+                                    EdgeInsetsDirectional.fromSTEB(5, 0, 0, 5),
+                                child: InkWell(
+                                  onTap: () async {
+                                    await showModalBottomSheet(
+                                      isScrollControlled: true,
+                                      backgroundColor: Colors.transparent,
+                                      barrierColor: Color(0xBF000000),
+                                      context: context,
+                                      builder: (context) {
+                                        return Padding(
+                                          padding:
+                                              MediaQuery.of(context).viewInsets,
+                                          child: Container(
+                                            height: 500,
+                                            child: AddActionWidget(
+                                              list: 'Repas',
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                    );
+                                  },
+                                  child: Container(
+                                    width: 70,
+                                    height: 70,
+                                    decoration: BoxDecoration(
+                                      color: FlutterFlowTheme.of(context)
+                                          .tertiaryColor,
+                                      boxShadow: [
+                                        BoxShadow(
+                                          blurRadius: 25,
+                                          color: Color(0x0C000000),
+                                          offset: Offset(0, 10),
+                                        )
+                                      ],
+                                      shape: BoxShape.circle,
+                                    ),
+                                    alignment: AlignmentDirectional(0, 0),
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.max,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Padding(
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  0, 0, 0, 5),
+                                          child: SvgPicture.asset(
+                                            'assets/images/repas.svg',
+                                            width: 25,
+                                            height: 25,
+                                            fit: BoxFit.cover,
+                                          ),
+                                        ),
+                                        Text(
+                                          'Repas',
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyText2
+                                              .override(
+                                                fontFamily: 'Montserrat',
+                                                fontSize: 11,
+                                              ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding:
+                                    EdgeInsetsDirectional.fromSTEB(5, 0, 0, 5),
+                                child: InkWell(
+                                  onTap: () async {
+                                    await showModalBottomSheet(
+                                      isScrollControlled: true,
+                                      backgroundColor: Colors.transparent,
+                                      barrierColor: Color(0xBF000000),
+                                      context: context,
+                                      builder: (context) {
+                                        return Padding(
+                                          padding:
+                                              MediaQuery.of(context).viewInsets,
+                                          child: Container(
+                                            height: 500,
+                                            child: AddActionWidget(
+                                              list: 'Energies',
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                    );
+                                  },
+                                  child: Container(
+                                    width: 70,
+                                    height: 70,
+                                    decoration: BoxDecoration(
+                                      color: FlutterFlowTheme.of(context)
+                                          .tertiaryColor,
+                                      boxShadow: [
+                                        BoxShadow(
+                                          blurRadius: 25,
+                                          color: Color(0x0C000000),
+                                          offset: Offset(0, 10),
+                                        )
+                                      ],
+                                      shape: BoxShape.circle,
+                                    ),
+                                    alignment: AlignmentDirectional(0, 0),
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.max,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Padding(
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  0, 0, 0, 5),
+                                          child: SvgPicture.asset(
+                                            'assets/images/energies.svg',
+                                            width: 25,
+                                            height: 25,
+                                            fit: BoxFit.cover,
+                                          ),
+                                        ),
+                                        Text(
+                                          'Energies',
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyText2
+                                              .override(
+                                                fontFamily: 'Montserrat',
+                                                fontSize: 11,
+                                              ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      Container(
+                        width: 85,
+                        height: 85,
+                        decoration: BoxDecoration(
+                          color: FlutterFlowTheme.of(context).tertiaryColor,
+                          boxShadow: [
+                            BoxShadow(
+                              blurRadius: 35,
+                              color: Color(0x1A000000),
+                              offset: Offset(0, 12),
+                            )
+                          ],
+                          shape: BoxShape.circle,
+                        ),
+                        child: FlutterFlowIconButton(
+                          borderColor:
+                              FlutterFlowTheme.of(context).tertiaryColor,
+                          borderRadius: 50,
+                          borderWidth: 10,
+                          buttonSize: 50,
+                          fillColor: FlutterFlowTheme.of(context).gronyLight,
+                          icon: Icon(
+                            Icons.add,
+                            color: FlutterFlowTheme.of(context).tertiaryColor,
+                            size: 30,
+                          ),
+                          onPressed: () async {
+                            if (FFAppState().addButtonsHome) {
+                              setState(
+                                  () => FFAppState().addButtonsHome = false);
+                            } else {
+                              setState(
+                                  () => FFAppState().addButtonsHome = true);
+                            }
+                          },
                         ),
                       ),
                     ],

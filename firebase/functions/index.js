@@ -61,9 +61,18 @@ exports.updateScoreEnergy = functions.region('europe-west6').firestore.document(
 
 async function reCalculate(userId) {
   var day_score = 0;
+  var week_score = 0;
+  var month_score = 0;
   var global_score = 0;
   var activity = 0;
   var level = 1;
+
+  // Dates used for "day_score", "week_score", "month_score"
+  var dateToday = new Date();
+  var dateTodayStart = dateToday.setHours(0,0,0,0);
+  var dateTodayEnd = dateToday.setHours(23,59,59,0);
+  var date30daysAgo = new Date(new Date().setDate(dateToday.getDate() - 30));
+  var date7daysAgo = new Date(new Date().setDate(dateToday.getDate() - 7));
 
   const tranportActions = await admin.firestore()      
   .collection('transportActions')
@@ -83,19 +92,67 @@ async function reCalculate(userId) {
 
   // Calculate day_score & global_score
   tranportActions.forEach(doc => {
-    day_score += doc.get("co2e");
+    actionDate = new Date(doc.get("created_time").toDate());
+
+    // Day Score
+    if (actionDate >= dateTodayStart && actionDate <= dateTodayEnd)
+    {
+      day_score += doc.get("co2e");
+    }
+    // Week Score
+    if (actionDate >= date7daysAgo && actionDate <= dateTodayEnd)
+    {
+      week_score += doc.get("co2e");
+    }
+    // Month Score
+    if (actionDate >= date30daysAgo && actionDate <= dateTodayEnd)
+    {
+      month_score += doc.get("co2e");
+    }
     global_score += doc.get("co2e");
     activity += 1;
   });
   energyActions.forEach(doc => {
-    day_score += doc.get("co2e");
+    actionDate = new Date(doc.get("created_time").toDate());
+
+    // Day Score
+    if (actionDate >= dateTodayStart && actionDate <= dateTodayEnd)
+    {
+      day_score += doc.get("co2e");
+    }
+    // Week Score
+    if (actionDate >= date7daysAgo && actionDate <= dateTodayEnd)
+    {
+      week_score += doc.get("co2e");
+    }
+    // Month Score
+    if (actionDate >= date30daysAgo && actionDate <= dateTodayEnd)
+    {
+      month_score += doc.get("co2e");
+    }
     global_score += doc.get("co2e");
-    activity += 1;   
+    activity += 1;
   });
   foodActions.forEach(doc => {
-    day_score += doc.get("co2e");
+    actionDate = new Date(doc.get("created_time").toDate());
+
+    // Day Score
+    if (actionDate >= dateTodayStart && actionDate <= dateTodayEnd)
+    {
+      day_score += doc.get("co2e");
+    }
+    // Week Score
+    if (actionDate >= date7daysAgo && actionDate <= dateTodayEnd)
+    {
+      week_score += doc.get("co2e");
+    }
+    // Month Score
+    if (actionDate >= date30daysAgo && actionDate <= dateTodayEnd)
+    {
+      month_score += doc.get("co2e");
+    }
     global_score += doc.get("co2e");
-    activity += 1; 
+    activity += 1;
   });
 
   // Set Level
@@ -120,16 +177,18 @@ async function reCalculate(userId) {
     let tmp = thing.data();
     
     tmp.day_score = day_score;
+    tmp.week_score = week_score;
+    tmp.month_score = month_score;
     tmp.global_score = global_score;
     tmp.activity = activity;
     tmp.level = level;
-
+    
     thing.ref.update(tmp);
   });
 }
 
 
-exports.periodicsToActions = functions.region('europe-west6').pubsub.schedule('0 3 * * *').onRun(async (context) => {
+exports.periodicsToActions = functions.region('europe-west6').pubsub.schedule('0 3 * * *').timeZone('Europe/Paris').onRun(async (context) => {
     
     const energyPeriodicsRef = admin.firestore().collection('energyPeriodics');
     const snapshot = await energyPeriodicsRef.get();
@@ -148,3 +207,18 @@ exports.periodicsToActions = functions.region('europe-west6').pubsub.schedule('0
 
     return null;
     });
+
+    // Reset scores every night at midnight (especially day score).
+    exports.resetUsersScores = functions.region('europe-west6').pubsub.schedule('0 0 * * *').timeZone('Europe/Paris').onRun(async (context) => {
+    
+      const usersRef = admin.firestore().collection('users');
+      const snapshot = await usersRef.get();
+      snapshot.forEach(async doc => {
+        // Recalculate score for all users
+        
+        var userId = doc.get("uid");
+        await reCalculate(userId);
+      });
+  
+      return null;
+  });

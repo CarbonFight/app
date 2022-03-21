@@ -1,4 +1,5 @@
 import '../auth/auth_util.dart';
+import '../components/forgot_password_widget.dart';
 import '../faq/faq_widget.dart';
 import '../feedback/feedback_widget.dart';
 import '../flutter_flow/flutter_flow_animations.dart';
@@ -179,17 +180,19 @@ class _DrawerWidgetState extends State<DrawerWidget>
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        Text(
-                                          'David Farmer',
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodyText2
-                                              .override(
-                                                fontFamily: 'Montserrat',
-                                                fontWeight: FontWeight.w600,
-                                              ),
+                                        AuthUserStreamWidget(
+                                          child: Text(
+                                            currentUserDisplayName,
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyText2
+                                                .override(
+                                                  fontFamily: 'Montserrat',
+                                                  fontWeight: FontWeight.w600,
+                                                ),
+                                          ),
                                         ),
                                         Text(
-                                          'david@example.com',
+                                          currentUserEmail,
                                           style: FlutterFlowTheme.of(context)
                                               .bodyText2
                                               .override(
@@ -201,16 +204,39 @@ class _DrawerWidgetState extends State<DrawerWidget>
                                           padding:
                                               EdgeInsetsDirectional.fromSTEB(
                                                   0, 5, 0, 0),
-                                          child: Text(
-                                            'Change Password',
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodyText2
-                                                .override(
-                                                  fontFamily: 'Montserrat',
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .secondaryColor,
-                                                ),
+                                          child: InkWell(
+                                            onTap: () async {
+                                              await showModalBottomSheet(
+                                                isScrollControlled: true,
+                                                backgroundColor:
+                                                    Colors.transparent,
+                                                context: context,
+                                                builder: (context) {
+                                                  return Padding(
+                                                    padding:
+                                                        MediaQuery.of(context)
+                                                            .viewInsets,
+                                                    child: Container(
+                                                      height: 400,
+                                                      child:
+                                                          ForgotPasswordWidget(),
+                                                    ),
+                                                  );
+                                                },
+                                              );
+                                            },
+                                            child: Text(
+                                              'Change Password',
+                                              style: FlutterFlowTheme.of(
+                                                      context)
+                                                  .bodyText2
+                                                  .override(
+                                                    fontFamily: 'Montserrat',
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
+                                                        .secondaryColor,
+                                                  ),
+                                            ),
                                           ),
                                         ),
                                       ],
@@ -247,12 +273,9 @@ class _DrawerWidgetState extends State<DrawerWidget>
                                     onTap: () async {
                                       await Navigator.push(
                                         context,
-                                        PageTransition(
-                                          type: PageTransitionType.fade,
-                                          duration: Duration(milliseconds: 0),
-                                          reverseDuration:
-                                              Duration(milliseconds: 0),
-                                          child: FeedbackWidget(),
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              FeedbackWidget(),
                                         ),
                                       );
                                     },
@@ -295,12 +318,8 @@ class _DrawerWidgetState extends State<DrawerWidget>
                                     onTap: () async {
                                       await Navigator.push(
                                         context,
-                                        PageTransition(
-                                          type: PageTransitionType.fade,
-                                          duration: Duration(milliseconds: 0),
-                                          reverseDuration:
-                                              Duration(milliseconds: 0),
-                                          child: SplashWidget(),
+                                        MaterialPageRoute(
+                                          builder: (context) => SplashWidget(),
                                         ),
                                       );
                                     },
@@ -343,12 +362,8 @@ class _DrawerWidgetState extends State<DrawerWidget>
                                     onTap: () async {
                                       await Navigator.push(
                                         context,
-                                        PageTransition(
-                                          type: PageTransitionType.fade,
-                                          duration: Duration(milliseconds: 0),
-                                          reverseDuration:
-                                              Duration(milliseconds: 0),
-                                          child: FaqWidget(),
+                                        MaterialPageRoute(
+                                          builder: (context) => FaqWidget(),
                                         ),
                                       );
                                     },
@@ -425,11 +440,8 @@ class _DrawerWidgetState extends State<DrawerWidget>
                                 await signOut();
                                 await Navigator.pushAndRemoveUntil(
                                   context,
-                                  PageTransition(
-                                    type: PageTransitionType.fade,
-                                    duration: Duration(milliseconds: 0),
-                                    reverseDuration: Duration(milliseconds: 0),
-                                    child: LoginWidget(),
+                                  MaterialPageRoute(
+                                    builder: (context) => LoginWidget(),
                                   ),
                                   (r) => false,
                                 );

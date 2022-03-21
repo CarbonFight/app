@@ -14,11 +14,21 @@ class FFAppState {
 
   Future initializePersistedState() async {
     prefs = await SharedPreferences.getInstance();
+    _showSplash = prefs.getBool('ff_showSplash') ?? _showSplash;
   }
 
   SharedPreferences prefs;
 
   bool addButtonsHome = false;
+
+  bool _showSplash = true;
+  bool get showSplash => _showSplash;
+  set showSplash(bool _value) {
+    _showSplash = _value;
+    prefs.setBool('ff_showSplash', _value);
+  }
+
+  int actionCO2 = 0;
 }
 
 LatLng _latLngFromString(String val) {

@@ -1,15 +1,17 @@
 import '../auth/auth_util.dart';
 import '../components/forgot_password_widget.dart';
 import '../components/icon_button_widget.dart';
+import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
 import '../home/home_widget.dart';
 import '../signup/signup_widget.dart';
+import '../splash/splash_widget.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class LoginWidget extends StatefulWidget {
@@ -314,16 +316,41 @@ class _LoginWidgetState extends State<LoginWidget> {
                                   return;
                                 }
 
-                                await Navigator.pushAndRemoveUntil(
-                                  context,
-                                  PageTransition(
-                                    type: PageTransitionType.fade,
-                                    duration: Duration(milliseconds: 0),
-                                    reverseDuration: Duration(milliseconds: 0),
-                                    child: HomeWidget(),
-                                  ),
-                                  (r) => false,
-                                );
+                                if (!(currentUserEmailVerified)) {
+                                  await showDialog(
+                                    context: context,
+                                    builder: (alertDialogContext) {
+                                      return AlertDialog(
+                                        title: Text('E-mail non vérifié'),
+                                        content: Text(
+                                            'Merci de valider votre compte en cliquant sur le lien reçu par mail.'),
+                                        actions: [
+                                          TextButton(
+                                            onPressed: () => Navigator.pop(
+                                                alertDialogContext),
+                                            child: Text('Ok'),
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  );
+                                  return;
+                                }
+                                if (FFAppState().showSplash) {
+                                  await Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => SplashWidget(),
+                                    ),
+                                  );
+                                } else {
+                                  await Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => HomeWidget(),
+                                    ),
+                                  );
+                                }
                               },
                               child: IconButtonWidget(
                                 fillColor:
@@ -402,98 +429,98 @@ class _LoginWidgetState extends State<LoginWidget> {
                                             borderRadius:
                                                 BorderRadius.circular(50),
                                           ),
-                                          child: Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    2, 2, 2, 2),
-                                            child: InkWell(
-                                              onTap: () async {
-                                                final user =
-                                                    await signInWithFacebook(
-                                                        context);
-                                                if (user == null) {
-                                                  return;
-                                                }
-                                                await Navigator
-                                                    .pushAndRemoveUntil(
-                                                  context,
-                                                  PageTransition(
-                                                    type:
-                                                        PageTransitionType.fade,
-                                                    duration: Duration(
-                                                        milliseconds: 0),
-                                                    reverseDuration: Duration(
-                                                        milliseconds: 0),
-                                                    child: HomeWidget(),
-                                                  ),
-                                                  (r) => false,
-                                                );
-                                              },
-                                              child: Container(
-                                                width: 50,
-                                                height: 50,
-                                                clipBehavior: Clip.antiAlias,
-                                                decoration: BoxDecoration(
-                                                  shape: BoxShape.circle,
-                                                ),
-                                                child: SvgPicture.asset(
-                                                  'assets/images/social_facebook.svg',
-                                                ),
-                                              ),
+                                          child: FlutterFlowIconButton(
+                                            borderColor: Colors.transparent,
+                                            borderRadius: 30,
+                                            borderWidth: 1,
+                                            buttonSize: 60,
+                                            icon: FaIcon(
+                                              FontAwesomeIcons.facebookF,
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .tertiaryColor,
+                                              size: 30,
                                             ),
+                                            onPressed: () {
+                                              print('IconButton pressed ...');
+                                            },
                                           ),
                                         ),
                                       ),
                                       Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(
                                             0, 0, 8, 0),
-                                        child: Card(
-                                          clipBehavior:
-                                              Clip.antiAliasWithSaveLayer,
-                                          color: FlutterFlowTheme.of(context)
-                                              .orange,
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(50),
-                                          ),
-                                          child: Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    2, 2, 2, 2),
-                                            child: InkWell(
-                                              onTap: () async {
+                                        child: InkWell(
+                                          onTap: () async {
+                                            final user =
+                                                await signInWithGoogle(context);
+                                            if (user == null) {
+                                              return;
+                                            }
+                                            if (FFAppState().showSplash) {
+                                              await Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      SplashWidget(),
+                                                ),
+                                              );
+                                            } else {
+                                              await Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      HomeWidget(),
+                                                ),
+                                              );
+                                            }
+                                          },
+                                          child: Card(
+                                            clipBehavior:
+                                                Clip.antiAliasWithSaveLayer,
+                                            color: FlutterFlowTheme.of(context)
+                                                .orange,
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(50),
+                                            ),
+                                            child: FlutterFlowIconButton(
+                                              borderColor: Colors.transparent,
+                                              borderRadius: 30,
+                                              borderWidth: 1,
+                                              buttonSize: 60,
+                                              icon: FaIcon(
+                                                FontAwesomeIcons.google,
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .tertiaryColor,
+                                                size: 30,
+                                              ),
+                                              onPressed: () async {
                                                 final user =
                                                     await signInWithGoogle(
                                                         context);
                                                 if (user == null) {
                                                   return;
                                                 }
-                                                await Navigator
-                                                    .pushAndRemoveUntil(
-                                                  context,
-                                                  PageTransition(
-                                                    type:
-                                                        PageTransitionType.fade,
-                                                    duration: Duration(
-                                                        milliseconds: 0),
-                                                    reverseDuration: Duration(
-                                                        milliseconds: 0),
-                                                    child: HomeWidget(),
-                                                  ),
-                                                  (r) => false,
-                                                );
+                                                if (FFAppState().showSplash) {
+                                                  await Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          SplashWidget(),
+                                                    ),
+                                                  );
+                                                } else {
+                                                  await Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          HomeWidget(),
+                                                    ),
+                                                  );
+                                                }
                                               },
-                                              child: Container(
-                                                width: 50,
-                                                height: 50,
-                                                clipBehavior: Clip.antiAlias,
-                                                decoration: BoxDecoration(
-                                                  shape: BoxShape.circle,
-                                                ),
-                                                child: SvgPicture.asset(
-                                                  'assets/images/social_GoogleWhite.svg',
-                                                ),
-                                              ),
                                             ),
                                           ),
                                         ),
@@ -507,44 +534,20 @@ class _LoginWidgetState extends State<LoginWidget> {
                                           borderRadius:
                                               BorderRadius.circular(50),
                                         ),
-                                        child: Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  2, 2, 2, 2),
-                                          child: InkWell(
-                                            onTap: () async {
-                                              final user =
-                                                  await signInWithApple(
-                                                      context);
-                                              if (user == null) {
-                                                return;
-                                              }
-                                              await Navigator
-                                                  .pushAndRemoveUntil(
-                                                context,
-                                                PageTransition(
-                                                  type: PageTransitionType.fade,
-                                                  duration:
-                                                      Duration(milliseconds: 0),
-                                                  reverseDuration:
-                                                      Duration(milliseconds: 0),
-                                                  child: HomeWidget(),
-                                                ),
-                                                (r) => false,
-                                              );
-                                            },
-                                            child: Container(
-                                              width: 50,
-                                              height: 50,
-                                              clipBehavior: Clip.antiAlias,
-                                              decoration: BoxDecoration(
-                                                shape: BoxShape.circle,
-                                              ),
-                                              child: SvgPicture.asset(
-                                                'assets/images/social_Apple.svg',
-                                              ),
-                                            ),
+                                        child: FlutterFlowIconButton(
+                                          borderColor: Colors.transparent,
+                                          borderRadius: 30,
+                                          borderWidth: 1,
+                                          buttonSize: 60,
+                                          icon: FaIcon(
+                                            FontAwesomeIcons.apple,
+                                            color: FlutterFlowTheme.of(context)
+                                                .tertiaryColor,
+                                            size: 30,
                                           ),
+                                          onPressed: () {
+                                            print('IconButton pressed ...');
+                                          },
                                         ),
                                       ),
                                     ],
@@ -559,12 +562,8 @@ class _LoginWidgetState extends State<LoginWidget> {
                                 onTap: () async {
                                   await Navigator.push(
                                     context,
-                                    PageTransition(
-                                      type: PageTransitionType.fade,
-                                      duration: Duration(milliseconds: 0),
-                                      reverseDuration:
-                                          Duration(milliseconds: 0),
-                                      child: SignupWidget(),
+                                    MaterialPageRoute(
+                                      builder: (context) => SignupWidget(),
                                     ),
                                   );
                                 },
@@ -574,7 +573,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
                                     Text(
-                                      'Don\'t have an account?',
+                                      'Don\'t have an account ?',
                                       style: FlutterFlowTheme.of(context)
                                           .subtitle2
                                           .override(
@@ -587,12 +586,9 @@ class _LoginWidgetState extends State<LoginWidget> {
                                       onPressed: () async {
                                         await Navigator.push(
                                           context,
-                                          PageTransition(
-                                            type: PageTransitionType.fade,
-                                            duration: Duration(milliseconds: 0),
-                                            reverseDuration:
-                                                Duration(milliseconds: 0),
-                                            child: SignupWidget(),
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                SignupWidget(),
                                           ),
                                         );
                                       },
