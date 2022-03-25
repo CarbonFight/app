@@ -28,6 +28,9 @@ abstract class FoodActionsRecord
   DateTime get createdTime;
 
   @nullable
+  String get userId;
+
+  @nullable
   @BuiltValueField(wireName: kDocumentReferenceField)
   DocumentReference get reference;
 
@@ -35,7 +38,8 @@ abstract class FoodActionsRecord
     ..co2e = 0
     ..food = ''
     ..mainComponent = ''
-    ..sideComponent = '';
+    ..sideComponent = ''
+    ..userId = '';
 
   static CollectionReference get collection =>
       FirebaseFirestore.instance.collection('foodActions');
@@ -64,6 +68,7 @@ Map<String, dynamic> createFoodActionsRecordData({
   String mainComponent,
   String sideComponent,
   DateTime createdTime,
+  String userId,
 }) =>
     serializers.toFirestore(
         FoodActionsRecord.serializer,
@@ -72,4 +77,5 @@ Map<String, dynamic> createFoodActionsRecordData({
           ..food = food
           ..mainComponent = mainComponent
           ..sideComponent = sideComponent
-          ..createdTime = createdTime));
+          ..createdTime = createdTime
+          ..userId = userId));

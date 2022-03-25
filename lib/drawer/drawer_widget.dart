@@ -160,14 +160,19 @@ class _DrawerWidgetState extends State<DrawerWidget>
                                         ],
                                         shape: BoxShape.circle,
                                       ),
-                                      child: ClipRRect(
-                                        borderRadius:
-                                            BorderRadius.circular(100),
-                                        child: Image.asset(
-                                          'assets/images/default_avatar_3d.png',
-                                          width: 70,
-                                          height: 70,
-                                          fit: BoxFit.cover,
+                                      child: AuthUserStreamWidget(
+                                        child: ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(100),
+                                          child: Image.network(
+                                            valueOrDefault<String>(
+                                              currentUserPhoto,
+                                              'https://firebasestorage.googleapis.com/v0/b/carbonfight-89af6.appspot.com/o/18275220161537356156-128.png?alt=media&token=c9797a03-bba1-46b8-aaac-4c54cb99fcb6',
+                                            ),
+                                            width: 70,
+                                            height: 70,
+                                            fit: BoxFit.cover,
+                                          ),
                                         ),
                                       ),
                                     ),

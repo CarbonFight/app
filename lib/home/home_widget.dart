@@ -1,5 +1,7 @@
 import '../auth/auth_util.dart';
-import '../components/add_action_widget.dart';
+import '../components/energy_form_widget.dart';
+import '../components/food_form_widget.dart';
+import '../components/transport_form_widget.dart';
 import '../drawer/drawer_widget.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
@@ -42,7 +44,7 @@ class _HomeWidgetState extends State<HomeWidget> {
             image: DecorationImage(
               fit: BoxFit.cover,
               image: Image.asset(
-                'assets/images/co2_illustration.jpg',
+                'assets/images/Final_Concept_1.jpg',
               ).image,
             ),
           ),
@@ -137,13 +139,18 @@ class _HomeWidgetState extends State<HomeWidget> {
                             width: 1,
                           ),
                         ),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(100),
-                          child: Image.asset(
-                            'assets/images/default_avatar_3d.png',
-                            width: 70,
-                            height: 70,
-                            fit: BoxFit.cover,
+                        child: AuthUserStreamWidget(
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(100),
+                            child: Image.network(
+                              valueOrDefault<String>(
+                                currentUserPhoto,
+                                'https://firebasestorage.googleapis.com/v0/b/carbonfight-89af6.appspot.com/o/18275220161537356156-128.png?alt=media&token=c9797a03-bba1-46b8-aaac-4c54cb99fcb6',
+                              ),
+                              width: 70,
+                              height: 70,
+                              fit: BoxFit.cover,
+                            ),
                           ),
                         ),
                       ),
@@ -341,13 +348,17 @@ class _HomeWidgetState extends State<HomeWidget> {
                                         children: [
                                           AuthUserStreamWidget(
                                             child: CircularPercentIndicator(
-                                                percent: 0.25,
+                                                percent: functions
+                                                    .percentProgressBar(
+                                                        currentUserDocument
+                                                            ?.dayScore,
+                                                        'day'),
                                                 radius: 100,
                                                 lineWidth: 18,
                                                 animation: true,
                                                 progressColor:
                                                     FlutterFlowTheme.of(context)
-                                                        .redi,
+                                                        .orange,
                                                 backgroundColor:
                                                     FlutterFlowTheme.of(context)
                                                         .tertiaryColor,
@@ -358,7 +369,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                                   textAlign: TextAlign.start,
                                                   style: FlutterFlowTheme.of(
                                                           context)
-                                                      .title1
+                                                      .title2
                                                       .override(
                                                         fontFamily:
                                                             'Montserrat',
@@ -366,9 +377,6 @@ class _HomeWidgetState extends State<HomeWidget> {
                                                             FlutterFlowTheme.of(
                                                                     context)
                                                                 .tertiaryColor,
-                                                        fontSize: 46,
-                                                        fontWeight:
-                                                            FontWeight.w600,
                                                       ),
                                                 ),
                                                 startAngle: 0),
@@ -376,38 +384,6 @@ class _HomeWidgetState extends State<HomeWidget> {
                                           Align(
                                             alignment:
                                                 AlignmentDirectional(0, -0.4),
-                                            child: Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(45, 0, 45, 0),
-                                              child: Row(
-                                                mainAxisSize: MainAxisSize.max,
-                                                children: [
-                                                  Expanded(
-                                                    child: Text(
-                                                      'Vos émissions : ',
-                                                      textAlign:
-                                                          TextAlign.center,
-                                                      style:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .bodyText1
-                                                              .override(
-                                                                fontFamily:
-                                                                    'Montserrat',
-                                                                color: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .gronyLighter,
-                                                                fontSize: 11,
-                                                              ),
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                          Align(
-                                            alignment:
-                                                AlignmentDirectional(0, 0.4),
                                             child: Padding(
                                               padding: EdgeInsetsDirectional
                                                   .fromSTEB(45, 0, 45, 0),
@@ -429,6 +405,38 @@ class _HomeWidgetState extends State<HomeWidget> {
                                                                 color: FlutterFlowTheme.of(
                                                                         context)
                                                                     .gronyLighter,
+                                                                fontSize: 11,
+                                                              ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                          Align(
+                                            alignment:
+                                                AlignmentDirectional(0, 0.4),
+                                            child: Padding(
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(45, 0, 45, 0),
+                                              child: Row(
+                                                mainAxisSize: MainAxisSize.max,
+                                                children: [
+                                                  Expanded(
+                                                    child: Text(
+                                                      'co2e',
+                                                      textAlign:
+                                                          TextAlign.center,
+                                                      style:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .bodyText1
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Montserrat',
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .gronyLighter,
                                                               ),
                                                     ),
                                                   ),
@@ -456,35 +464,41 @@ class _HomeWidgetState extends State<HomeWidget> {
                                       child: Stack(
                                         alignment: AlignmentDirectional(0, 0),
                                         children: [
-                                          CircularPercentIndicator(
-                                              percent: 0.25,
-                                              radius: 100,
-                                              lineWidth: 18,
-                                              animation: true,
-                                              progressColor:
-                                                  FlutterFlowTheme.of(context)
-                                                      .redi,
-                                              backgroundColor:
-                                                  FlutterFlowTheme.of(context)
-                                                      .tertiaryColor,
-                                              center: Text(
-                                                '71%',
-                                                textAlign: TextAlign.start,
-                                                style: FlutterFlowTheme.of(
-                                                        context)
-                                                    .title1
-                                                    .override(
-                                                      fontFamily: 'Montserrat',
-                                                      color:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .tertiaryColor,
-                                                      fontSize: 46,
-                                                      fontWeight:
-                                                          FontWeight.w600,
-                                                    ),
-                                              ),
-                                              startAngle: 0),
+                                          AuthUserStreamWidget(
+                                            child: CircularPercentIndicator(
+                                                percent: functions
+                                                    .percentProgressBar(
+                                                        currentUserDocument
+                                                            ?.weekScore,
+                                                        'week'),
+                                                radius: 100,
+                                                lineWidth: 18,
+                                                animation: true,
+                                                progressColor:
+                                                    FlutterFlowTheme.of(context)
+                                                        .orange,
+                                                backgroundColor:
+                                                    FlutterFlowTheme.of(context)
+                                                        .tertiaryColor,
+                                                center: Text(
+                                                  functions.printScore(
+                                                      currentUserDocument
+                                                          ?.weekScore),
+                                                  textAlign: TextAlign.start,
+                                                  style: FlutterFlowTheme.of(
+                                                          context)
+                                                      .title2
+                                                      .override(
+                                                        fontFamily:
+                                                            'Montserrat',
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .tertiaryColor,
+                                                      ),
+                                                ),
+                                                startAngle: 0),
+                                          ),
                                           Align(
                                             alignment:
                                                 AlignmentDirectional(0, -0.4),
@@ -496,7 +510,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                                 children: [
                                                   Expanded(
                                                     child: Text(
-                                                      'You\'re on track to decrease emissions by',
+                                                      'Cette semaine',
                                                       textAlign:
                                                           TextAlign.center,
                                                       style:
@@ -528,7 +542,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                                 children: [
                                                   Expanded(
                                                     child: Text(
-                                                      'This Month',
+                                                      'co2e',
                                                       textAlign:
                                                           TextAlign.center,
                                                       style:
@@ -568,35 +582,41 @@ class _HomeWidgetState extends State<HomeWidget> {
                                       child: Stack(
                                         alignment: AlignmentDirectional(0, 0),
                                         children: [
-                                          CircularPercentIndicator(
-                                              percent: 0.25,
-                                              radius: 100,
-                                              lineWidth: 18,
-                                              animation: true,
-                                              progressColor:
-                                                  FlutterFlowTheme.of(context)
-                                                      .redi,
-                                              backgroundColor:
-                                                  FlutterFlowTheme.of(context)
-                                                      .tertiaryColor,
-                                              center: Text(
-                                                '71%',
-                                                textAlign: TextAlign.start,
-                                                style: FlutterFlowTheme.of(
-                                                        context)
-                                                    .title1
-                                                    .override(
-                                                      fontFamily: 'Montserrat',
-                                                      color:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .tertiaryColor,
-                                                      fontSize: 46,
-                                                      fontWeight:
-                                                          FontWeight.w600,
-                                                    ),
-                                              ),
-                                              startAngle: 0),
+                                          AuthUserStreamWidget(
+                                            child: CircularPercentIndicator(
+                                                percent: functions
+                                                    .percentProgressBar(
+                                                        currentUserDocument
+                                                            ?.monthScore,
+                                                        'month'),
+                                                radius: 100,
+                                                lineWidth: 18,
+                                                animation: true,
+                                                progressColor:
+                                                    FlutterFlowTheme.of(context)
+                                                        .orange,
+                                                backgroundColor:
+                                                    FlutterFlowTheme.of(context)
+                                                        .tertiaryColor,
+                                                center: Text(
+                                                  functions.printScore(
+                                                      currentUserDocument
+                                                          ?.monthScore),
+                                                  textAlign: TextAlign.start,
+                                                  style: FlutterFlowTheme.of(
+                                                          context)
+                                                      .title2
+                                                      .override(
+                                                        fontFamily:
+                                                            'Montserrat',
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .tertiaryColor,
+                                                      ),
+                                                ),
+                                                startAngle: 0),
+                                          ),
                                           Align(
                                             alignment:
                                                 AlignmentDirectional(0, -0.4),
@@ -608,7 +628,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                                 children: [
                                                   Expanded(
                                                     child: Text(
-                                                      'You\'re on track to decrease emissions by',
+                                                      'Ce mois',
                                                       textAlign:
                                                           TextAlign.center,
                                                       style:
@@ -640,7 +660,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                                 children: [
                                                   Expanded(
                                                     child: Text(
-                                                      'This Month',
+                                                      'co2e',
                                                       textAlign:
                                                           TextAlign.center,
                                                       style:
@@ -728,10 +748,8 @@ class _HomeWidgetState extends State<HomeWidget> {
                                             padding: MediaQuery.of(context)
                                                 .viewInsets,
                                             child: Container(
-                                              height: 500,
-                                              child: AddActionWidget(
-                                                list: 'Transport',
-                                              ),
+                                              height: 600,
+                                              child: TransportFormWidget(),
                                             ),
                                           );
                                         },
@@ -762,15 +780,15 @@ class _HomeWidgetState extends State<HomeWidget> {
                                             padding:
                                                 EdgeInsetsDirectional.fromSTEB(
                                                     0, 0, 0, 5),
-                                            child: SvgPicture.network(
-                                              'https://twemoji.maxcdn.com/v/13.0.1/svg/1f697.svg',
+                                            child: SvgPicture.asset(
+                                              'assets/images/trans-car-01.svg',
                                               width: 25,
                                               height: 25,
                                               fit: BoxFit.cover,
                                             ),
                                           ),
                                           Text(
-                                            'Transport',
+                                            'Transports',
                                             style: FlutterFlowTheme.of(context)
                                                 .bodyText2
                                                 .override(
@@ -803,10 +821,8 @@ class _HomeWidgetState extends State<HomeWidget> {
                                             padding: MediaQuery.of(context)
                                                 .viewInsets,
                                             child: Container(
-                                              height: 500,
-                                              child: AddActionWidget(
-                                                list: 'Repas',
-                                              ),
+                                              height: 600,
+                                              child: FoodFormWidget(),
                                             ),
                                           );
                                         },
@@ -837,8 +853,8 @@ class _HomeWidgetState extends State<HomeWidget> {
                                             padding:
                                                 EdgeInsetsDirectional.fromSTEB(
                                                     0, 0, 0, 5),
-                                            child: SvgPicture.network(
-                                              'https://twemoji.maxcdn.com/v/13.0.1/svg/1f37d.svg',
+                                            child: Image.asset(
+                                              'assets/images/canape_(1).png',
                                               width: 25,
                                               height: 25,
                                               fit: BoxFit.cover,
@@ -878,10 +894,8 @@ class _HomeWidgetState extends State<HomeWidget> {
                                             padding: MediaQuery.of(context)
                                                 .viewInsets,
                                             child: Container(
-                                              height: 500,
-                                              child: AddActionWidget(
-                                                list: 'Energies',
-                                              ),
+                                              height: 380,
+                                              child: EnergyFormWidget(),
                                             ),
                                           );
                                         },
@@ -912,8 +926,8 @@ class _HomeWidgetState extends State<HomeWidget> {
                                             padding:
                                                 EdgeInsetsDirectional.fromSTEB(
                                                     0, 0, 0, 5),
-                                            child: SvgPicture.network(
-                                              'https://twemoji.maxcdn.com/v/13.0.1/svg/26a1.svg',
+                                            child: Image.asset(
+                                              'assets/images/energy.png',
                                               width: 25,
                                               height: 25,
                                               fit: BoxFit.cover,
@@ -1030,10 +1044,6 @@ class _HomeWidgetState extends State<HomeWidget> {
                                           ],
                                         ),
                                       ),
-                                    ),
-                                    Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      children: [],
                                     ),
                                   ],
                                 ),

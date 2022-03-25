@@ -121,17 +121,20 @@ class _StatistiquesWidgetState extends State<StatistiquesWidget> {
                                         shape: BoxShape.circle,
                                       ),
                                     ),
-                                    CircularPercentIndicator(
-                                      percent: 0.25,
-                                      radius: 35,
-                                      lineWidth: 18,
-                                      animation: true,
-                                      progressColor:
-                                          FlutterFlowTheme.of(context)
-                                              .gronyLight,
-                                      backgroundColor:
-                                          FlutterFlowTheme.of(context)
-                                              .tertiaryColor,
+                                    AuthUserStreamWidget(
+                                      child: CircularPercentIndicator(
+                                        percent: functions.percentProgressBar(
+                                            currentUserDocument?.dayScore,
+                                            'day'),
+                                        radius: 35,
+                                        lineWidth: 18,
+                                        animation: true,
+                                        progressColor:
+                                            FlutterFlowTheme.of(context).orange,
+                                        backgroundColor:
+                                            FlutterFlowTheme.of(context)
+                                                .tertiaryColor,
+                                      ),
                                     ),
                                     Container(
                                       width: 50,
@@ -146,14 +149,19 @@ class _StatistiquesWidgetState extends State<StatistiquesWidget> {
                                           width: 1,
                                         ),
                                       ),
-                                      child: ClipRRect(
-                                        borderRadius:
-                                            BorderRadius.circular(100),
-                                        child: Image.asset(
-                                          'assets/images/default_avatar_3d.png',
-                                          width: 70,
-                                          height: 70,
-                                          fit: BoxFit.cover,
+                                      child: AuthUserStreamWidget(
+                                        child: ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(100),
+                                          child: Image.network(
+                                            valueOrDefault<String>(
+                                              currentUserPhoto,
+                                              'https://firebasestorage.googleapis.com/v0/b/carbonfight-89af6.appspot.com/o/18275220161537356156-128.png?alt=media&token=c9797a03-bba1-46b8-aaac-4c54cb99fcb6',
+                                            ),
+                                            width: 70,
+                                            height: 70,
+                                            fit: BoxFit.cover,
+                                          ),
                                         ),
                                       ),
                                     ),
@@ -161,15 +169,15 @@ class _StatistiquesWidgetState extends State<StatistiquesWidget> {
                                 ),
                                 Align(
                                   alignment: AlignmentDirectional(0.35, 0),
-                                  child: Text(
-                                    '1',
-                                    style: FlutterFlowTheme.of(context)
-                                        .bodyText1
-                                        .override(
-                                          fontFamily: 'Montserrat',
-                                          fontSize: 46,
-                                          fontWeight: FontWeight.w800,
-                                        ),
+                                  child: AuthUserStreamWidget(
+                                    child: Text(
+                                      valueOrDefault<String>(
+                                        currentUserDocument?.level.toString(),
+                                        '1',
+                                      ),
+                                      style:
+                                          FlutterFlowTheme.of(context).title2,
+                                    ),
                                   ),
                                 ),
                               ],

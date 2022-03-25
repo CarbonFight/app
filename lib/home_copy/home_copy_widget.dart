@@ -1,8 +1,8 @@
 import '../auth/auth_util.dart';
-import '../components/add_action_widget.dart';
-import '../components/info_widget.dart';
+import '../components/energy_form_widget.dart';
+import '../components/food_form_widget.dart';
+import '../components/transport_form_widget.dart';
 import '../drawer/drawer_widget.dart';
-import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../home/home_widget.dart';
@@ -45,7 +45,7 @@ class _HomeCopyWidgetState extends State<HomeCopyWidget> {
             image: DecorationImage(
               fit: BoxFit.cover,
               image: Image.asset(
-                'assets/images/background.png',
+                'assets/images/Final_Concept_1.jpg',
               ).image,
             ),
           ),
@@ -344,13 +344,17 @@ class _HomeCopyWidgetState extends State<HomeCopyWidget> {
                                         children: [
                                           AuthUserStreamWidget(
                                             child: CircularPercentIndicator(
-                                                percent: 0.25,
+                                                percent: functions
+                                                    .percentProgressBar(
+                                                        currentUserDocument
+                                                            ?.dayScore,
+                                                        'day'),
                                                 radius: 100,
                                                 lineWidth: 18,
                                                 animation: true,
                                                 progressColor:
                                                     FlutterFlowTheme.of(context)
-                                                        .redi,
+                                                        .orange,
                                                 backgroundColor:
                                                     FlutterFlowTheme.of(context)
                                                         .tertiaryColor,
@@ -361,7 +365,7 @@ class _HomeCopyWidgetState extends State<HomeCopyWidget> {
                                                   textAlign: TextAlign.start,
                                                   style: FlutterFlowTheme.of(
                                                           context)
-                                                      .title1
+                                                      .title2
                                                       .override(
                                                         fontFamily:
                                                             'Montserrat',
@@ -369,9 +373,6 @@ class _HomeCopyWidgetState extends State<HomeCopyWidget> {
                                                             FlutterFlowTheme.of(
                                                                     context)
                                                                 .tertiaryColor,
-                                                        fontSize: 46,
-                                                        fontWeight:
-                                                            FontWeight.w600,
                                                       ),
                                                 ),
                                                 startAngle: 0),
@@ -379,38 +380,6 @@ class _HomeCopyWidgetState extends State<HomeCopyWidget> {
                                           Align(
                                             alignment:
                                                 AlignmentDirectional(0, -0.4),
-                                            child: Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(45, 0, 45, 0),
-                                              child: Row(
-                                                mainAxisSize: MainAxisSize.max,
-                                                children: [
-                                                  Expanded(
-                                                    child: Text(
-                                                      'Vos émissions : ',
-                                                      textAlign:
-                                                          TextAlign.center,
-                                                      style:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .bodyText1
-                                                              .override(
-                                                                fontFamily:
-                                                                    'Montserrat',
-                                                                color: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .gronyLighter,
-                                                                fontSize: 11,
-                                                              ),
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                          Align(
-                                            alignment:
-                                                AlignmentDirectional(0, 0.4),
                                             child: Padding(
                                               padding: EdgeInsetsDirectional
                                                   .fromSTEB(45, 0, 45, 0),
@@ -432,6 +401,38 @@ class _HomeCopyWidgetState extends State<HomeCopyWidget> {
                                                                 color: FlutterFlowTheme.of(
                                                                         context)
                                                                     .gronyLighter,
+                                                                fontSize: 11,
+                                                              ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                          Align(
+                                            alignment:
+                                                AlignmentDirectional(0, 0.4),
+                                            child: Padding(
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(45, 0, 45, 0),
+                                              child: Row(
+                                                mainAxisSize: MainAxisSize.max,
+                                                children: [
+                                                  Expanded(
+                                                    child: Text(
+                                                      'co2e',
+                                                      textAlign:
+                                                          TextAlign.center,
+                                                      style:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .bodyText1
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Montserrat',
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .gronyLighter,
                                                               ),
                                                     ),
                                                   ),
@@ -459,35 +460,41 @@ class _HomeCopyWidgetState extends State<HomeCopyWidget> {
                                       child: Stack(
                                         alignment: AlignmentDirectional(0, 0),
                                         children: [
-                                          CircularPercentIndicator(
-                                              percent: 0.25,
-                                              radius: 100,
-                                              lineWidth: 18,
-                                              animation: true,
-                                              progressColor:
-                                                  FlutterFlowTheme.of(context)
-                                                      .redi,
-                                              backgroundColor:
-                                                  FlutterFlowTheme.of(context)
-                                                      .tertiaryColor,
-                                              center: Text(
-                                                '71%',
-                                                textAlign: TextAlign.start,
-                                                style: FlutterFlowTheme.of(
-                                                        context)
-                                                    .title1
-                                                    .override(
-                                                      fontFamily: 'Montserrat',
-                                                      color:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .tertiaryColor,
-                                                      fontSize: 46,
-                                                      fontWeight:
-                                                          FontWeight.w600,
-                                                    ),
-                                              ),
-                                              startAngle: 0),
+                                          AuthUserStreamWidget(
+                                            child: CircularPercentIndicator(
+                                                percent: functions
+                                                    .percentProgressBar(
+                                                        currentUserDocument
+                                                            ?.weekScore,
+                                                        'week'),
+                                                radius: 100,
+                                                lineWidth: 18,
+                                                animation: true,
+                                                progressColor:
+                                                    FlutterFlowTheme.of(context)
+                                                        .orange,
+                                                backgroundColor:
+                                                    FlutterFlowTheme.of(context)
+                                                        .tertiaryColor,
+                                                center: Text(
+                                                  functions.printScore(
+                                                      currentUserDocument
+                                                          ?.weekScore),
+                                                  textAlign: TextAlign.start,
+                                                  style: FlutterFlowTheme.of(
+                                                          context)
+                                                      .title2
+                                                      .override(
+                                                        fontFamily:
+                                                            'Montserrat',
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .tertiaryColor,
+                                                      ),
+                                                ),
+                                                startAngle: 0),
+                                          ),
                                           Align(
                                             alignment:
                                                 AlignmentDirectional(0, -0.4),
@@ -499,7 +506,7 @@ class _HomeCopyWidgetState extends State<HomeCopyWidget> {
                                                 children: [
                                                   Expanded(
                                                     child: Text(
-                                                      'You\'re on track to decrease emissions by',
+                                                      'Cette semaine',
                                                       textAlign:
                                                           TextAlign.center,
                                                       style:
@@ -531,7 +538,7 @@ class _HomeCopyWidgetState extends State<HomeCopyWidget> {
                                                 children: [
                                                   Expanded(
                                                     child: Text(
-                                                      'This Month',
+                                                      'co2e',
                                                       textAlign:
                                                           TextAlign.center,
                                                       style:
@@ -571,35 +578,41 @@ class _HomeCopyWidgetState extends State<HomeCopyWidget> {
                                       child: Stack(
                                         alignment: AlignmentDirectional(0, 0),
                                         children: [
-                                          CircularPercentIndicator(
-                                              percent: 0.25,
-                                              radius: 100,
-                                              lineWidth: 18,
-                                              animation: true,
-                                              progressColor:
-                                                  FlutterFlowTheme.of(context)
-                                                      .redi,
-                                              backgroundColor:
-                                                  FlutterFlowTheme.of(context)
-                                                      .tertiaryColor,
-                                              center: Text(
-                                                '71%',
-                                                textAlign: TextAlign.start,
-                                                style: FlutterFlowTheme.of(
-                                                        context)
-                                                    .title1
-                                                    .override(
-                                                      fontFamily: 'Montserrat',
-                                                      color:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .tertiaryColor,
-                                                      fontSize: 46,
-                                                      fontWeight:
-                                                          FontWeight.w600,
-                                                    ),
-                                              ),
-                                              startAngle: 0),
+                                          AuthUserStreamWidget(
+                                            child: CircularPercentIndicator(
+                                                percent: functions
+                                                    .percentProgressBar(
+                                                        currentUserDocument
+                                                            ?.monthScore,
+                                                        'month'),
+                                                radius: 100,
+                                                lineWidth: 18,
+                                                animation: true,
+                                                progressColor:
+                                                    FlutterFlowTheme.of(context)
+                                                        .orange,
+                                                backgroundColor:
+                                                    FlutterFlowTheme.of(context)
+                                                        .tertiaryColor,
+                                                center: Text(
+                                                  functions.printScore(
+                                                      currentUserDocument
+                                                          ?.monthScore),
+                                                  textAlign: TextAlign.start,
+                                                  style: FlutterFlowTheme.of(
+                                                          context)
+                                                      .title2
+                                                      .override(
+                                                        fontFamily:
+                                                            'Montserrat',
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .tertiaryColor,
+                                                      ),
+                                                ),
+                                                startAngle: 0),
+                                          ),
                                           Align(
                                             alignment:
                                                 AlignmentDirectional(0, -0.4),
@@ -611,7 +624,7 @@ class _HomeCopyWidgetState extends State<HomeCopyWidget> {
                                                 children: [
                                                   Expanded(
                                                     child: Text(
-                                                      'You\'re on track to decrease emissions by',
+                                                      'Ce mois',
                                                       textAlign:
                                                           TextAlign.center,
                                                       style:
@@ -643,7 +656,7 @@ class _HomeCopyWidgetState extends State<HomeCopyWidget> {
                                                 children: [
                                                   Expanded(
                                                     child: Text(
-                                                      'This Month',
+                                                      'co2e',
                                                       textAlign:
                                                           TextAlign.center,
                                                       style:
@@ -707,99 +720,230 @@ class _HomeCopyWidgetState extends State<HomeCopyWidget> {
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(40, 0, 40, 0),
+                        padding: EdgeInsetsDirectional.fromSTEB(40, 20, 40, 0),
                         child: Row(
                           mainAxisSize: MainAxisSize.max,
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Expanded(
-                              child: Column(
-                                mainAxisSize: MainAxisSize.max,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  AuthUserStreamWidget(
-                                    child: Text(
-                                      valueOrDefault<String>(
-                                        functions.printScore(
-                                            currentUserDocument?.globalScore),
-                                        '0 g',
-                                      ),
-                                      textAlign: TextAlign.center,
-                                      style: FlutterFlowTheme.of(context)
-                                          .title3
-                                          .override(
-                                            fontFamily: 'Montserrat',
-                                            color: FlutterFlowTheme.of(context)
-                                                .tertiaryColor,
-                                            fontSize: 46,
-                                          ),
-                                    ),
-                                  ),
-                                  Row(
-                                    mainAxisSize: MainAxisSize.max,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                        'CO2e',
-                                        style: FlutterFlowTheme.of(context)
-                                            .subtitle2
-                                            .override(
-                                              fontFamily: 'Montserrat',
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .tertiaryColor,
+                            Column(
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      5, 0, 0, 5),
+                                  child: InkWell(
+                                    onTap: () async {
+                                      await showModalBottomSheet(
+                                        isScrollControlled: true,
+                                        backgroundColor: Colors.transparent,
+                                        barrierColor: Color(0xBF000000),
+                                        context: context,
+                                        builder: (context) {
+                                          return Padding(
+                                            padding: MediaQuery.of(context)
+                                                .viewInsets,
+                                            child: Container(
+                                              height: 600,
+                                              child: TransportFormWidget(),
                                             ),
-                                      ),
-                                      InkWell(
-                                        onTap: () async {
-                                          await showModalBottomSheet(
-                                            isScrollControlled: true,
-                                            backgroundColor: Colors.transparent,
-                                            barrierColor: Color(0xBF000000),
-                                            context: context,
-                                            builder: (context) {
-                                              return Padding(
-                                                padding: MediaQuery.of(context)
-                                                    .viewInsets,
-                                                child: Container(
-                                                  height: 375,
-                                                  child: InfoWidget(
-                                                    title: 'Some statistics',
-                                                    body:
-                                                        'The French average is 12.5 kg. The 10 most polluting countries emit on average between 40 kg (USA/Canada) and 83 kg (Quatar) of CO2 per capita per day. To reach the balance of our planet, it would be necessary to emit less than 3.30 kg per inhabitant.',
-                                                  ),
-                                                ),
-                                              );
-                                            },
                                           );
                                         },
-                                        child: Container(
-                                          width: 35,
-                                          height: 35,
-                                          decoration: BoxDecoration(
-                                            boxShadow: [
-                                              BoxShadow(
-                                                blurRadius: 10,
-                                                color: Color(0x13000000),
-                                                offset: Offset(0, 8),
-                                              )
-                                            ],
-                                            shape: BoxShape.circle,
-                                          ),
-                                          alignment: AlignmentDirectional(0, 0),
-                                          child: Icon(
-                                            Icons.info_outline_rounded,
-                                            color: FlutterFlowTheme.of(context)
-                                                .tertiaryColor,
-                                            size: 22,
-                                          ),
-                                        ),
+                                      );
+                                    },
+                                    child: Container(
+                                      width: 70,
+                                      height: 70,
+                                      decoration: BoxDecoration(
+                                        color: FlutterFlowTheme.of(context)
+                                            .tertiaryColor,
+                                        boxShadow: [
+                                          BoxShadow(
+                                            blurRadius: 25,
+                                            color: Color(0x0E000000),
+                                            offset: Offset(0, 10),
+                                          )
+                                        ],
+                                        shape: BoxShape.circle,
                                       ),
-                                    ],
+                                      alignment: AlignmentDirectional(0, 0),
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.max,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Padding(
+                                            padding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    0, 0, 0, 5),
+                                            child: SvgPicture.asset(
+                                              'assets/images/trans-car-01.svg',
+                                              width: 25,
+                                              height: 25,
+                                              fit: BoxFit.cover,
+                                            ),
+                                          ),
+                                          Text(
+                                            'Transports',
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyText2
+                                                .override(
+                                                  fontFamily: 'Montserrat',
+                                                  fontSize: 11,
+                                                ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
                                   ),
-                                ],
-                              ),
+                                ),
+                              ],
+                            ),
+                            Column(
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      5, 0, 0, 5),
+                                  child: InkWell(
+                                    onTap: () async {
+                                      await showModalBottomSheet(
+                                        isScrollControlled: true,
+                                        backgroundColor: Colors.transparent,
+                                        barrierColor: Color(0xBF000000),
+                                        context: context,
+                                        builder: (context) {
+                                          return Padding(
+                                            padding: MediaQuery.of(context)
+                                                .viewInsets,
+                                            child: Container(
+                                              height: 600,
+                                              child: FoodFormWidget(),
+                                            ),
+                                          );
+                                        },
+                                      );
+                                    },
+                                    child: Container(
+                                      width: 70,
+                                      height: 70,
+                                      decoration: BoxDecoration(
+                                        color: FlutterFlowTheme.of(context)
+                                            .tertiaryColor,
+                                        boxShadow: [
+                                          BoxShadow(
+                                            blurRadius: 25,
+                                            color: Color(0x0C000000),
+                                            offset: Offset(0, 10),
+                                          )
+                                        ],
+                                        shape: BoxShape.circle,
+                                      ),
+                                      alignment: AlignmentDirectional(0, 0),
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.max,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Padding(
+                                            padding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    0, 0, 0, 5),
+                                            child: Image.asset(
+                                              'assets/images/canape_(1).png',
+                                              width: 25,
+                                              height: 25,
+                                              fit: BoxFit.cover,
+                                            ),
+                                          ),
+                                          Text(
+                                            'Repas',
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyText2
+                                                .override(
+                                                  fontFamily: 'Montserrat',
+                                                  fontSize: 11,
+                                                ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Column(
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      5, 0, 0, 5),
+                                  child: InkWell(
+                                    onTap: () async {
+                                      await showModalBottomSheet(
+                                        isScrollControlled: true,
+                                        backgroundColor: Colors.transparent,
+                                        barrierColor: Color(0xBF000000),
+                                        context: context,
+                                        builder: (context) {
+                                          return Padding(
+                                            padding: MediaQuery.of(context)
+                                                .viewInsets,
+                                            child: Container(
+                                              height: 380,
+                                              child: EnergyFormWidget(),
+                                            ),
+                                          );
+                                        },
+                                      );
+                                    },
+                                    child: Container(
+                                      width: 70,
+                                      height: 70,
+                                      decoration: BoxDecoration(
+                                        color: FlutterFlowTheme.of(context)
+                                            .tertiaryColor,
+                                        boxShadow: [
+                                          BoxShadow(
+                                            blurRadius: 25,
+                                            color: Color(0x0C000000),
+                                            offset: Offset(0, 10),
+                                          )
+                                        ],
+                                        shape: BoxShape.circle,
+                                      ),
+                                      alignment: AlignmentDirectional(0, 0),
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.max,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Padding(
+                                            padding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    0, 0, 0, 5),
+                                            child: Image.asset(
+                                              'assets/images/energy.png',
+                                              width: 25,
+                                              height: 25,
+                                              fit: BoxFit.cover,
+                                            ),
+                                          ),
+                                          Text(
+                                            'Energies',
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyText2
+                                                .override(
+                                                  fontFamily: 'Montserrat',
+                                                  fontSize: 11,
+                                                ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
                           ],
                         ),
@@ -814,408 +958,9 @@ class _HomeCopyWidgetState extends State<HomeCopyWidget> {
                               child: Container(
                                 width: 100,
                                 decoration: BoxDecoration(),
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: [
-                                        InkWell(
-                                          onTap: () async {
-                                            await showModalBottomSheet(
-                                              isScrollControlled: true,
-                                              backgroundColor:
-                                                  Colors.transparent,
-                                              barrierColor: Color(0xBF000000),
-                                              context: context,
-                                              builder: (context) {
-                                                return Padding(
-                                                  padding:
-                                                      MediaQuery.of(context)
-                                                          .viewInsets,
-                                                  child: Container(
-                                                    height: 375,
-                                                    child: InfoWidget(
-                                                      title: 'Some statistics',
-                                                      body:
-                                                          'The French average is 12.5 kg. The 10 most polluting countries emit on average between 40 kg (USA/Canada) and 83 kg (Quatar) of CO2 per capita per day. To reach the balance of our planet, it would be necessary to emit less than 3.30 kg per inhabitant.',
-                                                    ),
-                                                  ),
-                                                );
-                                              },
-                                            );
-                                          },
-                                          child: Container(
-                                            width: 35,
-                                            height: 35,
-                                            decoration: BoxDecoration(
-                                              boxShadow: [
-                                                BoxShadow(
-                                                  blurRadius: 10,
-                                                  color: Color(0x13000000),
-                                                  offset: Offset(0, 8),
-                                                )
-                                              ],
-                                              shape: BoxShape.circle,
-                                            ),
-                                            alignment:
-                                                AlignmentDirectional(0, 0),
-                                            child: Icon(
-                                              Icons.info_outline_rounded,
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .tertiaryColor,
-                                              size: 22,
-                                            ),
-                                          ),
-                                        ),
-                                        Expanded(
-                                          child: Text(
-                                            'Les actions du jour : ',
-                                            style: FlutterFlowTheme.of(context)
-                                                .subtitle2
-                                                .override(
-                                                  fontFamily: 'Montserrat',
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .tertiaryColor,
-                                                ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          0, 5, 0, 0),
-                                      child: Row(
-                                        mainAxisSize: MainAxisSize.max,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        children: [
-                                          Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    0, 0, 10, 0),
-                                            child: SvgPicture.asset(
-                                              'assets/images/01.svg',
-                                              width: 25,
-                                              height: 25,
-                                              fit: BoxFit.cover,
-                                            ),
-                                          ),
-                                          Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    0, 0, 10, 0),
-                                            child: SvgPicture.asset(
-                                              'assets/images/02.svg',
-                                              width: 25,
-                                              height: 25,
-                                              fit: BoxFit.cover,
-                                            ),
-                                          ),
-                                          Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    0, 0, 10, 0),
-                                            child: SvgPicture.asset(
-                                              'assets/images/03.svg',
-                                              width: 25,
-                                              height: 25,
-                                              fit: BoxFit.cover,
-                                            ),
-                                          ),
-                                          Text(
-                                            '38%',
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodyText1
-                                                .override(
-                                                  fontFamily: 'Montserrat',
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .gronyLighter,
-                                                  fontWeight: FontWeight.bold,
-                                                ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                ),
                               ),
                             ),
                           ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              Align(
-                alignment: AlignmentDirectional(0, 0),
-                child: Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: 400,
-                  child: Stack(
-                    alignment: AlignmentDirectional(-0.65, -1),
-                    children: [
-                      if (FFAppState().addButtonsHome ?? true)
-                        Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(5, 90, 0, 0),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(5, 0, 0, 5),
-                                child: InkWell(
-                                  onTap: () async {
-                                    await showModalBottomSheet(
-                                      isScrollControlled: true,
-                                      backgroundColor: Colors.transparent,
-                                      barrierColor: Color(0xBF000000),
-                                      context: context,
-                                      builder: (context) {
-                                        return Padding(
-                                          padding:
-                                              MediaQuery.of(context).viewInsets,
-                                          child: Container(
-                                            height: 500,
-                                            child: AddActionWidget(
-                                              list: 'Transport',
-                                            ),
-                                          ),
-                                        );
-                                      },
-                                    );
-                                  },
-                                  child: Container(
-                                    width: 70,
-                                    height: 70,
-                                    decoration: BoxDecoration(
-                                      color: FlutterFlowTheme.of(context)
-                                          .tertiaryColor,
-                                      boxShadow: [
-                                        BoxShadow(
-                                          blurRadius: 25,
-                                          color: Color(0x0E000000),
-                                          offset: Offset(0, 10),
-                                        )
-                                      ],
-                                      shape: BoxShape.circle,
-                                    ),
-                                    alignment: AlignmentDirectional(0, 0),
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.max,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  0, 0, 0, 5),
-                                          child: SvgPicture.asset(
-                                            'assets/images/transport.svg',
-                                            width: 25,
-                                            height: 25,
-                                            fit: BoxFit.cover,
-                                          ),
-                                        ),
-                                        Text(
-                                          'Transport',
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodyText2
-                                              .override(
-                                                fontFamily: 'Montserrat',
-                                                fontSize: 11,
-                                              ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(5, 0, 0, 5),
-                                child: InkWell(
-                                  onTap: () async {
-                                    await showModalBottomSheet(
-                                      isScrollControlled: true,
-                                      backgroundColor: Colors.transparent,
-                                      barrierColor: Color(0xBF000000),
-                                      context: context,
-                                      builder: (context) {
-                                        return Padding(
-                                          padding:
-                                              MediaQuery.of(context).viewInsets,
-                                          child: Container(
-                                            height: 500,
-                                            child: AddActionWidget(
-                                              list: 'Repas',
-                                            ),
-                                          ),
-                                        );
-                                      },
-                                    );
-                                  },
-                                  child: Container(
-                                    width: 70,
-                                    height: 70,
-                                    decoration: BoxDecoration(
-                                      color: FlutterFlowTheme.of(context)
-                                          .tertiaryColor,
-                                      boxShadow: [
-                                        BoxShadow(
-                                          blurRadius: 25,
-                                          color: Color(0x0C000000),
-                                          offset: Offset(0, 10),
-                                        )
-                                      ],
-                                      shape: BoxShape.circle,
-                                    ),
-                                    alignment: AlignmentDirectional(0, 0),
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.max,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  0, 0, 0, 5),
-                                          child: SvgPicture.asset(
-                                            'assets/images/repas.svg',
-                                            width: 25,
-                                            height: 25,
-                                            fit: BoxFit.cover,
-                                          ),
-                                        ),
-                                        Text(
-                                          'Repas',
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodyText2
-                                              .override(
-                                                fontFamily: 'Montserrat',
-                                                fontSize: 11,
-                                              ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(5, 0, 0, 5),
-                                child: InkWell(
-                                  onTap: () async {
-                                    await showModalBottomSheet(
-                                      isScrollControlled: true,
-                                      backgroundColor: Colors.transparent,
-                                      barrierColor: Color(0xBF000000),
-                                      context: context,
-                                      builder: (context) {
-                                        return Padding(
-                                          padding:
-                                              MediaQuery.of(context).viewInsets,
-                                          child: Container(
-                                            height: 500,
-                                            child: AddActionWidget(
-                                              list: 'Energies',
-                                            ),
-                                          ),
-                                        );
-                                      },
-                                    );
-                                  },
-                                  child: Container(
-                                    width: 70,
-                                    height: 70,
-                                    decoration: BoxDecoration(
-                                      color: FlutterFlowTheme.of(context)
-                                          .tertiaryColor,
-                                      boxShadow: [
-                                        BoxShadow(
-                                          blurRadius: 25,
-                                          color: Color(0x0C000000),
-                                          offset: Offset(0, 10),
-                                        )
-                                      ],
-                                      shape: BoxShape.circle,
-                                    ),
-                                    alignment: AlignmentDirectional(0, 0),
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.max,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  0, 0, 0, 5),
-                                          child: SvgPicture.asset(
-                                            'assets/images/energies.svg',
-                                            width: 25,
-                                            height: 25,
-                                            fit: BoxFit.cover,
-                                          ),
-                                        ),
-                                        Text(
-                                          'Energies',
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodyText2
-                                              .override(
-                                                fontFamily: 'Montserrat',
-                                                fontSize: 11,
-                                              ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      Container(
-                        width: 85,
-                        height: 85,
-                        decoration: BoxDecoration(
-                          color: FlutterFlowTheme.of(context).tertiaryColor,
-                          boxShadow: [
-                            BoxShadow(
-                              blurRadius: 35,
-                              color: Color(0x1A000000),
-                              offset: Offset(0, 12),
-                            )
-                          ],
-                          shape: BoxShape.circle,
-                        ),
-                        child: FlutterFlowIconButton(
-                          borderColor:
-                              FlutterFlowTheme.of(context).tertiaryColor,
-                          borderRadius: 50,
-                          borderWidth: 10,
-                          buttonSize: 50,
-                          fillColor: FlutterFlowTheme.of(context).gronyLight,
-                          icon: Icon(
-                            Icons.add,
-                            color: FlutterFlowTheme.of(context).tertiaryColor,
-                            size: 30,
-                          ),
-                          onPressed: () async {
-                            if (FFAppState().addButtonsHome) {
-                              setState(
-                                  () => FFAppState().addButtonsHome = false);
-                            } else {
-                              setState(
-                                  () => FFAppState().addButtonsHome = true);
-                            }
-                          },
                         ),
                       ),
                     ],
