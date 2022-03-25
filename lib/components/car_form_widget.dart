@@ -5,7 +5,6 @@ import '../flutter_flow/flutter_flow_drop_down.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
-import '../home/home_widget.dart';
 import '../flutter_flow/custom_functions.dart' as functions;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -13,19 +12,14 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class AddActionFormWidget extends StatefulWidget {
-  const AddActionFormWidget({
-    Key key,
-    this.actionName,
-  }) : super(key: key);
-
-  final String actionName;
+class CarFormWidget extends StatefulWidget {
+  const CarFormWidget({Key key}) : super(key: key);
 
   @override
-  _AddActionFormWidgetState createState() => _AddActionFormWidgetState();
+  _CarFormWidgetState createState() => _CarFormWidgetState();
 }
 
-class _AddActionFormWidgetState extends State<AddActionFormWidget> {
+class _CarFormWidgetState extends State<CarFormWidget> {
   String energyValue;
   String ownershipValue;
   String passengersValue;
@@ -77,7 +71,7 @@ class _AddActionFormWidgetState extends State<AddActionFormWidget> {
                         ),
                       ),
                       Text(
-                        'Add ${widget.actionName}',
+                        'Trajet en voiture',
                         style: FlutterFlowTheme.of(context).subtitle1,
                       ),
                     ],
@@ -98,7 +92,26 @@ class _AddActionFormWidgetState extends State<AddActionFormWidget> {
                   ),
                 ],
               ),
-              Divider(),
+              Row(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
+                    child: Text(
+                      valueOrDefault<String>(
+                        '+ ${valueOrDefault<String>(
+                          functions.printScore(FFAppState().actionCO2),
+                          '0',
+                        )}',
+                        '+ 0 g',
+                      ),
+                      textAlign: TextAlign.center,
+                      style: FlutterFlowTheme.of(context).title2,
+                    ),
+                  ),
+                ],
+              ),
               SingleChildScrollView(
                 child: Column(
                   mainAxisSize: MainAxisSize.max,
@@ -107,41 +120,48 @@ class _AddActionFormWidgetState extends State<AddActionFormWidget> {
                       mainAxisSize: MainAxisSize.max,
                       children: [
                         Expanded(
-                          child: TextFormField(
-                            controller: textController,
-                            obscureText: false,
-                            decoration: InputDecoration(
-                              labelText: 'Distance Parcourue (en km )',
-                              hintText: 'Distance Parcourue (en km )',
-                              enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: FlutterFlowTheme.of(context).grayLight,
-                                  width: 1,
+                          child: Padding(
+                            padding:
+                                EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
+                            child: TextFormField(
+                              controller: textController,
+                              obscureText: false,
+                              decoration: InputDecoration(
+                                labelText: 'Distance Parcourue (en km )',
+                                hintText: 'Distance Parcourue (en km )',
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color:
+                                        FlutterFlowTheme.of(context).grayLight,
+                                    width: 1,
+                                  ),
+                                  borderRadius: BorderRadius.circular(100),
                                 ),
-                                borderRadius: BorderRadius.circular(100),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: FlutterFlowTheme.of(context).grayLight,
-                                  width: 1,
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color:
+                                        FlutterFlowTheme.of(context).grayLight,
+                                    width: 1,
+                                  ),
+                                  borderRadius: BorderRadius.circular(100),
                                 ),
-                                borderRadius: BorderRadius.circular(100),
+                                filled: true,
+                                fillColor: Color(0x40EEF1F0),
+                                prefixIcon: Icon(
+                                  Icons.directions_walk,
+                                  color: FlutterFlowTheme.of(context)
+                                      .secondaryColor,
+                                  size: 16,
+                                ),
                               ),
-                              filled: true,
-                              fillColor: Color(0x40EEF1F0),
-                              prefixIcon: Icon(
-                                Icons.directions_walk,
-                                color:
-                                    FlutterFlowTheme.of(context).secondaryColor,
-                                size: 16,
-                              ),
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyText2
+                                  .override(
+                                    fontFamily: 'Montserrat',
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                              keyboardType: TextInputType.number,
                             ),
-                            style:
-                                FlutterFlowTheme.of(context).bodyText2.override(
-                                      fontFamily: 'Montserrat',
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                            keyboardType: TextInputType.number,
                           ),
                         ),
                       ],
@@ -172,15 +192,9 @@ class _AddActionFormWidgetState extends State<AddActionFormWidget> {
                                     FlutterFlowTheme.of(context).tertiaryColor,
                               ),
                               child: Text(
-                                'More Options',
+                                ' Options',
                                 textAlign: TextAlign.center,
-                                style: FlutterFlowTheme.of(context)
-                                    .bodyText2
-                                    .override(
-                                      fontFamily: 'Montserrat',
-                                      fontSize: 11,
-                                      fontWeight: FontWeight.w500,
-                                    ),
+                                style: FlutterFlowTheme.of(context).subtitle2,
                               ),
                             ),
                           ),
@@ -283,7 +297,8 @@ class _AddActionFormWidgetState extends State<AddActionFormWidget> {
                         children: [
                           Expanded(
                             child: FlutterFlowDropDown(
-                              options: ['Option 1', 'Option 2'].toList(),
+                              options:
+                                  ['Thermic', 'Hybrid', 'Electric'].toList(),
                               onChanged: (val) =>
                                   setState(() => energyValue = val),
                               width: 180,
@@ -314,66 +329,102 @@ class _AddActionFormWidgetState extends State<AddActionFormWidget> {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 10),
+                      padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
                       child: Row(
                         mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Expanded(
-                            child: InkWell(
-                              onTap: () async {
-                                setState(() => FFAppState().actionCO2 =
-                                    functions.transportActionsCO2e(
-                                        int.parse(textController.text),
-                                        passengersValue,
-                                        ownershipValue,
-                                        energyValue,
-                                        'car'));
-
-                                final transportActionsCreateData =
-                                    createTransportActionsRecordData(
-                                  transport: 'car',
-                                  distance: int.parse(textController.text),
-                                  userId: currentUserUid,
-                                  powertype: 'electricity',
-                                  passengers: 1,
-                                  ownership: 'owner',
-                                  createdTime: getCurrentTimestamp,
-                                  co2e: FFAppState().actionCO2,
-                                );
-                                await TransportActionsRecord.collection
-                                    .doc()
-                                    .set(transportActionsCreateData);
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                    content: Text(
-                                      'Vous avez ajouté ${functions.printScore(FFAppState().actionCO2)}de CO2 à votre score.',
-                                      style: GoogleFonts.getFont(
-                                        'Roboto',
-                                      ),
-                                    ),
-                                    duration: Duration(milliseconds: 4000),
-                                    backgroundColor: Color(0x00000000),
-                                  ),
-                                );
-                                await Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => HomeWidget(),
-                                  ),
-                                );
-                              },
-                              child: IconButtonWidget(
-                                fillColor:
-                                    FlutterFlowTheme.of(context).secondaryColor,
-                                fontColor:
-                                    FlutterFlowTheme.of(context).tertiaryColor,
-                                icon: Icon(
-                                  Icons.save_outlined,
-                                  color: FlutterFlowTheme.of(context)
+                            child: Padding(
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(0, 0, 10, 0),
+                              child: InkWell(
+                                onTap: () async {
+                                  setState(() => FFAppState().actionCO2 =
+                                      functions.transportActionsCO2e(
+                                          int.parse(textController.text),
+                                          valueOrDefault<String>(
+                                            passengersValue,
+                                            '1',
+                                          ),
+                                          valueOrDefault<String>(
+                                            ownershipValue,
+                                            'owner',
+                                          ),
+                                          valueOrDefault<String>(
+                                            energyValue,
+                                            'thermic',
+                                          ),
+                                          'car'));
+                                },
+                                child: IconButtonWidget(
+                                  fillColor: FlutterFlowTheme.of(context)
+                                      .secondaryColor,
+                                  fontColor: FlutterFlowTheme.of(context)
                                       .tertiaryColor,
-                                  size: 18,
+                                  icon: Icon(
+                                    Icons.sync,
+                                    color: FlutterFlowTheme.of(context)
+                                        .tertiaryColor,
+                                    size: 18,
+                                  ),
+                                  text: 'Calculer',
                                 ),
-                                text: 'Ajouter',
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            child: Padding(
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(10, 0, 0, 0),
+                              child: InkWell(
+                                onTap: () async {
+                                  setState(() => FFAppState().actionCO2 =
+                                      functions.transportActionsCO2e(
+                                          int.parse(textController.text),
+                                          valueOrDefault<String>(
+                                            passengersValue,
+                                            'null',
+                                          ),
+                                          valueOrDefault<String>(
+                                            ownershipValue,
+                                            'owner',
+                                          ),
+                                          valueOrDefault<String>(
+                                            energyValue,
+                                            'thermic',
+                                          ),
+                                          'car'));
+
+                                  final transportActionsCreateData =
+                                      createTransportActionsRecordData(
+                                    transport: 'car',
+                                    distance: int.parse(textController.text),
+                                    userId: currentUserUid,
+                                    powertype: 'thermic',
+                                    passengers: passengersValue,
+                                    ownership: 'owner',
+                                    createdTime: getCurrentTimestamp,
+                                    co2e: FFAppState().actionCO2,
+                                  );
+                                  await TransportActionsRecord.collection
+                                      .doc()
+                                      .set(transportActionsCreateData);
+                                  Navigator.pop(context);
+                                },
+                                child: IconButtonWidget(
+                                  fillColor:
+                                      FlutterFlowTheme.of(context).primaryColor,
+                                  fontColor: FlutterFlowTheme.of(context)
+                                      .tertiaryColor,
+                                  icon: Icon(
+                                    Icons.add_circle_outline,
+                                    color: FlutterFlowTheme.of(context)
+                                        .tertiaryColor,
+                                    size: 25,
+                                  ),
+                                  text: 'Ajouter',
+                                ),
                               ),
                             ),
                           ),

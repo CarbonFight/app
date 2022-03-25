@@ -1,5 +1,4 @@
 import '../auth/auth_util.dart';
-import '../backend/backend.dart';
 import '../components/icon_button_widget.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
@@ -461,18 +460,6 @@ class _SignupWidgetState extends State<SignupWidget> {
                                   return;
                                 }
 
-                                final usersCreateData = createUsersRecordData(
-                                  createdTime: getCurrentTimestamp,
-                                  dayScore: 0,
-                                  displayName: nameController.text,
-                                  email: emailAddressController.text,
-                                  globalScore: 0,
-                                  level: 0,
-                                );
-                                await UsersRecord.collection
-                                    .doc(user.uid)
-                                    .update(usersCreateData);
-
                                 await sendEmailVerification();
                                 await showDialog(
                                   context: context,
@@ -596,47 +583,44 @@ class _SignupWidgetState extends State<SignupWidget> {
                                       Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(
                                             0, 0, 8, 0),
-                                        child: InkWell(
-                                          onTap: () async {
-                                            final user =
-                                                await signInWithGoogle(context);
-                                            if (user == null) {
-                                              return;
-                                            }
-                                            await Navigator.pushAndRemoveUntil(
-                                              context,
-                                              MaterialPageRoute(
-                                                builder: (context) =>
-                                                    HomeWidget(),
-                                              ),
-                                              (r) => false,
-                                            );
-                                          },
-                                          child: Card(
-                                            clipBehavior:
-                                                Clip.antiAliasWithSaveLayer,
-                                            color: FlutterFlowTheme.of(context)
-                                                .orange,
-                                            shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(50),
+                                        child: Card(
+                                          clipBehavior:
+                                              Clip.antiAliasWithSaveLayer,
+                                          color: FlutterFlowTheme.of(context)
+                                              .orange,
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(50),
+                                          ),
+                                          child: FlutterFlowIconButton(
+                                            borderColor: Colors.transparent,
+                                            borderRadius: 30,
+                                            borderWidth: 1,
+                                            buttonSize: 60,
+                                            icon: FaIcon(
+                                              FontAwesomeIcons.google,
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .tertiaryColor,
+                                              size: 30,
                                             ),
-                                            child: FlutterFlowIconButton(
-                                              borderColor: Colors.transparent,
-                                              borderRadius: 30,
-                                              borderWidth: 1,
-                                              buttonSize: 60,
-                                              icon: FaIcon(
-                                                FontAwesomeIcons.google,
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .tertiaryColor,
-                                                size: 30,
-                                              ),
-                                              onPressed: () {
-                                                print('IconButton pressed ...');
-                                              },
-                                            ),
+                                            onPressed: () async {
+                                              final user =
+                                                  await signInWithGoogle(
+                                                      context);
+                                              if (user == null) {
+                                                return;
+                                              }
+                                              await Navigator
+                                                  .pushAndRemoveUntil(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      HomeWidget(),
+                                                ),
+                                                (r) => false,
+                                              );
+                                            },
                                           ),
                                         ),
                                       ),
