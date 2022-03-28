@@ -57,6 +57,53 @@ exports.updateScoreEnergy = functions.region('europe-west6').firestore.document(
       const userId = change.after.exists ? change.after.data().userId : change.before.data().userId;
       await reCalculate(userId);
 });
+// Set initial values for new created users
+exports.userInitialValues = functions.region('europe-west6').firestore.document('/users/{documentId}')
+    .onCreate((snap, context) => {
+      snap.ref.update({day_score: 0});
+      snap.ref.update({week_score: 0});
+      snap.ref.update({month_score: 0});
+      snap.ref.update({global_score: 0});
+      snap.ref.update({level: 1});
+      snap.ref.update({activity: 0});
+      snap.ref.update({rank: 1});
+      snap.ref.update({rank_size: 1});
+      snap.ref.update({co2target: 12});
+});
+
+//exports.sendByeEmail = functions.auth.user().onDelete((user) => {
+  // ...
+//});
+
+
+exports.updateRanks = functions.region('europe-west6').firestore.document('/users/{documentId}')
+     .onWrite(async (change, context) => {
+
+      // Retrieve level, before change if delete, after change if update/create.
+      const level = change.after.exists ? change.after.data().level : change.before.data().level;
+
+      // Retrieve all users with the same level
+      var rank = 1;
+      await admin.firestore()      
+      .collection('users')
+      .where('level', '==', level)
+      .orderBy("global_score", "asc")
+      .get()
+      .then(function(querySnapshot) {
+          var rank_size = querySnapshot.size;
+          querySnapshot.forEach(function(doc) {
+              
+              doc.ref.update(
+                {rank: rank},
+              );
+              // Needs refacto
+              doc.ref.update(
+                {rank_size: rank_size}
+              );
+              rank++; // Increment rank for next user
+          });
+      });
+});
 
 
 async function reCalculate(userId) {
