@@ -13,7 +13,14 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class TrainFormWidget extends StatefulWidget {
-  const TrainFormWidget({Key key}) : super(key: key);
+  const TrainFormWidget({
+    Key key,
+    this.currentAction,
+    this.cache,
+  }) : super(key: key);
+
+  final TransportActionsRecord currentAction;
+  final ActionCacheRecord cache;
 
   @override
   _TrainFormWidgetState createState() => _TrainFormWidgetState();
@@ -26,7 +33,8 @@ class _TrainFormWidgetState extends State<TrainFormWidget> {
   @override
   void initState() {
     super.initState();
-    textController = TextEditingController();
+    textController =
+        TextEditingController(text: widget.currentAction.distance.toString());
   }
 
   @override
@@ -206,6 +214,8 @@ class _TrainFormWidgetState extends State<TrainFormWidget> {
                         children: [
                           Expanded(
                             child: FlutterFlowDropDown(
+                              initialOption: powertypeValue ??=
+                                  widget.currentAction.powertype,
                               options: [
                                 'TER',
                                 'TGV',
@@ -282,57 +292,59 @@ class _TrainFormWidgetState extends State<TrainFormWidget> {
                               ),
                             ),
                           ),
-                          Expanded(
-                            child: Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(10, 0, 0, 0),
-                              child: InkWell(
-                                onTap: () async {
-                                  setState(() => FFAppState().actionCO2 =
-                                      functions.transportActionsCO2e(
-                                          int.parse(textController.text),
-                                          'null',
-                                          'null',
-                                          valueOrDefault<String>(
-                                            powertypeValue,
-                                            'TER',
-                                          ),
-                                          'train'));
+                          Stack(
+                            children: [
+                              Padding(
+                                padding:
+                                    EdgeInsetsDirectional.fromSTEB(10, 0, 0, 0),
+                                child: InkWell(
+                                  onTap: () async {
+                                    setState(() => FFAppState().actionCO2 =
+                                        functions.transportActionsCO2e(
+                                            int.parse(textController.text),
+                                            'null',
+                                            'null',
+                                            valueOrDefault<String>(
+                                              powertypeValue,
+                                              'TER',
+                                            ),
+                                            'train'));
 
-                                  final transportActionsCreateData =
-                                      createTransportActionsRecordData(
-                                    transport: 'train',
-                                    distance: int.parse(textController.text),
-                                    userId: currentUserUid,
-                                    powertype: valueOrDefault<String>(
-                                      powertypeValue,
-                                      'TER',
-                                    ),
-                                    passengers: 'null',
-                                    ownership: 'owner',
-                                    createdTime: getCurrentTimestamp,
-                                    co2e: FFAppState().actionCO2,
-                                  );
-                                  await TransportActionsRecord.collection
-                                      .doc()
-                                      .set(transportActionsCreateData);
-                                  Navigator.pop(context);
-                                },
-                                child: IconButtonWidget(
-                                  fillColor:
-                                      FlutterFlowTheme.of(context).primaryColor,
-                                  fontColor: FlutterFlowTheme.of(context)
-                                      .tertiaryColor,
-                                  icon: Icon(
-                                    Icons.add_circle_outline,
-                                    color: FlutterFlowTheme.of(context)
+                                    final transportActionsCreateData =
+                                        createTransportActionsRecordData(
+                                      transport: 'train',
+                                      distance: int.parse(textController.text),
+                                      userId: currentUserUid,
+                                      powertype: valueOrDefault<String>(
+                                        powertypeValue,
+                                        'TER',
+                                      ),
+                                      passengers: 'null',
+                                      ownership: 'owner',
+                                      createdTime: getCurrentTimestamp,
+                                      co2e: FFAppState().actionCO2,
+                                    );
+                                    await TransportActionsRecord.collection
+                                        .doc()
+                                        .set(transportActionsCreateData);
+                                    Navigator.pop(context);
+                                  },
+                                  child: IconButtonWidget(
+                                    fillColor: FlutterFlowTheme.of(context)
+                                        .primaryColor,
+                                    fontColor: FlutterFlowTheme.of(context)
                                         .tertiaryColor,
-                                    size: 25,
+                                    icon: Icon(
+                                      Icons.add_circle_outline,
+                                      color: FlutterFlowTheme.of(context)
+                                          .tertiaryColor,
+                                      size: 25,
+                                    ),
+                                    text: 'Ajouter',
                                   ),
-                                  text: 'Ajouter',
                                 ),
                               ),
-                            ),
+                            ],
                           ),
                         ],
                       ),

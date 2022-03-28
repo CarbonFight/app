@@ -12,26 +12,29 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class BikeFormWidget extends StatefulWidget {
-  const BikeFormWidget({
+class TrainFormCopyWidget extends StatefulWidget {
+  const TrainFormCopyWidget({
     Key key,
     this.currentAction,
+    this.cache,
   }) : super(key: key);
 
   final TransportActionsRecord currentAction;
+  final ActionCacheRecord cache;
 
   @override
-  _BikeFormWidgetState createState() => _BikeFormWidgetState();
+  _TrainFormCopyWidgetState createState() => _TrainFormCopyWidgetState();
 }
 
-class _BikeFormWidgetState extends State<BikeFormWidget> {
-  String energyValue;
+class _TrainFormCopyWidgetState extends State<TrainFormCopyWidget> {
+  String powertypeValue;
   TextEditingController textController;
 
   @override
   void initState() {
     super.initState();
-    textController = TextEditingController();
+    textController =
+        TextEditingController(text: widget.currentAction.distance.toString());
   }
 
   @override
@@ -67,14 +70,14 @@ class _BikeFormWidgetState extends State<BikeFormWidget> {
                       Padding(
                         padding: EdgeInsetsDirectional.fromSTEB(0, 0, 5, 0),
                         child: SvgPicture.asset(
-                          'assets/images/trans-cycle-08.svg',
+                          'assets/images/trans-train-04.svg',
                           width: 25,
                           height: 25,
                           fit: BoxFit.cover,
                         ),
                       ),
                       Text(
-                        'Trajet en vélo',
+                        'Trajet en train',
                         style: FlutterFlowTheme.of(context).subtitle1,
                       ),
                     ],
@@ -95,25 +98,45 @@ class _BikeFormWidgetState extends State<BikeFormWidget> {
                   ),
                 ],
               ),
-              Row(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
-                    child: Text(
-                      valueOrDefault<String>(
-                        '+ ${valueOrDefault<String>(
-                          functions.printScore(FFAppState().actionCO2),
-                          '0',
-                        )}',
-                        '+ 0 g',
+              StreamBuilder<TransportActionsRecord>(
+                stream: TransportActionsRecord.getDocument(
+                    widget.currentAction.reference),
+                builder: (context, snapshot) {
+                  // Customize what your widget looks like when it's loading.
+                  if (!snapshot.hasData) {
+                    return Center(
+                      child: SizedBox(
+                        width: 50,
+                        height: 50,
+                        child: SpinKitRipple(
+                          color: FlutterFlowTheme.of(context).tertiaryColor,
+                          size: 50,
+                        ),
                       ),
-                      textAlign: TextAlign.center,
-                      style: FlutterFlowTheme.of(context).title2,
-                    ),
-                  ),
-                ],
+                    );
+                  }
+                  final rowTransportActionsRecord = snapshot.data;
+                  return Row(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
+                        child: Text(
+                          valueOrDefault<String>(
+                            '+ ${valueOrDefault<String>(
+                              widget.currentAction.co2e.toString(),
+                              '0',
+                            )} g',
+                            '+ 0 g',
+                          ),
+                          textAlign: TextAlign.center,
+                          style: FlutterFlowTheme.of(context).title2,
+                        ),
+                      ),
+                    ],
+                  );
+                },
               ),
               SingleChildScrollView(
                 child: Column(
@@ -211,9 +234,18 @@ class _BikeFormWidgetState extends State<BikeFormWidget> {
                         children: [
                           Expanded(
                             child: FlutterFlowDropDown(
-                              options: ['Classic', 'Electricity'].toList(),
+                              initialOption: powertypeValue ??=
+                                  widget.currentAction.powertype,
+                              options: [
+                                'TER',
+                                'TGV',
+                                'Intercites',
+                                'RER',
+                                'Transilien',
+                                'Tramway'
+                              ].toList(),
                               onChanged: (val) =>
-                                  setState(() => energyValue = val),
+                                  setState(() => powertypeValue = val),
                               width: 180,
                               height: 50,
                               textStyle: FlutterFlowTheme.of(context)
@@ -222,9 +254,9 @@ class _BikeFormWidgetState extends State<BikeFormWidget> {
                                     fontFamily: 'Montserrat',
                                     fontWeight: FontWeight.w500,
                                   ),
-                              hintText: 'Energie',
+                              hintText: 'Type de train',
                               icon: Icon(
-                                Icons.electrical_services_rounded,
+                                Icons.train_sharp,
                                 size: 15,
                               ),
                               fillColor: Color(0xFFFAFAFA),
@@ -257,12 +289,17 @@ class _BikeFormWidgetState extends State<BikeFormWidget> {
                                       functions.transportActionsCO2e(
                                           int.parse(textController.text),
                                           '1',
-                                          'owner',
+                                          'null',
                                           valueOrDefault<String>(
-                                            energyValue,
-                                            'Classic',
+                                            powertypeValue,
+                                            'TER',
                                           ),
-                                          'bike'));
+                                          'train'));
+
+                                  final transportActionsUpdateData =
+                                      createTransportActionsRecordData();
+                                  await widget.currentAction.reference
+                                      .update(transportActionsUpdateData);
                                 },
                                 child: IconButtonWidget(
                                   fillColor: FlutterFlowTheme.of(context)
@@ -280,54 +317,50 @@ class _BikeFormWidgetState extends State<BikeFormWidget> {
                               ),
                             ),
                           ),
-                          Expanded(
-                            child: Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(10, 0, 0, 0),
-                              child: InkWell(
-                                onTap: () async {
-                                  setState(() => FFAppState().actionCO2 =
-                                      functions.transportActionsCO2e(
-                                          int.parse(textController.text),
-                                          'null',
-                                          'null',
-                                          valueOrDefault<String>(
-                                            energyValue,
-                                            'Thermique',
-                                          ),
-                                          'bike'));
+                          Stack(
+                            children: [
+                              Padding(
+                                padding:
+                                    EdgeInsetsDirectional.fromSTEB(10, 0, 0, 0),
+                                child: InkWell(
+                                  onTap: () async {
+                                    setState(() => FFAppState().actionCO2 =
+                                        functions.transportActionsCO2e(
+                                            int.parse(textController.text),
+                                            'null',
+                                            'null',
+                                            valueOrDefault<String>(
+                                              powertypeValue,
+                                              'TER',
+                                            ),
+                                            'train'));
 
-                                  final transportActionsCreateData =
-                                      createTransportActionsRecordData(
-                                    transport: 'bike',
-                                    distance: int.parse(textController.text),
-                                    userId: currentUserUid,
-                                    powertype: 'Classic',
-                                    passengers: 'null',
-                                    ownership: 'owner',
-                                    createdTime: getCurrentTimestamp,
-                                    co2e: FFAppState().actionCO2,
-                                  );
-                                  await TransportActionsRecord.collection
-                                      .doc()
-                                      .set(transportActionsCreateData);
-                                  Navigator.pop(context);
-                                },
-                                child: IconButtonWidget(
-                                  fillColor:
-                                      FlutterFlowTheme.of(context).primaryColor,
-                                  fontColor: FlutterFlowTheme.of(context)
-                                      .tertiaryColor,
-                                  icon: Icon(
-                                    Icons.add_circle_outline,
-                                    color: FlutterFlowTheme.of(context)
+                                    final transportActionsUpdateData =
+                                        createTransportActionsRecordData(
+                                      distance: int.parse(textController.text),
+                                      powertype: powertypeValue,
+                                      co2e: FFAppState().actionCO2,
+                                    );
+                                    await widget.currentAction.reference
+                                        .update(transportActionsUpdateData);
+                                    Navigator.pop(context);
+                                  },
+                                  child: IconButtonWidget(
+                                    fillColor: FlutterFlowTheme.of(context)
+                                        .primaryColor,
+                                    fontColor: FlutterFlowTheme.of(context)
                                         .tertiaryColor,
-                                    size: 25,
+                                    icon: Icon(
+                                      Icons.check_circle,
+                                      color: FlutterFlowTheme.of(context)
+                                          .tertiaryColor,
+                                      size: 25,
+                                    ),
+                                    text: 'Modifier  ',
                                   ),
-                                  text: 'Ajouter',
                                 ),
                               ),
-                            ),
+                            ],
                           ),
                         ],
                       ),

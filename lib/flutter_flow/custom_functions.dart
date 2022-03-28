@@ -478,20 +478,22 @@ int foodActionsCO2e(
 double percentProgressBar(
   int co2e,
   String period,
+  double co2target,
 ) {
   //int planet = 3300; // Green : what the planet can support
-  int frenchAverage = 12500; // Yellow french avarage
+  //int frenchAverage = 12500; // Yellow french avarage
   //int usaAverage = 40000; // Red USA average
   // More is black
 
-  int threshold = frenchAverage;
+  double co2targetGrammes = co2target * 1000;
+  double threshold = co2targetGrammes;
 
   if (period == "day") {
-    threshold = frenchAverage;
+    threshold = co2targetGrammes;
   } else if (period == "week") {
-    threshold = frenchAverage * 7;
+    threshold = co2targetGrammes * 7;
   } else if (period == "month") {
-    threshold = frenchAverage * 30;
+    threshold = co2targetGrammes * 30;
   }
 
   double percent = co2e / threshold;

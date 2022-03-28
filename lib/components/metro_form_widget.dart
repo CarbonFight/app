@@ -12,7 +12,12 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class MetroFormWidget extends StatefulWidget {
-  const MetroFormWidget({Key key}) : super(key: key);
+  const MetroFormWidget({
+    Key key,
+    this.currentAction,
+  }) : super(key: key);
+
+  final TransportActionsRecord currentAction;
 
   @override
   _MetroFormWidgetState createState() => _MetroFormWidgetState();

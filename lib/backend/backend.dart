@@ -9,6 +9,7 @@ import 'schema/energy_actions_record.dart';
 import 'schema/users_record.dart';
 import 'schema/energy_periodics_record.dart';
 import 'schema/food_actions_record.dart';
+import 'schema/action_cache_record.dart';
 import 'schema/serializers.dart';
 
 export 'package:cloud_firestore/cloud_firestore.dart';
@@ -20,6 +21,7 @@ export 'schema/energy_actions_record.dart';
 export 'schema/users_record.dart';
 export 'schema/energy_periodics_record.dart';
 export 'schema/food_actions_record.dart';
+export 'schema/action_cache_record.dart';
 
 /// Functions to query TransportActionsRecords (as a Stream and as a Future).
 Stream<List<TransportActionsRecord>> queryTransportActionsRecord(
@@ -101,6 +103,22 @@ Future<List<FoodActionsRecord>> queryFoodActionsRecordOnce(
         bool singleRecord = false}) =>
     queryCollectionOnce(
         FoodActionsRecord.collection, FoodActionsRecord.serializer,
+        queryBuilder: queryBuilder, limit: limit, singleRecord: singleRecord);
+
+/// Functions to query ActionCacheRecords (as a Stream and as a Future).
+Stream<List<ActionCacheRecord>> queryActionCacheRecord(
+        {Query Function(Query) queryBuilder,
+        int limit = -1,
+        bool singleRecord = false}) =>
+    queryCollection(ActionCacheRecord.collection, ActionCacheRecord.serializer,
+        queryBuilder: queryBuilder, limit: limit, singleRecord: singleRecord);
+
+Future<List<ActionCacheRecord>> queryActionCacheRecordOnce(
+        {Query Function(Query) queryBuilder,
+        int limit = -1,
+        bool singleRecord = false}) =>
+    queryCollectionOnce(
+        ActionCacheRecord.collection, ActionCacheRecord.serializer,
         queryBuilder: queryBuilder, limit: limit, singleRecord: singleRecord);
 
 Stream<List<T>> queryCollection<T>(

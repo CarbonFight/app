@@ -13,7 +13,12 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class BusFormWidget extends StatefulWidget {
-  const BusFormWidget({Key key}) : super(key: key);
+  const BusFormWidget({
+    Key key,
+    this.currentAction,
+  }) : super(key: key);
+
+  final TransportActionsRecord currentAction;
 
   @override
   _BusFormWidgetState createState() => _BusFormWidgetState();

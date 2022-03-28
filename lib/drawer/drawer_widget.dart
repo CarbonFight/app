@@ -54,7 +54,6 @@ class _DrawerWidgetState extends State<DrawerWidget>
   Widget build(BuildContext context) {
     return Scaffold(
       key: scaffoldKey,
-      backgroundColor: Color(0x00FFFFFF),
       body: Stack(
         children: [
           InkWell(
@@ -65,15 +64,15 @@ class _DrawerWidgetState extends State<DrawerWidget>
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height * 1,
               decoration: BoxDecoration(
-                color: Color(0xB3000000),
+                color: Colors.transparent,
               ),
             ),
           ),
           Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(20, 20, 20, 20),
+            padding: EdgeInsetsDirectional.fromSTEB(20, 40, 20, 20),
             child: Container(
               width: MediaQuery.of(context).size.width * 0.75,
-              height: MediaQuery.of(context).size.height * 1,
+              height: MediaQuery.of(context).size.height * 0.9,
               decoration: BoxDecoration(
                 color: FlutterFlowTheme.of(context).tertiaryColor,
                 boxShadow: [
