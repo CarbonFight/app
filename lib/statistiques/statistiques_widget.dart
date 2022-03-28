@@ -1,6 +1,8 @@
 import '../auth/auth_util.dart';
 import '../components/info_widget.dart';
+import '../components/ranks2_widget.dart';
 import '../drawer/drawer_widget.dart';
+import '../drawer_copy/drawer_copy_widget.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../home/home_widget.dart';
@@ -95,11 +97,30 @@ class _StatistiquesWidgetState extends State<StatistiquesWidget> {
                               children: [
                                 Align(
                                   alignment: AlignmentDirectional(1, 0.95),
-                                  child: Image.asset(
-                                    'assets/images/badge.png',
-                                    width: 100,
-                                    height: 100,
-                                    fit: BoxFit.cover,
+                                  child: InkWell(
+                                    onTap: () async {
+                                      await showModalBottomSheet(
+                                        isScrollControlled: true,
+                                        backgroundColor: Colors.transparent,
+                                        context: context,
+                                        builder: (context) {
+                                          return Padding(
+                                            padding: MediaQuery.of(context)
+                                                .viewInsets,
+                                            child: Container(
+                                              height: 600,
+                                              child: Ranks2Widget(),
+                                            ),
+                                          );
+                                        },
+                                      );
+                                    },
+                                    child: Image.asset(
+                                      'assets/images/badge.png',
+                                      width: 100,
+                                      height: 100,
+                                      fit: BoxFit.cover,
+                                    ),
                                   ),
                                 ),
                                 Stack(
@@ -125,7 +146,8 @@ class _StatistiquesWidgetState extends State<StatistiquesWidget> {
                                       child: CircularPercentIndicator(
                                         percent: functions.percentProgressBar(
                                             currentUserDocument?.dayScore,
-                                            'day'),
+                                            'day',
+                                            currentUserDocument?.co2target),
                                         radius: 35,
                                         lineWidth: 18,
                                         animation: true,
@@ -136,31 +158,42 @@ class _StatistiquesWidgetState extends State<StatistiquesWidget> {
                                                 .tertiaryColor,
                                       ),
                                     ),
-                                    Container(
-                                      width: 50,
-                                      height: 50,
-                                      decoration: BoxDecoration(
-                                        color: FlutterFlowTheme.of(context)
-                                            .tertiaryColor,
-                                        shape: BoxShape.circle,
-                                        border: Border.all(
+                                    InkWell(
+                                      onTap: () async {
+                                        await Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                DrawerCopyWidget(),
+                                          ),
+                                        );
+                                      },
+                                      child: Container(
+                                        width: 50,
+                                        height: 50,
+                                        decoration: BoxDecoration(
                                           color: FlutterFlowTheme.of(context)
-                                              .grayLight,
-                                          width: 1,
+                                              .tertiaryColor,
+                                          shape: BoxShape.circle,
+                                          border: Border.all(
+                                            color: FlutterFlowTheme.of(context)
+                                                .grayLight,
+                                            width: 1,
+                                          ),
                                         ),
-                                      ),
-                                      child: AuthUserStreamWidget(
-                                        child: ClipRRect(
-                                          borderRadius:
-                                              BorderRadius.circular(100),
-                                          child: Image.network(
-                                            valueOrDefault<String>(
-                                              currentUserPhoto,
-                                              'https://firebasestorage.googleapis.com/v0/b/carbonfight-89af6.appspot.com/o/18275220161537356156-128.png?alt=media&token=c9797a03-bba1-46b8-aaac-4c54cb99fcb6',
+                                        child: AuthUserStreamWidget(
+                                          child: ClipRRect(
+                                            borderRadius:
+                                                BorderRadius.circular(100),
+                                            child: Image.network(
+                                              valueOrDefault<String>(
+                                                currentUserPhoto,
+                                                'https://firebasestorage.googleapis.com/v0/b/carbonfight-89af6.appspot.com/o/18275220161537356156-128.png?alt=media&token=c9797a03-bba1-46b8-aaac-4c54cb99fcb6',
+                                              ),
+                                              width: 70,
+                                              height: 70,
+                                              fit: BoxFit.cover,
                                             ),
-                                            width: 70,
-                                            height: 70,
-                                            fit: BoxFit.cover,
                                           ),
                                         ),
                                       ),
@@ -254,17 +287,30 @@ class _StatistiquesWidgetState extends State<StatistiquesWidget> {
                                               fontWeight: FontWeight.normal,
                                             ),
                                       ),
-                                      Text(
-                                        '#1 / 1',
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyText1
-                                            .override(
-                                              fontFamily: 'Montserrat',
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .tertiaryColor,
-                                              fontWeight: FontWeight.w600,
-                                            ),
+                                      AuthUserStreamWidget(
+                                        child: Text(
+                                          valueOrDefault<String>(
+                                            '${valueOrDefault<String>(
+                                              currentUserDocument?.rank
+                                                  .toString(),
+                                              '-',
+                                            )} / ${valueOrDefault<String>(
+                                              currentUserDocument?.rankSize
+                                                  .toString(),
+                                              '-',
+                                            )}',
+                                            '- / -',
+                                          ),
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyText1
+                                              .override(
+                                                fontFamily: 'Montserrat',
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .tertiaryColor,
+                                                fontWeight: FontWeight.w600,
+                                              ),
+                                        ),
                                       ),
                                     ],
                                   ),
