@@ -96,38 +96,28 @@ int transportActionsCO2e(
   }
 
   // TGV (High Speed Train)
-  else if (transport == "tgv") {
-    double co2perkm = 1.73;
-    co2e = distance * co2perkm;
-  }
-
-  // Train TER
-  else if (transport == "ter") {
-    double co2perkm = 24.8;
-    co2e = distance * co2perkm;
-  }
-
-  // Train intercites
-  else if (transport == "intercites") {
-    double co2perkm = 5.29;
-    co2e = distance * co2perkm;
-  }
-
-  // Train rer
-  else if (transport == "rer") {
-    double co2perkm = 4.1;
-    co2e = distance * co2perkm;
-  }
-
-  // Train transilien
-  else if (transport == "transilien") {
-    double co2perkm = 4.1;
-    co2e = distance * co2perkm;
-  }
-
-  // Train tramway
-  else if (transport == "tramway") {
-    double co2perkm = 2.2;
+  else if (transport == "train") {
+    double co2perkm = 24.8; // Default TER
+    switch (powertype) {
+      case "TGV":
+        co2perkm = 1.73;
+        break;
+      case "TER":
+        co2perkm = 24.8;
+        break;
+      case "intercites":
+        co2perkm = 5.29;
+        break;
+      case "RER":
+        co2perkm = 4.1;
+        break;
+      case "transilien":
+        co2perkm = 4.1;
+        break;
+      case "tramway":
+        co2perkm = 2.2;
+        break;
+    }
     co2e = distance * co2perkm;
   }
 
@@ -136,13 +126,13 @@ int transportActionsCO2e(
     double co2perkm = 103;
 
     switch (powertype) {
-      case "Thermic":
+      case "Thermique":
         co2perkm = 103;
         break;
-      case "Electricity":
+      case "Electrique":
         co2perkm = 9.5;
         break;
-      case "gnv":
+      case "Gaz Naturel":
         co2perkm = 113;
         break;
     }
@@ -209,9 +199,10 @@ int energyPeriodicsCO2e(
   String energy,
   int volume,
   String powertype,
-  int peopleSharing,
+  String peopleSharing,
 ) {
   double co2e = 0;
+  int peopleSharingInt = int.parse(peopleSharing);
 
   // Electricity
   if (energy == "electricity") {
@@ -219,34 +210,34 @@ int energyPeriodicsCO2e(
     // Default is Nuclear
     double co2powertype = 6;
     switch (powertype) {
-      case "Nuclear":
+      case "Nucléaire":
         co2powertype = 6;
         break;
-      case "Wind turbine (Offshore)":
+      case "Éolienne (mer)":
         co2powertype = 9;
         break;
-      case "Wind turbine":
+      case "Éolienne (terre)":
         co2powertype = 10;
         break;
-      case "Hydroelectric":
+      case "Hydroélectrique":
         co2powertype = 10;
         break;
-      case "Biomass":
+      case "Biomasse":
         co2powertype = 32;
         break;
-      case "Geothermal":
+      case "Géothermique":
         co2powertype = 38;
         break;
-      case "Fuel oil":
+      case "Fioul":
         co2powertype = 730;
         break;
-      case "Coal":
+      case "Charbon":
         co2powertype = 1058;
         break;
     }
 
     // Co2 volume * gCo2z/volume dividied by the number of people in the house
-    co2e = (volume * co2powertype) / peopleSharing;
+    co2e = (volume * co2powertype) / peopleSharingInt / 365;
   }
 
   // Gas
@@ -265,13 +256,13 @@ int energyPeriodicsCO2e(
         co2powertype = 968;
         break;
     }
-    co2e = (volume * co2powertype) / peopleSharing;
+    co2e = (volume * co2powertype) / peopleSharingInt / 365;
   }
 
   // Water
   else if (energy == "water") {
     double co2PerM3 = 7575;
-    co2e = (volume * co2PerM3) / peopleSharing;
+    co2e = (volume * co2PerM3) / peopleSharingInt / 365;
   }
 
   return co2e.round();
@@ -350,6 +341,8 @@ int foodActionsCO2e(
   double co2eAlcohol = 2.05 * 250;
   // Hot drink  : 1.34 g.co2e / g | 250g / portion
   double co2eHotDrink = 1.34 * 250;
+  // Soda : 1.34 g.co2e / g | 170g  / canette
+  double co2eSoda = 170;
 
   // Bread
   // Bread  : 1.52 g.co2e / g | 50g / portion
@@ -365,111 +358,113 @@ int foodActionsCO2e(
 
   if (food == "starter") {
     switch (mainComponent) {
-      case "vegy":
+      case "Végétarienne":
         co2e += 75;
         break;
-      case "nonvegy":
+      case "Mixte":
         co2e += 150;
         break;
-      case "meat":
+      case "Viande":
         co2e += 300;
         break;
     }
   } else if (food == "main") {
     switch (mainComponent) {
-      case "egg":
+      case "Oeuf":
         co2e += co2eEgg;
         break;
-      case "fish":
+      case "Poisson":
         co2e += co2eFish;
         break;
-      case "meat":
+      case "Viande rouge":
         co2e += co2eMeat;
         break;
-      case "poultry":
+      case "Viande blanche":
         co2e += co2ePoultry;
-        break;
-      case "deli":
-        co2e += co2eDeli;
         break;
     }
 
     switch (sideComponent) {
-      case "ricePastaWheat":
+      case "Riz":
         co2e += co2eRicePastaWheat;
         break;
-      case "legume":
-        co2e += co2eLegume;
+      case "Pâtes":
+        co2e += co2eRicePastaWheat;
         break;
-      case "vegetables":
+      case "Blé":
+        co2e += co2eRicePastaWheat;
+        break;
+      case "Légumes":
         co2e += co2eVegetables;
         break;
-      case "potatoes":
+      case "Pommes de terre":
         co2e += co2ePotatoes;
-        break;
-      case "deli":
-        co2e += co2eDeli;
         break;
     }
 
-    if (mainComponent == "vegy") {
+    if (mainComponent == "Végétarien") {
       co2e = co2e * 2;
     }
   } else if (food == "desert") {
     switch (mainComponent) {
-      case "fruit":
+      case "Fruit":
         co2e += co2eFruit;
         break;
-      case "transformedFruit":
+      case "Fruit transformé":
         co2e += co2eTransformedFruit;
         break;
-      case "yogurt":
+      case "Yahourt":
         co2e += co2eYogurt;
         break;
-      case "cakePastry":
+      case "Pâtisserie":
         co2e += co2eCakePastry;
         break;
-      case "icecream":
+      case "Glace":
         co2e += co2eIcecream;
         break;
-      case "custard":
+      case "Crême dessert":
         co2e += co2eCustard;
         break;
     }
   } else if (food == "drinks") {
     switch (mainComponent) {
-      case "bottleWater":
+      case "Eau en bouteille":
         co2e += co2eBottleWater;
         break;
-      case "tapWater":
+      case "Eau du robinet":
         co2e += co2eTapWater;
         break;
-      case "fruitJuice":
+      case "Jus de fruit":
         co2e += co2eFruitJuice;
         break;
-      case "soup":
+      case "Soupe":
         co2e += co2eSoup;
         break;
-      case "alcohol":
+      case "Alcool":
         co2e += co2eAlcohol;
         break;
-      case "hotDrink":
+      case "Boisson chaude":
         co2e += co2eHotDrink;
+        break;
+      case "Soda":
+        co2e += co2eSoda;
         break;
     }
   } else if (food == "cheese") {
-    co2e += co2eCheese;
+    int count = int.parse(mainComponent);
+    co2e += co2eCheese * count;
   } else if (food == "bread") {
-    co2e += co2eBread;
+    int count = int.parse(mainComponent);
+    co2e += co2eBread * count;
   } else if (food == "coffee") {
     switch (mainComponent) {
-      case "coffeeFilter":
+      case "Café filtre":
         co2e += co2eCoffeeFilter;
         break;
-      case "coffeeExpresso":
+      case "Expresso":
         co2e += co2eCoffeeExpresso;
         break;
-      case "coffeeCapsule":
+      case "Capsule":
         co2e += co2eCoffeeCapsule;
         break;
     }
@@ -478,4 +473,34 @@ int foodActionsCO2e(
   // Breakfast
 
   return co2e.round();
+}
+
+double percentProgressBar(
+  int co2e,
+  String period,
+  double co2target,
+) {
+  //int planet = 3300; // Green : what the planet can support
+  //int frenchAverage = 12500; // Yellow french avarage
+  //int usaAverage = 40000; // Red USA average
+  // More is black
+
+  double co2targetGrammes = co2target * 1000;
+  double threshold = co2targetGrammes;
+
+  if (period == "day") {
+    threshold = co2targetGrammes;
+  } else if (period == "week") {
+    threshold = co2targetGrammes * 7;
+  } else if (period == "month") {
+    threshold = co2targetGrammes * 30;
+  }
+
+  double percent = co2e / threshold;
+
+  if (percent > 1) {
+    return 1;
+  } else {
+    return percent;
+  }
 }

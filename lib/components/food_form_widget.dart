@@ -1,25 +1,25 @@
-import '../components/add_action_form_widget.dart';
+import '../components/bread_form_widget.dart';
+import '../components/cheese_form_widget.dart';
+import '../components/coffee_form_widget.dart';
+import '../components/desert_form_widget.dart';
+import '../components/drinks_form_widget.dart';
+import '../components/main_food_form_widget.dart';
+import '../components/starter_form_widget.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class AddActionWidget extends StatefulWidget {
-  const AddActionWidget({
-    Key key,
-    this.list,
-  }) : super(key: key);
-
-  final String list;
+class FoodFormWidget extends StatefulWidget {
+  const FoodFormWidget({Key key}) : super(key: key);
 
   @override
-  _AddActionWidgetState createState() => _AddActionWidgetState();
+  _FoodFormWidgetState createState() => _FoodFormWidgetState();
 }
 
-class _AddActionWidgetState extends State<AddActionWidget> {
+class _FoodFormWidgetState extends State<FoodFormWidget> {
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -48,7 +48,7 @@ class _AddActionWidgetState extends State<AddActionWidget> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    widget.list,
+                    'Nourriture',
                     style: FlutterFlowTheme.of(context).subtitle1,
                   ),
                   FlutterFlowIconButton(
@@ -81,6 +81,7 @@ class _AddActionWidgetState extends State<AddActionWidget> {
                           InkWell(
                             onTap: () async {
                               Navigator.pop(context);
+                              setState(() => FFAppState().actionCO2 = 0);
                               await showModalBottomSheet(
                                 isScrollControlled: true,
                                 backgroundColor: Colors.transparent,
@@ -90,10 +91,8 @@ class _AddActionWidgetState extends State<AddActionWidget> {
                                   return Padding(
                                     padding: MediaQuery.of(context).viewInsets,
                                     child: Container(
-                                      height: 500,
-                                      child: AddActionFormWidget(
-                                        actionName: 'Car',
-                                      ),
+                                      height: 370,
+                                      child: StarterFormWidget(),
                                     ),
                                   );
                                 },
@@ -114,8 +113,8 @@ class _AddActionWidgetState extends State<AddActionWidget> {
                                 child: Column(
                                   mainAxisSize: MainAxisSize.max,
                                   children: [
-                                    SvgPicture.asset(
-                                      'assets/images/trans-car-01.svg',
+                                    Image.asset(
+                                      'assets/images/canape_(1).png',
                                       width: 50,
                                       height: 50,
                                       fit: BoxFit.cover,
@@ -125,7 +124,7 @@ class _AddActionWidgetState extends State<AddActionWidget> {
                                         padding: EdgeInsetsDirectional.fromSTEB(
                                             0, 5, 0, 0),
                                         child: Text(
-                                          'Trajet en voiture',
+                                          'Entrées',
                                           textAlign: TextAlign.center,
                                           style: FlutterFlowTheme.of(context)
                                               .bodyText1,
@@ -140,6 +139,7 @@ class _AddActionWidgetState extends State<AddActionWidget> {
                           InkWell(
                             onTap: () async {
                               Navigator.pop(context);
+                              setState(() => FFAppState().actionCO2 = 0);
                               await showModalBottomSheet(
                                 isScrollControlled: true,
                                 backgroundColor: Colors.transparent,
@@ -149,10 +149,8 @@ class _AddActionWidgetState extends State<AddActionWidget> {
                                   return Padding(
                                     padding: MediaQuery.of(context).viewInsets,
                                     child: Container(
-                                      height: 500,
-                                      child: AddActionFormWidget(
-                                        actionName: 'Car',
-                                      ),
+                                      height: 440,
+                                      child: MainFoodFormWidget(),
                                     ),
                                   );
                                 },
@@ -173,8 +171,8 @@ class _AddActionWidgetState extends State<AddActionWidget> {
                                 child: Column(
                                   mainAxisSize: MainAxisSize.max,
                                   children: [
-                                    SvgPicture.asset(
-                                      'assets/images/trans-bus-02.svg',
+                                    Image.asset(
+                                      'assets/images/steak.png',
                                       width: 50,
                                       height: 50,
                                       fit: BoxFit.cover,
@@ -184,7 +182,7 @@ class _AddActionWidgetState extends State<AddActionWidget> {
                                         padding: EdgeInsetsDirectional.fromSTEB(
                                             0, 5, 0, 0),
                                         child: Text(
-                                          'Autobus',
+                                          'Plat',
                                           textAlign: TextAlign.center,
                                           style: FlutterFlowTheme.of(context)
                                               .bodyText1,
@@ -208,6 +206,7 @@ class _AddActionWidgetState extends State<AddActionWidget> {
                           InkWell(
                             onTap: () async {
                               Navigator.pop(context);
+                              setState(() => FFAppState().actionCO2 = 0);
                               await showModalBottomSheet(
                                 isScrollControlled: true,
                                 backgroundColor: Colors.transparent,
@@ -217,10 +216,8 @@ class _AddActionWidgetState extends State<AddActionWidget> {
                                   return Padding(
                                     padding: MediaQuery.of(context).viewInsets,
                                     child: Container(
-                                      height: 500,
-                                      child: AddActionFormWidget(
-                                        actionName: 'Car',
-                                      ),
+                                      height: 450,
+                                      child: DesertFormWidget(),
                                     ),
                                   );
                                 },
@@ -241,8 +238,8 @@ class _AddActionWidgetState extends State<AddActionWidget> {
                                 child: Column(
                                   mainAxisSize: MainAxisSize.max,
                                   children: [
-                                    SvgPicture.asset(
-                                      'assets/images/trans-motor-03.svg',
+                                    Image.asset(
+                                      'assets/images/ice-cream.png',
                                       width: 50,
                                       height: 50,
                                       fit: BoxFit.cover,
@@ -252,7 +249,7 @@ class _AddActionWidgetState extends State<AddActionWidget> {
                                         padding: EdgeInsetsDirectional.fromSTEB(
                                             0, 5, 0, 0),
                                         child: Text(
-                                          'Scooter et moto légère',
+                                          'Dessert',
                                           textAlign: TextAlign.center,
                                           style: FlutterFlowTheme.of(context)
                                               .bodyText1,
@@ -267,6 +264,7 @@ class _AddActionWidgetState extends State<AddActionWidget> {
                           InkWell(
                             onTap: () async {
                               Navigator.pop(context);
+                              setState(() => FFAppState().actionCO2 = 0);
                               await showModalBottomSheet(
                                 isScrollControlled: true,
                                 backgroundColor: Colors.transparent,
@@ -276,10 +274,8 @@ class _AddActionWidgetState extends State<AddActionWidget> {
                                   return Padding(
                                     padding: MediaQuery.of(context).viewInsets,
                                     child: Container(
-                                      height: 500,
-                                      child: AddActionFormWidget(
-                                        actionName: 'Car',
-                                      ),
+                                      height: 470,
+                                      child: DrinksFormWidget(),
                                     ),
                                   );
                                 },
@@ -300,8 +296,8 @@ class _AddActionWidgetState extends State<AddActionWidget> {
                                 child: Column(
                                   mainAxisSize: MainAxisSize.max,
                                   children: [
-                                    SvgPicture.asset(
-                                      'assets/images/trans-train-04.svg',
+                                    Image.asset(
+                                      'assets/images/soft-drink.png',
                                       width: 50,
                                       height: 50,
                                       fit: BoxFit.cover,
@@ -311,7 +307,7 @@ class _AddActionWidgetState extends State<AddActionWidget> {
                                         padding: EdgeInsetsDirectional.fromSTEB(
                                             0, 5, 0, 0),
                                         child: Text(
-                                          'Trajet en TGV',
+                                          'Boissons',
                                           textAlign: TextAlign.center,
                                           style: FlutterFlowTheme.of(context)
                                               .bodyText1,
@@ -335,6 +331,7 @@ class _AddActionWidgetState extends State<AddActionWidget> {
                           InkWell(
                             onTap: () async {
                               Navigator.pop(context);
+                              setState(() => FFAppState().actionCO2 = 0);
                               await showModalBottomSheet(
                                 isScrollControlled: true,
                                 backgroundColor: Colors.transparent,
@@ -344,10 +341,8 @@ class _AddActionWidgetState extends State<AddActionWidget> {
                                   return Padding(
                                     padding: MediaQuery.of(context).viewInsets,
                                     child: Container(
-                                      height: 500,
-                                      child: AddActionFormWidget(
-                                        actionName: 'Car',
-                                      ),
+                                      height: 350,
+                                      child: CheeseFormWidget(),
                                     ),
                                   );
                                 },
@@ -368,8 +363,8 @@ class _AddActionWidgetState extends State<AddActionWidget> {
                                 child: Column(
                                   mainAxisSize: MainAxisSize.max,
                                   children: [
-                                    SvgPicture.asset(
-                                      'assets/images/trans-train-05.svg',
+                                    Image.asset(
+                                      'assets/images/cheeses.png',
                                       width: 50,
                                       height: 50,
                                       fit: BoxFit.cover,
@@ -379,7 +374,7 @@ class _AddActionWidgetState extends State<AddActionWidget> {
                                         padding: EdgeInsetsDirectional.fromSTEB(
                                             0, 5, 0, 0),
                                         child: Text(
-                                          'Train régional',
+                                          'Fromage',
                                           textAlign: TextAlign.center,
                                           style: FlutterFlowTheme.of(context)
                                               .bodyText1,
@@ -394,6 +389,7 @@ class _AddActionWidgetState extends State<AddActionWidget> {
                           InkWell(
                             onTap: () async {
                               Navigator.pop(context);
+                              setState(() => FFAppState().actionCO2 = 0);
                               await showModalBottomSheet(
                                 isScrollControlled: true,
                                 backgroundColor: Colors.transparent,
@@ -403,10 +399,8 @@ class _AddActionWidgetState extends State<AddActionWidget> {
                                   return Padding(
                                     padding: MediaQuery.of(context).viewInsets,
                                     child: Container(
-                                      height: 500,
-                                      child: AddActionFormWidget(
-                                        actionName: 'Car',
-                                      ),
+                                      height: 350,
+                                      child: BreadFormWidget(),
                                     ),
                                   );
                                 },
@@ -427,8 +421,8 @@ class _AddActionWidgetState extends State<AddActionWidget> {
                                 child: Column(
                                   mainAxisSize: MainAxisSize.max,
                                   children: [
-                                    SvgPicture.asset(
-                                      'assets/images/trans-metro-06.svg',
+                                    Image.asset(
+                                      'assets/images/bread.png',
                                       width: 50,
                                       height: 50,
                                       fit: BoxFit.cover,
@@ -438,7 +432,7 @@ class _AddActionWidgetState extends State<AddActionWidget> {
                                         padding: EdgeInsetsDirectional.fromSTEB(
                                             0, 5, 0, 0),
                                         child: Text(
-                                          'Trajet en Métro',
+                                          'Pain',
                                           textAlign: TextAlign.center,
                                           style: FlutterFlowTheme.of(context)
                                               .bodyText1,
@@ -451,6 +445,72 @@ class _AddActionWidgetState extends State<AddActionWidget> {
                             ),
                           ),
                         ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 10),
+                child: Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    InkWell(
+                      onTap: () async {
+                        Navigator.pop(context);
+                        setState(() => FFAppState().actionCO2 = 0);
+                        await showModalBottomSheet(
+                          isScrollControlled: true,
+                          backgroundColor: Colors.transparent,
+                          barrierColor: Color(0xBF000000),
+                          context: context,
+                          builder: (context) {
+                            return Padding(
+                              padding: MediaQuery.of(context).viewInsets,
+                              child: Container(
+                                height: 380,
+                                child: CoffeeFormWidget(),
+                              ),
+                            );
+                          },
+                        );
+                      },
+                      child: Container(
+                        width: 135,
+                        height: 110,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(15),
+                          border: Border.all(
+                            color: FlutterFlowTheme.of(context).grayLight,
+                          ),
+                        ),
+                        child: Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(5, 10, 5, 10),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              Image.asset(
+                                'assets/images/coffee.png',
+                                width: 50,
+                                height: 50,
+                                fit: BoxFit.cover,
+                              ),
+                              Expanded(
+                                child: Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0, 5, 0, 0),
+                                  child: Text(
+                                    'Café',
+                                    textAlign: TextAlign.center,
+                                    style:
+                                        FlutterFlowTheme.of(context).bodyText1,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
                       ),
                     ),
                   ],

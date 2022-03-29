@@ -18,9 +18,6 @@ abstract class EnergyPeriodicsRecord
   String get energy;
 
   @nullable
-  int get peopleSharing;
-
-  @nullable
   String get powertype;
 
   @nullable
@@ -30,6 +27,9 @@ abstract class EnergyPeriodicsRecord
   int get volume;
 
   @nullable
+  String get peopleSharing;
+
+  @nullable
   @BuiltValueField(wireName: kDocumentReferenceField)
   DocumentReference get reference;
 
@@ -37,10 +37,10 @@ abstract class EnergyPeriodicsRecord
       builder
         ..co2e = 0
         ..energy = ''
-        ..peopleSharing = 0
         ..powertype = ''
         ..userId = ''
-        ..volume = 0;
+        ..volume = 0
+        ..peopleSharing = '';
 
   static CollectionReference get collection =>
       FirebaseFirestore.instance.collection('energyPeriodics');
@@ -67,17 +67,17 @@ abstract class EnergyPeriodicsRecord
 Map<String, dynamic> createEnergyPeriodicsRecordData({
   int co2e,
   String energy,
-  int peopleSharing,
   String powertype,
   String userId,
   int volume,
+  String peopleSharing,
 }) =>
     serializers.toFirestore(
         EnergyPeriodicsRecord.serializer,
         EnergyPeriodicsRecord((e) => e
           ..co2e = co2e
           ..energy = energy
-          ..peopleSharing = peopleSharing
           ..powertype = powertype
           ..userId = userId
-          ..volume = volume));
+          ..volume = volume
+          ..peopleSharing = peopleSharing));

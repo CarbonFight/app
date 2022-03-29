@@ -54,6 +54,19 @@ abstract class UsersRecord implements Built<UsersRecord, UsersRecordBuilder> {
   int get weekScore;
 
   @nullable
+  int get rank;
+
+  @nullable
+  @BuiltValueField(wireName: 'rank_size')
+  int get rankSize;
+
+  @nullable
+  DateTime get cache;
+
+  @nullable
+  double get co2target;
+
+  @nullable
   @BuiltValueField(wireName: kDocumentReferenceField)
   DocumentReference get reference;
 
@@ -68,7 +81,10 @@ abstract class UsersRecord implements Built<UsersRecord, UsersRecordBuilder> {
     ..photoUrl = ''
     ..activity = 0
     ..monthScore = 0
-    ..weekScore = 0;
+    ..weekScore = 0
+    ..rank = 0
+    ..rankSize = 0
+    ..co2target = 0.0;
 
   static CollectionReference get collection =>
       FirebaseFirestore.instance.collection('users');
@@ -104,6 +120,10 @@ Map<String, dynamic> createUsersRecordData({
   int activity,
   int monthScore,
   int weekScore,
+  int rank,
+  int rankSize,
+  DateTime cache,
+  double co2target,
 }) =>
     serializers.toFirestore(
         UsersRecord.serializer,
@@ -119,4 +139,8 @@ Map<String, dynamic> createUsersRecordData({
           ..photoUrl = photoUrl
           ..activity = activity
           ..monthScore = monthScore
-          ..weekScore = weekScore));
+          ..weekScore = weekScore
+          ..rank = rank
+          ..rankSize = rankSize
+          ..cache = cache
+          ..co2target = co2target));

@@ -21,9 +21,6 @@ abstract class EnergyActionsRecord
   String get powertype;
 
   @nullable
-  int get peopleSharing;
-
-  @nullable
   String get userId;
 
   @nullable
@@ -34,6 +31,9 @@ abstract class EnergyActionsRecord
   DateTime get createdTime;
 
   @nullable
+  String get peopleSharing;
+
+  @nullable
   @BuiltValueField(wireName: kDocumentReferenceField)
   DocumentReference get reference;
 
@@ -41,9 +41,9 @@ abstract class EnergyActionsRecord
     ..energy = ''
     ..volume = 0
     ..powertype = ''
-    ..peopleSharing = 0
     ..userId = ''
-    ..co2e = 0;
+    ..co2e = 0
+    ..peopleSharing = '';
 
   static CollectionReference get collection =>
       FirebaseFirestore.instance.collection('energyActions');
@@ -71,10 +71,10 @@ Map<String, dynamic> createEnergyActionsRecordData({
   String energy,
   int volume,
   String powertype,
-  int peopleSharing,
   String userId,
   int co2e,
   DateTime createdTime,
+  String peopleSharing,
 }) =>
     serializers.toFirestore(
         EnergyActionsRecord.serializer,
@@ -82,7 +82,7 @@ Map<String, dynamic> createEnergyActionsRecordData({
           ..energy = energy
           ..volume = volume
           ..powertype = powertype
-          ..peopleSharing = peopleSharing
           ..userId = userId
           ..co2e = co2e
-          ..createdTime = createdTime));
+          ..createdTime = createdTime
+          ..peopleSharing = peopleSharing));
