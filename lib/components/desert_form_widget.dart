@@ -77,6 +77,8 @@ class _DesertFormWidgetState extends State<DesertFormWidget> {
                       size: 24,
                     ),
                     onPressed: () async {
+                      logFirebaseEvent('IconButton-ON_TAP');
+                      logFirebaseEvent('IconButton-Navigate-Back');
                       Navigator.pop(context);
                     },
                   ),
@@ -149,6 +151,9 @@ class _DesertFormWidgetState extends State<DesertFormWidget> {
                                     EdgeInsetsDirectional.fromSTEB(0, 0, 10, 0),
                                 child: InkWell(
                                   onTap: () async {
+                                    logFirebaseEvent('iconButton-ON_TAP');
+                                    logFirebaseEvent(
+                                        'iconButton-Update-Local-State');
                                     setState(() => FFAppState().actionCO2 =
                                         functions.foodActionsCO2e('desert',
                                             mainComponentValue, 'null'));
@@ -175,9 +180,13 @@ class _DesertFormWidgetState extends State<DesertFormWidget> {
                                     EdgeInsetsDirectional.fromSTEB(10, 0, 0, 0),
                                 child: InkWell(
                                   onTap: () async {
+                                    logFirebaseEvent('iconButton-ON_TAP');
+                                    logFirebaseEvent(
+                                        'iconButton-Update-Local-State');
                                     setState(() => FFAppState().actionCO2 =
                                         functions.foodActionsCO2e('desert',
                                             mainComponentValue, 'null'));
+                                    logFirebaseEvent('iconButton-Backend-Call');
 
                                     final foodActionsCreateData =
                                         createFoodActionsRecordData(
@@ -191,6 +200,8 @@ class _DesertFormWidgetState extends State<DesertFormWidget> {
                                     await FoodActionsRecord.collection
                                         .doc()
                                         .set(foodActionsCreateData);
+                                    logFirebaseEvent(
+                                        'iconButton-Navigate-Back');
                                     Navigator.pop(context);
                                   },
                                   child: IconButtonWidget(

@@ -86,6 +86,8 @@ class _ScooterFormWidgetState extends State<ScooterFormWidget> {
                       size: 24,
                     ),
                     onPressed: () async {
+                      logFirebaseEvent('IconButton-ON_TAP');
+                      logFirebaseEvent('IconButton-Navigate-Back');
                       Navigator.pop(context);
                     },
                   ),
@@ -286,6 +288,9 @@ class _ScooterFormWidgetState extends State<ScooterFormWidget> {
                                   EdgeInsetsDirectional.fromSTEB(0, 0, 10, 0),
                               child: InkWell(
                                 onTap: () async {
+                                  logFirebaseEvent('iconButton-ON_TAP');
+                                  logFirebaseEvent(
+                                      'iconButton-Update-Local-State');
                                   setState(() => FFAppState().actionCO2 =
                                       functions.transportActionsCO2e(
                                           int.parse(textController.text),
@@ -322,6 +327,9 @@ class _ScooterFormWidgetState extends State<ScooterFormWidget> {
                                   EdgeInsetsDirectional.fromSTEB(10, 0, 0, 0),
                               child: InkWell(
                                 onTap: () async {
+                                  logFirebaseEvent('iconButton-ON_TAP');
+                                  logFirebaseEvent(
+                                      'iconButton-Update-Local-State');
                                   setState(() => FFAppState().actionCO2 =
                                       functions.transportActionsCO2e(
                                           int.parse(textController.text),
@@ -335,6 +343,7 @@ class _ScooterFormWidgetState extends State<ScooterFormWidget> {
                                             'Thermique',
                                           ),
                                           'scooter'));
+                                  logFirebaseEvent('iconButton-Backend-Call');
 
                                   final transportActionsCreateData =
                                       createTransportActionsRecordData(
@@ -350,6 +359,7 @@ class _ScooterFormWidgetState extends State<ScooterFormWidget> {
                                   await TransportActionsRecord.collection
                                       .doc()
                                       .set(transportActionsCreateData);
+                                  logFirebaseEvent('iconButton-Navigate-Back');
                                   Navigator.pop(context);
                                 },
                                 child: IconButtonWidget(

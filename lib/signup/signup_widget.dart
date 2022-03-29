@@ -37,6 +37,7 @@ class _SignupWidgetState extends State<SignupWidget> {
     passwordVisibility = false;
     retypepasswordController = TextEditingController();
     retypepasswordVisibility = false;
+    logFirebaseEvent('screen_view', parameters: {'screen_name': 'Signup'});
   }
 
   @override
@@ -439,6 +440,8 @@ class _SignupWidgetState extends State<SignupWidget> {
                           Expanded(
                             child: InkWell(
                               onTap: () async {
+                                logFirebaseEvent('iconButton-ON_TAP');
+                                logFirebaseEvent('iconButton-Auth');
                                 if (passwordController.text !=
                                     retypepasswordController.text) {
                                   ScaffoldMessenger.of(context).showSnackBar(
@@ -460,7 +463,9 @@ class _SignupWidgetState extends State<SignupWidget> {
                                   return;
                                 }
 
+                                logFirebaseEvent('iconButton-Auth');
                                 await sendEmailVerification();
+                                logFirebaseEvent('iconButton-Alert-Dialog');
                                 await showDialog(
                                   context: context,
                                   builder: (alertDialogContext) {
@@ -478,6 +483,7 @@ class _SignupWidgetState extends State<SignupWidget> {
                                     );
                                   },
                                 );
+                                logFirebaseEvent('iconButton-Navigate-To');
                                 await Navigator.push(
                                   context,
                                   MaterialPageRoute(
@@ -605,6 +611,10 @@ class _SignupWidgetState extends State<SignupWidget> {
                                               size: 30,
                                             ),
                                             onPressed: () async {
+                                              logFirebaseEvent(
+                                                  'IconButton-ON_TAP');
+                                              logFirebaseEvent(
+                                                  'IconButton-Auth');
                                               final user =
                                                   await signInWithGoogle(
                                                       context);
@@ -659,6 +669,8 @@ class _SignupWidgetState extends State<SignupWidget> {
                                   EdgeInsetsDirectional.fromSTEB(0, 0, 0, 40),
                               child: InkWell(
                                 onTap: () async {
+                                  logFirebaseEvent('createAccount-ON_TAP');
+                                  logFirebaseEvent('createAccount-Navigate-To');
                                   await Navigator.push(
                                     context,
                                     MaterialPageRoute(
@@ -683,6 +695,8 @@ class _SignupWidgetState extends State<SignupWidget> {
                                     ),
                                     FFButtonWidget(
                                       onPressed: () async {
+                                        logFirebaseEvent('Button-ON_TAP');
+                                        logFirebaseEvent('Button-Navigate-To');
                                         await Navigator.push(
                                           context,
                                           MaterialPageRoute(

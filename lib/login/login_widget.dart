@@ -33,6 +33,7 @@ class _LoginWidgetState extends State<LoginWidget> {
     emailAddressController = TextEditingController();
     passwordController = TextEditingController();
     passwordVisibility = false;
+    logFirebaseEvent('screen_view', parameters: {'screen_name': 'Login'});
   }
 
   @override
@@ -260,6 +261,8 @@ class _LoginWidgetState extends State<LoginWidget> {
                       children: [
                         InkWell(
                           onTap: () async {
+                            logFirebaseEvent('Container-ON_TAP');
+                            logFirebaseEvent('Container-Bottom-Sheet');
                             await showModalBottomSheet(
                               isScrollControlled: true,
                               backgroundColor: Colors.transparent,
@@ -307,6 +310,9 @@ class _LoginWidgetState extends State<LoginWidget> {
                           Expanded(
                             child: InkWell(
                               onTap: () async {
+                                logFirebaseEvent('iconButton-ON_TAP');
+                                logFirebaseEvent('iconButton-Auth');
+
                                 final user = await signInWithEmail(
                                   context,
                                   emailAddressController.text,
@@ -317,6 +323,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                                 }
 
                                 if (!(currentUserEmailVerified)) {
+                                  logFirebaseEvent('iconButton-Alert-Dialog');
                                   await showDialog(
                                     context: context,
                                     builder: (alertDialogContext) {
@@ -337,6 +344,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                                   return;
                                 }
                                 if (FFAppState().showSplash) {
+                                  logFirebaseEvent('iconButton-Navigate-To');
                                   await Navigator.push(
                                     context,
                                     MaterialPageRoute(
@@ -344,6 +352,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                                     ),
                                   );
                                 } else {
+                                  logFirebaseEvent('iconButton-Navigate-To');
                                   await Navigator.push(
                                     context,
                                     MaterialPageRoute(
@@ -452,12 +461,16 @@ class _LoginWidgetState extends State<LoginWidget> {
                                             0, 0, 8, 0),
                                         child: InkWell(
                                           onTap: () async {
+                                            logFirebaseEvent('Card-ON_TAP');
+                                            logFirebaseEvent('Card-Auth');
                                             final user =
                                                 await signInWithGoogle(context);
                                             if (user == null) {
                                               return;
                                             }
                                             if (FFAppState().showSplash) {
+                                              logFirebaseEvent(
+                                                  'Card-Navigate-To');
                                               await Navigator.push(
                                                 context,
                                                 MaterialPageRoute(
@@ -466,6 +479,8 @@ class _LoginWidgetState extends State<LoginWidget> {
                                                 ),
                                               );
                                             } else {
+                                              logFirebaseEvent(
+                                                  'Card-Navigate-To');
                                               await Navigator.push(
                                                 context,
                                                 MaterialPageRoute(
@@ -497,6 +512,10 @@ class _LoginWidgetState extends State<LoginWidget> {
                                                 size: 30,
                                               ),
                                               onPressed: () async {
+                                                logFirebaseEvent(
+                                                    'IconButton-ON_TAP');
+                                                logFirebaseEvent(
+                                                    'IconButton-Auth');
                                                 final user =
                                                     await signInWithGoogle(
                                                         context);
@@ -504,6 +523,8 @@ class _LoginWidgetState extends State<LoginWidget> {
                                                   return;
                                                 }
                                                 if (FFAppState().showSplash) {
+                                                  logFirebaseEvent(
+                                                      'IconButton-Navigate-To');
                                                   await Navigator.push(
                                                     context,
                                                     MaterialPageRoute(
@@ -512,6 +533,8 @@ class _LoginWidgetState extends State<LoginWidget> {
                                                     ),
                                                   );
                                                 } else {
+                                                  logFirebaseEvent(
+                                                      'IconButton-Navigate-To');
                                                   await Navigator.push(
                                                     context,
                                                     MaterialPageRoute(
@@ -560,6 +583,8 @@ class _LoginWidgetState extends State<LoginWidget> {
                                   EdgeInsetsDirectional.fromSTEB(0, 0, 0, 40),
                               child: InkWell(
                                 onTap: () async {
+                                  logFirebaseEvent('createAccount-ON_TAP');
+                                  logFirebaseEvent('createAccount-Navigate-To');
                                   await Navigator.push(
                                     context,
                                     MaterialPageRoute(
@@ -584,6 +609,8 @@ class _LoginWidgetState extends State<LoginWidget> {
                                     ),
                                     FFButtonWidget(
                                       onPressed: () async {
+                                        logFirebaseEvent('Button-ON_TAP');
+                                        logFirebaseEvent('Button-Navigate-To');
                                         await Navigator.push(
                                           context,
                                           MaterialPageRoute(

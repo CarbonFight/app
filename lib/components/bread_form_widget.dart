@@ -78,6 +78,8 @@ class _BreadFormWidgetState extends State<BreadFormWidget> {
                       size: 24,
                     ),
                     onPressed: () async {
+                      logFirebaseEvent('IconButton-ON_TAP');
+                      logFirebaseEvent('IconButton-Navigate-Back');
                       Navigator.pop(context);
                     },
                   ),
@@ -196,6 +198,9 @@ class _BreadFormWidgetState extends State<BreadFormWidget> {
                                   EdgeInsetsDirectional.fromSTEB(0, 0, 10, 0),
                               child: InkWell(
                                 onTap: () async {
+                                  logFirebaseEvent('iconButton-ON_TAP');
+                                  logFirebaseEvent(
+                                      'iconButton-Update-Local-State');
                                   setState(() => FFAppState().actionCO2 =
                                       functions.foodActionsCO2e(
                                           'bread',
@@ -224,11 +229,15 @@ class _BreadFormWidgetState extends State<BreadFormWidget> {
                                   EdgeInsetsDirectional.fromSTEB(10, 0, 0, 0),
                               child: InkWell(
                                 onTap: () async {
+                                  logFirebaseEvent('iconButton-ON_TAP');
+                                  logFirebaseEvent(
+                                      'iconButton-Update-Local-State');
                                   setState(() => FFAppState().actionCO2 =
                                       functions.foodActionsCO2e(
                                           'bread',
                                           mainComponentValue.toString(),
                                           'null'));
+                                  logFirebaseEvent('iconButton-Backend-Call');
 
                                   final foodActionsCreateData =
                                       createFoodActionsRecordData(
@@ -243,6 +252,7 @@ class _BreadFormWidgetState extends State<BreadFormWidget> {
                                   await FoodActionsRecord.collection
                                       .doc()
                                       .set(foodActionsCreateData);
+                                  logFirebaseEvent('iconButton-Navigate-Back');
                                   Navigator.pop(context);
                                 },
                                 child: IconButtonWidget(

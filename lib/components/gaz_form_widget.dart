@@ -86,6 +86,8 @@ class _GazFormWidgetState extends State<GazFormWidget> {
                       size: 24,
                     ),
                     onPressed: () async {
+                      logFirebaseEvent('IconButton-ON_TAP');
+                      logFirebaseEvent('IconButton-Navigate-Back');
                       Navigator.pop(context);
                     },
                   ),
@@ -285,6 +287,9 @@ class _GazFormWidgetState extends State<GazFormWidget> {
                                   EdgeInsetsDirectional.fromSTEB(0, 0, 10, 0),
                               child: InkWell(
                                 onTap: () async {
+                                  logFirebaseEvent('iconButton-ON_TAP');
+                                  logFirebaseEvent(
+                                      'iconButton-Update-Local-State');
                                   setState(() => FFAppState().actionCO2 =
                                       functions.energyPeriodicsCO2e(
                                           'gas',
@@ -320,6 +325,9 @@ class _GazFormWidgetState extends State<GazFormWidget> {
                                   EdgeInsetsDirectional.fromSTEB(10, 0, 0, 0),
                               child: InkWell(
                                 onTap: () async {
+                                  logFirebaseEvent('iconButton-ON_TAP');
+                                  logFirebaseEvent(
+                                      'iconButton-Update-Local-State');
                                   setState(() => FFAppState().actionCO2 =
                                       functions.energyPeriodicsCO2e(
                                           'gas',
@@ -332,6 +340,7 @@ class _GazFormWidgetState extends State<GazFormWidget> {
                                             peopleSharingValue,
                                             '1',
                                           )));
+                                  logFirebaseEvent('iconButton-Backend-Call');
 
                                   final energyActionsCreateData =
                                       createEnergyActionsRecordData(
@@ -352,6 +361,7 @@ class _GazFormWidgetState extends State<GazFormWidget> {
                                   await EnergyActionsRecord.collection
                                       .doc()
                                       .set(energyActionsCreateData);
+                                  logFirebaseEvent('iconButton-Backend-Call');
 
                                   final energyPeriodicsCreateData =
                                       createEnergyPeriodicsRecordData(
@@ -371,6 +381,7 @@ class _GazFormWidgetState extends State<GazFormWidget> {
                                   await EnergyPeriodicsRecord.collection
                                       .doc()
                                       .set(energyPeriodicsCreateData);
+                                  logFirebaseEvent('iconButton-Navigate-Back');
                                   Navigator.pop(context);
                                 },
                                 child: IconButtonWidget(

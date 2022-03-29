@@ -93,6 +93,8 @@ class _TrainFormCopyWidgetState extends State<TrainFormCopyWidget> {
                       size: 24,
                     ),
                     onPressed: () async {
+                      logFirebaseEvent('IconButton-ON_TAP');
+                      logFirebaseEvent('IconButton-Navigate-Back');
                       Navigator.pop(context);
                     },
                   ),
@@ -108,8 +110,8 @@ class _TrainFormCopyWidgetState extends State<TrainFormCopyWidget> {
                       child: SizedBox(
                         width: 50,
                         height: 50,
-                        child: SpinKitRipple(
-                          color: FlutterFlowTheme.of(context).tertiaryColor,
+                        child: SpinKitRing(
+                          color: FlutterFlowTheme.of(context).secondaryColor,
                           size: 50,
                         ),
                       ),
@@ -285,6 +287,9 @@ class _TrainFormCopyWidgetState extends State<TrainFormCopyWidget> {
                                   EdgeInsetsDirectional.fromSTEB(0, 0, 10, 0),
                               child: InkWell(
                                 onTap: () async {
+                                  logFirebaseEvent('iconButton-ON_TAP');
+                                  logFirebaseEvent(
+                                      'iconButton-Update-Local-State');
                                   setState(() => FFAppState().actionCO2 =
                                       functions.transportActionsCO2e(
                                           int.parse(textController.text),
@@ -295,6 +300,7 @@ class _TrainFormCopyWidgetState extends State<TrainFormCopyWidget> {
                                             'TER',
                                           ),
                                           'train'));
+                                  logFirebaseEvent('iconButton-Backend-Call');
 
                                   final transportActionsUpdateData =
                                       createTransportActionsRecordData();
@@ -324,6 +330,9 @@ class _TrainFormCopyWidgetState extends State<TrainFormCopyWidget> {
                                     EdgeInsetsDirectional.fromSTEB(10, 0, 0, 0),
                                 child: InkWell(
                                   onTap: () async {
+                                    logFirebaseEvent('iconButton-ON_TAP');
+                                    logFirebaseEvent(
+                                        'iconButton-Update-Local-State');
                                     setState(() => FFAppState().actionCO2 =
                                         functions.transportActionsCO2e(
                                             int.parse(textController.text),
@@ -334,6 +343,7 @@ class _TrainFormCopyWidgetState extends State<TrainFormCopyWidget> {
                                               'TER',
                                             ),
                                             'train'));
+                                    logFirebaseEvent('iconButton-Backend-Call');
 
                                     final transportActionsUpdateData =
                                         createTransportActionsRecordData(
@@ -343,6 +353,8 @@ class _TrainFormCopyWidgetState extends State<TrainFormCopyWidget> {
                                     );
                                     await widget.currentAction.reference
                                         .update(transportActionsUpdateData);
+                                    logFirebaseEvent(
+                                        'iconButton-Navigate-Back');
                                     Navigator.pop(context);
                                   },
                                   child: IconButtonWidget(

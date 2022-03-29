@@ -31,6 +31,12 @@ class _HomeCopyWidgetState extends State<HomeCopyWidget> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
+  void initState() {
+    super.initState();
+    logFirebaseEvent('screen_view', parameters: {'screen_name': 'HomeCopy'});
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       key: scaffoldKey,
@@ -98,6 +104,8 @@ class _HomeCopyWidgetState extends State<HomeCopyWidget> {
                         children: [
                           InkWell(
                             onTap: () async {
+                              logFirebaseEvent('Container-ON_TAP');
+                              logFirebaseEvent('Container-Navigate-To');
                               await Navigator.push(
                                 context,
                                 MaterialPageRoute(
@@ -202,6 +210,8 @@ class _HomeCopyWidgetState extends State<HomeCopyWidget> {
                           children: [
                             InkWell(
                               onTap: () async {
+                                logFirebaseEvent('Container-ON_TAP');
+                                logFirebaseEvent('Container-Navigate-To');
                                 await Navigator.push(
                                   context,
                                   MaterialPageRoute(
@@ -251,6 +261,8 @@ class _HomeCopyWidgetState extends State<HomeCopyWidget> {
                             ),
                             InkWell(
                               onTap: () async {
+                                logFirebaseEvent('Container-ON_TAP');
+                                logFirebaseEvent('Container-Navigate-To');
                                 await Navigator.push(
                                   context,
                                   MaterialPageRoute(
@@ -731,6 +743,8 @@ class _HomeCopyWidgetState extends State<HomeCopyWidget> {
                                       5, 0, 0, 5),
                                   child: InkWell(
                                     onTap: () async {
+                                      logFirebaseEvent('TransBtn-ON_TAP');
+                                      logFirebaseEvent('TransBtn-Bottom-Sheet');
                                       await showModalBottomSheet(
                                         isScrollControlled: true,
                                         backgroundColor: Colors.transparent,
@@ -804,6 +818,8 @@ class _HomeCopyWidgetState extends State<HomeCopyWidget> {
                                       5, 0, 0, 5),
                                   child: InkWell(
                                     onTap: () async {
+                                      logFirebaseEvent('Repasbtn-ON_TAP');
+                                      logFirebaseEvent('Repasbtn-Bottom-Sheet');
                                       await showModalBottomSheet(
                                         isScrollControlled: true,
                                         backgroundColor: Colors.transparent,
@@ -877,6 +893,9 @@ class _HomeCopyWidgetState extends State<HomeCopyWidget> {
                                       5, 0, 0, 5),
                                   child: InkWell(
                                     onTap: () async {
+                                      logFirebaseEvent('EnergiesBtn-ON_TAP');
+                                      logFirebaseEvent(
+                                          'EnergiesBtn-Bottom-Sheet');
                                       await showModalBottomSheet(
                                         isScrollControlled: true,
                                         backgroundColor: Colors.transparent,
@@ -956,9 +975,9 @@ class _HomeCopyWidgetState extends State<HomeCopyWidget> {
                                 child: SizedBox(
                                   width: 50,
                                   height: 50,
-                                  child: SpinKitRipple(
+                                  child: SpinKitRing(
                                     color: FlutterFlowTheme.of(context)
-                                        .tertiaryColor,
+                                        .secondaryColor,
                                     size: 50,
                                   ),
                                 ),
@@ -987,10 +1006,10 @@ class _HomeCopyWidgetState extends State<HomeCopyWidget> {
                                           child: SizedBox(
                                             width: 50,
                                             height: 50,
-                                            child: SpinKitRipple(
+                                            child: SpinKitRing(
                                               color:
                                                   FlutterFlowTheme.of(context)
-                                                      .tertiaryColor,
+                                                      .secondaryColor,
                                               size: 50,
                                             ),
                                           ),
@@ -1064,6 +1083,10 @@ class _HomeCopyWidgetState extends State<HomeCopyWidget> {
                                                                         0),
                                                             child: InkWell(
                                                               onTap: () async {
+                                                                logFirebaseEvent(
+                                                                    'Icon-ON_TAP');
+                                                                logFirebaseEvent(
+                                                                    'Icon-Page-View');
                                                                 await pageView2Controller
                                                                     .previousPage(
                                                                   duration: Duration(
@@ -1160,6 +1183,10 @@ class _HomeCopyWidgetState extends State<HomeCopyWidget> {
                                                                         0),
                                                             child: InkWell(
                                                               onTap: () async {
+                                                                logFirebaseEvent(
+                                                                    'Icon-ON_TAP');
+                                                                logFirebaseEvent(
+                                                                    'Icon-Page-View');
                                                                 await pageView2Controller
                                                                     .nextPage(
                                                                   duration: Duration(
@@ -1224,9 +1251,9 @@ class _HomeCopyWidgetState extends State<HomeCopyWidget> {
                                                                       height:
                                                                           50,
                                                                       child:
-                                                                          SpinKitRipple(
+                                                                          SpinKitRing(
                                                                         color: FlutterFlowTheme.of(context)
-                                                                            .tertiaryColor,
+                                                                            .secondaryColor,
                                                                         size:
                                                                             50,
                                                                       ),
@@ -1255,6 +1282,8 @@ class _HomeCopyWidgetState extends State<HomeCopyWidget> {
                                                                           InkWell(
                                                                             onTap:
                                                                                 () async {
+                                                                              logFirebaseEvent('trainImage-ON_TAP');
+                                                                              logFirebaseEvent('trainImage-Bottom-Sheet');
                                                                               await showModalBottomSheet(
                                                                                 isScrollControlled: true,
                                                                                 backgroundColor: Colors.transparent,

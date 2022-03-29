@@ -504,3 +504,17 @@ double percentProgressBar(
     return percent;
   }
 }
+
+String printLevel(int level) {
+  String levelString = "Débutant";
+
+  if (level == 1) {
+    return "Débutant";
+  } else if (level == 2) {
+    return "Confirmé";
+  } else if (level == 3) {
+    return "CarbonFighter";
+  }
+
+  return levelString;
+}

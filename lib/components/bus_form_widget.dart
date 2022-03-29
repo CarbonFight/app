@@ -90,6 +90,8 @@ class _BusFormWidgetState extends State<BusFormWidget> {
                       size: 24,
                     ),
                     onPressed: () async {
+                      logFirebaseEvent('IconButton-ON_TAP');
+                      logFirebaseEvent('IconButton-Navigate-Back');
                       Navigator.pop(context);
                     },
                   ),
@@ -257,6 +259,9 @@ class _BusFormWidgetState extends State<BusFormWidget> {
                                   EdgeInsetsDirectional.fromSTEB(0, 0, 10, 0),
                               child: InkWell(
                                 onTap: () async {
+                                  logFirebaseEvent('iconButton-ON_TAP');
+                                  logFirebaseEvent(
+                                      'iconButton-Update-Local-State');
                                   setState(() => FFAppState().actionCO2 =
                                       functions.transportActionsCO2e(
                                           int.parse(distanceController.text),
@@ -290,6 +295,9 @@ class _BusFormWidgetState extends State<BusFormWidget> {
                                   EdgeInsetsDirectional.fromSTEB(10, 0, 0, 0),
                               child: InkWell(
                                 onTap: () async {
+                                  logFirebaseEvent('iconButton-ON_TAP');
+                                  logFirebaseEvent(
+                                      'iconButton-Update-Local-State');
                                   setState(() => FFAppState().actionCO2 =
                                       functions.transportActionsCO2e(
                                           int.parse(distanceController.text),
@@ -300,6 +308,7 @@ class _BusFormWidgetState extends State<BusFormWidget> {
                                             'Thermique',
                                           ),
                                           'bus'));
+                                  logFirebaseEvent('iconButton-Backend-Call');
 
                                   final transportActionsCreateData =
                                       createTransportActionsRecordData(
@@ -316,6 +325,7 @@ class _BusFormWidgetState extends State<BusFormWidget> {
                                   await TransportActionsRecord.collection
                                       .doc()
                                       .set(transportActionsCreateData);
+                                  logFirebaseEvent('iconButton-Navigate-Back');
                                   Navigator.pop(context);
                                 },
                                 child: IconButtonWidget(

@@ -23,6 +23,7 @@ class _FeedbackWidgetState extends State<FeedbackWidget> {
   @override
   void initState() {
     super.initState();
+    logFirebaseEvent('screen_view', parameters: {'screen_name': 'Feedback'});
     messageController = TextEditingController();
   }
 
@@ -161,11 +162,14 @@ class _FeedbackWidgetState extends State<FeedbackWidget> {
                         Expanded(
                           child: InkWell(
                             onTap: () async {
+                              logFirebaseEvent('iconButton-ON_TAP');
+                              logFirebaseEvent('iconButton-Backend-Call');
                               apiCallOutput2 = await SendEmailCall.call(
                                 emailbody: messageController.text,
                                 emailsendername: currentUserDisplayName,
                               );
                               if ((apiCallOutput2?.succeeded ?? true)) {
+                                logFirebaseEvent('iconButton-Alert-Dialog');
                                 await showDialog(
                                   context: context,
                                   builder: (alertDialogContext) {
@@ -184,6 +188,7 @@ class _FeedbackWidgetState extends State<FeedbackWidget> {
                                   },
                                 );
                               } else {
+                                logFirebaseEvent('iconButton-Alert-Dialog');
                                 await showDialog(
                                   context: context,
                                   builder: (alertDialogContext) {
@@ -247,6 +252,8 @@ class _FeedbackWidgetState extends State<FeedbackWidget> {
                         size: 30,
                       ),
                       onPressed: () async {
+                        logFirebaseEvent('IconButton-ON_TAP');
+                        logFirebaseEvent('IconButton-Navigate-Back');
                         Navigator.pop(context);
                       },
                     ),

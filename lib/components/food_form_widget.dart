@@ -62,6 +62,8 @@ class _FoodFormWidgetState extends State<FoodFormWidget> {
                       size: 24,
                     ),
                     onPressed: () async {
+                      logFirebaseEvent('IconButton-ON_TAP');
+                      logFirebaseEvent('IconButton-Navigate-Back');
                       Navigator.pop(context);
                     },
                   ),
@@ -80,8 +82,12 @@ class _FoodFormWidgetState extends State<FoodFormWidget> {
                         children: [
                           InkWell(
                             onTap: () async {
+                              logFirebaseEvent('Container-ON_TAP');
+                              logFirebaseEvent('Container-Navigate-Back');
                               Navigator.pop(context);
+                              logFirebaseEvent('Container-Update-Local-State');
                               setState(() => FFAppState().actionCO2 = 0);
+                              logFirebaseEvent('Container-Bottom-Sheet');
                               await showModalBottomSheet(
                                 isScrollControlled: true,
                                 backgroundColor: Colors.transparent,
@@ -138,8 +144,12 @@ class _FoodFormWidgetState extends State<FoodFormWidget> {
                           ),
                           InkWell(
                             onTap: () async {
+                              logFirebaseEvent('Container-ON_TAP');
+                              logFirebaseEvent('Container-Navigate-Back');
                               Navigator.pop(context);
+                              logFirebaseEvent('Container-Update-Local-State');
                               setState(() => FFAppState().actionCO2 = 0);
+                              logFirebaseEvent('Container-Bottom-Sheet');
                               await showModalBottomSheet(
                                 isScrollControlled: true,
                                 backgroundColor: Colors.transparent,
@@ -205,8 +215,12 @@ class _FoodFormWidgetState extends State<FoodFormWidget> {
                         children: [
                           InkWell(
                             onTap: () async {
+                              logFirebaseEvent('Container-ON_TAP');
+                              logFirebaseEvent('Container-Navigate-Back');
                               Navigator.pop(context);
+                              logFirebaseEvent('Container-Update-Local-State');
                               setState(() => FFAppState().actionCO2 = 0);
+                              logFirebaseEvent('Container-Bottom-Sheet');
                               await showModalBottomSheet(
                                 isScrollControlled: true,
                                 backgroundColor: Colors.transparent,
@@ -263,8 +277,12 @@ class _FoodFormWidgetState extends State<FoodFormWidget> {
                           ),
                           InkWell(
                             onTap: () async {
+                              logFirebaseEvent('Container-ON_TAP');
+                              logFirebaseEvent('Container-Navigate-Back');
                               Navigator.pop(context);
+                              logFirebaseEvent('Container-Update-Local-State');
                               setState(() => FFAppState().actionCO2 = 0);
+                              logFirebaseEvent('Container-Bottom-Sheet');
                               await showModalBottomSheet(
                                 isScrollControlled: true,
                                 backgroundColor: Colors.transparent,
@@ -330,8 +348,12 @@ class _FoodFormWidgetState extends State<FoodFormWidget> {
                         children: [
                           InkWell(
                             onTap: () async {
+                              logFirebaseEvent('Container-ON_TAP');
+                              logFirebaseEvent('Container-Navigate-Back');
                               Navigator.pop(context);
+                              logFirebaseEvent('Container-Update-Local-State');
                               setState(() => FFAppState().actionCO2 = 0);
+                              logFirebaseEvent('Container-Bottom-Sheet');
                               await showModalBottomSheet(
                                 isScrollControlled: true,
                                 backgroundColor: Colors.transparent,
@@ -388,8 +410,12 @@ class _FoodFormWidgetState extends State<FoodFormWidget> {
                           ),
                           InkWell(
                             onTap: () async {
+                              logFirebaseEvent('Container-ON_TAP');
+                              logFirebaseEvent('Container-Navigate-Back');
                               Navigator.pop(context);
+                              logFirebaseEvent('Container-Update-Local-State');
                               setState(() => FFAppState().actionCO2 = 0);
+                              logFirebaseEvent('Container-Bottom-Sheet');
                               await showModalBottomSheet(
                                 isScrollControlled: true,
                                 backgroundColor: Colors.transparent,
@@ -458,8 +484,12 @@ class _FoodFormWidgetState extends State<FoodFormWidget> {
                   children: [
                     InkWell(
                       onTap: () async {
+                        logFirebaseEvent('Container-ON_TAP');
+                        logFirebaseEvent('Container-Navigate-Back');
                         Navigator.pop(context);
+                        logFirebaseEvent('Container-Update-Local-State');
                         setState(() => FFAppState().actionCO2 = 0);
+                        logFirebaseEvent('Container-Bottom-Sheet');
                         await showModalBottomSheet(
                           isScrollControlled: true,
                           backgroundColor: Colors.transparent,

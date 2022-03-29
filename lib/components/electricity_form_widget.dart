@@ -85,6 +85,8 @@ class _ElectricityFormWidgetState extends State<ElectricityFormWidget> {
                       size: 24,
                     ),
                     onPressed: () async {
+                      logFirebaseEvent('IconButton-ON_TAP');
+                      logFirebaseEvent('IconButton-Navigate-Back');
                       Navigator.pop(context);
                     },
                   ),
@@ -290,6 +292,9 @@ class _ElectricityFormWidgetState extends State<ElectricityFormWidget> {
                                   EdgeInsetsDirectional.fromSTEB(0, 0, 10, 0),
                               child: InkWell(
                                 onTap: () async {
+                                  logFirebaseEvent('iconButton-ON_TAP');
+                                  logFirebaseEvent(
+                                      'iconButton-Update-Local-State');
                                   setState(() => FFAppState().actionCO2 =
                                       functions.energyPeriodicsCO2e(
                                           'electricity',
@@ -325,6 +330,9 @@ class _ElectricityFormWidgetState extends State<ElectricityFormWidget> {
                                   EdgeInsetsDirectional.fromSTEB(10, 0, 0, 0),
                               child: InkWell(
                                 onTap: () async {
+                                  logFirebaseEvent('iconButton-ON_TAP');
+                                  logFirebaseEvent(
+                                      'iconButton-Update-Local-State');
                                   setState(() => FFAppState().actionCO2 =
                                       functions.energyPeriodicsCO2e(
                                           'electricity',
@@ -337,6 +345,7 @@ class _ElectricityFormWidgetState extends State<ElectricityFormWidget> {
                                             peopleSharingValue,
                                             '1',
                                           )));
+                                  logFirebaseEvent('iconButton-Backend-Call');
 
                                   final energyActionsCreateData =
                                       createEnergyActionsRecordData(
@@ -354,6 +363,7 @@ class _ElectricityFormWidgetState extends State<ElectricityFormWidget> {
                                   await EnergyActionsRecord.collection
                                       .doc()
                                       .set(energyActionsCreateData);
+                                  logFirebaseEvent('iconButton-Backend-Call');
 
                                   final energyPeriodicsCreateData =
                                       createEnergyPeriodicsRecordData(
@@ -367,6 +377,7 @@ class _ElectricityFormWidgetState extends State<ElectricityFormWidget> {
                                   await EnergyPeriodicsRecord.collection
                                       .doc()
                                       .set(energyPeriodicsCreateData);
+                                  logFirebaseEvent('iconButton-Navigate-Back');
                                   Navigator.pop(context);
                                 },
                                 child: IconButtonWidget(

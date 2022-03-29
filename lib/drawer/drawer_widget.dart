@@ -48,16 +48,21 @@ class _DrawerWidgetState extends State<DrawerWidget>
           .where((anim) => anim.trigger == AnimationTrigger.onPageLoad),
       this,
     );
+
+    logFirebaseEvent('screen_view', parameters: {'screen_name': 'Drawer'});
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       key: scaffoldKey,
+      backgroundColor: Colors.transparent,
       body: Stack(
         children: [
           InkWell(
             onTap: () async {
+              logFirebaseEvent('Container-ON_TAP');
+              logFirebaseEvent('Container-Navigate-Back');
               Navigator.pop(context);
             },
             child: Container(
@@ -102,6 +107,8 @@ class _DrawerWidgetState extends State<DrawerWidget>
                             children: [
                               InkWell(
                                 onTap: () async {
+                                  logFirebaseEvent('Container-ON_TAP');
+                                  logFirebaseEvent('Container-Navigate-Back');
                                   Navigator.pop(context);
                                 },
                                 child: Container(
@@ -210,6 +217,9 @@ class _DrawerWidgetState extends State<DrawerWidget>
                                                   0, 5, 0, 0),
                                           child: InkWell(
                                             onTap: () async {
+                                              logFirebaseEvent('Text-ON_TAP');
+                                              logFirebaseEvent(
+                                                  'Text-Bottom-Sheet');
                                               await showModalBottomSheet(
                                                 isScrollControlled: true,
                                                 backgroundColor:
@@ -275,6 +285,8 @@ class _DrawerWidgetState extends State<DrawerWidget>
                                       10, 0, 0, 0),
                                   child: InkWell(
                                     onTap: () async {
+                                      logFirebaseEvent('Text-ON_TAP');
+                                      logFirebaseEvent('Text-Navigate-To');
                                       await Navigator.push(
                                         context,
                                         MaterialPageRoute(
@@ -320,6 +332,8 @@ class _DrawerWidgetState extends State<DrawerWidget>
                                       10, 0, 0, 0),
                                   child: InkWell(
                                     onTap: () async {
+                                      logFirebaseEvent('Text-ON_TAP');
+                                      logFirebaseEvent('Text-Navigate-To');
                                       await Navigator.push(
                                         context,
                                         MaterialPageRoute(
@@ -364,6 +378,8 @@ class _DrawerWidgetState extends State<DrawerWidget>
                                       10, 0, 0, 0),
                                   child: InkWell(
                                     onTap: () async {
+                                      logFirebaseEvent('Text-ON_TAP');
+                                      logFirebaseEvent('Text-Navigate-To');
                                       await Navigator.push(
                                         context,
                                         MaterialPageRoute(
@@ -441,6 +457,8 @@ class _DrawerWidgetState extends State<DrawerWidget>
                             ),
                             child: InkWell(
                               onTap: () async {
+                                logFirebaseEvent('Icon-ON_TAP');
+                                logFirebaseEvent('Icon-Auth');
                                 await signOut();
                                 await Navigator.pushAndRemoveUntil(
                                   context,
