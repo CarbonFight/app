@@ -53,17 +53,20 @@ class _DrawerCopyWidgetState extends State<DrawerCopyWidget>
 
     displaynameController = TextEditingController(text: currentUserDisplayName);
     emailaddressController = TextEditingController(text: currentUserEmail);
+    logFirebaseEvent('screen_view', parameters: {'screen_name': 'DrawerCopy'});
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       key: scaffoldKey,
-      backgroundColor: Color(0x320B1E1B),
+      backgroundColor: Colors.transparent,
       body: Stack(
         children: [
           InkWell(
             onTap: () async {
+              logFirebaseEvent('Container-ON_TAP');
+              logFirebaseEvent('Container-Navigate-Back');
               Navigator.pop(context);
             },
             child: Container(
@@ -108,6 +111,8 @@ class _DrawerCopyWidgetState extends State<DrawerCopyWidget>
                             children: [
                               InkWell(
                                 onTap: () async {
+                                  logFirebaseEvent('Container-ON_TAP');
+                                  logFirebaseEvent('Container-Navigate-Back');
                                   Navigator.pop(context);
                                 },
                                 child: Container(
@@ -216,6 +221,9 @@ class _DrawerCopyWidgetState extends State<DrawerCopyWidget>
                                                   0, 5, 0, 0),
                                           child: InkWell(
                                             onTap: () async {
+                                              logFirebaseEvent('Text-ON_TAP');
+                                              logFirebaseEvent(
+                                                  'Text-Bottom-Sheet');
                                               await showModalBottomSheet(
                                                 isScrollControlled: true,
                                                 backgroundColor:
@@ -561,6 +569,9 @@ class _DrawerCopyWidgetState extends State<DrawerCopyWidget>
                               Expanded(
                                 child: InkWell(
                                   onTap: () async {
+                                    logFirebaseEvent('iconButton-ON_TAP');
+                                    logFirebaseEvent('iconButton-Backend-Call');
+
                                     final usersUpdateData =
                                         createUsersRecordData(
                                       displayName: displaynameController.text,
@@ -569,6 +580,8 @@ class _DrawerCopyWidgetState extends State<DrawerCopyWidget>
                                     );
                                     await currentUserReference
                                         .update(usersUpdateData);
+                                    logFirebaseEvent(
+                                        'iconButton-Navigate-Back');
                                     Navigator.pop(context);
                                   },
                                   child: IconButtonWidget(

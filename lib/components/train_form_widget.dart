@@ -93,6 +93,8 @@ class _TrainFormWidgetState extends State<TrainFormWidget> {
                       size: 24,
                     ),
                     onPressed: () async {
+                      logFirebaseEvent('IconButton-ON_TAP');
+                      logFirebaseEvent('IconButton-Navigate-Back');
                       Navigator.pop(context);
                     },
                   ),
@@ -265,6 +267,9 @@ class _TrainFormWidgetState extends State<TrainFormWidget> {
                                   EdgeInsetsDirectional.fromSTEB(0, 0, 10, 0),
                               child: InkWell(
                                 onTap: () async {
+                                  logFirebaseEvent('iconButton-ON_TAP');
+                                  logFirebaseEvent(
+                                      'iconButton-Update-Local-State');
                                   setState(() => FFAppState().actionCO2 =
                                       functions.transportActionsCO2e(
                                           int.parse(textController.text),
@@ -299,6 +304,9 @@ class _TrainFormWidgetState extends State<TrainFormWidget> {
                                     EdgeInsetsDirectional.fromSTEB(10, 0, 0, 0),
                                 child: InkWell(
                                   onTap: () async {
+                                    logFirebaseEvent('iconButton-ON_TAP');
+                                    logFirebaseEvent(
+                                        'iconButton-Update-Local-State');
                                     setState(() => FFAppState().actionCO2 =
                                         functions.transportActionsCO2e(
                                             int.parse(textController.text),
@@ -309,6 +317,7 @@ class _TrainFormWidgetState extends State<TrainFormWidget> {
                                               'TER',
                                             ),
                                             'train'));
+                                    logFirebaseEvent('iconButton-Backend-Call');
 
                                     final transportActionsCreateData =
                                         createTransportActionsRecordData(
@@ -327,6 +336,8 @@ class _TrainFormWidgetState extends State<TrainFormWidget> {
                                     await TransportActionsRecord.collection
                                         .doc()
                                         .set(transportActionsCreateData);
+                                    logFirebaseEvent(
+                                        'iconButton-Navigate-Back');
                                     Navigator.pop(context);
                                   },
                                   child: IconButtonWidget(

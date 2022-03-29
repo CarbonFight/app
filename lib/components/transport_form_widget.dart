@@ -64,6 +64,8 @@ class _TransportFormWidgetState extends State<TransportFormWidget> {
                       size: 24,
                     ),
                     onPressed: () async {
+                      logFirebaseEvent('IconButton-ON_TAP');
+                      logFirebaseEvent('IconButton-Navigate-Back');
                       Navigator.pop(context);
                     },
                   ),
@@ -82,8 +84,12 @@ class _TransportFormWidgetState extends State<TransportFormWidget> {
                         children: [
                           InkWell(
                             onTap: () async {
+                              logFirebaseEvent('Container-ON_TAP');
+                              logFirebaseEvent('Container-Navigate-Back');
                               Navigator.pop(context);
+                              logFirebaseEvent('Container-Update-Local-State');
                               setState(() => FFAppState().actionCO2 = 0);
+                              logFirebaseEvent('Container-Bottom-Sheet');
                               await showModalBottomSheet(
                                 isScrollControlled: true,
                                 backgroundColor: Colors.transparent,
@@ -140,8 +146,12 @@ class _TransportFormWidgetState extends State<TransportFormWidget> {
                           ),
                           InkWell(
                             onTap: () async {
+                              logFirebaseEvent('Container-ON_TAP');
+                              logFirebaseEvent('Container-Navigate-Back');
                               Navigator.pop(context);
+                              logFirebaseEvent('Container-Update-Local-State');
                               setState(() => FFAppState().actionCO2 = 0);
+                              logFirebaseEvent('Container-Bottom-Sheet');
                               await showModalBottomSheet(
                                 isScrollControlled: true,
                                 backgroundColor: Colors.transparent,
@@ -207,8 +217,12 @@ class _TransportFormWidgetState extends State<TransportFormWidget> {
                         children: [
                           InkWell(
                             onTap: () async {
+                              logFirebaseEvent('Container-ON_TAP');
+                              logFirebaseEvent('Container-Navigate-Back');
                               Navigator.pop(context);
+                              logFirebaseEvent('Container-Update-Local-State');
                               setState(() => FFAppState().actionCO2 = 0);
+                              logFirebaseEvent('Container-Bottom-Sheet');
                               await showModalBottomSheet(
                                 isScrollControlled: true,
                                 backgroundColor: Colors.transparent,
@@ -265,8 +279,12 @@ class _TransportFormWidgetState extends State<TransportFormWidget> {
                           ),
                           InkWell(
                             onTap: () async {
+                              logFirebaseEvent('Container-ON_TAP');
+                              logFirebaseEvent('Container-Navigate-Back');
                               Navigator.pop(context);
+                              logFirebaseEvent('Container-Update-Local-State');
                               setState(() => FFAppState().actionCO2 = 0);
+                              logFirebaseEvent('Container-Bottom-Sheet');
                               await showModalBottomSheet(
                                 isScrollControlled: true,
                                 backgroundColor: Colors.transparent,
@@ -332,8 +350,12 @@ class _TransportFormWidgetState extends State<TransportFormWidget> {
                         children: [
                           InkWell(
                             onTap: () async {
+                              logFirebaseEvent('Container-ON_TAP');
+                              logFirebaseEvent('Container-Navigate-Back');
                               Navigator.pop(context);
+                              logFirebaseEvent('Container-Update-Local-State');
                               setState(() => FFAppState().actionCO2 = 0);
+                              logFirebaseEvent('Container-Bottom-Sheet');
                               await showModalBottomSheet(
                                 isScrollControlled: true,
                                 backgroundColor: Colors.transparent,
@@ -390,8 +412,12 @@ class _TransportFormWidgetState extends State<TransportFormWidget> {
                           ),
                           InkWell(
                             onTap: () async {
+                              logFirebaseEvent('Container-ON_TAP');
+                              logFirebaseEvent('Container-Navigate-Back');
                               Navigator.pop(context);
+                              logFirebaseEvent('Container-Update-Local-State');
                               setState(() => FFAppState().actionCO2 = 0);
+                              logFirebaseEvent('Container-Bottom-Sheet');
                               await showModalBottomSheet(
                                 isScrollControlled: true,
                                 backgroundColor: Colors.transparent,
@@ -460,8 +486,12 @@ class _TransportFormWidgetState extends State<TransportFormWidget> {
                   children: [
                     InkWell(
                       onTap: () async {
+                        logFirebaseEvent('Container-ON_TAP');
+                        logFirebaseEvent('Container-Navigate-Back');
                         Navigator.pop(context);
+                        logFirebaseEvent('Container-Update-Local-State');
                         setState(() => FFAppState().actionCO2 = 0);
+                        logFirebaseEvent('Container-Bottom-Sheet');
                         await showModalBottomSheet(
                           isScrollControlled: true,
                           backgroundColor: Colors.transparent,
@@ -517,8 +547,12 @@ class _TransportFormWidgetState extends State<TransportFormWidget> {
                     ),
                     InkWell(
                       onTap: () async {
+                        logFirebaseEvent('Container-ON_TAP');
+                        logFirebaseEvent('Container-Navigate-Back');
                         Navigator.pop(context);
+                        logFirebaseEvent('Container-Update-Local-State');
                         setState(() => FFAppState().actionCO2 = 0);
+                        logFirebaseEvent('Container-Bottom-Sheet');
                         await showModalBottomSheet(
                           isScrollControlled: true,
                           backgroundColor: Colors.transparent,

@@ -20,6 +20,12 @@ class _SplashWidgetState extends State<SplashWidget> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
+  void initState() {
+    super.initState();
+    logFirebaseEvent('screen_view', parameters: {'screen_name': 'Splash'});
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       key: scaffoldKey,
@@ -102,7 +108,7 @@ class _SplashWidgetState extends State<SplashWidget> {
                                                 color:
                                                     FlutterFlowTheme.of(context)
                                                         .tertiaryColor,
-                                                size: 250,
+                                                size: 150,
                                               ),
                                             ],
                                           ),
@@ -115,20 +121,23 @@ class _SplashWidgetState extends State<SplashWidget> {
                                             mainAxisSize: MainAxisSize.max,
                                             children: [
                                               Expanded(
-                                                child: Text(
-                                                  'BIENVENUE',
-                                                  textAlign: TextAlign.center,
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .title3
-                                                      .override(
-                                                        fontFamily:
-                                                            'Montserrat',
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .tertiaryColor,
-                                                      ),
+                                                child: Padding(
+                                                  padding: EdgeInsetsDirectional
+                                                      .fromSTEB(0, 30, 0, 0),
+                                                  child: Text(
+                                                    'BIENVENUE',
+                                                    textAlign: TextAlign.center,
+                                                    style: FlutterFlowTheme.of(
+                                                            context)
+                                                        .title3
+                                                        .override(
+                                                          fontFamily:
+                                                              'Montserrat',
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .tertiaryColor,
+                                                        ),
+                                                  ),
                                                 ),
                                               ),
                                             ],
@@ -174,6 +183,10 @@ class _SplashWidgetState extends State<SplashWidget> {
                                                   .fromSTEB(40, 0, 40, 80),
                                               child: InkWell(
                                                 onTap: () async {
+                                                  logFirebaseEvent(
+                                                      'iconButton-ON_TAP');
+                                                  logFirebaseEvent(
+                                                      'iconButton-Page-View');
                                                   await pageViewController
                                                       .nextPage(
                                                     duration: Duration(
@@ -340,6 +353,10 @@ class _SplashWidgetState extends State<SplashWidget> {
                                                   .fromSTEB(40, 0, 40, 80),
                                               child: InkWell(
                                                 onTap: () async {
+                                                  logFirebaseEvent(
+                                                      'iconButton-ON_TAP');
+                                                  logFirebaseEvent(
+                                                      'iconButton-Page-View');
                                                   await pageViewController
                                                       .nextPage(
                                                     duration: Duration(
@@ -506,8 +523,14 @@ class _SplashWidgetState extends State<SplashWidget> {
                                                   .fromSTEB(40, 0, 40, 80),
                                               child: InkWell(
                                                 onTap: () async {
+                                                  logFirebaseEvent(
+                                                      'iconButton-ON_TAP');
+                                                  logFirebaseEvent(
+                                                      'iconButton-Update-Local-State');
                                                   setState(() => FFAppState()
                                                       .showSplash = false);
+                                                  logFirebaseEvent(
+                                                      'iconButton-Navigate-To');
                                                   await Navigator.push(
                                                     context,
                                                     MaterialPageRoute(

@@ -32,6 +32,12 @@ class _HomeWidgetState extends State<HomeWidget> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
+  void initState() {
+    super.initState();
+    logFirebaseEvent('screen_view', parameters: {'screen_name': 'Home'});
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       key: scaffoldKey,
@@ -99,10 +105,15 @@ class _HomeWidgetState extends State<HomeWidget> {
                         children: [
                           InkWell(
                             onTap: () async {
+                              logFirebaseEvent('Container-ON_TAP');
+                              logFirebaseEvent('Container-Navigate-To');
                               await Navigator.push(
                                 context,
-                                MaterialPageRoute(
-                                  builder: (context) => DrawerWidget(),
+                                PageTransition(
+                                  type: PageTransitionType.leftToRight,
+                                  duration: Duration(milliseconds: 300),
+                                  reverseDuration: Duration(milliseconds: 300),
+                                  child: DrawerWidget(),
                                 ),
                               );
                             },
@@ -129,6 +140,8 @@ class _HomeWidgetState extends State<HomeWidget> {
                       ),
                       InkWell(
                         onTap: () async {
+                          logFirebaseEvent('Container-ON_TAP');
+                          logFirebaseEvent('Container-Navigate-To');
                           await Navigator.push(
                             context,
                             MaterialPageRoute(
@@ -218,6 +231,8 @@ class _HomeWidgetState extends State<HomeWidget> {
                           children: [
                             InkWell(
                               onTap: () async {
+                                logFirebaseEvent('Container-ON_TAP');
+                                logFirebaseEvent('Container-Navigate-To');
                                 await Navigator.push(
                                   context,
                                   MaterialPageRoute(
@@ -267,6 +282,8 @@ class _HomeWidgetState extends State<HomeWidget> {
                             ),
                             InkWell(
                               onTap: () async {
+                                logFirebaseEvent('Container-ON_TAP');
+                                logFirebaseEvent('Container-Navigate-To');
                                 await Navigator.push(
                                   context,
                                   MaterialPageRoute(
@@ -751,9 +768,9 @@ class _HomeWidgetState extends State<HomeWidget> {
                                 child: SizedBox(
                                   width: 50,
                                   height: 50,
-                                  child: SpinKitRipple(
+                                  child: SpinKitRing(
                                     color: FlutterFlowTheme.of(context)
-                                        .tertiaryColor,
+                                        .secondaryColor,
                                     size: 50,
                                   ),
                                 ),
@@ -778,6 +795,9 @@ class _HomeWidgetState extends State<HomeWidget> {
                                           5, 0, 0, 5),
                                       child: InkWell(
                                         onTap: () async {
+                                          logFirebaseEvent('TransBtn-ON_TAP');
+                                          logFirebaseEvent(
+                                              'TransBtn-Bottom-Sheet');
                                           await showModalBottomSheet(
                                             isScrollControlled: true,
                                             backgroundColor: Colors.transparent,
@@ -796,6 +816,9 @@ class _HomeWidgetState extends State<HomeWidget> {
                                           );
                                           if ((currentUserDocument?.cache) !=
                                               (getCurrentTimestamp)) {
+                                            logFirebaseEvent(
+                                                'TransBtn-Backend-Call');
+
                                             final actionCacheCreateData =
                                                 createActionCacheRecordData(
                                               user: currentUserReference,
@@ -805,6 +828,8 @@ class _HomeWidgetState extends State<HomeWidget> {
                                             await ActionCacheRecord.collection
                                                 .doc()
                                                 .set(actionCacheCreateData);
+                                            logFirebaseEvent(
+                                                'TransBtn-Backend-Call');
 
                                             final usersUpdateData =
                                                 createUsersRecordData(
@@ -871,6 +896,9 @@ class _HomeWidgetState extends State<HomeWidget> {
                                           5, 0, 0, 5),
                                       child: InkWell(
                                         onTap: () async {
+                                          logFirebaseEvent('Repasbtn-ON_TAP');
+                                          logFirebaseEvent(
+                                              'Repasbtn-Bottom-Sheet');
                                           await showModalBottomSheet(
                                             isScrollControlled: true,
                                             backgroundColor: Colors.transparent,
@@ -889,6 +917,9 @@ class _HomeWidgetState extends State<HomeWidget> {
                                           );
                                           if ((currentUserDocument?.cache) !=
                                               (getCurrentTimestamp)) {
+                                            logFirebaseEvent(
+                                                'Repasbtn-Backend-Call');
+
                                             final actionCacheCreateData =
                                                 createActionCacheRecordData(
                                               user: currentUserReference,
@@ -898,6 +929,8 @@ class _HomeWidgetState extends State<HomeWidget> {
                                             await ActionCacheRecord.collection
                                                 .doc()
                                                 .set(actionCacheCreateData);
+                                            logFirebaseEvent(
+                                                'Repasbtn-Backend-Call');
 
                                             final usersUpdateData =
                                                 createUsersRecordData(
@@ -964,6 +997,10 @@ class _HomeWidgetState extends State<HomeWidget> {
                                           5, 0, 0, 5),
                                       child: InkWell(
                                         onTap: () async {
+                                          logFirebaseEvent(
+                                              'EnergiesBtn-ON_TAP');
+                                          logFirebaseEvent(
+                                              'EnergiesBtn-Bottom-Sheet');
                                           await showModalBottomSheet(
                                             isScrollControlled: true,
                                             backgroundColor: Colors.transparent,
@@ -982,6 +1019,9 @@ class _HomeWidgetState extends State<HomeWidget> {
                                           );
                                           if ((currentUserDocument?.cache) !=
                                               (getCurrentTimestamp)) {
+                                            logFirebaseEvent(
+                                                'EnergiesBtn-Backend-Call');
+
                                             final actionCacheCreateData =
                                                 createActionCacheRecordData(
                                               user: currentUserReference,
@@ -991,6 +1031,8 @@ class _HomeWidgetState extends State<HomeWidget> {
                                             await ActionCacheRecord.collection
                                                 .doc()
                                                 .set(actionCacheCreateData);
+                                            logFirebaseEvent(
+                                                'EnergiesBtn-Backend-Call');
 
                                             final usersUpdateData =
                                                 createUsersRecordData(
@@ -1107,9 +1149,9 @@ class _HomeWidgetState extends State<HomeWidget> {
                                       child: SizedBox(
                                         width: 50,
                                         height: 50,
-                                        child: SpinKitRipple(
+                                        child: SpinKitRing(
                                           color: FlutterFlowTheme.of(context)
-                                              .tertiaryColor,
+                                              .secondaryColor,
                                           size: 50,
                                         ),
                                       ),
@@ -1173,6 +1215,10 @@ class _HomeWidgetState extends State<HomeWidget> {
                                                                   0, 0, 7, 0),
                                                       child: InkWell(
                                                         onTap: () async {
+                                                          logFirebaseEvent(
+                                                              'Icon-ON_TAP');
+                                                          logFirebaseEvent(
+                                                              'Icon-Page-View');
                                                           await pageView2Controller
                                                               .previousPage(
                                                             duration: Duration(
@@ -1271,6 +1317,10 @@ class _HomeWidgetState extends State<HomeWidget> {
                                                                   7, 0, 0, 0),
                                                       child: InkWell(
                                                         onTap: () async {
+                                                          logFirebaseEvent(
+                                                              'Icon-ON_TAP');
+                                                          logFirebaseEvent(
+                                                              'Icon-Page-View');
                                                           await pageView2Controller
                                                               .nextPage(
                                                             duration: Duration(
@@ -1331,10 +1381,10 @@ class _HomeWidgetState extends State<HomeWidget> {
                                                                   width: 50,
                                                                   height: 50,
                                                                   child:
-                                                                      SpinKitRipple(
+                                                                      SpinKitRing(
                                                                     color: FlutterFlowTheme.of(
                                                                             context)
-                                                                        .tertiaryColor,
+                                                                        .secondaryColor,
                                                                     size: 50,
                                                                   ),
                                                                 ),
@@ -1362,6 +1412,10 @@ class _HomeWidgetState extends State<HomeWidget> {
                                                                       InkWell(
                                                                         onTap:
                                                                             () async {
+                                                                          logFirebaseEvent(
+                                                                              'trainImage-ON_TAP');
+                                                                          logFirebaseEvent(
+                                                                              'trainImage-Bottom-Sheet');
                                                                           await showModalBottomSheet(
                                                                             isScrollControlled:
                                                                                 true,
