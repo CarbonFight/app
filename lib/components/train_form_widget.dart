@@ -13,14 +13,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class TrainFormWidget extends StatefulWidget {
-  const TrainFormWidget({
-    Key key,
-    this.currentAction,
-    this.cache,
-  }) : super(key: key);
-
-  final TransportActionsRecord currentAction;
-  final ActionCacheRecord cache;
+  const TrainFormWidget({Key key}) : super(key: key);
 
   @override
   _TrainFormWidgetState createState() => _TrainFormWidgetState();
@@ -33,8 +26,7 @@ class _TrainFormWidgetState extends State<TrainFormWidget> {
   @override
   void initState() {
     super.initState();
-    textController =
-        TextEditingController(text: widget.currentAction.distance.toString());
+    textController = TextEditingController();
   }
 
   @override
@@ -216,8 +208,6 @@ class _TrainFormWidgetState extends State<TrainFormWidget> {
                         children: [
                           Expanded(
                             child: FlutterFlowDropDown(
-                              initialOption: powertypeValue ??=
-                                  widget.currentAction.powertype,
                               options: [
                                 'TER',
                                 'TGV',
