@@ -283,8 +283,12 @@ class _StatistiquesWidgetState extends State<StatistiquesWidget> {
                                             ),
                                             AuthUserStreamWidget(
                                               child: Text(
-                                                functions.printLevel(
-                                                    currentUserDocument?.level),
+                                                valueOrDefault<String>(
+                                                  functions.printLevel(
+                                                      currentUserDocument
+                                                          ?.level),
+                                                  'CarbonFighter',
+                                                ),
                                                 style: FlutterFlowTheme.of(
                                                         context)
                                                     .bodyText1

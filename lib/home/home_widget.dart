@@ -17,7 +17,6 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:percent_indicator/percent_indicator.dart';
-import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class HomeWidget extends StatefulWidget {
   const HomeWidget({Key key}) : super(key: key);
@@ -28,7 +27,6 @@ class HomeWidget extends StatefulWidget {
 
 class _HomeWidgetState extends State<HomeWidget> {
   PageController pageView2Controller;
-  PageController pageViewController;
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -346,407 +344,363 @@ class _HomeWidgetState extends State<HomeWidget> {
                   decoration: BoxDecoration(),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Expanded(
-                        child: Container(
-                          width: double.infinity,
-                          height: 350,
-                          child: Stack(
-                            children: [
-                              PageView(
-                                controller: pageViewController ??=
-                                    PageController(initialPage: 0),
-                                scrollDirection: Axis.horizontal,
-                                children: [
-                                  Container(
-                                    width: 220,
-                                    height: 220,
-                                    decoration: BoxDecoration(
-                                      color: Color(0x23FFFFFF),
-                                      boxShadow: [
-                                        BoxShadow(
-                                          blurRadius: 35,
-                                          color: Color(0x0E000000),
-                                          offset: Offset(0, 10),
-                                        )
-                                      ],
-                                      shape: BoxShape.circle,
-                                    ),
-                                    child: Stack(
-                                      alignment: AlignmentDirectional(0, 0),
-                                      children: [
-                                        AuthUserStreamWidget(
-                                          child: CircularPercentIndicator(
-                                              percent:
-                                                  functions.percentProgressBar(
-                                                      currentUserDocument
-                                                          ?.dayScore,
-                                                      'day',
-                                                      currentUserDocument
-                                                          ?.co2target),
-                                              radius: 100,
-                                              lineWidth: 18,
-                                              animation: true,
-                                              progressColor:
-                                                  FlutterFlowTheme.of(context)
-                                                      .orange,
-                                              backgroundColor:
-                                                  FlutterFlowTheme.of(context)
-                                                      .tertiaryColor,
-                                              center: Text(
-                                                functions.printScore(
-                                                    currentUserDocument
-                                                        ?.dayScore),
-                                                textAlign: TextAlign.center,
-                                                style: FlutterFlowTheme.of(
-                                                        context)
-                                                    .title2
-                                                    .override(
-                                                      fontFamily: 'Montserrat',
-                                                      color:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .tertiaryColor,
-                                                    ),
-                                              ),
-                                              startAngle: 0),
-                                        ),
-                                        Align(
-                                          alignment:
-                                              AlignmentDirectional(0, -0.4),
-                                          child: Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    45, 0, 45, 0),
-                                            child: Row(
-                                              mainAxisSize: MainAxisSize.max,
-                                              children: [
-                                                Expanded(
-                                                  child: Text(
-                                                    'Aujourd\'hui',
-                                                    textAlign: TextAlign.center,
-                                                    style: FlutterFlowTheme.of(
-                                                            context)
-                                                        .bodyText1
-                                                        .override(
-                                                          fontFamily:
-                                                              'Montserrat',
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .gronyLighter,
-                                                          fontSize: 11,
-                                                        ),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                        Align(
-                                          alignment:
-                                              AlignmentDirectional(0, 0.4),
-                                          child: Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    45, 0, 45, 0),
-                                            child: Row(
-                                              mainAxisSize: MainAxisSize.max,
-                                              children: [
-                                                Expanded(
-                                                  child: Text(
-                                                    'co2e',
-                                                    textAlign: TextAlign.center,
-                                                    style: FlutterFlowTheme.of(
-                                                            context)
-                                                        .bodyText1
-                                                        .override(
-                                                          fontFamily:
-                                                              'Montserrat',
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .gronyLighter,
-                                                        ),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
+                      SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Align(
+                              alignment: AlignmentDirectional(0, 0),
+                              child: Padding(
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                    80, 0, 50, 0),
+                                child: Container(
+                                  width: 220,
+                                  height: 220,
+                                  decoration: BoxDecoration(
+                                    color: Color(0x23FFFFFF),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        blurRadius: 35,
+                                        color: Color(0x0E000000),
+                                        offset: Offset(0, 10),
+                                      )
+                                    ],
+                                    shape: BoxShape.circle,
                                   ),
-                                  Container(
-                                    width: 220,
-                                    height: 220,
-                                    decoration: BoxDecoration(
-                                      color: Color(0x23FFFFFF),
-                                      boxShadow: [
-                                        BoxShadow(
-                                          blurRadius: 35,
-                                          color: Color(0x0E000000),
-                                          offset: Offset(0, 10),
-                                        )
-                                      ],
-                                      shape: BoxShape.circle,
-                                    ),
-                                    child: Stack(
-                                      alignment: AlignmentDirectional(0, 0),
-                                      children: [
-                                        AuthUserStreamWidget(
-                                          child: CircularPercentIndicator(
-                                              percent:
-                                                  functions.percentProgressBar(
-                                                      currentUserDocument
-                                                          ?.weekScore,
-                                                      'week',
-                                                      currentUserDocument
-                                                          ?.co2target),
-                                              radius: 100,
-                                              lineWidth: 18,
-                                              animation: true,
-                                              progressColor:
-                                                  FlutterFlowTheme.of(context)
-                                                      .orange,
-                                              backgroundColor:
-                                                  FlutterFlowTheme.of(context)
-                                                      .tertiaryColor,
-                                              center: Text(
-                                                functions.printScore(
+                                  child: Stack(
+                                    alignment: AlignmentDirectional(0, 0),
+                                    children: [
+                                      AuthUserStreamWidget(
+                                        child: CircularPercentIndicator(
+                                            percent:
+                                                functions.percentProgressBar(
                                                     currentUserDocument
-                                                        ?.weekScore),
-                                                textAlign: TextAlign.start,
-                                                style: FlutterFlowTheme.of(
-                                                        context)
-                                                    .title2
-                                                    .override(
-                                                      fontFamily: 'Montserrat',
-                                                      color:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .tertiaryColor,
-                                                    ),
-                                              ),
-                                              startAngle: 0),
-                                        ),
-                                        Align(
-                                          alignment:
-                                              AlignmentDirectional(0, -0.4),
-                                          child: Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    45, 0, 45, 0),
-                                            child: Row(
-                                              mainAxisSize: MainAxisSize.max,
-                                              children: [
-                                                Expanded(
-                                                  child: Text(
-                                                    'Cette semaine',
-                                                    textAlign: TextAlign.center,
-                                                    style: FlutterFlowTheme.of(
-                                                            context)
-                                                        .bodyText1
-                                                        .override(
-                                                          fontFamily:
-                                                              'Montserrat',
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .gronyLighter,
-                                                          fontSize: 11,
-                                                        ),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                        Align(
-                                          alignment:
-                                              AlignmentDirectional(0, 0.4),
-                                          child: Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    45, 0, 45, 0),
-                                            child: Row(
-                                              mainAxisSize: MainAxisSize.max,
-                                              children: [
-                                                Expanded(
-                                                  child: Text(
-                                                    'co2e',
-                                                    textAlign: TextAlign.center,
-                                                    style: FlutterFlowTheme.of(
-                                                            context)
-                                                        .bodyText1
-                                                        .override(
-                                                          fontFamily:
-                                                              'Montserrat',
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .gronyLighter,
-                                                        ),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  Container(
-                                    width: 220,
-                                    height: 220,
-                                    decoration: BoxDecoration(
-                                      color: Color(0x23FFFFFF),
-                                      boxShadow: [
-                                        BoxShadow(
-                                          blurRadius: 35,
-                                          color: Color(0x0E000000),
-                                          offset: Offset(0, 10),
-                                        )
-                                      ],
-                                      shape: BoxShape.circle,
-                                    ),
-                                    child: Stack(
-                                      alignment: AlignmentDirectional(0, 0),
-                                      children: [
-                                        AuthUserStreamWidget(
-                                          child: CircularPercentIndicator(
-                                              percent:
-                                                  functions.percentProgressBar(
-                                                      currentUserDocument
-                                                          ?.monthScore,
-                                                      'month',
-                                                      currentUserDocument
-                                                          ?.co2target),
-                                              radius: 100,
-                                              lineWidth: 18,
-                                              animation: true,
-                                              progressColor:
-                                                  FlutterFlowTheme.of(context)
-                                                      .orange,
-                                              backgroundColor:
-                                                  FlutterFlowTheme.of(context)
-                                                      .tertiaryColor,
-                                              center: Text(
-                                                functions.printScore(
+                                                        ?.dayScore,
+                                                    'day',
                                                     currentUserDocument
-                                                        ?.monthScore),
-                                                textAlign: TextAlign.start,
-                                                style: FlutterFlowTheme.of(
-                                                        context)
-                                                    .title2
-                                                    .override(
-                                                      fontFamily: 'Montserrat',
-                                                      color:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .tertiaryColor,
-                                                    ),
+                                                        ?.co2target),
+                                            radius: 100,
+                                            lineWidth: 18,
+                                            animation: true,
+                                            progressColor:
+                                                FlutterFlowTheme.of(context)
+                                                    .orange,
+                                            backgroundColor:
+                                                FlutterFlowTheme.of(context)
+                                                    .tertiaryColor,
+                                            center: Text(
+                                              functions.printScore(
+                                                  currentUserDocument
+                                                      ?.dayScore),
+                                              textAlign: TextAlign.center,
+                                              style: FlutterFlowTheme.of(
+                                                      context)
+                                                  .title2
+                                                  .override(
+                                                    fontFamily: 'Montserrat',
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
+                                                        .tertiaryColor,
+                                                  ),
+                                            ),
+                                            startAngle: 0),
+                                      ),
+                                      Align(
+                                        alignment:
+                                            AlignmentDirectional(0, -0.4),
+                                        child: Padding(
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  45, 0, 45, 0),
+                                          child: Row(
+                                            mainAxisSize: MainAxisSize.max,
+                                            children: [
+                                              Expanded(
+                                                child: Text(
+                                                  'Aujourd\'hui',
+                                                  textAlign: TextAlign.center,
+                                                  style: FlutterFlowTheme.of(
+                                                          context)
+                                                      .bodyText1
+                                                      .override(
+                                                        fontFamily:
+                                                            'Montserrat',
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .gronyLighter,
+                                                        fontSize: 11,
+                                                      ),
+                                                ),
                                               ),
-                                              startAngle: 0),
-                                        ),
-                                        Align(
-                                          alignment:
-                                              AlignmentDirectional(0, -0.4),
-                                          child: Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    120, 0, 120, 0),
-                                            child: Row(
-                                              mainAxisSize: MainAxisSize.max,
-                                              children: [
-                                                Expanded(
-                                                  child: Text(
-                                                    'Ce mois',
-                                                    textAlign: TextAlign.center,
-                                                    style: FlutterFlowTheme.of(
-                                                            context)
-                                                        .bodyText1
-                                                        .override(
-                                                          fontFamily:
-                                                              'Montserrat',
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .gronyLighter,
-                                                          fontSize: 11,
-                                                        ),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
+                                            ],
                                           ),
                                         ),
-                                        Align(
-                                          alignment:
-                                              AlignmentDirectional(0, 0.4),
-                                          child: Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    45, 0, 45, 0),
-                                            child: Row(
-                                              mainAxisSize: MainAxisSize.max,
-                                              children: [
-                                                Expanded(
-                                                  child: Text(
-                                                    'co2e',
-                                                    textAlign: TextAlign.center,
-                                                    style: FlutterFlowTheme.of(
-                                                            context)
-                                                        .bodyText1
-                                                        .override(
-                                                          fontFamily:
-                                                              'Montserrat',
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .gronyLighter,
-                                                        ),
-                                                  ),
+                                      ),
+                                      Align(
+                                        alignment: AlignmentDirectional(0, 0.4),
+                                        child: Padding(
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  45, 0, 45, 0),
+                                          child: Row(
+                                            mainAxisSize: MainAxisSize.max,
+                                            children: [
+                                              Expanded(
+                                                child: Text(
+                                                  'co2e',
+                                                  textAlign: TextAlign.center,
+                                                  style: FlutterFlowTheme.of(
+                                                          context)
+                                                      .bodyText1
+                                                      .override(
+                                                        fontFamily:
+                                                            'Montserrat',
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .gronyLighter,
+                                                      ),
                                                 ),
-                                              ],
-                                            ),
+                                              ),
+                                            ],
                                           ),
                                         ),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              Align(
-                                alignment: AlignmentDirectional(0, 1),
-                                child: Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      0, 0, 0, 10),
-                                  child: SmoothPageIndicator(
-                                    controller: pageViewController ??=
-                                        PageController(initialPage: 0),
-                                    count: 3,
-                                    axisDirection: Axis.horizontal,
-                                    onDotClicked: (i) {
-                                      pageViewController.animateToPage(
-                                        i,
-                                        duration: Duration(milliseconds: 500),
-                                        curve: Curves.ease,
-                                      );
-                                    },
-                                    effect: ExpandingDotsEffect(
-                                      expansionFactor: 4,
-                                      spacing: 8,
-                                      radius: 16,
-                                      dotWidth: 8,
-                                      dotHeight: 8,
-                                      dotColor: FlutterFlowTheme.of(context)
-                                          .gronyLighter,
-                                      activeDotColor:
-                                          FlutterFlowTheme.of(context)
-                                              .tertiaryColor,
-                                      paintStyle: PaintingStyle.fill,
-                                    ),
+                                      ),
+                                    ],
                                   ),
                                 ),
                               ),
-                            ],
-                          ),
+                            ),
+                            Padding(
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(0, 0, 50, 0),
+                              child: Container(
+                                width: 220,
+                                height: 220,
+                                decoration: BoxDecoration(
+                                  color: Color(0x23FFFFFF),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      blurRadius: 35,
+                                      color: Color(0x0E000000),
+                                      offset: Offset(0, 10),
+                                    )
+                                  ],
+                                  shape: BoxShape.circle,
+                                ),
+                                child: Stack(
+                                  alignment: AlignmentDirectional(0, 0),
+                                  children: [
+                                    AuthUserStreamWidget(
+                                      child: CircularPercentIndicator(
+                                          percent: functions.percentProgressBar(
+                                              currentUserDocument?.weekScore,
+                                              'week',
+                                              currentUserDocument?.co2target),
+                                          radius: 100,
+                                          lineWidth: 18,
+                                          animation: true,
+                                          progressColor:
+                                              FlutterFlowTheme.of(context)
+                                                  .orange,
+                                          backgroundColor:
+                                              FlutterFlowTheme.of(context)
+                                                  .tertiaryColor,
+                                          center: Text(
+                                            functions.printScore(
+                                                currentUserDocument?.weekScore),
+                                            textAlign: TextAlign.start,
+                                            style: FlutterFlowTheme.of(context)
+                                                .title2
+                                                .override(
+                                                  fontFamily: 'Montserrat',
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .tertiaryColor,
+                                                ),
+                                          ),
+                                          startAngle: 0),
+                                    ),
+                                    Align(
+                                      alignment: AlignmentDirectional(0, -0.4),
+                                      child: Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            45, 0, 45, 0),
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.max,
+                                          children: [
+                                            Expanded(
+                                              child: Text(
+                                                'Cette semaine',
+                                                textAlign: TextAlign.center,
+                                                style: FlutterFlowTheme.of(
+                                                        context)
+                                                    .bodyText1
+                                                    .override(
+                                                      fontFamily: 'Montserrat',
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .gronyLighter,
+                                                      fontSize: 11,
+                                                    ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                    Align(
+                                      alignment: AlignmentDirectional(0, 0.4),
+                                      child: Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            45, 0, 45, 0),
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.max,
+                                          children: [
+                                            Expanded(
+                                              child: Text(
+                                                'co2e',
+                                                textAlign: TextAlign.center,
+                                                style: FlutterFlowTheme.of(
+                                                        context)
+                                                    .bodyText1
+                                                    .override(
+                                                      fontFamily: 'Montserrat',
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .gronyLighter,
+                                                    ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(0, 0, 75, 0),
+                              child: Container(
+                                width: 220,
+                                height: 220,
+                                decoration: BoxDecoration(
+                                  color: Color(0x23FFFFFF),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      blurRadius: 35,
+                                      color: Color(0x0E000000),
+                                      offset: Offset(0, 10),
+                                    )
+                                  ],
+                                  shape: BoxShape.circle,
+                                ),
+                                child: Stack(
+                                  alignment: AlignmentDirectional(0, 0),
+                                  children: [
+                                    AuthUserStreamWidget(
+                                      child: CircularPercentIndicator(
+                                          percent: functions.percentProgressBar(
+                                              currentUserDocument?.monthScore,
+                                              'month',
+                                              currentUserDocument?.co2target),
+                                          radius: 100,
+                                          lineWidth: 18,
+                                          animation: true,
+                                          progressColor:
+                                              FlutterFlowTheme.of(context)
+                                                  .orange,
+                                          backgroundColor:
+                                              FlutterFlowTheme.of(context)
+                                                  .tertiaryColor,
+                                          center: Text(
+                                            functions.printScore(
+                                                currentUserDocument
+                                                    ?.monthScore),
+                                            textAlign: TextAlign.start,
+                                            style: FlutterFlowTheme.of(context)
+                                                .title2
+                                                .override(
+                                                  fontFamily: 'Montserrat',
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .tertiaryColor,
+                                                ),
+                                          ),
+                                          startAngle: 0),
+                                    ),
+                                    Align(
+                                      alignment: AlignmentDirectional(0, -0.4),
+                                      child: Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            120, 0, 120, 0),
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.max,
+                                          children: [
+                                            Expanded(
+                                              child: Text(
+                                                'Ce mois',
+                                                textAlign: TextAlign.center,
+                                                style: FlutterFlowTheme.of(
+                                                        context)
+                                                    .bodyText1
+                                                    .override(
+                                                      fontFamily: 'Montserrat',
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .gronyLighter,
+                                                      fontSize: 11,
+                                                    ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                    Align(
+                                      alignment: AlignmentDirectional(0, 0.4),
+                                      child: Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            45, 0, 45, 0),
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.max,
+                                          children: [
+                                            Expanded(
+                                              child: Text(
+                                                'co2e',
+                                                textAlign: TextAlign.center,
+                                                style: FlutterFlowTheme.of(
+                                                        context)
+                                                    .bodyText1
+                                                    .override(
+                                                      fontFamily: 'Montserrat',
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .gronyLighter,
+                                                    ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                       Padding(
@@ -796,24 +750,6 @@ class _HomeWidgetState extends State<HomeWidget> {
                                       child: InkWell(
                                         onTap: () async {
                                           logFirebaseEvent('TransBtn-ON_TAP');
-                                          logFirebaseEvent(
-                                              'TransBtn-Bottom-Sheet');
-                                          await showModalBottomSheet(
-                                            isScrollControlled: true,
-                                            backgroundColor: Colors.transparent,
-                                            barrierColor: Color(0xBF000000),
-                                            context: context,
-                                            builder: (context) {
-                                              return Padding(
-                                                padding: MediaQuery.of(context)
-                                                    .viewInsets,
-                                                child: Container(
-                                                  height: 600,
-                                                  child: TransportFormWidget(),
-                                                ),
-                                              );
-                                            },
-                                          );
                                           if ((currentUserDocument?.cache) !=
                                               (getCurrentTimestamp)) {
                                             logFirebaseEvent(
@@ -838,6 +774,24 @@ class _HomeWidgetState extends State<HomeWidget> {
                                             await currentUserReference
                                                 .update(usersUpdateData);
                                           }
+                                          logFirebaseEvent(
+                                              'TransBtn-Bottom-Sheet');
+                                          await showModalBottomSheet(
+                                            isScrollControlled: true,
+                                            backgroundColor: Colors.transparent,
+                                            barrierColor: Color(0xBF000000),
+                                            context: context,
+                                            builder: (context) {
+                                              return Padding(
+                                                padding: MediaQuery.of(context)
+                                                    .viewInsets,
+                                                child: Container(
+                                                  height: 600,
+                                                  child: TransportFormWidget(),
+                                                ),
+                                              );
+                                            },
+                                          );
                                         },
                                         child: Container(
                                           width: 70,
@@ -897,24 +851,6 @@ class _HomeWidgetState extends State<HomeWidget> {
                                       child: InkWell(
                                         onTap: () async {
                                           logFirebaseEvent('Repasbtn-ON_TAP');
-                                          logFirebaseEvent(
-                                              'Repasbtn-Bottom-Sheet');
-                                          await showModalBottomSheet(
-                                            isScrollControlled: true,
-                                            backgroundColor: Colors.transparent,
-                                            barrierColor: Color(0xBF000000),
-                                            context: context,
-                                            builder: (context) {
-                                              return Padding(
-                                                padding: MediaQuery.of(context)
-                                                    .viewInsets,
-                                                child: Container(
-                                                  height: 600,
-                                                  child: FoodFormWidget(),
-                                                ),
-                                              );
-                                            },
-                                          );
                                           if ((currentUserDocument?.cache) !=
                                               (getCurrentTimestamp)) {
                                             logFirebaseEvent(
@@ -939,6 +875,24 @@ class _HomeWidgetState extends State<HomeWidget> {
                                             await currentUserReference
                                                 .update(usersUpdateData);
                                           }
+                                          logFirebaseEvent(
+                                              'Repasbtn-Bottom-Sheet');
+                                          await showModalBottomSheet(
+                                            isScrollControlled: true,
+                                            backgroundColor: Colors.transparent,
+                                            barrierColor: Color(0xBF000000),
+                                            context: context,
+                                            builder: (context) {
+                                              return Padding(
+                                                padding: MediaQuery.of(context)
+                                                    .viewInsets,
+                                                child: Container(
+                                                  height: 600,
+                                                  child: FoodFormWidget(),
+                                                ),
+                                              );
+                                            },
+                                          );
                                         },
                                         child: Container(
                                           width: 70,
@@ -999,24 +953,6 @@ class _HomeWidgetState extends State<HomeWidget> {
                                         onTap: () async {
                                           logFirebaseEvent(
                                               'EnergiesBtn-ON_TAP');
-                                          logFirebaseEvent(
-                                              'EnergiesBtn-Bottom-Sheet');
-                                          await showModalBottomSheet(
-                                            isScrollControlled: true,
-                                            backgroundColor: Colors.transparent,
-                                            barrierColor: Color(0xBF000000),
-                                            context: context,
-                                            builder: (context) {
-                                              return Padding(
-                                                padding: MediaQuery.of(context)
-                                                    .viewInsets,
-                                                child: Container(
-                                                  height: 380,
-                                                  child: EnergyFormWidget(),
-                                                ),
-                                              );
-                                            },
-                                          );
                                           if ((currentUserDocument?.cache) !=
                                               (getCurrentTimestamp)) {
                                             logFirebaseEvent(
@@ -1041,6 +977,24 @@ class _HomeWidgetState extends State<HomeWidget> {
                                             await currentUserReference
                                                 .update(usersUpdateData);
                                           }
+                                          logFirebaseEvent(
+                                              'EnergiesBtn-Bottom-Sheet');
+                                          await showModalBottomSheet(
+                                            isScrollControlled: true,
+                                            backgroundColor: Colors.transparent,
+                                            barrierColor: Color(0xBF000000),
+                                            context: context,
+                                            builder: (context) {
+                                              return Padding(
+                                                padding: MediaQuery.of(context)
+                                                    .viewInsets,
+                                                child: Container(
+                                                  height: 380,
+                                                  child: EnergyFormWidget(),
+                                                ),
+                                              );
+                                            },
+                                          );
                                         },
                                         child: Container(
                                           width: 70,
@@ -1162,14 +1116,21 @@ class _HomeWidgetState extends State<HomeWidget> {
                                       snapshot.data;
                                   if (pageView2ActionCacheRecordList.isEmpty) {
                                     return Center(
-                                      child:
-                                          EmptySpaceTxtForActionCacheWidget(),
+                                      child: Container(
+                                        height:
+                                            MediaQuery.of(context).size.height *
+                                                0.5,
+                                        child:
+                                            EmptySpaceTxtForActionCacheWidget(),
+                                      ),
                                     );
                                   }
                                   return Container(
                                     width: MediaQuery.of(context).size.width,
                                     height: 100,
                                     child: PageView.builder(
+                                      physics:
+                                          const NeverScrollableScrollPhysics(),
                                       controller: pageView2Controller ??=
                                           PageController(
                                               initialPage: min(
@@ -1213,27 +1174,79 @@ class _HomeWidgetState extends State<HomeWidget> {
                                                           EdgeInsetsDirectional
                                                               .fromSTEB(
                                                                   0, 0, 7, 0),
-                                                      child: InkWell(
-                                                        onTap: () async {
-                                                          logFirebaseEvent(
-                                                              'Icon-ON_TAP');
-                                                          logFirebaseEvent(
-                                                              'Icon-Page-View');
-                                                          await pageView2Controller
-                                                              .previousPage(
-                                                            duration: Duration(
-                                                                milliseconds:
-                                                                    300),
-                                                            curve: Curves.ease,
+                                                      child: StreamBuilder<
+                                                          List<
+                                                              ActionCacheRecord>>(
+                                                        stream:
+                                                            queryActionCacheRecord(
+                                                          queryBuilder: (actionCacheRecord) =>
+                                                              actionCacheRecord
+                                                                  .where('user',
+                                                                      isEqualTo:
+                                                                          currentUserReference)
+                                                                  .where('date',
+                                                                      isLessThan:
+                                                                          getCurrentTimestamp),
+                                                          singleRecord: true,
+                                                        ),
+                                                        builder: (context,
+                                                            snapshot) {
+                                                          // Customize what your widget looks like when it's loading.
+                                                          if (!snapshot
+                                                              .hasData) {
+                                                            return Center(
+                                                              child: SizedBox(
+                                                                width: 50,
+                                                                height: 50,
+                                                                child:
+                                                                    SpinKitRing(
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .secondaryColor,
+                                                                  size: 50,
+                                                                ),
+                                                              ),
+                                                            );
+                                                          }
+                                                          List<ActionCacheRecord>
+                                                              iconActionCacheRecordList =
+                                                              snapshot.data;
+                                                          // Return an empty Container when the document does not exist.
+                                                          if (snapshot
+                                                              .data.isEmpty) {
+                                                            return Container();
+                                                          }
+                                                          final iconActionCacheRecord =
+                                                              iconActionCacheRecordList
+                                                                      .isNotEmpty
+                                                                  ? iconActionCacheRecordList
+                                                                      .first
+                                                                  : null;
+                                                          return InkWell(
+                                                            onTap: () async {
+                                                              logFirebaseEvent(
+                                                                  'Icon-ON_TAP');
+                                                              logFirebaseEvent(
+                                                                  'Icon-Page-View');
+                                                              await pageView2Controller
+                                                                  .previousPage(
+                                                                duration: Duration(
+                                                                    milliseconds:
+                                                                        300),
+                                                                curve:
+                                                                    Curves.ease,
+                                                              );
+                                                            },
+                                                            child: Icon(
+                                                              Icons
+                                                                  .arrow_back_ios,
+                                                              color: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .primaryColor,
+                                                              size: 18,
+                                                            ),
                                                           );
                                                         },
-                                                        child: Icon(
-                                                          Icons.arrow_back_ios,
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .primaryColor,
-                                                          size: 18,
-                                                        ),
                                                       ),
                                                     ),
                                                     Expanded(
@@ -1315,28 +1328,79 @@ class _HomeWidgetState extends State<HomeWidget> {
                                                           EdgeInsetsDirectional
                                                               .fromSTEB(
                                                                   7, 0, 0, 0),
-                                                      child: InkWell(
-                                                        onTap: () async {
-                                                          logFirebaseEvent(
-                                                              'Icon-ON_TAP');
-                                                          logFirebaseEvent(
-                                                              'Icon-Page-View');
-                                                          await pageView2Controller
-                                                              .nextPage(
-                                                            duration: Duration(
-                                                                milliseconds:
-                                                                    300),
-                                                            curve: Curves.ease,
+                                                      child: StreamBuilder<
+                                                          List<
+                                                              ActionCacheRecord>>(
+                                                        stream:
+                                                            queryActionCacheRecord(
+                                                          queryBuilder: (actionCacheRecord) =>
+                                                              actionCacheRecord
+                                                                  .where('user',
+                                                                      isEqualTo:
+                                                                          currentUserReference)
+                                                                  .where('date',
+                                                                      isGreaterThan:
+                                                                          getCurrentTimestamp),
+                                                          singleRecord: true,
+                                                        ),
+                                                        builder: (context,
+                                                            snapshot) {
+                                                          // Customize what your widget looks like when it's loading.
+                                                          if (!snapshot
+                                                              .hasData) {
+                                                            return Center(
+                                                              child: SizedBox(
+                                                                width: 50,
+                                                                height: 50,
+                                                                child:
+                                                                    SpinKitRing(
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .secondaryColor,
+                                                                  size: 50,
+                                                                ),
+                                                              ),
+                                                            );
+                                                          }
+                                                          List<ActionCacheRecord>
+                                                              iconActionCacheRecordList =
+                                                              snapshot.data;
+                                                          // Return an empty Container when the document does not exist.
+                                                          if (snapshot
+                                                              .data.isEmpty) {
+                                                            return Container();
+                                                          }
+                                                          final iconActionCacheRecord =
+                                                              iconActionCacheRecordList
+                                                                      .isNotEmpty
+                                                                  ? iconActionCacheRecordList
+                                                                      .first
+                                                                  : null;
+                                                          return InkWell(
+                                                            onTap: () async {
+                                                              logFirebaseEvent(
+                                                                  'Icon-ON_TAP');
+                                                              logFirebaseEvent(
+                                                                  'Icon-Page-View');
+                                                              await pageView2Controller
+                                                                  .nextPage(
+                                                                duration: Duration(
+                                                                    milliseconds:
+                                                                        300),
+                                                                curve:
+                                                                    Curves.ease,
+                                                              );
+                                                            },
+                                                            child: Icon(
+                                                              Icons
+                                                                  .arrow_forward_ios,
+                                                              color: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .primaryColor,
+                                                              size: 18,
+                                                            ),
                                                           );
                                                         },
-                                                        child: Icon(
-                                                          Icons
-                                                              .arrow_forward_ios,
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .primaryColor,
-                                                          size: 18,
-                                                        ),
                                                       ),
                                                     ),
                                                   ],
@@ -1462,14 +1526,113 @@ class _HomeWidgetState extends State<HomeWidget> {
                                                             );
                                                           },
                                                         ),
-                                                        Row(
-                                                          mainAxisSize:
-                                                              MainAxisSize.max,
-                                                          children: [
-                                                            Stack(
-                                                              children: [],
-                                                            ),
-                                                          ],
+                                                        StreamBuilder<
+                                                            List<
+                                                                EnergyActionsRecord>>(
+                                                          stream:
+                                                              queryEnergyActionsRecord(
+                                                            queryBuilder: (energyActionsRecord) => energyActionsRecord
+                                                                .where('userId',
+                                                                    isEqualTo: currentUserUid !=
+                                                                            ''
+                                                                        ? currentUserUid
+                                                                        : null)
+                                                                .where(
+                                                                    'created_time',
+                                                                    isEqualTo:
+                                                                        pageView2ActionCacheRecord
+                                                                            .date),
+                                                          ),
+                                                          builder: (context,
+                                                              snapshot) {
+                                                            // Customize what your widget looks like when it's loading.
+                                                            if (!snapshot
+                                                                .hasData) {
+                                                              return Center(
+                                                                child: SizedBox(
+                                                                  width: 50,
+                                                                  height: 50,
+                                                                  child:
+                                                                      SpinKitRing(
+                                                                    color: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .secondaryColor,
+                                                                    size: 50,
+                                                                  ),
+                                                                ),
+                                                              );
+                                                            }
+                                                            List<EnergyActionsRecord>
+                                                                row2EnergyActionsRecordList =
+                                                                snapshot.data;
+                                                            return Row(
+                                                              mainAxisSize:
+                                                                  MainAxisSize
+                                                                      .max,
+                                                              children: List.generate(
+                                                                  row2EnergyActionsRecordList
+                                                                      .length,
+                                                                  (row2Index) {
+                                                                final row2EnergyActionsRecord =
+                                                                    row2EnergyActionsRecordList[
+                                                                        row2Index];
+                                                                return Stack(
+                                                                  children: [
+                                                                    if ((row2EnergyActionsRecord
+                                                                            .powertype) ==
+                                                                        'gas')
+                                                                      InkWell(
+                                                                        onTap:
+                                                                            () async {
+                                                                          logFirebaseEvent(
+                                                                              'trainImage-ON_TAP');
+                                                                          logFirebaseEvent(
+                                                                              'trainImage-Bottom-Sheet');
+                                                                          await showModalBottomSheet(
+                                                                            isScrollControlled:
+                                                                                true,
+                                                                            backgroundColor:
+                                                                                Colors.transparent,
+                                                                            context:
+                                                                                context,
+                                                                            builder:
+                                                                                (context) {
+                                                                              return Padding(
+                                                                                padding: MediaQuery.of(context).viewInsets,
+                                                                                child: Container(
+                                                                                  height: 450,
+                                                                                  child: TrainFormCopyWidget(),
+                                                                                ),
+                                                                              );
+                                                                            },
+                                                                          );
+                                                                        },
+                                                                        child:
+                                                                            Container(
+                                                                          width:
+                                                                              40,
+                                                                          height:
+                                                                              40,
+                                                                          clipBehavior:
+                                                                              Clip.antiAlias,
+                                                                          decoration:
+                                                                              BoxDecoration(
+                                                                            shape:
+                                                                                BoxShape.circle,
+                                                                          ),
+                                                                          child:
+                                                                              Image.asset(
+                                                                            'assets/images/energy.png',
+                                                                            fit:
+                                                                                BoxFit.fitWidth,
+                                                                          ),
+                                                                        ),
+                                                                      ),
+                                                                  ],
+                                                                );
+                                                              }),
+                                                            );
+                                                          },
                                                         ),
                                                         Row(
                                                           mainAxisSize:
