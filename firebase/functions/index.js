@@ -107,6 +107,7 @@ exports.updateRanks = functions.region('europe-west6').firestore.document('/user
 
 
 async function reCalculate(userId) {
+  
   var day_score = 0;
   var week_score = 0;
   var month_score = 0;
@@ -115,11 +116,41 @@ async function reCalculate(userId) {
   var level = 1;
 
   // Dates used for "day_score", "week_score", "month_score"
-  var dateToday = new Date();
-  var dateTodayStart = dateToday.setHours(0,0,0,0);
-  var dateTodayEnd = dateToday.setHours(23,59,59,0);
-  var date30daysAgo = new Date(new Date().setDate(dateToday.getDate() - 30));
-  var date7daysAgo = new Date(new Date().setDate(dateToday.getDate() - 7));
+  //var dateToday = new Date();
+  //var dateTodayStart = dateToday.setHours(0,0,0,0);
+  //var dateTodayEnd = dateToday.setHours(23,59,59,999);
+  //var date30daysAgo = new Date(new Date().setDate(dateToday.getDate() - 30));
+  //var date7daysAgo = new Date(new Date().setDate(dateToday.getDate() - 7));
+
+//// Stats update
+// Initialize
+var day0 = 0;
+var day1 = 0;
+var day2 = 0;
+var day3 = 0;
+var day4 = 0;
+var day5 = 0;
+var day6 = 0;
+
+var week0 = 0;
+var week1 = 0;
+var week2 = 0;
+var week3 = 0;
+
+// Calculate periods
+var dateDay0 = new Date(); dateDay0.setHours(0,0,0,0);
+var dateDay1 = new Date(new Date().setDate(dateDay0.getDate() - 1)); dateDay1.setHours(0,0,0,0)
+var dateDay2 = new Date(new Date().setDate(dateDay0.getDate() - 2)); dateDay2.setHours(0,0,0,0)
+var dateDay3 = new Date(new Date().setDate(dateDay0.getDate() - 3)); dateDay3.setHours(0,0,0,0)
+var dateDay4 = new Date(new Date().setDate(dateDay0.getDate() - 4)); dateDay4.setHours(0,0,0,0)
+var dateDay5 = new Date(new Date().setDate(dateDay0.getDate() - 5)); dateDay5.setHours(0,0,0,0)
+var dateDay6 = new Date(new Date().setDate(dateDay0.getDate() - 6)); dateDay6.setHours(0,0,0,0)
+
+var dateweek0 = new Date(new Date().setDate(dateDay0.getDate() - dateDay0.getDay() +1)); dateweek0.setHours(0,0,0,0)
+var dateweek1 = new Date(new Date().setDate(dateweek0.getDate() - 7)); dateweek1.setHours(0,0,0,0)
+var dateweek2 = new Date(new Date().setDate(dateweek0.getDate() - 14)); dateweek2.setHours(0,0,0,0)
+var dateweek3 = new Date(new Date().setDate(dateweek0.getDate() - 21)); dateweek3.setHours(0,0,0,0)
+
 
   const tranportActions = await admin.firestore()      
   .collection('transportActions')
@@ -141,63 +172,58 @@ async function reCalculate(userId) {
   tranportActions.forEach(doc => {
     actionDate = new Date(doc.get("created_time").toDate());
 
-    // Day Score
-    if (actionDate >= dateTodayStart && actionDate <= dateTodayEnd)
-    {
-      day_score += doc.get("co2e");
-    }
-    // Week Score
-    if (actionDate >= date7daysAgo && actionDate <= dateTodayEnd)
-    {
-      week_score += doc.get("co2e");
-    }
-    // Month Score
-    if (actionDate >= date30daysAgo && actionDate <= dateTodayEnd)
-    {
-      month_score += doc.get("co2e");
-    }
+    if (actionDate >= dateDay0) { day0 += doc.get("co2e"); }
+    else if (actionDate >= dateDay1 && actionDate < dateDay0) { day1 += doc.get("co2e"); }
+    else if (actionDate >= dateDay2 && actionDate < dateDay1) { day2 += doc.get("co2e"); }
+    else if (actionDate >= dateDay3 && actionDate < dateDay2) { day3 += doc.get("co2e"); }
+    else if (actionDate >= dateDay4 && actionDate < dateDay3) { day4 += doc.get("co2e"); }
+    else if (actionDate >= dateDay5 && actionDate < dateDay4) { day5 += doc.get("co2e"); }
+    else if (actionDate >= dateDay6 && actionDate < dateDay5) { day6 += doc.get("co2e"); }
+
+    if (actionDate >= dateweek0) { week0 += doc.get("co2e"); }
+    else if (actionDate >= dateweek1 && actionDate < dateweek0) { week1 += doc.get("co2e"); }
+    else if (actionDate >= dateweek2 && actionDate < dateweek1) { week2 += doc.get("co2e"); }
+    else if (actionDate >= dateweek3 && actionDate < dateweek2) { week3 += doc.get("co2e"); }
+
     global_score += doc.get("co2e");
     activity += 1;
+
   });
   energyActions.forEach(doc => {
     actionDate = new Date(doc.get("created_time").toDate());
 
-    // Day Score
-    if (actionDate >= dateTodayStart && actionDate <= dateTodayEnd)
-    {
-      day_score += doc.get("co2e");
-    }
-    // Week Score
-    if (actionDate >= date7daysAgo && actionDate <= dateTodayEnd)
-    {
-      week_score += doc.get("co2e");
-    }
-    // Month Score
-    if (actionDate >= date30daysAgo && actionDate <= dateTodayEnd)
-    {
-      month_score += doc.get("co2e");
-    }
+    if (actionDate >= dateDay0) { day0 += doc.get("co2e"); }
+    else if (actionDate >= dateDay1 && actionDate < dateDay0) { day1 += doc.get("co2e"); }
+    else if (actionDate >= dateDay2 && actionDate < dateDay1) { day2 += doc.get("co2e"); }
+    else if (actionDate >= dateDay3 && actionDate < dateDay2) { day3 += doc.get("co2e"); }
+    else if (actionDate >= dateDay4 && actionDate < dateDay3) { day4 += doc.get("co2e"); }
+    else if (actionDate >= dateDay5 && actionDate < dateDay4) { day5 += doc.get("co2e"); }
+    else if (actionDate >= dateDay6 && actionDate < dateDay5) { day6 += doc.get("co2e"); }
+
+    if (actionDate >= dateweek0) { week0 += doc.get("co2e"); }
+    else if (actionDate >= dateweek1 && actionDate < dateweek0) { week1 += doc.get("co2e"); }
+    else if (actionDate >= dateweek2 && actionDate < dateweek1) { week2 += doc.get("co2e"); }
+    else if (actionDate >= dateweek3 && actionDate < dateweek2) { week3 += doc.get("co2e"); }
+
     global_score += doc.get("co2e");
     activity += 1;
   });
   foodActions.forEach(doc => {
     actionDate = new Date(doc.get("created_time").toDate());
 
-    // Day Score
-    if (actionDate >= dateTodayStart && actionDate <= dateTodayEnd)
-    {
-      day_score += doc.get("co2e");
-    }
-    // Week Score
-    if (actionDate >= date7daysAgo && actionDate <= dateTodayEnd)
-    {
-      week_score += doc.get("co2e");
-    }
-    // Month Score
-    if (actionDate >= date30daysAgo && actionDate <= dateTodayEnd)
-    {
-      month_score += doc.get("co2e");
-    }
+    if (actionDate >= dateDay0) { day0 += doc.get("co2e"); }
+    else if (actionDate >= dateDay1 && actionDate < dateDay0) { day1 += doc.get("co2e"); }
+    else if (actionDate >= dateDay2 && actionDate < dateDay1) { day2 += doc.get("co2e"); }
+    else if (actionDate >= dateDay3 && actionDate < dateDay2) { day3 += doc.get("co2e"); }
+    else if (actionDate >= dateDay4 && actionDate < dateDay3) { day4 += doc.get("co2e"); }
+    else if (actionDate >= dateDay5 && actionDate < dateDay4) { day5 += doc.get("co2e"); }
+    else if (actionDate >= dateDay6 && actionDate < dateDay5) { day6 += doc.get("co2e"); }
+
+    if (actionDate >= dateweek0) { week0 += doc.get("co2e"); }
+    else if (actionDate >= dateweek1 && actionDate < dateweek0) { week1 += doc.get("co2e"); }
+    else if (actionDate >= dateweek2 && actionDate < dateweek1) { week2 += doc.get("co2e"); }
+    else if (actionDate >= dateweek3 && actionDate < dateweek2) { week3 += doc.get("co2e"); }
+
     global_score += doc.get("co2e");
     activity += 1;
   });
@@ -223,8 +249,8 @@ async function reCalculate(userId) {
     const thing = query.docs[0];
     let tmp = thing.data();
     
-    tmp.day_score = day_score;
-    tmp.week_score = week_score;
+    tmp.day_score = day0;
+    tmp.week_score = week0;
     tmp.month_score = month_score;
     tmp.global_score = global_score;
     tmp.activity = activity;
@@ -232,6 +258,33 @@ async function reCalculate(userId) {
     
     thing.ref.update(tmp);
   });
+
+    // Update in user table
+    const updateStats = await admin.firestore()      
+    .collection('usersStats')
+    .where('uid', '==', userId)
+    .limit(1)
+    .get()
+    .then(query => {
+      const thing = query.docs[0];
+      let tmp = thing.data();
+      
+      tmp.day0 = day0;
+      tmp.day1 = day1;
+      tmp.day2 = day2;
+      tmp.day3 = day3;
+      tmp.day4 = day4;
+      tmp.day5 = day5;
+      tmp.day6 = day6;
+
+      tmp.week0 = week0;
+      tmp.week1 = week1;
+      tmp.week2 = week2;
+      tmp.week3 = week3;
+
+      thing.ref.update(tmp);
+    });
+
 }
 
 
