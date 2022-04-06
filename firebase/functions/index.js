@@ -137,6 +137,11 @@ var week1 = 0;
 var week2 = 0;
 var week3 = 0;
 
+var month0 = 0;
+var month1 = 0;
+var month2 = 0;
+var month3 = 0;
+
 // Calculate periods
 var dateDay0 = new Date(); dateDay0.setHours(0,0,0,0);
 var dateDay1 = new Date(new Date().setDate(dateDay0.getDate() - 1)); dateDay1.setHours(0,0,0,0)
@@ -145,11 +150,18 @@ var dateDay3 = new Date(new Date().setDate(dateDay0.getDate() - 3)); dateDay3.se
 var dateDay4 = new Date(new Date().setDate(dateDay0.getDate() - 4)); dateDay4.setHours(0,0,0,0)
 var dateDay5 = new Date(new Date().setDate(dateDay0.getDate() - 5)); dateDay5.setHours(0,0,0,0)
 var dateDay6 = new Date(new Date().setDate(dateDay0.getDate() - 6)); dateDay6.setHours(0,0,0,0)
+var dateDay7 = new Date(new Date().setDate(dateDay0.getDate() - 7)); dateDay7.setHours(0,0,0,0)
 
 var dateweek0 = new Date(new Date().setDate(dateDay0.getDate() - dateDay0.getDay() +1)); dateweek0.setHours(0,0,0,0)
 var dateweek1 = new Date(new Date().setDate(dateweek0.getDate() - 7)); dateweek1.setHours(0,0,0,0)
 var dateweek2 = new Date(new Date().setDate(dateweek0.getDate() - 14)); dateweek2.setHours(0,0,0,0)
 var dateweek3 = new Date(new Date().setDate(dateweek0.getDate() - 21)); dateweek3.setHours(0,0,0,0)
+
+y = dateDay0.getFullYear(), m = dateDay0.getMonth();
+var datemonth0 = new Date(y, m, 1); datemonth0.setHours(0,0,0,0)
+var datemonth1 = new Date(y, m-1, 1); datemonth1.setHours(0,0,0,0)
+var datemonth2 = new Date(y, m-2, 1); datemonth2.setHours(0,0,0,0)
+var datemonth3 = new Date(y, m-3, 1); datemonth3.setHours(0,0,0,0)
 
 
   const tranportActions = await admin.firestore()      
@@ -185,6 +197,11 @@ var dateweek3 = new Date(new Date().setDate(dateweek0.getDate() - 21)); dateweek
     else if (actionDate >= dateweek2 && actionDate < dateweek1) { week2 += doc.get("co2e"); }
     else if (actionDate >= dateweek3 && actionDate < dateweek2) { week3 += doc.get("co2e"); }
 
+    if (actionDate >= datemonth0) { month0 += doc.get("co2e"); }
+    else if (actionDate >= datemonth1 && actionDate < datemonth0) { month1 += doc.get("co2e"); }
+    else if (actionDate >= datemonth2 && actionDate < datemonth1) { month2 += doc.get("co2e"); }
+    else if (actionDate >= datemonth3 && actionDate < datemonth2) { month3 += doc.get("co2e"); }
+
     global_score += doc.get("co2e");
     activity += 1;
 
@@ -205,6 +222,11 @@ var dateweek3 = new Date(new Date().setDate(dateweek0.getDate() - 21)); dateweek
     else if (actionDate >= dateweek2 && actionDate < dateweek1) { week2 += doc.get("co2e"); }
     else if (actionDate >= dateweek3 && actionDate < dateweek2) { week3 += doc.get("co2e"); }
 
+    if (actionDate >= datemonth0) { month0 += doc.get("co2e"); }
+    else if (actionDate >= datemonth1 && actionDate < datemonth0) { month1 += doc.get("co2e"); }
+    else if (actionDate >= datemonth2 && actionDate < datemonth1) { month2 += doc.get("co2e"); }
+    else if (actionDate >= datemonth3 && actionDate < datemonth2) { month3 += doc.get("co2e"); }
+
     global_score += doc.get("co2e");
     activity += 1;
   });
@@ -223,6 +245,11 @@ var dateweek3 = new Date(new Date().setDate(dateweek0.getDate() - 21)); dateweek
     else if (actionDate >= dateweek1 && actionDate < dateweek0) { week1 += doc.get("co2e"); }
     else if (actionDate >= dateweek2 && actionDate < dateweek1) { week2 += doc.get("co2e"); }
     else if (actionDate >= dateweek3 && actionDate < dateweek2) { week3 += doc.get("co2e"); }
+
+    if (actionDate >= datemonth0) { month0 += doc.get("co2e"); }
+    else if (actionDate >= datemonth1 && actionDate < datemonth0) { month1 += doc.get("co2e"); }
+    else if (actionDate >= datemonth2 && actionDate < datemonth1) { month2 += doc.get("co2e"); }
+    else if (actionDate >= datemonth3 && actionDate < datemonth2) { month3 += doc.get("co2e"); }
 
     global_score += doc.get("co2e");
     activity += 1;
@@ -281,6 +308,11 @@ var dateweek3 = new Date(new Date().setDate(dateweek0.getDate() - 21)); dateweek
       tmp.week1 = week1;
       tmp.week2 = week2;
       tmp.week3 = week3;
+
+      tmp.month0 = month0;
+      tmp.month1 = month1;
+      tmp.month2 = month2;
+      tmp.month3 = month3;
 
       thing.ref.update(tmp);
     });
