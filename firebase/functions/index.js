@@ -4,36 +4,6 @@ const { write } = require("firebase-functions/logger");
 admin.initializeApp();
 
 
-// // Take the text parameter passed to this HTTP endpoint and insert it into 
-// // Firestore under the path /messages/:documentId/original
-// exports.addMessage = functions.https.onRequest(async (req, res) => {
-//     // Grab the text parameter.
-//     const original = req.query.text;
-//     // Push the new message into Firestore using the Firebase Admin SDK.
-//     const writeResult = await admin.firestore().collection('messages').add({original: original});
-//     // Send back a message that we've successfully written the message
-//     res.json({result: `Message with ID: ${writeResult.id} added.`});
-//   });
-
-
-
-// // Listens for new messages added to /messages/:documentId/original and creates an
-// // uppercase version of the message to /messages/:documentId/uppercase
-// exports.makeUppercase = functions.firestore.document('/messages/{documentId}')
-//     .onCreate((snap, context) => {
-//       // Grab the current value of what was written to Firestore.
-//       const original = snap.data().original;
-
-//       // Access the parameter `{documentId}` with `context.params`
-//       functions.logger.log('Uppercasing', context.params.documentId, original);
-      
-//       const uppercase = original.toUpperCase();
-      
-//       // You must return a Promise when performing asynchronous tasks inside a Functions such as
-//       // writing to Firestore.
-//       // Setting an 'uppercase' field in Firestore document returns a Promise.
-//       return snap.ref.set({uppercase}, {merge: true});
-//     });
 exports.updateScoreTransport = functions.region('europe-west6').firestore.document('/transportActions/{documentId}')
      .onWrite(async (change, context) => {
 
@@ -59,10 +29,7 @@ exports.updateScoreEnergy = functions.region('europe-west6').firestore.document(
 });
 // Set initial values for new created users
 exports.userInitialValues = functions.region('europe-west6').firestore.document('/users/{documentId}')
-    .onCreate((snap, context) => {
-      snap.ref.update({day_score: 0});
-      snap.ref.update({week_score: 0});
-      snap.ref.update({month_score: 0});
+    .onCreate(async (snap, context) => {
       snap.ref.update({global_score: 0});
       snap.ref.update({level: 1});
       snap.ref.update({activity: 0});
@@ -71,9 +38,85 @@ exports.userInitialValues = functions.region('europe-west6').firestore.document(
       snap.ref.update({co2target: 12});
 });
 
-//exports.sendByeEmail = functions.auth.user().onDelete((user) => {
-  // ...
-//});
+
+// Setup initial values for new users
+exports.createdUserDefaultData = functions.region('europe-west6').auth.user().onCreate(async (user) => {
+  await admin.firestore().collection('usersStats').add({
+    day0: "0",
+    day1: "0",
+    day2: "0",
+    day3: "0",
+    day4: "0",
+    day5: "0",
+    day6: "0",
+
+    week0: "0",
+    week1: "0",
+    week2: "0",
+    week3: "0",
+
+    month0: "0",
+    month1: "0",
+    month2: "0",
+    month3: "0",
+
+    uid: user.uid
+  });
+});
+
+
+
+// When firebase authentication user is deleted, deletes all data : Actions / Periodics / Stats / Users
+exports.deletedUserFlushData = functions.region('europe-west6').auth.user().onDelete(async (user) => {
+  
+  // Deletes all Transport Action
+  var jobskill_query = admin.firestore().collection('transportActions').where('userId','==',user.uid);
+  jobskill_query.get().then(function(querySnapshot) {
+    querySnapshot.forEach(function(doc) {
+      doc.ref.delete();
+    });
+  });
+
+  // Deletes all Energy Action
+  var jobskill_query = admin.firestore().collection('energyActions').where('userId','==',user.uid);
+  jobskill_query.get().then(function(querySnapshot) {
+    querySnapshot.forEach(function(doc) {
+      doc.ref.delete();
+    });
+  });
+
+  // Deletes all Food Action
+  var jobskill_query = admin.firestore().collection('foodActions').where('userId','==',user.uid);
+  jobskill_query.get().then(function(querySnapshot) {
+    querySnapshot.forEach(function(doc) {
+      doc.ref.delete();
+    });
+  });
+
+  // Deletes all Energy Periodics
+  var jobskill_query = admin.firestore().collection('energyPeriodics').where('userId','==',user.uid);
+  jobskill_query.get().then(function(querySnapshot) {
+    querySnapshot.forEach(function(doc) {
+      doc.ref.delete();
+    });
+  });
+
+  // Deletes all users data
+  var jobskill_query = admin.firestore().collection('users').where('userId','==',user.uid);
+  jobskill_query.get().then(function(querySnapshot) {
+    querySnapshot.forEach(function(doc) {
+      doc.ref.delete();
+    });
+  });
+
+  // Deletes all stats data
+  var jobskill_query = admin.firestore().collection('usersStats').where('userId','==',user.uid);
+  jobskill_query.get().then(function(querySnapshot) {
+    querySnapshot.forEach(function(doc) {
+      doc.ref.delete();
+    });
+  });
+});
 
 
 exports.updateRanks = functions.region('europe-west6').firestore.document('/users/{documentId}')
@@ -108,60 +151,50 @@ exports.updateRanks = functions.region('europe-west6').firestore.document('/user
 
 async function reCalculate(userId) {
   
-  var day_score = 0;
-  var week_score = 0;
-  var month_score = 0;
   var global_score = 0;
   var activity = 0;
   var level = 1;
 
-  // Dates used for "day_score", "week_score", "month_score"
-  //var dateToday = new Date();
-  //var dateTodayStart = dateToday.setHours(0,0,0,0);
-  //var dateTodayEnd = dateToday.setHours(23,59,59,999);
-  //var date30daysAgo = new Date(new Date().setDate(dateToday.getDate() - 30));
-  //var date7daysAgo = new Date(new Date().setDate(dateToday.getDate() - 7));
+  //// Stats update
+  // Initialize
+  var day0 = 0;
+  var day1 = 0;
+  var day2 = 0;
+  var day3 = 0;
+  var day4 = 0;
+  var day5 = 0;
+  var day6 = 0;
 
-//// Stats update
-// Initialize
-var day0 = 0;
-var day1 = 0;
-var day2 = 0;
-var day3 = 0;
-var day4 = 0;
-var day5 = 0;
-var day6 = 0;
+  var week0 = 0;
+  var week1 = 0;
+  var week2 = 0;
+  var week3 = 0;
 
-var week0 = 0;
-var week1 = 0;
-var week2 = 0;
-var week3 = 0;
+  var month0 = 0;
+  var month1 = 0;
+  var month2 = 0;
+  var month3 = 0;
 
-var month0 = 0;
-var month1 = 0;
-var month2 = 0;
-var month3 = 0;
+  // Calculate periods
+  var dateDay0 = new Date(); dateDay0.setHours(0,0,0,0);
+  var dateDay1 = new Date(new Date().setDate(dateDay0.getDate() - 1)); dateDay1.setHours(0,0,0,0)
+  var dateDay2 = new Date(new Date().setDate(dateDay0.getDate() - 2)); dateDay2.setHours(0,0,0,0)
+  var dateDay3 = new Date(new Date().setDate(dateDay0.getDate() - 3)); dateDay3.setHours(0,0,0,0)
+  var dateDay4 = new Date(new Date().setDate(dateDay0.getDate() - 4)); dateDay4.setHours(0,0,0,0)
+  var dateDay5 = new Date(new Date().setDate(dateDay0.getDate() - 5)); dateDay5.setHours(0,0,0,0)
+  var dateDay6 = new Date(new Date().setDate(dateDay0.getDate() - 6)); dateDay6.setHours(0,0,0,0)
+  var dateDay7 = new Date(new Date().setDate(dateDay0.getDate() - 7)); dateDay7.setHours(0,0,0,0)
 
-// Calculate periods
-var dateDay0 = new Date(); dateDay0.setHours(0,0,0,0);
-var dateDay1 = new Date(new Date().setDate(dateDay0.getDate() - 1)); dateDay1.setHours(0,0,0,0)
-var dateDay2 = new Date(new Date().setDate(dateDay0.getDate() - 2)); dateDay2.setHours(0,0,0,0)
-var dateDay3 = new Date(new Date().setDate(dateDay0.getDate() - 3)); dateDay3.setHours(0,0,0,0)
-var dateDay4 = new Date(new Date().setDate(dateDay0.getDate() - 4)); dateDay4.setHours(0,0,0,0)
-var dateDay5 = new Date(new Date().setDate(dateDay0.getDate() - 5)); dateDay5.setHours(0,0,0,0)
-var dateDay6 = new Date(new Date().setDate(dateDay0.getDate() - 6)); dateDay6.setHours(0,0,0,0)
-var dateDay7 = new Date(new Date().setDate(dateDay0.getDate() - 7)); dateDay7.setHours(0,0,0,0)
+  var dateweek0 = new Date(new Date().setDate(dateDay0.getDate() - dateDay0.getDay() +1)); dateweek0.setHours(0,0,0,0)
+  var dateweek1 = new Date(new Date().setDate(dateweek0.getDate() - 7)); dateweek1.setHours(0,0,0,0)
+  var dateweek2 = new Date(new Date().setDate(dateweek0.getDate() - 14)); dateweek2.setHours(0,0,0,0)
+  var dateweek3 = new Date(new Date().setDate(dateweek0.getDate() - 21)); dateweek3.setHours(0,0,0,0)
 
-var dateweek0 = new Date(new Date().setDate(dateDay0.getDate() - dateDay0.getDay() +1)); dateweek0.setHours(0,0,0,0)
-var dateweek1 = new Date(new Date().setDate(dateweek0.getDate() - 7)); dateweek1.setHours(0,0,0,0)
-var dateweek2 = new Date(new Date().setDate(dateweek0.getDate() - 14)); dateweek2.setHours(0,0,0,0)
-var dateweek3 = new Date(new Date().setDate(dateweek0.getDate() - 21)); dateweek3.setHours(0,0,0,0)
-
-y = dateDay0.getFullYear(), m = dateDay0.getMonth();
-var datemonth0 = new Date(y, m, 1); datemonth0.setHours(0,0,0,0)
-var datemonth1 = new Date(y, m-1, 1); datemonth1.setHours(0,0,0,0)
-var datemonth2 = new Date(y, m-2, 1); datemonth2.setHours(0,0,0,0)
-var datemonth3 = new Date(y, m-3, 1); datemonth3.setHours(0,0,0,0)
+  y = dateDay0.getFullYear(), m = dateDay0.getMonth();
+  var datemonth0 = new Date(y, m, 1); datemonth0.setHours(0,0,0,0)
+  var datemonth1 = new Date(y, m-1, 1); datemonth1.setHours(0,0,0,0)
+  var datemonth2 = new Date(y, m-2, 1); datemonth2.setHours(0,0,0,0)
+  var datemonth3 = new Date(y, m-3, 1); datemonth3.setHours(0,0,0,0)
 
 
   const tranportActions = await admin.firestore()      
@@ -276,9 +309,6 @@ var datemonth3 = new Date(y, m-3, 1); datemonth3.setHours(0,0,0,0)
     const thing = query.docs[0];
     let tmp = thing.data();
     
-    tmp.day_score = day0;
-    tmp.week_score = week0;
-    tmp.month_score = month_score;
     tmp.global_score = global_score;
     tmp.activity = activity;
     tmp.level = level;
