@@ -1,5 +1,4 @@
 import '../auth/auth_util.dart';
-import '../components/forgot_password_widget.dart';
 import '../faq/faq_widget.dart';
 import '../feedback/feedback_widget.dart';
 import '../flutter_flow/flutter_flow_animations.dart';
@@ -128,137 +127,6 @@ class _DrawerWidgetState extends State<DrawerWidget>
                                 ),
                               ),
                             ],
-                          ),
-                        ),
-                        Padding(
-                          padding:
-                              EdgeInsetsDirectional.fromSTEB(20, 40, 20, 0),
-                          child: Container(
-                            width: double.infinity,
-                            height: 100,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15),
-                              border: Border.all(
-                                color: FlutterFlowTheme.of(context).grayLight,
-                              ),
-                            ),
-                            child: Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  10, 10, 10, 10),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.max,
-                                children: [
-                                  Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        5, 0, 0, 0),
-                                    child: Container(
-                                      width: 60,
-                                      height: 60,
-                                      decoration: BoxDecoration(
-                                        color: FlutterFlowTheme.of(context)
-                                            .tertiaryColor,
-                                        boxShadow: [
-                                          BoxShadow(
-                                            blurRadius: 25,
-                                            color: Color(0x1B000000),
-                                            offset: Offset(0, 8),
-                                          )
-                                        ],
-                                        shape: BoxShape.circle,
-                                      ),
-                                      child: AuthUserStreamWidget(
-                                        child: ClipRRect(
-                                          borderRadius:
-                                              BorderRadius.circular(100),
-                                          child: Image.network(
-                                            valueOrDefault<String>(
-                                              currentUserPhoto,
-                                              'https://firebasestorage.googleapis.com/v0/b/carbonfight-89af6.appspot.com/o/18275220161537356156-128.png?alt=media&token=c9797a03-bba1-46b8-aaac-4c54cb99fcb6',
-                                            ),
-                                            width: 70,
-                                            height: 70,
-                                            fit: BoxFit.cover,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        10, 0, 0, 0),
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        AuthUserStreamWidget(
-                                          child: Text(
-                                            currentUserDisplayName,
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodyText2
-                                                .override(
-                                                  fontFamily: 'Montserrat',
-                                                  fontWeight: FontWeight.w600,
-                                                ),
-                                          ),
-                                        ),
-                                        Text(
-                                          currentUserEmail,
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodyText2
-                                              .override(
-                                                fontFamily: 'Montserrat',
-                                                fontSize: 11,
-                                              ),
-                                        ),
-                                        Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  0, 5, 0, 0),
-                                          child: InkWell(
-                                            onTap: () async {
-                                              logFirebaseEvent('Text-ON_TAP');
-                                              logFirebaseEvent(
-                                                  'Text-Bottom-Sheet');
-                                              await showModalBottomSheet(
-                                                isScrollControlled: true,
-                                                backgroundColor:
-                                                    Colors.transparent,
-                                                context: context,
-                                                builder: (context) {
-                                                  return Padding(
-                                                    padding:
-                                                        MediaQuery.of(context)
-                                                            .viewInsets,
-                                                    child: Container(
-                                                      height: 400,
-                                                      child:
-                                                          ForgotPasswordWidget(),
-                                                    ),
-                                                  );
-                                                },
-                                              );
-                                            },
-                                            child: Text(
-                                              'Change Password',
-                                              style: FlutterFlowTheme.of(
-                                                      context)
-                                                  .bodyText2
-                                                  .override(
-                                                    fontFamily: 'Montserrat',
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .secondaryColor,
-                                                  ),
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
                           ),
                         ),
                       ],
@@ -490,7 +358,7 @@ class _DrawerWidgetState extends State<DrawerWidget>
                                       children: [
                                         Expanded(
                                           child: Text(
-                                            'Carbonfight Copyright 2022',
+                                            'CarbonFight Copyright 2022',
                                             style: FlutterFlowTheme.of(context)
                                                 .bodyText2
                                                 .override(
@@ -511,7 +379,7 @@ class _DrawerWidgetState extends State<DrawerWidget>
                                                 EdgeInsetsDirectional.fromSTEB(
                                                     0, 3, 0, 0),
                                             child: Text(
-                                              'Version 1.0.2 Build 34',
+                                              'Version 1.0.4',
                                               style: FlutterFlowTheme.of(
                                                       context)
                                                   .bodyText2

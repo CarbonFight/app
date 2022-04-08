@@ -138,7 +138,7 @@ class _MainFoodFormWidgetState extends State<MainFoodFormWidget> {
                               'Poisson',
                               'Viande rouge',
                               'Viande blanche'
-                            ],
+                            ].toList(),
                             onChanged: (value) {
                               setState(() => mainComponentValue = value);
                             },
@@ -181,7 +181,7 @@ class _MainFoodFormWidgetState extends State<MainFoodFormWidget> {
                               'Blé',
                               'Légumes',
                               'Pommes de terre'
-                            ],
+                            ].toList(),
                             onChanged: (value) {
                               setState(() => sideComponentValue = value);
                             },

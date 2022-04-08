@@ -3,12 +3,14 @@ import '../backend/backend.dart';
 import '../components/forgot_password_widget.dart';
 import '../components/icon_button_widget.dart';
 import '../flutter_flow/flutter_flow_animations.dart';
+import '../flutter_flow/flutter_flow_count_controller.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class DrawerCopyWidget extends StatefulWidget {
@@ -22,7 +24,7 @@ class _DrawerCopyWidgetState extends State<DrawerCopyWidget>
     with TickerProviderStateMixin {
   TextEditingController displaynameController;
   TextEditingController emailaddressController;
-  double co2targetValue;
+  int co2targetValue;
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final animationsMap = {
     'containerOnPageLoadAnimation': AnimationInfo(
@@ -518,29 +520,72 @@ class _DrawerCopyWidgetState extends State<DrawerCopyWidget>
                                         ),
                                         Row(
                                           mainAxisSize: MainAxisSize.max,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
                                           children: [
-                                            Expanded(
+                                            Padding(
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(0, 10, 0, 0),
                                               child: AuthUserStreamWidget(
-                                                child: Slider(
-                                                  activeColor:
-                                                      FlutterFlowTheme.of(
-                                                              context)
-                                                          .secondaryColor,
-                                                  inactiveColor:
-                                                      Color(0xFF9E9E9E),
-                                                  min: 0,
-                                                  max: 80,
-                                                  value: co2targetValue ??=
-                                                      currentUserDocument
-                                                          ?.co2target,
-                                                  label:
-                                                      co2targetValue.toString(),
-                                                  divisions: 160,
-                                                  onChanged: (newValue) {
-                                                    setState(() =>
-                                                        co2targetValue =
-                                                            newValue);
-                                                  },
+                                                child: Container(
+                                                  width: 160,
+                                                  height: 50,
+                                                  decoration: BoxDecoration(
+                                                    color: Colors.white,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            25),
+                                                    shape: BoxShape.rectangle,
+                                                    border: Border.all(
+                                                      color: Color(0xFF9E9E9E),
+                                                      width: 1,
+                                                    ),
+                                                  ),
+                                                  child:
+                                                      FlutterFlowCountController(
+                                                    decrementIconBuilder:
+                                                        (enabled) => FaIcon(
+                                                      FontAwesomeIcons.minus,
+                                                      color: enabled
+                                                          ? Color(0xDD000000)
+                                                          : Color(0xFFEEEEEE),
+                                                      size: 20,
+                                                    ),
+                                                    incrementIconBuilder:
+                                                        (enabled) => FaIcon(
+                                                      FontAwesomeIcons.plus,
+                                                      color: enabled
+                                                          ? FlutterFlowTheme.of(
+                                                                  context)
+                                                              .secondaryColor
+                                                          : Color(0xFFEEEEEE),
+                                                      size: 20,
+                                                    ),
+                                                    countBuilder: (count) =>
+                                                        Text(
+                                                      count.toString(),
+                                                      style:
+                                                          GoogleFonts.getFont(
+                                                        'Roboto',
+                                                        color: Colors.black,
+                                                        fontWeight:
+                                                            FontWeight.w600,
+                                                        fontSize: 16,
+                                                      ),
+                                                    ),
+                                                    count: co2targetValue ??=
+                                                        currentUserDocument
+                                                            ?.co2target,
+                                                    updateCount: (count) =>
+                                                        setState(() =>
+                                                            co2targetValue =
+                                                                count),
+                                                    stepSize: 1,
+                                                    minimum: 0,
+                                                    maximum: 80,
+                                                  ),
                                                 ),
                                               ),
                                             ),

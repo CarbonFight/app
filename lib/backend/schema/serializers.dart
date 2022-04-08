@@ -6,6 +6,8 @@ import 'users_record.dart';
 import 'energy_periodics_record.dart';
 import 'food_actions_record.dart';
 import 'action_cache_record.dart';
+import 'action_type_cache_record.dart';
+import 'users_stats_record.dart';
 
 import 'index.dart';
 
@@ -22,6 +24,8 @@ const kDocumentReferenceField = 'Document__Reference__Field';
   EnergyPeriodicsRecord,
   FoodActionsRecord,
   ActionCacheRecord,
+  ActionTypeCacheRecord,
+  UsersStatsRecord,
 ])
 final Serializers serializers = (_$serializers.toBuilder()
       ..add(DocumentReferenceSerializer())

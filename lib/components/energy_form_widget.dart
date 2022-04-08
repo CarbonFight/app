@@ -1,3 +1,4 @@
+import '../backend/backend.dart';
 import '../components/electricity_form_widget.dart';
 import '../components/gaz_form_widget.dart';
 import '../components/water_form_widget.dart';
@@ -9,7 +10,12 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class EnergyFormWidget extends StatefulWidget {
-  const EnergyFormWidget({Key key}) : super(key: key);
+  const EnergyFormWidget({
+    Key key,
+    this.actioncache,
+  }) : super(key: key);
+
+  final ActionCacheRecord actioncache;
 
   @override
   _EnergyFormWidgetState createState() => _EnergyFormWidgetState();
@@ -156,7 +162,9 @@ class _EnergyFormWidgetState extends State<EnergyFormWidget> {
                                     padding: MediaQuery.of(context).viewInsets,
                                     child: Container(
                                       height: 490,
-                                      child: GazFormWidget(),
+                                      child: GazFormWidget(
+                                        cache: widget.actioncache,
+                                      ),
                                     ),
                                   );
                                 },

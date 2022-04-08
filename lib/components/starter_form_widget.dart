@@ -113,7 +113,7 @@ class _StarterFormWidgetState extends State<StarterFormWidget> {
                       Padding(
                         padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 10),
                         child: FlutterFlowRadioButton(
-                          options: ['Végétarienne', 'Mixte', 'Viande'],
+                          options: ['Végétarienne', 'Mixte', 'Viande'].toList(),
                           onChanged: (value) {
                             setState(() => mainComponentValue = value);
                           },

@@ -121,7 +121,7 @@ class _DrinksFormWidgetState extends State<DrinksFormWidget> {
                             'Alcool',
                             'Boisson chaude',
                             'Soda'
-                          ],
+                          ].toList(),
                           onChanged: (value) {
                             setState(() => mainComponentValue = value);
                           },

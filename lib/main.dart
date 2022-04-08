@@ -9,7 +9,7 @@ import 'flutter_flow/flutter_flow_util.dart';
 import 'flutter_flow/flutter_flow_theme.dart';
 import 'flutter_flow/internationalization.dart';
 import 'package:carbon_fight/login/login_widget.dart';
-import 'package:carbon_fight/statistiques/statistiques_widget.dart';
+import 'package:carbon_fight/home/home_widget.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 import 'package:flutter/services.dart';
@@ -91,7 +91,7 @@ class _MyAppState extends State<MyApp> {
               ),
             )
           : currentUser.loggedIn
-              ? PushNotificationsHandler(child: StatistiquesWidget())
+              ? PushNotificationsHandler(child: HomeWidget())
               : LoginWidget(),
     );
   }

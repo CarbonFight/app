@@ -13,7 +13,12 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class GazFormWidget extends StatefulWidget {
-  const GazFormWidget({Key key}) : super(key: key);
+  const GazFormWidget({
+    Key key,
+    this.cache,
+  }) : super(key: key);
+
+  final ActionCacheRecord cache;
 
   @override
   _GazFormWidgetState createState() => _GazFormWidgetState();
@@ -63,7 +68,7 @@ class _GazFormWidgetState extends State<GazFormWidget> {
                       Padding(
                         padding: EdgeInsetsDirectional.fromSTEB(0, 0, 5, 0),
                         child: Image.asset(
-                          'assets/images/energy.png',
+                          'assets/images/gas.png',
                           width: 25,
                           height: 25,
                           fit: BoxFit.cover,
@@ -319,87 +324,162 @@ class _GazFormWidgetState extends State<GazFormWidget> {
                               ),
                             ),
                           ),
-                          Expanded(
-                            child: Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(10, 0, 0, 0),
-                              child: InkWell(
-                                onTap: () async {
-                                  logFirebaseEvent('iconButton-ON_TAP');
-                                  logFirebaseEvent(
-                                      'iconButton-Update-Local-State');
-                                  setState(() => FFAppState().actionCO2 =
-                                      functions.energyPeriodicsCO2e(
-                                          'gas',
-                                          int.parse(volumeController.text),
-                                          valueOrDefault<String>(
+                          if ((FFAppState().loading) == false)
+                            Expanded(
+                              child: Padding(
+                                padding:
+                                    EdgeInsetsDirectional.fromSTEB(10, 0, 0, 0),
+                                child: StreamBuilder<ActionCacheRecord>(
+                                  stream: ActionCacheRecord.getDocument(
+                                      widget.cache.reference),
+                                  builder: (context, snapshot) {
+                                    // Customize what your widget looks like when it's loading.
+                                    if (!snapshot.hasData) {
+                                      return Center(
+                                        child: SizedBox(
+                                          width: 2,
+                                          height: 2,
+                                          child: SpinKitRing(
+                                            color: Colors.transparent,
+                                            size: 2,
+                                          ),
+                                        ),
+                                      );
+                                    }
+                                    final iconButtonActionCacheRecord =
+                                        snapshot.data;
+                                    return InkWell(
+                                      onTap: () async {
+                                        logFirebaseEvent('iconButton-ON_TAP');
+                                        // loading
+                                        logFirebaseEvent('iconButton-loading');
+                                        setState(
+                                            () => FFAppState().loading = true);
+                                        logFirebaseEvent(
+                                            'iconButton-Update-Local-State');
+                                        setState(() => FFAppState().actionCO2 =
+                                            functions.energyPeriodicsCO2e(
+                                                'gas',
+                                                int.parse(
+                                                    volumeController.text),
+                                                valueOrDefault<String>(
+                                                  powertypeValue,
+                                                  'Gaz naturel',
+                                                ),
+                                                valueOrDefault<String>(
+                                                  peopleSharingValue,
+                                                  '1',
+                                                )));
+                                        logFirebaseEvent(
+                                            'iconButton-Update-Local-State');
+                                        setState(() => FFAppState().time =
+                                            getCurrentTimestamp);
+                                        logFirebaseEvent(
+                                            'iconButton-Backend-Call');
+
+                                        final energyActionsCreateData =
+                                            createEnergyActionsRecordData(
+                                          createdTime: FFAppState().time,
+                                          co2e: FFAppState().actionCO2,
+                                          energy: 'gas',
+                                          volume:
+                                              int.parse(volumeController.text),
+                                          powertype: valueOrDefault<String>(
                                             powertypeValue,
                                             'Gaz naturel',
                                           ),
-                                          valueOrDefault<String>(
+                                          peopleSharing: valueOrDefault<String>(
                                             peopleSharingValue,
                                             '1',
-                                          )));
-                                  logFirebaseEvent('iconButton-Backend-Call');
+                                          ),
+                                          userId: currentUserUid,
+                                        );
+                                        await EnergyActionsRecord.collection
+                                            .doc()
+                                            .set(energyActionsCreateData);
+                                        logFirebaseEvent(
+                                            'iconButton-Backend-Call');
 
-                                  final energyActionsCreateData =
-                                      createEnergyActionsRecordData(
-                                    createdTime: getCurrentTimestamp,
-                                    co2e: FFAppState().actionCO2,
-                                    energy: 'gas',
-                                    volume: int.parse(volumeController.text),
-                                    powertype: valueOrDefault<String>(
-                                      powertypeValue,
-                                      'Gaz naturel',
-                                    ),
-                                    peopleSharing: valueOrDefault<String>(
-                                      peopleSharingValue,
-                                      '1',
-                                    ),
-                                    userId: currentUserUid,
-                                  );
-                                  await EnergyActionsRecord.collection
-                                      .doc()
-                                      .set(energyActionsCreateData);
-                                  logFirebaseEvent('iconButton-Backend-Call');
+                                        final actionTypeCacheCreateData =
+                                            createActionTypeCacheRecordData(
+                                          actionCache:
+                                              iconButtonActionCacheRecord
+                                                  .reference,
+                                          date: FFAppState().time,
+                                          actionType: 'gas',
+                                        );
+                                        await ActionTypeCacheRecord.collection
+                                            .doc()
+                                            .set(actionTypeCacheCreateData);
+                                        logFirebaseEvent(
+                                            'iconButton-Backend-Call');
 
-                                  final energyPeriodicsCreateData =
-                                      createEnergyPeriodicsRecordData(
-                                    co2e: FFAppState().actionCO2,
-                                    energy: 'gas',
-                                    peopleSharing: valueOrDefault<String>(
-                                      peopleSharingValue,
-                                      '1',
-                                    ),
-                                    powertype: valueOrDefault<String>(
-                                      powertypeValue,
-                                      'Gaz naturel',
-                                    ),
-                                    userId: currentUserUid,
-                                    volume: int.parse(volumeController.text),
-                                  );
-                                  await EnergyPeriodicsRecord.collection
-                                      .doc()
-                                      .set(energyPeriodicsCreateData);
-                                  logFirebaseEvent('iconButton-Navigate-Back');
-                                  Navigator.pop(context);
-                                },
-                                child: IconButtonWidget(
-                                  fillColor:
-                                      FlutterFlowTheme.of(context).primaryColor,
-                                  fontColor: FlutterFlowTheme.of(context)
-                                      .tertiaryColor,
-                                  icon: Icon(
-                                    Icons.add_circle_outline,
-                                    color: FlutterFlowTheme.of(context)
-                                        .tertiaryColor,
-                                    size: 25,
-                                  ),
-                                  text: 'Ajouter',
+                                        final energyPeriodicsCreateData =
+                                            createEnergyPeriodicsRecordData(
+                                          co2e: FFAppState().actionCO2,
+                                          energy: 'gas',
+                                          powertype: valueOrDefault<String>(
+                                            powertypeValue,
+                                            'Gaz naturel',
+                                          ),
+                                          userId: currentUserUid,
+                                          volume:
+                                              int.parse(volumeController.text),
+                                          peopleSharing: valueOrDefault<String>(
+                                            peopleSharingValue,
+                                            '1',
+                                          ),
+                                        );
+                                        await EnergyPeriodicsRecord.collection
+                                            .doc()
+                                            .set(energyPeriodicsCreateData);
+                                        logFirebaseEvent(
+                                            'iconButton-Backend-Call');
+
+                                        final actionCacheUpdateData = {
+                                          'co2e': FieldValue.increment(
+                                              FFAppState().actionCO2),
+                                        };
+                                        await iconButtonActionCacheRecord
+                                            .reference
+                                            .update(actionCacheUpdateData);
+                                        // loading
+                                        logFirebaseEvent('iconButton-loading');
+                                        setState(
+                                            () => FFAppState().loading = false);
+                                        logFirebaseEvent(
+                                            'iconButton-Navigate-Back');
+                                        Navigator.pop(context);
+                                      },
+                                      child: IconButtonWidget(
+                                        fillColor: FlutterFlowTheme.of(context)
+                                            .primaryColor,
+                                        fontColor: FlutterFlowTheme.of(context)
+                                            .tertiaryColor,
+                                        icon: Icon(
+                                          Icons.add_circle_outline,
+                                          color: FlutterFlowTheme.of(context)
+                                              .tertiaryColor,
+                                          size: 25,
+                                        ),
+                                        text: 'Ajouter',
+                                      ),
+                                    );
+                                  },
                                 ),
                               ),
                             ),
-                          ),
+                          if ((FFAppState().loading) == true)
+                            Padding(
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(10, 0, 0, 0),
+                              child: Image.asset(
+                                'assets/images/1484.gif',
+                                width: 150,
+                                height: 55,
+                                fit: BoxFit.fitHeight,
+                              ),
+                            ),
                         ],
                       ),
                     ),

@@ -15,16 +15,16 @@
       ]
     },
     {
-      "collectionGroup": "actionCache",
+      "collectionGroup": "actionTypeCache",
       "queryScope": "COLLECTION",
       "fields": [
         {
-          "fieldPath": "user",
+          "fieldPath": "actionCache",
           "order": "ASCENDING"
         },
         {
           "fieldPath": "date",
-          "order": "ASCENDING"
+          "order": "DESCENDING"
         }
       ]
     },
