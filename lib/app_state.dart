@@ -29,6 +29,10 @@ class FFAppState {
   }
 
   int actionCO2 = 0;
+
+  DateTime time;
+
+  bool loading = false;
 }
 
 LatLng _latLngFromString(String val) {

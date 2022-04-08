@@ -113,7 +113,8 @@ class _CoffeeFormWidgetState extends State<CoffeeFormWidget> {
                       Padding(
                         padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 10),
                         child: FlutterFlowRadioButton(
-                          options: ['Expresso', 'Café filtre', 'Capsule'],
+                          options:
+                              ['Expresso', 'Café filtre', 'Capsule'].toList(),
                           onChanged: (value) {
                             setState(() => mainComponentValue = value);
                           },

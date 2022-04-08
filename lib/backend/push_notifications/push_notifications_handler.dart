@@ -11,13 +11,12 @@ import 'package:flutter/material.dart';
 
 import '../../main.dart';
 import '../../login/login_widget.dart';
-import '../../signup/signup_widget.dart';
 import '../../splash/splash_widget.dart';
-import '../../home/home_widget.dart';
+import '../../signup/signup_widget.dart';
+import '../../statistiques/statistiques_widget.dart';
 import '../../faq/faq_widget.dart';
 import '../../drawer/drawer_widget.dart';
 import '../../feedback/feedback_widget.dart';
-import '../../home_copy/home_copy_widget.dart';
 import '../../drawer_copy/drawer_copy_widget.dart';
 
 class PushNotificationsHandler extends StatefulWidget {
@@ -86,13 +85,12 @@ class _PushNotificationsHandlerState extends State<PushNotificationsHandler> {
 
 final pageBuilderMap = <String, Future<Widget> Function(Map<String, dynamic>)>{
   'Login': (data) async => LoginWidget(),
-  'Signup': (data) async => SignupWidget(),
   'Splash': (data) async => SplashWidget(),
-  'Home': (data) async => HomeWidget(),
+  'Signup': (data) async => SignupWidget(),
+  'Statistiques': (data) async => StatistiquesWidget(),
   'FAQ': (data) async => FaqWidget(),
   'Drawer': (data) async => DrawerWidget(),
   'Feedback': (data) async => FeedbackWidget(),
-  'HomeCopy': (data) async => HomeCopyWidget(),
   'DrawerCopy': (data) async => DrawerCopyWidget(),
 };
 

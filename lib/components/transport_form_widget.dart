@@ -1,3 +1,4 @@
+import '../backend/backend.dart';
 import '../components/bike_form_widget.dart';
 import '../components/bus_form_widget.dart';
 import '../components/car_form_widget.dart';
@@ -15,7 +16,12 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class TransportFormWidget extends StatefulWidget {
-  const TransportFormWidget({Key key}) : super(key: key);
+  const TransportFormWidget({
+    Key key,
+    this.cache,
+  }) : super(key: key);
+
+  final ActionCacheRecord cache;
 
   @override
   _TransportFormWidgetState createState() => _TransportFormWidgetState();
@@ -359,14 +365,15 @@ class _TransportFormWidgetState extends State<TransportFormWidget> {
                               await showModalBottomSheet(
                                 isScrollControlled: true,
                                 backgroundColor: Colors.transparent,
-                                barrierColor: Color(0xBF000000),
                                 context: context,
                                 builder: (context) {
                                   return Padding(
                                     padding: MediaQuery.of(context).viewInsets,
                                     child: Container(
                                       height: 450,
-                                      child: TrainFormWidget(),
+                                      child: TrainFormWidget(
+                                        cache: widget.cache,
+                                      ),
                                     ),
                                   );
                                 },

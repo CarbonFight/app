@@ -21,11 +21,15 @@ abstract class ActionCacheRecord
   int get co2e;
 
   @nullable
+  String get day;
+
+  @nullable
   @BuiltValueField(wireName: kDocumentReferenceField)
   DocumentReference get reference;
 
-  static void _initializeBuilder(ActionCacheRecordBuilder builder) =>
-      builder..co2e = 0;
+  static void _initializeBuilder(ActionCacheRecordBuilder builder) => builder
+    ..co2e = 0
+    ..day = '';
 
   static CollectionReference get collection =>
       FirebaseFirestore.instance.collection('actionCache');
@@ -52,10 +56,12 @@ Map<String, dynamic> createActionCacheRecordData({
   DocumentReference user,
   DateTime date,
   int co2e,
+  String day,
 }) =>
     serializers.toFirestore(
         ActionCacheRecord.serializer,
         ActionCacheRecord((a) => a
           ..user = user
           ..date = date
-          ..co2e = co2e));
+          ..co2e = co2e
+          ..day = day));

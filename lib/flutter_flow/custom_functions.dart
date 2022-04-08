@@ -478,15 +478,15 @@ int foodActionsCO2e(
 double percentProgressBar(
   int co2e,
   String period,
-  double co2target,
+  int co2target,
 ) {
   //int planet = 3300; // Green : what the planet can support
   //int frenchAverage = 12500; // Yellow french avarage
   //int usaAverage = 40000; // Red USA average
   // More is black
 
-  double co2targetGrammes = co2target * 1000;
-  double threshold = co2targetGrammes;
+  int co2targetGrammes = co2target * 1000;
+  int threshold = co2targetGrammes;
 
   if (period == "day") {
     threshold = co2targetGrammes;
@@ -517,4 +517,17 @@ String printLevel(int level) {
   }
 
   return levelString;
+}
+
+bool primed(
+  int actionCache,
+  int index,
+) {
+  // Add your function code here!
+  var val = actionCache - index;
+  if (val == 1) {
+    return false;
+  } else {
+    return true;
+  }
 }

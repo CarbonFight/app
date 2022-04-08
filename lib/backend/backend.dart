@@ -10,6 +10,8 @@ import 'schema/users_record.dart';
 import 'schema/energy_periodics_record.dart';
 import 'schema/food_actions_record.dart';
 import 'schema/action_cache_record.dart';
+import 'schema/action_type_cache_record.dart';
+import 'schema/users_stats_record.dart';
 import 'schema/serializers.dart';
 
 export 'package:cloud_firestore/cloud_firestore.dart';
@@ -22,6 +24,8 @@ export 'schema/users_record.dart';
 export 'schema/energy_periodics_record.dart';
 export 'schema/food_actions_record.dart';
 export 'schema/action_cache_record.dart';
+export 'schema/action_type_cache_record.dart';
+export 'schema/users_stats_record.dart';
 
 /// Functions to query TransportActionsRecords (as a Stream and as a Future).
 Stream<List<TransportActionsRecord>> queryTransportActionsRecord(
@@ -119,6 +123,39 @@ Future<List<ActionCacheRecord>> queryActionCacheRecordOnce(
         bool singleRecord = false}) =>
     queryCollectionOnce(
         ActionCacheRecord.collection, ActionCacheRecord.serializer,
+        queryBuilder: queryBuilder, limit: limit, singleRecord: singleRecord);
+
+/// Functions to query ActionTypeCacheRecords (as a Stream and as a Future).
+Stream<List<ActionTypeCacheRecord>> queryActionTypeCacheRecord(
+        {Query Function(Query) queryBuilder,
+        int limit = -1,
+        bool singleRecord = false}) =>
+    queryCollection(
+        ActionTypeCacheRecord.collection, ActionTypeCacheRecord.serializer,
+        queryBuilder: queryBuilder, limit: limit, singleRecord: singleRecord);
+
+Future<List<ActionTypeCacheRecord>> queryActionTypeCacheRecordOnce(
+        {Query Function(Query) queryBuilder,
+        int limit = -1,
+        bool singleRecord = false}) =>
+    queryCollectionOnce(
+        ActionTypeCacheRecord.collection, ActionTypeCacheRecord.serializer,
+        queryBuilder: queryBuilder, limit: limit, singleRecord: singleRecord);
+
+/// Functions to query UsersStatsRecords (as a Stream and as a Future).
+Stream<List<UsersStatsRecord>> queryUsersStatsRecord(
+        {Query Function(Query) queryBuilder,
+        int limit = -1,
+        bool singleRecord = false}) =>
+    queryCollection(UsersStatsRecord.collection, UsersStatsRecord.serializer,
+        queryBuilder: queryBuilder, limit: limit, singleRecord: singleRecord);
+
+Future<List<UsersStatsRecord>> queryUsersStatsRecordOnce(
+        {Query Function(Query) queryBuilder,
+        int limit = -1,
+        bool singleRecord = false}) =>
+    queryCollectionOnce(
+        UsersStatsRecord.collection, UsersStatsRecord.serializer,
         queryBuilder: queryBuilder, limit: limit, singleRecord: singleRecord);
 
 Stream<List<T>> queryCollection<T>(

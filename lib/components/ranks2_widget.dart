@@ -129,13 +129,11 @@ class _Ranks2WidgetState extends State<Ranks2Widget> {
                                       if (!snapshot.hasData) {
                                         return Center(
                                           child: SizedBox(
-                                            width: 50,
-                                            height: 50,
+                                            width: 2,
+                                            height: 2,
                                             child: SpinKitRing(
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .secondaryColor,
-                                              size: 50,
+                                              color: Colors.transparent,
+                                              size: 2,
                                             ),
                                           ),
                                         );
@@ -346,13 +344,11 @@ class _Ranks2WidgetState extends State<Ranks2Widget> {
                                       if (!snapshot.hasData) {
                                         return Center(
                                           child: SizedBox(
-                                            width: 50,
-                                            height: 50,
+                                            width: 2,
+                                            height: 2,
                                             child: SpinKitRing(
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .secondaryColor,
-                                              size: 50,
+                                              color: Colors.transparent,
+                                              size: 2,
                                             ),
                                           ),
                                         );

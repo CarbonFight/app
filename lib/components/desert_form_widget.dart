@@ -120,7 +120,7 @@ class _DesertFormWidgetState extends State<DesertFormWidget> {
                             'Pâtisserie',
                             'Glace',
                             'Crême dessert'
-                          ],
+                          ].toList(),
                           onChanged: (value) {
                             setState(() => mainComponentValue = value);
                           },
