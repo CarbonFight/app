@@ -108,7 +108,7 @@ class _SplashWidgetState extends State<SplashWidget> {
                                                 color:
                                                     FlutterFlowTheme.of(context)
                                                         .tertiaryColor,
-                                                size: 150,
+                                                size: 20,
                                               ),
                                             ],
                                           ),
@@ -281,7 +281,7 @@ class _SplashWidgetState extends State<SplashWidget> {
                                                 color:
                                                     FlutterFlowTheme.of(context)
                                                         .tertiaryColor,
-                                                size: 250,
+                                                size: 20,
                                               ),
                                             ],
                                           ),
@@ -451,7 +451,7 @@ class _SplashWidgetState extends State<SplashWidget> {
                                                 color:
                                                     FlutterFlowTheme.of(context)
                                                         .tertiaryColor,
-                                                size: 250,
+                                                size: 20,
                                               ),
                                             ],
                                           ),
