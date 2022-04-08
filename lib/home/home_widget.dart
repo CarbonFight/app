@@ -3,6 +3,7 @@ import '../backend/backend.dart';
 import '../components/energy_form_widget.dart';
 import '../components/food_form_widget.dart';
 import '../components/gaz_form_copy_widget.dart';
+import '../components/gaz_form_periodic_widget.dart';
 import '../components/train_form_copy2_widget.dart';
 import '../components/transport_form_widget.dart';
 import '../drawer/drawer_widget.dart';
@@ -29,6 +30,7 @@ class HomeWidget extends StatefulWidget {
 class _HomeWidgetState extends State<HomeWidget> {
   PageController pageView2Controller;
   PageController pageViewController;
+  PageController periodicsController;
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -411,7 +413,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                       alignment: AlignmentDirectional(0, -0.35),
                       child: Container(
                         width: MediaQuery.of(context).size.width,
-                        height: 550,
+                        height: 650,
                         decoration: BoxDecoration(),
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
@@ -1315,6 +1317,9 @@ class _HomeWidgetState extends State<HomeWidget> {
                                           containerActionCacheRecordList =
                                           snapshot.data;
                                       return Container(
+                                        width:
+                                            MediaQuery.of(context).size.width,
+                                        height: 90,
                                         decoration: BoxDecoration(
                                           borderRadius:
                                               BorderRadius.circular(10),
@@ -1351,7 +1356,10 @@ class _HomeWidgetState extends State<HomeWidget> {
                                               width: MediaQuery.of(context)
                                                   .size
                                                   .width,
-                                              height: 120,
+                                              height: MediaQuery.of(context)
+                                                      .size
+                                                      .height *
+                                                  1,
                                               child: PageView.builder(
                                                 physics:
                                                     const NeverScrollableScrollPhysics(),
@@ -1455,10 +1463,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                                                               0),
                                                                           child:
                                                                               Text(
-                                                                            'Vous avez émis ${valueOrDefault<String>(
-                                                                              pageView2ActionCacheRecord.co2e.toString(),
-                                                                              '0',
-                                                                            )} kg de CO2 sur ${dateTimeFormat('d/M/y', pageView2ActionCacheRecord.date)}',
+                                                                            'Emissions du ${dateTimeFormat('d/M/y', pageView2ActionCacheRecord.date)} : ${pageView2ActionCacheRecord.co2e.toString()}',
                                                                             textAlign:
                                                                                 TextAlign.center,
                                                                             style: FlutterFlowTheme.of(context).subtitle1.override(
@@ -1478,10 +1483,10 @@ class _HomeWidgetState extends State<HomeWidget> {
                                                                               0),
                                                                           child:
                                                                               Text(
-                                                                            'Vous avez émis ${valueOrDefault<String>(
+                                                                            'Emission du jour : ${valueOrDefault<String>(
                                                                               pageView2ActionCacheRecord.co2e.toString(),
                                                                               '0',
-                                                                            )} kg de CO2 sur aujourd\'hui',
+                                                                            )}',
                                                                             textAlign:
                                                                                 TextAlign.center,
                                                                             style: FlutterFlowTheme.of(context).subtitle1.override(
@@ -1713,6 +1718,261 @@ class _HomeWidgetState extends State<HomeWidget> {
                                         ),
                                       );
                                     },
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Column(
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      20, 20, 20, 0),
+                                  child: Container(
+                                    width: MediaQuery.of(context).size.width,
+                                    height: 90,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    child: Container(
+                                      width: MediaQuery.of(context).size.width,
+                                      height:
+                                          MediaQuery.of(context).size.height *
+                                              1,
+                                      child: PageView(
+                                        physics:
+                                            const NeverScrollableScrollPhysics(),
+                                        controller: periodicsController ??=
+                                            PageController(initialPage: 0),
+                                        scrollDirection: Axis.horizontal,
+                                        children: [
+                                          Padding(
+                                            padding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    8, 0, 8, 0),
+                                            child: Container(
+                                              width: 100,
+                                              height: 120,
+                                              decoration: BoxDecoration(
+                                                color: Color(0xA9F77303),
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                              ),
+                                              child: Padding(
+                                                padding: EdgeInsetsDirectional
+                                                    .fromSTEB(15, 5, 15, 5),
+                                                child: Column(
+                                                  mainAxisSize:
+                                                      MainAxisSize.max,
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: [
+                                                    Row(
+                                                      mainAxisSize:
+                                                          MainAxisSize.min,
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceBetween,
+                                                      children: [
+                                                        Align(
+                                                          alignment:
+                                                              AlignmentDirectional(
+                                                                  0, 0),
+                                                          child: Text(
+                                                            'Vos émissions réccurrentes',
+                                                            textAlign: TextAlign
+                                                                .center,
+                                                            style: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .subtitle1
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Montserrat',
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .tertiaryColor,
+                                                                  fontSize: 15,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w500,
+                                                                ),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    Padding(
+                                                      padding:
+                                                          EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                                  0, 8, 0, 0),
+                                                      child: StreamBuilder<
+                                                          List<
+                                                              EnergyPeriodicsRecord>>(
+                                                        stream:
+                                                            queryEnergyPeriodicsRecord(
+                                                          queryBuilder: (energyPeriodicsRecord) =>
+                                                              energyPeriodicsRecord
+                                                                  .where(
+                                                                      'userId',
+                                                                      isEqualTo:
+                                                                          currentUserUid),
+                                                        ),
+                                                        builder: (context,
+                                                            snapshot) {
+                                                          // Customize what your widget looks like when it's loading.
+                                                          if (!snapshot
+                                                              .hasData) {
+                                                            return Center(
+                                                              child: SizedBox(
+                                                                width: 2,
+                                                                height: 2,
+                                                                child:
+                                                                    SpinKitRing(
+                                                                  color: Colors
+                                                                      .transparent,
+                                                                  size: 2,
+                                                                ),
+                                                              ),
+                                                            );
+                                                          }
+                                                          List<EnergyPeriodicsRecord>
+                                                              rowEnergyPeriodicsRecordList =
+                                                              snapshot.data;
+                                                          return SingleChildScrollView(
+                                                            scrollDirection:
+                                                                Axis.horizontal,
+                                                            child: Row(
+                                                              mainAxisSize:
+                                                                  MainAxisSize
+                                                                      .max,
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .center,
+                                                              children: List.generate(
+                                                                  rowEnergyPeriodicsRecordList
+                                                                      .length,
+                                                                  (rowIndex) {
+                                                                final rowEnergyPeriodicsRecord =
+                                                                    rowEnergyPeriodicsRecordList[
+                                                                        rowIndex];
+                                                                return Padding(
+                                                                  padding: EdgeInsetsDirectional
+                                                                      .fromSTEB(
+                                                                          0,
+                                                                          0,
+                                                                          10,
+                                                                          0),
+                                                                  child:
+                                                                      Container(
+                                                                    width: 40,
+                                                                    height: 40,
+                                                                    child:
+                                                                        Stack(
+                                                                      alignment:
+                                                                          AlignmentDirectional(
+                                                                              0,
+                                                                              0),
+                                                                      children: [
+                                                                        if ((rowEnergyPeriodicsRecord.energy) ==
+                                                                            'water')
+                                                                          Align(
+                                                                            alignment:
+                                                                                AlignmentDirectional(0, 0),
+                                                                            child:
+                                                                                Container(
+                                                                              width: 40,
+                                                                              height: 40,
+                                                                              clipBehavior: Clip.antiAlias,
+                                                                              decoration: BoxDecoration(
+                                                                                shape: BoxShape.circle,
+                                                                              ),
+                                                                              child: Image.asset(
+                                                                                'assets/images/water-drop.png',
+                                                                                fit: BoxFit.cover,
+                                                                              ),
+                                                                            ),
+                                                                          ),
+                                                                        if ((rowEnergyPeriodicsRecord.energy) ==
+                                                                            'gas')
+                                                                          InkWell(
+                                                                            onTap:
+                                                                                () async {
+                                                                              logFirebaseEvent('gazPeriodics-ON_TAP');
+                                                                              logFirebaseEvent('gazPeriodics-Update-Local-State');
+                                                                              setState(() => FFAppState().actionCO2 = rowEnergyPeriodicsRecord.co2e);
+                                                                              logFirebaseEvent('gazPeriodics-Bottom-Sheet');
+                                                                              await showModalBottomSheet(
+                                                                                isScrollControlled: true,
+                                                                                backgroundColor: Colors.transparent,
+                                                                                context: context,
+                                                                                builder: (context) {
+                                                                                  return Padding(
+                                                                                    padding: MediaQuery.of(context).viewInsets,
+                                                                                    child: Container(
+                                                                                      height: 500,
+                                                                                      child: GazFormPeriodicWidget(
+                                                                                        volume: rowEnergyPeriodicsRecord.volume,
+                                                                                        powertype: rowEnergyPeriodicsRecord.powertype,
+                                                                                        peopleSharing: rowEnergyPeriodicsRecord.peopleSharing,
+                                                                                        ref: rowEnergyPeriodicsRecord,
+                                                                                      ),
+                                                                                    ),
+                                                                                  );
+                                                                                },
+                                                                              );
+                                                                            },
+                                                                            child:
+                                                                                Container(
+                                                                              width: 40,
+                                                                              height: 40,
+                                                                              clipBehavior: Clip.antiAlias,
+                                                                              decoration: BoxDecoration(
+                                                                                shape: BoxShape.circle,
+                                                                              ),
+                                                                              child: Image.asset(
+                                                                                'assets/images/gas.png',
+                                                                                fit: BoxFit.cover,
+                                                                              ),
+                                                                            ),
+                                                                          ),
+                                                                        if ((rowEnergyPeriodicsRecord.energy) ==
+                                                                            'electricity')
+                                                                          Container(
+                                                                            width:
+                                                                                40,
+                                                                            height:
+                                                                                40,
+                                                                            clipBehavior:
+                                                                                Clip.antiAlias,
+                                                                            decoration:
+                                                                                BoxDecoration(
+                                                                              shape: BoxShape.circle,
+                                                                            ),
+                                                                            child:
+                                                                                Image.asset(
+                                                                              'assets/images/energy.png',
+                                                                              fit: BoxFit.cover,
+                                                                            ),
+                                                                          ),
+                                                                      ],
+                                                                    ),
+                                                                  ),
+                                                                );
+                                                              }),
+                                                            ),
+                                                          );
+                                                        },
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
                                   ),
                                 ),
                               ],
