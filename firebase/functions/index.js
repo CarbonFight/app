@@ -4,42 +4,6 @@ const { write } = require("firebase-functions/logger");
 admin.initializeApp();
 
 
-exports.updateScoreTransport = functions.region('europe-west6').firestore.document('/transportActions/{documentId}')
-     .onWrite(async (change, context) => {
-
-      // Retrieve userId, before change if delete, after change if update/create.
-      const userId = change.after.exists ? change.after.data().userId : change.before.data().userId;
-      await reCalculate(userId);
-});
-
-exports.updateScoreFood = functions.region('europe-west6').firestore.document('/foodActions/{documentId}')
-     .onWrite(async (change, context) => {
-
-      // Retrieve userId, before change if delete, after change if update/create.
-      const userId = change.after.exists ? change.after.data().userId : change.before.data().userId;
-      await reCalculate(userId);
-});
-
-exports.updateScoreEnergy = functions.region('europe-west6').firestore.document('/energyActions/{documentId}')
-     .onWrite(async (change, context) => {
-
-      // Retrieve userId, before change if delete, after change if update/create.
-      const userId = change.after.exists ? change.after.data().userId : change.before.data().userId;
-      await reCalculate(userId);
-});
-
-
-// Set initial values for new created users
-//exports.userInitialValues = functions.region('europe-west6').firestore.document('/users/{documentId}')
-//    .onCreate(async (snap, context) => {
-//      snap.ref.update({global_score: 0});
-//      snap.ref.update({level: 1});
-//      snap.ref.update({activity: 0});
-//      snap.ref.update({rank: 1});
-//      snap.ref.update({rank_size: 1});
-//      snap.ref.update({co2target: 12});
-//});
-
 
 // Setup initial values for new users
 exports.createdUserDefaultData = functions.region('europe-west6').auth.user().onCreate(async (user) => {
@@ -63,6 +27,8 @@ exports.createdUserDefaultData = functions.region('europe-west6').auth.user().on
     month1: 0,
     month2: 0,
     month3: 0,
+
+    periodics: 0,
 
     uid: user.uid
   });
@@ -183,8 +149,35 @@ exports.updateRanks = functions.region('europe-west6').firestore.document('/user
 });
 
 
-async function reCalculate(userId) {
+exports.updateScoreTransport = functions.region('europe-west6').firestore.document('/transportActions/{documentId}')
+     .onWrite(async (change, context) => {
+
+      // Retrieve userId, before change if delete, after change if update/create.
+      const userId = change.after.exists ? change.after.data().userId : change.before.data().userId;
+      await reCalculateActions(userId);
+});
+
+exports.updateScoreFood = functions.region('europe-west6').firestore.document('/foodActions/{documentId}')
+     .onWrite(async (change, context) => {
+
+      // Retrieve userId, before change if delete, after change if update/create.
+      const userId = change.after.exists ? change.after.data().userId : change.before.data().userId;
+      await reCalculateActions(userId);
+});
+
+exports.updateScoreEnergy = functions.region('europe-west6').firestore.document('/energyActions/{documentId}')
+     .onWrite(async (change, context) => {
+
+      // Retrieve userId, before change if delete, after change if update/create.
+      const userId = change.after.exists ? change.after.data().userId : change.before.data().userId;
+      await reCalculateActions(userId);
+});
+
+async function reCalculateActions(userId) {
   
+  // Set Paris Timezone (default is UTC, even if function TimeZone is Paris)
+  process.env.TZ = 'Europe/Paris' 
+
   var global_score = 0;
   var activity = 0;
   var level = 1;
@@ -275,6 +268,9 @@ async function reCalculate(userId) {
   });
   energyActions.forEach(doc => {
     actionDate = new Date(doc.get("created_time").toDate());
+    console.log('actionDate : ' + actionDate);
+    console.log('dateweek0 : ' + dateweek0);
+    console.log('dateDay0 : ' + dateDay0);
 
     if (actionDate >= dateDay0) { day0 += doc.get("co2e"); }
     else if (actionDate >= dateDay1 && actionDate < dateDay0) { day1 += doc.get("co2e"); }
@@ -334,7 +330,7 @@ async function reCalculate(userId) {
   }
 
   // Update in user table
-  const queryUser = await admin.firestore()      
+  await admin.firestore()      
   .collection('users')
   .where('uid', '==', userId)
   .limit(1)
@@ -351,7 +347,7 @@ async function reCalculate(userId) {
   });
 
     // Update in user table
-    const updateStats = await admin.firestore()      
+    await admin.firestore()      
     .collection('usersStats')
     .where('uid', '==', userId)
     .limit(1)
@@ -380,31 +376,48 @@ async function reCalculate(userId) {
 
       thing.ref.update(tmp);
     });
-
 }
 
+exports.updateScorePeriodics = functions.region('europe-west6').firestore.document('/energyPeriodics/{documentId}')
+  .onWrite(async (change, context) => {
 
-//exports.periodicsToActions = functions.region('europe-west6').pubsub.schedule('0 3 * * *').timeZone('Europe/Paris').onRun(async (context) => {
-//  const energyPeriodicsRef = admin.firestore().collection('energyPeriodics');
-//  const snapshot = await energyPeriodicsRef.get();
-//  if (snapshot.empty) {
-//    console.log('No matching documents.');
-//    return;
-//  } 
+  // Retrieve userId, before change if delete, after change if update/create.
+  const userId = change.after.exists ? change.after.data().userId : change.before.data().userId;
+  
+  var periodics = 0;
 
-//  snapshot.forEach(async doc => {
-//    // Writing new Action with Periodics fields
-//    const writeResult = await admin.firestore().collection('energyActions').add(doc.data());
-//    // Adding Timestamp which does not exist on periodics
-//    const timestamp = admin.firestore.Timestamp.now();
-//    writeResult.update({created_time: timestamp});
-//  });
+  const energyPeriodics = await admin.firestore()      
+  .collection('energyPeriodics')
+  .where('userId', '==', userId)
+  .get();
 
-//  return null;
-//  });
+  // Calculate day_score & global_score
+  energyPeriodics.forEach(doc => {
+    periodics += doc.get("co2e"); 
+  });
+
+  // Update in user table
+  await admin.firestore()      
+  .collection('usersStats')
+  .where('uid', '==', userId)
+  .limit(1)
+  .get()
+  .then(query => {
+    const thing = query.docs[0];
+    let tmp = thing.data();
+    
+    tmp.periodics = periodics;
+
+    thing.ref.update(tmp);
+  });
+});
+
 
 // At midnight : Reset users scores / New Cache / Flush Cache > 7 days (todo)
-exports.ResetScoresAndCache = functions.region('europe-west6').pubsub.schedule('0 0 * * *').timeZone('Europe/Paris').onRun(async (context) => {
+exports.ResetScoresCachePeriodics = functions.region('europe-west6').pubsub.schedule('0 0 * * *').timeZone('Europe/Paris').onRun(async (context) => {
+
+  // Set Paris Timezone (default is UTC, even if function TimeZone is Paris)
+  process.env.TZ = 'Europe/Paris' 
 
   // For each user
   const usersRef = admin.firestore().collection('users');   
@@ -442,8 +455,31 @@ exports.ResetScoresAndCache = functions.region('europe-west6').pubsub.schedule('
       const writeResult = await admin.firestore().collection('energyActions').add(energyPeriodic.data());
       writeResult.update({created_time: newTimestamp});
 
+
       // Recalculated is launched by adding new actions
+    }); // end Periodics > Actions
+  }); // end Foreach user
+
+  // Delete cache > 7 days
+  // Calculate periods
+  var dateDay0 = new Date(); dateDay0.setHours(0,0,0,0);
+  var dateDay7 = new Date(new Date().setDate(dateDay0.getDate() - 7)); dateDay7.setHours(0,0,0,0)
+
+  // Deletes all Cache > 7 days
+  var jobskill_query = admin.firestore().collection('actionCache').where('date','<=', dateDay7);
+  jobskill_query.get().then(function(querySnapshot) {
+    querySnapshot.forEach(function(doc) {
+      doc.ref.delete();
     });
   });
+
+  // Deletes all actionTypeCache > 7 days
+  var jobskill_query = admin.firestore().collection('actionTypeCache').where('date','<=', dateDay7);
+  jobskill_query.get().then(function(querySnapshot) {
+    querySnapshot.forEach(function(doc) {
+      doc.ref.delete();
+    });
+  });
+
   return null;
 });
