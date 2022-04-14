@@ -28,6 +28,10 @@ exports.createdUserDefaultData = functions.region('europe-west6').auth.user().on
     month2: 0,
     month3: 0,
 
+    transportDay0: 0,
+    energyDay0: 0,
+    foodDay0: 0,
+
     periodics: 0,
 
     uid: user.uid
@@ -202,6 +206,10 @@ async function reCalculateActions(userId) {
   var month2 = 0;
   var month3 = 0;
 
+  var transportDay0 = 0;
+  var energyDay0 = 0;
+  var foodDay0 = 0;
+
   // Calculate periods
   var dateDay0 = new Date(); dateDay0.setHours(0,0,0,0);
   var dateDay1 = new Date(new Date().setDate(dateDay0.getDate() - 1)); dateDay1.setHours(0,0,0,0)
@@ -244,7 +252,10 @@ async function reCalculateActions(userId) {
   tranportActions.forEach(doc => {
     actionDate = new Date(doc.get("created_time").toDate());
 
-    if (actionDate >= dateDay0) { day0 += doc.get("co2e"); }
+    if (actionDate >= dateDay0) { 
+      day0 += doc.get("co2e");
+      transportDay0 += doc.get("co2e");
+    }
     else if (actionDate >= dateDay1 && actionDate < dateDay0) { day1 += doc.get("co2e"); }
     else if (actionDate >= dateDay2 && actionDate < dateDay1) { day2 += doc.get("co2e"); }
     else if (actionDate >= dateDay3 && actionDate < dateDay2) { day3 += doc.get("co2e"); }
@@ -268,11 +279,11 @@ async function reCalculateActions(userId) {
   });
   energyActions.forEach(doc => {
     actionDate = new Date(doc.get("created_time").toDate());
-    console.log('actionDate : ' + actionDate);
-    console.log('dateweek0 : ' + dateweek0);
-    console.log('dateDay0 : ' + dateDay0);
 
-    if (actionDate >= dateDay0) { day0 += doc.get("co2e"); }
+    if (actionDate >= dateDay0) { 
+      day0 += doc.get("co2e");
+      energyDay0 += doc.get("co2e");
+    }
     else if (actionDate >= dateDay1 && actionDate < dateDay0) { day1 += doc.get("co2e"); }
     else if (actionDate >= dateDay2 && actionDate < dateDay1) { day2 += doc.get("co2e"); }
     else if (actionDate >= dateDay3 && actionDate < dateDay2) { day3 += doc.get("co2e"); }
@@ -296,7 +307,10 @@ async function reCalculateActions(userId) {
   foodActions.forEach(doc => {
     actionDate = new Date(doc.get("created_time").toDate());
 
-    if (actionDate >= dateDay0) { day0 += doc.get("co2e"); }
+    if (actionDate >= dateDay0) { 
+      day0 += doc.get("co2e");
+      foodDay0 += doc.get("co2e");
+    }
     else if (actionDate >= dateDay1 && actionDate < dateDay0) { day1 += doc.get("co2e"); }
     else if (actionDate >= dateDay2 && actionDate < dateDay1) { day2 += doc.get("co2e"); }
     else if (actionDate >= dateDay3 && actionDate < dateDay2) { day3 += doc.get("co2e"); }
@@ -373,6 +387,10 @@ async function reCalculateActions(userId) {
       tmp.month1 = month1;
       tmp.month2 = month2;
       tmp.month3 = month3;
+
+      tmp.transportDay0 = transportDay0;
+      tmp.energyDay0 = energyDay0;
+      tmp.foodDay0 = foodDay0;
 
       thing.ref.update(tmp);
     });
