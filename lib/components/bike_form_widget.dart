@@ -15,10 +15,10 @@ import 'package:google_fonts/google_fonts.dart';
 class BikeFormWidget extends StatefulWidget {
   const BikeFormWidget({
     Key key,
-    this.currentAction,
+    this.cache,
   }) : super(key: key);
 
-  final TransportActionsRecord currentAction;
+  final ActionCacheRecord cache;
 
   @override
   _BikeFormWidgetState createState() => _BikeFormWidgetState();
@@ -90,6 +90,8 @@ class _BikeFormWidgetState extends State<BikeFormWidget> {
                       size: 24,
                     ),
                     onPressed: () async {
+                      logFirebaseEvent('IconButton-ON_TAP');
+                      logFirebaseEvent('IconButton-Navigate-Back');
                       Navigator.pop(context);
                     },
                   ),
@@ -211,7 +213,7 @@ class _BikeFormWidgetState extends State<BikeFormWidget> {
                         children: [
                           Expanded(
                             child: FlutterFlowDropDown(
-                              options: ['Classic', 'Electricity'].toList(),
+                              options: ['Classique', 'Électrique'].toList(),
                               onChanged: (val) =>
                                   setState(() => energyValue = val),
                               width: 180,
@@ -253,6 +255,9 @@ class _BikeFormWidgetState extends State<BikeFormWidget> {
                                   EdgeInsetsDirectional.fromSTEB(0, 0, 10, 0),
                               child: InkWell(
                                 onTap: () async {
+                                  logFirebaseEvent('iconButton-ON_TAP');
+                                  logFirebaseEvent(
+                                      'iconButton-Update-Local-State');
                                   setState(() => FFAppState().actionCO2 =
                                       functions.transportActionsCO2e(
                                           int.parse(textController.text),
@@ -260,7 +265,7 @@ class _BikeFormWidgetState extends State<BikeFormWidget> {
                                           'owner',
                                           valueOrDefault<String>(
                                             energyValue,
-                                            'Classic',
+                                            'Classique',
                                           ),
                                           'bike'));
                                 },
@@ -286,16 +291,27 @@ class _BikeFormWidgetState extends State<BikeFormWidget> {
                                   EdgeInsetsDirectional.fromSTEB(10, 0, 0, 0),
                               child: InkWell(
                                 onTap: () async {
+                                  logFirebaseEvent('iconButton-ON_TAP');
+                                  logFirebaseEvent(
+                                      'iconButton-Update-Local-State');
+                                  setState(() => FFAppState().loading = true);
+                                  logFirebaseEvent(
+                                      'iconButton-Update-Local-State');
                                   setState(() => FFAppState().actionCO2 =
                                       functions.transportActionsCO2e(
                                           int.parse(textController.text),
-                                          'null',
+                                          '1',
                                           'null',
                                           valueOrDefault<String>(
                                             energyValue,
                                             'Thermique',
                                           ),
                                           'bike'));
+                                  logFirebaseEvent(
+                                      'iconButton-Update-Local-State');
+                                  setState(() =>
+                                      FFAppState().time = getCurrentTimestamp);
+                                  logFirebaseEvent('iconButton-Backend-Call');
 
                                   final transportActionsCreateData =
                                       createTransportActionsRecordData(
@@ -303,15 +319,30 @@ class _BikeFormWidgetState extends State<BikeFormWidget> {
                                     distance: int.parse(textController.text),
                                     userId: currentUserUid,
                                     powertype: 'Classic',
-                                    passengers: 'null',
+                                    passengers: '1',
                                     ownership: 'owner',
-                                    createdTime: getCurrentTimestamp,
+                                    createdTime: FFAppState().time,
                                     co2e: FFAppState().actionCO2,
                                   );
                                   await TransportActionsRecord.collection
                                       .doc()
                                       .set(transportActionsCreateData);
+                                  logFirebaseEvent('iconButton-Backend-Call');
+
+                                  final actionTypeCacheCreateData =
+                                      createActionTypeCacheRecordData(
+                                    actionCache: widget.cache.reference,
+                                    actionType: 'bike',
+                                    date: FFAppState().time,
+                                  );
+                                  await ActionTypeCacheRecord.collection
+                                      .doc()
+                                      .set(actionTypeCacheCreateData);
+                                  logFirebaseEvent('iconButton-Navigate-Back');
                                   Navigator.pop(context);
+                                  logFirebaseEvent(
+                                      'iconButton-Update-Local-State');
+                                  setState(() => FFAppState().loading = false);
                                 },
                                 child: IconButtonWidget(
                                   fillColor:

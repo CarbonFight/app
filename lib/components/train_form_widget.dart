@@ -15,11 +15,9 @@ import 'package:google_fonts/google_fonts.dart';
 class TrainFormWidget extends StatefulWidget {
   const TrainFormWidget({
     Key key,
-    this.currentAction,
     this.cache,
   }) : super(key: key);
 
-  final TransportActionsRecord currentAction;
   final ActionCacheRecord cache;
 
   @override
@@ -33,8 +31,7 @@ class _TrainFormWidgetState extends State<TrainFormWidget> {
   @override
   void initState() {
     super.initState();
-    textController =
-        TextEditingController(text: widget.currentAction.distance.toString());
+    textController = TextEditingController();
   }
 
   @override
@@ -93,6 +90,8 @@ class _TrainFormWidgetState extends State<TrainFormWidget> {
                       size: 24,
                     ),
                     onPressed: () async {
+                      logFirebaseEvent('IconButton-ON_TAP');
+                      logFirebaseEvent('IconButton-Navigate-Back');
                       Navigator.pop(context);
                     },
                   ),
@@ -214,8 +213,6 @@ class _TrainFormWidgetState extends State<TrainFormWidget> {
                         children: [
                           Expanded(
                             child: FlutterFlowDropDown(
-                              initialOption: powertypeValue ??=
-                                  widget.currentAction.powertype,
                               options: [
                                 'TER',
                                 'TGV',
@@ -265,6 +262,9 @@ class _TrainFormWidgetState extends State<TrainFormWidget> {
                                   EdgeInsetsDirectional.fromSTEB(0, 0, 10, 0),
                               child: InkWell(
                                 onTap: () async {
+                                  logFirebaseEvent('iconButton-ON_TAP');
+                                  logFirebaseEvent(
+                                      'iconButton-Update-Local-State');
                                   setState(() => FFAppState().actionCO2 =
                                       functions.transportActionsCO2e(
                                           int.parse(textController.text),
@@ -297,51 +297,106 @@ class _TrainFormWidgetState extends State<TrainFormWidget> {
                               Padding(
                                 padding:
                                     EdgeInsetsDirectional.fromSTEB(10, 0, 0, 0),
-                                child: InkWell(
-                                  onTap: () async {
-                                    setState(() => FFAppState().actionCO2 =
-                                        functions.transportActionsCO2e(
-                                            int.parse(textController.text),
-                                            'null',
-                                            'null',
-                                            valueOrDefault<String>(
-                                              powertypeValue,
-                                              'TER',
-                                            ),
-                                            'train'));
+                                child: StreamBuilder<ActionCacheRecord>(
+                                  stream: ActionCacheRecord.getDocument(
+                                      widget.cache.reference),
+                                  builder: (context, snapshot) {
+                                    // Customize what your widget looks like when it's loading.
+                                    if (!snapshot.hasData) {
+                                      return Center(
+                                        child: SizedBox(
+                                          width: 2,
+                                          height: 2,
+                                          child: SpinKitRing(
+                                            color: Colors.transparent,
+                                            size: 2,
+                                          ),
+                                        ),
+                                      );
+                                    }
+                                    final iconButtonActionCacheRecord =
+                                        snapshot.data;
+                                    return InkWell(
+                                      onTap: () async {
+                                        logFirebaseEvent('iconButton-ON_TAP');
+                                        logFirebaseEvent(
+                                            'iconButton-Update-Local-State');
+                                        setState(
+                                            () => FFAppState().loading = true);
+                                        logFirebaseEvent(
+                                            'iconButton-Update-Local-State');
+                                        setState(() => FFAppState().actionCO2 =
+                                            functions.transportActionsCO2e(
+                                                int.parse(textController.text),
+                                                '1',
+                                                'null',
+                                                valueOrDefault<String>(
+                                                  powertypeValue,
+                                                  'TER',
+                                                ),
+                                                'train'));
+                                        logFirebaseEvent(
+                                            'iconButton-Update-Local-State');
+                                        setState(() => FFAppState().time =
+                                            getCurrentTimestamp);
+                                        logFirebaseEvent(
+                                            'iconButton-Backend-Call');
 
-                                    final transportActionsCreateData =
-                                        createTransportActionsRecordData(
-                                      transport: 'train',
-                                      distance: int.parse(textController.text),
-                                      userId: currentUserUid,
-                                      powertype: valueOrDefault<String>(
-                                        powertypeValue,
-                                        'TER',
+                                        final transportActionsCreateData =
+                                            createTransportActionsRecordData(
+                                          transport: 'train',
+                                          distance:
+                                              int.parse(textController.text),
+                                          userId: currentUserUid,
+                                          powertype: valueOrDefault<String>(
+                                            powertypeValue,
+                                            'TER',
+                                          ),
+                                          passengers: '1',
+                                          ownership: 'owner',
+                                          createdTime: FFAppState().time,
+                                          co2e: FFAppState().actionCO2,
+                                        );
+                                        await TransportActionsRecord.collection
+                                            .doc()
+                                            .set(transportActionsCreateData);
+                                        logFirebaseEvent(
+                                            'iconButton-Backend-Call');
+
+                                        final actionTypeCacheCreateData =
+                                            createActionTypeCacheRecordData(
+                                          actionCache:
+                                              iconButtonActionCacheRecord
+                                                  .reference,
+                                          actionType: 'train',
+                                          date: FFAppState().time,
+                                        );
+                                        await ActionTypeCacheRecord.collection
+                                            .doc()
+                                            .set(actionTypeCacheCreateData);
+                                        logFirebaseEvent(
+                                            'iconButton-Navigate-Back');
+                                        Navigator.pop(context);
+                                        logFirebaseEvent(
+                                            'iconButton-Update-Local-State');
+                                        setState(
+                                            () => FFAppState().loading = false);
+                                      },
+                                      child: IconButtonWidget(
+                                        fillColor: FlutterFlowTheme.of(context)
+                                            .primaryColor,
+                                        fontColor: FlutterFlowTheme.of(context)
+                                            .tertiaryColor,
+                                        icon: Icon(
+                                          Icons.add_circle_outline,
+                                          color: FlutterFlowTheme.of(context)
+                                              .tertiaryColor,
+                                          size: 25,
+                                        ),
+                                        text: 'Ajouter',
                                       ),
-                                      passengers: 'null',
-                                      ownership: 'owner',
-                                      createdTime: getCurrentTimestamp,
-                                      co2e: FFAppState().actionCO2,
                                     );
-                                    await TransportActionsRecord.collection
-                                        .doc()
-                                        .set(transportActionsCreateData);
-                                    Navigator.pop(context);
                                   },
-                                  child: IconButtonWidget(
-                                    fillColor: FlutterFlowTheme.of(context)
-                                        .primaryColor,
-                                    fontColor: FlutterFlowTheme.of(context)
-                                        .tertiaryColor,
-                                    icon: Icon(
-                                      Icons.add_circle_outline,
-                                      color: FlutterFlowTheme.of(context)
-                                          .tertiaryColor,
-                                      size: 25,
-                                    ),
-                                    text: 'Ajouter',
-                                  ),
                                 ),
                               ),
                             ],

@@ -1,3 +1,4 @@
+import '../backend/backend.dart';
 import '../components/bread_form_widget.dart';
 import '../components/cheese_form_widget.dart';
 import '../components/coffee_form_widget.dart';
@@ -13,7 +14,12 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class FoodFormWidget extends StatefulWidget {
-  const FoodFormWidget({Key key}) : super(key: key);
+  const FoodFormWidget({
+    Key key,
+    this.cache,
+  }) : super(key: key);
+
+  final ActionCacheRecord cache;
 
   @override
   _FoodFormWidgetState createState() => _FoodFormWidgetState();
@@ -62,6 +68,8 @@ class _FoodFormWidgetState extends State<FoodFormWidget> {
                       size: 24,
                     ),
                     onPressed: () async {
+                      logFirebaseEvent('IconButton-ON_TAP');
+                      logFirebaseEvent('IconButton-Navigate-Back');
                       Navigator.pop(context);
                     },
                   ),
@@ -80,8 +88,12 @@ class _FoodFormWidgetState extends State<FoodFormWidget> {
                         children: [
                           InkWell(
                             onTap: () async {
+                              logFirebaseEvent('Container-ON_TAP');
+                              logFirebaseEvent('Container-Navigate-Back');
                               Navigator.pop(context);
+                              logFirebaseEvent('Container-Update-Local-State');
                               setState(() => FFAppState().actionCO2 = 0);
+                              logFirebaseEvent('Container-Bottom-Sheet');
                               await showModalBottomSheet(
                                 isScrollControlled: true,
                                 backgroundColor: Colors.transparent,
@@ -92,7 +104,9 @@ class _FoodFormWidgetState extends State<FoodFormWidget> {
                                     padding: MediaQuery.of(context).viewInsets,
                                     child: Container(
                                       height: 370,
-                                      child: StarterFormWidget(),
+                                      child: StarterFormWidget(
+                                        cache: widget.cache,
+                                      ),
                                     ),
                                   );
                                 },
@@ -138,8 +152,12 @@ class _FoodFormWidgetState extends State<FoodFormWidget> {
                           ),
                           InkWell(
                             onTap: () async {
+                              logFirebaseEvent('Container-ON_TAP');
+                              logFirebaseEvent('Container-Navigate-Back');
                               Navigator.pop(context);
+                              logFirebaseEvent('Container-Update-Local-State');
                               setState(() => FFAppState().actionCO2 = 0);
+                              logFirebaseEvent('Container-Bottom-Sheet');
                               await showModalBottomSheet(
                                 isScrollControlled: true,
                                 backgroundColor: Colors.transparent,
@@ -149,8 +167,10 @@ class _FoodFormWidgetState extends State<FoodFormWidget> {
                                   return Padding(
                                     padding: MediaQuery.of(context).viewInsets,
                                     child: Container(
-                                      height: 440,
-                                      child: MainFoodFormWidget(),
+                                      height: 640,
+                                      child: MainFoodFormWidget(
+                                        cache: widget.cache,
+                                      ),
                                     ),
                                   );
                                 },
@@ -205,8 +225,12 @@ class _FoodFormWidgetState extends State<FoodFormWidget> {
                         children: [
                           InkWell(
                             onTap: () async {
+                              logFirebaseEvent('Container-ON_TAP');
+                              logFirebaseEvent('Container-Navigate-Back');
                               Navigator.pop(context);
+                              logFirebaseEvent('Container-Update-Local-State');
                               setState(() => FFAppState().actionCO2 = 0);
+                              logFirebaseEvent('Container-Bottom-Sheet');
                               await showModalBottomSheet(
                                 isScrollControlled: true,
                                 backgroundColor: Colors.transparent,
@@ -217,7 +241,9 @@ class _FoodFormWidgetState extends State<FoodFormWidget> {
                                     padding: MediaQuery.of(context).viewInsets,
                                     child: Container(
                                       height: 450,
-                                      child: DesertFormWidget(),
+                                      child: DesertFormWidget(
+                                        cache: widget.cache,
+                                      ),
                                     ),
                                   );
                                 },
@@ -263,8 +289,12 @@ class _FoodFormWidgetState extends State<FoodFormWidget> {
                           ),
                           InkWell(
                             onTap: () async {
+                              logFirebaseEvent('Container-ON_TAP');
+                              logFirebaseEvent('Container-Navigate-Back');
                               Navigator.pop(context);
+                              logFirebaseEvent('Container-Update-Local-State');
                               setState(() => FFAppState().actionCO2 = 0);
+                              logFirebaseEvent('Container-Bottom-Sheet');
                               await showModalBottomSheet(
                                 isScrollControlled: true,
                                 backgroundColor: Colors.transparent,
@@ -275,7 +305,9 @@ class _FoodFormWidgetState extends State<FoodFormWidget> {
                                     padding: MediaQuery.of(context).viewInsets,
                                     child: Container(
                                       height: 470,
-                                      child: DrinksFormWidget(),
+                                      child: DrinksFormWidget(
+                                        cache: widget.cache,
+                                      ),
                                     ),
                                   );
                                 },
@@ -330,8 +362,12 @@ class _FoodFormWidgetState extends State<FoodFormWidget> {
                         children: [
                           InkWell(
                             onTap: () async {
+                              logFirebaseEvent('Container-ON_TAP');
+                              logFirebaseEvent('Container-Navigate-Back');
                               Navigator.pop(context);
+                              logFirebaseEvent('Container-Update-Local-State');
                               setState(() => FFAppState().actionCO2 = 0);
+                              logFirebaseEvent('Container-Bottom-Sheet');
                               await showModalBottomSheet(
                                 isScrollControlled: true,
                                 backgroundColor: Colors.transparent,
@@ -342,7 +378,9 @@ class _FoodFormWidgetState extends State<FoodFormWidget> {
                                     padding: MediaQuery.of(context).viewInsets,
                                     child: Container(
                                       height: 350,
-                                      child: CheeseFormWidget(),
+                                      child: CheeseFormWidget(
+                                        cache: widget.cache,
+                                      ),
                                     ),
                                   );
                                 },
@@ -388,8 +426,12 @@ class _FoodFormWidgetState extends State<FoodFormWidget> {
                           ),
                           InkWell(
                             onTap: () async {
+                              logFirebaseEvent('Container-ON_TAP');
+                              logFirebaseEvent('Container-Navigate-Back');
                               Navigator.pop(context);
+                              logFirebaseEvent('Container-Update-Local-State');
                               setState(() => FFAppState().actionCO2 = 0);
+                              logFirebaseEvent('Container-Bottom-Sheet');
                               await showModalBottomSheet(
                                 isScrollControlled: true,
                                 backgroundColor: Colors.transparent,
@@ -400,7 +442,9 @@ class _FoodFormWidgetState extends State<FoodFormWidget> {
                                     padding: MediaQuery.of(context).viewInsets,
                                     child: Container(
                                       height: 350,
-                                      child: BreadFormWidget(),
+                                      child: BreadFormWidget(
+                                        cache: widget.cache,
+                                      ),
                                     ),
                                   );
                                 },
@@ -458,8 +502,12 @@ class _FoodFormWidgetState extends State<FoodFormWidget> {
                   children: [
                     InkWell(
                       onTap: () async {
+                        logFirebaseEvent('Container-ON_TAP');
+                        logFirebaseEvent('Container-Navigate-Back');
                         Navigator.pop(context);
+                        logFirebaseEvent('Container-Update-Local-State');
                         setState(() => FFAppState().actionCO2 = 0);
+                        logFirebaseEvent('Container-Bottom-Sheet');
                         await showModalBottomSheet(
                           isScrollControlled: true,
                           backgroundColor: Colors.transparent,
@@ -470,7 +518,9 @@ class _FoodFormWidgetState extends State<FoodFormWidget> {
                               padding: MediaQuery.of(context).viewInsets,
                               child: Container(
                                 height: 380,
-                                child: CoffeeFormWidget(),
+                                child: CoffeeFormWidget(
+                                  cache: widget.cache,
+                                ),
                               ),
                             );
                           },

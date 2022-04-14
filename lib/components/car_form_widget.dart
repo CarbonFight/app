@@ -13,7 +13,12 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class CarFormWidget extends StatefulWidget {
-  const CarFormWidget({Key key}) : super(key: key);
+  const CarFormWidget({
+    Key key,
+    this.cache,
+  }) : super(key: key);
+
+  final ActionCacheRecord cache;
 
   @override
   _CarFormWidgetState createState() => _CarFormWidgetState();
@@ -87,6 +92,8 @@ class _CarFormWidgetState extends State<CarFormWidget> {
                       size: 24,
                     ),
                     onPressed: () async {
+                      logFirebaseEvent('IconButton-ON_TAP');
+                      logFirebaseEvent('IconButton-Navigate-Back');
                       Navigator.pop(context);
                     },
                   ),
@@ -256,9 +263,9 @@ class _CarFormWidgetState extends State<CarFormWidget> {
                           Expanded(
                             child: FlutterFlowDropDown(
                               options: [
-                                'Owner',
-                                'Short rent',
-                                'Long rent',
+                                'Propriétaire',
+                                'Location courte',
+                                'Location longue',
                                 'Taxi'
                               ].toList(),
                               onChanged: (val) =>
@@ -297,8 +304,8 @@ class _CarFormWidgetState extends State<CarFormWidget> {
                         children: [
                           Expanded(
                             child: FlutterFlowDropDown(
-                              options:
-                                  ['Thermic', 'Hybrid', 'Electric'].toList(),
+                              options: ['Thermique', 'Hybride', 'Électrique']
+                                  .toList(),
                               onChanged: (val) =>
                                   setState(() => energyValue = val),
                               width: 180,
@@ -340,6 +347,9 @@ class _CarFormWidgetState extends State<CarFormWidget> {
                                   EdgeInsetsDirectional.fromSTEB(0, 0, 10, 0),
                               child: InkWell(
                                 onTap: () async {
+                                  logFirebaseEvent('iconButton-ON_TAP');
+                                  logFirebaseEvent(
+                                      'iconButton-Update-Local-State');
                                   setState(() => FFAppState().actionCO2 =
                                       functions.transportActionsCO2e(
                                           int.parse(textController.text),
@@ -353,7 +363,7 @@ class _CarFormWidgetState extends State<CarFormWidget> {
                                           ),
                                           valueOrDefault<String>(
                                             energyValue,
-                                            'thermic',
+                                            'Thermique',
                                           ),
                                           'car'));
                                 },
@@ -379,12 +389,18 @@ class _CarFormWidgetState extends State<CarFormWidget> {
                                   EdgeInsetsDirectional.fromSTEB(10, 0, 0, 0),
                               child: InkWell(
                                 onTap: () async {
+                                  logFirebaseEvent('iconButton-ON_TAP');
+                                  logFirebaseEvent(
+                                      'iconButton-Update-Local-State');
+                                  setState(() => FFAppState().loading = true);
+                                  logFirebaseEvent(
+                                      'iconButton-Update-Local-State');
                                   setState(() => FFAppState().actionCO2 =
                                       functions.transportActionsCO2e(
                                           int.parse(textController.text),
                                           valueOrDefault<String>(
                                             passengersValue,
-                                            'null',
+                                            '1',
                                           ),
                                           valueOrDefault<String>(
                                             ownershipValue,
@@ -392,9 +408,14 @@ class _CarFormWidgetState extends State<CarFormWidget> {
                                           ),
                                           valueOrDefault<String>(
                                             energyValue,
-                                            'thermic',
+                                            'Thermique',
                                           ),
                                           'car'));
+                                  logFirebaseEvent(
+                                      'iconButton-Update-Local-State');
+                                  setState(() =>
+                                      FFAppState().time = getCurrentTimestamp);
+                                  logFirebaseEvent('iconButton-Backend-Call');
 
                                   final transportActionsCreateData =
                                       createTransportActionsRecordData(
@@ -402,15 +423,33 @@ class _CarFormWidgetState extends State<CarFormWidget> {
                                     distance: int.parse(textController.text),
                                     userId: currentUserUid,
                                     powertype: 'thermic',
-                                    passengers: passengersValue,
+                                    passengers: valueOrDefault<String>(
+                                      passengersValue,
+                                      '1',
+                                    ),
                                     ownership: 'owner',
-                                    createdTime: getCurrentTimestamp,
+                                    createdTime: FFAppState().time,
                                     co2e: FFAppState().actionCO2,
                                   );
                                   await TransportActionsRecord.collection
                                       .doc()
                                       .set(transportActionsCreateData);
+                                  logFirebaseEvent('iconButton-Backend-Call');
+
+                                  final actionTypeCacheCreateData =
+                                      createActionTypeCacheRecordData(
+                                    actionCache: widget.cache.reference,
+                                    actionType: 'car',
+                                    date: FFAppState().time,
+                                  );
+                                  await ActionTypeCacheRecord.collection
+                                      .doc()
+                                      .set(actionTypeCacheCreateData);
+                                  logFirebaseEvent('iconButton-Navigate-Back');
                                   Navigator.pop(context);
+                                  logFirebaseEvent(
+                                      'iconButton-Update-Local-State');
+                                  setState(() => FFAppState().loading = false);
                                 },
                                 child: IconButtonWidget(
                                   fillColor:

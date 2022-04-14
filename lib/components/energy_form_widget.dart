@@ -1,3 +1,4 @@
+import '../backend/backend.dart';
 import '../components/electricity_form_widget.dart';
 import '../components/gaz_form_widget.dart';
 import '../components/water_form_widget.dart';
@@ -9,7 +10,12 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class EnergyFormWidget extends StatefulWidget {
-  const EnergyFormWidget({Key key}) : super(key: key);
+  const EnergyFormWidget({
+    Key key,
+    this.actioncache,
+  }) : super(key: key);
+
+  final ActionCacheRecord actioncache;
 
   @override
   _EnergyFormWidgetState createState() => _EnergyFormWidgetState();
@@ -58,6 +64,8 @@ class _EnergyFormWidgetState extends State<EnergyFormWidget> {
                       size: 24,
                     ),
                     onPressed: () async {
+                      logFirebaseEvent('IconButton-ON_TAP');
+                      logFirebaseEvent('IconButton-Navigate-Back');
                       Navigator.pop(context);
                     },
                   ),
@@ -76,8 +84,12 @@ class _EnergyFormWidgetState extends State<EnergyFormWidget> {
                         children: [
                           InkWell(
                             onTap: () async {
+                              logFirebaseEvent('Container-ON_TAP');
+                              logFirebaseEvent('Container-Navigate-Back');
                               Navigator.pop(context);
+                              logFirebaseEvent('Container-Update-Local-State');
                               setState(() => FFAppState().actionCO2 = 0);
+                              logFirebaseEvent('Container-Bottom-Sheet');
                               await showModalBottomSheet(
                                 isScrollControlled: true,
                                 backgroundColor: Colors.transparent,
@@ -88,7 +100,9 @@ class _EnergyFormWidgetState extends State<EnergyFormWidget> {
                                     padding: MediaQuery.of(context).viewInsets,
                                     child: Container(
                                       height: 490,
-                                      child: ElectricityFormWidget(),
+                                      child: ElectricityFormWidget(
+                                        cache: widget.actioncache,
+                                      ),
                                     ),
                                   );
                                 },
@@ -134,8 +148,12 @@ class _EnergyFormWidgetState extends State<EnergyFormWidget> {
                           ),
                           InkWell(
                             onTap: () async {
+                              logFirebaseEvent('Container-ON_TAP');
+                              logFirebaseEvent('Container-Navigate-Back');
                               Navigator.pop(context);
+                              logFirebaseEvent('Container-Update-Local-State');
                               setState(() => FFAppState().actionCO2 = 0);
+                              logFirebaseEvent('Container-Bottom-Sheet');
                               await showModalBottomSheet(
                                 isScrollControlled: true,
                                 backgroundColor: Colors.transparent,
@@ -145,8 +163,10 @@ class _EnergyFormWidgetState extends State<EnergyFormWidget> {
                                   return Padding(
                                     padding: MediaQuery.of(context).viewInsets,
                                     child: Container(
-                                      height: 490,
-                                      child: GazFormWidget(),
+                                      height: 480,
+                                      child: GazFormWidget(
+                                        cache: widget.actioncache,
+                                      ),
                                     ),
                                   );
                                 },
@@ -201,8 +221,12 @@ class _EnergyFormWidgetState extends State<EnergyFormWidget> {
                         children: [
                           InkWell(
                             onTap: () async {
+                              logFirebaseEvent('Container-ON_TAP');
+                              logFirebaseEvent('Container-Navigate-Back');
                               Navigator.pop(context);
+                              logFirebaseEvent('Container-Update-Local-State');
                               setState(() => FFAppState().actionCO2 = 0);
+                              logFirebaseEvent('Container-Bottom-Sheet');
                               await showModalBottomSheet(
                                 isScrollControlled: true,
                                 backgroundColor: Colors.transparent,
@@ -213,7 +237,9 @@ class _EnergyFormWidgetState extends State<EnergyFormWidget> {
                                     padding: MediaQuery.of(context).viewInsets,
                                     child: Container(
                                       height: 450,
-                                      child: WaterFormWidget(),
+                                      child: WaterFormWidget(
+                                        cache: widget.actioncache,
+                                      ),
                                     ),
                                   );
                                 },

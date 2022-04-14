@@ -15,6 +15,20 @@
       ]
     },
     {
+      "collectionGroup": "actionTypeCache",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "actionCache",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "date",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
       "collectionGroup": "users",
       "queryScope": "COLLECTION",
       "fields": [
@@ -25,6 +39,18 @@
         {
           "fieldPath": "global_score",
           "order": "ASCENDING"
+        }
+      ]
+    }
+  ],
+  "fieldOverrides": [
+    {
+      "collectionGroup": "fcm_tokens",
+      "fieldPath": "fcm_token",
+      "indexes": [
+        {
+          "order": "ASCENDING",
+          "queryScope": "COLLECTION_GROUP"
         }
       ]
     }

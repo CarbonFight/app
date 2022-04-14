@@ -1,3 +1,4 @@
+import '../backend/backend.dart';
 import '../components/bike_form_widget.dart';
 import '../components/bus_form_widget.dart';
 import '../components/car_form_widget.dart';
@@ -15,7 +16,12 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class TransportFormWidget extends StatefulWidget {
-  const TransportFormWidget({Key key}) : super(key: key);
+  const TransportFormWidget({
+    Key key,
+    this.cache,
+  }) : super(key: key);
+
+  final ActionCacheRecord cache;
 
   @override
   _TransportFormWidgetState createState() => _TransportFormWidgetState();
@@ -64,6 +70,8 @@ class _TransportFormWidgetState extends State<TransportFormWidget> {
                       size: 24,
                     ),
                     onPressed: () async {
+                      logFirebaseEvent('IconButton-ON_TAP');
+                      logFirebaseEvent('IconButton-Navigate-Back');
                       Navigator.pop(context);
                     },
                   ),
@@ -82,8 +90,12 @@ class _TransportFormWidgetState extends State<TransportFormWidget> {
                         children: [
                           InkWell(
                             onTap: () async {
+                              logFirebaseEvent('Container-ON_TAP');
+                              logFirebaseEvent('Container-Navigate-Back');
                               Navigator.pop(context);
+                              logFirebaseEvent('Container-Update-Local-State');
                               setState(() => FFAppState().actionCO2 = 0);
+                              logFirebaseEvent('Container-Bottom-Sheet');
                               await showModalBottomSheet(
                                 isScrollControlled: true,
                                 backgroundColor: Colors.transparent,
@@ -94,7 +106,9 @@ class _TransportFormWidgetState extends State<TransportFormWidget> {
                                     padding: MediaQuery.of(context).viewInsets,
                                     child: Container(
                                       height: 550,
-                                      child: CarFormWidget(),
+                                      child: CarFormWidget(
+                                        cache: widget.cache,
+                                      ),
                                     ),
                                   );
                                 },
@@ -140,8 +154,12 @@ class _TransportFormWidgetState extends State<TransportFormWidget> {
                           ),
                           InkWell(
                             onTap: () async {
+                              logFirebaseEvent('Container-ON_TAP');
+                              logFirebaseEvent('Container-Navigate-Back');
                               Navigator.pop(context);
+                              logFirebaseEvent('Container-Update-Local-State');
                               setState(() => FFAppState().actionCO2 = 0);
+                              logFirebaseEvent('Container-Bottom-Sheet');
                               await showModalBottomSheet(
                                 isScrollControlled: true,
                                 backgroundColor: Colors.transparent,
@@ -152,7 +170,9 @@ class _TransportFormWidgetState extends State<TransportFormWidget> {
                                     padding: MediaQuery.of(context).viewInsets,
                                     child: Container(
                                       height: 430,
-                                      child: BusFormWidget(),
+                                      child: BusFormWidget(
+                                        cache: widget.cache,
+                                      ),
                                     ),
                                   );
                                 },
@@ -207,8 +227,12 @@ class _TransportFormWidgetState extends State<TransportFormWidget> {
                         children: [
                           InkWell(
                             onTap: () async {
+                              logFirebaseEvent('Container-ON_TAP');
+                              logFirebaseEvent('Container-Navigate-Back');
                               Navigator.pop(context);
+                              logFirebaseEvent('Container-Update-Local-State');
                               setState(() => FFAppState().actionCO2 = 0);
+                              logFirebaseEvent('Container-Bottom-Sheet');
                               await showModalBottomSheet(
                                 isScrollControlled: true,
                                 backgroundColor: Colors.transparent,
@@ -219,7 +243,9 @@ class _TransportFormWidgetState extends State<TransportFormWidget> {
                                     padding: MediaQuery.of(context).viewInsets,
                                     child: Container(
                                       height: 480,
-                                      child: ScooterFormWidget(),
+                                      child: ScooterFormWidget(
+                                        cache: widget.cache,
+                                      ),
                                     ),
                                   );
                                 },
@@ -265,8 +291,12 @@ class _TransportFormWidgetState extends State<TransportFormWidget> {
                           ),
                           InkWell(
                             onTap: () async {
+                              logFirebaseEvent('Container-ON_TAP');
+                              logFirebaseEvent('Container-Navigate-Back');
                               Navigator.pop(context);
+                              logFirebaseEvent('Container-Update-Local-State');
                               setState(() => FFAppState().actionCO2 = 0);
+                              logFirebaseEvent('Container-Bottom-Sheet');
                               await showModalBottomSheet(
                                 isScrollControlled: true,
                                 backgroundColor: Colors.transparent,
@@ -277,7 +307,9 @@ class _TransportFormWidgetState extends State<TransportFormWidget> {
                                     padding: MediaQuery.of(context).viewInsets,
                                     child: Container(
                                       height: 300,
-                                      child: MotoFormWidget(),
+                                      child: MotoFormWidget(
+                                        cache: widget.cache,
+                                      ),
                                     ),
                                   );
                                 },
@@ -332,19 +364,24 @@ class _TransportFormWidgetState extends State<TransportFormWidget> {
                         children: [
                           InkWell(
                             onTap: () async {
+                              logFirebaseEvent('Container-ON_TAP');
+                              logFirebaseEvent('Container-Navigate-Back');
                               Navigator.pop(context);
+                              logFirebaseEvent('Container-Update-Local-State');
                               setState(() => FFAppState().actionCO2 = 0);
+                              logFirebaseEvent('Container-Bottom-Sheet');
                               await showModalBottomSheet(
                                 isScrollControlled: true,
                                 backgroundColor: Colors.transparent,
-                                barrierColor: Color(0xBF000000),
                                 context: context,
                                 builder: (context) {
                                   return Padding(
                                     padding: MediaQuery.of(context).viewInsets,
                                     child: Container(
                                       height: 450,
-                                      child: TrainFormWidget(),
+                                      child: TrainFormWidget(
+                                        cache: widget.cache,
+                                      ),
                                     ),
                                   );
                                 },
@@ -390,8 +427,12 @@ class _TransportFormWidgetState extends State<TransportFormWidget> {
                           ),
                           InkWell(
                             onTap: () async {
+                              logFirebaseEvent('Container-ON_TAP');
+                              logFirebaseEvent('Container-Navigate-Back');
                               Navigator.pop(context);
+                              logFirebaseEvent('Container-Update-Local-State');
                               setState(() => FFAppState().actionCO2 = 0);
+                              logFirebaseEvent('Container-Bottom-Sheet');
                               await showModalBottomSheet(
                                 isScrollControlled: true,
                                 backgroundColor: Colors.transparent,
@@ -402,7 +443,9 @@ class _TransportFormWidgetState extends State<TransportFormWidget> {
                                     padding: MediaQuery.of(context).viewInsets,
                                     child: Container(
                                       height: 330,
-                                      child: MetroFormWidget(),
+                                      child: MetroFormWidget(
+                                        cache: widget.cache,
+                                      ),
                                     ),
                                   );
                                 },
@@ -460,8 +503,12 @@ class _TransportFormWidgetState extends State<TransportFormWidget> {
                   children: [
                     InkWell(
                       onTap: () async {
+                        logFirebaseEvent('Container-ON_TAP');
+                        logFirebaseEvent('Container-Navigate-Back');
                         Navigator.pop(context);
+                        logFirebaseEvent('Container-Update-Local-State');
                         setState(() => FFAppState().actionCO2 = 0);
+                        logFirebaseEvent('Container-Bottom-Sheet');
                         await showModalBottomSheet(
                           isScrollControlled: true,
                           backgroundColor: Colors.transparent,
@@ -472,7 +519,9 @@ class _TransportFormWidgetState extends State<TransportFormWidget> {
                               padding: MediaQuery.of(context).viewInsets,
                               child: Container(
                                 height: 300,
-                                child: FlightFormWidget(),
+                                child: FlightFormWidget(
+                                  cache: widget.cache,
+                                ),
                               ),
                             );
                           },
@@ -517,8 +566,12 @@ class _TransportFormWidgetState extends State<TransportFormWidget> {
                     ),
                     InkWell(
                       onTap: () async {
+                        logFirebaseEvent('Container-ON_TAP');
+                        logFirebaseEvent('Container-Navigate-Back');
                         Navigator.pop(context);
+                        logFirebaseEvent('Container-Update-Local-State');
                         setState(() => FFAppState().actionCO2 = 0);
+                        logFirebaseEvent('Container-Bottom-Sheet');
                         await showModalBottomSheet(
                           isScrollControlled: true,
                           backgroundColor: Colors.transparent,
@@ -529,7 +582,9 @@ class _TransportFormWidgetState extends State<TransportFormWidget> {
                               padding: MediaQuery.of(context).viewInsets,
                               child: Container(
                                 height: 430,
-                                child: BikeFormWidget(),
+                                child: BikeFormWidget(
+                                  cache: widget.cache,
+                                ),
                               ),
                             );
                           },

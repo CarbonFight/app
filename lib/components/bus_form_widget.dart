@@ -15,10 +15,10 @@ import 'package:google_fonts/google_fonts.dart';
 class BusFormWidget extends StatefulWidget {
   const BusFormWidget({
     Key key,
-    this.currentAction,
+    this.cache,
   }) : super(key: key);
 
-  final TransportActionsRecord currentAction;
+  final ActionCacheRecord cache;
 
   @override
   _BusFormWidgetState createState() => _BusFormWidgetState();
@@ -90,6 +90,8 @@ class _BusFormWidgetState extends State<BusFormWidget> {
                       size: 24,
                     ),
                     onPressed: () async {
+                      logFirebaseEvent('IconButton-ON_TAP');
+                      logFirebaseEvent('IconButton-Navigate-Back');
                       Navigator.pop(context);
                     },
                   ),
@@ -214,7 +216,7 @@ class _BusFormWidgetState extends State<BusFormWidget> {
                               options: [
                                 'Thermique',
                                 'Gaz Naturel',
-                                'Electrique'
+                                'Électrique'
                               ].toList(),
                               onChanged: (val) =>
                                   setState(() => energyValue = val),
@@ -257,6 +259,9 @@ class _BusFormWidgetState extends State<BusFormWidget> {
                                   EdgeInsetsDirectional.fromSTEB(0, 0, 10, 0),
                               child: InkWell(
                                 onTap: () async {
+                                  logFirebaseEvent('iconButton-ON_TAP');
+                                  logFirebaseEvent(
+                                      'iconButton-Update-Local-State');
                                   setState(() => FFAppState().actionCO2 =
                                       functions.transportActionsCO2e(
                                           int.parse(distanceController.text),
@@ -290,33 +295,59 @@ class _BusFormWidgetState extends State<BusFormWidget> {
                                   EdgeInsetsDirectional.fromSTEB(10, 0, 0, 0),
                               child: InkWell(
                                 onTap: () async {
+                                  logFirebaseEvent('iconButton-ON_TAP');
+                                  logFirebaseEvent(
+                                      'iconButton-Update-Local-State');
+                                  setState(() => FFAppState().loading = true);
+                                  logFirebaseEvent(
+                                      'iconButton-Update-Local-State');
                                   setState(() => FFAppState().actionCO2 =
                                       functions.transportActionsCO2e(
                                           int.parse(distanceController.text),
-                                          'null',
+                                          '1',
                                           'null',
                                           valueOrDefault<String>(
                                             energyValue,
                                             'Thermique',
                                           ),
                                           'bus'));
+                                  logFirebaseEvent(
+                                      'iconButton-Update-Local-State');
+                                  setState(() =>
+                                      FFAppState().time = getCurrentTimestamp);
+                                  logFirebaseEvent('iconButton-Backend-Call');
 
                                   final transportActionsCreateData =
                                       createTransportActionsRecordData(
-                                    transport: 'car',
+                                    transport: 'bus',
                                     distance:
                                         int.parse(distanceController.text),
                                     userId: currentUserUid,
                                     powertype: 'Thermique',
-                                    passengers: 'null',
+                                    passengers: '1',
                                     ownership: 'owner',
-                                    createdTime: getCurrentTimestamp,
+                                    createdTime: FFAppState().time,
                                     co2e: FFAppState().actionCO2,
                                   );
                                   await TransportActionsRecord.collection
                                       .doc()
                                       .set(transportActionsCreateData);
+                                  logFirebaseEvent('iconButton-Backend-Call');
+
+                                  final actionTypeCacheCreateData =
+                                      createActionTypeCacheRecordData(
+                                    actionCache: widget.cache.reference,
+                                    actionType: 'bus',
+                                    date: FFAppState().time,
+                                  );
+                                  await ActionTypeCacheRecord.collection
+                                      .doc()
+                                      .set(actionTypeCacheCreateData);
+                                  logFirebaseEvent('iconButton-Navigate-Back');
                                   Navigator.pop(context);
+                                  logFirebaseEvent(
+                                      'iconButton-Update-Local-State');
+                                  setState(() => FFAppState().loading = false);
                                 },
                                 child: IconButtonWidget(
                                   fillColor:

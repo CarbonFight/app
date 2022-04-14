@@ -24,13 +24,13 @@ int transportActionsCO2e(
     // Default is Thermic
     double co2powertype = 193;
     switch (powertype) {
-      case "Thermic":
+      case "Thermique":
         co2powertype = 193;
         break;
-      case "Electricity":
+      case "Électrique":
         co2powertype = 19.8;
         break;
-      case "Hybrid":
+      case "Hybride":
         co2powertype = 50;
         break;
     }
@@ -39,13 +39,13 @@ int transportActionsCO2e(
     // Default is Owner
     double co2ownership = 1;
     switch (ownership) {
-      case "Owner":
+      case "Propriétaire":
         co2ownership = 1;
         break;
-      case "Short rent":
+      case "Location courte":
         co2ownership = 0.6;
         break;
-      case "Long rent":
+      case "Location longue":
         co2ownership = 0.8;
         break;
       case "Taxi":
@@ -63,10 +63,10 @@ int transportActionsCO2e(
     // Default is Classic
     double co2powertype = 0;
     switch (powertype) {
-      case "Classic":
+      case "Classique":
         co2powertype = 0;
         break;
-      case "Electricity":
+      case "Électrique":
         co2powertype = 2;
         break;
     }
@@ -129,7 +129,7 @@ int transportActionsCO2e(
       case "Thermique":
         co2perkm = 103;
         break;
-      case "Electrique":
+      case "Électrique":
         co2perkm = 9.5;
         break;
       case "Gaz Naturel":
@@ -142,10 +142,10 @@ int transportActionsCO2e(
     // Default is Thermic
     double co2powertype = 61.6;
     switch (powertype) {
-      case "Thermic":
+      case "Thermique":
         co2powertype = 61.6;
         break;
-      case "Electricity":
+      case "Électrique":
         co2powertype = 4.1;
         break;
     }
@@ -154,13 +154,13 @@ int transportActionsCO2e(
     // Default is Owner
     double co2ownership = 1;
     switch (ownership) {
-      case "Owner":
+      case "Propriétaire":
         co2ownership = 1;
         break;
-      case "Short rent":
+      case "Location longue":
         co2ownership = 0.6;
         break;
-      case "Long rent":
+      case "Location courte":
         co2ownership = 0.8;
         break;
     }
@@ -246,13 +246,13 @@ int energyPeriodicsCO2e(
     // Default is Natural
     double co2powertype = 239;
     switch (powertype) {
-      case "Natural":
+      case "Gaz naturel":
         co2powertype = 239;
         break;
-      case "Cokerie":
+      case "Gaz de cokerie":
         co2powertype = 171;
         break;
-      case "Furnace":
+      case "Gaz de haut fourneau":
         co2powertype = 968;
         break;
     }
@@ -478,15 +478,15 @@ int foodActionsCO2e(
 double percentProgressBar(
   int co2e,
   String period,
-  double co2target,
+  int co2target,
 ) {
   //int planet = 3300; // Green : what the planet can support
   //int frenchAverage = 12500; // Yellow french avarage
   //int usaAverage = 40000; // Red USA average
   // More is black
 
-  double co2targetGrammes = co2target * 1000;
-  double threshold = co2targetGrammes;
+  int co2targetGrammes = co2target * 1000;
+  int threshold = co2targetGrammes;
 
   if (period == "day") {
     threshold = co2targetGrammes;
@@ -501,6 +501,51 @@ double percentProgressBar(
   if (percent > 1) {
     return 1;
   } else {
-    return percent;
+    // 1 digit only
+    return double.parse(percent.toStringAsFixed(2));
+  }
+}
+
+String printTarget(
+  String period,
+  int co2target,
+) {
+  int periodTarget = 0;
+
+  if (period == "day") {
+    periodTarget = co2target;
+  } else if (period == "week") {
+    periodTarget = co2target * 7;
+  } else if (period == "month") {
+    periodTarget = co2target * 30;
+  }
+
+  return periodTarget.toString() + " kg";
+}
+
+String printLevel(int level) {
+  String levelString = "Débutant";
+
+  if (level == 1) {
+    return "Débutant";
+  } else if (level == 2) {
+    return "Confirmé";
+  } else if (level == 3) {
+    return "CarbonFighter";
+  }
+
+  return levelString;
+}
+
+bool primed(
+  int actionCache,
+  int index,
+) {
+  // Add your function code here!
+  var val = actionCache - index;
+  if (val == 1) {
+    return false;
+  } else {
+    return true;
   }
 }

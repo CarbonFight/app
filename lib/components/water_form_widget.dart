@@ -12,7 +12,12 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class WaterFormWidget extends StatefulWidget {
-  const WaterFormWidget({Key key}) : super(key: key);
+  const WaterFormWidget({
+    Key key,
+    this.cache,
+  }) : super(key: key);
+
+  final ActionCacheRecord cache;
 
   @override
   _WaterFormWidgetState createState() => _WaterFormWidgetState();
@@ -84,6 +89,8 @@ class _WaterFormWidgetState extends State<WaterFormWidget> {
                       size: 24,
                     ),
                     onPressed: () async {
+                      logFirebaseEvent('IconButton-ON_TAP');
+                      logFirebaseEvent('IconButton-Navigate-Back');
                       Navigator.pop(context);
                     },
                   ),
@@ -243,6 +250,9 @@ class _WaterFormWidgetState extends State<WaterFormWidget> {
                                   EdgeInsetsDirectional.fromSTEB(0, 0, 10, 0),
                               child: InkWell(
                                 onTap: () async {
+                                  logFirebaseEvent('iconButton-ON_TAP');
+                                  logFirebaseEvent(
+                                      'iconButton-Update-Local-State');
                                   setState(() => FFAppState().actionCO2 =
                                       functions.energyPeriodicsCO2e(
                                           'water',
@@ -275,6 +285,9 @@ class _WaterFormWidgetState extends State<WaterFormWidget> {
                                   EdgeInsetsDirectional.fromSTEB(10, 0, 0, 0),
                               child: InkWell(
                                 onTap: () async {
+                                  logFirebaseEvent('iconButton-ON_TAP');
+                                  logFirebaseEvent(
+                                      'iconButton-Update-Local-State');
                                   setState(() => FFAppState().actionCO2 =
                                       functions.energyPeriodicsCO2e(
                                           'water',
@@ -284,6 +297,11 @@ class _WaterFormWidgetState extends State<WaterFormWidget> {
                                             peopleSharingValue,
                                             '1',
                                           )));
+                                  logFirebaseEvent(
+                                      'iconButton-Update-Local-State');
+                                  setState(() =>
+                                      FFAppState().time = getCurrentTimestamp);
+                                  logFirebaseEvent('iconButton-Backend-Call');
 
                                   final energyActionsCreateData =
                                       createEnergyActionsRecordData(
@@ -301,6 +319,7 @@ class _WaterFormWidgetState extends State<WaterFormWidget> {
                                   await EnergyActionsRecord.collection
                                       .doc()
                                       .set(energyActionsCreateData);
+                                  logFirebaseEvent('iconButton-Backend-Call');
 
                                   final energyPeriodicsCreateData =
                                       createEnergyPeriodicsRecordData(
@@ -317,6 +336,18 @@ class _WaterFormWidgetState extends State<WaterFormWidget> {
                                   await EnergyPeriodicsRecord.collection
                                       .doc()
                                       .set(energyPeriodicsCreateData);
+                                  logFirebaseEvent('iconButton-Backend-Call');
+
+                                  final actionTypeCacheCreateData =
+                                      createActionTypeCacheRecordData(
+                                    actionCache: widget.cache.reference,
+                                    actionType: 'water',
+                                    date: FFAppState().time,
+                                  );
+                                  await ActionTypeCacheRecord.collection
+                                      .doc()
+                                      .set(actionTypeCacheCreateData);
+                                  logFirebaseEvent('iconButton-Navigate-Back');
                                   Navigator.pop(context);
                                 },
                                 child: IconButtonWidget(

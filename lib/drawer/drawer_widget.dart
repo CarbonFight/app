@@ -1,5 +1,4 @@
 import '../auth/auth_util.dart';
-import '../components/forgot_password_widget.dart';
 import '../faq/faq_widget.dart';
 import '../feedback/feedback_widget.dart';
 import '../flutter_flow/flutter_flow_animations.dart';
@@ -10,6 +9,7 @@ import '../splash/splash_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class DrawerWidget extends StatefulWidget {
@@ -48,16 +48,21 @@ class _DrawerWidgetState extends State<DrawerWidget>
           .where((anim) => anim.trigger == AnimationTrigger.onPageLoad),
       this,
     );
+
+    logFirebaseEvent('screen_view', parameters: {'screen_name': 'Drawer'});
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       key: scaffoldKey,
+      backgroundColor: Colors.transparent,
       body: Stack(
         children: [
           InkWell(
             onTap: () async {
+              logFirebaseEvent('Container-ON_TAP');
+              logFirebaseEvent('Container-Navigate-Back');
               Navigator.pop(context);
             },
             child: Container(
@@ -69,10 +74,10 @@ class _DrawerWidgetState extends State<DrawerWidget>
             ),
           ),
           Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(20, 40, 20, 20),
+            padding: EdgeInsetsDirectional.fromSTEB(20, 70, 20, 20),
             child: Container(
               width: MediaQuery.of(context).size.width * 0.75,
-              height: MediaQuery.of(context).size.height * 0.9,
+              height: 400,
               decoration: BoxDecoration(
                 color: FlutterFlowTheme.of(context).tertiaryColor,
                 boxShadow: [
@@ -85,7 +90,7 @@ class _DrawerWidgetState extends State<DrawerWidget>
                 borderRadius: BorderRadius.circular(15),
               ),
               child: Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 10),
+                padding: EdgeInsetsDirectional.fromSTEB(2, 10, 0, 10),
                 child: Column(
                   mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -102,6 +107,8 @@ class _DrawerWidgetState extends State<DrawerWidget>
                             children: [
                               InkWell(
                                 onTap: () async {
+                                  logFirebaseEvent('Container-ON_TAP');
+                                  logFirebaseEvent('Container-Navigate-Back');
                                   Navigator.pop(context);
                                 },
                                 child: Container(
@@ -123,134 +130,6 @@ class _DrawerWidgetState extends State<DrawerWidget>
                             ],
                           ),
                         ),
-                        Padding(
-                          padding:
-                              EdgeInsetsDirectional.fromSTEB(20, 40, 20, 0),
-                          child: Container(
-                            width: double.infinity,
-                            height: 100,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15),
-                              border: Border.all(
-                                color: FlutterFlowTheme.of(context).grayLight,
-                              ),
-                            ),
-                            child: Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  10, 10, 10, 10),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.max,
-                                children: [
-                                  Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        5, 0, 0, 0),
-                                    child: Container(
-                                      width: 60,
-                                      height: 60,
-                                      decoration: BoxDecoration(
-                                        color: FlutterFlowTheme.of(context)
-                                            .tertiaryColor,
-                                        boxShadow: [
-                                          BoxShadow(
-                                            blurRadius: 25,
-                                            color: Color(0x1B000000),
-                                            offset: Offset(0, 8),
-                                          )
-                                        ],
-                                        shape: BoxShape.circle,
-                                      ),
-                                      child: AuthUserStreamWidget(
-                                        child: ClipRRect(
-                                          borderRadius:
-                                              BorderRadius.circular(100),
-                                          child: Image.network(
-                                            valueOrDefault<String>(
-                                              currentUserPhoto,
-                                              'https://firebasestorage.googleapis.com/v0/b/carbonfight-89af6.appspot.com/o/18275220161537356156-128.png?alt=media&token=c9797a03-bba1-46b8-aaac-4c54cb99fcb6',
-                                            ),
-                                            width: 70,
-                                            height: 70,
-                                            fit: BoxFit.cover,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        10, 0, 0, 0),
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        AuthUserStreamWidget(
-                                          child: Text(
-                                            currentUserDisplayName,
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodyText2
-                                                .override(
-                                                  fontFamily: 'Montserrat',
-                                                  fontWeight: FontWeight.w600,
-                                                ),
-                                          ),
-                                        ),
-                                        Text(
-                                          currentUserEmail,
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodyText2
-                                              .override(
-                                                fontFamily: 'Montserrat',
-                                                fontSize: 11,
-                                              ),
-                                        ),
-                                        Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  0, 5, 0, 0),
-                                          child: InkWell(
-                                            onTap: () async {
-                                              await showModalBottomSheet(
-                                                isScrollControlled: true,
-                                                backgroundColor:
-                                                    Colors.transparent,
-                                                context: context,
-                                                builder: (context) {
-                                                  return Padding(
-                                                    padding:
-                                                        MediaQuery.of(context)
-                                                            .viewInsets,
-                                                    child: Container(
-                                                      height: 400,
-                                                      child:
-                                                          ForgotPasswordWidget(),
-                                                    ),
-                                                  );
-                                                },
-                                              );
-                                            },
-                                            child: Text(
-                                              'Change Password',
-                                              style: FlutterFlowTheme.of(
-                                                      context)
-                                                  .bodyText2
-                                                  .override(
-                                                    fontFamily: 'Montserrat',
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .secondaryColor,
-                                                  ),
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
                       ],
                     ),
                     Padding(
@@ -261,28 +140,31 @@ class _DrawerWidgetState extends State<DrawerWidget>
                           Container(
                             width: double.infinity,
                             decoration: BoxDecoration(),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.max,
-                              children: [
-                                SvgPicture.asset(
-                                  'assets/images/forward_green.svg',
-                                  width: 12,
-                                  height: 12,
-                                  fit: BoxFit.cover,
-                                ),
-                                Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      10, 0, 0, 0),
-                                  child: InkWell(
-                                    onTap: () async {
-                                      await Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) =>
-                                              FeedbackWidget(),
-                                        ),
-                                      );
-                                    },
+                            child: InkWell(
+                              onTap: () async {
+                                logFirebaseEvent('Row-ON_TAP');
+                                logFirebaseEvent('Row-Navigate-Back');
+                                Navigator.pop(context);
+                                logFirebaseEvent('Row-Navigate-To');
+                                await Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => FeedbackWidget(),
+                                  ),
+                                );
+                              },
+                              child: Row(
+                                mainAxisSize: MainAxisSize.max,
+                                children: [
+                                  SvgPicture.asset(
+                                    'assets/images/forward_green.svg',
+                                    width: 12,
+                                    height: 12,
+                                    fit: BoxFit.cover,
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        10, 0, 0, 0),
                                     child: Text(
                                       'Contacter l\'équipe',
                                       style: FlutterFlowTheme.of(context)
@@ -295,8 +177,8 @@ class _DrawerWidgetState extends State<DrawerWidget>
                                           ),
                                     ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                           ),
                           Divider(
@@ -306,29 +188,33 @@ class _DrawerWidgetState extends State<DrawerWidget>
                           Container(
                             width: double.infinity,
                             decoration: BoxDecoration(),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.max,
-                              children: [
-                                SvgPicture.asset(
-                                  'assets/images/forward_green.svg',
-                                  width: 12,
-                                  height: 12,
-                                  fit: BoxFit.cover,
-                                ),
-                                Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      10, 0, 0, 0),
-                                  child: InkWell(
-                                    onTap: () async {
-                                      await Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) => SplashWidget(),
-                                        ),
-                                      );
-                                    },
+                            child: InkWell(
+                              onTap: () async {
+                                logFirebaseEvent('Row-ON_TAP');
+                                logFirebaseEvent('Row-Navigate-Back');
+                                Navigator.pop(context);
+                                logFirebaseEvent('Row-Navigate-To');
+                                await Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => SplashWidget(),
+                                  ),
+                                );
+                              },
+                              child: Row(
+                                mainAxisSize: MainAxisSize.max,
+                                children: [
+                                  SvgPicture.asset(
+                                    'assets/images/forward_green.svg',
+                                    width: 12,
+                                    height: 12,
+                                    fit: BoxFit.cover,
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        10, 0, 0, 0),
                                     child: Text(
-                                      'Help',
+                                      'Bienvenue !',
                                       style: FlutterFlowTheme.of(context)
                                           .bodyText2
                                           .override(
@@ -339,8 +225,8 @@ class _DrawerWidgetState extends State<DrawerWidget>
                                           ),
                                     ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                           ),
                           Divider(
@@ -350,27 +236,31 @@ class _DrawerWidgetState extends State<DrawerWidget>
                           Container(
                             width: double.infinity,
                             decoration: BoxDecoration(),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.max,
-                              children: [
-                                SvgPicture.asset(
-                                  'assets/images/forward_green.svg',
-                                  width: 12,
-                                  height: 12,
-                                  fit: BoxFit.cover,
-                                ),
-                                Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      10, 0, 0, 0),
-                                  child: InkWell(
-                                    onTap: () async {
-                                      await Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) => FaqWidget(),
-                                        ),
-                                      );
-                                    },
+                            child: InkWell(
+                              onTap: () async {
+                                logFirebaseEvent('Row-ON_TAP');
+                                logFirebaseEvent('Row-Navigate-Back');
+                                Navigator.pop(context);
+                                logFirebaseEvent('Row-Navigate-To');
+                                await Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => FaqWidget(),
+                                  ),
+                                );
+                              },
+                              child: Row(
+                                mainAxisSize: MainAxisSize.max,
+                                children: [
+                                  SvgPicture.asset(
+                                    'assets/images/forward_green.svg',
+                                    width: 12,
+                                    height: 12,
+                                    fit: BoxFit.cover,
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        10, 0, 0, 0),
                                     child: Text(
                                       'FAQ',
                                       style: FlutterFlowTheme.of(context)
@@ -383,8 +273,8 @@ class _DrawerWidgetState extends State<DrawerWidget>
                                           ),
                                     ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                           ),
                           Divider(
@@ -394,31 +284,129 @@ class _DrawerWidgetState extends State<DrawerWidget>
                           Container(
                             width: double.infinity,
                             decoration: BoxDecoration(),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.max,
-                              children: [
-                                SvgPicture.asset(
-                                  'assets/images/forward_green.svg',
-                                  width: 12,
-                                  height: 12,
-                                  fit: BoxFit.cover,
-                                ),
-                                Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      10, 0, 0, 0),
-                                  child: Text(
-                                    'Terms',
-                                    style: FlutterFlowTheme.of(context)
-                                        .bodyText2
-                                        .override(
-                                          fontFamily: 'Montserrat',
-                                          color: FlutterFlowTheme.of(context)
-                                              .primaryColor,
-                                          fontWeight: FontWeight.w500,
-                                        ),
+                            child: InkWell(
+                              onTap: () async {
+                                logFirebaseEvent('Row-ON_TAP');
+                                logFirebaseEvent('Row-Navigate-Back');
+                                Navigator.pop(context);
+                                logFirebaseEvent('Row-Launch-U-R-L');
+                                await launchURL(
+                                    'https://carbonfight.app/privacy.html');
+                              },
+                              child: Row(
+                                mainAxisSize: MainAxisSize.max,
+                                children: [
+                                  FaIcon(
+                                    FontAwesomeIcons.externalLinkAlt,
+                                    color: FlutterFlowTheme.of(context)
+                                        .secondaryColor,
+                                    size: 12,
                                   ),
-                                ),
-                              ],
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        10, 0, 0, 0),
+                                    child: Text(
+                                      'Terms',
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyText2
+                                          .override(
+                                            fontFamily: 'Montserrat',
+                                            color: FlutterFlowTheme.of(context)
+                                                .primaryColor,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          Divider(
+                            height: 20,
+                            endIndent: 140,
+                          ),
+                          Container(
+                            width: double.infinity,
+                            decoration: BoxDecoration(),
+                            child: InkWell(
+                              onTap: () async {
+                                logFirebaseEvent('Row-ON_TAP');
+                                logFirebaseEvent('Row-Navigate-Back');
+                                Navigator.pop(context);
+                                logFirebaseEvent('Row-Launch-U-R-L');
+                                await launchURL(
+                                    'https://github.com/CarbonFight/mobile');
+                              },
+                              child: Row(
+                                mainAxisSize: MainAxisSize.max,
+                                children: [
+                                  FaIcon(
+                                    FontAwesomeIcons.externalLinkAlt,
+                                    color: FlutterFlowTheme.of(context)
+                                        .secondaryColor,
+                                    size: 12,
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        10, 0, 0, 0),
+                                    child: Text(
+                                      'Code source (Github)',
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyText2
+                                          .override(
+                                            fontFamily: 'Montserrat',
+                                            color: FlutterFlowTheme.of(context)
+                                                .primaryColor,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          Divider(
+                            height: 20,
+                            endIndent: 140,
+                          ),
+                          Container(
+                            width: double.infinity,
+                            decoration: BoxDecoration(),
+                            child: InkWell(
+                              onTap: () async {
+                                logFirebaseEvent('Row-ON_TAP');
+                                logFirebaseEvent('Row-Navigate-Back');
+                                Navigator.pop(context);
+                                logFirebaseEvent('Row-Launch-U-R-L');
+                                await launchURL(
+                                    'https://discord.gg/e7weuGA4UW');
+                              },
+                              child: Row(
+                                mainAxisSize: MainAxisSize.max,
+                                children: [
+                                  FaIcon(
+                                    FontAwesomeIcons.externalLinkAlt,
+                                    color: FlutterFlowTheme.of(context)
+                                        .secondaryColor,
+                                    size: 12,
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        10, 0, 0, 0),
+                                    child: Text(
+                                      'Discussion (Discord)',
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyText2
+                                          .override(
+                                            fontFamily: 'Montserrat',
+                                            color: FlutterFlowTheme.of(context)
+                                                .primaryColor,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         ],
@@ -441,6 +429,8 @@ class _DrawerWidgetState extends State<DrawerWidget>
                             ),
                             child: InkWell(
                               onTap: () async {
+                                logFirebaseEvent('Icon-ON_TAP');
+                                logFirebaseEvent('Icon-Auth');
                                 await signOut();
                                 await Navigator.pushAndRemoveUntil(
                                   context,
@@ -472,7 +462,7 @@ class _DrawerWidgetState extends State<DrawerWidget>
                                       children: [
                                         Expanded(
                                           child: Text(
-                                            'Carbonfight Copyright 2022',
+                                            'CarbonFight Copyright 2022',
                                             style: FlutterFlowTheme.of(context)
                                                 .bodyText2
                                                 .override(
@@ -493,7 +483,7 @@ class _DrawerWidgetState extends State<DrawerWidget>
                                                 EdgeInsetsDirectional.fromSTEB(
                                                     0, 3, 0, 0),
                                             child: Text(
-                                              'Version 1.0.2 Build 34',
+                                              'Version 1.0.6',
                                               style: FlutterFlowTheme.of(
                                                       context)
                                                   .bodyText2

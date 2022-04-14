@@ -37,9 +37,23 @@ service cloud.firestore {
     }
 
     match /actionCache/{document} {
-      allow create: if true;
-      allow read: if true;
-      allow write: if false;
+      allow create: if request.auth != null;
+      allow read: if request.auth != null;
+      allow write: if request.auth != null;
+      allow delete: if false;
+    }
+
+    match /actionTypeCache/{document} {
+      allow create: if request.auth != null;
+      allow read: if request.auth != null;
+      allow write: if request.auth != null;
+      allow delete: if false;
+    }
+
+    match /usersStats/{document} {
+      allow create: if request.auth != null;
+      allow read: if request.auth != null;
+      allow write: if request.auth != null;
       allow delete: if false;
     }
   }

@@ -9,32 +9,33 @@ import '../flutter_flow/custom_functions.dart' as functions;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class TrainFormCopyWidget extends StatefulWidget {
-  const TrainFormCopyWidget({
+class ElectricityFormPeriodicModifyWidget extends StatefulWidget {
+  const ElectricityFormPeriodicModifyWidget({
     Key key,
-    this.currentAction,
-    this.cache,
+    this.periodic,
   }) : super(key: key);
 
-  final TransportActionsRecord currentAction;
-  final ActionCacheRecord cache;
+  final EnergyPeriodicsRecord periodic;
 
   @override
-  _TrainFormCopyWidgetState createState() => _TrainFormCopyWidgetState();
+  _ElectricityFormPeriodicModifyWidgetState createState() =>
+      _ElectricityFormPeriodicModifyWidgetState();
 }
 
-class _TrainFormCopyWidgetState extends State<TrainFormCopyWidget> {
+class _ElectricityFormPeriodicModifyWidgetState
+    extends State<ElectricityFormPeriodicModifyWidget> {
+  String peopleSharingValue;
   String powertypeValue;
-  TextEditingController textController;
+  TextEditingController volumeController;
+  bool deleteValue;
 
   @override
   void initState() {
     super.initState();
-    textController =
-        TextEditingController(text: widget.currentAction.distance.toString());
+    volumeController =
+        TextEditingController(text: widget.periodic.volume.toString());
   }
 
   @override
@@ -69,15 +70,15 @@ class _TrainFormCopyWidgetState extends State<TrainFormCopyWidget> {
                     children: [
                       Padding(
                         padding: EdgeInsetsDirectional.fromSTEB(0, 0, 5, 0),
-                        child: SvgPicture.asset(
-                          'assets/images/trans-train-04.svg',
+                        child: Image.asset(
+                          'assets/images/energy.png',
                           width: 25,
                           height: 25,
                           fit: BoxFit.cover,
                         ),
                       ),
                       Text(
-                        'Trajet en train',
+                        'Electricité',
                         style: FlutterFlowTheme.of(context).subtitle1,
                       ),
                     ],
@@ -93,50 +94,32 @@ class _TrainFormCopyWidgetState extends State<TrainFormCopyWidget> {
                       size: 24,
                     ),
                     onPressed: () async {
+                      logFirebaseEvent('IconButton-ON_TAP');
+                      logFirebaseEvent('IconButton-Navigate-Back');
                       Navigator.pop(context);
                     },
                   ),
                 ],
               ),
-              StreamBuilder<TransportActionsRecord>(
-                stream: TransportActionsRecord.getDocument(
-                    widget.currentAction.reference),
-                builder: (context, snapshot) {
-                  // Customize what your widget looks like when it's loading.
-                  if (!snapshot.hasData) {
-                    return Center(
-                      child: SizedBox(
-                        width: 50,
-                        height: 50,
-                        child: SpinKitRipple(
-                          color: FlutterFlowTheme.of(context).tertiaryColor,
-                          size: 50,
-                        ),
+              Row(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
+                    child: Text(
+                      valueOrDefault<String>(
+                        '+ ${valueOrDefault<String>(
+                          functions.printScore(FFAppState().actionCO2),
+                          '0',
+                        )} / jour',
+                        '+ 0 g / jour',
                       ),
-                    );
-                  }
-                  final rowTransportActionsRecord = snapshot.data;
-                  return Row(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
-                        child: Text(
-                          valueOrDefault<String>(
-                            '+ ${valueOrDefault<String>(
-                              widget.currentAction.co2e.toString(),
-                              '0',
-                            )} g',
-                            '+ 0 g',
-                          ),
-                          textAlign: TextAlign.center,
-                          style: FlutterFlowTheme.of(context).title2,
-                        ),
-                      ),
-                    ],
-                  );
-                },
+                      textAlign: TextAlign.center,
+                      style: FlutterFlowTheme.of(context).title2,
+                    ),
+                  ),
+                ],
               ),
               SingleChildScrollView(
                 child: Column(
@@ -150,11 +133,11 @@ class _TrainFormCopyWidgetState extends State<TrainFormCopyWidget> {
                             padding:
                                 EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
                             child: TextFormField(
-                              controller: textController,
+                              controller: volumeController,
                               obscureText: false,
                               decoration: InputDecoration(
-                                labelText: 'Distance Parcourue (en km )',
-                                hintText: 'Distance Parcourue (en km )',
+                                labelText: 'Consommation annuelle (KWH)',
+                                hintText: 'Consommation annuelle (KWH)',
                                 enabledBorder: OutlineInputBorder(
                                   borderSide: BorderSide(
                                     color:
@@ -174,7 +157,7 @@ class _TrainFormCopyWidgetState extends State<TrainFormCopyWidget> {
                                 filled: true,
                                 fillColor: Color(0x40EEF1F0),
                                 prefixIcon: Icon(
-                                  Icons.directions_walk,
+                                  Icons.today_outlined,
                                   color: FlutterFlowTheme.of(context)
                                       .secondaryColor,
                                   size: 16,
@@ -235,14 +218,16 @@ class _TrainFormCopyWidgetState extends State<TrainFormCopyWidget> {
                           Expanded(
                             child: FlutterFlowDropDown(
                               initialOption: powertypeValue ??=
-                                  widget.currentAction.powertype,
+                                  widget.periodic.powertype,
                               options: [
-                                'TER',
-                                'TGV',
-                                'Intercites',
-                                'RER',
-                                'Transilien',
-                                'Tramway'
+                                'Nucléaire',
+                                'Éolienne (mer)',
+                                'Éolienne (terre)',
+                                'Hydroélectrique',
+                                'Biomasse',
+                                'Géothermique',
+                                'Fioul',
+                                'Charbon'
                               ].toList(),
                               onChanged: (val) =>
                                   setState(() => powertypeValue = val),
@@ -254,9 +239,9 @@ class _TrainFormCopyWidgetState extends State<TrainFormCopyWidget> {
                                     fontFamily: 'Montserrat',
                                     fontWeight: FontWeight.w500,
                                   ),
-                              hintText: 'Type de train',
+                              hintText: 'Type d\'énergie',
                               icon: Icon(
-                                Icons.train_sharp,
+                                Icons.flash_on,
                                 size: 15,
                               ),
                               fillColor: Color(0xFFFAFAFA),
@@ -273,6 +258,63 @@ class _TrainFormCopyWidgetState extends State<TrainFormCopyWidget> {
                         ],
                       ),
                     ),
+                    Row(
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Expanded(
+                          child: FlutterFlowDropDown(
+                            initialOption: peopleSharingValue ??=
+                                widget.periodic.peopleSharing,
+                            options: ['1', '2', '3', '4', '5', '6', '7', '8']
+                                .toList(),
+                            onChanged: (val) =>
+                                setState(() => peopleSharingValue = val),
+                            width: 180,
+                            height: 50,
+                            textStyle:
+                                FlutterFlowTheme.of(context).bodyText2.override(
+                                      fontFamily: 'Montserrat',
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                            hintText: 'Taille du foyer',
+                            icon: Icon(
+                              Icons.family_restroom,
+                              size: 15,
+                            ),
+                            fillColor: Color(0xFFFAFAFA),
+                            elevation: 2,
+                            borderColor: FlutterFlowTheme.of(context).grayLight,
+                            borderWidth: 1,
+                            borderRadius: 100,
+                            margin:
+                                EdgeInsetsDirectional.fromSTEB(12, 4, 12, 4),
+                            hidesUnderline: true,
+                          ),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Expanded(
+                          child: SwitchListTile(
+                            value: deleteValue ??= false,
+                            onChanged: (newValue) =>
+                                setState(() => deleteValue = newValue),
+                            title: Text(
+                              'Supprimer',
+                              style: FlutterFlowTheme.of(context).bodyText1,
+                            ),
+                            tileColor:
+                                FlutterFlowTheme.of(context).secondaryColor,
+                            activeColor: Color(0xFFA10000),
+                            activeTrackColor: Color(0xFFAD6161),
+                            dense: false,
+                            controlAffinity: ListTileControlAffinity.trailing,
+                          ),
+                        ),
+                      ],
+                    ),
                     Padding(
                       padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
                       child: Row(
@@ -285,21 +327,21 @@ class _TrainFormCopyWidgetState extends State<TrainFormCopyWidget> {
                                   EdgeInsetsDirectional.fromSTEB(0, 0, 10, 0),
                               child: InkWell(
                                 onTap: () async {
+                                  logFirebaseEvent('iconButton-ON_TAP');
+                                  logFirebaseEvent(
+                                      'iconButton-Update-Local-State');
                                   setState(() => FFAppState().actionCO2 =
-                                      functions.transportActionsCO2e(
-                                          int.parse(textController.text),
-                                          '1',
-                                          'null',
+                                      functions.energyPeriodicsCO2e(
+                                          'electricity',
+                                          int.parse(volumeController.text),
                                           valueOrDefault<String>(
                                             powertypeValue,
-                                            'TER',
+                                            'Nucléaire',
                                           ),
-                                          'train'));
-
-                                  final transportActionsUpdateData =
-                                      createTransportActionsRecordData();
-                                  await widget.currentAction.reference
-                                      .update(transportActionsUpdateData);
+                                          valueOrDefault<String>(
+                                            peopleSharingValue,
+                                            '1',
+                                          )));
                                 },
                                 child: IconButtonWidget(
                                   fillColor: FlutterFlowTheme.of(context)
@@ -317,50 +359,68 @@ class _TrainFormCopyWidgetState extends State<TrainFormCopyWidget> {
                               ),
                             ),
                           ),
-                          Stack(
-                            children: [
-                              Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(10, 0, 0, 0),
-                                child: InkWell(
-                                  onTap: () async {
+                          Expanded(
+                            child: Padding(
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(10, 0, 0, 0),
+                              child: InkWell(
+                                onTap: () async {
+                                  logFirebaseEvent('iconButton-ON_TAP');
+                                  logFirebaseEvent(
+                                      'iconButton-Update-Local-State');
+                                  setState(() => FFAppState().loading = true);
+                                  if (deleteValue) {
+                                    logFirebaseEvent('iconButton-Backend-Call');
+                                    await widget.periodic.reference.delete();
+                                  } else {
+                                    logFirebaseEvent(
+                                        'iconButton-Update-Local-State');
                                     setState(() => FFAppState().actionCO2 =
-                                        functions.transportActionsCO2e(
-                                            int.parse(textController.text),
-                                            'null',
-                                            'null',
+                                        functions.energyPeriodicsCO2e(
+                                            'electricity',
+                                            int.parse(volumeController.text),
                                             valueOrDefault<String>(
                                               powertypeValue,
-                                              'TER',
+                                              'Nucléaire',
                                             ),
-                                            'train'));
+                                            valueOrDefault<String>(
+                                              peopleSharingValue,
+                                              '1',
+                                            )));
+                                    logFirebaseEvent('iconButton-Backend-Call');
 
-                                    final transportActionsUpdateData =
-                                        createTransportActionsRecordData(
-                                      distance: int.parse(textController.text),
-                                      powertype: powertypeValue,
+                                    final energyPeriodicsUpdateData =
+                                        createEnergyPeriodicsRecordData(
                                       co2e: FFAppState().actionCO2,
+                                      powertype: powertypeValue,
+                                      volume: int.parse(volumeController.text),
+                                      peopleSharing: peopleSharingValue,
                                     );
-                                    await widget.currentAction.reference
-                                        .update(transportActionsUpdateData);
-                                    Navigator.pop(context);
-                                  },
-                                  child: IconButtonWidget(
-                                    fillColor: FlutterFlowTheme.of(context)
-                                        .primaryColor,
-                                    fontColor: FlutterFlowTheme.of(context)
+                                    await widget.periodic.reference
+                                        .update(energyPeriodicsUpdateData);
+                                  }
+
+                                  logFirebaseEvent('iconButton-Navigate-Back');
+                                  Navigator.pop(context);
+                                  logFirebaseEvent(
+                                      'iconButton-Update-Local-State');
+                                  setState(() => FFAppState().loading = false);
+                                },
+                                child: IconButtonWidget(
+                                  fillColor:
+                                      FlutterFlowTheme.of(context).orange,
+                                  fontColor: FlutterFlowTheme.of(context)
+                                      .tertiaryColor,
+                                  icon: Icon(
+                                    Icons.add_circle_outline,
+                                    color: FlutterFlowTheme.of(context)
                                         .tertiaryColor,
-                                    icon: Icon(
-                                      Icons.check_circle,
-                                      color: FlutterFlowTheme.of(context)
-                                          .tertiaryColor,
-                                      size: 25,
-                                    ),
-                                    text: 'Modifier  ',
+                                    size: 25,
                                   ),
+                                  text: 'Modifier',
                                 ),
                               ),
-                            ],
+                            ),
                           ),
                         ],
                       ),

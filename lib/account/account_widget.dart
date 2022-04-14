@@ -3,26 +3,28 @@ import '../backend/backend.dart';
 import '../components/forgot_password_widget.dart';
 import '../components/icon_button_widget.dart';
 import '../flutter_flow/flutter_flow_animations.dart';
+import '../flutter_flow/flutter_flow_count_controller.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class DrawerCopyWidget extends StatefulWidget {
-  const DrawerCopyWidget({Key key}) : super(key: key);
+class AccountWidget extends StatefulWidget {
+  const AccountWidget({Key key}) : super(key: key);
 
   @override
-  _DrawerCopyWidgetState createState() => _DrawerCopyWidgetState();
+  _AccountWidgetState createState() => _AccountWidgetState();
 }
 
-class _DrawerCopyWidgetState extends State<DrawerCopyWidget>
+class _AccountWidgetState extends State<AccountWidget>
     with TickerProviderStateMixin {
   TextEditingController displaynameController;
   TextEditingController emailaddressController;
-  double co2targetValue;
+  int co2targetValue;
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final animationsMap = {
     'containerOnPageLoadAnimation': AnimationInfo(
@@ -53,17 +55,20 @@ class _DrawerCopyWidgetState extends State<DrawerCopyWidget>
 
     displaynameController = TextEditingController(text: currentUserDisplayName);
     emailaddressController = TextEditingController(text: currentUserEmail);
+    logFirebaseEvent('screen_view', parameters: {'screen_name': 'Account'});
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       key: scaffoldKey,
-      backgroundColor: Color(0x320B1E1B),
+      backgroundColor: Colors.transparent,
       body: Stack(
         children: [
           InkWell(
             onTap: () async {
+              logFirebaseEvent('Container-ON_TAP');
+              logFirebaseEvent('Container-Navigate-Back');
               Navigator.pop(context);
             },
             child: Container(
@@ -78,7 +83,7 @@ class _DrawerCopyWidgetState extends State<DrawerCopyWidget>
             padding: EdgeInsetsDirectional.fromSTEB(20, 40, 20, 20),
             child: Container(
               width: MediaQuery.of(context).size.width * 0.75,
-              height: MediaQuery.of(context).size.height * 0.9,
+              height: 620,
               decoration: BoxDecoration(
                 color: FlutterFlowTheme.of(context).tertiaryColor,
                 boxShadow: [
@@ -94,7 +99,7 @@ class _DrawerCopyWidgetState extends State<DrawerCopyWidget>
                 padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 10),
                 child: Column(
                   mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     Column(
@@ -108,6 +113,8 @@ class _DrawerCopyWidgetState extends State<DrawerCopyWidget>
                             children: [
                               InkWell(
                                 onTap: () async {
+                                  logFirebaseEvent('Container-ON_TAP');
+                                  logFirebaseEvent('Container-Navigate-Back');
                                   Navigator.pop(context);
                                 },
                                 child: Container(
@@ -131,7 +138,7 @@ class _DrawerCopyWidgetState extends State<DrawerCopyWidget>
                         ),
                         Padding(
                           padding:
-                              EdgeInsetsDirectional.fromSTEB(20, 10, 20, 0),
+                              EdgeInsetsDirectional.fromSTEB(10, 10, 10, 0),
                           child: Container(
                             width: double.infinity,
                             height: 100,
@@ -216,6 +223,9 @@ class _DrawerCopyWidgetState extends State<DrawerCopyWidget>
                                                   0, 5, 0, 0),
                                           child: InkWell(
                                             onTap: () async {
+                                              logFirebaseEvent('Text-ON_TAP');
+                                              logFirebaseEvent(
+                                                  'Text-Bottom-Sheet');
                                               await showModalBottomSheet(
                                                 isScrollControlled: true,
                                                 backgroundColor:
@@ -236,7 +246,7 @@ class _DrawerCopyWidgetState extends State<DrawerCopyWidget>
                                               );
                                             },
                                             child: Text(
-                                              'Change Password',
+                                              'Modifier le password',
                                               style: FlutterFlowTheme.of(
                                                       context)
                                                   .bodyText2
@@ -259,7 +269,7 @@ class _DrawerCopyWidgetState extends State<DrawerCopyWidget>
                         ),
                         Padding(
                           padding:
-                              EdgeInsetsDirectional.fromSTEB(20, 20, 20, 10),
+                              EdgeInsetsDirectional.fromSTEB(10, 20, 10, 10),
                           child: Container(
                             decoration: BoxDecoration(
                               color: FlutterFlowTheme.of(context).tertiaryColor,
@@ -274,7 +284,7 @@ class _DrawerCopyWidgetState extends State<DrawerCopyWidget>
                             ),
                             child: Padding(
                               padding: EdgeInsetsDirectional.fromSTEB(
-                                  20, 10, 20, 10),
+                                  10, 10, 10, 10),
                               child: Column(
                                 mainAxisSize: MainAxisSize.max,
                                 children: [
@@ -310,6 +320,8 @@ class _DrawerCopyWidgetState extends State<DrawerCopyWidget>
                                   SingleChildScrollView(
                                     child: Column(
                                       mainAxisSize: MainAxisSize.max,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
                                       children: [
                                         Row(
                                           mainAxisSize: MainAxisSize.max,
@@ -441,7 +453,7 @@ class _DrawerCopyWidgetState extends State<DrawerCopyWidget>
                         ),
                         Padding(
                           padding:
-                              EdgeInsetsDirectional.fromSTEB(20, 10, 20, 10),
+                              EdgeInsetsDirectional.fromSTEB(10, 10, 10, 10),
                           child: Container(
                             decoration: BoxDecoration(
                               color: FlutterFlowTheme.of(context).tertiaryColor,
@@ -479,7 +491,7 @@ class _DrawerCopyWidgetState extends State<DrawerCopyWidget>
                                                 EdgeInsetsDirectional.fromSTEB(
                                                     10, 0, 0, 0),
                                             child: Text(
-                                              'Objectifs',
+                                              'Objectifs co2',
                                               style:
                                                   FlutterFlowTheme.of(context)
                                                       .title3,
@@ -495,12 +507,15 @@ class _DrawerCopyWidgetState extends State<DrawerCopyWidget>
                                       children: [
                                         Row(
                                           mainAxisSize: MainAxisSize.max,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
                                           children: [
                                             Padding(
                                               padding: EdgeInsetsDirectional
                                                   .fromSTEB(0, 10, 0, 0),
                                               child: Text(
-                                                'Objectif journalier (KG de co2e)',
+                                                'Objectif journalier (en kg)',
+                                                textAlign: TextAlign.start,
                                                 style:
                                                     FlutterFlowTheme.of(context)
                                                         .bodyText2,
@@ -510,29 +525,72 @@ class _DrawerCopyWidgetState extends State<DrawerCopyWidget>
                                         ),
                                         Row(
                                           mainAxisSize: MainAxisSize.max,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
                                           children: [
-                                            Expanded(
+                                            Padding(
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(0, 10, 0, 0),
                                               child: AuthUserStreamWidget(
-                                                child: Slider(
-                                                  activeColor:
-                                                      FlutterFlowTheme.of(
-                                                              context)
-                                                          .secondaryColor,
-                                                  inactiveColor:
-                                                      Color(0xFF9E9E9E),
-                                                  min: 0,
-                                                  max: 80,
-                                                  value: co2targetValue ??=
-                                                      currentUserDocument
-                                                          ?.co2target,
-                                                  label:
-                                                      co2targetValue.toString(),
-                                                  divisions: 160,
-                                                  onChanged: (newValue) {
-                                                    setState(() =>
-                                                        co2targetValue =
-                                                            newValue);
-                                                  },
+                                                child: Container(
+                                                  width: 160,
+                                                  height: 50,
+                                                  decoration: BoxDecoration(
+                                                    color: Colors.white,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            25),
+                                                    shape: BoxShape.rectangle,
+                                                    border: Border.all(
+                                                      color: Color(0xFF9E9E9E),
+                                                      width: 1,
+                                                    ),
+                                                  ),
+                                                  child:
+                                                      FlutterFlowCountController(
+                                                    decrementIconBuilder:
+                                                        (enabled) => FaIcon(
+                                                      FontAwesomeIcons.minus,
+                                                      color: enabled
+                                                          ? Color(0xDD000000)
+                                                          : Color(0xFFEEEEEE),
+                                                      size: 20,
+                                                    ),
+                                                    incrementIconBuilder:
+                                                        (enabled) => FaIcon(
+                                                      FontAwesomeIcons.plus,
+                                                      color: enabled
+                                                          ? FlutterFlowTheme.of(
+                                                                  context)
+                                                              .secondaryColor
+                                                          : Color(0xFFEEEEEE),
+                                                      size: 20,
+                                                    ),
+                                                    countBuilder: (count) =>
+                                                        Text(
+                                                      count.toString(),
+                                                      style:
+                                                          GoogleFonts.getFont(
+                                                        'Roboto',
+                                                        color: Colors.black,
+                                                        fontWeight:
+                                                            FontWeight.w600,
+                                                        fontSize: 16,
+                                                      ),
+                                                    ),
+                                                    count: co2targetValue ??=
+                                                        currentUserDocument
+                                                            ?.co2target,
+                                                    updateCount: (count) =>
+                                                        setState(() =>
+                                                            co2targetValue =
+                                                                count),
+                                                    stepSize: 1,
+                                                    minimum: 0,
+                                                    maximum: 80,
+                                                  ),
                                                 ),
                                               ),
                                             ),
@@ -556,34 +614,35 @@ class _DrawerCopyWidgetState extends State<DrawerCopyWidget>
                               EdgeInsetsDirectional.fromSTEB(20, 20, 20, 20),
                           child: Row(
                             mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Expanded(
-                                child: InkWell(
-                                  onTap: () async {
-                                    final usersUpdateData =
-                                        createUsersRecordData(
-                                      displayName: displaynameController.text,
-                                      email: emailaddressController.text,
-                                      co2target: co2targetValue,
-                                    );
-                                    await currentUserReference
-                                        .update(usersUpdateData);
-                                    Navigator.pop(context);
-                                  },
-                                  child: IconButtonWidget(
-                                    fillColor: FlutterFlowTheme.of(context)
-                                        .primaryColor,
-                                    fontColor: FlutterFlowTheme.of(context)
+                              InkWell(
+                                onTap: () async {
+                                  logFirebaseEvent('iconButton-ON_TAP');
+                                  logFirebaseEvent('iconButton-Backend-Call');
+
+                                  final usersUpdateData = createUsersRecordData(
+                                    displayName: displaynameController.text,
+                                    email: emailaddressController.text,
+                                    co2target: co2targetValue,
+                                  );
+                                  await currentUserReference
+                                      .update(usersUpdateData);
+                                  logFirebaseEvent('iconButton-Navigate-Back');
+                                  Navigator.pop(context);
+                                },
+                                child: IconButtonWidget(
+                                  fillColor:
+                                      FlutterFlowTheme.of(context).primaryColor,
+                                  fontColor: FlutterFlowTheme.of(context)
+                                      .tertiaryColor,
+                                  icon: Icon(
+                                    Icons.sync,
+                                    color: FlutterFlowTheme.of(context)
                                         .tertiaryColor,
-                                    icon: Icon(
-                                      Icons.sync,
-                                      color: FlutterFlowTheme.of(context)
-                                          .tertiaryColor,
-                                      size: 25,
-                                    ),
-                                    text: 'Mettre à jour',
+                                    size: 20,
                                   ),
+                                  text: 'Mettre à jour ',
                                 ),
                               ),
                             ],

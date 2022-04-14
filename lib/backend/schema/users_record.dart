@@ -14,10 +14,6 @@ abstract class UsersRecord implements Built<UsersRecord, UsersRecordBuilder> {
   DateTime get createdTime;
 
   @nullable
-  @BuiltValueField(wireName: 'day_score')
-  int get dayScore;
-
-  @nullable
   @BuiltValueField(wireName: 'display_name')
   String get displayName;
 
@@ -46,14 +42,6 @@ abstract class UsersRecord implements Built<UsersRecord, UsersRecordBuilder> {
   int get activity;
 
   @nullable
-  @BuiltValueField(wireName: 'month_score')
-  int get monthScore;
-
-  @nullable
-  @BuiltValueField(wireName: 'week_score')
-  int get weekScore;
-
-  @nullable
   int get rank;
 
   @nullable
@@ -61,17 +49,13 @@ abstract class UsersRecord implements Built<UsersRecord, UsersRecordBuilder> {
   int get rankSize;
 
   @nullable
-  DateTime get cache;
-
-  @nullable
-  double get co2target;
+  int get co2target;
 
   @nullable
   @BuiltValueField(wireName: kDocumentReferenceField)
   DocumentReference get reference;
 
   static void _initializeBuilder(UsersRecordBuilder builder) => builder
-    ..dayScore = 0
     ..displayName = ''
     ..email = ''
     ..globalScore = 0
@@ -80,11 +64,9 @@ abstract class UsersRecord implements Built<UsersRecord, UsersRecordBuilder> {
     ..uid = ''
     ..photoUrl = ''
     ..activity = 0
-    ..monthScore = 0
-    ..weekScore = 0
     ..rank = 0
     ..rankSize = 0
-    ..co2target = 0.0;
+    ..co2target = 0;
 
   static CollectionReference get collection =>
       FirebaseFirestore.instance.collection('users');
@@ -109,7 +91,6 @@ abstract class UsersRecord implements Built<UsersRecord, UsersRecordBuilder> {
 
 Map<String, dynamic> createUsersRecordData({
   DateTime createdTime,
-  int dayScore,
   String displayName,
   String email,
   int globalScore,
@@ -118,18 +99,14 @@ Map<String, dynamic> createUsersRecordData({
   String uid,
   String photoUrl,
   int activity,
-  int monthScore,
-  int weekScore,
   int rank,
   int rankSize,
-  DateTime cache,
-  double co2target,
+  int co2target,
 }) =>
     serializers.toFirestore(
         UsersRecord.serializer,
         UsersRecord((u) => u
           ..createdTime = createdTime
-          ..dayScore = dayScore
           ..displayName = displayName
           ..email = email
           ..globalScore = globalScore
@@ -138,9 +115,6 @@ Map<String, dynamic> createUsersRecordData({
           ..uid = uid
           ..photoUrl = photoUrl
           ..activity = activity
-          ..monthScore = monthScore
-          ..weekScore = weekScore
           ..rank = rank
           ..rankSize = rankSize
-          ..cache = cache
           ..co2target = co2target));

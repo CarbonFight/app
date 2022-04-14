@@ -1,3 +1,4 @@
+import '../components/icon_button_widget.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
@@ -5,21 +6,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class InfoWidget extends StatefulWidget {
-  const InfoWidget({
-    Key key,
-    this.title,
-    this.body,
-  }) : super(key: key);
-
-  final String title;
-  final String body;
+class NextVersionAlertWidget extends StatefulWidget {
+  const NextVersionAlertWidget({Key key}) : super(key: key);
 
   @override
-  _InfoWidgetState createState() => _InfoWidgetState();
+  _NextVersionAlertWidgetState createState() => _NextVersionAlertWidgetState();
 }
 
-class _InfoWidgetState extends State<InfoWidget> {
+class _NextVersionAlertWidgetState extends State<NextVersionAlertWidget> {
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -50,17 +44,9 @@ class _InfoWidgetState extends State<InfoWidget> {
                   Row(
                     mainAxisSize: MainAxisSize.max,
                     children: [
-                      Icon(
-                        Icons.info_outline,
-                        color: FlutterFlowTheme.of(context).secondaryColor,
-                        size: 24,
-                      ),
-                      Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(10, 0, 0, 0),
-                        child: Text(
-                          widget.title,
-                          style: FlutterFlowTheme.of(context).subtitle1,
-                        ),
+                      Text(
+                        'Bientôt disponible !',
+                        style: FlutterFlowTheme.of(context).subtitle1,
                       ),
                     ],
                   ),
@@ -75,12 +61,13 @@ class _InfoWidgetState extends State<InfoWidget> {
                       size: 24,
                     ),
                     onPressed: () async {
+                      logFirebaseEvent('IconButton-ON_TAP');
+                      logFirebaseEvent('IconButton-Navigate-Back');
                       Navigator.pop(context);
                     },
                   ),
                 ],
               ),
-              Divider(),
               SingleChildScrollView(
                 child: Column(
                   mainAxisSize: MainAxisSize.max,
@@ -92,19 +79,42 @@ class _InfoWidgetState extends State<InfoWidget> {
                         children: [
                           Expanded(
                             child: Text(
-                              widget.body,
+                              'Désolé , cette fonctionnalité n\'est pas encore disponible.\n\nSi vous voyez cette fenêtre, la fonctionnalité est déjà listée pour la prochaine version.',
                               style: FlutterFlowTheme.of(context)
                                   .bodyText1
                                   .override(
                                     fontFamily: 'Montserrat',
                                     color: FlutterFlowTheme.of(context)
                                         .primaryColor,
-                                    fontWeight: FontWeight.normal,
                                   ),
                             ),
                           ),
                         ],
                       ),
+                    ),
+                    Row(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        InkWell(
+                          onTap: () async {
+                            logFirebaseEvent('iconButton-ON_TAP');
+                            logFirebaseEvent('iconButton-Navigate-Back');
+                            Navigator.pop(context);
+                          },
+                          child: IconButtonWidget(
+                            fillColor: Color(0xA10B1E1B),
+                            fontColor:
+                                FlutterFlowTheme.of(context).tertiaryColor,
+                            icon: Icon(
+                              Icons.close,
+                              color: FlutterFlowTheme.of(context).tertiaryColor,
+                              size: 25,
+                            ),
+                            text: 'Fermer ',
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),
