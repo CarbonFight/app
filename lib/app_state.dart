@@ -33,6 +33,8 @@ class FFAppState {
   DateTime time;
 
   bool loading = false;
+
+  bool actionActive = true;
 }
 
 LatLng _latLngFromString(String val) {

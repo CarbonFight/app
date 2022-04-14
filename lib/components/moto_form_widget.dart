@@ -11,7 +11,12 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class MotoFormWidget extends StatefulWidget {
-  const MotoFormWidget({Key key}) : super(key: key);
+  const MotoFormWidget({
+    Key key,
+    this.cache,
+  }) : super(key: key);
+
+  final ActionCacheRecord cache;
 
   @override
   _MotoFormWidgetState createState() => _MotoFormWidgetState();
@@ -211,13 +216,20 @@ class _MotoFormWidgetState extends State<MotoFormWidget> {
                                   logFirebaseEvent('iconButton-ON_TAP');
                                   logFirebaseEvent(
                                       'iconButton-Update-Local-State');
+                                  setState(() => FFAppState().loading = true);
+                                  logFirebaseEvent(
+                                      'iconButton-Update-Local-State');
                                   setState(() => FFAppState().actionCO2 =
                                       functions.transportActionsCO2e(
                                           int.parse(textController.text),
-                                          'null',
+                                          '1',
                                           'null',
                                           'null',
                                           'moto'));
+                                  logFirebaseEvent(
+                                      'iconButton-Update-Local-State');
+                                  setState(() =>
+                                      FFAppState().time = getCurrentTimestamp);
                                   logFirebaseEvent('iconButton-Backend-Call');
 
                                   final transportActionsCreateData =
@@ -226,16 +238,30 @@ class _MotoFormWidgetState extends State<MotoFormWidget> {
                                     distance: int.parse(textController.text),
                                     userId: currentUserUid,
                                     powertype: 'null',
-                                    passengers: 'null',
+                                    passengers: '1',
                                     ownership: 'null',
-                                    createdTime: getCurrentTimestamp,
+                                    createdTime: FFAppState().time,
                                     co2e: FFAppState().actionCO2,
                                   );
                                   await TransportActionsRecord.collection
                                       .doc()
                                       .set(transportActionsCreateData);
+                                  logFirebaseEvent('iconButton-Backend-Call');
+
+                                  final actionTypeCacheCreateData =
+                                      createActionTypeCacheRecordData(
+                                    actionCache: widget.cache.reference,
+                                    actionType: 'moto',
+                                    date: FFAppState().time,
+                                  );
+                                  await ActionTypeCacheRecord.collection
+                                      .doc()
+                                      .set(actionTypeCacheCreateData);
                                   logFirebaseEvent('iconButton-Navigate-Back');
                                   Navigator.pop(context);
+                                  logFirebaseEvent(
+                                      'iconButton-Update-Local-State');
+                                  setState(() => FFAppState().loading = false);
                                 },
                                 child: IconButtonWidget(
                                   fillColor:

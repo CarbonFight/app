@@ -1,9 +1,9 @@
+import '../account/account_widget.dart';
 import '../auth/auth_util.dart';
 import '../backend/backend.dart';
-import '../components/info_widget.dart';
-import '../components/ranks2_widget.dart';
+import '../components/next_version_alert_widget.dart';
+import '../components/ranks_widget.dart';
 import '../drawer/drawer_widget.dart';
-import '../drawer_copy/drawer_copy_widget.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../home/home_widget.dart';
@@ -124,7 +124,7 @@ class _StatistiquesWidgetState extends State<StatistiquesWidget> {
                         children: [
                           Padding(
                             padding:
-                                EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
+                                EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
                             child: Row(
                               mainAxisSize: MainAxisSize.max,
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -201,7 +201,7 @@ class _StatistiquesWidgetState extends State<StatistiquesWidget> {
                                                       milliseconds: 300),
                                                   reverseDuration: Duration(
                                                       milliseconds: 300),
-                                                  child: DrawerCopyWidget(),
+                                                  child: AccountWidget(),
                                                 ),
                                               );
                                             },
@@ -276,7 +276,7 @@ class _StatistiquesWidgetState extends State<StatistiquesWidget> {
                                                   .viewInsets,
                                               child: Container(
                                                 height: 600,
-                                                child: Ranks2Widget(),
+                                                child: RanksWidget(),
                                               ),
                                             );
                                           },
@@ -429,9 +429,299 @@ class _StatistiquesWidgetState extends State<StatistiquesWidget> {
                           ),
                           Padding(
                             padding:
-                                EdgeInsetsDirectional.fromSTEB(20, 20, 20, 0),
+                                EdgeInsetsDirectional.fromSTEB(20, 0, 20, 0),
                             child: Row(
                               mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Container(
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.9,
+                                  height: 120,
+                                  decoration: BoxDecoration(
+                                    boxShadow: [
+                                      BoxShadow(
+                                        blurRadius: 35,
+                                        color: Color(0x12000000),
+                                        offset: Offset(0, -4),
+                                      )
+                                    ],
+                                    gradient: LinearGradient(
+                                      colors: [
+                                        Color(0x82FF9E65),
+                                        Color(0x00FF9E65)
+                                      ],
+                                      stops: [0, 1],
+                                      begin: AlignmentDirectional(0, -1),
+                                      end: AlignmentDirectional(0, 1),
+                                    ),
+                                    borderRadius: BorderRadius.circular(15),
+                                  ),
+                                  child: Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        10, 0, 10, 0),
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.max,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Row(
+                                          mainAxisSize: MainAxisSize.max,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Expanded(
+                                              child: Padding(
+                                                padding: EdgeInsetsDirectional
+                                                    .fromSTEB(0, 10, 0, 0),
+                                                child: Text(
+                                                  'Vos émissions du jour',
+                                                  textAlign: TextAlign.center,
+                                                  style: FlutterFlowTheme.of(
+                                                          context)
+                                                      .bodyText1
+                                                      .override(
+                                                        fontFamily:
+                                                            'Montserrat',
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .gronyLighter,
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                      ),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        Row(
+                                          mainAxisSize: MainAxisSize.max,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(
+                                              '${functions.printScore(containerUsersStatsRecord.day0)} de CO2 aujourd\'hui.',
+                                              style: FlutterFlowTheme.of(
+                                                      context)
+                                                  .bodyText2
+                                                  .override(
+                                                    fontFamily: 'Montserrat',
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
+                                                        .tertiaryColor,
+                                                  ),
+                                            ),
+                                            InkWell(
+                                              onTap: () async {
+                                                logFirebaseEvent(
+                                                    'Container-ON_TAP');
+                                                logFirebaseEvent(
+                                                    'Container-Bottom-Sheet');
+                                                await showModalBottomSheet(
+                                                  isScrollControlled: true,
+                                                  backgroundColor:
+                                                      Colors.transparent,
+                                                  barrierColor:
+                                                      Color(0xBF000000),
+                                                  context: context,
+                                                  builder: (context) {
+                                                    return Padding(
+                                                      padding:
+                                                          MediaQuery.of(context)
+                                                              .viewInsets,
+                                                      child: Container(
+                                                        height: 310,
+                                                        child:
+                                                            NextVersionAlertWidget(),
+                                                      ),
+                                                    );
+                                                  },
+                                                );
+                                              },
+                                              child: Container(
+                                                width: 35,
+                                                height: 35,
+                                                decoration: BoxDecoration(
+                                                  boxShadow: [
+                                                    BoxShadow(
+                                                      blurRadius: 15,
+                                                      color: Color(0x3A000000),
+                                                      offset: Offset(0, 4),
+                                                    )
+                                                  ],
+                                                  shape: BoxShape.circle,
+                                                ),
+                                                alignment:
+                                                    AlignmentDirectional(0, 0),
+                                                child: Icon(
+                                                  Icons.timeline_sharp,
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .tertiaryColor,
+                                                  size: 22,
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        Row(
+                                          mainAxisSize: MainAxisSize.max,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          children: [
+                                            Text(
+                                              '${functions.printScore(containerUsersStatsRecord.week0)} de CO2 cette semaine.',
+                                              style: FlutterFlowTheme.of(
+                                                      context)
+                                                  .bodyText2
+                                                  .override(
+                                                    fontFamily: 'Montserrat',
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
+                                                        .tertiaryColor,
+                                                  ),
+                                            ),
+                                            InkWell(
+                                              onTap: () async {
+                                                logFirebaseEvent(
+                                                    'Container-ON_TAP');
+                                                logFirebaseEvent(
+                                                    'Container-Bottom-Sheet');
+                                                await showModalBottomSheet(
+                                                  isScrollControlled: true,
+                                                  backgroundColor:
+                                                      Colors.transparent,
+                                                  barrierColor:
+                                                      Color(0xBF000000),
+                                                  context: context,
+                                                  builder: (context) {
+                                                    return Padding(
+                                                      padding:
+                                                          MediaQuery.of(context)
+                                                              .viewInsets,
+                                                      child: Container(
+                                                        height: 310,
+                                                        child:
+                                                            NextVersionAlertWidget(),
+                                                      ),
+                                                    );
+                                                  },
+                                                );
+                                              },
+                                              child: Container(
+                                                width: 35,
+                                                height: 35,
+                                                decoration: BoxDecoration(
+                                                  boxShadow: [
+                                                    BoxShadow(
+                                                      blurRadius: 15,
+                                                      color: Color(0x3A000000),
+                                                      offset: Offset(0, 4),
+                                                    )
+                                                  ],
+                                                  shape: BoxShape.circle,
+                                                ),
+                                                alignment:
+                                                    AlignmentDirectional(0, 0),
+                                                child: Icon(
+                                                  Icons.timeline_rounded,
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .tertiaryColor,
+                                                  size: 22,
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        Row(
+                                          mainAxisSize: MainAxisSize.max,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          children: [
+                                            Text(
+                                              '${functions.printScore(containerUsersStatsRecord.month0)} de CO2 ce mois.',
+                                              style: FlutterFlowTheme.of(
+                                                      context)
+                                                  .bodyText2
+                                                  .override(
+                                                    fontFamily: 'Montserrat',
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
+                                                        .tertiaryColor,
+                                                  ),
+                                            ),
+                                            InkWell(
+                                              onTap: () async {
+                                                logFirebaseEvent(
+                                                    'Container-ON_TAP');
+                                                logFirebaseEvent(
+                                                    'Container-Bottom-Sheet');
+                                                await showModalBottomSheet(
+                                                  isScrollControlled: true,
+                                                  backgroundColor:
+                                                      Colors.transparent,
+                                                  barrierColor:
+                                                      Color(0xBF000000),
+                                                  context: context,
+                                                  builder: (context) {
+                                                    return Padding(
+                                                      padding:
+                                                          MediaQuery.of(context)
+                                                              .viewInsets,
+                                                      child: Container(
+                                                        height: 310,
+                                                        child:
+                                                            NextVersionAlertWidget(),
+                                                      ),
+                                                    );
+                                                  },
+                                                );
+                                              },
+                                              child: Container(
+                                                width: 30,
+                                                height: 30,
+                                                decoration: BoxDecoration(
+                                                  boxShadow: [
+                                                    BoxShadow(
+                                                      blurRadius: 15,
+                                                      color: Color(0x3A000000),
+                                                      offset: Offset(0, 4),
+                                                    )
+                                                  ],
+                                                  shape: BoxShape.circle,
+                                                ),
+                                                alignment:
+                                                    AlignmentDirectional(0, 0),
+                                                child: Icon(
+                                                  Icons.timeline_rounded,
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .tertiaryColor,
+                                                  size: 22,
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Padding(
+                            padding:
+                                EdgeInsetsDirectional.fromSTEB(20, 20, 20, 0),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.max,
                               children: [
                                 Expanded(
                                   child: Container(
@@ -458,274 +748,284 @@ class _StatistiquesWidgetState extends State<StatistiquesWidget> {
                                     ),
                                     child: Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
-                                          20, 10, 10, 10),
-                                      child: Column(
+                                          0, 1, 0, 0),
+                                      child: Row(
                                         mainAxisSize: MainAxisSize.max,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
                                         children: [
-                                          Row(
-                                            mainAxisSize: MainAxisSize.max,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Expanded(
-                                                child: Text(
-                                                  'Vos émissions du jour',
-                                                  textAlign: TextAlign.center,
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .bodyText1
-                                                      .override(
-                                                        fontFamily:
-                                                            'Montserrat',
+                                          SingleChildScrollView(
+                                            primary: false,
+                                            child: Column(
+                                              mainAxisSize: MainAxisSize.max,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
+                                              children: [
+                                                Row(
+                                                  mainAxisSize:
+                                                      MainAxisSize.max,
+                                                  children: [
+                                                    Text(
+                                                      'Répartition du jour par secteur',
+                                                      style:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .bodyText1
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Montserrat',
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .tertiaryColor,
+                                                              ),
+                                                    ),
+                                                  ],
+                                                ),
+                                                Padding(
+                                                  padding: EdgeInsetsDirectional
+                                                      .fromSTEB(10, 10, 10, 0),
+                                                  child: Row(
+                                                    mainAxisSize:
+                                                        MainAxisSize.max,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      Icon(
+                                                        Icons.directions_car,
+                                                        color:
+                                                            Color(0xFFFF0000),
+                                                        size: 24,
+                                                      ),
+                                                      Text(
+                                                        valueOrDefault<String>(
+                                                          functions.printScore(
+                                                              containerUsersStatsRecord
+                                                                  .transportDay0),
+                                                          '1.2 kg',
+                                                        ),
+                                                        style:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .bodyText1
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Montserrat',
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .tertiaryColor,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .normal,
+                                                                ),
+                                                      ),
+                                                      Text(
+                                                        valueOrDefault<String>(
+                                                          '${functions.percentProgressBar(containerUsersStatsRecord.transportDay0, 'day', containerUsersStatsRecord.day0).toString()}%',
+                                                          '0%',
+                                                        ),
+                                                        style:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .bodyText1
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Montserrat',
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .tertiaryColor,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                ),
+                                                      ),
+                                                      LinearPercentIndicator(
+                                                        percent: functions
+                                                            .percentProgressBar(
+                                                                containerUsersStatsRecord
+                                                                    .transportDay0,
+                                                                'day',
+                                                                containerUsersStatsRecord
+                                                                    .day0),
+                                                        width: 140,
+                                                        lineHeight: 18,
+                                                        animation: true,
+                                                        progressColor:
+                                                            Color(0xFFFF0000),
+                                                        backgroundColor:
+                                                            Color(0xFFF1F4F8),
+                                                        barRadius:
+                                                            Radius.circular(
+                                                                100),
+                                                        padding:
+                                                            EdgeInsets.zero,
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                                Padding(
+                                                  padding: EdgeInsetsDirectional
+                                                      .fromSTEB(10, 10, 10, 0),
+                                                  child: Row(
+                                                    mainAxisSize:
+                                                        MainAxisSize.max,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      Icon(
+                                                        Icons.fastfood_rounded,
+                                                        color:
+                                                            Color(0xFF0072FF),
+                                                        size: 24,
+                                                      ),
+                                                      Text(
+                                                        functions.printScore(
+                                                            containerUsersStatsRecord
+                                                                .foodDay0),
+                                                        style:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .bodyText1
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Montserrat',
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .tertiaryColor,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .normal,
+                                                                ),
+                                                      ),
+                                                      Text(
+                                                        valueOrDefault<String>(
+                                                          '${functions.percentProgressBar(containerUsersStatsRecord.foodDay0, 'day', containerUsersStatsRecord.day0).toString()}',
+                                                          '0%',
+                                                        ),
+                                                        style:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .bodyText1
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Montserrat',
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .tertiaryColor,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                ),
+                                                      ),
+                                                      LinearPercentIndicator(
+                                                        percent: functions
+                                                            .percentProgressBar(
+                                                                containerUsersStatsRecord
+                                                                    .foodDay0,
+                                                                'day',
+                                                                containerUsersStatsRecord
+                                                                    .day0),
+                                                        width: 140,
+                                                        lineHeight: 18,
+                                                        animation: true,
+                                                        progressColor:
+                                                            Color(0xFF0072FF),
+                                                        backgroundColor:
+                                                            Color(0xFFF1F4F8),
+                                                        barRadius:
+                                                            Radius.circular(
+                                                                100),
+                                                        padding:
+                                                            EdgeInsets.zero,
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                                Padding(
+                                                  padding: EdgeInsetsDirectional
+                                                      .fromSTEB(10, 10, 10, 10),
+                                                  child: Row(
+                                                    mainAxisSize:
+                                                        MainAxisSize.max,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      Icon(
+                                                        Icons
+                                                            .electrical_services,
                                                         color:
                                                             FlutterFlowTheme.of(
                                                                     context)
-                                                                .gronyLighter,
-                                                        fontWeight:
-                                                            FontWeight.w500,
+                                                                .orange,
+                                                        size: 24,
                                                       ),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                          Row(
-                                            mainAxisSize: MainAxisSize.max,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Text(
-                                                '${functions.printScore(containerUsersStatsRecord.day0)} de CO2 aujourd\'hui.',
-                                                style: FlutterFlowTheme.of(
-                                                        context)
-                                                    .bodyText2
-                                                    .override(
-                                                      fontFamily: 'Montserrat',
-                                                      color:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .tertiaryColor,
-                                                    ),
-                                              ),
-                                              InkWell(
-                                                onTap: () async {
-                                                  logFirebaseEvent(
-                                                      'Container-ON_TAP');
-                                                  logFirebaseEvent(
-                                                      'Container-Bottom-Sheet');
-                                                  await showModalBottomSheet(
-                                                    isScrollControlled: true,
-                                                    backgroundColor:
-                                                        Colors.transparent,
-                                                    barrierColor:
-                                                        Color(0xBF000000),
-                                                    context: context,
-                                                    builder: (context) {
-                                                      return Padding(
-                                                        padding: MediaQuery.of(
-                                                                context)
-                                                            .viewInsets,
-                                                        child: Container(
-                                                          height: 375,
-                                                          child: InfoWidget(
-                                                            title:
-                                                                'Some statistics',
-                                                            body:
-                                                                'The French average is 12.5 kg. The 10 most polluting countries emit on average between 40 kg (USA/Canada) and 83 kg (Quatar) of CO2 per capita per day. To reach the balance of our planet, it would be necessary to emit less than 3.30 kg per inhabitant.',
-                                                          ),
+                                                      Text(
+                                                        functions.printScore(
+                                                            containerUsersStatsRecord
+                                                                .energyDay0),
+                                                        style:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .bodyText1
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Montserrat',
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .tertiaryColor,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .normal,
+                                                                ),
+                                                      ),
+                                                      Text(
+                                                        valueOrDefault<String>(
+                                                          '${functions.percentProgressBar(containerUsersStatsRecord.energyDay0, 'day', containerUsersStatsRecord.day0).toString()}',
+                                                          '0%',
                                                         ),
-                                                      );
-                                                    },
-                                                  );
-                                                },
-                                                child: Container(
-                                                  width: 35,
-                                                  height: 35,
-                                                  decoration: BoxDecoration(
-                                                    boxShadow: [
-                                                      BoxShadow(
-                                                        blurRadius: 15,
-                                                        color:
-                                                            Color(0x3A000000),
-                                                        offset: Offset(0, 4),
-                                                      )
+                                                        style:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .bodyText1
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Montserrat',
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .tertiaryColor,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                ),
+                                                      ),
+                                                      LinearPercentIndicator(
+                                                        percent: functions
+                                                            .percentProgressBar(
+                                                                containerUsersStatsRecord
+                                                                    .energyDay0,
+                                                                'day',
+                                                                containerUsersStatsRecord
+                                                                    .day0),
+                                                        width: 140,
+                                                        lineHeight: 18,
+                                                        animation: true,
+                                                        progressColor:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .orange,
+                                                        backgroundColor:
+                                                            Color(0xFFF1F4F8),
+                                                        barRadius:
+                                                            Radius.circular(
+                                                                100),
+                                                        padding:
+                                                            EdgeInsets.zero,
+                                                      ),
                                                     ],
-                                                    shape: BoxShape.circle,
-                                                  ),
-                                                  alignment:
-                                                      AlignmentDirectional(
-                                                          0, 0),
-                                                  child: Icon(
-                                                    Icons.timeline_sharp,
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .tertiaryColor,
-                                                    size: 22,
                                                   ),
                                                 ),
-                                              ),
-                                            ],
-                                          ),
-                                          Row(
-                                            mainAxisSize: MainAxisSize.max,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.center,
-                                            children: [
-                                              Text(
-                                                '${functions.printScore(containerUsersStatsRecord.week0)} de CO2 cette semaine.',
-                                                style: FlutterFlowTheme.of(
-                                                        context)
-                                                    .bodyText2
-                                                    .override(
-                                                      fontFamily: 'Montserrat',
-                                                      color:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .tertiaryColor,
-                                                    ),
-                                              ),
-                                              InkWell(
-                                                onTap: () async {
-                                                  logFirebaseEvent(
-                                                      'Container-ON_TAP');
-                                                  logFirebaseEvent(
-                                                      'Container-Bottom-Sheet');
-                                                  await showModalBottomSheet(
-                                                    isScrollControlled: true,
-                                                    backgroundColor:
-                                                        Colors.transparent,
-                                                    barrierColor:
-                                                        Color(0xBF000000),
-                                                    context: context,
-                                                    builder: (context) {
-                                                      return Padding(
-                                                        padding: MediaQuery.of(
-                                                                context)
-                                                            .viewInsets,
-                                                        child: Container(
-                                                          height: 375,
-                                                          child: InfoWidget(
-                                                            title:
-                                                                'Some statistics',
-                                                            body:
-                                                                'The French average is 12.5 kg. The 10 most polluting countries emit on average between 40 kg (USA/Canada) and 83 kg (Quatar) of CO2 per capita per day. To reach the balance of our planet, it would be necessary to emit less than 3.30 kg per inhabitant.',
-                                                          ),
-                                                        ),
-                                                      );
-                                                    },
-                                                  );
-                                                },
-                                                child: Container(
-                                                  width: 35,
-                                                  height: 35,
-                                                  decoration: BoxDecoration(
-                                                    boxShadow: [
-                                                      BoxShadow(
-                                                        blurRadius: 15,
-                                                        color:
-                                                            Color(0x3A000000),
-                                                        offset: Offset(0, 4),
-                                                      )
-                                                    ],
-                                                    shape: BoxShape.circle,
-                                                  ),
-                                                  alignment:
-                                                      AlignmentDirectional(
-                                                          0, 0),
-                                                  child: Icon(
-                                                    Icons.timeline_rounded,
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .tertiaryColor,
-                                                    size: 22,
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                          Row(
-                                            mainAxisSize: MainAxisSize.max,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.center,
-                                            children: [
-                                              Text(
-                                                '${functions.printScore(containerUsersStatsRecord.month0)} de CO2 ce mois.',
-                                                style: FlutterFlowTheme.of(
-                                                        context)
-                                                    .bodyText2
-                                                    .override(
-                                                      fontFamily: 'Montserrat',
-                                                      color:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .tertiaryColor,
-                                                    ),
-                                              ),
-                                              InkWell(
-                                                onTap: () async {
-                                                  logFirebaseEvent(
-                                                      'Container-ON_TAP');
-                                                  logFirebaseEvent(
-                                                      'Container-Bottom-Sheet');
-                                                  await showModalBottomSheet(
-                                                    isScrollControlled: true,
-                                                    backgroundColor:
-                                                        Colors.transparent,
-                                                    barrierColor:
-                                                        Color(0xBF000000),
-                                                    context: context,
-                                                    builder: (context) {
-                                                      return Padding(
-                                                        padding: MediaQuery.of(
-                                                                context)
-                                                            .viewInsets,
-                                                        child: Container(
-                                                          height: 375,
-                                                          child: InfoWidget(
-                                                            title:
-                                                                'Some statistics',
-                                                            body:
-                                                                'The French average is 12.5 kg. The 10 most polluting countries emit on average between 40 kg (USA/Canada) and 83 kg (Quatar) of CO2 per capita per day. To reach the balance of our planet, it would be necessary to emit less than 3.30 kg per inhabitant.',
-                                                          ),
-                                                        ),
-                                                      );
-                                                    },
-                                                  );
-                                                },
-                                                child: Container(
-                                                  width: 35,
-                                                  height: 35,
-                                                  decoration: BoxDecoration(
-                                                    boxShadow: [
-                                                      BoxShadow(
-                                                        blurRadius: 15,
-                                                        color:
-                                                            Color(0x3A000000),
-                                                        offset: Offset(0, 4),
-                                                      )
-                                                    ],
-                                                    shape: BoxShape.circle,
-                                                  ),
-                                                  alignment:
-                                                      AlignmentDirectional(
-                                                          0, 0),
-                                                  child: Icon(
-                                                    Icons.timeline_rounded,
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .tertiaryColor,
-                                                    size: 22,
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
+                                              ],
+                                            ),
                                           ),
                                         ],
                                       ),
@@ -739,6 +1039,7 @@ class _StatistiquesWidgetState extends State<StatistiquesWidget> {
                             padding:
                                 EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
                             child: SingleChildScrollView(
+                              primary: false,
                               child: Column(
                                 mainAxisSize: MainAxisSize.max,
                                 children: [
@@ -780,13 +1081,15 @@ class _StatistiquesWidgetState extends State<StatistiquesWidget> {
                                               ),
                                         ),
                                         LinearPercentIndicator(
-                                            percent: 0.72,
-                                            width: 140,
-                                            lineHeight: 18,
-                                            animation: true,
-                                            progressColor: Color(0xFFFF0000),
-                                            backgroundColor: Color(0xFFF1F4F8),
-                                            barRadius: Radius.circular(100)),
+                                          percent: 0.72,
+                                          width: 140,
+                                          lineHeight: 18,
+                                          animation: true,
+                                          progressColor: Color(0xFFFF0000),
+                                          backgroundColor: Color(0xFFF1F4F8),
+                                          barRadius: Radius.circular(100),
+                                          padding: EdgeInsets.zero,
+                                        ),
                                       ],
                                     ),
                                   ),
@@ -828,13 +1131,15 @@ class _StatistiquesWidgetState extends State<StatistiquesWidget> {
                                               ),
                                         ),
                                         LinearPercentIndicator(
-                                            percent: 0.26,
-                                            width: 140,
-                                            lineHeight: 18,
-                                            animation: true,
-                                            progressColor: Color(0xFF0072FF),
-                                            backgroundColor: Color(0xFFF1F4F8),
-                                            barRadius: Radius.circular(100)),
+                                          percent: 0.26,
+                                          width: 140,
+                                          lineHeight: 18,
+                                          animation: true,
+                                          progressColor: Color(0xFF0072FF),
+                                          backgroundColor: Color(0xFFF1F4F8),
+                                          barRadius: Radius.circular(100),
+                                          padding: EdgeInsets.zero,
+                                        ),
                                       ],
                                     ),
                                   ),
@@ -877,15 +1182,17 @@ class _StatistiquesWidgetState extends State<StatistiquesWidget> {
                                               ),
                                         ),
                                         LinearPercentIndicator(
-                                            percent: 0.1,
-                                            width: 140,
-                                            lineHeight: 18,
-                                            animation: true,
-                                            progressColor:
-                                                FlutterFlowTheme.of(context)
-                                                    .orange,
-                                            backgroundColor: Color(0xFFF1F4F8),
-                                            barRadius: Radius.circular(100)),
+                                          percent: 0.1,
+                                          width: 140,
+                                          lineHeight: 18,
+                                          animation: true,
+                                          progressColor:
+                                              FlutterFlowTheme.of(context)
+                                                  .orange,
+                                          backgroundColor: Color(0xFFF1F4F8),
+                                          barRadius: Radius.circular(100),
+                                          padding: EdgeInsets.zero,
+                                        ),
                                       ],
                                     ),
                                   ),

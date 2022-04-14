@@ -17,7 +17,7 @@ import '../../statistiques/statistiques_widget.dart';
 import '../../faq/faq_widget.dart';
 import '../../drawer/drawer_widget.dart';
 import '../../feedback/feedback_widget.dart';
-import '../../drawer_copy/drawer_copy_widget.dart';
+import '../../account/account_widget.dart';
 
 class PushNotificationsHandler extends StatefulWidget {
   const PushNotificationsHandler(
@@ -91,7 +91,7 @@ final pageBuilderMap = <String, Future<Widget> Function(Map<String, dynamic>)>{
   'FAQ': (data) async => FaqWidget(),
   'Drawer': (data) async => DrawerWidget(),
   'Feedback': (data) async => FeedbackWidget(),
-  'DrawerCopy': (data) async => DrawerCopyWidget(),
+  'Account': (data) async => AccountWidget(),
 };
 
 bool hasMatchingParameters(Map<String, dynamic> data, Set<String> params) =>

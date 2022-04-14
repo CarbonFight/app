@@ -12,35 +12,31 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class GazFormPeriodicWidget extends StatefulWidget {
-  const GazFormPeriodicWidget({
+class GazFormPeriodicModifyWidget extends StatefulWidget {
+  const GazFormPeriodicModifyWidget({
     Key key,
-    this.volume,
-    this.powertype,
-    this.peopleSharing,
-    this.co2e,
-    this.ref,
+    this.periodic,
   }) : super(key: key);
 
-  final int volume;
-  final String powertype;
-  final String peopleSharing;
-  final int co2e;
-  final EnergyPeriodicsRecord ref;
+  final EnergyPeriodicsRecord periodic;
 
   @override
-  _GazFormPeriodicWidgetState createState() => _GazFormPeriodicWidgetState();
+  _GazFormPeriodicModifyWidgetState createState() =>
+      _GazFormPeriodicModifyWidgetState();
 }
 
-class _GazFormPeriodicWidgetState extends State<GazFormPeriodicWidget> {
+class _GazFormPeriodicModifyWidgetState
+    extends State<GazFormPeriodicModifyWidget> {
   String peopleSharingValue;
   String powertypeValue;
   TextEditingController volumeController;
+  bool deleteValue;
 
   @override
   void initState() {
     super.initState();
-    volumeController = TextEditingController(text: widget.volume.toString());
+    volumeController =
+        TextEditingController(text: widget.periodic.volume.toString());
   }
 
   @override
@@ -214,7 +210,8 @@ class _GazFormPeriodicWidgetState extends State<GazFormPeriodicWidget> {
                       children: [
                         Expanded(
                           child: FlutterFlowDropDown(
-                            initialOption: powertypeValue ??= widget.powertype,
+                            initialOption: powertypeValue ??=
+                                widget.periodic.powertype,
                             options: [
                               'Gaz naturel',
                               'Gaz de cokerie',
@@ -252,7 +249,7 @@ class _GazFormPeriodicWidgetState extends State<GazFormPeriodicWidget> {
                       Expanded(
                         child: FlutterFlowDropDown(
                           initialOption: peopleSharingValue ??=
-                              widget.powertype,
+                              widget.periodic.peopleSharing,
                           options:
                               ['1', '2', '3', '4', '5', '6', '7', '8'].toList(),
                           onChanged: (val) =>
@@ -280,6 +277,28 @@ class _GazFormPeriodicWidgetState extends State<GazFormPeriodicWidget> {
                       ),
                     ],
                   ),
+                  Row(
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      Expanded(
+                        child: SwitchListTile(
+                          value: deleteValue ??= false,
+                          onChanged: (newValue) =>
+                              setState(() => deleteValue = newValue),
+                          title: Text(
+                            'Supprimer',
+                            style: FlutterFlowTheme.of(context).bodyText1,
+                          ),
+                          tileColor:
+                              FlutterFlowTheme.of(context).secondaryColor,
+                          activeColor: Color(0xFFA10000),
+                          activeTrackColor: Color(0xFFAD6161),
+                          dense: false,
+                          controlAffinity: ListTileControlAffinity.trailing,
+                        ),
+                      ),
+                    ],
+                  ),
                   Padding(
                     padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
                     child: Row(
@@ -293,23 +312,6 @@ class _GazFormPeriodicWidgetState extends State<GazFormPeriodicWidget> {
                             child: InkWell(
                               onTap: () async {
                                 logFirebaseEvent('iconButton-ON_TAP');
-                                logFirebaseEvent('iconButton-Alert-Dialog');
-                                await showDialog(
-                                  context: context,
-                                  builder: (alertDialogContext) {
-                                    return AlertDialog(
-                                      title: Text('Départ'),
-                                      content: Text('départ'),
-                                      actions: [
-                                        TextButton(
-                                          onPressed: () =>
-                                              Navigator.pop(alertDialogContext),
-                                          child: Text('Ok'),
-                                        ),
-                                      ],
-                                    );
-                                  },
-                                );
                                 logFirebaseEvent(
                                     'iconButton-Update-Local-State');
                                 setState(() => FFAppState().actionCO2 =
@@ -324,34 +326,6 @@ class _GazFormPeriodicWidgetState extends State<GazFormPeriodicWidget> {
                                           peopleSharingValue,
                                           '1',
                                         )));
-                                logFirebaseEvent('iconButton-Alert-Dialog');
-                                await showDialog(
-                                  context: context,
-                                  builder: (alertDialogContext) {
-                                    return AlertDialog(
-                                      title: Text('POouette'),
-                                      content: Text('Pouette c\'est passé'),
-                                      actions: [
-                                        TextButton(
-                                          onPressed: () =>
-                                              Navigator.pop(alertDialogContext),
-                                          child: Text('Ok'),
-                                        ),
-                                      ],
-                                    );
-                                  },
-                                );
-                                logFirebaseEvent('iconButton-Backend-Call');
-
-                                final energyPeriodicsUpdateData =
-                                    createEnergyPeriodicsRecordData(
-                                  co2e: FFAppState().actionCO2,
-                                  energy: 'gas',
-                                  powertype: powertypeValue,
-                                  peopleSharing: peopleSharingValue,
-                                );
-                                await widget.ref.reference
-                                    .update(energyPeriodicsUpdateData);
                               },
                               child: IconButtonWidget(
                                 fillColor:
@@ -380,38 +354,37 @@ class _GazFormPeriodicWidgetState extends State<GazFormPeriodicWidget> {
                                   // loading
                                   logFirebaseEvent('iconButton-loading');
                                   setState(() => FFAppState().loading = true);
-                                  logFirebaseEvent(
-                                      'iconButton-Update-Local-State');
-                                  setState(() => FFAppState().actionCO2 =
-                                      functions.energyPeriodicsCO2e(
-                                          'gas',
-                                          int.parse(volumeController.text),
-                                          valueOrDefault<String>(
-                                            powertypeValue,
-                                            'Gaz naturel',
-                                          ),
-                                          valueOrDefault<String>(
-                                            peopleSharingValue,
-                                            '1',
-                                          )));
-                                  logFirebaseEvent('iconButton-Backend-Call');
+                                  if (deleteValue) {
+                                    logFirebaseEvent('iconButton-Backend-Call');
+                                    await widget.periodic.reference.delete();
+                                  } else {
+                                    logFirebaseEvent(
+                                        'iconButton-Update-Local-State');
+                                    setState(() => FFAppState().actionCO2 =
+                                        functions.energyPeriodicsCO2e(
+                                            'gas',
+                                            int.parse(volumeController.text),
+                                            valueOrDefault<String>(
+                                              powertypeValue,
+                                              'Gaz naturel',
+                                            ),
+                                            valueOrDefault<String>(
+                                              peopleSharingValue,
+                                              '1',
+                                            )));
+                                    logFirebaseEvent('iconButton-Backend-Call');
 
-                                  final energyPeriodicsUpdateData =
-                                      createEnergyPeriodicsRecordData(
-                                    energy: 'gas',
-                                    volume: int.parse(volumeController.text),
-                                    powertype: valueOrDefault<String>(
-                                      powertypeValue,
-                                      'Gaz natural',
-                                    ),
-                                    peopleSharing: valueOrDefault<String>(
-                                      peopleSharingValue,
-                                      '1',
-                                    ),
-                                    co2e: FFAppState().actionCO2,
-                                  );
-                                  await widget.ref.reference
-                                      .update(energyPeriodicsUpdateData);
+                                    final energyPeriodicsUpdateData =
+                                        createEnergyPeriodicsRecordData(
+                                      volume: int.parse(volumeController.text),
+                                      powertype: powertypeValue,
+                                      peopleSharing: peopleSharingValue,
+                                      co2e: FFAppState().actionCO2,
+                                    );
+                                    await widget.periodic.reference
+                                        .update(energyPeriodicsUpdateData);
+                                  }
+
                                   logFirebaseEvent('iconButton-Navigate-Back');
                                   Navigator.pop(context);
                                   // loading

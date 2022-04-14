@@ -11,26 +11,31 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class WaterFormWidget extends StatefulWidget {
-  const WaterFormWidget({
+class ElectricityFormPeriodicModifyWidget extends StatefulWidget {
+  const ElectricityFormPeriodicModifyWidget({
     Key key,
-    this.cache,
+    this.periodic,
   }) : super(key: key);
 
-  final ActionCacheRecord cache;
+  final EnergyPeriodicsRecord periodic;
 
   @override
-  _WaterFormWidgetState createState() => _WaterFormWidgetState();
+  _ElectricityFormPeriodicModifyWidgetState createState() =>
+      _ElectricityFormPeriodicModifyWidgetState();
 }
 
-class _WaterFormWidgetState extends State<WaterFormWidget> {
+class _ElectricityFormPeriodicModifyWidgetState
+    extends State<ElectricityFormPeriodicModifyWidget> {
   String peopleSharingValue;
+  String powertypeValue;
   TextEditingController volumeController;
+  bool deleteValue;
 
   @override
   void initState() {
     super.initState();
-    volumeController = TextEditingController();
+    volumeController =
+        TextEditingController(text: widget.periodic.volume.toString());
   }
 
   @override
@@ -66,14 +71,14 @@ class _WaterFormWidgetState extends State<WaterFormWidget> {
                       Padding(
                         padding: EdgeInsetsDirectional.fromSTEB(0, 0, 5, 0),
                         child: Image.asset(
-                          'assets/images/water-drop.png',
+                          'assets/images/energy.png',
                           width: 25,
                           height: 25,
                           fit: BoxFit.cover,
                         ),
                       ),
                       Text(
-                        'Eau',
+                        'Electricité',
                         style: FlutterFlowTheme.of(context).subtitle1,
                       ),
                     ],
@@ -131,8 +136,8 @@ class _WaterFormWidgetState extends State<WaterFormWidget> {
                               controller: volumeController,
                               obscureText: false,
                               decoration: InputDecoration(
-                                labelText: 'Consommation annuelle (m3)',
-                                hintText: 'Consommation annuelle (m3)',
+                                labelText: 'Consommation annuelle (KWH)',
+                                hintText: 'Consommation annuelle (KWH)',
                                 enabledBorder: OutlineInputBorder(
                                   borderSide: BorderSide(
                                     color:
@@ -205,11 +210,61 @@ class _WaterFormWidgetState extends State<WaterFormWidget> {
                         ],
                       ),
                     ),
+                    Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 10),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          Expanded(
+                            child: FlutterFlowDropDown(
+                              initialOption: powertypeValue ??=
+                                  widget.periodic.powertype,
+                              options: [
+                                'Nucléaire',
+                                'Éolienne (mer)',
+                                'Éolienne (terre)',
+                                'Hydroélectrique',
+                                'Biomasse',
+                                'Géothermique',
+                                'Fioul',
+                                'Charbon'
+                              ].toList(),
+                              onChanged: (val) =>
+                                  setState(() => powertypeValue = val),
+                              width: 180,
+                              height: 50,
+                              textStyle: FlutterFlowTheme.of(context)
+                                  .bodyText2
+                                  .override(
+                                    fontFamily: 'Montserrat',
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                              hintText: 'Type d\'énergie',
+                              icon: Icon(
+                                Icons.flash_on,
+                                size: 15,
+                              ),
+                              fillColor: Color(0xFFFAFAFA),
+                              elevation: 2,
+                              borderColor:
+                                  FlutterFlowTheme.of(context).grayLight,
+                              borderWidth: 1,
+                              borderRadius: 100,
+                              margin:
+                                  EdgeInsetsDirectional.fromSTEB(12, 4, 12, 4),
+                              hidesUnderline: true,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                     Row(
                       mainAxisSize: MainAxisSize.max,
                       children: [
                         Expanded(
                           child: FlutterFlowDropDown(
+                            initialOption: peopleSharingValue ??=
+                                widget.periodic.peopleSharing,
                             options: ['1', '2', '3', '4', '5', '6', '7', '8']
                                 .toList(),
                             onChanged: (val) =>
@@ -238,6 +293,28 @@ class _WaterFormWidgetState extends State<WaterFormWidget> {
                         ),
                       ],
                     ),
+                    Row(
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Expanded(
+                          child: SwitchListTile(
+                            value: deleteValue ??= false,
+                            onChanged: (newValue) =>
+                                setState(() => deleteValue = newValue),
+                            title: Text(
+                              'Supprimer',
+                              style: FlutterFlowTheme.of(context).bodyText1,
+                            ),
+                            tileColor:
+                                FlutterFlowTheme.of(context).secondaryColor,
+                            activeColor: Color(0xFFA10000),
+                            activeTrackColor: Color(0xFFAD6161),
+                            dense: false,
+                            controlAffinity: ListTileControlAffinity.trailing,
+                          ),
+                        ),
+                      ],
+                    ),
                     Padding(
                       padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
                       child: Row(
@@ -255,9 +332,12 @@ class _WaterFormWidgetState extends State<WaterFormWidget> {
                                       'iconButton-Update-Local-State');
                                   setState(() => FFAppState().actionCO2 =
                                       functions.energyPeriodicsCO2e(
-                                          'water',
+                                          'electricity',
                                           int.parse(volumeController.text),
-                                          'null',
+                                          valueOrDefault<String>(
+                                            powertypeValue,
+                                            'Nucléaire',
+                                          ),
                                           valueOrDefault<String>(
                                             peopleSharingValue,
                                             '1',
@@ -288,71 +368,47 @@ class _WaterFormWidgetState extends State<WaterFormWidget> {
                                   logFirebaseEvent('iconButton-ON_TAP');
                                   logFirebaseEvent(
                                       'iconButton-Update-Local-State');
-                                  setState(() => FFAppState().actionCO2 =
-                                      functions.energyPeriodicsCO2e(
-                                          'water',
-                                          int.parse(volumeController.text),
-                                          'null',
-                                          valueOrDefault<String>(
-                                            peopleSharingValue,
-                                            '1',
-                                          )));
-                                  logFirebaseEvent(
-                                      'iconButton-Update-Local-State');
-                                  setState(() =>
-                                      FFAppState().time = getCurrentTimestamp);
-                                  logFirebaseEvent('iconButton-Backend-Call');
+                                  setState(() => FFAppState().loading = true);
+                                  if (deleteValue) {
+                                    logFirebaseEvent('iconButton-Backend-Call');
+                                    await widget.periodic.reference.delete();
+                                  } else {
+                                    logFirebaseEvent(
+                                        'iconButton-Update-Local-State');
+                                    setState(() => FFAppState().actionCO2 =
+                                        functions.energyPeriodicsCO2e(
+                                            'electricity',
+                                            int.parse(volumeController.text),
+                                            valueOrDefault<String>(
+                                              powertypeValue,
+                                              'Nucléaire',
+                                            ),
+                                            valueOrDefault<String>(
+                                              peopleSharingValue,
+                                              '1',
+                                            )));
+                                    logFirebaseEvent('iconButton-Backend-Call');
 
-                                  final energyActionsCreateData =
-                                      createEnergyActionsRecordData(
-                                    createdTime: getCurrentTimestamp,
-                                    co2e: FFAppState().actionCO2,
-                                    energy: 'water',
-                                    volume: int.parse(volumeController.text),
-                                    powertype: 'null',
-                                    peopleSharing: valueOrDefault<String>(
-                                      peopleSharingValue,
-                                      '1',
-                                    ),
-                                    userId: currentUserUid,
-                                  );
-                                  await EnergyActionsRecord.collection
-                                      .doc()
-                                      .set(energyActionsCreateData);
-                                  logFirebaseEvent('iconButton-Backend-Call');
+                                    final energyPeriodicsUpdateData =
+                                        createEnergyPeriodicsRecordData(
+                                      co2e: FFAppState().actionCO2,
+                                      powertype: powertypeValue,
+                                      volume: int.parse(volumeController.text),
+                                      peopleSharing: peopleSharingValue,
+                                    );
+                                    await widget.periodic.reference
+                                        .update(energyPeriodicsUpdateData);
+                                  }
 
-                                  final energyPeriodicsCreateData =
-                                      createEnergyPeriodicsRecordData(
-                                    co2e: FFAppState().actionCO2,
-                                    energy: 'water',
-                                    peopleSharing: valueOrDefault<String>(
-                                      peopleSharingValue,
-                                      '1',
-                                    ),
-                                    powertype: 'null',
-                                    userId: currentUserUid,
-                                    volume: int.parse(volumeController.text),
-                                  );
-                                  await EnergyPeriodicsRecord.collection
-                                      .doc()
-                                      .set(energyPeriodicsCreateData);
-                                  logFirebaseEvent('iconButton-Backend-Call');
-
-                                  final actionTypeCacheCreateData =
-                                      createActionTypeCacheRecordData(
-                                    actionCache: widget.cache.reference,
-                                    actionType: 'water',
-                                    date: FFAppState().time,
-                                  );
-                                  await ActionTypeCacheRecord.collection
-                                      .doc()
-                                      .set(actionTypeCacheCreateData);
                                   logFirebaseEvent('iconButton-Navigate-Back');
                                   Navigator.pop(context);
+                                  logFirebaseEvent(
+                                      'iconButton-Update-Local-State');
+                                  setState(() => FFAppState().loading = false);
                                 },
                                 child: IconButtonWidget(
                                   fillColor:
-                                      FlutterFlowTheme.of(context).primaryColor,
+                                      FlutterFlowTheme.of(context).orange,
                                   fontColor: FlutterFlowTheme.of(context)
                                       .tertiaryColor,
                                   icon: Icon(
@@ -361,7 +417,7 @@ class _WaterFormWidgetState extends State<WaterFormWidget> {
                                         .tertiaryColor,
                                     size: 25,
                                   ),
-                                  text: 'Ajouter',
+                                  text: 'Modifier',
                                 ),
                               ),
                             ),

@@ -9,6 +9,7 @@ import '../splash/splash_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class DrawerWidget extends StatefulWidget {
@@ -73,10 +74,10 @@ class _DrawerWidgetState extends State<DrawerWidget>
             ),
           ),
           Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(20, 40, 20, 20),
+            padding: EdgeInsetsDirectional.fromSTEB(20, 70, 20, 20),
             child: Container(
               width: MediaQuery.of(context).size.width * 0.75,
-              height: MediaQuery.of(context).size.height * 0.9,
+              height: 400,
               decoration: BoxDecoration(
                 color: FlutterFlowTheme.of(context).tertiaryColor,
                 boxShadow: [
@@ -89,7 +90,7 @@ class _DrawerWidgetState extends State<DrawerWidget>
                 borderRadius: BorderRadius.circular(15),
               ),
               child: Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 10),
+                padding: EdgeInsetsDirectional.fromSTEB(2, 10, 0, 10),
                 child: Column(
                   mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -139,30 +140,31 @@ class _DrawerWidgetState extends State<DrawerWidget>
                           Container(
                             width: double.infinity,
                             decoration: BoxDecoration(),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.max,
-                              children: [
-                                SvgPicture.asset(
-                                  'assets/images/forward_green.svg',
-                                  width: 12,
-                                  height: 12,
-                                  fit: BoxFit.cover,
-                                ),
-                                Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      10, 0, 0, 0),
-                                  child: InkWell(
-                                    onTap: () async {
-                                      logFirebaseEvent('Text-ON_TAP');
-                                      logFirebaseEvent('Text-Navigate-To');
-                                      await Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) =>
-                                              FeedbackWidget(),
-                                        ),
-                                      );
-                                    },
+                            child: InkWell(
+                              onTap: () async {
+                                logFirebaseEvent('Row-ON_TAP');
+                                logFirebaseEvent('Row-Navigate-Back');
+                                Navigator.pop(context);
+                                logFirebaseEvent('Row-Navigate-To');
+                                await Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => FeedbackWidget(),
+                                  ),
+                                );
+                              },
+                              child: Row(
+                                mainAxisSize: MainAxisSize.max,
+                                children: [
+                                  SvgPicture.asset(
+                                    'assets/images/forward_green.svg',
+                                    width: 12,
+                                    height: 12,
+                                    fit: BoxFit.cover,
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        10, 0, 0, 0),
                                     child: Text(
                                       'Contacter l\'équipe',
                                       style: FlutterFlowTheme.of(context)
@@ -175,8 +177,8 @@ class _DrawerWidgetState extends State<DrawerWidget>
                                           ),
                                     ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                           ),
                           Divider(
@@ -186,31 +188,33 @@ class _DrawerWidgetState extends State<DrawerWidget>
                           Container(
                             width: double.infinity,
                             decoration: BoxDecoration(),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.max,
-                              children: [
-                                SvgPicture.asset(
-                                  'assets/images/forward_green.svg',
-                                  width: 12,
-                                  height: 12,
-                                  fit: BoxFit.cover,
-                                ),
-                                Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      10, 0, 0, 0),
-                                  child: InkWell(
-                                    onTap: () async {
-                                      logFirebaseEvent('Text-ON_TAP');
-                                      logFirebaseEvent('Text-Navigate-To');
-                                      await Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) => SplashWidget(),
-                                        ),
-                                      );
-                                    },
+                            child: InkWell(
+                              onTap: () async {
+                                logFirebaseEvent('Row-ON_TAP');
+                                logFirebaseEvent('Row-Navigate-Back');
+                                Navigator.pop(context);
+                                logFirebaseEvent('Row-Navigate-To');
+                                await Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => SplashWidget(),
+                                  ),
+                                );
+                              },
+                              child: Row(
+                                mainAxisSize: MainAxisSize.max,
+                                children: [
+                                  SvgPicture.asset(
+                                    'assets/images/forward_green.svg',
+                                    width: 12,
+                                    height: 12,
+                                    fit: BoxFit.cover,
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        10, 0, 0, 0),
                                     child: Text(
-                                      'Help',
+                                      'Bienvenue !',
                                       style: FlutterFlowTheme.of(context)
                                           .bodyText2
                                           .override(
@@ -221,8 +225,8 @@ class _DrawerWidgetState extends State<DrawerWidget>
                                           ),
                                     ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                           ),
                           Divider(
@@ -232,29 +236,31 @@ class _DrawerWidgetState extends State<DrawerWidget>
                           Container(
                             width: double.infinity,
                             decoration: BoxDecoration(),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.max,
-                              children: [
-                                SvgPicture.asset(
-                                  'assets/images/forward_green.svg',
-                                  width: 12,
-                                  height: 12,
-                                  fit: BoxFit.cover,
-                                ),
-                                Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      10, 0, 0, 0),
-                                  child: InkWell(
-                                    onTap: () async {
-                                      logFirebaseEvent('Text-ON_TAP');
-                                      logFirebaseEvent('Text-Navigate-To');
-                                      await Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) => FaqWidget(),
-                                        ),
-                                      );
-                                    },
+                            child: InkWell(
+                              onTap: () async {
+                                logFirebaseEvent('Row-ON_TAP');
+                                logFirebaseEvent('Row-Navigate-Back');
+                                Navigator.pop(context);
+                                logFirebaseEvent('Row-Navigate-To');
+                                await Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => FaqWidget(),
+                                  ),
+                                );
+                              },
+                              child: Row(
+                                mainAxisSize: MainAxisSize.max,
+                                children: [
+                                  SvgPicture.asset(
+                                    'assets/images/forward_green.svg',
+                                    width: 12,
+                                    height: 12,
+                                    fit: BoxFit.cover,
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        10, 0, 0, 0),
                                     child: Text(
                                       'FAQ',
                                       style: FlutterFlowTheme.of(context)
@@ -267,8 +273,8 @@ class _DrawerWidgetState extends State<DrawerWidget>
                                           ),
                                     ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                           ),
                           Divider(
@@ -278,31 +284,129 @@ class _DrawerWidgetState extends State<DrawerWidget>
                           Container(
                             width: double.infinity,
                             decoration: BoxDecoration(),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.max,
-                              children: [
-                                SvgPicture.asset(
-                                  'assets/images/forward_green.svg',
-                                  width: 12,
-                                  height: 12,
-                                  fit: BoxFit.cover,
-                                ),
-                                Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      10, 0, 0, 0),
-                                  child: Text(
-                                    'Terms',
-                                    style: FlutterFlowTheme.of(context)
-                                        .bodyText2
-                                        .override(
-                                          fontFamily: 'Montserrat',
-                                          color: FlutterFlowTheme.of(context)
-                                              .primaryColor,
-                                          fontWeight: FontWeight.w500,
-                                        ),
+                            child: InkWell(
+                              onTap: () async {
+                                logFirebaseEvent('Row-ON_TAP');
+                                logFirebaseEvent('Row-Navigate-Back');
+                                Navigator.pop(context);
+                                logFirebaseEvent('Row-Launch-U-R-L');
+                                await launchURL(
+                                    'https://carbonfight.app/privacy.html');
+                              },
+                              child: Row(
+                                mainAxisSize: MainAxisSize.max,
+                                children: [
+                                  FaIcon(
+                                    FontAwesomeIcons.externalLinkAlt,
+                                    color: FlutterFlowTheme.of(context)
+                                        .secondaryColor,
+                                    size: 12,
                                   ),
-                                ),
-                              ],
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        10, 0, 0, 0),
+                                    child: Text(
+                                      'Terms',
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyText2
+                                          .override(
+                                            fontFamily: 'Montserrat',
+                                            color: FlutterFlowTheme.of(context)
+                                                .primaryColor,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          Divider(
+                            height: 20,
+                            endIndent: 140,
+                          ),
+                          Container(
+                            width: double.infinity,
+                            decoration: BoxDecoration(),
+                            child: InkWell(
+                              onTap: () async {
+                                logFirebaseEvent('Row-ON_TAP');
+                                logFirebaseEvent('Row-Navigate-Back');
+                                Navigator.pop(context);
+                                logFirebaseEvent('Row-Launch-U-R-L');
+                                await launchURL(
+                                    'https://github.com/CarbonFight/mobile');
+                              },
+                              child: Row(
+                                mainAxisSize: MainAxisSize.max,
+                                children: [
+                                  FaIcon(
+                                    FontAwesomeIcons.externalLinkAlt,
+                                    color: FlutterFlowTheme.of(context)
+                                        .secondaryColor,
+                                    size: 12,
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        10, 0, 0, 0),
+                                    child: Text(
+                                      'Code source (Github)',
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyText2
+                                          .override(
+                                            fontFamily: 'Montserrat',
+                                            color: FlutterFlowTheme.of(context)
+                                                .primaryColor,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          Divider(
+                            height: 20,
+                            endIndent: 140,
+                          ),
+                          Container(
+                            width: double.infinity,
+                            decoration: BoxDecoration(),
+                            child: InkWell(
+                              onTap: () async {
+                                logFirebaseEvent('Row-ON_TAP');
+                                logFirebaseEvent('Row-Navigate-Back');
+                                Navigator.pop(context);
+                                logFirebaseEvent('Row-Launch-U-R-L');
+                                await launchURL(
+                                    'https://discord.gg/e7weuGA4UW');
+                              },
+                              child: Row(
+                                mainAxisSize: MainAxisSize.max,
+                                children: [
+                                  FaIcon(
+                                    FontAwesomeIcons.externalLinkAlt,
+                                    color: FlutterFlowTheme.of(context)
+                                        .secondaryColor,
+                                    size: 12,
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        10, 0, 0, 0),
+                                    child: Text(
+                                      'Discussion (Discord)',
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyText2
+                                          .override(
+                                            fontFamily: 'Montserrat',
+                                            color: FlutterFlowTheme.of(context)
+                                                .primaryColor,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         ],
@@ -379,7 +483,7 @@ class _DrawerWidgetState extends State<DrawerWidget>
                                                 EdgeInsetsDirectional.fromSTEB(
                                                     0, 3, 0, 0),
                                             child: Text(
-                                              'Version 1.0.4',
+                                              'Version 1.0.6',
                                               style: FlutterFlowTheme.of(
                                                       context)
                                                   .bodyText2

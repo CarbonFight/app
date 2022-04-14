@@ -12,7 +12,12 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class DrinksFormWidget extends StatefulWidget {
-  const DrinksFormWidget({Key key}) : super(key: key);
+  const DrinksFormWidget({
+    Key key,
+    this.cache,
+  }) : super(key: key);
+
+  final ActionCacheRecord cache;
 
   @override
   _DrinksFormWidgetState createState() => _DrinksFormWidgetState();
@@ -122,6 +127,7 @@ class _DrinksFormWidgetState extends State<DrinksFormWidget> {
                             'Boisson chaude',
                             'Soda'
                           ].toList(),
+                          initialValue: 'Eau en bouteille',
                           onChanged: (value) {
                             setState(() => mainComponentValue = value);
                           },
@@ -184,14 +190,21 @@ class _DrinksFormWidgetState extends State<DrinksFormWidget> {
                                     logFirebaseEvent('iconButton-ON_TAP');
                                     logFirebaseEvent(
                                         'iconButton-Update-Local-State');
+                                    setState(() => FFAppState().loading = true);
+                                    logFirebaseEvent(
+                                        'iconButton-Update-Local-State');
                                     setState(() => FFAppState().actionCO2 =
                                         functions.foodActionsCO2e('drinks',
                                             mainComponentValue, 'null'));
+                                    logFirebaseEvent(
+                                        'iconButton-Update-Local-State');
+                                    setState(() => FFAppState().time =
+                                        getCurrentTimestamp);
                                     logFirebaseEvent('iconButton-Backend-Call');
 
                                     final foodActionsCreateData =
                                         createFoodActionsRecordData(
-                                      createdTime: getCurrentTimestamp,
+                                      createdTime: FFAppState().time,
                                       co2e: FFAppState().actionCO2,
                                       food: 'drinks',
                                       mainComponent: mainComponentValue,
@@ -201,9 +214,24 @@ class _DrinksFormWidgetState extends State<DrinksFormWidget> {
                                     await FoodActionsRecord.collection
                                         .doc()
                                         .set(foodActionsCreateData);
+                                    logFirebaseEvent('iconButton-Backend-Call');
+
+                                    final actionTypeCacheCreateData =
+                                        createActionTypeCacheRecordData(
+                                      actionCache: widget.cache.reference,
+                                      actionType: 'drinks',
+                                      date: FFAppState().time,
+                                    );
+                                    await ActionTypeCacheRecord.collection
+                                        .doc()
+                                        .set(actionTypeCacheCreateData);
                                     logFirebaseEvent(
                                         'iconButton-Navigate-Back');
                                     Navigator.pop(context);
+                                    logFirebaseEvent(
+                                        'iconButton-Update-Local-State');
+                                    setState(
+                                        () => FFAppState().loading = false);
                                   },
                                   child: IconButtonWidget(
                                     fillColor: FlutterFlowTheme.of(context)

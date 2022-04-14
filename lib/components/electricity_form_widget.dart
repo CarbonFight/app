@@ -12,7 +12,12 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class ElectricityFormWidget extends StatefulWidget {
-  const ElectricityFormWidget({Key key}) : super(key: key);
+  const ElectricityFormWidget({
+    Key key,
+    this.cache,
+  }) : super(key: key);
+
+  final ActionCacheRecord cache;
 
   @override
   _ElectricityFormWidgetState createState() => _ElectricityFormWidgetState();
@@ -345,11 +350,15 @@ class _ElectricityFormWidgetState extends State<ElectricityFormWidget> {
                                             peopleSharingValue,
                                             '1',
                                           )));
+                                  logFirebaseEvent(
+                                      'iconButton-Update-Local-State');
+                                  setState(() =>
+                                      FFAppState().time = getCurrentTimestamp);
                                   logFirebaseEvent('iconButton-Backend-Call');
 
                                   final energyActionsCreateData =
                                       createEnergyActionsRecordData(
-                                    createdTime: getCurrentTimestamp,
+                                    createdTime: FFAppState().time,
                                     co2e: FFAppState().actionCO2,
                                     energy: 'electricity',
                                     volume: int.parse(volumeController.text),
@@ -377,6 +386,17 @@ class _ElectricityFormWidgetState extends State<ElectricityFormWidget> {
                                   await EnergyPeriodicsRecord.collection
                                       .doc()
                                       .set(energyPeriodicsCreateData);
+                                  logFirebaseEvent('iconButton-Backend-Call');
+
+                                  final actionTypeCacheCreateData =
+                                      createActionTypeCacheRecordData(
+                                    actionCache: widget.cache.reference,
+                                    actionType: 'electricity',
+                                    date: FFAppState().time,
+                                  );
+                                  await ActionTypeCacheRecord.collection
+                                      .doc()
+                                      .set(actionTypeCacheCreateData);
                                   logFirebaseEvent('iconButton-Navigate-Back');
                                   Navigator.pop(context);
                                 },

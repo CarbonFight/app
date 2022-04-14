@@ -11,26 +11,30 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class WaterFormWidget extends StatefulWidget {
-  const WaterFormWidget({
+class WaterFormPeriodicModifyWidget extends StatefulWidget {
+  const WaterFormPeriodicModifyWidget({
     Key key,
-    this.cache,
+    this.periodic,
   }) : super(key: key);
 
-  final ActionCacheRecord cache;
+  final EnergyPeriodicsRecord periodic;
 
   @override
-  _WaterFormWidgetState createState() => _WaterFormWidgetState();
+  _WaterFormPeriodicModifyWidgetState createState() =>
+      _WaterFormPeriodicModifyWidgetState();
 }
 
-class _WaterFormWidgetState extends State<WaterFormWidget> {
+class _WaterFormPeriodicModifyWidgetState
+    extends State<WaterFormPeriodicModifyWidget> {
   String peopleSharingValue;
   TextEditingController volumeController;
+  bool deleteValue;
 
   @override
   void initState() {
     super.initState();
-    volumeController = TextEditingController();
+    volumeController =
+        TextEditingController(text: widget.periodic.volume.toString());
   }
 
   @override
@@ -210,6 +214,8 @@ class _WaterFormWidgetState extends State<WaterFormWidget> {
                       children: [
                         Expanded(
                           child: FlutterFlowDropDown(
+                            initialOption: peopleSharingValue ??=
+                                widget.periodic.peopleSharing,
                             options: ['1', '2', '3', '4', '5', '6', '7', '8']
                                 .toList(),
                             onChanged: (val) =>
@@ -234,6 +240,28 @@ class _WaterFormWidgetState extends State<WaterFormWidget> {
                             margin:
                                 EdgeInsetsDirectional.fromSTEB(12, 4, 12, 4),
                             hidesUnderline: true,
+                          ),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Expanded(
+                          child: SwitchListTile(
+                            value: deleteValue ??= false,
+                            onChanged: (newValue) =>
+                                setState(() => deleteValue = newValue),
+                            title: Text(
+                              'Supprimer',
+                              style: FlutterFlowTheme.of(context).bodyText1,
+                            ),
+                            tileColor:
+                                FlutterFlowTheme.of(context).secondaryColor,
+                            activeColor: Color(0xFFA10000),
+                            activeTrackColor: Color(0xFFAD6161),
+                            dense: false,
+                            controlAffinity: ListTileControlAffinity.trailing,
                           ),
                         ),
                       ],
@@ -288,71 +316,43 @@ class _WaterFormWidgetState extends State<WaterFormWidget> {
                                   logFirebaseEvent('iconButton-ON_TAP');
                                   logFirebaseEvent(
                                       'iconButton-Update-Local-State');
-                                  setState(() => FFAppState().actionCO2 =
-                                      functions.energyPeriodicsCO2e(
-                                          'water',
-                                          int.parse(volumeController.text),
-                                          'null',
-                                          valueOrDefault<String>(
-                                            peopleSharingValue,
-                                            '1',
-                                          )));
-                                  logFirebaseEvent(
-                                      'iconButton-Update-Local-State');
-                                  setState(() =>
-                                      FFAppState().time = getCurrentTimestamp);
-                                  logFirebaseEvent('iconButton-Backend-Call');
+                                  setState(() => FFAppState().loading = true);
+                                  if (deleteValue) {
+                                    logFirebaseEvent('iconButton-Backend-Call');
+                                    await widget.periodic.reference.delete();
+                                  } else {
+                                    logFirebaseEvent(
+                                        'iconButton-Update-Local-State');
+                                    setState(() => FFAppState().actionCO2 =
+                                        functions.energyPeriodicsCO2e(
+                                            'water',
+                                            int.parse(volumeController.text),
+                                            'null',
+                                            valueOrDefault<String>(
+                                              peopleSharingValue,
+                                              '1',
+                                            )));
+                                    logFirebaseEvent('iconButton-Backend-Call');
 
-                                  final energyActionsCreateData =
-                                      createEnergyActionsRecordData(
-                                    createdTime: getCurrentTimestamp,
-                                    co2e: FFAppState().actionCO2,
-                                    energy: 'water',
-                                    volume: int.parse(volumeController.text),
-                                    powertype: 'null',
-                                    peopleSharing: valueOrDefault<String>(
-                                      peopleSharingValue,
-                                      '1',
-                                    ),
-                                    userId: currentUserUid,
-                                  );
-                                  await EnergyActionsRecord.collection
-                                      .doc()
-                                      .set(energyActionsCreateData);
-                                  logFirebaseEvent('iconButton-Backend-Call');
+                                    final energyPeriodicsUpdateData =
+                                        createEnergyPeriodicsRecordData(
+                                      co2e: FFAppState().actionCO2,
+                                      volume: int.parse(volumeController.text),
+                                      peopleSharing: peopleSharingValue,
+                                    );
+                                    await widget.periodic.reference
+                                        .update(energyPeriodicsUpdateData);
+                                  }
 
-                                  final energyPeriodicsCreateData =
-                                      createEnergyPeriodicsRecordData(
-                                    co2e: FFAppState().actionCO2,
-                                    energy: 'water',
-                                    peopleSharing: valueOrDefault<String>(
-                                      peopleSharingValue,
-                                      '1',
-                                    ),
-                                    powertype: 'null',
-                                    userId: currentUserUid,
-                                    volume: int.parse(volumeController.text),
-                                  );
-                                  await EnergyPeriodicsRecord.collection
-                                      .doc()
-                                      .set(energyPeriodicsCreateData);
-                                  logFirebaseEvent('iconButton-Backend-Call');
-
-                                  final actionTypeCacheCreateData =
-                                      createActionTypeCacheRecordData(
-                                    actionCache: widget.cache.reference,
-                                    actionType: 'water',
-                                    date: FFAppState().time,
-                                  );
-                                  await ActionTypeCacheRecord.collection
-                                      .doc()
-                                      .set(actionTypeCacheCreateData);
                                   logFirebaseEvent('iconButton-Navigate-Back');
                                   Navigator.pop(context);
+                                  logFirebaseEvent(
+                                      'iconButton-Update-Local-State');
+                                  setState(() => FFAppState().loading = false);
                                 },
                                 child: IconButtonWidget(
                                   fillColor:
-                                      FlutterFlowTheme.of(context).primaryColor,
+                                      FlutterFlowTheme.of(context).orange,
                                   fontColor: FlutterFlowTheme.of(context)
                                       .tertiaryColor,
                                   icon: Icon(
@@ -361,7 +361,7 @@ class _WaterFormWidgetState extends State<WaterFormWidget> {
                                         .tertiaryColor,
                                     size: 25,
                                   ),
-                                  text: 'Ajouter',
+                                  text: 'Modifier',
                                 ),
                               ),
                             ),

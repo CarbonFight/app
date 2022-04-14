@@ -13,14 +13,14 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class DrawerCopyWidget extends StatefulWidget {
-  const DrawerCopyWidget({Key key}) : super(key: key);
+class AccountWidget extends StatefulWidget {
+  const AccountWidget({Key key}) : super(key: key);
 
   @override
-  _DrawerCopyWidgetState createState() => _DrawerCopyWidgetState();
+  _AccountWidgetState createState() => _AccountWidgetState();
 }
 
-class _DrawerCopyWidgetState extends State<DrawerCopyWidget>
+class _AccountWidgetState extends State<AccountWidget>
     with TickerProviderStateMixin {
   TextEditingController displaynameController;
   TextEditingController emailaddressController;
@@ -55,7 +55,7 @@ class _DrawerCopyWidgetState extends State<DrawerCopyWidget>
 
     displaynameController = TextEditingController(text: currentUserDisplayName);
     emailaddressController = TextEditingController(text: currentUserEmail);
-    logFirebaseEvent('screen_view', parameters: {'screen_name': 'DrawerCopy'});
+    logFirebaseEvent('screen_view', parameters: {'screen_name': 'Account'});
   }
 
   @override
@@ -83,7 +83,7 @@ class _DrawerCopyWidgetState extends State<DrawerCopyWidget>
             padding: EdgeInsetsDirectional.fromSTEB(20, 40, 20, 20),
             child: Container(
               width: MediaQuery.of(context).size.width * 0.75,
-              height: MediaQuery.of(context).size.height * 0.9,
+              height: 620,
               decoration: BoxDecoration(
                 color: FlutterFlowTheme.of(context).tertiaryColor,
                 boxShadow: [
@@ -99,7 +99,7 @@ class _DrawerCopyWidgetState extends State<DrawerCopyWidget>
                 padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 10),
                 child: Column(
                   mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     Column(
@@ -138,7 +138,7 @@ class _DrawerCopyWidgetState extends State<DrawerCopyWidget>
                         ),
                         Padding(
                           padding:
-                              EdgeInsetsDirectional.fromSTEB(20, 10, 20, 0),
+                              EdgeInsetsDirectional.fromSTEB(10, 10, 10, 0),
                           child: Container(
                             width: double.infinity,
                             height: 100,
@@ -246,7 +246,7 @@ class _DrawerCopyWidgetState extends State<DrawerCopyWidget>
                                               );
                                             },
                                             child: Text(
-                                              'Change Password',
+                                              'Modifier le password',
                                               style: FlutterFlowTheme.of(
                                                       context)
                                                   .bodyText2
@@ -269,7 +269,7 @@ class _DrawerCopyWidgetState extends State<DrawerCopyWidget>
                         ),
                         Padding(
                           padding:
-                              EdgeInsetsDirectional.fromSTEB(20, 20, 20, 10),
+                              EdgeInsetsDirectional.fromSTEB(10, 20, 10, 10),
                           child: Container(
                             decoration: BoxDecoration(
                               color: FlutterFlowTheme.of(context).tertiaryColor,
@@ -284,7 +284,7 @@ class _DrawerCopyWidgetState extends State<DrawerCopyWidget>
                             ),
                             child: Padding(
                               padding: EdgeInsetsDirectional.fromSTEB(
-                                  20, 10, 20, 10),
+                                  10, 10, 10, 10),
                               child: Column(
                                 mainAxisSize: MainAxisSize.max,
                                 children: [
@@ -320,6 +320,8 @@ class _DrawerCopyWidgetState extends State<DrawerCopyWidget>
                                   SingleChildScrollView(
                                     child: Column(
                                       mainAxisSize: MainAxisSize.max,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
                                       children: [
                                         Row(
                                           mainAxisSize: MainAxisSize.max,
@@ -451,7 +453,7 @@ class _DrawerCopyWidgetState extends State<DrawerCopyWidget>
                         ),
                         Padding(
                           padding:
-                              EdgeInsetsDirectional.fromSTEB(20, 10, 20, 10),
+                              EdgeInsetsDirectional.fromSTEB(10, 10, 10, 10),
                           child: Container(
                             decoration: BoxDecoration(
                               color: FlutterFlowTheme.of(context).tertiaryColor,
@@ -489,7 +491,7 @@ class _DrawerCopyWidgetState extends State<DrawerCopyWidget>
                                                 EdgeInsetsDirectional.fromSTEB(
                                                     10, 0, 0, 0),
                                             child: Text(
-                                              'Objectifs',
+                                              'Objectifs co2',
                                               style:
                                                   FlutterFlowTheme.of(context)
                                                       .title3,
@@ -505,12 +507,15 @@ class _DrawerCopyWidgetState extends State<DrawerCopyWidget>
                                       children: [
                                         Row(
                                           mainAxisSize: MainAxisSize.max,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
                                           children: [
                                             Padding(
                                               padding: EdgeInsetsDirectional
                                                   .fromSTEB(0, 10, 0, 0),
                                               child: Text(
-                                                'Objectif journalier (KG de co2e)',
+                                                'Objectif journalier (en kg)',
+                                                textAlign: TextAlign.start,
                                                 style:
                                                     FlutterFlowTheme.of(context)
                                                         .bodyText2,
@@ -609,39 +614,35 @@ class _DrawerCopyWidgetState extends State<DrawerCopyWidget>
                               EdgeInsetsDirectional.fromSTEB(20, 20, 20, 20),
                           child: Row(
                             mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Expanded(
-                                child: InkWell(
-                                  onTap: () async {
-                                    logFirebaseEvent('iconButton-ON_TAP');
-                                    logFirebaseEvent('iconButton-Backend-Call');
+                              InkWell(
+                                onTap: () async {
+                                  logFirebaseEvent('iconButton-ON_TAP');
+                                  logFirebaseEvent('iconButton-Backend-Call');
 
-                                    final usersUpdateData =
-                                        createUsersRecordData(
-                                      displayName: displaynameController.text,
-                                      email: emailaddressController.text,
-                                      co2target: co2targetValue,
-                                    );
-                                    await currentUserReference
-                                        .update(usersUpdateData);
-                                    logFirebaseEvent(
-                                        'iconButton-Navigate-Back');
-                                    Navigator.pop(context);
-                                  },
-                                  child: IconButtonWidget(
-                                    fillColor: FlutterFlowTheme.of(context)
-                                        .primaryColor,
-                                    fontColor: FlutterFlowTheme.of(context)
+                                  final usersUpdateData = createUsersRecordData(
+                                    displayName: displaynameController.text,
+                                    email: emailaddressController.text,
+                                    co2target: co2targetValue,
+                                  );
+                                  await currentUserReference
+                                      .update(usersUpdateData);
+                                  logFirebaseEvent('iconButton-Navigate-Back');
+                                  Navigator.pop(context);
+                                },
+                                child: IconButtonWidget(
+                                  fillColor:
+                                      FlutterFlowTheme.of(context).primaryColor,
+                                  fontColor: FlutterFlowTheme.of(context)
+                                      .tertiaryColor,
+                                  icon: Icon(
+                                    Icons.sync,
+                                    color: FlutterFlowTheme.of(context)
                                         .tertiaryColor,
-                                    icon: Icon(
-                                      Icons.sync,
-                                      color: FlutterFlowTheme.of(context)
-                                          .tertiaryColor,
-                                      size: 25,
-                                    ),
-                                    text: 'Mettre à jour',
+                                    size: 20,
                                   ),
+                                  text: 'Mettre à jour ',
                                 ),
                               ),
                             ],

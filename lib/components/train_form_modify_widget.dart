@@ -12,21 +12,19 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class TrainFormCopy2Widget extends StatefulWidget {
-  const TrainFormCopy2Widget({
+class TrainFormModifyWidget extends StatefulWidget {
+  const TrainFormModifyWidget({
     Key key,
-    this.cache,
     this.typeCache,
   }) : super(key: key);
 
-  final ActionCacheRecord cache;
   final ActionTypeCacheRecord typeCache;
 
   @override
-  _TrainFormCopy2WidgetState createState() => _TrainFormCopy2WidgetState();
+  _TrainFormModifyWidgetState createState() => _TrainFormModifyWidgetState();
 }
 
-class _TrainFormCopy2WidgetState extends State<TrainFormCopy2Widget> {
+class _TrainFormModifyWidgetState extends State<TrainFormModifyWidget> {
   String powertypeValue;
   TextEditingController textController;
   bool deleteValue;
@@ -348,16 +346,7 @@ class _TrainFormCopy2WidgetState extends State<TrainFormCopy2Widget> {
                             onTap: () async {
                               logFirebaseEvent('iconButton-ON_TAP');
                               logFirebaseEvent('iconButton-Update-Local-State');
-                              setState(() => FFAppState().actionCO2 =
-                                  functions.transportActionsCO2e(
-                                      int.parse(textController?.text ?? ''),
-                                      '1',
-                                      'null',
-                                      valueOrDefault<String>(
-                                        powertypeValue,
-                                        'TER',
-                                      ),
-                                      'train'));
+                              setState(() => FFAppState().loading = true);
                               if (deleteValue) {
                                 logFirebaseEvent('iconButton-Backend-Call');
                                 await columnTransportActionsRecord.reference
@@ -365,6 +354,18 @@ class _TrainFormCopy2WidgetState extends State<TrainFormCopy2Widget> {
                                 logFirebaseEvent('iconButton-Backend-Call');
                                 await widget.typeCache.reference.delete();
                               } else {
+                                logFirebaseEvent(
+                                    'iconButton-Update-Local-State');
+                                setState(() => FFAppState().actionCO2 =
+                                    functions.transportActionsCO2e(
+                                        int.parse(textController?.text ?? ''),
+                                        '1',
+                                        'null',
+                                        valueOrDefault<String>(
+                                          powertypeValue,
+                                          'TER',
+                                        ),
+                                        'train'));
                                 logFirebaseEvent('iconButton-Backend-Call');
 
                                 final transportActionsUpdateData =
@@ -376,22 +377,15 @@ class _TrainFormCopy2WidgetState extends State<TrainFormCopy2Widget> {
                                 );
                                 await columnTransportActionsRecord.reference
                                     .update(transportActionsUpdateData);
-                                logFirebaseEvent('iconButton-Backend-Call');
-
-                                final actionCacheUpdateData =
-                                    createActionCacheRecordData(
-                                  co2e: FFAppState().actionCO2,
-                                );
-                                await widget.cache.reference
-                                    .update(actionCacheUpdateData);
                               }
 
                               logFirebaseEvent('iconButton-Navigate-Back');
                               Navigator.pop(context);
+                              logFirebaseEvent('iconButton-Update-Local-State');
+                              setState(() => FFAppState().loading = false);
                             },
                             child: IconButtonWidget(
-                              fillColor:
-                                  FlutterFlowTheme.of(context).primaryColor,
+                              fillColor: FlutterFlowTheme.of(context).orange,
                               fontColor:
                                   FlutterFlowTheme.of(context).tertiaryColor,
                               icon: Icon(

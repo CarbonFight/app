@@ -39,7 +39,7 @@ class SendEmailCall {
       callType: ApiCallType.POST,
       headers: {
         'Authorization':
-            'Bearer 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',
+            'Bearer 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',
       },
       params: {
         'emailbody': emailbody,
