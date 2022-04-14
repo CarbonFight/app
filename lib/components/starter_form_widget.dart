@@ -12,7 +12,12 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class StarterFormWidget extends StatefulWidget {
-  const StarterFormWidget({Key key}) : super(key: key);
+  const StarterFormWidget({
+    Key key,
+    this.cache,
+  }) : super(key: key);
+
+  final ActionCacheRecord cache;
 
   @override
   _StarterFormWidgetState createState() => _StarterFormWidgetState();
@@ -114,6 +119,7 @@ class _StarterFormWidgetState extends State<StarterFormWidget> {
                         padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 10),
                         child: FlutterFlowRadioButton(
                           options: ['Végétarienne', 'Mixte', 'Viande'].toList(),
+                          initialValue: 'Mixte',
                           onChanged: (value) {
                             setState(() => mainComponentValue = value);
                           },
@@ -176,14 +182,21 @@ class _StarterFormWidgetState extends State<StarterFormWidget> {
                                     logFirebaseEvent('iconButton-ON_TAP');
                                     logFirebaseEvent(
                                         'iconButton-Update-Local-State');
+                                    setState(() => FFAppState().loading = true);
+                                    logFirebaseEvent(
+                                        'iconButton-Update-Local-State');
                                     setState(() => FFAppState().actionCO2 =
                                         functions.foodActionsCO2e('starter',
                                             mainComponentValue, 'null'));
+                                    logFirebaseEvent(
+                                        'iconButton-Update-Local-State');
+                                    setState(() => FFAppState().time =
+                                        getCurrentTimestamp);
                                     logFirebaseEvent('iconButton-Backend-Call');
 
                                     final foodActionsCreateData =
                                         createFoodActionsRecordData(
-                                      createdTime: getCurrentTimestamp,
+                                      createdTime: FFAppState().time,
                                       co2e: FFAppState().actionCO2,
                                       food: 'starter',
                                       mainComponent: mainComponentValue,
@@ -193,9 +206,24 @@ class _StarterFormWidgetState extends State<StarterFormWidget> {
                                     await FoodActionsRecord.collection
                                         .doc()
                                         .set(foodActionsCreateData);
+                                    logFirebaseEvent('iconButton-Backend-Call');
+
+                                    final actionTypeCacheCreateData =
+                                        createActionTypeCacheRecordData(
+                                      actionCache: widget.cache.reference,
+                                      actionType: 'starter',
+                                      date: FFAppState().time,
+                                    );
+                                    await ActionTypeCacheRecord.collection
+                                        .doc()
+                                        .set(actionTypeCacheCreateData);
                                     logFirebaseEvent(
                                         'iconButton-Navigate-Back');
                                     Navigator.pop(context);
+                                    logFirebaseEvent(
+                                        'iconButton-Update-Local-State');
+                                    setState(
+                                        () => FFAppState().loading = false);
                                   },
                                   child: IconButtonWidget(
                                     fillColor: FlutterFlowTheme.of(context)

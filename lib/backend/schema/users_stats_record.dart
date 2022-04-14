@@ -60,6 +60,18 @@ abstract class UsersStatsRecord
   int get week3;
 
   @nullable
+  int get periodics;
+
+  @nullable
+  int get transportDay0;
+
+  @nullable
+  int get energyDay0;
+
+  @nullable
+  int get foodDay0;
+
+  @nullable
   @BuiltValueField(wireName: kDocumentReferenceField)
   DocumentReference get reference;
 
@@ -79,7 +91,11 @@ abstract class UsersStatsRecord
     ..week0 = 0
     ..week1 = 0
     ..week2 = 0
-    ..week3 = 0;
+    ..week3 = 0
+    ..periodics = 0
+    ..transportDay0 = 0
+    ..energyDay0 = 0
+    ..foodDay0 = 0;
 
   static CollectionReference get collection =>
       FirebaseFirestore.instance.collection('usersStats');
@@ -119,6 +135,10 @@ Map<String, dynamic> createUsersStatsRecordData({
   int week1,
   int week2,
   int week3,
+  int periodics,
+  int transportDay0,
+  int energyDay0,
+  int foodDay0,
 }) =>
     serializers.toFirestore(
         UsersStatsRecord.serializer,
@@ -138,4 +158,8 @@ Map<String, dynamic> createUsersStatsRecordData({
           ..week0 = week0
           ..week1 = week1
           ..week2 = week2
-          ..week3 = week3));
+          ..week3 = week3
+          ..periodics = periodics
+          ..transportDay0 = transportDay0
+          ..energyDay0 = energyDay0
+          ..foodDay0 = foodDay0));

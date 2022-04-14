@@ -49,9 +49,6 @@ abstract class UsersRecord implements Built<UsersRecord, UsersRecordBuilder> {
   int get rankSize;
 
   @nullable
-  String get primer;
-
-  @nullable
   int get co2target;
 
   @nullable
@@ -69,7 +66,6 @@ abstract class UsersRecord implements Built<UsersRecord, UsersRecordBuilder> {
     ..activity = 0
     ..rank = 0
     ..rankSize = 0
-    ..primer = ''
     ..co2target = 0;
 
   static CollectionReference get collection =>
@@ -105,7 +101,6 @@ Map<String, dynamic> createUsersRecordData({
   int activity,
   int rank,
   int rankSize,
-  String primer,
   int co2target,
 }) =>
     serializers.toFirestore(
@@ -122,5 +117,4 @@ Map<String, dynamic> createUsersRecordData({
           ..activity = activity
           ..rank = rank
           ..rankSize = rankSize
-          ..primer = primer
           ..co2target = co2target));

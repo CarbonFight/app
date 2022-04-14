@@ -106,7 +106,9 @@ class _TransportFormWidgetState extends State<TransportFormWidget> {
                                     padding: MediaQuery.of(context).viewInsets,
                                     child: Container(
                                       height: 550,
-                                      child: CarFormWidget(),
+                                      child: CarFormWidget(
+                                        cache: widget.cache,
+                                      ),
                                     ),
                                   );
                                 },
@@ -168,7 +170,9 @@ class _TransportFormWidgetState extends State<TransportFormWidget> {
                                     padding: MediaQuery.of(context).viewInsets,
                                     child: Container(
                                       height: 430,
-                                      child: BusFormWidget(),
+                                      child: BusFormWidget(
+                                        cache: widget.cache,
+                                      ),
                                     ),
                                   );
                                 },
@@ -239,7 +243,9 @@ class _TransportFormWidgetState extends State<TransportFormWidget> {
                                     padding: MediaQuery.of(context).viewInsets,
                                     child: Container(
                                       height: 480,
-                                      child: ScooterFormWidget(),
+                                      child: ScooterFormWidget(
+                                        cache: widget.cache,
+                                      ),
                                     ),
                                   );
                                 },
@@ -301,7 +307,9 @@ class _TransportFormWidgetState extends State<TransportFormWidget> {
                                     padding: MediaQuery.of(context).viewInsets,
                                     child: Container(
                                       height: 300,
-                                      child: MotoFormWidget(),
+                                      child: MotoFormWidget(
+                                        cache: widget.cache,
+                                      ),
                                     ),
                                   );
                                 },
@@ -435,7 +443,9 @@ class _TransportFormWidgetState extends State<TransportFormWidget> {
                                     padding: MediaQuery.of(context).viewInsets,
                                     child: Container(
                                       height: 330,
-                                      child: MetroFormWidget(),
+                                      child: MetroFormWidget(
+                                        cache: widget.cache,
+                                      ),
                                     ),
                                   );
                                 },
@@ -509,7 +519,9 @@ class _TransportFormWidgetState extends State<TransportFormWidget> {
                               padding: MediaQuery.of(context).viewInsets,
                               child: Container(
                                 height: 300,
-                                child: FlightFormWidget(),
+                                child: FlightFormWidget(
+                                  cache: widget.cache,
+                                ),
                               ),
                             );
                           },
@@ -570,7 +582,9 @@ class _TransportFormWidgetState extends State<TransportFormWidget> {
                               padding: MediaQuery.of(context).viewInsets,
                               child: Container(
                                 height: 430,
-                                child: BikeFormWidget(),
+                                child: BikeFormWidget(
+                                  cache: widget.cache,
+                                ),
                               ),
                             );
                           },

@@ -1,3 +1,4 @@
+import '../components/icon_button_widget.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
@@ -5,14 +6,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class StatsWidget extends StatefulWidget {
-  const StatsWidget({Key key}) : super(key: key);
+class NextVersionAlertWidget extends StatefulWidget {
+  const NextVersionAlertWidget({Key key}) : super(key: key);
 
   @override
-  _StatsWidgetState createState() => _StatsWidgetState();
+  _NextVersionAlertWidgetState createState() => _NextVersionAlertWidgetState();
 }
 
-class _StatsWidgetState extends State<StatsWidget> {
+class _NextVersionAlertWidgetState extends State<NextVersionAlertWidget> {
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -43,17 +44,9 @@ class _StatsWidgetState extends State<StatsWidget> {
                   Row(
                     mainAxisSize: MainAxisSize.max,
                     children: [
-                      Icon(
-                        Icons.info_outline,
-                        color: FlutterFlowTheme.of(context).secondaryColor,
-                        size: 24,
-                      ),
-                      Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(10, 0, 0, 0),
-                        child: Text(
-                          'Select Action',
-                          style: FlutterFlowTheme.of(context).subtitle1,
-                        ),
+                      Text(
+                        'Bientôt disponible !',
+                        style: FlutterFlowTheme.of(context).subtitle1,
                       ),
                     ],
                   ),
@@ -75,7 +68,6 @@ class _StatsWidgetState extends State<StatsWidget> {
                   ),
                 ],
               ),
-              Divider(),
               SingleChildScrollView(
                 child: Column(
                   mainAxisSize: MainAxisSize.max,
@@ -87,19 +79,42 @@ class _StatsWidgetState extends State<StatsWidget> {
                         children: [
                           Expanded(
                             child: Text(
-                              'Hello World',
+                              'Désolé , cette fonctionnalité n\'est pas encore disponible.\n\nSi vous voyez cette fenêtre, la fonctionnalité est déjà listée pour la prochaine version.',
                               style: FlutterFlowTheme.of(context)
                                   .bodyText1
                                   .override(
                                     fontFamily: 'Montserrat',
                                     color: FlutterFlowTheme.of(context)
                                         .primaryColor,
-                                    fontWeight: FontWeight.normal,
                                   ),
                             ),
                           ),
                         ],
                       ),
+                    ),
+                    Row(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        InkWell(
+                          onTap: () async {
+                            logFirebaseEvent('iconButton-ON_TAP');
+                            logFirebaseEvent('iconButton-Navigate-Back');
+                            Navigator.pop(context);
+                          },
+                          child: IconButtonWidget(
+                            fillColor: Color(0xA10B1E1B),
+                            fontColor:
+                                FlutterFlowTheme.of(context).tertiaryColor,
+                            icon: Icon(
+                              Icons.close,
+                              color: FlutterFlowTheme.of(context).tertiaryColor,
+                              size: 25,
+                            ),
+                            text: 'Fermer ',
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),

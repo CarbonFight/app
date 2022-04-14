@@ -12,23 +12,22 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class TrainFormCopyWidget extends StatefulWidget {
-  const TrainFormCopyWidget({
+class BusFormModifyWidget extends StatefulWidget {
+  const BusFormModifyWidget({
     Key key,
-    this.cache,
     this.typeCache,
   }) : super(key: key);
 
-  final ActionCacheRecord cache;
   final ActionTypeCacheRecord typeCache;
 
   @override
-  _TrainFormCopyWidgetState createState() => _TrainFormCopyWidgetState();
+  _BusFormModifyWidgetState createState() => _BusFormModifyWidgetState();
 }
 
-class _TrainFormCopyWidgetState extends State<TrainFormCopyWidget> {
+class _BusFormModifyWidgetState extends State<BusFormModifyWidget> {
   String powertypeValue;
-  TextEditingController textController;
+  TextEditingController distanceController;
+  bool deleteValue;
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +37,7 @@ class _TrainFormCopyWidgetState extends State<TrainFormCopyWidget> {
         stream: queryTransportActionsRecord(
           queryBuilder: (transportActionsRecord) => transportActionsRecord
               .where('userId', isEqualTo: currentUserUid)
-              .where('created_time', isEqualTo: widget.cache.date),
+              .where('created_time', isEqualTo: widget.typeCache.date),
           singleRecord: true,
         ),
         builder: (context, snapshot) {
@@ -57,6 +56,10 @@ class _TrainFormCopyWidgetState extends State<TrainFormCopyWidget> {
           }
           List<TransportActionsRecord> containerTransportActionsRecordList =
               snapshot.data;
+          // Return an empty Container when the document does not exist.
+          if (snapshot.data.isEmpty) {
+            return Container();
+          }
           final containerTransportActionsRecord =
               containerTransportActionsRecordList.isNotEmpty
                   ? containerTransportActionsRecordList.first
@@ -90,14 +93,14 @@ class _TrainFormCopyWidgetState extends State<TrainFormCopyWidget> {
                           Padding(
                             padding: EdgeInsetsDirectional.fromSTEB(0, 0, 5, 0),
                             child: SvgPicture.asset(
-                              'assets/images/trans-train-04.svg',
+                              'assets/images/trans-bus-02.svg',
                               width: 25,
                               height: 25,
                               fit: BoxFit.cover,
                             ),
                           ),
                           Text(
-                            'Trajet en train',
+                            'Trajet en bus',
                             style: FlutterFlowTheme.of(context).subtitle1,
                           ),
                         ],
@@ -120,43 +123,25 @@ class _TrainFormCopyWidgetState extends State<TrainFormCopyWidget> {
                       ),
                     ],
                   ),
-                  StreamBuilder<TransportActionsRecord>(
-                    stream: TransportActionsRecord.getDocument(
-                        containerTransportActionsRecord.reference),
-                    builder: (context, snapshot) {
-                      // Customize what your widget looks like when it's loading.
-                      if (!snapshot.hasData) {
-                        return Center(
-                          child: SizedBox(
-                            width: 2,
-                            height: 2,
-                            child: SpinKitRing(
-                              color: Colors.transparent,
-                              size: 2,
-                            ),
+                  Row(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
+                        child: Text(
+                          valueOrDefault<String>(
+                            '+ ${valueOrDefault<String>(
+                              functions.printScore(FFAppState().actionCO2),
+                              '0',
+                            )}',
+                            '+ 0 g',
                           ),
-                        );
-                      }
-                      final rowTransportActionsRecord = snapshot.data;
-                      return Row(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Padding(
-                            padding:
-                                EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
-                            child: Text(
-                              valueOrDefault<String>(
-                                '+ ${rowTransportActionsRecord.co2e.toString()} g',
-                                '+ 0 g',
-                              ),
-                              textAlign: TextAlign.center,
-                              style: FlutterFlowTheme.of(context).title2,
-                            ),
-                          ),
-                        ],
-                      );
-                    },
+                          textAlign: TextAlign.center,
+                          style: FlutterFlowTheme.of(context).title2,
+                        ),
+                      ),
+                    ],
                   ),
                   SingleChildScrollView(
                     child: Column(
@@ -170,7 +155,7 @@ class _TrainFormCopyWidgetState extends State<TrainFormCopyWidget> {
                                 padding:
                                     EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
                                 child: TextFormField(
-                                  controller: textController ??=
+                                  controller: distanceController ??=
                                       TextEditingController(
                                     text: containerTransportActionsRecord
                                         .distance
@@ -263,12 +248,9 @@ class _TrainFormCopyWidgetState extends State<TrainFormCopyWidget> {
                                   initialOption: powertypeValue ??=
                                       containerTransportActionsRecord.powertype,
                                   options: [
-                                    'TER',
-                                    'TGV',
-                                    'Intercites',
-                                    'RER',
-                                    'Transilien',
-                                    'Tramway'
+                                    'Thermique',
+                                    'Gaz Naturel',
+                                    'Électrique'
                                   ].toList(),
                                   onChanged: (val) =>
                                       setState(() => powertypeValue = val),
@@ -280,9 +262,9 @@ class _TrainFormCopyWidgetState extends State<TrainFormCopyWidget> {
                                         fontFamily: 'Montserrat',
                                         fontWeight: FontWeight.w500,
                                       ),
-                                  hintText: 'Type de train',
+                                  hintText: 'Energie',
                                   icon: Icon(
-                                    Icons.train_sharp,
+                                    Icons.electrical_services_rounded,
                                     size: 15,
                                   ),
                                   fillColor: Color(0xFFFAFAFA),
@@ -298,6 +280,29 @@ class _TrainFormCopyWidgetState extends State<TrainFormCopyWidget> {
                               ),
                             ],
                           ),
+                        ),
+                        Row(
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Expanded(
+                              child: SwitchListTile(
+                                value: deleteValue ??= false,
+                                onChanged: (newValue) =>
+                                    setState(() => deleteValue = newValue),
+                                title: Text(
+                                  'Supprimer',
+                                  style: FlutterFlowTheme.of(context).bodyText1,
+                                ),
+                                tileColor:
+                                    FlutterFlowTheme.of(context).secondaryColor,
+                                activeColor: Color(0xFFA10000),
+                                activeTrackColor: Color(0xFFAD6161),
+                                dense: false,
+                                controlAffinity:
+                                    ListTileControlAffinity.trailing,
+                              ),
+                            ),
+                          ],
                         ),
                         Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
@@ -317,14 +322,15 @@ class _TrainFormCopyWidgetState extends State<TrainFormCopyWidget> {
                                       setState(() => FFAppState().actionCO2 =
                                           functions.transportActionsCO2e(
                                               int.parse(
-                                                  textController?.text ?? ''),
+                                                  distanceController?.text ??
+                                                      ''),
                                               '1',
                                               'null',
                                               valueOrDefault<String>(
                                                 powertypeValue,
-                                                'TER',
+                                                'Thermique',
                                               ),
-                                              'train'));
+                                              'bus'));
                                       logFirebaseEvent(
                                           'iconButton-Backend-Call');
 
@@ -352,69 +358,80 @@ class _TrainFormCopyWidgetState extends State<TrainFormCopyWidget> {
                                   ),
                                 ),
                               ),
-                              Stack(
-                                children: [
-                                  Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        10, 0, 0, 0),
-                                    child: InkWell(
-                                      onTap: () async {
-                                        logFirebaseEvent('iconButton-ON_TAP');
+                              Expanded(
+                                child: Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      10, 0, 0, 0),
+                                  child: InkWell(
+                                    onTap: () async {
+                                      logFirebaseEvent('iconButton-ON_TAP');
+                                      logFirebaseEvent(
+                                          'iconButton-Update-Local-State');
+                                      setState(
+                                          () => FFAppState().loading = true);
+                                      if (deleteValue) {
+                                        logFirebaseEvent(
+                                            'iconButton-Backend-Call');
+                                        await containerTransportActionsRecord
+                                            .reference
+                                            .delete();
+                                        logFirebaseEvent(
+                                            'iconButton-Backend-Call');
+                                        await widget.typeCache.reference
+                                            .delete();
+                                      } else {
                                         logFirebaseEvent(
                                             'iconButton-Update-Local-State');
                                         setState(() => FFAppState().actionCO2 =
                                             functions.transportActionsCO2e(
                                                 int.parse(
-                                                    textController?.text ?? ''),
-                                                'null',
+                                                    distanceController?.text ??
+                                                        ''),
+                                                '1',
                                                 'null',
                                                 valueOrDefault<String>(
                                                   powertypeValue,
-                                                  'TER',
+                                                  'Thermique',
                                                 ),
-                                                'train'));
+                                                'bus'));
                                         logFirebaseEvent(
                                             'iconButton-Backend-Call');
 
                                         final transportActionsUpdateData =
                                             createTransportActionsRecordData(
                                           distance: int.parse(
-                                              textController?.text ?? ''),
+                                              distanceController?.text ?? ''),
                                           powertype: powertypeValue,
                                           co2e: FFAppState().actionCO2,
                                         );
                                         await containerTransportActionsRecord
                                             .reference
                                             .update(transportActionsUpdateData);
-                                        logFirebaseEvent(
-                                            'iconButton-Backend-Call');
+                                      }
 
-                                        final actionCacheUpdateData = {
-                                          'co2e': FieldValue.increment(
-                                              FFAppState().actionCO2),
-                                        };
-                                        await widget.cache.reference
-                                            .update(actionCacheUpdateData);
-                                        logFirebaseEvent(
-                                            'iconButton-Navigate-Back');
-                                        Navigator.pop(context);
-                                      },
-                                      child: IconButtonWidget(
-                                        fillColor:
-                                            FlutterFlowTheme.of(context).orange,
-                                        fontColor: FlutterFlowTheme.of(context)
+                                      logFirebaseEvent(
+                                          'iconButton-Navigate-Back');
+                                      Navigator.pop(context);
+                                      logFirebaseEvent(
+                                          'iconButton-Update-Local-State');
+                                      setState(
+                                          () => FFAppState().loading = false);
+                                    },
+                                    child: IconButtonWidget(
+                                      fillColor:
+                                          FlutterFlowTheme.of(context).orange,
+                                      fontColor: FlutterFlowTheme.of(context)
+                                          .tertiaryColor,
+                                      icon: Icon(
+                                        Icons.add_circle_outline,
+                                        color: FlutterFlowTheme.of(context)
                                             .tertiaryColor,
-                                        icon: Icon(
-                                          Icons.check_circle,
-                                          color: FlutterFlowTheme.of(context)
-                                              .tertiaryColor,
-                                          size: 25,
-                                        ),
-                                        text: 'Modifier  ',
+                                        size: 25,
                                       ),
+                                      text: 'Modifier',
                                     ),
                                   ),
-                                ],
+                                ),
                               ),
                             ],
                           ),

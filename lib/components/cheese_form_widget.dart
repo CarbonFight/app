@@ -13,7 +13,12 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class CheeseFormWidget extends StatefulWidget {
-  const CheeseFormWidget({Key key}) : super(key: key);
+  const CheeseFormWidget({
+    Key key,
+    this.cache,
+  }) : super(key: key);
+
+  final ActionCacheRecord cache;
 
   @override
   _CheeseFormWidgetState createState() => _CheeseFormWidgetState();
@@ -232,16 +237,23 @@ class _CheeseFormWidgetState extends State<CheeseFormWidget> {
                                   logFirebaseEvent('iconButton-ON_TAP');
                                   logFirebaseEvent(
                                       'iconButton-Update-Local-State');
+                                  setState(() => FFAppState().loading = true);
+                                  logFirebaseEvent(
+                                      'iconButton-Update-Local-State');
                                   setState(() => FFAppState().actionCO2 =
                                       functions.foodActionsCO2e(
                                           'cheese',
                                           mainComponentValue.toString(),
                                           'null'));
+                                  logFirebaseEvent(
+                                      'iconButton-Update-Local-State');
+                                  setState(() =>
+                                      FFAppState().time = getCurrentTimestamp);
                                   logFirebaseEvent('iconButton-Backend-Call');
 
                                   final foodActionsCreateData =
                                       createFoodActionsRecordData(
-                                    createdTime: getCurrentTimestamp,
+                                    createdTime: FFAppState().time,
                                     co2e: FFAppState().actionCO2,
                                     food: 'cheese',
                                     mainComponent:
@@ -252,8 +264,22 @@ class _CheeseFormWidgetState extends State<CheeseFormWidget> {
                                   await FoodActionsRecord.collection
                                       .doc()
                                       .set(foodActionsCreateData);
+                                  logFirebaseEvent('iconButton-Backend-Call');
+
+                                  final actionTypeCacheCreateData =
+                                      createActionTypeCacheRecordData(
+                                    actionCache: widget.cache.reference,
+                                    actionType: 'cheese',
+                                    date: FFAppState().time,
+                                  );
+                                  await ActionTypeCacheRecord.collection
+                                      .doc()
+                                      .set(actionTypeCacheCreateData);
                                   logFirebaseEvent('iconButton-Navigate-Back');
                                   Navigator.pop(context);
+                                  logFirebaseEvent(
+                                      'iconButton-Update-Local-State');
+                                  setState(() => FFAppState().loading = false);
                                 },
                                 child: IconButtonWidget(
                                   fillColor:

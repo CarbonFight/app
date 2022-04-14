@@ -321,6 +321,10 @@ class _TrainFormWidgetState extends State<TrainFormWidget> {
                                         logFirebaseEvent('iconButton-ON_TAP');
                                         logFirebaseEvent(
                                             'iconButton-Update-Local-State');
+                                        setState(
+                                            () => FFAppState().loading = true);
+                                        logFirebaseEvent(
+                                            'iconButton-Update-Local-State');
                                         setState(() => FFAppState().actionCO2 =
                                             functions.transportActionsCO2e(
                                                 int.parse(textController.text),
@@ -371,18 +375,12 @@ class _TrainFormWidgetState extends State<TrainFormWidget> {
                                             .doc()
                                             .set(actionTypeCacheCreateData);
                                         logFirebaseEvent(
-                                            'iconButton-Backend-Call');
-
-                                        final actionCacheUpdateData = {
-                                          'co2e': FieldValue.increment(
-                                              FFAppState().actionCO2),
-                                        };
-                                        await iconButtonActionCacheRecord
-                                            .reference
-                                            .update(actionCacheUpdateData);
-                                        logFirebaseEvent(
                                             'iconButton-Navigate-Back');
                                         Navigator.pop(context);
+                                        logFirebaseEvent(
+                                            'iconButton-Update-Local-State');
+                                        setState(
+                                            () => FFAppState().loading = false);
                                       },
                                       child: IconButtonWidget(
                                         fillColor: FlutterFlowTheme.of(context)

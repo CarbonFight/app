@@ -12,7 +12,12 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class DesertFormWidget extends StatefulWidget {
-  const DesertFormWidget({Key key}) : super(key: key);
+  const DesertFormWidget({
+    Key key,
+    this.cache,
+  }) : super(key: key);
+
+  final ActionCacheRecord cache;
 
   @override
   _DesertFormWidgetState createState() => _DesertFormWidgetState();
@@ -121,6 +126,7 @@ class _DesertFormWidgetState extends State<DesertFormWidget> {
                             'Glace',
                             'Crême dessert'
                           ].toList(),
+                          initialValue: 'Fruit',
                           onChanged: (value) {
                             setState(() => mainComponentValue = value);
                           },
@@ -183,9 +189,16 @@ class _DesertFormWidgetState extends State<DesertFormWidget> {
                                     logFirebaseEvent('iconButton-ON_TAP');
                                     logFirebaseEvent(
                                         'iconButton-Update-Local-State');
+                                    setState(() => FFAppState().loading = true);
+                                    logFirebaseEvent(
+                                        'iconButton-Update-Local-State');
                                     setState(() => FFAppState().actionCO2 =
                                         functions.foodActionsCO2e('desert',
                                             mainComponentValue, 'null'));
+                                    logFirebaseEvent(
+                                        'iconButton-Update-Local-State');
+                                    setState(() => FFAppState().time =
+                                        getCurrentTimestamp);
                                     logFirebaseEvent('iconButton-Backend-Call');
 
                                     final foodActionsCreateData =
@@ -200,9 +213,24 @@ class _DesertFormWidgetState extends State<DesertFormWidget> {
                                     await FoodActionsRecord.collection
                                         .doc()
                                         .set(foodActionsCreateData);
+                                    logFirebaseEvent('iconButton-Backend-Call');
+
+                                    final actionTypeCacheCreateData =
+                                        createActionTypeCacheRecordData(
+                                      actionCache: widget.cache.reference,
+                                      actionType: 'desert',
+                                      date: FFAppState().time,
+                                    );
+                                    await ActionTypeCacheRecord.collection
+                                        .doc()
+                                        .set(actionTypeCacheCreateData);
                                     logFirebaseEvent(
                                         'iconButton-Navigate-Back');
                                     Navigator.pop(context);
+                                    logFirebaseEvent(
+                                        'iconButton-Update-Local-State');
+                                    setState(
+                                        () => FFAppState().loading = false);
                                   },
                                   child: IconButtonWidget(
                                     fillColor: FlutterFlowTheme.of(context)

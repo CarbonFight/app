@@ -7,14 +7,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class Ranks2Widget extends StatefulWidget {
-  const Ranks2Widget({Key key}) : super(key: key);
+class RanksWidget extends StatefulWidget {
+  const RanksWidget({Key key}) : super(key: key);
 
   @override
-  _Ranks2WidgetState createState() => _Ranks2WidgetState();
+  _RanksWidgetState createState() => _RanksWidgetState();
 }
 
-class _Ranks2WidgetState extends State<Ranks2Widget> {
+class _RanksWidgetState extends State<RanksWidget> {
   @override
   Widget build(BuildContext context) {
     return Padding(

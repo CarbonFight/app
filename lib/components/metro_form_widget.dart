@@ -14,10 +14,10 @@ import 'package:google_fonts/google_fonts.dart';
 class MetroFormWidget extends StatefulWidget {
   const MetroFormWidget({
     Key key,
-    this.currentAction,
+    this.cache,
   }) : super(key: key);
 
-  final TransportActionsRecord currentAction;
+  final ActionCacheRecord cache;
 
   @override
   _MetroFormWidgetState createState() => _MetroFormWidgetState();
@@ -217,6 +217,9 @@ class _MetroFormWidgetState extends State<MetroFormWidget> {
                                   logFirebaseEvent('iconButton-ON_TAP');
                                   logFirebaseEvent(
                                       'iconButton-Update-Local-State');
+                                  setState(() => FFAppState().loading = true);
+                                  logFirebaseEvent(
+                                      'iconButton-Update-Local-State');
                                   setState(() => FFAppState().actionCO2 =
                                       functions.transportActionsCO2e(
                                           int.parse(textController.text),
@@ -224,6 +227,10 @@ class _MetroFormWidgetState extends State<MetroFormWidget> {
                                           'null',
                                           'null',
                                           'metro'));
+                                  logFirebaseEvent(
+                                      'iconButton-Update-Local-State');
+                                  setState(() =>
+                                      FFAppState().time = getCurrentTimestamp);
                                   logFirebaseEvent('iconButton-Backend-Call');
 
                                   final transportActionsCreateData =
@@ -232,16 +239,30 @@ class _MetroFormWidgetState extends State<MetroFormWidget> {
                                     distance: int.parse(textController.text),
                                     userId: currentUserUid,
                                     powertype: 'null',
-                                    passengers: 'null',
+                                    passengers: '1',
                                     ownership: 'null',
-                                    createdTime: getCurrentTimestamp,
+                                    createdTime: FFAppState().time,
                                     co2e: FFAppState().actionCO2,
                                   );
                                   await TransportActionsRecord.collection
                                       .doc()
                                       .set(transportActionsCreateData);
+                                  logFirebaseEvent('iconButton-Backend-Call');
+
+                                  final actionTypeCacheCreateData =
+                                      createActionTypeCacheRecordData(
+                                    actionCache: widget.cache.reference,
+                                    actionType: 'metro',
+                                    date: FFAppState().time,
+                                  );
+                                  await ActionTypeCacheRecord.collection
+                                      .doc()
+                                      .set(actionTypeCacheCreateData);
                                   logFirebaseEvent('iconButton-Navigate-Back');
                                   Navigator.pop(context);
+                                  logFirebaseEvent(
+                                      'iconButton-Update-Local-State');
+                                  setState(() => FFAppState().loading = false);
                                 },
                                 child: IconButtonWidget(
                                   fillColor:

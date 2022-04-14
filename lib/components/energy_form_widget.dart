@@ -100,7 +100,9 @@ class _EnergyFormWidgetState extends State<EnergyFormWidget> {
                                     padding: MediaQuery.of(context).viewInsets,
                                     child: Container(
                                       height: 490,
-                                      child: ElectricityFormWidget(),
+                                      child: ElectricityFormWidget(
+                                        cache: widget.actioncache,
+                                      ),
                                     ),
                                   );
                                 },
@@ -161,7 +163,7 @@ class _EnergyFormWidgetState extends State<EnergyFormWidget> {
                                   return Padding(
                                     padding: MediaQuery.of(context).viewInsets,
                                     child: Container(
-                                      height: 490,
+                                      height: 480,
                                       child: GazFormWidget(
                                         cache: widget.actioncache,
                                       ),
@@ -235,7 +237,9 @@ class _EnergyFormWidgetState extends State<EnergyFormWidget> {
                                     padding: MediaQuery.of(context).viewInsets,
                                     child: Container(
                                       height: 450,
-                                      child: WaterFormWidget(),
+                                      child: WaterFormWidget(
+                                        cache: widget.actioncache,
+                                      ),
                                     ),
                                   );
                                 },

@@ -433,16 +433,6 @@ class _GazFormWidgetState extends State<GazFormWidget> {
                                         await EnergyPeriodicsRecord.collection
                                             .doc()
                                             .set(energyPeriodicsCreateData);
-                                        logFirebaseEvent(
-                                            'iconButton-Backend-Call');
-
-                                        final actionCacheUpdateData = {
-                                          'co2e': FieldValue.increment(
-                                              FFAppState().actionCO2),
-                                        };
-                                        await iconButtonActionCacheRecord
-                                            .reference
-                                            .update(actionCacheUpdateData);
                                         // loading
                                         logFirebaseEvent('iconButton-loading');
                                         setState(

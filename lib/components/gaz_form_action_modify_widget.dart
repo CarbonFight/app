@@ -12,116 +12,120 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class GazFormCopyWidget extends StatefulWidget {
-  const GazFormCopyWidget({
+class GazFormActionModifyWidget extends StatefulWidget {
+  const GazFormActionModifyWidget({
     Key key,
-    this.cache,
     this.typeCache,
   }) : super(key: key);
 
-  final ActionCacheRecord cache;
   final ActionTypeCacheRecord typeCache;
 
   @override
-  _GazFormCopyWidgetState createState() => _GazFormCopyWidgetState();
+  _GazFormActionModifyWidgetState createState() =>
+      _GazFormActionModifyWidgetState();
 }
 
-class _GazFormCopyWidgetState extends State<GazFormCopyWidget> {
+class _GazFormActionModifyWidgetState extends State<GazFormActionModifyWidget> {
   String peopleSharingValue;
   String powertypeValue;
   TextEditingController volumeController;
+  bool deleteValue;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsetsDirectional.fromSTEB(20, 20, 20, 20),
-      child: Container(
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height * 1,
-        decoration: BoxDecoration(
-          color: FlutterFlowTheme.of(context).tertiaryColor,
-          boxShadow: [
-            BoxShadow(
-              blurRadius: 10,
-              color: Color(0x25000000),
-              offset: Offset(0, 0),
-            )
-          ],
-          borderRadius: BorderRadius.circular(15),
+      child: StreamBuilder<List<EnergyActionsRecord>>(
+        stream: queryEnergyActionsRecord(
+          queryBuilder: (energyActionsRecord) => energyActionsRecord
+              .where('userId', isEqualTo: currentUserUid)
+              .where('created_time', isEqualTo: widget.typeCache.date),
+          singleRecord: true,
         ),
-        child: Padding(
-          padding: EdgeInsetsDirectional.fromSTEB(20, 10, 20, 10),
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              Row(
+        builder: (context, snapshot) {
+          // Customize what your widget looks like when it's loading.
+          if (!snapshot.hasData) {
+            return Center(
+              child: SizedBox(
+                width: 2,
+                height: 2,
+                child: SpinKitRing(
+                  color: Colors.transparent,
+                  size: 2,
+                ),
+              ),
+            );
+          }
+          List<EnergyActionsRecord> containerEnergyActionsRecordList =
+              snapshot.data;
+          // Return an empty Container when the document does not exist.
+          if (snapshot.data.isEmpty) {
+            return Container();
+          }
+          final containerEnergyActionsRecord =
+              containerEnergyActionsRecordList.isNotEmpty
+                  ? containerEnergyActionsRecordList.first
+                  : null;
+          return Container(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height * 1,
+            decoration: BoxDecoration(
+              color: FlutterFlowTheme.of(context).tertiaryColor,
+              boxShadow: [
+                BoxShadow(
+                  blurRadius: 10,
+                  color: Color(0x25000000),
+                  offset: Offset(0, 0),
+                )
+              ],
+              borderRadius: BorderRadius.circular(15),
+            ),
+            child: Padding(
+              padding: EdgeInsetsDirectional.fromSTEB(20, 10, 20, 10),
+              child: Column(
                 mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Row(
                     mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(0, 0, 5, 0),
-                        child: Image.asset(
-                          'assets/images/gas.png',
-                          width: 25,
-                          height: 25,
-                          fit: BoxFit.cover,
-                        ),
+                      Row(
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(0, 0, 5, 0),
+                            child: Image.asset(
+                              'assets/images/gas.png',
+                              width: 25,
+                              height: 25,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                          Text(
+                            'Gaz',
+                            style: FlutterFlowTheme.of(context).subtitle1,
+                          ),
+                        ],
                       ),
-                      Text(
-                        'Gaz',
-                        style: FlutterFlowTheme.of(context).subtitle1,
+                      FlutterFlowIconButton(
+                        borderColor: Colors.transparent,
+                        borderRadius: 30,
+                        borderWidth: 1,
+                        buttonSize: 46,
+                        icon: Icon(
+                          Icons.close,
+                          color: Colors.black,
+                          size: 24,
+                        ),
+                        onPressed: () async {
+                          logFirebaseEvent('IconButton-ON_TAP');
+                          logFirebaseEvent('IconButton-Navigate-Back');
+                          Navigator.pop(context);
+                        },
                       ),
                     ],
                   ),
-                  FlutterFlowIconButton(
-                    borderColor: Colors.transparent,
-                    borderRadius: 30,
-                    borderWidth: 1,
-                    buttonSize: 46,
-                    icon: Icon(
-                      Icons.close,
-                      color: Colors.black,
-                      size: 24,
-                    ),
-                    onPressed: () async {
-                      logFirebaseEvent('IconButton-ON_TAP');
-                      logFirebaseEvent('IconButton-Navigate-Back');
-                      Navigator.pop(context);
-                    },
-                  ),
-                ],
-              ),
-              StreamBuilder<List<EnergyActionsRecord>>(
-                stream: queryEnergyActionsRecord(
-                  queryBuilder: (energyActionsRecord) => energyActionsRecord
-                      .where('userId', isEqualTo: currentUserUid)
-                      .where('created_time', isEqualTo: widget.typeCache.date),
-                  singleRecord: true,
-                ),
-                builder: (context, snapshot) {
-                  // Customize what your widget looks like when it's loading.
-                  if (!snapshot.hasData) {
-                    return Center(
-                      child: SizedBox(
-                        width: 2,
-                        height: 2,
-                        child: SpinKitRing(
-                          color: Colors.transparent,
-                          size: 2,
-                        ),
-                      ),
-                    );
-                  }
-                  List<EnergyActionsRecord> columnEnergyActionsRecordList =
-                      snapshot.data;
-                  final columnEnergyActionsRecord =
-                      columnEnergyActionsRecordList.isNotEmpty
-                          ? columnEnergyActionsRecordList.first
-                          : null;
-                  return Column(
+                  Column(
                     mainAxisSize: MainAxisSize.max,
                     children: [
                       Row(
@@ -134,10 +138,10 @@ class _GazFormCopyWidgetState extends State<GazFormCopyWidget> {
                             child: Text(
                               valueOrDefault<String>(
                                 '+ ${valueOrDefault<String>(
-                                  columnEnergyActionsRecord.co2e.toString(),
+                                  containerEnergyActionsRecord.co2e.toString(),
                                   '0',
-                                )} / jour',
-                                '+ 0 g / jour',
+                                )}',
+                                '+ 0 g',
                               ),
                               textAlign: TextAlign.center,
                               style: FlutterFlowTheme.of(context).title2,
@@ -155,7 +159,7 @@ class _GazFormCopyWidgetState extends State<GazFormCopyWidget> {
                               child: TextFormField(
                                 controller: volumeController ??=
                                     TextEditingController(
-                                  text: columnEnergyActionsRecord.volume
+                                  text: containerEnergyActionsRecord.volume
                                       .toString(),
                                 ),
                                 obscureText: false,
@@ -242,7 +246,7 @@ class _GazFormCopyWidgetState extends State<GazFormCopyWidget> {
                             Expanded(
                               child: FlutterFlowDropDown(
                                 initialOption: powertypeValue ??=
-                                    columnEnergyActionsRecord.powertype,
+                                    containerEnergyActionsRecord.powertype,
                                 options: [
                                   'Gaz naturel',
                                   'Gaz de cokerie',
@@ -282,7 +286,7 @@ class _GazFormCopyWidgetState extends State<GazFormCopyWidget> {
                           Expanded(
                             child: FlutterFlowDropDown(
                               initialOption: peopleSharingValue ??=
-                                  columnEnergyActionsRecord.peopleSharing,
+                                  containerEnergyActionsRecord.peopleSharing,
                               options: ['1', '2', '3', '4', '5', '6', '7', '8']
                                   .toList(),
                               onChanged: (val) =>
@@ -309,6 +313,28 @@ class _GazFormCopyWidgetState extends State<GazFormCopyWidget> {
                               margin:
                                   EdgeInsetsDirectional.fromSTEB(12, 4, 12, 4),
                               hidesUnderline: true,
+                            ),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          Expanded(
+                            child: SwitchListTile(
+                              value: deleteValue ??= false,
+                              onChanged: (newValue) =>
+                                  setState(() => deleteValue = newValue),
+                              title: Text(
+                                'Supprimer',
+                                style: FlutterFlowTheme.of(context).bodyText1,
+                              ),
+                              tileColor:
+                                  FlutterFlowTheme.of(context).secondaryColor,
+                              activeColor: Color(0xFFA10000),
+                              activeTrackColor: Color(0xFFAD6161),
+                              dense: false,
+                              controlAffinity: ListTileControlAffinity.trailing,
                             ),
                           ),
                         ],
@@ -347,7 +373,7 @@ class _GazFormCopyWidgetState extends State<GazFormCopyWidget> {
                                         createEnergyActionsRecordData(
                                       co2e: FFAppState().actionCO2,
                                     );
-                                    await columnEnergyActionsRecord.reference
+                                    await containerEnergyActionsRecord.reference
                                         .update(energyActionsUpdateData);
                                   },
                                   child: IconButtonWidget(
@@ -378,50 +404,49 @@ class _GazFormCopyWidgetState extends State<GazFormCopyWidget> {
                                       logFirebaseEvent('iconButton-loading');
                                       setState(
                                           () => FFAppState().loading = true);
-                                      logFirebaseEvent(
-                                          'iconButton-Update-Local-State');
-                                      setState(() => FFAppState().actionCO2 =
-                                          functions.energyPeriodicsCO2e(
-                                              'gas',
-                                              int.parse(
-                                                  volumeController?.text ?? ''),
-                                              valueOrDefault<String>(
-                                                powertypeValue,
-                                                'Gaz naturel',
-                                              ),
-                                              valueOrDefault<String>(
-                                                peopleSharingValue,
-                                                '1',
-                                              )));
-                                      logFirebaseEvent(
-                                          'iconButton-Backend-Call');
+                                      if (deleteValue) {
+                                        logFirebaseEvent(
+                                            'iconButton-Backend-Call');
+                                        await containerEnergyActionsRecord
+                                            .reference
+                                            .delete();
+                                        logFirebaseEvent(
+                                            'iconButton-Backend-Call');
+                                        await widget.typeCache.reference
+                                            .delete();
+                                      } else {
+                                        logFirebaseEvent(
+                                            'iconButton-Update-Local-State');
+                                        setState(() => FFAppState().actionCO2 =
+                                            functions.energyPeriodicsCO2e(
+                                                'gas',
+                                                int.parse(
+                                                    volumeController?.text ??
+                                                        ''),
+                                                valueOrDefault<String>(
+                                                  powertypeValue,
+                                                  'Gaz naturel',
+                                                ),
+                                                valueOrDefault<String>(
+                                                  peopleSharingValue,
+                                                  '1',
+                                                )));
+                                        logFirebaseEvent(
+                                            'iconButton-Backend-Call');
 
-                                      final energyActionsUpdateData =
-                                          createEnergyActionsRecordData(
-                                        energy: 'gas',
-                                        volume: int.parse(
-                                            volumeController?.text ?? ''),
-                                        powertype: valueOrDefault<String>(
-                                          powertypeValue,
-                                          'Gaz natural',
-                                        ),
-                                        peopleSharing: valueOrDefault<String>(
-                                          peopleSharingValue,
-                                          '1',
-                                        ),
-                                        co2e: FFAppState().actionCO2,
-                                      );
-                                      await columnEnergyActionsRecord.reference
-                                          .update(energyActionsUpdateData);
-                                      logFirebaseEvent(
-                                          'iconButton-Backend-Call');
+                                        final energyActionsUpdateData =
+                                            createEnergyActionsRecordData(
+                                          volume: int.parse(
+                                              volumeController?.text ?? ''),
+                                          powertype: powertypeValue,
+                                          peopleSharing: peopleSharingValue,
+                                          co2e: FFAppState().actionCO2,
+                                        );
+                                        await containerEnergyActionsRecord
+                                            .reference
+                                            .update(energyActionsUpdateData);
+                                      }
 
-                                      final actionCacheUpdateData = {
-                                        'co2e': FieldValue.increment(
-                                            FFAppState().actionCO2),
-                                      };
-                                      await widget.cache.reference
-                                          .update(actionCacheUpdateData);
                                       logFirebaseEvent(
                                           'iconButton-Navigate-Back');
                                       Navigator.pop(context);
@@ -461,12 +486,12 @@ class _GazFormCopyWidgetState extends State<GazFormCopyWidget> {
                         ),
                       ),
                     ],
-                  );
-                },
+                  ),
+                ],
               ),
-            ],
-          ),
-        ),
+            ),
+          );
+        },
       ),
     );
   }

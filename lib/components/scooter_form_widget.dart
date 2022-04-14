@@ -13,7 +13,12 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class ScooterFormWidget extends StatefulWidget {
-  const ScooterFormWidget({Key key}) : super(key: key);
+  const ScooterFormWidget({
+    Key key,
+    this.cache,
+  }) : super(key: key);
+
+  final ActionCacheRecord cache;
 
   @override
   _ScooterFormWidgetState createState() => _ScooterFormWidgetState();
@@ -209,7 +214,7 @@ class _ScooterFormWidgetState extends State<ScooterFormWidget> {
                         children: [
                           Expanded(
                             child: FlutterFlowDropDown(
-                              options: ['Thermic', 'Electricity'].toList(),
+                              options: ['Thermique', 'Électrique'].toList(),
                               onChanged: (val) =>
                                   setState(() => energyValue = val),
                               width: 180,
@@ -245,9 +250,9 @@ class _ScooterFormWidgetState extends State<ScooterFormWidget> {
                         Expanded(
                           child: FlutterFlowDropDown(
                             options: [
-                              'Owner',
-                              'Short rent',
-                              'Long rent',
+                              'Propriétaire',
+                              'Location courte',
+                              'Location longue',
                               'Taxi'
                             ].toList(),
                             onChanged: (val) =>
@@ -301,7 +306,7 @@ class _ScooterFormWidgetState extends State<ScooterFormWidget> {
                                           ),
                                           valueOrDefault<String>(
                                             energyValue,
-                                            'Thermic',
+                                            'Thermique',
                                           ),
                                           'scooter'));
                                 },
@@ -330,10 +335,13 @@ class _ScooterFormWidgetState extends State<ScooterFormWidget> {
                                   logFirebaseEvent('iconButton-ON_TAP');
                                   logFirebaseEvent(
                                       'iconButton-Update-Local-State');
+                                  setState(() => FFAppState().loading = true);
+                                  logFirebaseEvent(
+                                      'iconButton-Update-Local-State');
                                   setState(() => FFAppState().actionCO2 =
                                       functions.transportActionsCO2e(
                                           int.parse(textController.text),
-                                          'null',
+                                          '1',
                                           valueOrDefault<String>(
                                             ownershipValue,
                                             'owner',
@@ -343,6 +351,10 @@ class _ScooterFormWidgetState extends State<ScooterFormWidget> {
                                             'Thermique',
                                           ),
                                           'scooter'));
+                                  logFirebaseEvent(
+                                      'iconButton-Update-Local-State');
+                                  setState(() =>
+                                      FFAppState().time = getCurrentTimestamp);
                                   logFirebaseEvent('iconButton-Backend-Call');
 
                                   final transportActionsCreateData =
@@ -350,17 +362,31 @@ class _ScooterFormWidgetState extends State<ScooterFormWidget> {
                                     transport: 'scooter',
                                     distance: int.parse(textController.text),
                                     userId: currentUserUid,
-                                    powertype: 'Thermic',
-                                    passengers: 'null',
+                                    powertype: 'Thermique',
+                                    passengers: '1',
                                     ownership: 'owner',
-                                    createdTime: getCurrentTimestamp,
+                                    createdTime: FFAppState().time,
                                     co2e: FFAppState().actionCO2,
                                   );
                                   await TransportActionsRecord.collection
                                       .doc()
                                       .set(transportActionsCreateData);
+                                  logFirebaseEvent('iconButton-Backend-Call');
+
+                                  final actionTypeCacheCreateData =
+                                      createActionTypeCacheRecordData(
+                                    actionCache: widget.cache.reference,
+                                    actionType: 'scooter',
+                                    date: FFAppState().time,
+                                  );
+                                  await ActionTypeCacheRecord.collection
+                                      .doc()
+                                      .set(actionTypeCacheCreateData);
                                   logFirebaseEvent('iconButton-Navigate-Back');
                                   Navigator.pop(context);
+                                  logFirebaseEvent(
+                                      'iconButton-Update-Local-State');
+                                  setState(() => FFAppState().loading = false);
                                 },
                                 child: IconButtonWidget(
                                   fillColor:
