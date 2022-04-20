@@ -461,6 +461,7 @@ exports.ResetScoresCachePeriodics = functions.region('europe-west6').pubsub.sche
       // Need to create actions with different timestamps, wait 1sec
       await new Promise(resolve => setTimeout(resolve, 1000));
       var newTimestamp = new Date();
+      var day = ((newTimestamp.getMonth() + 1) + '/' + newTimestamp.getDate() + '/' + newTimestamp.getFullYear());
 
       // Create cacheType
       await admin.firestore().collection('actionTypeCache').add({
@@ -472,6 +473,7 @@ exports.ResetScoresCachePeriodics = functions.region('europe-west6').pubsub.sche
       // Create action
       const writeResult = await admin.firestore().collection('energyActions').add(energyPeriodic.data());
       writeResult.update({created_time: newTimestamp});
+      writeResult.update({day: day});
 
 
       // Recalculated is launched by adding new actions
