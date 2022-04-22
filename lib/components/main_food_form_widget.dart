@@ -1,8 +1,8 @@
 import '../auth/auth_util.dart';
 import '../backend/backend.dart';
 import '../components/icon_button_widget.dart';
+import '../flutter_flow/flutter_flow_choice_chips.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
-import '../flutter_flow/flutter_flow_radio_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/custom_functions.dart' as functions;
@@ -111,204 +111,281 @@ class _MainFoodFormWidgetState extends State<MainFoodFormWidget> {
                 ],
               ),
               Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
-                child: Column(
-                  mainAxisSize: MainAxisSize.max,
-                  crossAxisAlignment: CrossAxisAlignment.center,
+                padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 5),
+                child: Stack(
                   children: [
-                    Text(
-                      'Élement Principal',
-                      textAlign: TextAlign.center,
-                      style: FlutterFlowTheme.of(context).subtitle2.override(
-                            fontFamily: 'Montserrat',
-                            fontSize: 16,
-                          ),
+                    Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 10),
+                      child: Container(
+                        width: double.infinity,
+                        height: 1,
+                        decoration: BoxDecoration(
+                          color: Color(0xFFEEEEEE),
+                        ),
+                      ),
                     ),
                     Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
-                      child: FlutterFlowRadioButton(
-                        options: [
-                          'Végétarien',
-                          'Oeuf',
-                          'Poisson',
-                          'Viande rouge',
-                          'Viande blanche'
-                        ].toList(),
-                        initialValue: 'Végétarien',
-                        onChanged: (value) {
-                          setState(() => mainComponentValue = value);
-                        },
-                        optionHeight: 25,
-                        textStyle:
-                            FlutterFlowTheme.of(context).bodyText1.override(
-                                  fontFamily: 'Montserrat',
-                                  color: Colors.black,
-                                ),
-                        buttonPosition: RadioButtonPosition.left,
-                        direction: Axis.vertical,
-                        radioButtonColor: Colors.blue,
-                        inactiveRadioButtonColor: Color(0x8A000000),
-                        toggleable: false,
-                        horizontalAlignment: WrapAlignment.start,
-                        verticalAlignment: WrapCrossAlignment.start,
+                      padding: EdgeInsetsDirectional.fromSTEB(90, 0, 90, 0),
+                      child: Container(
+                        width: double.infinity,
+                        height: 20,
+                        decoration: BoxDecoration(
+                          color: FlutterFlowTheme.of(context).tertiaryColor,
+                        ),
+                        child: Text(
+                          'Principal',
+                          textAlign: TextAlign.center,
+                          style: FlutterFlowTheme.of(context).subtitle2,
+                        ),
                       ),
                     ),
                   ],
                 ),
               ),
               Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
-                child: Column(
+                padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 20),
+                child: Row(
                   mainAxisSize: MainAxisSize.max,
-                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(
-                      'Accompagnement',
-                      textAlign: TextAlign.center,
-                      style: FlutterFlowTheme.of(context).subtitle2,
+                    Column(
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Container(
+                          width: 300,
+                          constraints: BoxConstraints(
+                            maxWidth: 300,
+                          ),
+                          decoration: BoxDecoration(),
+                          child: FlutterFlowChoiceChips(
+                            initiallySelected: [mainComponentValue],
+                            options: [
+                              ChipData('Végétarien'),
+                              ChipData('Oeuf'),
+                              ChipData('Poisson'),
+                              ChipData('Viande rouge'),
+                              ChipData('Viande blanche')
+                            ],
+                            onChanged: (val) =>
+                                setState(() => mainComponentValue = val.first),
+                            selectedChipStyle: ChipStyle(
+                              backgroundColor: Color(0xFF323B45),
+                              textStyle: FlutterFlowTheme.of(context)
+                                  .bodyText1
+                                  .override(
+                                    fontFamily: 'Montserrat',
+                                    color: Colors.white,
+                                  ),
+                              iconColor: Colors.white,
+                              iconSize: 18,
+                              elevation: 4,
+                            ),
+                            unselectedChipStyle: ChipStyle(
+                              backgroundColor: Colors.white,
+                              textStyle: FlutterFlowTheme.of(context)
+                                  .bodyText2
+                                  .override(
+                                    fontFamily: 'Montserrat',
+                                    color: Color(0xFF323B45),
+                                  ),
+                              iconColor: Color(0xFF323B45),
+                              iconSize: 18,
+                              elevation: 4,
+                            ),
+                            chipSpacing: 10,
+                            multiselect: false,
+                            alignment: WrapAlignment.spaceEvenly,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 5),
+                child: Stack(
+                  children: [
+                    Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 10),
+                      child: Container(
+                        width: double.infinity,
+                        height: 1,
+                        decoration: BoxDecoration(
+                          color: Color(0xFFEEEEEE),
+                        ),
+                      ),
                     ),
                     Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
-                      child: FlutterFlowRadioButton(
-                        options: [
-                          'Riz',
-                          'Pâtes',
-                          'Blé',
-                          'Légumes',
-                          'Pommes de terre'
-                        ].toList(),
-                        initialValue: 'Riz',
-                        onChanged: (value) {
-                          setState(() => sideComponentValue = value);
-                        },
-                        optionHeight: 25,
-                        textStyle:
-                            FlutterFlowTheme.of(context).bodyText1.override(
-                                  fontFamily: 'Montserrat',
-                                  color: Colors.black,
-                                ),
-                        buttonPosition: RadioButtonPosition.left,
-                        direction: Axis.vertical,
-                        radioButtonColor: Colors.blue,
-                        inactiveRadioButtonColor: Color(0x8A000000),
-                        toggleable: false,
-                        horizontalAlignment: WrapAlignment.start,
-                        verticalAlignment: WrapCrossAlignment.start,
+                      padding: EdgeInsetsDirectional.fromSTEB(90, 0, 90, 0),
+                      child: Container(
+                        width: double.infinity,
+                        height: 20,
+                        decoration: BoxDecoration(
+                          color: FlutterFlowTheme.of(context).tertiaryColor,
+                        ),
+                        child: Text(
+                          'Accompagnement',
+                          textAlign: TextAlign.center,
+                          style: FlutterFlowTheme.of(context).subtitle2,
+                        ),
                       ),
                     ),
                   ],
                 ),
               ),
-              SingleChildScrollView(
-                child: Column(
+              Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 20),
+                child: Row(
                   mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Expanded(
-                            child: Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 0, 10, 0),
-                              child: InkWell(
-                                onTap: () async {
-                                  logFirebaseEvent('iconButton-ON_TAP');
-                                  logFirebaseEvent(
-                                      'iconButton-Update-Local-State');
-                                  setState(() => FFAppState().actionCO2 =
-                                      functions.foodActionsCO2e(
-                                          'main',
-                                          mainComponentValue,
-                                          sideComponentValue));
-                                },
-                                child: IconButtonWidget(
-                                  fillColor: FlutterFlowTheme.of(context)
-                                      .secondaryColor,
-                                  fontColor: FlutterFlowTheme.of(context)
-                                      .tertiaryColor,
-                                  icon: Icon(
-                                    Icons.sync,
-                                    color: FlutterFlowTheme.of(context)
-                                        .tertiaryColor,
-                                    size: 18,
-                                  ),
-                                  text: 'Calculer',
-                                ),
-                              ),
-                            ),
+                    Column(
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Container(
+                          width: 300,
+                          constraints: BoxConstraints(
+                            maxWidth: 300,
                           ),
-                          Expanded(
-                            child: Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(10, 0, 0, 0),
-                              child: InkWell(
-                                onTap: () async {
-                                  logFirebaseEvent('iconButton-ON_TAP');
-                                  logFirebaseEvent(
-                                      'iconButton-Update-Local-State');
-                                  setState(() => FFAppState().loading = true);
-                                  logFirebaseEvent(
-                                      'iconButton-Update-Local-State');
-                                  setState(() => FFAppState().actionCO2 =
-                                      functions.foodActionsCO2e(
-                                          'main',
-                                          mainComponentValue,
-                                          sideComponentValue));
-                                  logFirebaseEvent(
-                                      'iconButton-Update-Local-State');
-                                  setState(() =>
-                                      FFAppState().time = getCurrentTimestamp);
-                                  logFirebaseEvent('iconButton-Backend-Call');
-
-                                  final foodActionsCreateData =
-                                      createFoodActionsRecordData(
-                                    createdTime: FFAppState().time,
-                                    co2e: FFAppState().actionCO2,
-                                    food: 'main',
-                                    mainComponent: mainComponentValue,
-                                    sideComponent: sideComponentValue,
-                                    userId: currentUserUid,
-                                  );
-                                  await FoodActionsRecord.collection
-                                      .doc()
-                                      .set(foodActionsCreateData);
-                                  logFirebaseEvent('iconButton-Backend-Call');
-
-                                  final actionTypeCacheCreateData =
-                                      createActionTypeCacheRecordData(
-                                    actionCache: widget.cache.reference,
-                                    actionType: 'main',
-                                    date: FFAppState().time,
-                                  );
-                                  await ActionTypeCacheRecord.collection
-                                      .doc()
-                                      .set(actionTypeCacheCreateData);
-                                  logFirebaseEvent('iconButton-Navigate-Back');
-                                  Navigator.pop(context);
-                                  logFirebaseEvent(
-                                      'iconButton-Update-Local-State');
-                                  setState(() => FFAppState().loading = false);
-                                },
-                                child: IconButtonWidget(
-                                  fillColor:
-                                      FlutterFlowTheme.of(context).primaryColor,
-                                  fontColor: FlutterFlowTheme.of(context)
-                                      .tertiaryColor,
-                                  icon: Icon(
-                                    Icons.add_circle_outline,
-                                    color: FlutterFlowTheme.of(context)
-                                        .tertiaryColor,
-                                    size: 25,
+                          decoration: BoxDecoration(),
+                          child: FlutterFlowChoiceChips(
+                            initiallySelected: [sideComponentValue],
+                            options: [
+                              ChipData('Riz'),
+                              ChipData('Pâtes'),
+                              ChipData('Blé'),
+                              ChipData('Légumes'),
+                              ChipData('Pommes de terre')
+                            ],
+                            onChanged: (val) =>
+                                setState(() => sideComponentValue = val.first),
+                            selectedChipStyle: ChipStyle(
+                              backgroundColor: Color(0xFF323B45),
+                              textStyle: FlutterFlowTheme.of(context)
+                                  .bodyText1
+                                  .override(
+                                    fontFamily: 'Montserrat',
+                                    color: Colors.white,
                                   ),
-                                  text: 'Ajouter',
-                                ),
-                              ),
+                              iconColor: Colors.white,
+                              iconSize: 18,
+                              elevation: 4,
                             ),
+                            unselectedChipStyle: ChipStyle(
+                              backgroundColor: Colors.white,
+                              textStyle: FlutterFlowTheme.of(context)
+                                  .bodyText2
+                                  .override(
+                                    fontFamily: 'Montserrat',
+                                    color: Color(0xFF323B45),
+                                  ),
+                              iconColor: Color(0xFF323B45),
+                              iconSize: 18,
+                              elevation: 4,
+                            ),
+                            chipSpacing: 10,
+                            multiselect: false,
+                            alignment: WrapAlignment.spaceEvenly,
                           ),
-                        ],
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
+                child: Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                      child: Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(0, 0, 10, 0),
+                        child: InkWell(
+                          onTap: () async {
+                            logFirebaseEvent('iconButton-ON_TAP');
+                            logFirebaseEvent('iconButton-Update-Local-State');
+                            setState(() => FFAppState().actionCO2 =
+                                functions.foodActionsCO2e('main',
+                                    mainComponentValue, sideComponentValue, 1));
+                          },
+                          child: IconButtonWidget(
+                            fillColor:
+                                FlutterFlowTheme.of(context).secondaryColor,
+                            fontColor:
+                                FlutterFlowTheme.of(context).tertiaryColor,
+                            icon: Icon(
+                              Icons.sync,
+                              color: FlutterFlowTheme.of(context).tertiaryColor,
+                              size: 18,
+                            ),
+                            text: 'Calculer',
+                          ),
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(10, 0, 0, 0),
+                        child: InkWell(
+                          onTap: () async {
+                            logFirebaseEvent('iconButton-ON_TAP');
+                            logFirebaseEvent('iconButton-Update-Local-State');
+                            setState(() => FFAppState().loading = true);
+                            logFirebaseEvent('iconButton-Update-Local-State');
+                            setState(() => FFAppState().actionCO2 =
+                                functions.foodActionsCO2e('main',
+                                    mainComponentValue, sideComponentValue, 1));
+                            logFirebaseEvent('iconButton-Update-Local-State');
+                            setState(
+                                () => FFAppState().time = getCurrentTimestamp);
+                            logFirebaseEvent('iconButton-Backend-Call');
+
+                            final foodActionsCreateData =
+                                createFoodActionsRecordData(
+                              createdTime: FFAppState().time,
+                              co2e: FFAppState().actionCO2,
+                              food: 'main',
+                              mainComponent: mainComponentValue,
+                              sideComponent: sideComponentValue,
+                              userId: currentUserUid,
+                              day: dateTimeFormat('yMd', getCurrentTimestamp),
+                              portions: 1,
+                            );
+                            await FoodActionsRecord.collection
+                                .doc()
+                                .set(foodActionsCreateData);
+                            logFirebaseEvent('iconButton-Backend-Call');
+
+                            final actionTypeCacheCreateData =
+                                createActionTypeCacheRecordData(
+                              actionCache: widget.cache.reference,
+                              actionType: 'main',
+                              date: FFAppState().time,
+                            );
+                            await ActionTypeCacheRecord.collection
+                                .doc()
+                                .set(actionTypeCacheCreateData);
+                            logFirebaseEvent('iconButton-Navigate-Back');
+                            Navigator.pop(context);
+                            logFirebaseEvent('iconButton-Update-Local-State');
+                            setState(() => FFAppState().loading = false);
+                          },
+                          child: IconButtonWidget(
+                            fillColor:
+                                FlutterFlowTheme.of(context).primaryColor,
+                            fontColor:
+                                FlutterFlowTheme.of(context).tertiaryColor,
+                            icon: Icon(
+                              Icons.add_circle_outline,
+                              color: FlutterFlowTheme.of(context).tertiaryColor,
+                              size: 25,
+                            ),
+                            text: 'Ajouter',
+                          ),
+                        ),
                       ),
                     ),
                   ],

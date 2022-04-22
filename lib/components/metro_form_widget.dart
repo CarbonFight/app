@@ -243,6 +243,8 @@ class _MetroFormWidgetState extends State<MetroFormWidget> {
                                     ownership: 'null',
                                     createdTime: FFAppState().time,
                                     co2e: FFAppState().actionCO2,
+                                    day: dateTimeFormat(
+                                        'yMd', getCurrentTimestamp),
                                   );
                                   await TransportActionsRecord.collection
                                       .doc()
