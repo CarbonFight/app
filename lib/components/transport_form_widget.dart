@@ -105,7 +105,7 @@ class _TransportFormWidgetState extends State<TransportFormWidget> {
                                   return Padding(
                                     padding: MediaQuery.of(context).viewInsets,
                                     child: Container(
-                                      height: 550,
+                                      height: 554,
                                       child: CarFormWidget(
                                         cache: widget.cache,
                                       ),
@@ -242,7 +242,7 @@ class _TransportFormWidgetState extends State<TransportFormWidget> {
                                   return Padding(
                                     padding: MediaQuery.of(context).viewInsets,
                                     child: Container(
-                                      height: 480,
+                                      height: 489,
                                       child: ScooterFormWidget(
                                         cache: widget.cache,
                                       ),
@@ -306,7 +306,7 @@ class _TransportFormWidgetState extends State<TransportFormWidget> {
                                   return Padding(
                                     padding: MediaQuery.of(context).viewInsets,
                                     child: Container(
-                                      height: 300,
+                                      height: 309,
                                       child: MotoFormWidget(
                                         cache: widget.cache,
                                       ),
@@ -378,7 +378,7 @@ class _TransportFormWidgetState extends State<TransportFormWidget> {
                                   return Padding(
                                     padding: MediaQuery.of(context).viewInsets,
                                     child: Container(
-                                      height: 450,
+                                      height: 432,
                                       child: TrainFormWidget(
                                         cache: widget.cache,
                                       ),
@@ -442,7 +442,7 @@ class _TransportFormWidgetState extends State<TransportFormWidget> {
                                   return Padding(
                                     padding: MediaQuery.of(context).viewInsets,
                                     child: Container(
-                                      height: 330,
+                                      height: 300,
                                       child: MetroFormWidget(
                                         cache: widget.cache,
                                       ),
@@ -518,7 +518,7 @@ class _TransportFormWidgetState extends State<TransportFormWidget> {
                             return Padding(
                               padding: MediaQuery.of(context).viewInsets,
                               child: Container(
-                                height: 300,
+                                height: 313,
                                 child: FlightFormWidget(
                                   cache: widget.cache,
                                 ),
@@ -581,7 +581,7 @@ class _TransportFormWidgetState extends State<TransportFormWidget> {
                             return Padding(
                               padding: MediaQuery.of(context).viewInsets,
                               child: Container(
-                                height: 430,
+                                height: 434,
                                 child: BikeFormWidget(
                                   cache: widget.cache,
                                 ),

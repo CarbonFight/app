@@ -272,6 +272,7 @@ int foodActionsCO2e(
   String food,
   String mainComponent,
   String sideComponent,
+  int portions,
 ) {
   double co2e = 0.0;
 
@@ -407,10 +408,10 @@ int foodActionsCO2e(
     }
   } else if (food == "desert") {
     switch (mainComponent) {
-      case "Fruit":
+      case "Fruits":
         co2e += co2eFruit;
         break;
-      case "Fruit transformé":
+      case "Fruits transformés":
         co2e += co2eTransformedFruit;
         break;
       case "Yahourt":
@@ -451,11 +452,9 @@ int foodActionsCO2e(
         break;
     }
   } else if (food == "cheese") {
-    int count = int.parse(mainComponent);
-    co2e += co2eCheese * count;
+    co2e += co2eCheese;
   } else if (food == "bread") {
-    int count = int.parse(mainComponent);
-    co2e += co2eBread * count;
+    co2e += co2eBread;
   } else if (food == "coffee") {
     switch (mainComponent) {
       case "Café filtre":
@@ -472,31 +471,29 @@ int foodActionsCO2e(
 
   // Breakfast
 
+  // Portions
+  co2e = co2e * portions;
+
   return co2e.round();
 }
 
-double percentProgressBar(
-  int co2e,
+double ratioScoreGoal(
+  int score,
   String period,
-  int co2target,
+  int goal,
 ) {
-  //int planet = 3300; // Green : what the planet can support
-  //int frenchAverage = 12500; // Yellow french avarage
-  //int usaAverage = 40000; // Red USA average
-  // More is black
-
-  int co2targetGrammes = co2target * 1000;
-  int threshold = co2targetGrammes;
+  int goalGrammes = goal * 1000;
+  int divider = goalGrammes;
 
   if (period == "day") {
-    threshold = co2targetGrammes;
+    divider = goalGrammes;
   } else if (period == "week") {
-    threshold = co2targetGrammes * 7;
+    divider = goalGrammes * 7;
   } else if (period == "month") {
-    threshold = co2targetGrammes * 30;
+    divider = goalGrammes * 30;
   }
 
-  double percent = co2e / threshold;
+  double percent = score / divider;
 
   if (percent > 1) {
     return 1;
@@ -548,4 +545,32 @@ bool primed(
   } else {
     return true;
   }
+}
+
+DateTime dateConv(DateTime date) {
+  // Add your function code here!
+  var formatter = DateFormat('yyyy-MM-dd');
+  String formattedDate = formatter.format(date);
+  return DateTime.parse(formattedDate); // change to 2016-01-25
+}
+
+double ratioScoreTotal(
+  int score,
+  int total,
+) {
+  // Add your function code here!
+  var ratio = (score / total);
+  var output = ratio.toStringAsFixed(2);
+  return double.parse(output);
+}
+
+String printRatioScoreTotal(
+  int score,
+  int total,
+) {
+  // Add your function code here!
+  var ratio = 100 * (score / total);
+  var val = ratio.toStringAsFixed(0);
+  var unit = '%';
+  return val + " " + unit;
 }

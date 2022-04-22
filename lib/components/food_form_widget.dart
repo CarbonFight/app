@@ -103,7 +103,7 @@ class _FoodFormWidgetState extends State<FoodFormWidget> {
                                   return Padding(
                                     padding: MediaQuery.of(context).viewInsets,
                                     child: Container(
-                                      height: 370,
+                                      height: 341,
                                       child: StarterFormWidget(
                                         cache: widget.cache,
                                       ),
@@ -167,7 +167,7 @@ class _FoodFormWidgetState extends State<FoodFormWidget> {
                                   return Padding(
                                     padding: MediaQuery.of(context).viewInsets,
                                     child: Container(
-                                      height: 640,
+                                      height: 519,
                                       child: MainFoodFormWidget(
                                         cache: widget.cache,
                                       ),
@@ -240,7 +240,7 @@ class _FoodFormWidgetState extends State<FoodFormWidget> {
                                   return Padding(
                                     padding: MediaQuery.of(context).viewInsets,
                                     child: Container(
-                                      height: 450,
+                                      height: 393,
                                       child: DesertFormWidget(
                                         cache: widget.cache,
                                       ),
@@ -304,7 +304,7 @@ class _FoodFormWidgetState extends State<FoodFormWidget> {
                                   return Padding(
                                     padding: MediaQuery.of(context).viewInsets,
                                     child: Container(
-                                      height: 470,
+                                      height: 474,
                                       child: DrinksFormWidget(
                                         cache: widget.cache,
                                       ),
@@ -377,7 +377,7 @@ class _FoodFormWidgetState extends State<FoodFormWidget> {
                                   return Padding(
                                     padding: MediaQuery.of(context).viewInsets,
                                     child: Container(
-                                      height: 350,
+                                      height: 315,
                                       child: CheeseFormWidget(
                                         cache: widget.cache,
                                       ),
@@ -441,7 +441,7 @@ class _FoodFormWidgetState extends State<FoodFormWidget> {
                                   return Padding(
                                     padding: MediaQuery.of(context).viewInsets,
                                     child: Container(
-                                      height: 350,
+                                      height: 318,
                                       child: BreadFormWidget(
                                         cache: widget.cache,
                                       ),
@@ -517,7 +517,7 @@ class _FoodFormWidgetState extends State<FoodFormWidget> {
                             return Padding(
                               padding: MediaQuery.of(context).viewInsets,
                               child: Container(
-                                height: 380,
+                                height: 406,
                                 child: CoffeeFormWidget(
                                   cache: widget.cache,
                                 ),

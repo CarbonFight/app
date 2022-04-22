@@ -25,7 +25,7 @@ class CheeseFormWidget extends StatefulWidget {
 }
 
 class _CheeseFormWidgetState extends State<CheeseFormWidget> {
-  int mainComponentValue;
+  int portionsValue;
 
   @override
   Widget build(BuildContext context) {
@@ -110,194 +110,177 @@ class _CheeseFormWidgetState extends State<CheeseFormWidget> {
                   ),
                 ],
               ),
-              SingleChildScrollView(
-                child: Column(
-                  mainAxisSize: MainAxisSize.max,
+              Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 5),
+                child: Stack(
                   children: [
                     Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 20),
-                      child: Stack(
-                        children: [
-                          Padding(
-                            padding:
-                                EdgeInsetsDirectional.fromSTEB(0, 10, 0, 10),
-                            child: Container(
-                              width: double.infinity,
-                              height: 1,
-                              decoration: BoxDecoration(
-                                color: Color(0xFFEEEEEE),
-                              ),
-                            ),
-                          ),
-                          Padding(
-                            padding:
-                                EdgeInsetsDirectional.fromSTEB(90, 0, 90, 0),
-                            child: Container(
-                              width: double.infinity,
-                              height: 20,
-                              decoration: BoxDecoration(
-                                color:
-                                    FlutterFlowTheme.of(context).tertiaryColor,
-                              ),
-                              child: Text(
-                                'Portions',
-                                textAlign: TextAlign.center,
-                                style: FlutterFlowTheme.of(context).subtitle2,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Container(
-                      width: 160,
-                      height: 50,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(25),
-                        shape: BoxShape.rectangle,
-                        border: Border.all(
-                          color: Color(0xFF9E9E9E),
-                          width: 1,
+                      padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 10),
+                      child: Container(
+                        width: double.infinity,
+                        height: 1,
+                        decoration: BoxDecoration(
+                          color: Color(0xFFEEEEEE),
                         ),
-                      ),
-                      child: FlutterFlowCountController(
-                        decrementIconBuilder: (enabled) => FaIcon(
-                          FontAwesomeIcons.minus,
-                          color:
-                              enabled ? Color(0xDD000000) : Color(0xFFEEEEEE),
-                          size: 20,
-                        ),
-                        incrementIconBuilder: (enabled) => FaIcon(
-                          FontAwesomeIcons.plus,
-                          color: enabled
-                              ? FlutterFlowTheme.of(context).secondaryColor
-                              : Color(0xFFEEEEEE),
-                          size: 20,
-                        ),
-                        countBuilder: (count) => Text(
-                          count.toString(),
-                          style: GoogleFonts.getFont(
-                            'Roboto',
-                            color: Colors.black,
-                            fontWeight: FontWeight.w600,
-                            fontSize: 16,
-                          ),
-                        ),
-                        count: mainComponentValue ??= 1,
-                        updateCount: (count) =>
-                            setState(() => mainComponentValue = count),
-                        stepSize: 1,
-                        minimum: 1,
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Expanded(
-                            child: Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 0, 10, 0),
-                              child: InkWell(
-                                onTap: () async {
-                                  logFirebaseEvent('iconButton-ON_TAP');
-                                  logFirebaseEvent(
-                                      'iconButton-Update-Local-State');
-                                  setState(() => FFAppState().actionCO2 =
-                                      functions.foodActionsCO2e(
-                                          'cheese',
-                                          mainComponentValue.toString(),
-                                          'null'));
-                                },
-                                child: IconButtonWidget(
-                                  fillColor: FlutterFlowTheme.of(context)
-                                      .secondaryColor,
-                                  fontColor: FlutterFlowTheme.of(context)
-                                      .tertiaryColor,
-                                  icon: Icon(
-                                    Icons.sync,
-                                    color: FlutterFlowTheme.of(context)
-                                        .tertiaryColor,
-                                    size: 18,
-                                  ),
-                                  text: 'Calculer',
-                                ),
-                              ),
+                      padding: EdgeInsetsDirectional.fromSTEB(90, 0, 90, 0),
+                      child: Container(
+                        width: double.infinity,
+                        height: 20,
+                        decoration: BoxDecoration(
+                          color: FlutterFlowTheme.of(context).tertiaryColor,
+                        ),
+                        child: Text(
+                          'Portions',
+                          textAlign: TextAlign.center,
+                          style: FlutterFlowTheme.of(context).subtitle2,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Row(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    width: 150,
+                    height: 40,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(25),
+                      shape: BoxShape.rectangle,
+                      border: Border.all(
+                        color: Color(0xFF9E9E9E),
+                        width: 1,
+                      ),
+                    ),
+                    child: FlutterFlowCountController(
+                      decrementIconBuilder: (enabled) => FaIcon(
+                        FontAwesomeIcons.minus,
+                        color: enabled ? Color(0xDD000000) : Color(0xFFEEEEEE),
+                        size: 15,
+                      ),
+                      incrementIconBuilder: (enabled) => FaIcon(
+                        FontAwesomeIcons.plus,
+                        color: enabled
+                            ? FlutterFlowTheme.of(context).secondaryColor
+                            : Color(0xFFEEEEEE),
+                        size: 15,
+                      ),
+                      countBuilder: (count) => Text(
+                        count.toString(),
+                        style: GoogleFonts.getFont(
+                          'Roboto',
+                          color: Colors.black,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 16,
+                        ),
+                      ),
+                      count: portionsValue ??= 1,
+                      updateCount: (count) =>
+                          setState(() => portionsValue = count),
+                      stepSize: 1,
+                      minimum: 1,
+                    ),
+                  ),
+                ],
+              ),
+              Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
+                child: Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                      child: Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(0, 0, 10, 0),
+                        child: InkWell(
+                          onTap: () async {
+                            logFirebaseEvent('iconButton-ON_TAP');
+                            logFirebaseEvent('iconButton-Update-Local-State');
+                            setState(() => FFAppState().actionCO2 =
+                                functions.foodActionsCO2e(
+                                    'cheese', 'null', 'null', portionsValue));
+                          },
+                          child: IconButtonWidget(
+                            fillColor:
+                                FlutterFlowTheme.of(context).secondaryColor,
+                            fontColor:
+                                FlutterFlowTheme.of(context).tertiaryColor,
+                            icon: Icon(
+                              Icons.sync,
+                              color: FlutterFlowTheme.of(context).tertiaryColor,
+                              size: 18,
                             ),
+                            text: 'Calculer',
                           ),
-                          Expanded(
-                            child: Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(10, 0, 0, 0),
-                              child: InkWell(
-                                onTap: () async {
-                                  logFirebaseEvent('iconButton-ON_TAP');
-                                  logFirebaseEvent(
-                                      'iconButton-Update-Local-State');
-                                  setState(() => FFAppState().loading = true);
-                                  logFirebaseEvent(
-                                      'iconButton-Update-Local-State');
-                                  setState(() => FFAppState().actionCO2 =
-                                      functions.foodActionsCO2e(
-                                          'cheese',
-                                          mainComponentValue.toString(),
-                                          'null'));
-                                  logFirebaseEvent(
-                                      'iconButton-Update-Local-State');
-                                  setState(() =>
-                                      FFAppState().time = getCurrentTimestamp);
-                                  logFirebaseEvent('iconButton-Backend-Call');
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(10, 0, 0, 0),
+                        child: InkWell(
+                          onTap: () async {
+                            logFirebaseEvent('iconButton-ON_TAP');
+                            logFirebaseEvent('iconButton-Update-Local-State');
+                            setState(() => FFAppState().loading = true);
+                            logFirebaseEvent('iconButton-Update-Local-State');
+                            setState(() => FFAppState().actionCO2 =
+                                functions.foodActionsCO2e(
+                                    'cheese', 'null', 'null', portionsValue));
+                            logFirebaseEvent('iconButton-Update-Local-State');
+                            setState(
+                                () => FFAppState().time = getCurrentTimestamp);
+                            logFirebaseEvent('iconButton-Backend-Call');
 
-                                  final foodActionsCreateData =
-                                      createFoodActionsRecordData(
-                                    createdTime: FFAppState().time,
-                                    co2e: FFAppState().actionCO2,
-                                    food: 'cheese',
-                                    mainComponent:
-                                        mainComponentValue.toString(),
-                                    sideComponent: 'null',
-                                    userId: currentUserUid,
-                                  );
-                                  await FoodActionsRecord.collection
-                                      .doc()
-                                      .set(foodActionsCreateData);
-                                  logFirebaseEvent('iconButton-Backend-Call');
+                            final foodActionsCreateData =
+                                createFoodActionsRecordData(
+                              createdTime: FFAppState().time,
+                              co2e: FFAppState().actionCO2,
+                              food: 'cheese',
+                              mainComponent: 'null',
+                              sideComponent: 'null',
+                              userId: currentUserUid,
+                              day: dateTimeFormat('yMd', getCurrentTimestamp),
+                              portions: portionsValue,
+                            );
+                            await FoodActionsRecord.collection
+                                .doc()
+                                .set(foodActionsCreateData);
+                            logFirebaseEvent('iconButton-Backend-Call');
 
-                                  final actionTypeCacheCreateData =
-                                      createActionTypeCacheRecordData(
-                                    actionCache: widget.cache.reference,
-                                    actionType: 'cheese',
-                                    date: FFAppState().time,
-                                  );
-                                  await ActionTypeCacheRecord.collection
-                                      .doc()
-                                      .set(actionTypeCacheCreateData);
-                                  logFirebaseEvent('iconButton-Navigate-Back');
-                                  Navigator.pop(context);
-                                  logFirebaseEvent(
-                                      'iconButton-Update-Local-State');
-                                  setState(() => FFAppState().loading = false);
-                                },
-                                child: IconButtonWidget(
-                                  fillColor:
-                                      FlutterFlowTheme.of(context).primaryColor,
-                                  fontColor: FlutterFlowTheme.of(context)
-                                      .tertiaryColor,
-                                  icon: Icon(
-                                    Icons.add_circle_outline,
-                                    color: FlutterFlowTheme.of(context)
-                                        .tertiaryColor,
-                                    size: 25,
-                                  ),
-                                  text: 'Ajouter',
-                                ),
-                              ),
+                            final actionTypeCacheCreateData =
+                                createActionTypeCacheRecordData(
+                              actionCache: widget.cache.reference,
+                              actionType: 'cheese',
+                              date: FFAppState().time,
+                            );
+                            await ActionTypeCacheRecord.collection
+                                .doc()
+                                .set(actionTypeCacheCreateData);
+                            logFirebaseEvent('iconButton-Navigate-Back');
+                            Navigator.pop(context);
+                            logFirebaseEvent('iconButton-Update-Local-State');
+                            setState(() => FFAppState().loading = false);
+                          },
+                          child: IconButtonWidget(
+                            fillColor:
+                                FlutterFlowTheme.of(context).primaryColor,
+                            fontColor:
+                                FlutterFlowTheme.of(context).tertiaryColor,
+                            icon: Icon(
+                              Icons.add_circle_outline,
+                              color: FlutterFlowTheme.of(context).tertiaryColor,
+                              size: 25,
                             ),
+                            text: 'Ajouter',
                           ),
-                        ],
+                        ),
                       ),
                     ),
                   ],

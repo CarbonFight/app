@@ -116,6 +116,42 @@ class _WaterFormWidgetState extends State<WaterFormWidget> {
                   ),
                 ],
               ),
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Expanded(
+                    child: Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(0, 5, 0, 0),
+                      child: Container(
+                        width: 100,
+                        decoration: BoxDecoration(
+                          color: Color(0x1CF77303),
+                          boxShadow: [
+                            BoxShadow(
+                              blurRadius: 3,
+                              color: Color(0x13F77303),
+                            )
+                          ],
+                        ),
+                        child: Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(10, 5, 10, 5),
+                          child: Text(
+                            'Cette action est hebdomadaire',
+                            textAlign: TextAlign.center,
+                            style:
+                                FlutterFlowTheme.of(context).bodyText1.override(
+                                      fontFamily: 'Montserrat',
+                                      color: FlutterFlowTheme.of(context).redi,
+                                      fontSize: 10,
+                                    ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
               SingleChildScrollView(
                 child: Column(
                   mainAxisSize: MainAxisSize.max,
@@ -315,6 +351,8 @@ class _WaterFormWidgetState extends State<WaterFormWidget> {
                                       '1',
                                     ),
                                     userId: currentUserUid,
+                                    day: dateTimeFormat(
+                                        'yMd', getCurrentTimestamp),
                                   );
                                   await EnergyActionsRecord.collection
                                       .doc()

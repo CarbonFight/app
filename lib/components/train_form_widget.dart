@@ -314,17 +314,17 @@ class _TrainFormWidgetState extends State<TrainFormWidget> {
                                         ),
                                       );
                                     }
-                                    final iconButtonActionCacheRecord =
+                                    final iconButActionCacheRecord =
                                         snapshot.data;
                                     return InkWell(
                                       onTap: () async {
-                                        logFirebaseEvent('iconButton-ON_TAP');
+                                        logFirebaseEvent('iconBut-ON_TAP');
                                         logFirebaseEvent(
-                                            'iconButton-Update-Local-State');
+                                            'iconBut-Update-Local-State');
                                         setState(
                                             () => FFAppState().loading = true);
                                         logFirebaseEvent(
-                                            'iconButton-Update-Local-State');
+                                            'iconBut-Update-Local-State');
                                         setState(() => FFAppState().actionCO2 =
                                             functions.transportActionsCO2e(
                                                 int.parse(textController.text),
@@ -336,11 +336,11 @@ class _TrainFormWidgetState extends State<TrainFormWidget> {
                                                 ),
                                                 'train'));
                                         logFirebaseEvent(
-                                            'iconButton-Update-Local-State');
+                                            'iconBut-Update-Local-State');
                                         setState(() => FFAppState().time =
                                             getCurrentTimestamp);
                                         logFirebaseEvent(
-                                            'iconButton-Backend-Call');
+                                            'iconBut-Backend-Call');
 
                                         final transportActionsCreateData =
                                             createTransportActionsRecordData(
@@ -356,18 +356,19 @@ class _TrainFormWidgetState extends State<TrainFormWidget> {
                                           ownership: 'owner',
                                           createdTime: FFAppState().time,
                                           co2e: FFAppState().actionCO2,
+                                          day: dateTimeFormat(
+                                              'yMd', getCurrentTimestamp),
                                         );
                                         await TransportActionsRecord.collection
                                             .doc()
                                             .set(transportActionsCreateData);
                                         logFirebaseEvent(
-                                            'iconButton-Backend-Call');
+                                            'iconBut-Backend-Call');
 
                                         final actionTypeCacheCreateData =
                                             createActionTypeCacheRecordData(
-                                          actionCache:
-                                              iconButtonActionCacheRecord
-                                                  .reference,
+                                          actionCache: iconButActionCacheRecord
+                                              .reference,
                                           actionType: 'train',
                                           date: FFAppState().time,
                                         );
@@ -375,10 +376,10 @@ class _TrainFormWidgetState extends State<TrainFormWidget> {
                                             .doc()
                                             .set(actionTypeCacheCreateData);
                                         logFirebaseEvent(
-                                            'iconButton-Navigate-Back');
+                                            'iconBut-Navigate-Back');
                                         Navigator.pop(context);
                                         logFirebaseEvent(
-                                            'iconButton-Update-Local-State');
+                                            'iconBut-Update-Local-State');
                                         setState(
                                             () => FFAppState().loading = false);
                                       },

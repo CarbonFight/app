@@ -99,7 +99,7 @@ class _EnergyFormWidgetState extends State<EnergyFormWidget> {
                                   return Padding(
                                     padding: MediaQuery.of(context).viewInsets,
                                     child: Container(
-                                      height: 490,
+                                      height: 498,
                                       child: ElectricityFormWidget(
                                         cache: widget.actioncache,
                                       ),
@@ -163,7 +163,7 @@ class _EnergyFormWidgetState extends State<EnergyFormWidget> {
                                   return Padding(
                                     padding: MediaQuery.of(context).viewInsets,
                                     child: Container(
-                                      height: 480,
+                                      height: 500,
                                       child: GazFormWidget(
                                         cache: widget.actioncache,
                                       ),
@@ -236,7 +236,7 @@ class _EnergyFormWidgetState extends State<EnergyFormWidget> {
                                   return Padding(
                                     padding: MediaQuery.of(context).viewInsets,
                                     child: Container(
-                                      height: 450,
+                                      height: 437,
                                       child: WaterFormWidget(
                                         cache: widget.actioncache,
                                       ),
