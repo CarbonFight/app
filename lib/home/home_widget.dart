@@ -100,10 +100,6 @@ class _HomeWidgetState extends State<HomeWidget> {
               }
               List<UsersStatsRecord> containerUsersStatsRecordList =
                   snapshot.data;
-              // Return an empty Container when the document does not exist.
-              if (snapshot.data.isEmpty) {
-                return Container();
-              }
               final containerUsersStatsRecord =
                   containerUsersStatsRecordList.isNotEmpty
                       ? containerUsersStatsRecordList.first
@@ -485,12 +481,13 @@ class _HomeWidgetState extends State<HomeWidget> {
                                                       AuthUserStreamWidget(
                                                         child:
                                                             CircularPercentIndicator(
-                                                          percent: functions.percentProgressBar(
-                                                              containerUsersStatsRecord
-                                                                  .day0,
-                                                              'day',
-                                                              currentUserDocument
-                                                                  ?.co2target),
+                                                          percent: functions
+                                                              .ratioScoreGoal(
+                                                                  containerUsersStatsRecord
+                                                                      .day0,
+                                                                  'day',
+                                                                  currentUserDocument
+                                                                      ?.co2target),
                                                           radius: 100,
                                                           lineWidth: 18,
                                                           animation: true,
@@ -629,7 +626,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                                       child:
                                                           CircularPercentIndicator(
                                                         percent: functions
-                                                            .percentProgressBar(
+                                                            .ratioScoreGoal(
                                                                 containerUsersStatsRecord
                                                                     .week0,
                                                                 'week',
@@ -773,7 +770,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                                         child:
                                                             CircularPercentIndicator(
                                                           percent: functions
-                                                              .percentProgressBar(
+                                                              .ratioScoreGoal(
                                                                   containerUsersStatsRecord
                                                                       .month0,
                                                                   'month',
@@ -937,7 +934,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                 ),
                                 Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
-                                      0, 40, 0, 0),
+                                      0, 20, 0, 0),
                                   child: Column(
                                     mainAxisSize: MainAxisSize.max,
                                     mainAxisAlignment: MainAxisAlignment.center,
@@ -1037,8 +1034,8 @@ class _HomeWidgetState extends State<HomeWidget> {
                                                           );
                                                         },
                                                         child: Container(
-                                                          width: 70,
-                                                          height: 70,
+                                                          width: 90,
+                                                          height: 90,
                                                           decoration:
                                                               BoxDecoration(
                                                             color: Color(
@@ -1076,9 +1073,9 @@ class _HomeWidgetState extends State<HomeWidget> {
                                                                             5),
                                                                 child:
                                                                     Image.asset(
-                                                                  'assets/images/bread.png',
-                                                                  width: 30,
-                                                                  height: 30,
+                                                                  'assets/images/diet.png',
+                                                                  width: 50,
+                                                                  height: 50,
                                                                   fit: BoxFit
                                                                       .cover,
                                                                 ),
@@ -1139,8 +1136,8 @@ class _HomeWidgetState extends State<HomeWidget> {
                                                         );
                                                       },
                                                       child: Container(
-                                                        width: 70,
-                                                        height: 70,
+                                                        width: 90,
+                                                        height: 90,
                                                         decoration:
                                                             BoxDecoration(
                                                           color:
@@ -1175,11 +1172,11 @@ class _HomeWidgetState extends State<HomeWidget> {
                                                                           0,
                                                                           0,
                                                                           5),
-                                                              child: SvgPicture
-                                                                  .asset(
-                                                                'assets/images/trans-car-01.svg',
-                                                                width: 30,
-                                                                height: 30,
+                                                              child:
+                                                                  Image.asset(
+                                                                'assets/images/vehicles.png',
+                                                                width: 50,
+                                                                height: 50,
                                                                 fit: BoxFit
                                                                     .cover,
                                                               ),
@@ -1243,8 +1240,8 @@ class _HomeWidgetState extends State<HomeWidget> {
                                                           );
                                                         },
                                                         child: Container(
-                                                          width: 70,
-                                                          height: 70,
+                                                          width: 90,
+                                                          height: 90,
                                                           decoration:
                                                               BoxDecoration(
                                                             color: Color(
@@ -1282,9 +1279,9 @@ class _HomeWidgetState extends State<HomeWidget> {
                                                                             5),
                                                                 child:
                                                                     Image.asset(
-                                                                  'assets/images/energy.png',
-                                                                  width: 30,
-                                                                  height: 30,
+                                                                  'assets/images/utility.png',
+                                                                  width: 50,
+                                                                  height: 50,
                                                                   fit: BoxFit
                                                                       .cover,
                                                                 ),
@@ -1613,7 +1610,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                                                                                       return Padding(
                                                                                                         padding: MediaQuery.of(context).viewInsets,
                                                                                                         child: Container(
-                                                                                                          height: 550,
+                                                                                                          height: 519,
                                                                                                           child: GazFormActionModifyWidget(
                                                                                                             typeCache: rowActionTypeCacheRecord,
                                                                                                           ),
@@ -1648,7 +1645,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                                                                                       return Padding(
                                                                                                         padding: MediaQuery.of(context).viewInsets,
                                                                                                         child: Container(
-                                                                                                          height: 550,
+                                                                                                          height: 463,
                                                                                                           child: WaterFormActionModifWidget(
                                                                                                             typeCache: rowActionTypeCacheRecord,
                                                                                                           ),
@@ -1683,7 +1680,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                                                                                       return Padding(
                                                                                                         padding: MediaQuery.of(context).viewInsets,
                                                                                                         child: Container(
-                                                                                                          height: 550,
+                                                                                                          height: 526,
                                                                                                           child: ElectricityFormActionModifyWidget(
                                                                                                             typeCache: rowActionTypeCacheRecord,
                                                                                                           ),
@@ -1753,7 +1750,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                                                                                       return Padding(
                                                                                                         padding: MediaQuery.of(context).viewInsets,
                                                                                                         child: Container(
-                                                                                                          height: 590,
+                                                                                                          height: 602,
                                                                                                           child: CarFormModifyWidget(
                                                                                                             typeAction: rowActionTypeCacheRecord,
                                                                                                           ),
@@ -1788,7 +1785,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                                                                                       return Padding(
                                                                                                         padding: MediaQuery.of(context).viewInsets,
                                                                                                         child: Container(
-                                                                                                          height: 550,
+                                                                                                          height: 476,
                                                                                                           child: BusFormModifyWidget(
                                                                                                             typeCache: rowActionTypeCacheRecord,
                                                                                                           ),
@@ -1823,7 +1820,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                                                                                       return Padding(
                                                                                                         padding: MediaQuery.of(context).viewInsets,
                                                                                                         child: Container(
-                                                                                                          height: 380,
+                                                                                                          height: 342,
                                                                                                           child: MotoFormModifyWidget(
                                                                                                             typeCache: rowActionTypeCacheRecord,
                                                                                                           ),
@@ -1858,7 +1855,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                                                                                       return Padding(
                                                                                                         padding: MediaQuery.of(context).viewInsets,
                                                                                                         child: Container(
-                                                                                                          height: 580,
+                                                                                                          height: 520,
                                                                                                           child: ScooterFormModifyWidget(
                                                                                                             typeCache: rowActionTypeCacheRecord,
                                                                                                           ),
@@ -1893,7 +1890,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                                                                                       return Padding(
                                                                                                         padding: MediaQuery.of(context).viewInsets,
                                                                                                         child: Container(
-                                                                                                          height: 360,
+                                                                                                          height: 357,
                                                                                                           child: MetroFormModifyWidget(
                                                                                                             typeCache: rowActionTypeCacheRecord,
                                                                                                           ),
@@ -1930,7 +1927,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                                                                                       return Padding(
                                                                                                         padding: MediaQuery.of(context).viewInsets,
                                                                                                         child: Container(
-                                                                                                          height: 350,
+                                                                                                          height: 356,
                                                                                                           child: FlightFormModifyWidget(
                                                                                                             typeCache: rowActionTypeCacheRecord,
                                                                                                           ),
@@ -1965,7 +1962,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                                                                                       return Padding(
                                                                                                         padding: MediaQuery.of(context).viewInsets,
                                                                                                         child: Container(
-                                                                                                          height: 500,
+                                                                                                          height: 477,
                                                                                                           child: BikeFormModifyWidget(
                                                                                                             typeCache: rowActionTypeCacheRecord,
                                                                                                           ),
@@ -2000,7 +1997,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                                                                                       return Padding(
                                                                                                         padding: MediaQuery.of(context).viewInsets,
                                                                                                         child: Container(
-                                                                                                          height: 500,
+                                                                                                          height: 407,
                                                                                                           child: StarterFormModifyWidget(
                                                                                                             typeCache: rowActionTypeCacheRecord,
                                                                                                           ),
@@ -2035,7 +2032,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                                                                                       return Padding(
                                                                                                         padding: MediaQuery.of(context).viewInsets,
                                                                                                         child: Container(
-                                                                                                          height: 650,
+                                                                                                          height: 573,
                                                                                                           child: MainFoodFormModifyWidget(
                                                                                                             typeCache: rowActionTypeCacheRecord,
                                                                                                           ),
@@ -2070,7 +2067,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                                                                                       return Padding(
                                                                                                         padding: MediaQuery.of(context).viewInsets,
                                                                                                         child: Container(
-                                                                                                          height: 500,
+                                                                                                          height: 440,
                                                                                                           child: DesertFormModifyWidget(
                                                                                                             typeCache: rowActionTypeCacheRecord,
                                                                                                           ),
@@ -2105,7 +2102,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                                                                                       return Padding(
                                                                                                         padding: MediaQuery.of(context).viewInsets,
                                                                                                         child: Container(
-                                                                                                          height: 500,
+                                                                                                          height: 508,
                                                                                                           child: DrinksFormModifyWidget(
                                                                                                             typeCache: rowActionTypeCacheRecord,
                                                                                                           ),
@@ -2140,7 +2137,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                                                                                       return Padding(
                                                                                                         padding: MediaQuery.of(context).viewInsets,
                                                                                                         child: Container(
-                                                                                                          height: 400,
+                                                                                                          height: 349,
                                                                                                           child: CheeseFormModifyWidget(
                                                                                                             typeCache: rowActionTypeCacheRecord,
                                                                                                           ),
@@ -2175,7 +2172,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                                                                                       return Padding(
                                                                                                         padding: MediaQuery.of(context).viewInsets,
                                                                                                         child: Container(
-                                                                                                          height: 400,
+                                                                                                          height: 387,
                                                                                                           child: BreadFormModifyWidget(
                                                                                                             typeCache: rowActionTypeCacheRecord,
                                                                                                           ),
@@ -2210,7 +2207,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                                                                                       return Padding(
                                                                                                         padding: MediaQuery.of(context).viewInsets,
                                                                                                         child: Container(
-                                                                                                          height: 400,
+                                                                                                          height: 435,
                                                                                                           child: CoffeeFormModifyWidget(
                                                                                                             typeCache: rowActionTypeCacheRecord,
                                                                                                           ),
@@ -2447,7 +2444,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                                                                                   return Padding(
                                                                                                     padding: MediaQuery.of(context).viewInsets,
                                                                                                     child: Container(
-                                                                                                      height: 470,
+                                                                                                      height: 467,
                                                                                                       child: WaterFormPeriodicModifyWidget(
                                                                                                         periodic: rowEnergyPeriodicsRecord,
                                                                                                       ),
@@ -2485,7 +2482,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                                                                                 return Padding(
                                                                                                   padding: MediaQuery.of(context).viewInsets,
                                                                                                   child: Container(
-                                                                                                    height: 520,
+                                                                                                    height: 519,
                                                                                                     child: GazFormPeriodicModifyWidget(
                                                                                                       periodic: rowEnergyPeriodicsRecord,
                                                                                                     ),
@@ -2524,7 +2521,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                                                                                   return Padding(
                                                                                                     padding: MediaQuery.of(context).viewInsets,
                                                                                                     child: Container(
-                                                                                                      height: 550,
+                                                                                                      height: 526,
                                                                                                       child: ElectricityFormPeriodicModifyWidget(
                                                                                                         periodic: rowEnergyPeriodicsRecord,
                                                                                                       ),

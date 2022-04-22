@@ -821,6 +821,10 @@ class _SplashWidgetState extends State<SplashWidget> {
                                                     logFirebaseEvent(
                                                         'iconButton-ON_TAP');
                                                     logFirebaseEvent(
+                                                        'iconButton-Update-Local-State');
+                                                    setState(() => FFAppState()
+                                                        .showSplash = false);
+                                                    logFirebaseEvent(
                                                         'iconButton-Navigate-To');
                                                     await Navigator.push(
                                                       context,

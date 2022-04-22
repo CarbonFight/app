@@ -37,6 +37,9 @@ abstract class TransportActionsRecord
   String get passengers;
 
   @nullable
+  String get day;
+
+  @nullable
   @BuiltValueField(wireName: kDocumentReferenceField)
   DocumentReference get reference;
 
@@ -48,7 +51,8 @@ abstract class TransportActionsRecord
         ..ownership = ''
         ..userId = ''
         ..co2e = 0
-        ..passengers = '';
+        ..passengers = ''
+        ..day = '';
 
   static CollectionReference get collection =>
       FirebaseFirestore.instance.collection('transportActions');
@@ -82,6 +86,7 @@ Map<String, dynamic> createTransportActionsRecordData({
   int co2e,
   DateTime createdTime,
   String passengers,
+  String day,
 }) =>
     serializers.toFirestore(
         TransportActionsRecord.serializer,
@@ -93,4 +98,5 @@ Map<String, dynamic> createTransportActionsRecordData({
           ..userId = userId
           ..co2e = co2e
           ..createdTime = createdTime
-          ..passengers = passengers));
+          ..passengers = passengers
+          ..day = day));

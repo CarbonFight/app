@@ -138,7 +138,8 @@ class _GazFormActionModifyWidgetState extends State<GazFormActionModifyWidget> {
                             child: Text(
                               valueOrDefault<String>(
                                 '+ ${valueOrDefault<String>(
-                                  containerEnergyActionsRecord.co2e.toString(),
+                                  functions.printScore(
+                                      containerEnergyActionsRecord.co2e),
                                   '0',
                                 )}',
                                 '+ 0 g',

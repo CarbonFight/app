@@ -165,16 +165,32 @@ class _DrawerWidgetState extends State<DrawerWidget>
                                   Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
                                         10, 0, 0, 0),
-                                    child: Text(
-                                      'Contacter l\'équipe',
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyText2
-                                          .override(
-                                            fontFamily: 'Montserrat',
-                                            color: FlutterFlowTheme.of(context)
-                                                .primaryColor,
-                                            fontWeight: FontWeight.w500,
+                                    child: InkWell(
+                                      onTap: () async {
+                                        logFirebaseEvent('Text-ON_TAP');
+                                        logFirebaseEvent('Text-Navigate-Back');
+                                        Navigator.pop(context);
+                                        logFirebaseEvent('Text-Navigate-To');
+                                        await Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                FeedbackWidget(),
                                           ),
+                                        );
+                                      },
+                                      child: Text(
+                                        'Contacter l\'équipe',
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodyText2
+                                            .override(
+                                              fontFamily: 'Montserrat',
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .primaryColor,
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                      ),
                                     ),
                                   ),
                                 ],
@@ -213,16 +229,32 @@ class _DrawerWidgetState extends State<DrawerWidget>
                                   Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
                                         10, 0, 0, 0),
-                                    child: Text(
-                                      'Bienvenue !',
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyText2
-                                          .override(
-                                            fontFamily: 'Montserrat',
-                                            color: FlutterFlowTheme.of(context)
-                                                .primaryColor,
-                                            fontWeight: FontWeight.w500,
+                                    child: InkWell(
+                                      onTap: () async {
+                                        logFirebaseEvent('Text-ON_TAP');
+                                        logFirebaseEvent('Text-Navigate-Back');
+                                        Navigator.pop(context);
+                                        logFirebaseEvent('Text-Navigate-To');
+                                        await Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                SplashWidget(),
                                           ),
+                                        );
+                                      },
+                                      child: Text(
+                                        'Bienvenue !',
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodyText2
+                                            .override(
+                                              fontFamily: 'Montserrat',
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .primaryColor,
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                      ),
                                     ),
                                   ),
                                 ],
@@ -261,16 +293,31 @@ class _DrawerWidgetState extends State<DrawerWidget>
                                   Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
                                         10, 0, 0, 0),
-                                    child: Text(
-                                      'FAQ',
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyText2
-                                          .override(
-                                            fontFamily: 'Montserrat',
-                                            color: FlutterFlowTheme.of(context)
-                                                .primaryColor,
-                                            fontWeight: FontWeight.w500,
+                                    child: InkWell(
+                                      onTap: () async {
+                                        logFirebaseEvent('Text-ON_TAP');
+                                        logFirebaseEvent('Text-Navigate-Back');
+                                        Navigator.pop(context);
+                                        logFirebaseEvent('Text-Navigate-To');
+                                        await Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => FaqWidget(),
                                           ),
+                                        );
+                                      },
+                                      child: Text(
+                                        'FAQ',
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodyText2
+                                            .override(
+                                              fontFamily: 'Montserrat',
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .primaryColor,
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                      ),
                                     ),
                                   ),
                                 ],
@@ -305,16 +352,27 @@ class _DrawerWidgetState extends State<DrawerWidget>
                                   Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
                                         10, 0, 0, 0),
-                                    child: Text(
-                                      'Terms',
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyText2
-                                          .override(
-                                            fontFamily: 'Montserrat',
-                                            color: FlutterFlowTheme.of(context)
-                                                .primaryColor,
-                                            fontWeight: FontWeight.w500,
-                                          ),
+                                    child: InkWell(
+                                      onTap: () async {
+                                        logFirebaseEvent('Text-ON_TAP');
+                                        logFirebaseEvent('Text-Navigate-Back');
+                                        Navigator.pop(context);
+                                        logFirebaseEvent('Text-Launch-U-R-L');
+                                        await launchURL(
+                                            'https://carbonfight.app/privacy.html');
+                                      },
+                                      child: Text(
+                                        'Terms',
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodyText2
+                                            .override(
+                                              fontFamily: 'Montserrat',
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .primaryColor,
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                      ),
                                     ),
                                   ),
                                 ],
@@ -349,16 +407,27 @@ class _DrawerWidgetState extends State<DrawerWidget>
                                   Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
                                         10, 0, 0, 0),
-                                    child: Text(
-                                      'Code source (Github)',
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyText2
-                                          .override(
-                                            fontFamily: 'Montserrat',
-                                            color: FlutterFlowTheme.of(context)
-                                                .primaryColor,
-                                            fontWeight: FontWeight.w500,
-                                          ),
+                                    child: InkWell(
+                                      onTap: () async {
+                                        logFirebaseEvent('Text-ON_TAP');
+                                        logFirebaseEvent('Text-Navigate-Back');
+                                        Navigator.pop(context);
+                                        logFirebaseEvent('Text-Launch-U-R-L');
+                                        await launchURL(
+                                            'https://github.com/CarbonFight/mobile');
+                                      },
+                                      child: Text(
+                                        'Code source (Github)',
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodyText2
+                                            .override(
+                                              fontFamily: 'Montserrat',
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .primaryColor,
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                      ),
                                     ),
                                   ),
                                 ],
@@ -393,16 +462,27 @@ class _DrawerWidgetState extends State<DrawerWidget>
                                   Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
                                         10, 0, 0, 0),
-                                    child: Text(
-                                      'Discussion (Discord)',
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyText2
-                                          .override(
-                                            fontFamily: 'Montserrat',
-                                            color: FlutterFlowTheme.of(context)
-                                                .primaryColor,
-                                            fontWeight: FontWeight.w500,
-                                          ),
+                                    child: InkWell(
+                                      onTap: () async {
+                                        logFirebaseEvent('Text-ON_TAP');
+                                        logFirebaseEvent('Text-Navigate-Back');
+                                        Navigator.pop(context);
+                                        logFirebaseEvent('Text-Launch-U-R-L');
+                                        await launchURL(
+                                            'https://discord.gg/e7weuGA4UW');
+                                      },
+                                      child: Text(
+                                        'Discussion (Discord)',
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodyText2
+                                            .override(
+                                              fontFamily: 'Montserrat',
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .primaryColor,
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                      ),
                                     ),
                                   ),
                                 ],

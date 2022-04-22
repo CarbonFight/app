@@ -344,18 +344,17 @@ class _TrainFormModifyWidgetState extends State<TrainFormModifyWidget> {
                           ),
                           InkWell(
                             onTap: () async {
-                              logFirebaseEvent('iconButton-ON_TAP');
-                              logFirebaseEvent('iconButton-Update-Local-State');
+                              logFirebaseEvent('iconBut-ON_TAP');
+                              logFirebaseEvent('iconBut-Update-Local-State');
                               setState(() => FFAppState().loading = true);
                               if (deleteValue) {
-                                logFirebaseEvent('iconButton-Backend-Call');
+                                logFirebaseEvent('iconBut-Backend-Call');
                                 await columnTransportActionsRecord.reference
                                     .delete();
-                                logFirebaseEvent('iconButton-Backend-Call');
+                                logFirebaseEvent('iconBut-Backend-Call');
                                 await widget.typeCache.reference.delete();
                               } else {
-                                logFirebaseEvent(
-                                    'iconButton-Update-Local-State');
+                                logFirebaseEvent('iconBut-Update-Local-State');
                                 setState(() => FFAppState().actionCO2 =
                                     functions.transportActionsCO2e(
                                         int.parse(textController?.text ?? ''),
@@ -366,7 +365,7 @@ class _TrainFormModifyWidgetState extends State<TrainFormModifyWidget> {
                                           'TER',
                                         ),
                                         'train'));
-                                logFirebaseEvent('iconButton-Backend-Call');
+                                logFirebaseEvent('iconBut-Backend-Call');
 
                                 final transportActionsUpdateData =
                                     createTransportActionsRecordData(
@@ -379,9 +378,9 @@ class _TrainFormModifyWidgetState extends State<TrainFormModifyWidget> {
                                     .update(transportActionsUpdateData);
                               }
 
-                              logFirebaseEvent('iconButton-Navigate-Back');
+                              logFirebaseEvent('iconBut-Navigate-Back');
                               Navigator.pop(context);
-                              logFirebaseEvent('iconButton-Update-Local-State');
+                              logFirebaseEvent('iconBut-Update-Local-State');
                               setState(() => FFAppState().loading = false);
                             },
                             child: IconButtonWidget(

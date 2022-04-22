@@ -54,7 +54,7 @@ class _ForgotPasswordWidgetState extends State<ForgotPasswordWidget> {
                     mainAxisSize: MainAxisSize.max,
                     children: [
                       Text(
-                        'Forgot Password',
+                        'Changer le mot de passe',
                         style: FlutterFlowTheme.of(context).subtitle1,
                       ),
                     ],
@@ -89,7 +89,7 @@ class _ForgotPasswordWidgetState extends State<ForgotPasswordWidget> {
                         children: [
                           Expanded(
                             child: Text(
-                              'Enter your email address and we will send a reset password link for you, you can follow the link and set your new password.',
+                              'Veuillez entrer votre adresse email. Un message vous sera envoyé avec un lien permettant de ré-initialiser votre mot de passe.',
                               style: FlutterFlowTheme.of(context)
                                   .bodyText1
                                   .override(
@@ -111,8 +111,8 @@ class _ForgotPasswordWidgetState extends State<ForgotPasswordWidget> {
                               controller: emailController,
                               obscureText: false,
                               decoration: InputDecoration(
-                                labelText: 'Your Email',
-                                hintText: 'Your Email',
+                                labelText: 'Adresse email',
+                                hintText: 'Adresse email',
                                 enabledBorder: OutlineInputBorder(
                                   borderSide: BorderSide(
                                     color:
@@ -186,7 +186,7 @@ class _ForgotPasswordWidgetState extends State<ForgotPasswordWidget> {
                                       .tertiaryColor,
                                   size: 18,
                                 ),
-                                text: 'Send Reset Link',
+                                text: 'Envoyer le lien',
                               ),
                             ),
                           ),
