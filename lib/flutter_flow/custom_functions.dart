@@ -568,6 +568,10 @@ String printRatioScoreTotal(
   int score,
   int total,
 ) {
+  if (total == 0) {
+    total = 1; // No divide by zero
+  }
+
   // Add your function code here!
   var ratio = 100 * (score / total);
   var val = ratio.toStringAsFixed(0);

@@ -668,10 +668,10 @@ class _StatistiquesWidgetState extends State<StatistiquesWidget> {
                           ),
                           Padding(
                             padding:
-                                EdgeInsetsDirectional.fromSTEB(20, 15, 20, 15),
+                                EdgeInsetsDirectional.fromSTEB(20, 15, 20, 5),
                             child: Container(
                               width: MediaQuery.of(context).size.width,
-                              height: 150,
+                              height: 135,
                               decoration: BoxDecoration(
                                 boxShadow: [
                                   BoxShadow(
@@ -705,7 +705,7 @@ class _StatistiquesWidgetState extends State<StatistiquesWidget> {
                                           MainAxisAlignment.center,
                                       children: [
                                         Text(
-                                          'Répartition par secteur : ${functions.printScore(containerUsersStatsRecord.day0)}',
+                                          'Répartition par secteur',
                                           style: FlutterFlowTheme.of(context)
                                               .bodyText1
                                               .override(
@@ -923,7 +923,7 @@ class _StatistiquesWidgetState extends State<StatistiquesWidget> {
                                               animation: true,
                                               progressColor:
                                                   FlutterFlowTheme.of(context)
-                                                      .orange,
+                                                      .redi,
                                               backgroundColor:
                                                   Color(0xFFF1F4F8),
                                               barRadius: Radius.circular(100),
@@ -1188,7 +1188,7 @@ class _StatistiquesWidgetState extends State<StatistiquesWidget> {
                                                             animation: true,
                                                             progressColor:
                                                                 Color(
-                                                                    0xFFFF0000),
+                                                                    0xFF0072FF),
                                                             backgroundColor:
                                                                 Color(
                                                                     0xFFF1F4F8),
@@ -1421,8 +1421,9 @@ class _StatistiquesWidgetState extends State<StatistiquesWidget> {
                                                               lineHeight: 18,
                                                               animation: true,
                                                               progressColor:
-                                                                  Color(
-                                                                      0xFFFF0000),
+                                                                  FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .secondaryColor,
                                                               backgroundColor:
                                                                   Color(
                                                                       0xFFF1F4F8),
@@ -1601,8 +1602,9 @@ class _StatistiquesWidgetState extends State<StatistiquesWidget> {
                                                               lineHeight: 18,
                                                               animation: true,
                                                               progressColor:
-                                                                  Color(
-                                                                      0xFFFF0000),
+                                                                  FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .redi,
                                                               backgroundColor:
                                                                   Color(
                                                                       0xFFF1F4F8),
