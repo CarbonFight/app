@@ -9,15 +9,8 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 
+import '../../index.dart';
 import '../../main.dart';
-import '../../login/login_widget.dart';
-import '../../splash/splash_widget.dart';
-import '../../signup/signup_widget.dart';
-import '../../statistiques/statistiques_widget.dart';
-import '../../faq/faq_widget.dart';
-import '../../drawer/drawer_widget.dart';
-import '../../feedback/feedback_widget.dart';
-import '../../account/account_widget.dart';
 
 class PushNotificationsHandler extends StatefulWidget {
   const PushNotificationsHandler(

@@ -23,8 +23,8 @@ class MotoFormModifyWidget extends StatefulWidget {
 }
 
 class _MotoFormModifyWidgetState extends State<MotoFormModifyWidget> {
-  TextEditingController textController;
   bool deleteValue;
+  TextEditingController textController;
 
   @override
   Widget build(BuildContext context) {

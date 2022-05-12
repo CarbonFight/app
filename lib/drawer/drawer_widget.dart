@@ -1,4 +1,5 @@
 import '../auth/auth_util.dart';
+import '../components/delete_account_widget.dart';
 import '../faq/faq_widget.dart';
 import '../feedback/feedback_widget.dart';
 import '../flutter_flow/flutter_flow_animations.dart';
@@ -574,6 +575,57 @@ class _DrawerWidgetState extends State<DrawerWidget>
                                                         .gray,
                                                     fontSize: 11,
                                                   ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      children: [
+                                        Expanded(
+                                          child: Padding(
+                                            padding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    0, 3, 0, 0),
+                                            child: InkWell(
+                                              onTap: () async {
+                                                logFirebaseEvent('Text-ON_TAP');
+                                                logFirebaseEvent(
+                                                    'Text-Bottom-Sheet');
+                                                await showModalBottomSheet(
+                                                  isScrollControlled: true,
+                                                  backgroundColor:
+                                                      Colors.transparent,
+                                                  context: context,
+                                                  builder: (context) {
+                                                    return Padding(
+                                                      padding:
+                                                          MediaQuery.of(context)
+                                                              .viewInsets,
+                                                      child: Container(
+                                                        height: 476,
+                                                        child:
+                                                            DeleteAccountWidget(),
+                                                      ),
+                                                    );
+                                                  },
+                                                );
+                                              },
+                                              child: Text(
+                                                'Supprimer mon compte',
+                                                style: FlutterFlowTheme.of(
+                                                        context)
+                                                    .bodyText2
+                                                    .override(
+                                                      fontFamily: 'Montserrat',
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .gray,
+                                                      fontSize: 11,
+                                                    ),
+                                              ),
                                             ),
                                           ),
                                         ),

@@ -24,8 +24,8 @@ class MetroFormModifyWidget extends StatefulWidget {
 }
 
 class _MetroFormModifyWidgetState extends State<MetroFormModifyWidget> {
-  TextEditingController textController;
   bool deleteValue;
+  TextEditingController textController;
 
   @override
   Widget build(BuildContext context) {
@@ -162,7 +162,7 @@ class _MetroFormModifyWidgetState extends State<MetroFormModifyWidget> {
                                   obscureText: false,
                                   decoration: InputDecoration(
                                     labelText: 'Nombre de stations',
-                                    hintText: 'Distance Parcourue (en km )',
+                                    hintText: 'Nombre de stations',
                                     enabledBorder: OutlineInputBorder(
                                       borderSide: BorderSide(
                                         color: FlutterFlowTheme.of(context)
