@@ -413,7 +413,7 @@ class _TransportFormWidgetState extends State<TransportFormWidget> {
                                         padding: EdgeInsetsDirectional.fromSTEB(
                                             0, 5, 0, 0),
                                         child: Text(
-                                          'Train',
+                                          'Train / Tram',
                                           textAlign: TextAlign.center,
                                           style: FlutterFlowTheme.of(context)
                                               .bodyText1,

@@ -20,13 +20,13 @@ class SignupWidget extends StatefulWidget {
 }
 
 class _SignupWidgetState extends State<SignupWidget> {
+  final scaffoldKey = GlobalKey<ScaffoldState>();
   TextEditingController emailAddressController;
   TextEditingController nameController;
   TextEditingController passwordController;
   bool passwordVisibility;
   TextEditingController retypepasswordController;
   bool retypepasswordVisibility;
-  final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {

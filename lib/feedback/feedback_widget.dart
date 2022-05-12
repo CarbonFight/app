@@ -16,9 +16,9 @@ class FeedbackWidget extends StatefulWidget {
 }
 
 class _FeedbackWidgetState extends State<FeedbackWidget> {
+  final scaffoldKey = GlobalKey<ScaffoldState>();
   ApiCallResponse apiCallOutput2;
   TextEditingController messageController;
-  final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {

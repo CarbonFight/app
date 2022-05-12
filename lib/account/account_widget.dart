@@ -22,10 +22,6 @@ class AccountWidget extends StatefulWidget {
 
 class _AccountWidgetState extends State<AccountWidget>
     with TickerProviderStateMixin {
-  TextEditingController displaynameController;
-  TextEditingController emailaddressController;
-  int co2targetValue;
-  final scaffoldKey = GlobalKey<ScaffoldState>();
   final animationsMap = {
     'containerOnPageLoadAnimation': AnimationInfo(
       trigger: AnimationTrigger.onPageLoad,
@@ -43,6 +39,10 @@ class _AccountWidgetState extends State<AccountWidget>
       ),
     ),
   };
+  final scaffoldKey = GlobalKey<ScaffoldState>();
+  int co2targetValue;
+  TextEditingController displaynameController;
+  TextEditingController emailaddressController;
 
   @override
   void initState() {
