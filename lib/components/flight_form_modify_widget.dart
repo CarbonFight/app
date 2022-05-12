@@ -23,8 +23,8 @@ class FlightFormModifyWidget extends StatefulWidget {
 }
 
 class _FlightFormModifyWidgetState extends State<FlightFormModifyWidget> {
-  TextEditingController textController;
   bool deleteValue;
+  TextEditingController textController;
 
   @override
   Widget build(BuildContext context) {

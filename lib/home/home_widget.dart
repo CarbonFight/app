@@ -1478,7 +1478,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                                                               onTap: () async {
                                                                                 logFirebaseEvent('Container-ON_TAP');
                                                                                 logFirebaseEvent('Container-Page-View');
-                                                                                await pageView2Controller.previousPage(
+                                                                                await pageView2Controller.nextPage(
                                                                                   duration: Duration(milliseconds: 300),
                                                                                   curve: Curves.ease,
                                                                                 );
@@ -1490,7 +1490,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                                                                   color: Color(0x00EEEEEE),
                                                                                 ),
                                                                                 child: Visibility(
-                                                                                  visible: (pageView2Index) > 0,
+                                                                                  visible: functions.lastCache(containerActionCacheRecordList.length, pageView2Index) ?? true,
                                                                                   child: Padding(
                                                                                     padding: EdgeInsetsDirectional.fromSTEB(0, 0, 7, 0),
                                                                                     child: Icon(
@@ -1520,7 +1520,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                                                               onTap: () async {
                                                                                 logFirebaseEvent('Container-ON_TAP');
                                                                                 logFirebaseEvent('Container-Page-View');
-                                                                                await pageView2Controller.nextPage(
+                                                                                await pageView2Controller.previousPage(
                                                                                   duration: Duration(milliseconds: 300),
                                                                                   curve: Curves.ease,
                                                                                 );
@@ -1532,7 +1532,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                                                                   color: Color(0x00EEEEEE),
                                                                                 ),
                                                                                 child: Visibility(
-                                                                                  visible: (functions.primed(containerActionCacheRecordList.length, pageView2Index)) == true,
+                                                                                  visible: (pageView2Index) == 0,
                                                                                   child: Padding(
                                                                                     padding: EdgeInsetsDirectional.fromSTEB(7, 0, 0, 0),
                                                                                     child: Icon(

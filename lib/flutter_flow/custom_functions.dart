@@ -414,7 +414,7 @@ int foodActionsCO2e(
       case "Fruits transformés":
         co2e += co2eTransformedFruit;
         break;
-      case "Yahourt":
+      case "Yaourt":
         co2e += co2eYogurt;
         break;
       case "Pâtisserie":
@@ -534,16 +534,17 @@ String printLevel(int level) {
   return levelString;
 }
 
-bool primed(
+bool lastCache(
   int actionCache,
   int index,
 ) {
-  // Add your function code here!
-  var val = actionCache - index;
-  if (val == 1) {
-    return false;
-  } else {
+  // If it's last cache, "cache size" - "index" = 1
+  // If true, hide the arrow to next cache screen
+  var isLastCache = actionCache - index;
+  if (isLastCache == 1) {
     return true;
+  } else {
+    return false;
   }
 }
 

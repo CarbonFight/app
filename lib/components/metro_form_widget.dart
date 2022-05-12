@@ -131,7 +131,7 @@ class _MetroFormWidgetState extends State<MetroFormWidget> {
                               obscureText: false,
                               decoration: InputDecoration(
                                 labelText: 'Nombre de stations',
-                                hintText: 'Distance Parcourue (en km )',
+                                hintText: 'Nombre de stations',
                                 enabledBorder: OutlineInputBorder(
                                   borderSide: BorderSide(
                                     color:

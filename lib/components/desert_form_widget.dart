@@ -161,7 +161,7 @@ class _DesertFormWidgetState extends State<DesertFormWidget> {
                             options: [
                               ChipData('Fruits'),
                               ChipData('Fruits transformés'),
-                              ChipData('Yahourt'),
+                              ChipData('Yaourt'),
                               ChipData('Pâtisserie'),
                               ChipData('Glace'),
                               ChipData('Crême dessert')
