@@ -520,6 +520,20 @@ exports.ResetScoresCachePeriodics = functions.region('europe-west6').pubsub.sche
         // Recalculated is launched by adding new actions
       }); // end Periodics > Actions
     }); // end Foreach user
+  }
+  catch (e) {
+    console.error(new Error('ResetScoresCachePeriodics : failed'));
+    throw new Error('ResetScoresCachePeriodics : failed');
+  }
+});
+
+
+// At midnight : Reset users scores / New Cache / Flush Cache > 7 days (todo)
+exports.cleanOldActions = functions.region('europe-west6').pubsub.schedule('0 0 * * *').timeZone('Europe/Paris').onRun(async (context) => {
+
+  try {
+    // Set Paris Timezone (default is UTC, even if function TimeZone is Paris)
+    process.env.TZ = 'Europe/Paris' 
 
     // Delete cache > 7 days
     // Calculate periods
@@ -541,9 +555,31 @@ exports.ResetScoresCachePeriodics = functions.region('europe-west6').pubsub.sche
         doc.ref.delete();
       });
     });
+
+    // Deletes all actions > 7 days
+    var jobskill_query = admin.firestore().collection('foodActions').where('created_time','<', dateDay7);
+    jobskill_query.get().then(function(querySnapshot) {
+      querySnapshot.forEach(function(doc) {
+        doc.ref.delete();
+      });
+    });
+    var jobskill_query = admin.firestore().collection('energyActions').where('created_time','<', dateDay7);
+    jobskill_query.get().then(function(querySnapshot) {
+      querySnapshot.forEach(function(doc) {
+        doc.ref.delete();
+      });
+    });
+    var jobskill_query = admin.firestore().collection('transportActions').where('created_time','<', dateDay7);
+    jobskill_query.get().then(function(querySnapshot) {
+      querySnapshot.forEach(function(doc) {
+        doc.ref.delete();
+      });
+    });
+
+
   }
   catch (e) {
-    console.error(new Error('updateScoreEnergy : failed'));
-    throw new Error('updateScoreEnergy : failed');
+    console.error(new Error('cleanOldActions : failed'));
+    throw new Error('cleanOldActions : failed');
   }
 });
