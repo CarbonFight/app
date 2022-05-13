@@ -12,6 +12,7 @@ import 'schema/food_actions_record.dart';
 import 'schema/action_cache_record.dart';
 import 'schema/action_type_cache_record.dart';
 import 'schema/users_stats_record.dart';
+import 'schema/transport_periodics_record.dart';
 import 'schema/serializers.dart';
 
 export 'dart:async' show StreamSubscription;
@@ -27,6 +28,7 @@ export 'schema/food_actions_record.dart';
 export 'schema/action_cache_record.dart';
 export 'schema/action_type_cache_record.dart';
 export 'schema/users_stats_record.dart';
+export 'schema/transport_periodics_record.dart';
 
 /// Functions to query TransportActionsRecords (as a Stream and as a Future).
 Stream<List<TransportActionsRecord>> queryTransportActionsRecord(
@@ -279,6 +281,39 @@ Future<FFFirestorePage<UsersStatsRecord>> queryUsersStatsRecordPage({
       pageSize: pageSize,
       isStream: isStream,
     );
+
+/// Functions to query TransportPeriodicsRecords (as a Stream and as a Future).
+Stream<List<TransportPeriodicsRecord>> queryTransportPeriodicsRecord(
+        {Query Function(Query) queryBuilder,
+        int limit = -1,
+        bool singleRecord = false}) =>
+    queryCollection(TransportPeriodicsRecord.collection,
+        TransportPeriodicsRecord.serializer,
+        queryBuilder: queryBuilder, limit: limit, singleRecord: singleRecord);
+
+Future<List<TransportPeriodicsRecord>> queryTransportPeriodicsRecordOnce(
+        {Query Function(Query) queryBuilder,
+        int limit = -1,
+        bool singleRecord = false}) =>
+    queryCollectionOnce(TransportPeriodicsRecord.collection,
+        TransportPeriodicsRecord.serializer,
+        queryBuilder: queryBuilder, limit: limit, singleRecord: singleRecord);
+
+Future<FFFirestorePage<TransportPeriodicsRecord>>
+    queryTransportPeriodicsRecordPage({
+  Query Function(Query) queryBuilder,
+  DocumentSnapshot nextPageMarker,
+  int pageSize,
+  bool isStream,
+}) =>
+        queryCollectionPage(
+          TransportPeriodicsRecord.collection,
+          TransportPeriodicsRecord.serializer,
+          queryBuilder: queryBuilder,
+          nextPageMarker: nextPageMarker,
+          pageSize: pageSize,
+          isStream: isStream,
+        );
 
 Stream<List<T>> queryCollection<T>(
     CollectionReference collection, Serializer<T> serializer,
