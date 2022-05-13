@@ -29,14 +29,14 @@
             <key>CFBundleURLSchemes</key>
             <array>
                 <string>com.googleusercontent.apps.11012056131-ciq3vki8qino45qc2ku5ml00e6domjab</string>
-                <string>fb357714712474073</string>
+                <string>fb265347802383003</string>
             </array>
         </dict>
 
     </array>
 
     <key>FacebookAppID</key>
-    <string>357714712474073</string>
+    <string>265347802383003</string>
     <key>FacebookDisplayName</key>
     <string>CarbonFight</string>
 

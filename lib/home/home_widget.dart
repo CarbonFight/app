@@ -1474,25 +1474,25 @@ class _HomeWidgetState extends State<HomeWidget> {
                                                                           mainAxisAlignment:
                                                                               MainAxisAlignment.spaceBetween,
                                                                           children: [
-                                                                            InkWell(
-                                                                              onTap: () async {
-                                                                                logFirebaseEvent('Container-ON_TAP');
-                                                                                logFirebaseEvent('Container-Page-View');
-                                                                                await pageView2Controller.nextPage(
-                                                                                  duration: Duration(milliseconds: 300),
-                                                                                  curve: Curves.ease,
-                                                                                );
-                                                                              },
-                                                                              child: Container(
-                                                                                width: 50,
-                                                                                height: 25,
-                                                                                decoration: BoxDecoration(
-                                                                                  color: Color(0x00EEEEEE),
-                                                                                ),
-                                                                                child: Visibility(
-                                                                                  visible: functions.lastCache(containerActionCacheRecordList.length, pageView2Index) ?? true,
-                                                                                  child: Padding(
-                                                                                    padding: EdgeInsetsDirectional.fromSTEB(0, 0, 7, 0),
+                                                                            Container(
+                                                                              width: 50,
+                                                                              height: 25,
+                                                                              decoration: BoxDecoration(
+                                                                                color: Color(0x00EEEEEE),
+                                                                              ),
+                                                                              child: Visibility(
+                                                                                visible: !(functions.lastCache(containerActionCacheRecordList.length, pageView2Index)) ?? true,
+                                                                                child: Padding(
+                                                                                  padding: EdgeInsetsDirectional.fromSTEB(0, 0, 7, 0),
+                                                                                  child: InkWell(
+                                                                                    onTap: () async {
+                                                                                      logFirebaseEvent('previous-ON_TAP');
+                                                                                      logFirebaseEvent('previous-Page-View');
+                                                                                      await pageView2Controller.nextPage(
+                                                                                        duration: Duration(milliseconds: 300),
+                                                                                        curve: Curves.ease,
+                                                                                      );
+                                                                                    },
                                                                                     child: Icon(
                                                                                       Icons.arrow_back_ios,
                                                                                       color: FlutterFlowTheme.of(context).primaryColor,
@@ -1516,25 +1516,25 @@ class _HomeWidgetState extends State<HomeWidget> {
                                                                                 ],
                                                                               ),
                                                                             ),
-                                                                            InkWell(
-                                                                              onTap: () async {
-                                                                                logFirebaseEvent('Container-ON_TAP');
-                                                                                logFirebaseEvent('Container-Page-View');
-                                                                                await pageView2Controller.previousPage(
-                                                                                  duration: Duration(milliseconds: 300),
-                                                                                  curve: Curves.ease,
-                                                                                );
-                                                                              },
-                                                                              child: Container(
-                                                                                width: 50,
-                                                                                height: 20,
-                                                                                decoration: BoxDecoration(
-                                                                                  color: Color(0x00EEEEEE),
-                                                                                ),
-                                                                                child: Visibility(
-                                                                                  visible: (pageView2Index) == 0,
-                                                                                  child: Padding(
-                                                                                    padding: EdgeInsetsDirectional.fromSTEB(7, 0, 0, 0),
+                                                                            Container(
+                                                                              width: 50,
+                                                                              height: 20,
+                                                                              decoration: BoxDecoration(
+                                                                                color: Color(0x00EEEEEE),
+                                                                              ),
+                                                                              child: Visibility(
+                                                                                visible: (pageView2Index) != 0,
+                                                                                child: Padding(
+                                                                                  padding: EdgeInsetsDirectional.fromSTEB(7, 0, 0, 0),
+                                                                                  child: InkWell(
+                                                                                    onTap: () async {
+                                                                                      logFirebaseEvent('next-ON_TAP');
+                                                                                      logFirebaseEvent('next-Page-View');
+                                                                                      await pageView2Controller.previousPage(
+                                                                                        duration: Duration(milliseconds: 300),
+                                                                                        curve: Curves.ease,
+                                                                                      );
+                                                                                    },
                                                                                     child: Icon(
                                                                                       Icons.arrow_forward_ios,
                                                                                       color: FlutterFlowTheme.of(context).primaryColor,

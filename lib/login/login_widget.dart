@@ -492,26 +492,35 @@ class _LoginWidgetState extends State<LoginWidget> {
                                                     logFirebaseEvent(
                                                         'IconButton-ON_TAP');
                                                     logFirebaseEvent(
-                                                        'IconButton-Bottom-Sheet');
-                                                    await showModalBottomSheet(
-                                                      isScrollControlled: true,
-                                                      backgroundColor:
-                                                          Colors.transparent,
-                                                      context: context,
-                                                      builder: (context) {
-                                                        return Padding(
-                                                          padding:
-                                                              MediaQuery.of(
-                                                                      context)
-                                                                  .viewInsets,
-                                                          child: Container(
-                                                            height: 310,
-                                                            child:
-                                                                NextVersionAlertWidget(),
-                                                          ),
-                                                        );
-                                                      },
-                                                    );
+                                                        'IconButton-Auth');
+                                                    final user =
+                                                        await signInWithFacebook(
+                                                            context);
+                                                    if (user == null) {
+                                                      return;
+                                                    }
+                                                    if (FFAppState()
+                                                        .showSplash) {
+                                                      logFirebaseEvent(
+                                                          'IconButton-Navigate-To');
+                                                      await Navigator.push(
+                                                        context,
+                                                        MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              SplashWidget(),
+                                                        ),
+                                                      );
+                                                    } else {
+                                                      logFirebaseEvent(
+                                                          'IconButton-Navigate-To');
+                                                      await Navigator.push(
+                                                        context,
+                                                        MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              HomeWidget(),
+                                                        ),
+                                                      );
+                                                    }
                                                   },
                                                 ),
                                               ),

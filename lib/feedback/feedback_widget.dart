@@ -17,7 +17,7 @@ class FeedbackWidget extends StatefulWidget {
 
 class _FeedbackWidgetState extends State<FeedbackWidget> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
-  ApiCallResponse apiCallOutput2;
+  ApiCallResponse sendEmail;
   TextEditingController messageController;
 
   @override
@@ -165,75 +165,104 @@ class _FeedbackWidgetState extends State<FeedbackWidget> {
                           padding: EdgeInsetsDirectional.fromSTEB(0, 24, 0, 0),
                           child: Row(
                             mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Expanded(
-                                child: InkWell(
-                                  onTap: () async {
-                                    logFirebaseEvent('iconButton-ON_TAP');
-                                    logFirebaseEvent('iconButton-Backend-Call');
-                                    apiCallOutput2 = await SendEmailCall.call(
-                                      emailbody: messageController.text,
-                                      emailsendername: currentUserDisplayName,
-                                    );
-                                    if ((apiCallOutput2?.succeeded ?? true)) {
-                                      logFirebaseEvent(
-                                          'iconButton-Alert-Dialog');
-                                      await showDialog(
-                                        context: context,
-                                        builder: (alertDialogContext) {
-                                          return AlertDialog(
-                                            title: Text('Message envoyé !'),
-                                            content: Text(
-                                                'Merci pour votre message.'),
-                                            actions: [
-                                              TextButton(
-                                                onPressed: () => Navigator.pop(
-                                                    alertDialogContext),
-                                                child: Text('OK'),
-                                              ),
-                                            ],
+                              Stack(
+                                children: [
+                                  if (!(FFAppState().loading) ?? true)
+                                    InkWell(
+                                      onTap: () async {
+                                        logFirebaseEvent('send-ON_TAP');
+                                        logFirebaseEvent(
+                                            'send-Update-Local-State');
+                                        setState(
+                                            () => FFAppState().loading = true);
+                                        logFirebaseEvent('send-Backend-Call');
+                                        sendEmail = await SendEmailCall.call(
+                                          emailbody: messageController.text,
+                                          emailsendername:
+                                              currentUserDisplayName,
+                                        );
+                                        if ((sendEmail?.succeeded ?? true)) {
+                                          logFirebaseEvent('send-Alert-Dialog');
+                                          await showDialog(
+                                            context: context,
+                                            builder: (alertDialogContext) {
+                                              return AlertDialog(
+                                                title: Text('Message envoyé !'),
+                                                content: Text(
+                                                    'Merci pour votre message.'),
+                                                actions: [
+                                                  TextButton(
+                                                    onPressed: () =>
+                                                        Navigator.pop(
+                                                            alertDialogContext),
+                                                    child: Text('OK'),
+                                                  ),
+                                                ],
+                                              );
+                                            },
                                           );
-                                        },
-                                      );
-                                    } else {
-                                      logFirebaseEvent(
-                                          'iconButton-Alert-Dialog');
-                                      await showDialog(
-                                        context: context,
-                                        builder: (alertDialogContext) {
-                                          return AlertDialog(
-                                            title: Text('Problème'),
-                                            content: Text(
-                                                'C\'est bizarre, le message n\'a pas été envoyé. Merci d\'envoyer votre message par mail ou téléphone !'),
-                                            actions: [
-                                              TextButton(
-                                                onPressed: () => Navigator.pop(
-                                                    alertDialogContext),
-                                                child: Text('OK'),
-                                              ),
-                                            ],
+                                        } else {
+                                          logFirebaseEvent('send-Alert-Dialog');
+                                          await showDialog(
+                                            context: context,
+                                            builder: (alertDialogContext) {
+                                              return AlertDialog(
+                                                title: Text('Problème'),
+                                                content: Text(
+                                                    'C\'est bizarre, le message n\'a pas été envoyé. Merci d\'envoyer votre message par mail ou téléphone !'),
+                                                actions: [
+                                                  TextButton(
+                                                    onPressed: () =>
+                                                        Navigator.pop(
+                                                            alertDialogContext),
+                                                    child: Text('OK'),
+                                                  ),
+                                                ],
+                                              );
+                                            },
                                           );
-                                        },
-                                      );
-                                    }
+                                        }
 
-                                    setState(() {});
-                                  },
-                                  child: IconButtonWidget(
-                                    fillColor: FlutterFlowTheme.of(context)
-                                        .secondaryColor,
-                                    fontColor: FlutterFlowTheme.of(context)
-                                        .tertiaryColor,
-                                    icon: Icon(
-                                      Icons.send_sharp,
-                                      color: FlutterFlowTheme.of(context)
-                                          .tertiaryColor,
-                                      size: 26,
+                                        logFirebaseEvent('send-Navigate-Back');
+                                        Navigator.pop(context);
+                                        logFirebaseEvent(
+                                            'send-Update-Local-State');
+                                        setState(
+                                            () => FFAppState().loading = false);
+
+                                        setState(() {});
+                                      },
+                                      child: IconButtonWidget(
+                                        fillColor: FlutterFlowTheme.of(context)
+                                            .secondaryColor,
+                                        fontColor: FlutterFlowTheme.of(context)
+                                            .tertiaryColor,
+                                        icon: Icon(
+                                          Icons.send_sharp,
+                                          color: FlutterFlowTheme.of(context)
+                                              .tertiaryColor,
+                                          size: 26,
+                                        ),
+                                        text: 'Envoyer  ',
+                                      ),
                                     ),
-                                    text: 'Envoyer',
-                                  ),
-                                ),
+                                  if (FFAppState().loading ?? true)
+                                    IconButtonWidget(
+                                      fillColor:
+                                          FlutterFlowTheme.of(context).gray,
+                                      fontColor: FlutterFlowTheme.of(context)
+                                          .tertiaryColor,
+                                      icon: Icon(
+                                        Icons.schedule_send,
+                                        color: FlutterFlowTheme.of(context)
+                                            .tertiaryColor,
+                                        size: 26,
+                                      ),
+                                      text: 'En cours  ',
+                                    ),
+                                ],
                               ),
                             ],
                           ),

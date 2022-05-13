@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <resources>
     <string name="app_name">CarbonFight</string>
-    <string name="facebook_app_id">357714712474073</string>
-               <string name="fb_login_protocol_scheme">fb357714712474073</string>
+    <string name="facebook_app_id">265347802383003</string>
+               <string name="fb_login_protocol_scheme">fb265347802383003</string>
 </resources>
