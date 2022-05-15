@@ -232,7 +232,14 @@ async function reCalculateActions(userId) {
   var dateDay6 = new Date(new Date().setDate(dateDay0.getDate() - 6)); dateDay6.setHours(0,0,0,0)
   var dateDay7 = new Date(new Date().setDate(dateDay0.getDate() - 7)); dateDay7.setHours(0,0,0,0)
 
-  var dateweek0 = new Date(new Date().setDate(dateDay0.getDate() - dateDay0.getDay() +1)); dateweek0.setHours(0,0,0,0)
+  function getMonday(d) {
+    d = new Date(d);
+    var day = d.getDay(),
+        diff = d.getDate() - day + (day == 0 ? -6:1); // adjust when day is sunday
+    return new Date(d.setDate(diff));
+  }
+
+  var dateweek0 = getMonday(new Date()); dateweek0.setHours(0,0,0,0)
   var dateweek1 = new Date(new Date().setDate(dateweek0.getDate() - 7)); dateweek1.setHours(0,0,0,0)
   var dateweek2 = new Date(new Date().setDate(dateweek0.getDate() - 14)); dateweek2.setHours(0,0,0,0)
   var dateweek3 = new Date(new Date().setDate(dateweek0.getDate() - 21)); dateweek3.setHours(0,0,0,0)
@@ -255,8 +262,6 @@ async function reCalculateActions(userId) {
 
       if (actionDate >= dateDay0) { 
         day0 += doc.get("co2e");
-        week0 += doc.get("co2e");
-        month0 += doc.get("co2e");
         transportDay0 += doc.get("co2e");
       }
       else if (actionDate >= dateDay1 && actionDate < dateDay0) { day1 += doc.get("co2e"); }
@@ -297,8 +302,6 @@ async function reCalculateActions(userId) {
   
       if (actionDate >= dateDay0) { 
         day0 += doc.get("co2e");
-        week0 += doc.get("co2e");
-        month0 += doc.get("co2e");
         energyDay0 += doc.get("co2e");
       }
       else if (actionDate >= dateDay1 && actionDate < dateDay0) { day1 += doc.get("co2e"); }
@@ -338,8 +341,6 @@ async function reCalculateActions(userId) {
   
       if (actionDate >= dateDay0) { 
         day0 += doc.get("co2e");
-        week0 += doc.get("co2e");
-        month0 += doc.get("co2e");
         foodDay0 += doc.get("co2e");
       }
       else if (actionDate >= dateDay1 && actionDate < dateDay0) { day1 += doc.get("co2e"); }
