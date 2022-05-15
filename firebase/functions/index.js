@@ -38,9 +38,8 @@ exports.createdUserDefaultData = functions.region('europe-west6').auth.user().on
       uid: user.uid
     });
   }
-  catch (e) {
-    console.error(new Error('createdUserDefaultData : Failed initializing default userStats values'));
-    throw new Error('createdUserDefaultData : Failed initializing default userStats values');
+  catch (error) {
+    throw new Error(error);
   }
 
   // Generates default cache
@@ -72,9 +71,8 @@ exports.createdUserDefaultData = functions.region('europe-west6').auth.user().on
       });
     });
   }
-  catch (e) {
-    console.error(new Error('createdUserDefaultData : Failed createing cache'));
-    throw new Error('createdUserDefaultData : Failed createing cache');
+  catch (error) {
+    throw new Error(error);
   }
 });
 
@@ -133,9 +131,8 @@ exports.deletedUserFlushData = functions.region('europe-west6').auth.user().onDe
       });
     });
   }
-  catch (e) {
-    console.error(new Error('deletedUserFlushData : cleaning data'));
-    throw new Error('deletedUserFlushData : cleaning data');
+  catch (error) {
+    throw new Error(error);
   }
 });
 
@@ -168,47 +165,28 @@ exports.updateRanks = functions.region('europe-west6').firestore.document('/user
         });
     });
   }
-  catch (e) {
-    console.error(new Error('updateRanks : failed'));
-    throw new Error('updateRanks : failed');
+  catch (error) {
+    throw new Error(error);
   }
 });
 
 
 exports.updateScoreTransport = functions.region('europe-west6').firestore.document('/transportActions/{documentId}').onWrite(async (change, context) => {
-  try {
     // Retrieve userId, before change if delete, after change if update/create.
     const userId = change.after.exists ? change.after.data().userId : change.before.data().userId;
     await reCalculateActions(userId);
-  }
-  catch (e) {
-    console.error(new Error('updateScoreTransport : failed'));
-    throw new Error('updateScoreTransport : failed');
-  }
 });
 
 exports.updateScoreFood = functions.region('europe-west6').firestore.document('/foodActions/{documentId}').onWrite(async (change, context) => {
-  try {
     // Retrieve userId, before change if delete, after change if update/create.
     const userId = change.after.exists ? change.after.data().userId : change.before.data().userId;
     await reCalculateActions(userId);
-  }
-  catch (e) {
-    console.error(new Error('updateScoreFood : failed'));
-    throw new Error('updateScoreFood : failed');
-  }
 });
 
 exports.updateScoreEnergy = functions.region('europe-west6').firestore.document('/energyActions/{documentId}').onWrite(async (change, context) => {
-  try {
     // Retrieve userId, before change if delete, after change if update/create.
     const userId = change.after.exists ? change.after.data().userId : change.before.data().userId;
     await reCalculateActions(userId);
-  }
-  catch (e) {
-    console.error(new Error('updateScoreEnergy : failed'));
-    throw new Error('updateScoreEnergy : failed');
-  }
 });
 
 async function reCalculateActions(userId) {
@@ -265,106 +243,130 @@ async function reCalculateActions(userId) {
   var datemonth2 = new Date(y, m-2, 1); datemonth2.setHours(0,0,0,0)
   var datemonth3 = new Date(y, m-3, 1); datemonth3.setHours(0,0,0,0)
 
+  // Search every transportAction for user and calculate
+  try {
+    const tranportActions = await admin.firestore()      
+    .collection('transportActions')
+    .where('userId', '==', userId)
+    .get();
 
-  const tranportActions = await admin.firestore()      
-  .collection('transportActions')
-  .where('userId', '==', userId)
-  .get();
+    tranportActions.forEach(doc => {
+      actionDate = new Date(doc.get("created_time").toDate());
 
-  const energyActions = await admin.firestore()      
-  .collection('energyActions')
-  .where('userId', '==', userId)
-  .get();
+      if (actionDate >= dateDay0) { 
+        day0 += doc.get("co2e");
+        week0 += doc.get("co2e");
+        month0 += doc.get("co2e");
+        transportDay0 += doc.get("co2e");
+      }
+      else if (actionDate >= dateDay1 && actionDate < dateDay0) { day1 += doc.get("co2e"); }
+      else if (actionDate >= dateDay2 && actionDate < dateDay1) { day2 += doc.get("co2e"); }
+      else if (actionDate >= dateDay3 && actionDate < dateDay2) { day3 += doc.get("co2e"); }
+      else if (actionDate >= dateDay4 && actionDate < dateDay3) { day4 += doc.get("co2e"); }
+      else if (actionDate >= dateDay5 && actionDate < dateDay4) { day5 += doc.get("co2e"); }
+      else if (actionDate >= dateDay6 && actionDate < dateDay5) { day6 += doc.get("co2e"); }
 
-  const foodActions = await admin.firestore()      
-  .collection('foodActions')
-  .where('userId', '==', userId)
-  .get();
+      if (actionDate >= dateweek0) { week0 += doc.get("co2e"); }
+      else if (actionDate >= dateweek1 && actionDate < dateweek0) { week1 += doc.get("co2e"); }
+      else if (actionDate >= dateweek2 && actionDate < dateweek1) { week2 += doc.get("co2e"); }
+      else if (actionDate >= dateweek3 && actionDate < dateweek2) { week3 += doc.get("co2e"); }
 
+      if (actionDate >= datemonth0) { month0 += doc.get("co2e"); }
+      else if (actionDate >= datemonth1 && actionDate < datemonth0) { month1 += doc.get("co2e"); }
+      else if (actionDate >= datemonth2 && actionDate < datemonth1) { month2 += doc.get("co2e"); }
+      else if (actionDate >= datemonth3 && actionDate < datemonth2) { month3 += doc.get("co2e"); }
 
-  // Calculate day_score & global_score
-  tranportActions.forEach(doc => {
-    actionDate = new Date(doc.get("created_time").toDate());
+      global_score += doc.get("co2e");
+      activity += 1;
 
-    if (actionDate >= dateDay0) { 
-      day0 += doc.get("co2e");
-      transportDay0 += doc.get("co2e");
-    }
-    else if (actionDate >= dateDay1 && actionDate < dateDay0) { day1 += doc.get("co2e"); }
-    else if (actionDate >= dateDay2 && actionDate < dateDay1) { day2 += doc.get("co2e"); }
-    else if (actionDate >= dateDay3 && actionDate < dateDay2) { day3 += doc.get("co2e"); }
-    else if (actionDate >= dateDay4 && actionDate < dateDay3) { day4 += doc.get("co2e"); }
-    else if (actionDate >= dateDay5 && actionDate < dateDay4) { day5 += doc.get("co2e"); }
-    else if (actionDate >= dateDay6 && actionDate < dateDay5) { day6 += doc.get("co2e"); }
+    });
+  }
+  catch (error) {
+    throw new Error(error);
+  }
 
-    if (actionDate >= dateweek0) { week0 += doc.get("co2e"); }
-    else if (actionDate >= dateweek1 && actionDate < dateweek0) { week1 += doc.get("co2e"); }
-    else if (actionDate >= dateweek2 && actionDate < dateweek1) { week2 += doc.get("co2e"); }
-    else if (actionDate >= dateweek3 && actionDate < dateweek2) { week3 += doc.get("co2e"); }
+  // Search every energyAction for user and calculate
+  try {
+    const energyActions = await admin.firestore()      
+    .collection('energyActions')
+    .where('userId', '==', userId)
+    .get();
 
-    if (actionDate >= datemonth0) { month0 += doc.get("co2e"); }
-    else if (actionDate >= datemonth1 && actionDate < datemonth0) { month1 += doc.get("co2e"); }
-    else if (actionDate >= datemonth2 && actionDate < datemonth1) { month2 += doc.get("co2e"); }
-    else if (actionDate >= datemonth3 && actionDate < datemonth2) { month3 += doc.get("co2e"); }
+    energyActions.forEach(doc => {
+      actionDate = new Date(doc.get("created_time").toDate());
+  
+      if (actionDate >= dateDay0) { 
+        day0 += doc.get("co2e");
+        week0 += doc.get("co2e");
+        month0 += doc.get("co2e");
+        energyDay0 += doc.get("co2e");
+      }
+      else if (actionDate >= dateDay1 && actionDate < dateDay0) { day1 += doc.get("co2e"); }
+      else if (actionDate >= dateDay2 && actionDate < dateDay1) { day2 += doc.get("co2e"); }
+      else if (actionDate >= dateDay3 && actionDate < dateDay2) { day3 += doc.get("co2e"); }
+      else if (actionDate >= dateDay4 && actionDate < dateDay3) { day4 += doc.get("co2e"); }
+      else if (actionDate >= dateDay5 && actionDate < dateDay4) { day5 += doc.get("co2e"); }
+      else if (actionDate >= dateDay6 && actionDate < dateDay5) { day6 += doc.get("co2e"); }
+  
+      if (actionDate >= dateweek0) { week0 += doc.get("co2e"); }
+      else if (actionDate >= dateweek1 && actionDate < dateweek0) { week1 += doc.get("co2e"); }
+      else if (actionDate >= dateweek2 && actionDate < dateweek1) { week2 += doc.get("co2e"); }
+      else if (actionDate >= dateweek3 && actionDate < dateweek2) { week3 += doc.get("co2e"); }
+  
+      if (actionDate >= datemonth0) { month0 += doc.get("co2e"); }
+      else if (actionDate >= datemonth1 && actionDate < datemonth0) { month1 += doc.get("co2e"); }
+      else if (actionDate >= datemonth2 && actionDate < datemonth1) { month2 += doc.get("co2e"); }
+      else if (actionDate >= datemonth3 && actionDate < datemonth2) { month3 += doc.get("co2e"); }
+  
+      global_score += doc.get("co2e");
+      activity += 1;
+    });
+  }
+  catch (error) {
+    throw new Error(error);
+  }
 
-    global_score += doc.get("co2e");
-    activity += 1;
+  // Search every foodAction for user and calculate
+  try {
+    const foodActions = await admin.firestore()      
+    .collection('foodActions')
+    .where('userId', '==', userId)
+    .get();
 
-  });
-  energyActions.forEach(doc => {
-    actionDate = new Date(doc.get("created_time").toDate());
+    foodActions.forEach(doc => {
+      actionDate = new Date(doc.get("created_time").toDate());
+  
+      if (actionDate >= dateDay0) { 
+        day0 += doc.get("co2e");
+        week0 += doc.get("co2e");
+        month0 += doc.get("co2e");
+        foodDay0 += doc.get("co2e");
+      }
+      else if (actionDate >= dateDay1 && actionDate < dateDay0) { day1 += doc.get("co2e"); }
+      else if (actionDate >= dateDay2 && actionDate < dateDay1) { day2 += doc.get("co2e"); }
+      else if (actionDate >= dateDay3 && actionDate < dateDay2) { day3 += doc.get("co2e"); }
+      else if (actionDate >= dateDay4 && actionDate < dateDay3) { day4 += doc.get("co2e"); }
+      else if (actionDate >= dateDay5 && actionDate < dateDay4) { day5 += doc.get("co2e"); }
+      else if (actionDate >= dateDay6 && actionDate < dateDay5) { day6 += doc.get("co2e"); }
+  
+      if (actionDate >= dateweek0) { week0 += doc.get("co2e"); }
+      else if (actionDate >= dateweek1 && actionDate < dateweek0) { week1 += doc.get("co2e"); }
+      else if (actionDate >= dateweek2 && actionDate < dateweek1) { week2 += doc.get("co2e"); }
+      else if (actionDate >= dateweek3 && actionDate < dateweek2) { week3 += doc.get("co2e"); }
+  
+      if (actionDate >= datemonth0) { month0 += doc.get("co2e"); }
+      else if (actionDate >= datemonth1 && actionDate < datemonth0) { month1 += doc.get("co2e"); }
+      else if (actionDate >= datemonth2 && actionDate < datemonth1) { month2 += doc.get("co2e"); }
+      else if (actionDate >= datemonth3 && actionDate < datemonth2) { month3 += doc.get("co2e"); }
+  
+      global_score += doc.get("co2e");
+      activity += 1;
+    });
+  }
+  catch (error) {
+    throw new Error(error);
+  }
 
-    if (actionDate >= dateDay0) { 
-      day0 += doc.get("co2e");
-      energyDay0 += doc.get("co2e");
-    }
-    else if (actionDate >= dateDay1 && actionDate < dateDay0) { day1 += doc.get("co2e"); }
-    else if (actionDate >= dateDay2 && actionDate < dateDay1) { day2 += doc.get("co2e"); }
-    else if (actionDate >= dateDay3 && actionDate < dateDay2) { day3 += doc.get("co2e"); }
-    else if (actionDate >= dateDay4 && actionDate < dateDay3) { day4 += doc.get("co2e"); }
-    else if (actionDate >= dateDay5 && actionDate < dateDay4) { day5 += doc.get("co2e"); }
-    else if (actionDate >= dateDay6 && actionDate < dateDay5) { day6 += doc.get("co2e"); }
-
-    if (actionDate >= dateweek0) { week0 += doc.get("co2e"); }
-    else if (actionDate >= dateweek1 && actionDate < dateweek0) { week1 += doc.get("co2e"); }
-    else if (actionDate >= dateweek2 && actionDate < dateweek1) { week2 += doc.get("co2e"); }
-    else if (actionDate >= dateweek3 && actionDate < dateweek2) { week3 += doc.get("co2e"); }
-
-    if (actionDate >= datemonth0) { month0 += doc.get("co2e"); }
-    else if (actionDate >= datemonth1 && actionDate < datemonth0) { month1 += doc.get("co2e"); }
-    else if (actionDate >= datemonth2 && actionDate < datemonth1) { month2 += doc.get("co2e"); }
-    else if (actionDate >= datemonth3 && actionDate < datemonth2) { month3 += doc.get("co2e"); }
-
-    global_score += doc.get("co2e");
-    activity += 1;
-  });
-  foodActions.forEach(doc => {
-    actionDate = new Date(doc.get("created_time").toDate());
-
-    if (actionDate >= dateDay0) { 
-      day0 += doc.get("co2e");
-      foodDay0 += doc.get("co2e");
-    }
-    else if (actionDate >= dateDay1 && actionDate < dateDay0) { day1 += doc.get("co2e"); }
-    else if (actionDate >= dateDay2 && actionDate < dateDay1) { day2 += doc.get("co2e"); }
-    else if (actionDate >= dateDay3 && actionDate < dateDay2) { day3 += doc.get("co2e"); }
-    else if (actionDate >= dateDay4 && actionDate < dateDay3) { day4 += doc.get("co2e"); }
-    else if (actionDate >= dateDay5 && actionDate < dateDay4) { day5 += doc.get("co2e"); }
-    else if (actionDate >= dateDay6 && actionDate < dateDay5) { day6 += doc.get("co2e"); }
-
-    if (actionDate >= dateweek0) { week0 += doc.get("co2e"); }
-    else if (actionDate >= dateweek1 && actionDate < dateweek0) { week1 += doc.get("co2e"); }
-    else if (actionDate >= dateweek2 && actionDate < dateweek1) { week2 += doc.get("co2e"); }
-    else if (actionDate >= dateweek3 && actionDate < dateweek2) { week3 += doc.get("co2e"); }
-
-    if (actionDate >= datemonth0) { month0 += doc.get("co2e"); }
-    else if (actionDate >= datemonth1 && actionDate < datemonth0) { month1 += doc.get("co2e"); }
-    else if (actionDate >= datemonth2 && actionDate < datemonth1) { month2 += doc.get("co2e"); }
-    else if (actionDate >= datemonth3 && actionDate < datemonth2) { month3 += doc.get("co2e"); }
-
-    global_score += doc.get("co2e");
-    activity += 1;
-  });
 
   // Set Level
   if (activity >= 0 && activity < 10) {
@@ -377,23 +379,32 @@ async function reCalculateActions(userId) {
     level = 3
   }
 
-  // Update in user table
-  await admin.firestore()      
-  .collection('users')
-  .where('uid', '==', userId)
-  .limit(1)
-  .get()
-  .then(query => {
-    const thing = query.docs[0];
-    let tmp = thing.data();
-    
-    tmp.global_score = global_score;
-    tmp.activity = activity;
-    tmp.level = level;
-    
-    thing.ref.update(tmp);
-  });
 
+
+  // Update in user table
+  try {
+    await admin.firestore()      
+    .collection('users')
+    .where('uid', '==', userId)
+    .limit(1)
+    .get()
+    .then(query => {
+      const thing = query.docs[0];
+      let tmp = thing.data();
+      
+      tmp.global_score = global_score;
+      tmp.activity = activity;
+      tmp.level = level;
+      
+      thing.ref.update(tmp);
+    });
+  }
+  catch (error) {
+    throw new Error(error);
+  }
+
+  // Update in user table
+  try {
     // Update in user table
     await admin.firestore()      
     .collection('usersStats')
@@ -428,6 +439,10 @@ async function reCalculateActions(userId) {
 
       thing.ref.update(tmp);
     });
+  }
+  catch (error) {
+    throw new Error(error);
+  }
 }
 
 exports.updateScorePeriodics = functions.region('europe-west6').firestore.document('/energyPeriodics/{documentId}').onWrite(async (change, context) => {
@@ -463,9 +478,8 @@ exports.updateScorePeriodics = functions.region('europe-west6').firestore.docume
       thing.ref.update(tmp);
     });
   }
-  catch (e) {
-    console.error(new Error('updateScorePeriodics : failed'));
-    throw new Error('updateScorePeriodics : failed');
+  catch (error) {
+    throw new Error(error);
   }
 
 });
@@ -508,7 +522,7 @@ exports.ResetScoresCachePeriodics = functions.region('europe-west6').pubsub.sche
         await admin.firestore().collection('actionTypeCache').add({
           actionCache: admin.firestore().collection('actionCache').doc(cacheRef.id),
           actionType: energyPeriodic.get("energy"),
-          date: newTimestamp
+          date: newTimestam
         });
 
         // Create action
@@ -520,6 +534,19 @@ exports.ResetScoresCachePeriodics = functions.region('europe-west6').pubsub.sche
         // Recalculated is launched by adding new actions
       }); // end Periodics > Actions
     }); // end Foreach user
+  }
+  catch (error) {
+    throw new Error(error);
+  }
+});
+
+
+// At midnight : Reset users scores / New Cache / Flush Cache > 7 days (todo)
+exports.cleanOldActions = functions.region('europe-west6').pubsub.schedule('0 0 * * *').timeZone('Europe/Paris').onRun(async (context) => {
+
+  try {
+    // Set Paris Timezone (default is UTC, even if function TimeZone is Paris)
+    process.env.TZ = 'Europe/Paris' 
 
     // Delete cache > 7 days
     // Calculate periods
@@ -541,9 +568,28 @@ exports.ResetScoresCachePeriodics = functions.region('europe-west6').pubsub.sche
         doc.ref.delete();
       });
     });
+
+    // Deletes all actions > 7 days
+    var jobskill_query = admin.firestore().collection('foodActions').where('created_time','<', dateDay7);
+    jobskill_query.get().then(function(querySnapshot) {
+      querySnapshot.forEach(function(doc) {
+        doc.ref.delete();
+      });
+    });
+    var jobskill_query = admin.firestore().collection('energyActions').where('created_time','<', dateDay7);
+    jobskill_query.get().then(function(querySnapshot) {
+      querySnapshot.forEach(function(doc) {
+        doc.ref.delete();
+      });
+    });
+    var jobskill_query = admin.firestore().collection('transportActions').where('created_time','<', dateDay7);
+    jobskill_query.get().then(function(querySnapshot) {
+      querySnapshot.forEach(function(doc) {
+        doc.ref.delete();
+      });
+    });
   }
-  catch (e) {
-    console.error(new Error('updateScoreEnergy : failed'));
-    throw new Error('updateScoreEnergy : failed');
+  catch (error) {
+    throw new Error(error);
   }
 });
