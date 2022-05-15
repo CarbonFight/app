@@ -82,8 +82,7 @@ class _SplashWidgetState extends State<SplashWidget> {
                                     40, 40, 40, 0),
                                 child: Column(
                                   mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
                                     Column(
                                       mainAxisSize: MainAxisSize.max,
@@ -195,50 +194,101 @@ class _SplashWidgetState extends State<SplashWidget> {
                                         ),
                                       ],
                                     ),
-                                    Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Align(
-                                          alignment:
-                                              AlignmentDirectional(0, 0.85),
-                                          child: Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    40, 0, 40, 80),
-                                            child: InkWell(
-                                              onTap: () async {
-                                                logFirebaseEvent(
-                                                    'iconButton-ON_TAP');
-                                                logFirebaseEvent(
-                                                    'iconButton-Page-View');
-                                                await pageViewController
-                                                    .nextPage(
-                                                  duration: Duration(
-                                                      milliseconds: 300),
-                                                  curve: Curves.ease,
-                                                );
-                                              },
-                                              child: IconButtonWidget(
-                                                fillColor:
-                                                    FlutterFlowTheme.of(context)
-                                                        .tertiaryColor,
-                                                fontColor:
-                                                    FlutterFlowTheme.of(context)
-                                                        .secondaryColor,
-                                                icon: Icon(
-                                                  Icons.arrow_right_alt,
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .secondaryColor,
+                                    Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          0, 10, 0, 0),
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.max,
+                                        children: [
+                                          Row(
+                                            mainAxisSize: MainAxisSize.max,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Align(
+                                                alignment: AlignmentDirectional(
+                                                    0, 0.85),
+                                                child: InkWell(
+                                                  onTap: () async {
+                                                    logFirebaseEvent(
+                                                        'iconButton-ON_TAP');
+                                                    logFirebaseEvent(
+                                                        'iconButton-Page-View');
+                                                    await pageViewController
+                                                        .nextPage(
+                                                      duration: Duration(
+                                                          milliseconds: 300),
+                                                      curve: Curves.ease,
+                                                    );
+                                                  },
+                                                  child: IconButtonWidget(
+                                                    fillColor:
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .tertiaryColor,
+                                                    fontColor:
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .secondaryColor,
+                                                    icon: Icon(
+                                                      Icons.arrow_right_alt,
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .secondaryColor,
+                                                    ),
+                                                    text: 'Suivant ',
+                                                  ),
                                                 ),
-                                                text: 'Suivant ',
                                               ),
-                                            ),
+                                            ],
                                           ),
-                                        ),
-                                      ],
+                                          Row(
+                                            mainAxisSize: MainAxisSize.max,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Padding(
+                                                padding: EdgeInsetsDirectional
+                                                    .fromSTEB(0, 10, 0, 0),
+                                                child: InkWell(
+                                                  onTap: () async {
+                                                    logFirebaseEvent(
+                                                        'Text-ON_TAP');
+                                                    logFirebaseEvent(
+                                                        'Text-Update-Local-State');
+                                                    setState(() => FFAppState()
+                                                        .showSplash = false);
+                                                    logFirebaseEvent(
+                                                        'Text-Navigate-To');
+                                                    await Navigator.push(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            HomeWidget(),
+                                                      ),
+                                                    );
+                                                  },
+                                                  child: Text(
+                                                    'Passer',
+                                                    style: FlutterFlowTheme.of(
+                                                            context)
+                                                        .bodyText1
+                                                        .override(
+                                                          fontFamily:
+                                                              'Montserrat',
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .secondaryColor,
+                                                          fontSize: 12,
+                                                        ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                   ],
                                 ),
@@ -282,13 +332,12 @@ class _SplashWidgetState extends State<SplashWidget> {
                                     40, 40, 40, 0),
                                 child: Column(
                                   mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
                                     Column(
                                       mainAxisSize: MainAxisSize.max,
                                       mainAxisAlignment:
-                                          MainAxisAlignment.center,
+                                          MainAxisAlignment.start,
                                       children: [
                                         Padding(
                                           padding:
@@ -395,50 +444,101 @@ class _SplashWidgetState extends State<SplashWidget> {
                                         ),
                                       ],
                                     ),
-                                    Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Align(
-                                          alignment:
-                                              AlignmentDirectional(0, 0.85),
-                                          child: Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    40, 0, 40, 80),
-                                            child: InkWell(
-                                              onTap: () async {
-                                                logFirebaseEvent(
-                                                    'iconButton-ON_TAP');
-                                                logFirebaseEvent(
-                                                    'iconButton-Page-View');
-                                                await pageViewController
-                                                    .nextPage(
-                                                  duration: Duration(
-                                                      milliseconds: 300),
-                                                  curve: Curves.ease,
-                                                );
-                                              },
-                                              child: IconButtonWidget(
-                                                fillColor:
-                                                    FlutterFlowTheme.of(context)
-                                                        .tertiaryColor,
-                                                fontColor:
-                                                    FlutterFlowTheme.of(context)
-                                                        .secondaryColor,
-                                                icon: Icon(
-                                                  Icons.arrow_right_alt,
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .secondaryColor,
+                                    Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          0, 10, 0, 0),
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.max,
+                                        children: [
+                                          Row(
+                                            mainAxisSize: MainAxisSize.max,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Align(
+                                                alignment: AlignmentDirectional(
+                                                    0, 0.85),
+                                                child: InkWell(
+                                                  onTap: () async {
+                                                    logFirebaseEvent(
+                                                        'iconButton-ON_TAP');
+                                                    logFirebaseEvent(
+                                                        'iconButton-Page-View');
+                                                    await pageViewController
+                                                        .nextPage(
+                                                      duration: Duration(
+                                                          milliseconds: 300),
+                                                      curve: Curves.ease,
+                                                    );
+                                                  },
+                                                  child: IconButtonWidget(
+                                                    fillColor:
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .tertiaryColor,
+                                                    fontColor:
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .secondaryColor,
+                                                    icon: Icon(
+                                                      Icons.arrow_right_alt,
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .secondaryColor,
+                                                    ),
+                                                    text: 'Suivant ',
+                                                  ),
                                                 ),
-                                                text: 'Suivant ',
                                               ),
-                                            ),
+                                            ],
                                           ),
-                                        ),
-                                      ],
+                                          Row(
+                                            mainAxisSize: MainAxisSize.max,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Padding(
+                                                padding: EdgeInsetsDirectional
+                                                    .fromSTEB(0, 10, 0, 0),
+                                                child: InkWell(
+                                                  onTap: () async {
+                                                    logFirebaseEvent(
+                                                        'Text-ON_TAP');
+                                                    logFirebaseEvent(
+                                                        'Text-Update-Local-State');
+                                                    setState(() => FFAppState()
+                                                        .showSplash = false);
+                                                    logFirebaseEvent(
+                                                        'Text-Navigate-To');
+                                                    await Navigator.push(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            HomeWidget(),
+                                                      ),
+                                                    );
+                                                  },
+                                                  child: Text(
+                                                    'Passer',
+                                                    style: FlutterFlowTheme.of(
+                                                            context)
+                                                        .bodyText1
+                                                        .override(
+                                                          fontFamily:
+                                                              'Montserrat',
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .secondaryColor,
+                                                          fontSize: 12,
+                                                        ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                   ],
                                 ),
@@ -482,8 +582,7 @@ class _SplashWidgetState extends State<SplashWidget> {
                                     40, 40, 40, 0),
                                 child: Column(
                                   mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
                                     Column(
                                       mainAxisSize: MainAxisSize.max,
@@ -595,50 +694,101 @@ class _SplashWidgetState extends State<SplashWidget> {
                                         ),
                                       ],
                                     ),
-                                    Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Align(
-                                          alignment:
-                                              AlignmentDirectional(0, 0.85),
-                                          child: Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    40, 0, 40, 80),
-                                            child: InkWell(
-                                              onTap: () async {
-                                                logFirebaseEvent(
-                                                    'iconButton-ON_TAP');
-                                                logFirebaseEvent(
-                                                    'iconButton-Page-View');
-                                                await pageViewController
-                                                    .nextPage(
-                                                  duration: Duration(
-                                                      milliseconds: 300),
-                                                  curve: Curves.ease,
-                                                );
-                                              },
-                                              child: IconButtonWidget(
-                                                fillColor:
-                                                    FlutterFlowTheme.of(context)
-                                                        .tertiaryColor,
-                                                fontColor:
-                                                    FlutterFlowTheme.of(context)
-                                                        .secondaryColor,
-                                                icon: Icon(
-                                                  Icons.arrow_right_alt,
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .secondaryColor,
+                                    Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          0, 10, 0, 0),
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.max,
+                                        children: [
+                                          Row(
+                                            mainAxisSize: MainAxisSize.max,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Align(
+                                                alignment: AlignmentDirectional(
+                                                    0, 0.85),
+                                                child: InkWell(
+                                                  onTap: () async {
+                                                    logFirebaseEvent(
+                                                        'iconButton-ON_TAP');
+                                                    logFirebaseEvent(
+                                                        'iconButton-Page-View');
+                                                    await pageViewController
+                                                        .nextPage(
+                                                      duration: Duration(
+                                                          milliseconds: 300),
+                                                      curve: Curves.ease,
+                                                    );
+                                                  },
+                                                  child: IconButtonWidget(
+                                                    fillColor:
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .tertiaryColor,
+                                                    fontColor:
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .secondaryColor,
+                                                    icon: Icon(
+                                                      Icons.arrow_right_alt,
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .secondaryColor,
+                                                    ),
+                                                    text: 'Suivant ',
+                                                  ),
                                                 ),
-                                                text: 'Suivant ',
                                               ),
-                                            ),
+                                            ],
                                           ),
-                                        ),
-                                      ],
+                                          Row(
+                                            mainAxisSize: MainAxisSize.max,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Padding(
+                                                padding: EdgeInsetsDirectional
+                                                    .fromSTEB(0, 10, 0, 0),
+                                                child: InkWell(
+                                                  onTap: () async {
+                                                    logFirebaseEvent(
+                                                        'Text-ON_TAP');
+                                                    logFirebaseEvent(
+                                                        'Text-Update-Local-State');
+                                                    setState(() => FFAppState()
+                                                        .showSplash = false);
+                                                    logFirebaseEvent(
+                                                        'Text-Navigate-To');
+                                                    await Navigator.push(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            HomeWidget(),
+                                                      ),
+                                                    );
+                                                  },
+                                                  child: Text(
+                                                    'Passer',
+                                                    style: FlutterFlowTheme.of(
+                                                            context)
+                                                        .bodyText1
+                                                        .override(
+                                                          fontFamily:
+                                                              'Montserrat',
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .secondaryColor,
+                                                          fontSize: 12,
+                                                        ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                   ],
                                 ),

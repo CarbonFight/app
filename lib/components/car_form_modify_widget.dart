@@ -461,84 +461,191 @@ class _CarFormModifyWidgetState extends State<CarFormModifyWidget> {
                                 ),
                               ),
                               Expanded(
-                                child: Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      10, 0, 0, 0),
-                                  child: InkWell(
-                                    onTap: () async {
-                                      logFirebaseEvent('iconButton-ON_TAP');
-                                      logFirebaseEvent(
-                                          'iconButton-Update-Local-State');
-                                      setState(
-                                          () => FFAppState().loading = true);
-                                      if (deleteValue) {
-                                        logFirebaseEvent(
-                                            'iconButton-Backend-Call');
-                                        await containerTransportActionsRecord
-                                            .reference
-                                            .delete();
-                                        logFirebaseEvent(
-                                            'iconButton-Backend-Call');
-                                        await widget.typeAction.reference
-                                            .delete();
-                                      } else {
-                                        logFirebaseEvent(
-                                            'iconButton-Update-Local-State');
-                                        setState(() => FFAppState().actionCO2 =
-                                            functions.transportActionsCO2e(
-                                                int.parse(
+                                child: Stack(
+                                  children: [
+                                    if (!(FFAppState().loading) ?? true)
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            10, 0, 0, 0),
+                                        child: InkWell(
+                                          onTap: () async {
+                                            logFirebaseEvent('modify-ON_TAP');
+                                            logFirebaseEvent(
+                                                'modify-Update-Local-State');
+                                            setState(() =>
+                                                FFAppState().loading = true);
+                                            if (deleteValue) {
+                                              logFirebaseEvent(
+                                                  'modify-Backend-Call');
+                                              await containerTransportActionsRecord
+                                                  .reference
+                                                  .delete();
+                                              logFirebaseEvent(
+                                                  'modify-Backend-Call');
+                                              await widget.typeAction.reference
+                                                  .delete();
+                                            } else {
+                                              logFirebaseEvent(
+                                                  'modify-Update-Local-State');
+                                              setState(() => FFAppState()
+                                                      .actionCO2 =
+                                                  functions
+                                                      .transportActionsCO2e(
+                                                          int.parse(
+                                                              textController
+                                                                      ?.text ??
+                                                                  ''),
+                                                          valueOrDefault<
+                                                              String>(
+                                                            passengersValue,
+                                                            '1',
+                                                          ),
+                                                          valueOrDefault<
+                                                              String>(
+                                                            ownershipValue,
+                                                            'owner',
+                                                          ),
+                                                          valueOrDefault<
+                                                              String>(
+                                                            powertypeValue,
+                                                            'thermic',
+                                                          ),
+                                                          'car'));
+                                              logFirebaseEvent(
+                                                  'modify-Backend-Call');
+
+                                              final transportActionsUpdateData =
+                                                  createTransportActionsRecordData(
+                                                distance: int.parse(
                                                     textController?.text ?? ''),
-                                                valueOrDefault<String>(
-                                                  passengersValue,
-                                                  '1',
-                                                ),
-                                                valueOrDefault<String>(
-                                                  ownershipValue,
-                                                  'owner',
-                                                ),
-                                                valueOrDefault<String>(
-                                                  powertypeValue,
-                                                  'thermic',
-                                                ),
-                                                'car'));
-                                        logFirebaseEvent(
-                                            'iconButton-Backend-Call');
+                                                powertype: powertypeValue,
+                                                passengers: passengersValue,
+                                                ownership: ownershipValue,
+                                              );
+                                              await containerTransportActionsRecord
+                                                  .reference
+                                                  .update(
+                                                      transportActionsUpdateData);
+                                            }
 
-                                        final transportActionsUpdateData =
-                                            createTransportActionsRecordData(
-                                          distance: int.parse(
-                                              textController?.text ?? ''),
-                                          powertype: powertypeValue,
-                                          passengers: passengersValue,
-                                          ownership: ownershipValue,
-                                        );
-                                        await containerTransportActionsRecord
-                                            .reference
-                                            .update(transportActionsUpdateData);
-                                      }
-
-                                      logFirebaseEvent(
-                                          'iconButton-Navigate-Back');
-                                      Navigator.pop(context);
-                                      logFirebaseEvent(
-                                          'iconButton-Update-Local-State');
-                                      setState(
-                                          () => FFAppState().loading = false);
-                                    },
-                                    child: IconButtonWidget(
-                                      fillColor:
-                                          FlutterFlowTheme.of(context).orange,
-                                      fontColor: FlutterFlowTheme.of(context)
-                                          .tertiaryColor,
-                                      icon: Icon(
-                                        Icons.add_circle_outline,
-                                        color: FlutterFlowTheme.of(context)
-                                            .tertiaryColor,
-                                        size: 25,
+                                            logFirebaseEvent(
+                                                'modify-Navigate-Back');
+                                            Navigator.pop(context);
+                                            logFirebaseEvent(
+                                                'modify-Update-Local-State');
+                                            setState(() =>
+                                                FFAppState().loading = false);
+                                          },
+                                          child: IconButtonWidget(
+                                            fillColor:
+                                                FlutterFlowTheme.of(context)
+                                                    .orange,
+                                            fontColor:
+                                                FlutterFlowTheme.of(context)
+                                                    .tertiaryColor,
+                                            icon: Icon(
+                                              Icons.add_circle_outline,
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .tertiaryColor,
+                                              size: 25,
+                                            ),
+                                            text: 'Modifier',
+                                          ),
+                                        ),
                                       ),
-                                      text: 'Modifier',
-                                    ),
-                                  ),
+                                    if (FFAppState().loading ?? true)
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            10, 0, 0, 0),
+                                        child: InkWell(
+                                          onTap: () async {
+                                            logFirebaseEvent('sync-ON_TAP');
+                                            logFirebaseEvent(
+                                                'sync-Update-Local-State');
+                                            setState(() =>
+                                                FFAppState().loading = true);
+                                            if (deleteValue) {
+                                              logFirebaseEvent(
+                                                  'sync-Backend-Call');
+                                              await containerTransportActionsRecord
+                                                  .reference
+                                                  .delete();
+                                              logFirebaseEvent(
+                                                  'sync-Backend-Call');
+                                              await widget.typeAction.reference
+                                                  .delete();
+                                            } else {
+                                              logFirebaseEvent(
+                                                  'sync-Update-Local-State');
+                                              setState(() => FFAppState()
+                                                      .actionCO2 =
+                                                  functions
+                                                      .transportActionsCO2e(
+                                                          int.parse(
+                                                              textController
+                                                                      ?.text ??
+                                                                  ''),
+                                                          valueOrDefault<
+                                                              String>(
+                                                            passengersValue,
+                                                            '1',
+                                                          ),
+                                                          valueOrDefault<
+                                                              String>(
+                                                            ownershipValue,
+                                                            'owner',
+                                                          ),
+                                                          valueOrDefault<
+                                                              String>(
+                                                            powertypeValue,
+                                                            'thermic',
+                                                          ),
+                                                          'car'));
+                                              logFirebaseEvent(
+                                                  'sync-Backend-Call');
+
+                                              final transportActionsUpdateData =
+                                                  createTransportActionsRecordData(
+                                                distance: int.parse(
+                                                    textController?.text ?? ''),
+                                                powertype: powertypeValue,
+                                                passengers: passengersValue,
+                                                ownership: ownershipValue,
+                                              );
+                                              await containerTransportActionsRecord
+                                                  .reference
+                                                  .update(
+                                                      transportActionsUpdateData);
+                                            }
+
+                                            logFirebaseEvent(
+                                                'sync-Navigate-Back');
+                                            Navigator.pop(context);
+                                            logFirebaseEvent(
+                                                'sync-Update-Local-State');
+                                            setState(() =>
+                                                FFAppState().loading = false);
+                                          },
+                                          child: IconButtonWidget(
+                                            fillColor:
+                                                FlutterFlowTheme.of(context)
+                                                    .gray,
+                                            fontColor:
+                                                FlutterFlowTheme.of(context)
+                                                    .tertiaryColor,
+                                            icon: Icon(
+                                              Icons.sync,
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .tertiaryColor,
+                                              size: 25,
+                                            ),
+                                            text: 'Modifier',
+                                          ),
+                                        ),
+                                      ),
+                                  ],
                                 ),
                               ),
                             ],
