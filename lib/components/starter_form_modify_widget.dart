@@ -210,6 +210,8 @@ class _StarterFormModifyWidgetState extends State<StarterFormModifyWidget> {
                                       .override(
                                         fontFamily: 'Montserrat',
                                         color: Colors.white,
+                                        fontSize: 13,
+                                        fontWeight: FontWeight.normal,
                                       ),
                                   iconColor: Colors.white,
                                   iconSize: 18,

@@ -380,6 +380,7 @@ class _CarFormWidgetState extends State<CarFormWidget> {
                                 FlutterFlowTheme.of(context).bodyText1.override(
                                       fontFamily: 'Montserrat',
                                       color: Colors.white,
+                                      fontSize: 13,
                                       fontWeight: FontWeight.normal,
                                     ),
                             iconColor: Colors.white,
@@ -392,7 +393,7 @@ class _CarFormWidgetState extends State<CarFormWidget> {
                                 FlutterFlowTheme.of(context).bodyText2.override(
                                       fontFamily: 'Montserrat',
                                       color: Color(0xFF323B45),
-                                      fontSize: 14,
+                                      fontSize: 13,
                                     ),
                             iconColor: Color(0xFF323B45),
                             iconSize: 18,

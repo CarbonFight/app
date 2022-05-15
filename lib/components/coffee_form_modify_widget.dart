@@ -219,6 +219,8 @@ class _CoffeeFormModifyWidgetState extends State<CoffeeFormModifyWidget> {
                                           .override(
                                             fontFamily: 'Montserrat',
                                             color: Colors.white,
+                                            fontSize: 13,
+                                            fontWeight: FontWeight.normal,
                                           ),
                                       iconColor: Colors.white,
                                       iconSize: 18,

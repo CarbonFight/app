@@ -169,6 +169,8 @@ class _CoffeeFormWidgetState extends State<CoffeeFormWidget> {
                                 FlutterFlowTheme.of(context).bodyText1.override(
                                       fontFamily: 'Montserrat',
                                       color: Colors.white,
+                                      fontSize: 13,
+                                      fontWeight: FontWeight.normal,
                                     ),
                             iconColor: Colors.white,
                             iconSize: 18,

@@ -1,7 +1,6 @@
 import '../auth/auth_util.dart';
 import '../components/forgot_password_widget.dart';
 import '../components/icon_button_widget.dart';
-import '../components/next_version_alert_widget.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
@@ -650,24 +649,21 @@ class _LoginWidgetState extends State<LoginWidget> {
                                                   logFirebaseEvent(
                                                       'IconButton-ON_TAP');
                                                   logFirebaseEvent(
-                                                      'IconButton-Bottom-Sheet');
-                                                  await showModalBottomSheet(
-                                                    isScrollControlled: true,
-                                                    backgroundColor:
-                                                        Colors.transparent,
-                                                    context: context,
-                                                    builder: (context) {
-                                                      return Padding(
-                                                        padding: MediaQuery.of(
-                                                                context)
-                                                            .viewInsets,
-                                                        child: Container(
-                                                          height: 310,
-                                                          child:
-                                                              NextVersionAlertWidget(),
-                                                        ),
-                                                      );
-                                                    },
+                                                      'IconButton-Auth');
+                                                  final user =
+                                                      await signInWithApple(
+                                                          context);
+                                                  if (user == null) {
+                                                    return;
+                                                  }
+                                                  await Navigator
+                                                      .pushAndRemoveUntil(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          HomeWidget(),
+                                                    ),
+                                                    (r) => false,
                                                   );
                                                 },
                                               ),
