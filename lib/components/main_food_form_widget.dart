@@ -175,6 +175,8 @@ class _MainFoodFormWidgetState extends State<MainFoodFormWidget> {
                                   .override(
                                     fontFamily: 'Montserrat',
                                     color: Colors.white,
+                                    fontSize: 13,
+                                    fontWeight: FontWeight.normal,
                                   ),
                               iconColor: Colors.white,
                               iconSize: 18,
@@ -267,6 +269,8 @@ class _MainFoodFormWidgetState extends State<MainFoodFormWidget> {
                                   .override(
                                     fontFamily: 'Montserrat',
                                     color: Colors.white,
+                                    fontSize: 13,
+                                    fontWeight: FontWeight.normal,
                                   ),
                               iconColor: Colors.white,
                               iconSize: 18,
