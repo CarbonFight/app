@@ -74,8 +74,8 @@ class _RanksWidgetState extends State<RanksWidget> {
                           size: 24,
                         ),
                         onPressed: () async {
-                          logFirebaseEvent('IconButton-ON_TAP');
-                          logFirebaseEvent('IconButton-Navigate-Back');
+                          logFirebaseEvent('RANKS_COMP_close_ICON_ON_TAP');
+                          logFirebaseEvent('IconButton_Navigate-Back');
                           Navigator.pop(context);
                         },
                       ),
@@ -334,8 +334,9 @@ class _RanksWidgetState extends State<RanksWidget> {
                                     stream: queryUsersRecord(
                                       queryBuilder: (usersRecord) => usersRecord
                                           .where('level',
-                                              isEqualTo:
-                                                  currentUserDocument?.level)
+                                              isEqualTo: valueOrDefault(
+                                                  currentUserDocument?.level,
+                                                  0))
                                           .orderBy('global_score'),
                                       limit: 5,
                                     ),

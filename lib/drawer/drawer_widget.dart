@@ -62,8 +62,8 @@ class _DrawerWidgetState extends State<DrawerWidget>
         children: [
           InkWell(
             onTap: () async {
-              logFirebaseEvent('Container-ON_TAP');
-              logFirebaseEvent('Container-Navigate-Back');
+              logFirebaseEvent('DRAWER_PAGE_Container_sn7zgd2k_ON_TAP');
+              logFirebaseEvent('Container_Navigate-Back');
               Navigator.pop(context);
             },
             child: Container(
@@ -108,8 +108,9 @@ class _DrawerWidgetState extends State<DrawerWidget>
                             children: [
                               InkWell(
                                 onTap: () async {
-                                  logFirebaseEvent('Container-ON_TAP');
-                                  logFirebaseEvent('Container-Navigate-Back');
+                                  logFirebaseEvent(
+                                      'DRAWER_PAGE_Container_60vxfsrq_ON_TAP');
+                                  logFirebaseEvent('Container_Navigate-Back');
                                   Navigator.pop(context);
                                 },
                                 child: Container(
@@ -143,10 +144,11 @@ class _DrawerWidgetState extends State<DrawerWidget>
                             decoration: BoxDecoration(),
                             child: InkWell(
                               onTap: () async {
-                                logFirebaseEvent('Row-ON_TAP');
-                                logFirebaseEvent('Row-Navigate-Back');
+                                logFirebaseEvent(
+                                    'DRAWER_PAGE_Row_rsn1mcit_ON_TAP');
+                                logFirebaseEvent('Row_Navigate-Back');
                                 Navigator.pop(context);
-                                logFirebaseEvent('Row-Navigate-To');
+                                logFirebaseEvent('Row_Navigate-To');
                                 await Navigator.push(
                                   context,
                                   MaterialPageRoute(
@@ -168,10 +170,11 @@ class _DrawerWidgetState extends State<DrawerWidget>
                                         10, 0, 0, 0),
                                     child: InkWell(
                                       onTap: () async {
-                                        logFirebaseEvent('Text-ON_TAP');
-                                        logFirebaseEvent('Text-Navigate-Back');
+                                        logFirebaseEvent(
+                                            'DRAWER_PAGE_Text_ii2hyxok_ON_TAP');
+                                        logFirebaseEvent('Text_Navigate-Back');
                                         Navigator.pop(context);
-                                        logFirebaseEvent('Text-Navigate-To');
+                                        logFirebaseEvent('Text_Navigate-To');
                                         await Navigator.push(
                                           context,
                                           MaterialPageRoute(
@@ -207,10 +210,11 @@ class _DrawerWidgetState extends State<DrawerWidget>
                             decoration: BoxDecoration(),
                             child: InkWell(
                               onTap: () async {
-                                logFirebaseEvent('Row-ON_TAP');
-                                logFirebaseEvent('Row-Navigate-Back');
+                                logFirebaseEvent(
+                                    'DRAWER_PAGE_Row_9fn8a7ip_ON_TAP');
+                                logFirebaseEvent('Row_Navigate-Back');
                                 Navigator.pop(context);
-                                logFirebaseEvent('Row-Navigate-To');
+                                logFirebaseEvent('Row_Navigate-To');
                                 await Navigator.push(
                                   context,
                                   MaterialPageRoute(
@@ -232,10 +236,11 @@ class _DrawerWidgetState extends State<DrawerWidget>
                                         10, 0, 0, 0),
                                     child: InkWell(
                                       onTap: () async {
-                                        logFirebaseEvent('Text-ON_TAP');
-                                        logFirebaseEvent('Text-Navigate-Back');
+                                        logFirebaseEvent(
+                                            'DRAWER_PAGE_Text_v6f841f2_ON_TAP');
+                                        logFirebaseEvent('Text_Navigate-Back');
                                         Navigator.pop(context);
-                                        logFirebaseEvent('Text-Navigate-To');
+                                        logFirebaseEvent('Text_Navigate-To');
                                         await Navigator.push(
                                           context,
                                           MaterialPageRoute(
@@ -271,10 +276,11 @@ class _DrawerWidgetState extends State<DrawerWidget>
                             decoration: BoxDecoration(),
                             child: InkWell(
                               onTap: () async {
-                                logFirebaseEvent('Row-ON_TAP');
-                                logFirebaseEvent('Row-Navigate-Back');
+                                logFirebaseEvent(
+                                    'DRAWER_PAGE_Row_bp49j8dd_ON_TAP');
+                                logFirebaseEvent('Row_Navigate-Back');
                                 Navigator.pop(context);
-                                logFirebaseEvent('Row-Navigate-To');
+                                logFirebaseEvent('Row_Navigate-To');
                                 await Navigator.push(
                                   context,
                                   MaterialPageRoute(
@@ -296,10 +302,11 @@ class _DrawerWidgetState extends State<DrawerWidget>
                                         10, 0, 0, 0),
                                     child: InkWell(
                                       onTap: () async {
-                                        logFirebaseEvent('Text-ON_TAP');
-                                        logFirebaseEvent('Text-Navigate-Back');
+                                        logFirebaseEvent(
+                                            'DRAWER_PAGE_Text_hfgjhnx8_ON_TAP');
+                                        logFirebaseEvent('Text_Navigate-Back');
                                         Navigator.pop(context);
-                                        logFirebaseEvent('Text-Navigate-To');
+                                        logFirebaseEvent('Text_Navigate-To');
                                         await Navigator.push(
                                           context,
                                           MaterialPageRoute(
@@ -334,10 +341,11 @@ class _DrawerWidgetState extends State<DrawerWidget>
                             decoration: BoxDecoration(),
                             child: InkWell(
                               onTap: () async {
-                                logFirebaseEvent('Row-ON_TAP');
-                                logFirebaseEvent('Row-Navigate-Back');
+                                logFirebaseEvent(
+                                    'DRAWER_PAGE_Row_vel7kftr_ON_TAP');
+                                logFirebaseEvent('Row_Navigate-Back');
                                 Navigator.pop(context);
-                                logFirebaseEvent('Row-Launch-U-R-L');
+                                logFirebaseEvent('Row_Launch-U-R-L');
                                 await launchURL(
                                     'https://carbonfight.app/privacy.html');
                               },
@@ -355,10 +363,11 @@ class _DrawerWidgetState extends State<DrawerWidget>
                                         10, 0, 0, 0),
                                     child: InkWell(
                                       onTap: () async {
-                                        logFirebaseEvent('Text-ON_TAP');
-                                        logFirebaseEvent('Text-Navigate-Back');
+                                        logFirebaseEvent(
+                                            'DRAWER_PAGE_Text_hndtb0cn_ON_TAP');
+                                        logFirebaseEvent('Text_Navigate-Back');
                                         Navigator.pop(context);
-                                        logFirebaseEvent('Text-Launch-U-R-L');
+                                        logFirebaseEvent('Text_Launch-U-R-L');
                                         await launchURL(
                                             'https://carbonfight.app/privacy.html');
                                       },
@@ -389,10 +398,11 @@ class _DrawerWidgetState extends State<DrawerWidget>
                             decoration: BoxDecoration(),
                             child: InkWell(
                               onTap: () async {
-                                logFirebaseEvent('Row-ON_TAP');
-                                logFirebaseEvent('Row-Navigate-Back');
+                                logFirebaseEvent(
+                                    'DRAWER_PAGE_Row_hn9nctz4_ON_TAP');
+                                logFirebaseEvent('Row_Navigate-Back');
                                 Navigator.pop(context);
-                                logFirebaseEvent('Row-Launch-U-R-L');
+                                logFirebaseEvent('Row_Launch-U-R-L');
                                 await launchURL(
                                     'https://github.com/CarbonFight/mobile');
                               },
@@ -410,10 +420,11 @@ class _DrawerWidgetState extends State<DrawerWidget>
                                         10, 0, 0, 0),
                                     child: InkWell(
                                       onTap: () async {
-                                        logFirebaseEvent('Text-ON_TAP');
-                                        logFirebaseEvent('Text-Navigate-Back');
+                                        logFirebaseEvent(
+                                            'DRAWER_PAGE_Text_l6soz93q_ON_TAP');
+                                        logFirebaseEvent('Text_Navigate-Back');
                                         Navigator.pop(context);
-                                        logFirebaseEvent('Text-Launch-U-R-L');
+                                        logFirebaseEvent('Text_Launch-U-R-L');
                                         await launchURL(
                                             'https://github.com/CarbonFight/mobile');
                                       },
@@ -444,10 +455,11 @@ class _DrawerWidgetState extends State<DrawerWidget>
                             decoration: BoxDecoration(),
                             child: InkWell(
                               onTap: () async {
-                                logFirebaseEvent('Row-ON_TAP');
-                                logFirebaseEvent('Row-Navigate-Back');
+                                logFirebaseEvent(
+                                    'DRAWER_PAGE_Row_y0dzp0lh_ON_TAP');
+                                logFirebaseEvent('Row_Navigate-Back');
                                 Navigator.pop(context);
-                                logFirebaseEvent('Row-Launch-U-R-L');
+                                logFirebaseEvent('Row_Launch-U-R-L');
                                 await launchURL(
                                     'https://discord.gg/e7weuGA4UW');
                               },
@@ -465,10 +477,11 @@ class _DrawerWidgetState extends State<DrawerWidget>
                                         10, 0, 0, 0),
                                     child: InkWell(
                                       onTap: () async {
-                                        logFirebaseEvent('Text-ON_TAP');
-                                        logFirebaseEvent('Text-Navigate-Back');
+                                        logFirebaseEvent(
+                                            'DRAWER_PAGE_Text_sygx0pbg_ON_TAP');
+                                        logFirebaseEvent('Text_Navigate-Back');
                                         Navigator.pop(context);
-                                        logFirebaseEvent('Text-Launch-U-R-L');
+                                        logFirebaseEvent('Text_Launch-U-R-L');
                                         await launchURL(
                                             'https://discord.gg/e7weuGA4UW');
                                       },
@@ -510,8 +523,9 @@ class _DrawerWidgetState extends State<DrawerWidget>
                             ),
                             child: InkWell(
                               onTap: () async {
-                                logFirebaseEvent('Icon-ON_TAP');
-                                logFirebaseEvent('Icon-Auth');
+                                logFirebaseEvent(
+                                    'DRAWER_PAGE_Icon_uuebze8d_ON_TAP');
+                                logFirebaseEvent('Icon_Auth');
                                 await signOut();
                                 await Navigator.pushAndRemoveUntil(
                                   context,
@@ -590,9 +604,10 @@ class _DrawerWidgetState extends State<DrawerWidget>
                                                     0, 3, 0, 0),
                                             child: InkWell(
                                               onTap: () async {
-                                                logFirebaseEvent('Text-ON_TAP');
                                                 logFirebaseEvent(
-                                                    'Text-Bottom-Sheet');
+                                                    'DRAWER_PAGE_Text_f4im2sln_ON_TAP');
+                                                logFirebaseEvent(
+                                                    'Text_Bottom-Sheet');
                                                 await showModalBottomSheet(
                                                   isScrollControlled: true,
                                                   backgroundColor:

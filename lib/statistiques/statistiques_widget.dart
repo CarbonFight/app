@@ -169,8 +169,10 @@ class _StatistiquesWidgetState extends State<StatistiquesWidget> {
                                                   containerUsersStatsRecord
                                                       .day0,
                                                   'day',
-                                                  currentUserDocument
-                                                      ?.co2target),
+                                                  valueOrDefault(
+                                                      currentUserDocument
+                                                          ?.co2target,
+                                                      0)),
                                               radius: 35,
                                               lineWidth: 18,
                                               animation: true,
@@ -185,9 +187,9 @@ class _StatistiquesWidgetState extends State<StatistiquesWidget> {
                                           InkWell(
                                             onTap: () async {
                                               logFirebaseEvent(
-                                                  'Container-ON_TAP');
+                                                  'STATISTIQUES_PAGE_Container_yeznk2hd_ON_TAP');
                                               logFirebaseEvent(
-                                                  'Container-Navigate-To');
+                                                  'Container_Navigate-To');
                                               await Navigator.push(
                                                 context,
                                                 PageTransition(
@@ -242,7 +244,10 @@ class _StatistiquesWidgetState extends State<StatistiquesWidget> {
                                         child: AuthUserStreamWidget(
                                           child: Text(
                                             valueOrDefault<String>(
-                                              currentUserDocument?.level
+                                              valueOrDefault(
+                                                      currentUserDocument
+                                                          ?.level,
+                                                      0)
                                                   .toString(),
                                               '1',
                                             ),
@@ -260,8 +265,9 @@ class _StatistiquesWidgetState extends State<StatistiquesWidget> {
                                   children: [
                                     InkWell(
                                       onTap: () async {
-                                        logFirebaseEvent('Column-ON_TAP');
-                                        logFirebaseEvent('Column-Bottom-Sheet');
+                                        logFirebaseEvent(
+                                            'STATISTIQUES_PAGE_Column_4otlsmdh_ON_TAP');
+                                        logFirebaseEvent('Column_Bottom-Sheet');
                                         await showModalBottomSheet(
                                           isScrollControlled: true,
                                           backgroundColor: Colors.transparent,
@@ -327,8 +333,10 @@ class _StatistiquesWidgetState extends State<StatistiquesWidget> {
                                                   child: Text(
                                                     valueOrDefault<String>(
                                                       functions.printLevel(
-                                                          currentUserDocument
-                                                              ?.level),
+                                                          valueOrDefault(
+                                                              currentUserDocument
+                                                                  ?.level,
+                                                              0)),
                                                       'CarbonFighter',
                                                     ),
                                                     style: FlutterFlowTheme.of(
@@ -375,13 +383,17 @@ class _StatistiquesWidgetState extends State<StatistiquesWidget> {
                                                   child: Text(
                                                     valueOrDefault<String>(
                                                       '${valueOrDefault<String>(
-                                                        currentUserDocument
-                                                            ?.rank
+                                                        valueOrDefault(
+                                                                currentUserDocument
+                                                                    ?.rank,
+                                                                0)
                                                             .toString(),
                                                         '-',
                                                       )} / ${valueOrDefault<String>(
-                                                        currentUserDocument
-                                                            ?.rankSize
+                                                        valueOrDefault(
+                                                                currentUserDocument
+                                                                    ?.rankSize,
+                                                                0)
                                                             .toString(),
                                                         '-',
                                                       )}',
@@ -1650,8 +1662,9 @@ class _StatistiquesWidgetState extends State<StatistiquesWidget> {
                     children: [
                       InkWell(
                         onTap: () async {
-                          logFirebaseEvent('Container-ON_TAP');
-                          logFirebaseEvent('Container-Navigate-To');
+                          logFirebaseEvent(
+                              'STATISTIQUES_PAGE_Container_0gx9wx6k_ON_TAP');
+                          logFirebaseEvent('Container_Navigate-To');
                           await Navigator.push(
                             context,
                             PageTransition(
@@ -1729,8 +1742,9 @@ class _StatistiquesWidgetState extends State<StatistiquesWidget> {
                           children: [
                             InkWell(
                               onTap: () async {
-                                logFirebaseEvent('Container-ON_TAP');
-                                logFirebaseEvent('Container-Navigate-To');
+                                logFirebaseEvent(
+                                    'STATISTIQUES_PAGE_Container_pfc39kc9_ON_TAP');
+                                logFirebaseEvent('Container_Navigate-To');
                                 await Navigator.push(
                                   context,
                                   MaterialPageRoute(
@@ -1780,8 +1794,9 @@ class _StatistiquesWidgetState extends State<StatistiquesWidget> {
                             ),
                             InkWell(
                               onTap: () async {
-                                logFirebaseEvent('Container-ON_TAP');
-                                logFirebaseEvent('Container-Navigate-To');
+                                logFirebaseEvent(
+                                    'STATISTIQUES_PAGE_Container_owsdktcl_ON_TAP');
+                                logFirebaseEvent('Container_Navigate-To');
                                 await Navigator.push(
                                   context,
                                   MaterialPageRoute(

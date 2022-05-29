@@ -22,6 +22,10 @@ class AccountWidget extends StatefulWidget {
 
 class _AccountWidgetState extends State<AccountWidget>
     with TickerProviderStateMixin {
+  TextEditingController displaynameController;
+  TextEditingController emailaddressController;
+  int co2targetValue;
+  final scaffoldKey = GlobalKey<ScaffoldState>();
   final animationsMap = {
     'containerOnPageLoadAnimation': AnimationInfo(
       trigger: AnimationTrigger.onPageLoad,
@@ -39,10 +43,6 @@ class _AccountWidgetState extends State<AccountWidget>
       ),
     ),
   };
-  final scaffoldKey = GlobalKey<ScaffoldState>();
-  int co2targetValue;
-  TextEditingController displaynameController;
-  TextEditingController emailaddressController;
 
   @override
   void initState() {
@@ -67,8 +67,8 @@ class _AccountWidgetState extends State<AccountWidget>
         children: [
           InkWell(
             onTap: () async {
-              logFirebaseEvent('Container-ON_TAP');
-              logFirebaseEvent('Container-Navigate-Back');
+              logFirebaseEvent('ACCOUNT_PAGE_Container_dlb88ocq_ON_TAP');
+              logFirebaseEvent('Container_Navigate-Back');
               Navigator.pop(context);
             },
             child: Container(
@@ -113,8 +113,9 @@ class _AccountWidgetState extends State<AccountWidget>
                             children: [
                               InkWell(
                                 onTap: () async {
-                                  logFirebaseEvent('Container-ON_TAP');
-                                  logFirebaseEvent('Container-Navigate-Back');
+                                  logFirebaseEvent(
+                                      'ACCOUNT_PAGE_Container_x5b2nxw7_ON_TAP');
+                                  logFirebaseEvent('Container_Navigate-Back');
                                   Navigator.pop(context);
                                 },
                                 child: Container(
@@ -223,9 +224,10 @@ class _AccountWidgetState extends State<AccountWidget>
                                                   0, 5, 0, 0),
                                           child: InkWell(
                                             onTap: () async {
-                                              logFirebaseEvent('Text-ON_TAP');
                                               logFirebaseEvent(
-                                                  'Text-Bottom-Sheet');
+                                                  'ACCOUNT_PAGE_Text_kt16r7hw_ON_TAP');
+                                              logFirebaseEvent(
+                                                  'Text_Bottom-Sheet');
                                               await showModalBottomSheet(
                                                 isScrollControlled: true,
                                                 backgroundColor:
@@ -581,8 +583,10 @@ class _AccountWidgetState extends State<AccountWidget>
                                                       ),
                                                     ),
                                                     count: co2targetValue ??=
-                                                        currentUserDocument
-                                                            ?.co2target,
+                                                        valueOrDefault(
+                                                            currentUserDocument
+                                                                ?.co2target,
+                                                            0),
                                                     updateCount: (count) =>
                                                         setState(() =>
                                                             co2targetValue =
@@ -618,8 +622,9 @@ class _AccountWidgetState extends State<AccountWidget>
                             children: [
                               InkWell(
                                 onTap: () async {
-                                  logFirebaseEvent('iconButton-ON_TAP');
-                                  logFirebaseEvent('iconButton-Backend-Call');
+                                  logFirebaseEvent(
+                                      'ACCOUNT_PAGE_Container_89hz60u5_ON_TAP');
+                                  logFirebaseEvent('iconButton_Backend-Call');
 
                                   final usersUpdateData = createUsersRecordData(
                                     displayName: displaynameController.text,
@@ -628,7 +633,7 @@ class _AccountWidgetState extends State<AccountWidget>
                                   );
                                   await currentUserReference
                                       .update(usersUpdateData);
-                                  logFirebaseEvent('iconButton-Navigate-Back');
+                                  logFirebaseEvent('iconButton_Navigate-Back');
                                   Navigator.pop(context);
                                 },
                                 child: IconButtonWidget(

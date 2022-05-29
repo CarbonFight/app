@@ -21,9 +21,6 @@ abstract class TransportActionsRecord
   String get powertype;
 
   @nullable
-  String get ownership;
-
-  @nullable
   String get userId;
 
   @nullable
@@ -40,6 +37,18 @@ abstract class TransportActionsRecord
   String get day;
 
   @nullable
+  BuiltList<String> get periodicity;
+
+  @nullable
+  bool get roundTrip;
+
+  @nullable
+  bool get isPeriodic;
+
+  @nullable
+  bool get favorite;
+
+  @nullable
   @BuiltValueField(wireName: kDocumentReferenceField)
   DocumentReference get reference;
 
@@ -48,11 +57,14 @@ abstract class TransportActionsRecord
         ..transport = ''
         ..distance = 0
         ..powertype = ''
-        ..ownership = ''
         ..userId = ''
         ..co2e = 0
         ..passengers = ''
-        ..day = '';
+        ..day = ''
+        ..periodicity = ListBuilder()
+        ..roundTrip = false
+        ..isPeriodic = false
+        ..favorite = false;
 
   static CollectionReference get collection =>
       FirebaseFirestore.instance.collection('transportActions');
@@ -81,12 +93,14 @@ Map<String, dynamic> createTransportActionsRecordData({
   String transport,
   int distance,
   String powertype,
-  String ownership,
   String userId,
   int co2e,
   DateTime createdTime,
   String passengers,
   String day,
+  bool roundTrip,
+  bool isPeriodic,
+  bool favorite,
 }) =>
     serializers.toFirestore(
         TransportActionsRecord.serializer,
@@ -94,9 +108,12 @@ Map<String, dynamic> createTransportActionsRecordData({
           ..transport = transport
           ..distance = distance
           ..powertype = powertype
-          ..ownership = ownership
           ..userId = userId
           ..co2e = co2e
           ..createdTime = createdTime
           ..passengers = passengers
-          ..day = day));
+          ..day = day
+          ..periodicity = null
+          ..roundTrip = roundTrip
+          ..isPeriodic = isPeriodic
+          ..favorite = favorite));

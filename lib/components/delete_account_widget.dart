@@ -71,8 +71,8 @@ class _DeleteAccountWidgetState extends State<DeleteAccountWidget> {
                       size: 24,
                     ),
                     onPressed: () async {
-                      logFirebaseEvent('IconButton-ON_TAP');
-                      logFirebaseEvent('IconButton-Navigate-Back');
+                      logFirebaseEvent('DELETE_ACCOUNT_COMP_close_ICON_ON_TAP');
+                      logFirebaseEvent('IconButton_Navigate-Back');
                       Navigator.pop(context);
                     },
                   ),
@@ -160,12 +160,13 @@ class _DeleteAccountWidgetState extends State<DeleteAccountWidget> {
                           Expanded(
                             child: InkWell(
                               onTap: () async {
-                                logFirebaseEvent('iconButton-ON_TAP');
+                                logFirebaseEvent(
+                                    'DELETE_ACCOUNT_COMP_Container_2n8nomcm_ON_TAP');
                                 if ((emailController.text) ==
                                     (currentUserEmail)) {
-                                  logFirebaseEvent('iconButton-Auth');
+                                  logFirebaseEvent('iconButton_Auth');
                                   await deleteUser(context);
-                                  logFirebaseEvent('iconButton-Alert-Dialog');
+                                  logFirebaseEvent('iconButton_Alert-Dialog');
                                   await showDialog(
                                     context: context,
                                     builder: (alertDialogContext) {
@@ -184,7 +185,7 @@ class _DeleteAccountWidgetState extends State<DeleteAccountWidget> {
                                     },
                                   );
                                 } else {
-                                  logFirebaseEvent('iconButton-Alert-Dialog');
+                                  logFirebaseEvent('iconButton_Alert-Dialog');
                                   await showDialog(
                                     context: context,
                                     builder: (alertDialogContext) {
@@ -205,7 +206,7 @@ class _DeleteAccountWidgetState extends State<DeleteAccountWidget> {
                                   return;
                                 }
 
-                                logFirebaseEvent('iconButton-Navigate-To');
+                                logFirebaseEvent('iconButton_Navigate-To');
                                 await Navigator.push(
                                   context,
                                   MaterialPageRoute(

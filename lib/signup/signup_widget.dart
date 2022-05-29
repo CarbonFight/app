@@ -20,13 +20,13 @@ class SignupWidget extends StatefulWidget {
 }
 
 class _SignupWidgetState extends State<SignupWidget> {
-  final scaffoldKey = GlobalKey<ScaffoldState>();
   TextEditingController emailAddressController;
   TextEditingController nameController;
   TextEditingController passwordController;
   bool passwordVisibility;
   TextEditingController retypepasswordController;
   bool retypepasswordVisibility;
+  final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
@@ -342,6 +342,8 @@ class _SignupWidgetState extends State<SignupWidget> {
                                               () => passwordVisibility =
                                                   !passwordVisibility,
                                             ),
+                                            focusNode:
+                                                FocusNode(skipTraversal: true),
                                             child: Icon(
                                               passwordVisibility
                                                   ? Icons.visibility_outlined
@@ -445,6 +447,8 @@ class _SignupWidgetState extends State<SignupWidget> {
                                               () => retypepasswordVisibility =
                                                   !retypepasswordVisibility,
                                             ),
+                                            focusNode:
+                                                FocusNode(skipTraversal: true),
                                             child: Icon(
                                               retypepasswordVisibility
                                                   ? Icons.visibility_outlined
@@ -483,10 +487,11 @@ class _SignupWidgetState extends State<SignupWidget> {
                                 Expanded(
                                   child: InkWell(
                                     onTap: () async {
-                                      logFirebaseEvent('iconButton-ON_TAP');
-                                      logFirebaseEvent('iconButton-Auth');
-                                      if (passwordController.text !=
-                                          retypepasswordController.text) {
+                                      logFirebaseEvent(
+                                          'SIGNUP_PAGE_Container_csgylktj_ON_TAP');
+                                      logFirebaseEvent('iconButton_Auth');
+                                      if (passwordController?.text !=
+                                          retypepasswordController?.text) {
                                         ScaffoldMessenger.of(context)
                                             .showSnackBar(
                                           SnackBar(
@@ -507,10 +512,10 @@ class _SignupWidgetState extends State<SignupWidget> {
                                         return;
                                       }
 
-                                      logFirebaseEvent('iconButton-Auth');
+                                      logFirebaseEvent('iconButton_Auth');
                                       await sendEmailVerification();
                                       logFirebaseEvent(
-                                          'iconButton-Alert-Dialog');
+                                          'iconButton_Alert-Dialog');
                                       await showDialog(
                                         context: context,
                                         builder: (alertDialogContext) {
@@ -529,7 +534,7 @@ class _SignupWidgetState extends State<SignupWidget> {
                                         },
                                       );
                                       logFirebaseEvent(
-                                          'iconButton-Navigate-To');
+                                          'iconButton_Navigate-To');
                                       await Navigator.push(
                                         context,
                                         MaterialPageRoute(
@@ -635,9 +640,9 @@ class _SignupWidgetState extends State<SignupWidget> {
                                                   ),
                                                   onPressed: () async {
                                                     logFirebaseEvent(
-                                                        'IconButton-ON_TAP');
+                                                        'SIGNUP_PAGE_facebookF_ICON_ON_TAP');
                                                     logFirebaseEvent(
-                                                        'IconButton-Auth');
+                                                        'IconButton_Auth');
                                                     final user =
                                                         await signInWithFacebook(
                                                             context);
@@ -645,7 +650,7 @@ class _SignupWidgetState extends State<SignupWidget> {
                                                       return;
                                                     }
                                                     logFirebaseEvent(
-                                                        'IconButton-Navigate-To');
+                                                        'IconButton_Navigate-To');
                                                     await Navigator.push(
                                                       context,
                                                       MaterialPageRoute(
@@ -685,9 +690,9 @@ class _SignupWidgetState extends State<SignupWidget> {
                                                   ),
                                                   onPressed: () async {
                                                     logFirebaseEvent(
-                                                        'IconButton-ON_TAP');
+                                                        'SIGNUP_PAGE_google_ICON_ON_TAP');
                                                     logFirebaseEvent(
-                                                        'IconButton-Auth');
+                                                        'IconButton_Auth');
                                                     final user =
                                                         await signInWithGoogle(
                                                             context);
@@ -695,7 +700,7 @@ class _SignupWidgetState extends State<SignupWidget> {
                                                       return;
                                                     }
                                                     logFirebaseEvent(
-                                                        'IconButton-Navigate-To');
+                                                        'IconButton_Navigate-To');
                                                     await Navigator.push(
                                                       context,
                                                       MaterialPageRoute(
@@ -731,9 +736,9 @@ class _SignupWidgetState extends State<SignupWidget> {
                                                 ),
                                                 onPressed: () async {
                                                   logFirebaseEvent(
-                                                      'IconButton-ON_TAP');
+                                                      'SIGNUP_PAGE_apple_ICON_ON_TAP');
                                                   logFirebaseEvent(
-                                                      'IconButton-Auth');
+                                                      'IconButton_Auth');
                                                   final user =
                                                       await signInWithApple(
                                                           context);
@@ -784,9 +789,10 @@ class _SignupWidgetState extends State<SignupWidget> {
                                                   10, 0, 0, 0),
                                           child: InkWell(
                                             onTap: () async {
-                                              logFirebaseEvent('Text-ON_TAP');
                                               logFirebaseEvent(
-                                                  'Text-Navigate-To');
+                                                  'SIGNUP_PAGE_Text_xhdx4q9m_ON_TAP');
+                                              logFirebaseEvent(
+                                                  'Text_Navigate-To');
                                               await Navigator.push(
                                                 context,
                                                 MaterialPageRoute(

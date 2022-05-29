@@ -55,29 +55,23 @@
       ]
     },
     {
-      "collectionGroup": "actionCache",
+      "collectionGroup": "transportActions",
       "queryScope": "COLLECTION",
       "fields": [
         {
-          "fieldPath": "user",
+          "fieldPath": "userId",
           "order": "ASCENDING"
         },
         {
-          "fieldPath": "date",
-          "order": "DESCENDING"
-        }
-      ]
-    },
-    {
-      "collectionGroup": "actionTypeCache",
-      "queryScope": "COLLECTION",
-      "fields": [
-        {
-          "fieldPath": "actionCache",
+          "fieldPath": "day",
           "order": "ASCENDING"
         },
         {
-          "fieldPath": "date",
+          "fieldPath": "isPeriodic",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "created_time",
           "order": "DESCENDING"
         }
       ]

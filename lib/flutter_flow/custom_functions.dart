@@ -1,6 +1,7 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import 'lat_lng.dart';
@@ -12,9 +13,9 @@ import '../../auth/auth_util.dart';
 int transportActionsCO2e(
   int distance,
   String passengers,
-  String ownership,
   String powertype,
   String transport,
+  bool roundTrip,
 ) {
   double co2e = 0;
   var passengersInt = int.parse(passengers);
@@ -35,26 +36,8 @@ int transportActionsCO2e(
         break;
     }
 
-    // ownership : Ratio applied to co2e
-    // Default is Owner
-    double co2ownership = 1;
-    switch (ownership) {
-      case "Propriétaire":
-        co2ownership = 1;
-        break;
-      case "Location courte":
-        co2ownership = 0.6;
-        break;
-      case "Location longue":
-        co2ownership = 0.8;
-        break;
-      case "Taxi":
-        co2ownership = 0.4;
-        break;
-    }
-
     // Co2 is distance * co2 per km for powertype * ratio of ownership / nomber of passengers
-    co2e = (distance * co2powertype * co2ownership) / passengersInt;
+    co2e = (distance * co2powertype) / passengersInt;
   }
 
   // Bike
@@ -150,23 +133,13 @@ int transportActionsCO2e(
         break;
     }
 
-    // ownership : Ratio applied to co2e
-    // Default is Owner
-    double co2ownership = 1;
-    switch (ownership) {
-      case "Propriétaire":
-        co2ownership = 1;
-        break;
-      case "Location longue":
-        co2ownership = 0.6;
-        break;
-      case "Location courte":
-        co2ownership = 0.8;
-        break;
-    }
-
     // Co2 is distance * co2 per km for powertype * ratio of ownership / nomber of passengers
-    co2e = (distance * co2powertype * co2ownership) / passengersInt;
+    co2e = (distance * co2powertype) / passengersInt;
+  }
+
+  // If roundTrip is Truc, co2e is *2
+  if (roundTrip) {
+    co2e = co2e * 2;
   }
 
   return co2e.round();
@@ -548,11 +521,28 @@ bool lastCache(
   }
 }
 
-DateTime dateConv(DateTime date) {
+String timestampToDay(DateTime timestamp) {
   // Add your function code here!
-  var formatter = DateFormat('yyyy-MM-dd');
-  String formattedDate = formatter.format(date);
-  return DateTime.parse(formattedDate); // change to 2016-01-25
+  var formatter = DateFormat('yMd');
+  String formattedDate = formatter.format(timestamp);
+  //return DateTime.parse(formattedDate); // change to 7/25/2022
+  return formattedDate;
+}
+
+String setOneDayBefore(String activeDate) {
+  var parsedDate = DateFormat('yMd').parse(activeDate);
+  DateTime oneDayAgo = parsedDate.subtract(new Duration(days: 1));
+  String formattedDate = DateFormat('yMd').format(oneDayAgo);
+
+  return formattedDate;
+}
+
+String setOneDayAfter(String activeDate) {
+  var parsedDate = DateFormat('yMd').parse(activeDate);
+  DateTime oneDayAfter = parsedDate.add(new Duration(days: 1));
+  String formattedDate = DateFormat('yMd').format(oneDayAfter);
+
+  return formattedDate;
 }
 
 double ratioScoreTotal(
@@ -578,4 +568,124 @@ String printRatioScoreTotal(
   var val = ratio.toStringAsFixed(0);
   var unit = '%';
   return val + " " + unit;
+}
+
+List<String> getTransportPowerType(String transport) {
+  List<String> params = [];
+
+  switch (transport) {
+    case "car":
+      params.add('Thermique');
+      params.add('Hybride');
+      params.add('Électrique');
+      break;
+    case "bus":
+      params.add('Thermique');
+      params.add('Gaz Naturel');
+      params.add('Électrique');
+      break;
+    case "scooter":
+      params.add('Thermique');
+      params.add('Électrique');
+      break;
+    case "train":
+      params.add('TGV');
+      params.add('TER');
+      params.add('intercites');
+      params.add('RER');
+      params.add('transilien');
+      params.add('tramway');
+      break;
+    case "bike":
+      params.add('Classique');
+      params.add('Électrique');
+      break;
+    case "flight":
+      params.add('Non applicable');
+      break;
+    case "metro":
+      params.add('Non applicable');
+      break;
+    case "moto":
+      params.add('Non applicable');
+      break;
+  }
+
+  return params;
+}
+
+List<String> getTransportPassengers(String transport) {
+  List<String> params = [];
+
+  switch (transport) {
+    case "car":
+      params.add('1');
+      params.add('2');
+      params.add('3');
+      params.add('4');
+      params.add('5');
+      params.add('6');
+      params.add('7');
+      params.add('8');
+      break;
+    case "bus":
+      params.add('Non applicable');
+      break;
+    case "scooter":
+      params.add('1');
+      params.add('2');
+      break;
+    case "train":
+      params.add('Non applicable');
+      break;
+    case "bike":
+      params.add('1');
+      params.add('2');
+      break;
+    case "flight":
+      params.add('Non applicable');
+      break;
+    case "metro":
+      params.add('Non applicable');
+      break;
+    case "moto":
+      params.add('1');
+      params.add('2');
+      break;
+  }
+
+  return params;
+}
+
+String getTransportDistanceLabel(String transport) {
+  String label = "";
+
+  switch (transport) {
+    case "car":
+      label = "Distance parcourue (en KMs)";
+      break;
+    case "bus":
+      label = "Nombre de stations";
+      break;
+    case "scooter":
+      label = "Distance parcourue (en KMs)";
+      break;
+    case "train":
+      label = "Distance parcourue (en KMs)";
+      break;
+    case "bike":
+      label = "Distance parcourue (en KMs)";
+      break;
+    case "flight":
+      label = "Distance parcourue (en KMs)";
+      break;
+    case "metro":
+      label = "Nombre de stations";
+      break;
+    case "moto":
+      label = "Distance parcourue (en KMs)";
+      break;
+  }
+
+  return label;
 }

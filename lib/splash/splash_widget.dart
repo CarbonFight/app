@@ -211,9 +211,9 @@ class _SplashWidgetState extends State<SplashWidget> {
                                                 child: InkWell(
                                                   onTap: () async {
                                                     logFirebaseEvent(
-                                                        'iconButton-ON_TAP');
+                                                        'SPLASH_PAGE_Container_wq8nnca0_ON_TAP');
                                                     logFirebaseEvent(
-                                                        'iconButton-Page-View');
+                                                        'iconButton_Page-View');
                                                     await pageViewController
                                                         .nextPage(
                                                       duration: Duration(
@@ -254,13 +254,13 @@ class _SplashWidgetState extends State<SplashWidget> {
                                                 child: InkWell(
                                                   onTap: () async {
                                                     logFirebaseEvent(
-                                                        'Text-ON_TAP');
+                                                        'SPLASH_PAGE_Text_x0x4hfws_ON_TAP');
                                                     logFirebaseEvent(
-                                                        'Text-Update-Local-State');
+                                                        'Text_Update-Local-State');
                                                     setState(() => FFAppState()
                                                         .showSplash = false);
                                                     logFirebaseEvent(
-                                                        'Text-Navigate-To');
+                                                        'Text_Navigate-To');
                                                     await Navigator.push(
                                                       context,
                                                       MaterialPageRoute(
@@ -461,9 +461,9 @@ class _SplashWidgetState extends State<SplashWidget> {
                                                 child: InkWell(
                                                   onTap: () async {
                                                     logFirebaseEvent(
-                                                        'iconButton-ON_TAP');
+                                                        'SPLASH_PAGE_Container_cd5hy14j_ON_TAP');
                                                     logFirebaseEvent(
-                                                        'iconButton-Page-View');
+                                                        'iconButton_Page-View');
                                                     await pageViewController
                                                         .nextPage(
                                                       duration: Duration(
@@ -504,13 +504,13 @@ class _SplashWidgetState extends State<SplashWidget> {
                                                 child: InkWell(
                                                   onTap: () async {
                                                     logFirebaseEvent(
-                                                        'Text-ON_TAP');
+                                                        'SPLASH_PAGE_Text_44tr5v7r_ON_TAP');
                                                     logFirebaseEvent(
-                                                        'Text-Update-Local-State');
+                                                        'Text_Update-Local-State');
                                                     setState(() => FFAppState()
                                                         .showSplash = false);
                                                     logFirebaseEvent(
-                                                        'Text-Navigate-To');
+                                                        'Text_Navigate-To');
                                                     await Navigator.push(
                                                       context,
                                                       MaterialPageRoute(
@@ -711,9 +711,9 @@ class _SplashWidgetState extends State<SplashWidget> {
                                                 child: InkWell(
                                                   onTap: () async {
                                                     logFirebaseEvent(
-                                                        'iconButton-ON_TAP');
+                                                        'SPLASH_PAGE_Container_nd32h8uq_ON_TAP');
                                                     logFirebaseEvent(
-                                                        'iconButton-Page-View');
+                                                        'iconButton_Page-View');
                                                     await pageViewController
                                                         .nextPage(
                                                       duration: Duration(
@@ -754,13 +754,13 @@ class _SplashWidgetState extends State<SplashWidget> {
                                                 child: InkWell(
                                                   onTap: () async {
                                                     logFirebaseEvent(
-                                                        'Text-ON_TAP');
+                                                        'SPLASH_PAGE_Text_flzwg6be_ON_TAP');
                                                     logFirebaseEvent(
-                                                        'Text-Update-Local-State');
+                                                        'Text_Update-Local-State');
                                                     setState(() => FFAppState()
                                                         .showSplash = false);
                                                     logFirebaseEvent(
-                                                        'Text-Navigate-To');
+                                                        'Text_Navigate-To');
                                                     await Navigator.push(
                                                       context,
                                                       MaterialPageRoute(
@@ -969,13 +969,13 @@ class _SplashWidgetState extends State<SplashWidget> {
                                                 child: InkWell(
                                                   onTap: () async {
                                                     logFirebaseEvent(
-                                                        'iconButton-ON_TAP');
+                                                        'SPLASH_PAGE_Container_cnkjjssa_ON_TAP');
                                                     logFirebaseEvent(
-                                                        'iconButton-Update-Local-State');
+                                                        'iconButton_Update-Local-State');
                                                     setState(() => FFAppState()
                                                         .showSplash = false);
                                                     logFirebaseEvent(
-                                                        'iconButton-Navigate-To');
+                                                        'iconButton_Navigate-To');
                                                     await Navigator.push(
                                                       context,
                                                       MaterialPageRoute(
