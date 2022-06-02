@@ -21,10 +21,10 @@ class LoginWidget extends StatefulWidget {
 }
 
 class _LoginWidgetState extends State<LoginWidget> {
-  final scaffoldKey = GlobalKey<ScaffoldState>();
   TextEditingController emailAddressController;
   TextEditingController passwordController;
   bool passwordVisibility;
+  final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
@@ -250,6 +250,8 @@ class _LoginWidgetState extends State<LoginWidget> {
                                               () => passwordVisibility =
                                                   !passwordVisibility,
                                             ),
+                                            focusNode:
+                                                FocusNode(skipTraversal: true),
                                             child: Icon(
                                               passwordVisibility
                                                   ? Icons.visibility_outlined
@@ -284,8 +286,9 @@ class _LoginWidgetState extends State<LoginWidget> {
                             children: [
                               InkWell(
                                 onTap: () async {
-                                  logFirebaseEvent('Container-ON_TAP');
-                                  logFirebaseEvent('Container-Bottom-Sheet');
+                                  logFirebaseEvent(
+                                      'LOGIN_PAGE_Container_waim5wfw_ON_TAP');
+                                  logFirebaseEvent('Container_Bottom-Sheet');
                                   await showModalBottomSheet(
                                     isScrollControlled: true,
                                     backgroundColor: Colors.transparent,
@@ -335,8 +338,9 @@ class _LoginWidgetState extends State<LoginWidget> {
                                 Expanded(
                                   child: InkWell(
                                     onTap: () async {
-                                      logFirebaseEvent('iconButton-ON_TAP');
-                                      logFirebaseEvent('iconButton-Auth');
+                                      logFirebaseEvent(
+                                          'LOGIN_PAGE_Container_sb7d0wr0_ON_TAP');
+                                      logFirebaseEvent('iconButton_Auth');
 
                                       final user = await signInWithEmail(
                                         context,
@@ -349,7 +353,7 @@ class _LoginWidgetState extends State<LoginWidget> {
 
                                       if (!(currentUserEmailVerified)) {
                                         logFirebaseEvent(
-                                            'iconButton-Alert-Dialog');
+                                            'iconButton_Alert-Dialog');
                                         await showDialog(
                                           context: context,
                                           builder: (alertDialogContext) {
@@ -372,21 +376,28 @@ class _LoginWidgetState extends State<LoginWidget> {
                                       }
                                       if (FFAppState().showSplash) {
                                         logFirebaseEvent(
-                                            'iconButton-Navigate-To');
+                                            'iconButton_Navigate-To');
                                         await Navigator.push(
                                           context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                SplashWidget(),
+                                          PageTransition(
+                                            type: PageTransitionType.fade,
+                                            duration: Duration(milliseconds: 0),
+                                            reverseDuration:
+                                                Duration(milliseconds: 0),
+                                            child: SplashWidget(),
                                           ),
                                         );
                                       } else {
                                         logFirebaseEvent(
-                                            'iconButton-Navigate-To');
+                                            'iconButton_Navigate-To');
                                         await Navigator.push(
                                           context,
-                                          MaterialPageRoute(
-                                            builder: (context) => HomeWidget(),
+                                          PageTransition(
+                                            type: PageTransitionType.fade,
+                                            duration: Duration(milliseconds: 0),
+                                            reverseDuration:
+                                                Duration(milliseconds: 0),
+                                            child: HomeWidget(),
                                           ),
                                         );
                                       }
@@ -489,9 +500,9 @@ class _LoginWidgetState extends State<LoginWidget> {
                                                   ),
                                                   onPressed: () async {
                                                     logFirebaseEvent(
-                                                        'IconButton-ON_TAP');
+                                                        'LOGIN_PAGE_facebookF_ICON_ON_TAP');
                                                     logFirebaseEvent(
-                                                        'IconButton-Auth');
+                                                        'IconButton_Auth');
                                                     final user =
                                                         await signInWithFacebook(
                                                             context);
@@ -501,22 +512,38 @@ class _LoginWidgetState extends State<LoginWidget> {
                                                     if (FFAppState()
                                                         .showSplash) {
                                                       logFirebaseEvent(
-                                                          'IconButton-Navigate-To');
+                                                          'IconButton_Navigate-To');
                                                       await Navigator.push(
                                                         context,
-                                                        MaterialPageRoute(
-                                                          builder: (context) =>
-                                                              SplashWidget(),
+                                                        PageTransition(
+                                                          type:
+                                                              PageTransitionType
+                                                                  .fade,
+                                                          duration: Duration(
+                                                              milliseconds: 0),
+                                                          reverseDuration:
+                                                              Duration(
+                                                                  milliseconds:
+                                                                      0),
+                                                          child: SplashWidget(),
                                                         ),
                                                       );
                                                     } else {
                                                       logFirebaseEvent(
-                                                          'IconButton-Navigate-To');
+                                                          'IconButton_Navigate-To');
                                                       await Navigator.push(
                                                         context,
-                                                        MaterialPageRoute(
-                                                          builder: (context) =>
-                                                              HomeWidget(),
+                                                        PageTransition(
+                                                          type:
+                                                              PageTransitionType
+                                                                  .fade,
+                                                          duration: Duration(
+                                                              milliseconds: 0),
+                                                          reverseDuration:
+                                                              Duration(
+                                                                  milliseconds:
+                                                                      0),
+                                                          child: HomeWidget(),
                                                         ),
                                                       );
                                                     }
@@ -530,8 +557,8 @@ class _LoginWidgetState extends State<LoginWidget> {
                                               child: InkWell(
                                                 onTap: () async {
                                                   logFirebaseEvent(
-                                                      'Card-ON_TAP');
-                                                  logFirebaseEvent('Card-Auth');
+                                                      'LOGIN_PAGE_Card_o107iyfu_ON_TAP');
+                                                  logFirebaseEvent('Card_Auth');
                                                   final user =
                                                       await signInWithGoogle(
                                                           context);
@@ -540,22 +567,36 @@ class _LoginWidgetState extends State<LoginWidget> {
                                                   }
                                                   if (FFAppState().showSplash) {
                                                     logFirebaseEvent(
-                                                        'Card-Navigate-To');
+                                                        'Card_Navigate-To');
                                                     await Navigator.push(
                                                       context,
-                                                      MaterialPageRoute(
-                                                        builder: (context) =>
-                                                            SplashWidget(),
+                                                      PageTransition(
+                                                        type: PageTransitionType
+                                                            .fade,
+                                                        duration: Duration(
+                                                            milliseconds: 0),
+                                                        reverseDuration:
+                                                            Duration(
+                                                                milliseconds:
+                                                                    0),
+                                                        child: SplashWidget(),
                                                       ),
                                                     );
                                                   } else {
                                                     logFirebaseEvent(
-                                                        'Card-Navigate-To');
+                                                        'Card_Navigate-To');
                                                     await Navigator.push(
                                                       context,
-                                                      MaterialPageRoute(
-                                                        builder: (context) =>
-                                                            HomeWidget(),
+                                                      PageTransition(
+                                                        type: PageTransitionType
+                                                            .fade,
+                                                        duration: Duration(
+                                                            milliseconds: 0),
+                                                        reverseDuration:
+                                                            Duration(
+                                                                milliseconds:
+                                                                    0),
+                                                        child: HomeWidget(),
                                                       ),
                                                     );
                                                   }
@@ -587,9 +628,9 @@ class _LoginWidgetState extends State<LoginWidget> {
                                                     ),
                                                     onPressed: () async {
                                                       logFirebaseEvent(
-                                                          'IconButton-ON_TAP');
+                                                          'LOGIN_PAGE_google_ICON_ON_TAP');
                                                       logFirebaseEvent(
-                                                          'IconButton-Auth');
+                                                          'IconButton_Auth');
                                                       final user =
                                                           await signInWithGoogle(
                                                               context);
@@ -599,22 +640,41 @@ class _LoginWidgetState extends State<LoginWidget> {
                                                       if (FFAppState()
                                                           .showSplash) {
                                                         logFirebaseEvent(
-                                                            'IconButton-Navigate-To');
+                                                            'IconButton_Navigate-To');
                                                         await Navigator.push(
                                                           context,
-                                                          MaterialPageRoute(
-                                                            builder: (context) =>
+                                                          PageTransition(
+                                                            type:
+                                                                PageTransitionType
+                                                                    .fade,
+                                                            duration: Duration(
+                                                                milliseconds:
+                                                                    0),
+                                                            reverseDuration:
+                                                                Duration(
+                                                                    milliseconds:
+                                                                        0),
+                                                            child:
                                                                 SplashWidget(),
                                                           ),
                                                         );
                                                       } else {
                                                         logFirebaseEvent(
-                                                            'IconButton-Navigate-To');
+                                                            'IconButton_Navigate-To');
                                                         await Navigator.push(
                                                           context,
-                                                          MaterialPageRoute(
-                                                            builder: (context) =>
-                                                                HomeWidget(),
+                                                          PageTransition(
+                                                            type:
+                                                                PageTransitionType
+                                                                    .fade,
+                                                            duration: Duration(
+                                                                milliseconds:
+                                                                    0),
+                                                            reverseDuration:
+                                                                Duration(
+                                                                    milliseconds:
+                                                                        0),
+                                                            child: HomeWidget(),
                                                           ),
                                                         );
                                                       }
@@ -647,9 +707,9 @@ class _LoginWidgetState extends State<LoginWidget> {
                                                 ),
                                                 onPressed: () async {
                                                   logFirebaseEvent(
-                                                      'IconButton-ON_TAP');
+                                                      'LOGIN_PAGE_apple_ICON_ON_TAP');
                                                   logFirebaseEvent(
-                                                      'IconButton-Auth');
+                                                      'IconButton_Auth');
                                                   final user =
                                                       await signInWithApple(
                                                           context);
@@ -659,9 +719,14 @@ class _LoginWidgetState extends State<LoginWidget> {
                                                   await Navigator
                                                       .pushAndRemoveUntil(
                                                     context,
-                                                    MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          HomeWidget(),
+                                                    PageTransition(
+                                                      type: PageTransitionType
+                                                          .fade,
+                                                      duration: Duration(
+                                                          milliseconds: 0),
+                                                      reverseDuration: Duration(
+                                                          milliseconds: 0),
+                                                      child: HomeWidget(),
                                                     ),
                                                     (r) => false,
                                                   );
@@ -700,14 +765,19 @@ class _LoginWidgetState extends State<LoginWidget> {
                                                   10, 0, 0, 0),
                                           child: InkWell(
                                             onTap: () async {
-                                              logFirebaseEvent('Text-ON_TAP');
                                               logFirebaseEvent(
-                                                  'Text-Navigate-To');
+                                                  'LOGIN_PAGE_Text_u0bcam3w_ON_TAP');
+                                              logFirebaseEvent(
+                                                  'Text_Navigate-To');
                                               await Navigator.push(
                                                 context,
-                                                MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      SignupWidget(),
+                                                PageTransition(
+                                                  type: PageTransitionType.fade,
+                                                  duration:
+                                                      Duration(milliseconds: 0),
+                                                  reverseDuration:
+                                                      Duration(milliseconds: 0),
+                                                  child: SignupWidget(),
                                                 ),
                                               );
                                             },

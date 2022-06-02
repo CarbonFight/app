@@ -30,11 +30,11 @@ class FFAppState {
 
   int actionCO2 = 0;
 
-  DateTime time;
-
   bool loading = false;
 
   bool actionActive = true;
+
+  String activeDate = '';
 }
 
 LatLng _latLngFromString(String val) {

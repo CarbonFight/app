@@ -1,6 +1,7 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import 'lat_lng.dart';
@@ -12,9 +13,9 @@ import '../../auth/auth_util.dart';
 int transportActionsCO2e(
   int distance,
   String passengers,
-  String ownership,
   String powertype,
   String transport,
+  bool roundTrip,
 ) {
   double co2e = 0;
   var passengersInt = int.parse(passengers);
@@ -35,26 +36,8 @@ int transportActionsCO2e(
         break;
     }
 
-    // ownership : Ratio applied to co2e
-    // Default is Owner
-    double co2ownership = 1;
-    switch (ownership) {
-      case "Propriétaire":
-        co2ownership = 1;
-        break;
-      case "Location courte":
-        co2ownership = 0.6;
-        break;
-      case "Location longue":
-        co2ownership = 0.8;
-        break;
-      case "Taxi":
-        co2ownership = 0.4;
-        break;
-    }
-
     // Co2 is distance * co2 per km for powertype * ratio of ownership / nomber of passengers
-    co2e = (distance * co2powertype * co2ownership) / passengersInt;
+    co2e = (distance * co2powertype) / passengersInt;
   }
 
   // Bike
@@ -150,23 +133,13 @@ int transportActionsCO2e(
         break;
     }
 
-    // ownership : Ratio applied to co2e
-    // Default is Owner
-    double co2ownership = 1;
-    switch (ownership) {
-      case "Propriétaire":
-        co2ownership = 1;
-        break;
-      case "Location longue":
-        co2ownership = 0.6;
-        break;
-      case "Location courte":
-        co2ownership = 0.8;
-        break;
-    }
-
     // Co2 is distance * co2 per km for powertype * ratio of ownership / nomber of passengers
-    co2e = (distance * co2powertype * co2ownership) / passengersInt;
+    co2e = (distance * co2powertype) / passengersInt;
+  }
+
+  // If roundTrip is Truc, co2e is *2
+  if (roundTrip) {
+    co2e = co2e * 2;
   }
 
   return co2e.round();
@@ -270,8 +243,8 @@ int energyPeriodicsCO2e(
 
 int foodActionsCO2e(
   String food,
-  String mainComponent,
-  String sideComponent,
+  List<String> mainComponents,
+  List<String> sideComponents,
   int portions,
 ) {
   double co2e = 0.0;
@@ -358,115 +331,156 @@ int foodActionsCO2e(
   // JUNK FOOD needs portions
 
   if (food == "starter") {
-    switch (mainComponent) {
-      case "Végétarienne":
-        co2e += 75;
-        break;
-      case "Mixte":
-        co2e += 150;
-        break;
-      case "Viande":
-        co2e += 300;
-        break;
+    for (var i = 0; i < mainComponents.length; i++) {
+      String currentMainComponent = mainComponents[i];
+      switch (currentMainComponent) {
+        case "Végétarienne":
+          co2e += 75;
+          break;
+        case "Mixte":
+          co2e += 150;
+          break;
+        case "Viande":
+          co2e += 300;
+          break;
+      }
     }
+
+    // Divide by number of components
+    co2e = co2e / mainComponents.length;
   } else if (food == "main") {
-    switch (mainComponent) {
-      case "Oeuf":
-        co2e += co2eEgg;
-        break;
-      case "Poisson":
-        co2e += co2eFish;
-        break;
-      case "Viande rouge":
-        co2e += co2eMeat;
-        break;
-      case "Viande blanche":
-        co2e += co2ePoultry;
-        break;
+    double co2eMain = 0.0;
+    double co2eSide = 0.0;
+
+    for (var i = 0; i < sideComponents.length; i++) {
+      String currentSideComponents = sideComponents[i];
+      switch (currentSideComponents) {
+        case "Riz":
+          co2eSide += co2eRicePastaWheat;
+          break;
+        case "Pâtes":
+          co2eSide += co2eRicePastaWheat;
+          break;
+        case "Blé":
+          co2eSide += co2eRicePastaWheat;
+          break;
+        case "Légumes":
+          co2eSide += co2eVegetables;
+          break;
+        case "Pommes de terre":
+          co2eSide += co2ePotatoes;
+          break;
+      }
     }
 
-    switch (sideComponent) {
-      case "Riz":
-        co2e += co2eRicePastaWheat;
-        break;
-      case "Pâtes":
-        co2e += co2eRicePastaWheat;
-        break;
-      case "Blé":
-        co2e += co2eRicePastaWheat;
-        break;
-      case "Légumes":
-        co2e += co2eVegetables;
-        break;
-      case "Pommes de terre":
-        co2e += co2ePotatoes;
-        break;
+    // Divide by number of components
+    co2eSide = co2eSide / (sideComponents.length);
+
+    for (var i = 0; i < mainComponents.length; i++) {
+      String currentMainComponent = mainComponents[i];
+      switch (currentMainComponent) {
+        case "Oeuf":
+          co2eMain += co2eEgg;
+          break;
+        case "Poisson":
+          co2eMain += co2eFish;
+          break;
+        case "Viande rouge":
+          co2eMain += co2eMeat;
+          break;
+        case "Viande blanche":
+          co2eMain += co2ePoultry;
+          break;
+        case "Végétarien":
+          co2eMain += co2e * 2;
+          break;
+      }
     }
 
-    if (mainComponent == "Végétarien") {
-      co2e = co2e * 2;
-    }
+    // Divide by number of components
+    co2eMain = co2eMain / (mainComponents.length);
+
+    // Divide by number of components
+    co2e = co2eMain + co2eSide;
   } else if (food == "desert") {
-    switch (mainComponent) {
-      case "Fruits":
-        co2e += co2eFruit;
-        break;
-      case "Fruits transformés":
-        co2e += co2eTransformedFruit;
-        break;
-      case "Yaourt":
-        co2e += co2eYogurt;
-        break;
-      case "Pâtisserie":
-        co2e += co2eCakePastry;
-        break;
-      case "Glace":
-        co2e += co2eIcecream;
-        break;
-      case "Crême dessert":
-        co2e += co2eCustard;
-        break;
+    for (var i = 0; i < mainComponents.length; i++) {
+      String currentMainComponent = mainComponents[i];
+      switch (currentMainComponent) {
+        case "Fruits":
+          co2e += co2eFruit;
+          break;
+        case "Fruits transformés":
+          co2e += co2eTransformedFruit;
+          break;
+        case "Yaourt":
+          co2e += co2eYogurt;
+          break;
+        case "Pâtisserie":
+          co2e += co2eCakePastry;
+          break;
+        case "Glace":
+          co2e += co2eIcecream;
+          break;
+        case "Crême dessert":
+          co2e += co2eCustard;
+          break;
+      }
     }
+
+    // Divide by number of components
+    co2e = co2e / mainComponents.length;
   } else if (food == "drinks") {
-    switch (mainComponent) {
-      case "Eau en bouteille":
-        co2e += co2eBottleWater;
-        break;
-      case "Eau du robinet":
-        co2e += co2eTapWater;
-        break;
-      case "Jus de fruit":
-        co2e += co2eFruitJuice;
-        break;
-      case "Soupe":
-        co2e += co2eSoup;
-        break;
-      case "Alcool":
-        co2e += co2eAlcohol;
-        break;
-      case "Boisson chaude":
-        co2e += co2eHotDrink;
-        break;
-      case "Soda":
-        co2e += co2eSoda;
-        break;
+    for (var i = 0; i < mainComponents.length; i++) {
+      String currentMainComponent = mainComponents[i];
+      switch (currentMainComponent) {
+        case "Eau en bouteille":
+          co2e += co2eBottleWater;
+          break;
+        case "Eau du robinet":
+          co2e += co2eTapWater;
+          break;
+        case "Jus de fruit":
+          co2e += co2eFruitJuice;
+          break;
+        case "Soupe":
+          co2e += co2eSoup;
+          break;
+        case "Alcool":
+          co2e += co2eAlcohol;
+          break;
+        case "Boisson chaude":
+          co2e += co2eHotDrink;
+          break;
+        case "Soda":
+          co2e += co2eSoda;
+          break;
+      }
     }
+
+    // Divide by number of components
+    co2e = co2e / mainComponents.length;
   } else if (food == "cheese") {
     co2e += co2eCheese;
   } else if (food == "bread") {
     co2e += co2eBread;
   } else if (food == "coffee") {
-    switch (mainComponent) {
-      case "Café filtre":
-        co2e += co2eCoffeeFilter;
-        break;
-      case "Expresso":
-        co2e += co2eCoffeeExpresso;
-        break;
-      case "Capsule":
-        co2e += co2eCoffeeCapsule;
-        break;
+    for (var i = 0; i < mainComponents.length; i++) {
+      String currentMainComponent = mainComponents[i];
+      switch (currentMainComponent) {
+        case "Café filtre":
+          co2e += co2eCoffeeFilter;
+          break;
+        case "Expresso":
+          co2e += co2eCoffeeExpresso;
+          break;
+        case "Capsule":
+          co2e += co2eCoffeeCapsule;
+          break;
+      }
     }
+
+    // Divide by number of components
+    co2e = co2e / mainComponents.length;
   }
 
   // Breakfast
@@ -548,11 +562,28 @@ bool lastCache(
   }
 }
 
-DateTime dateConv(DateTime date) {
+String timestampToDay(DateTime timestamp) {
   // Add your function code here!
-  var formatter = DateFormat('yyyy-MM-dd');
-  String formattedDate = formatter.format(date);
-  return DateTime.parse(formattedDate); // change to 2016-01-25
+  var formatter = DateFormat('yMd');
+  String formattedDate = formatter.format(timestamp);
+  //return DateTime.parse(formattedDate); // change to 7/25/2022
+  return formattedDate;
+}
+
+String setOneDayBefore(String activeDate) {
+  var parsedDate = DateFormat('yMd').parse(activeDate);
+  DateTime oneDayAgo = parsedDate.subtract(new Duration(days: 1));
+  String formattedDate = DateFormat('yMd').format(oneDayAgo);
+
+  return formattedDate;
+}
+
+String setOneDayAfter(String activeDate) {
+  var parsedDate = DateFormat('yMd').parse(activeDate);
+  DateTime oneDayAfter = parsedDate.add(new Duration(days: 1));
+  String formattedDate = DateFormat('yMd').format(oneDayAfter);
+
+  return formattedDate;
 }
 
 double ratioScoreTotal(
@@ -578,4 +609,211 @@ String printRatioScoreTotal(
   var val = ratio.toStringAsFixed(0);
   var unit = '%';
   return val + " " + unit;
+}
+
+List<String> getTransportPowerType(String transport) {
+  List<String> params = [];
+
+  switch (transport) {
+    case "car":
+      params.add('Thermique');
+      params.add('Hybride');
+      params.add('Électrique');
+      break;
+    case "bus":
+      params.add('Thermique');
+      params.add('Gaz Naturel');
+      params.add('Électrique');
+      break;
+    case "scooter":
+      params.add('Thermique');
+      params.add('Électrique');
+      break;
+    case "train":
+      params.add('TGV');
+      params.add('TER');
+      params.add('intercites');
+      params.add('RER');
+      params.add('transilien');
+      params.add('tramway');
+      break;
+    case "bike":
+      params.add('Classique');
+      params.add('Électrique');
+      break;
+    case "flight":
+      params.add('Avion commercial');
+      break;
+    case "metro":
+      params.add('RATP');
+      break;
+    case "moto":
+      params.add('Thermique');
+      params.add('Électrique');
+      break;
+  }
+
+  return params;
+}
+
+List<String> getEnergyPowertype(String energy) {
+  List<String> params = [];
+
+  switch (energy) {
+    case "electricity":
+      params.add('Nucléaire');
+      params.add('Éolienne (mer)');
+      params.add('Éolienne (terre)');
+      params.add('Hydroélectrique');
+      params.add('Biomasse');
+      params.add('Géothermique');
+      params.add('Fioul');
+      params.add('Charbon');
+      break;
+    case "gas":
+      params.add('Gaz naturel');
+      params.add('Gaz de cokerie');
+      params.add('Gaz de haut fourneau');
+      break;
+    case "water":
+      params.add('Circuit France');
+      break;
+  }
+
+  return params;
+}
+
+List<String> getFoodMainComponents(String food) {
+  List<String> params = [];
+
+  switch (food) {
+    case "starter":
+      params.add('Végétarienne');
+      params.add('Mixte');
+      params.add('Viande');
+      break;
+    case "main":
+      params.add('Végétarien');
+      params.add('Oeuf');
+      params.add('Poisson');
+      params.add('Viande rouge');
+      params.add('Viande blanche');
+      break;
+    case "desert":
+      params.add('Fruits');
+      params.add('Fruits transformés');
+      params.add('Yaourt');
+      params.add('Pâtisserie');
+      params.add('Glace');
+      params.add('Crême dessert');
+      break;
+    case "drinks":
+      params.add('Eau en bouteille');
+      params.add('Eau du robinet');
+      params.add('Jus de fruit');
+      params.add('Soupe');
+      params.add('Alcool');
+      params.add('Boisson chaude');
+      params.add('Soda');
+      break;
+    case "coffee":
+      params.add('Café filtre');
+      params.add('Expresso');
+      params.add('Capsule');
+      break;
+  }
+
+  return params;
+}
+
+List<String> getFoodSideComponents(String food) {
+  List<String> params = [];
+
+  switch (food) {
+    case "main":
+      params.add('Riz');
+      params.add('Pâtes');
+      params.add('Blé');
+      params.add('Légumes');
+      params.add('Pommes de terre');
+      break;
+  }
+
+  return params;
+}
+
+List<String> getTransportPassengers(String transport) {
+  List<String> params = [];
+
+  switch (transport) {
+    case "car":
+      params.add('1');
+      params.add('2');
+      params.add('3');
+      params.add('4');
+      params.add('5');
+      params.add('6');
+      params.add('7');
+      params.add('8');
+      break;
+    case "bus":
+      params.add('Non applicable');
+      break;
+    case "scooter":
+      params.add('1');
+      params.add('2');
+      break;
+    case "train":
+      params.add('Non applicable');
+      break;
+    case "bike":
+      params.add('1');
+      params.add('2');
+      break;
+    case "flight":
+      params.add('Non applicable');
+      break;
+    case "metro":
+      params.add('Non applicable');
+      break;
+    case "moto":
+      params.add('1');
+      params.add('2');
+      break;
+  }
+
+  return params;
+}
+
+String getTransportDistanceLabel(String transport) {
+  String label = "";
+
+  switch (transport) {
+    case "car":
+      label = "Distance parcourue (en KMs)";
+      break;
+    case "bus":
+      label = "Nombre de stations";
+      break;
+    case "scooter":
+      label = "Distance parcourue (en KMs)";
+      break;
+    case "train":
+      label = "Distance parcourue (en KMs)";
+      break;
+    case "bike":
+      label = "Distance parcourue (en KMs)";
+      break;
+    case "flight":
+      label = "Distance parcourue (en KMs)";
+      break;
+    case "metro":
+      label = "Nombre de stations";
+      break;
+    case "moto":
+      label = "Distance parcourue (en KMs)";
+      break;
+  }
+
+  return label;
 }

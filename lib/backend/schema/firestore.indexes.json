@@ -55,29 +55,85 @@
       ]
     },
     {
-      "collectionGroup": "actionCache",
+      "collectionGroup": "transportActions",
       "queryScope": "COLLECTION",
       "fields": [
         {
-          "fieldPath": "user",
+          "fieldPath": "userId",
           "order": "ASCENDING"
         },
         {
-          "fieldPath": "date",
+          "fieldPath": "day",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isPeriodic",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "created_time",
           "order": "DESCENDING"
         }
       ]
     },
     {
-      "collectionGroup": "actionTypeCache",
+      "collectionGroup": "energyActions",
       "queryScope": "COLLECTION",
       "fields": [
         {
-          "fieldPath": "actionCache",
+          "fieldPath": "userId",
           "order": "ASCENDING"
         },
         {
-          "fieldPath": "date",
+          "fieldPath": "day",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isPeriodic",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "created_time",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "foodActions",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "userId",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "day",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isPeriodic",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "created_time",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "foodActions",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "userId",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isPeriodic",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "created_time",
           "order": "DESCENDING"
         }
       ]

@@ -16,9 +16,9 @@ class FeedbackWidget extends StatefulWidget {
 }
 
 class _FeedbackWidgetState extends State<FeedbackWidget> {
-  final scaffoldKey = GlobalKey<ScaffoldState>();
   ApiCallResponse sendEmail;
   TextEditingController messageController;
+  final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
@@ -172,19 +172,20 @@ class _FeedbackWidgetState extends State<FeedbackWidget> {
                                   if (!(FFAppState().loading) ?? true)
                                     InkWell(
                                       onTap: () async {
-                                        logFirebaseEvent('send-ON_TAP');
                                         logFirebaseEvent(
-                                            'send-Update-Local-State');
+                                            'FEEDBACK_PAGE_send_ON_TAP');
+                                        logFirebaseEvent(
+                                            'send_Update-Local-State');
                                         setState(
                                             () => FFAppState().loading = true);
-                                        logFirebaseEvent('send-Backend-Call');
+                                        logFirebaseEvent('send_Backend-Call');
                                         sendEmail = await SendEmailCall.call(
                                           emailbody: messageController.text,
                                           emailsendername:
                                               currentUserDisplayName,
                                         );
                                         if ((sendEmail?.succeeded ?? true)) {
-                                          logFirebaseEvent('send-Alert-Dialog');
+                                          logFirebaseEvent('send_Alert-Dialog');
                                           await showDialog(
                                             context: context,
                                             builder: (alertDialogContext) {
@@ -204,7 +205,7 @@ class _FeedbackWidgetState extends State<FeedbackWidget> {
                                             },
                                           );
                                         } else {
-                                          logFirebaseEvent('send-Alert-Dialog');
+                                          logFirebaseEvent('send_Alert-Dialog');
                                           await showDialog(
                                             context: context,
                                             builder: (alertDialogContext) {
@@ -225,10 +226,10 @@ class _FeedbackWidgetState extends State<FeedbackWidget> {
                                           );
                                         }
 
-                                        logFirebaseEvent('send-Navigate-Back');
+                                        logFirebaseEvent('send_Navigate-Back');
                                         Navigator.pop(context);
                                         logFirebaseEvent(
-                                            'send-Update-Local-State');
+                                            'send_Update-Local-State');
                                         setState(
                                             () => FFAppState().loading = false);
 
@@ -291,8 +292,9 @@ class _FeedbackWidgetState extends State<FeedbackWidget> {
                               size: 30,
                             ),
                             onPressed: () async {
-                              logFirebaseEvent('IconButton-ON_TAP');
-                              logFirebaseEvent('IconButton-Navigate-Back');
+                              logFirebaseEvent(
+                                  'FEEDBACK_PAGE_arrow_back_ICON_ON_TAP');
+                              logFirebaseEvent('IconButton_Navigate-Back');
                               Navigator.pop(context);
                             },
                           ),

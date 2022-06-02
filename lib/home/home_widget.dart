@@ -1,36 +1,19 @@
 import '../account/account_widget.dart';
 import '../auth/auth_util.dart';
 import '../backend/backend.dart';
-import '../components/bike_form_modify_widget.dart';
-import '../components/bread_form_modify_widget.dart';
-import '../components/bus_form_modify_widget.dart';
-import '../components/car_form_modify_widget.dart';
-import '../components/cheese_form_modify_widget.dart';
-import '../components/coffee_form_modify_widget.dart';
-import '../components/desert_form_modify_widget.dart';
-import '../components/drinks_form_modify_widget.dart';
-import '../components/electricity_form_action_modify_widget.dart';
-import '../components/electricity_form_periodic_modify_widget.dart';
-import '../components/energy_form_widget.dart';
-import '../components/flight_form_modify_widget.dart';
-import '../components/food_form_widget.dart';
-import '../components/gaz_form_action_modify_widget.dart';
-import '../components/gaz_form_periodic_modify_widget.dart';
-import '../components/main_food_form_modify_widget.dart';
-import '../components/metro_form_modify_widget.dart';
-import '../components/moto_form_modify_widget.dart';
-import '../components/scooter_form_modify_widget.dart';
-import '../components/starter_form_modify_widget.dart';
-import '../components/train_form_modify_widget.dart';
-import '../components/transport_form_widget.dart';
-import '../components/water_form_action_modif_widget.dart';
-import '../components/water_form_periodic_modify_widget.dart';
+import '../components/energy_list_widget.dart';
+import '../components/food_list_widget.dart';
+import '../components/transport_list_widget.dart';
 import '../drawer/drawer_widget.dart';
+import '../energies/energies_widget.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
+import '../food/food_widget.dart';
 import '../statistiques/statistiques_widget.dart';
+import '../transport/transport_widget.dart';
 import '../flutter_flow/custom_functions.dart' as functions;
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -45,14 +28,20 @@ class HomeWidget extends StatefulWidget {
 }
 
 class _HomeWidgetState extends State<HomeWidget> {
-  PageController pageView2Controller;
-  PageController periodicsController;
   PageController pageViewController;
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
     super.initState();
+    // On page load action.
+    SchedulerBinding.instance?.addPostFrameCallback((_) async {
+      logFirebaseEvent('HOME_PAGE_Home_ON_PAGE_LOAD');
+      logFirebaseEvent('Home_Update-Local-State');
+      setState(() =>
+          FFAppState().activeDate = dateTimeFormat('yMd', getCurrentTimestamp));
+    });
+
     logFirebaseEvent('screen_view', parameters: {'screen_name': 'Home'});
   }
 
@@ -165,8 +154,9 @@ class _HomeWidgetState extends State<HomeWidget> {
                               children: [
                                 InkWell(
                                   onTap: () async {
-                                    logFirebaseEvent('Container-ON_TAP');
-                                    logFirebaseEvent('Container-Navigate-To');
+                                    logFirebaseEvent(
+                                        'HOME_PAGE_Container_0enn42xz_ON_TAP');
+                                    logFirebaseEvent('Container_Navigate-To');
                                     await Navigator.push(
                                       context,
                                       PageTransition(
@@ -201,8 +191,9 @@ class _HomeWidgetState extends State<HomeWidget> {
                             ),
                             InkWell(
                               onTap: () async {
-                                logFirebaseEvent('Container-ON_TAP');
-                                logFirebaseEvent('Container-Navigate-To');
+                                logFirebaseEvent(
+                                    'HOME_PAGE_Container_gcuzh7sp_ON_TAP');
+                                logFirebaseEvent('Container_Navigate-To');
                                 await Navigator.push(
                                   context,
                                   PageTransition(
@@ -303,13 +294,18 @@ class _HomeWidgetState extends State<HomeWidget> {
                                   children: [
                                     InkWell(
                                       onTap: () async {
-                                        logFirebaseEvent('Container-ON_TAP');
                                         logFirebaseEvent(
-                                            'Container-Navigate-To');
+                                            'HOME_PAGE_Container_ol5sejov_ON_TAP');
+                                        logFirebaseEvent(
+                                            'Container_Navigate-To');
                                         await Navigator.push(
                                           context,
-                                          MaterialPageRoute(
-                                            builder: (context) => HomeWidget(),
+                                          PageTransition(
+                                            type: PageTransitionType.fade,
+                                            duration: Duration(milliseconds: 0),
+                                            reverseDuration:
+                                                Duration(milliseconds: 0),
+                                            child: HomeWidget(),
                                           ),
                                         );
                                       },
@@ -361,14 +357,18 @@ class _HomeWidgetState extends State<HomeWidget> {
                                     ),
                                     InkWell(
                                       onTap: () async {
-                                        logFirebaseEvent('Container-ON_TAP');
                                         logFirebaseEvent(
-                                            'Container-Navigate-To');
+                                            'HOME_PAGE_Container_a2kikzom_ON_TAP');
+                                        logFirebaseEvent(
+                                            'Container_Navigate-To');
                                         await Navigator.push(
                                           context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                StatistiquesWidget(),
+                                          PageTransition(
+                                            type: PageTransitionType.fade,
+                                            duration: Duration(milliseconds: 0),
+                                            reverseDuration:
+                                                Duration(milliseconds: 0),
+                                            child: StatistiquesWidget(),
                                           ),
                                         );
                                       },
@@ -434,189 +434,41 @@ class _HomeWidgetState extends State<HomeWidget> {
                           width: MediaQuery.of(context).size.width,
                           height: 600,
                           decoration: BoxDecoration(),
-                          child: Padding(
-                            padding:
-                                EdgeInsetsDirectional.fromSTEB(0, 0, 0, 40),
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Expanded(
-                                  child: Container(
-                                    width: MediaQuery.of(context).size.width,
-                                    child: Stack(
-                                      children: [
-                                        Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  0, 0, 0, 30),
-                                          child: PageView(
-                                            controller: pageViewController ??=
-                                                PageController(initialPage: 0),
-                                            scrollDirection: Axis.horizontal,
-                                            children: [
-                                              Container(
-                                                width: 100,
-                                                height: 100,
-                                                decoration: BoxDecoration(
-                                                  color: Color(0x23FFFFFF),
-                                                  boxShadow: [
-                                                    BoxShadow(
-                                                      blurRadius: 35,
-                                                      color: Color(0x0E000000),
-                                                      offset: Offset(0, 10),
-                                                    )
-                                                  ],
-                                                  shape: BoxShape.circle,
-                                                ),
-                                                child: Padding(
-                                                  padding: EdgeInsetsDirectional
-                                                      .fromSTEB(0, 0, 0, 2),
-                                                  child: Stack(
-                                                    alignment:
-                                                        AlignmentDirectional(
-                                                            0, 0),
-                                                    children: [
-                                                      AuthUserStreamWidget(
-                                                        child:
-                                                            CircularPercentIndicator(
-                                                          percent: functions
-                                                              .ratioScoreGoal(
-                                                                  containerUsersStatsRecord
-                                                                      .day0,
-                                                                  'day',
-                                                                  currentUserDocument
-                                                                      ?.co2target),
-                                                          radius: 100,
-                                                          lineWidth: 18,
-                                                          animation: true,
-                                                          progressColor:
-                                                              Color(0xB30B1E1B),
-                                                          backgroundColor:
-                                                              Color(0x98FFFFFF),
-                                                          center: Text(
-                                                            functions.printScore(
-                                                                containerUsersStatsRecord
-                                                                    .day0),
-                                                            textAlign:
-                                                                TextAlign.start,
-                                                            style: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .title2
-                                                                .override(
-                                                                  fontFamily:
-                                                                      'Montserrat',
-                                                                  color: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .tertiaryColor,
-                                                                  fontSize: 32,
-                                                                ),
-                                                          ),
-                                                          startAngle: 0,
-                                                        ),
-                                                      ),
-                                                      Align(
-                                                        alignment:
-                                                            AlignmentDirectional(
-                                                                0, -0.4),
-                                                        child: Padding(
-                                                          padding:
-                                                              EdgeInsetsDirectional
-                                                                  .fromSTEB(45,
-                                                                      0, 45, 0),
-                                                          child: Row(
-                                                            mainAxisSize:
-                                                                MainAxisSize
-                                                                    .max,
-                                                            children: [
-                                                              Expanded(
-                                                                child: Text(
-                                                                  'Aujourd\'hui',
-                                                                  textAlign:
-                                                                      TextAlign
-                                                                          .center,
-                                                                  style: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .bodyText1
-                                                                      .override(
-                                                                        fontFamily:
-                                                                            'Montserrat',
-                                                                        color: FlutterFlowTheme.of(context)
-                                                                            .gronyLighter,
-                                                                        fontSize:
-                                                                            11,
-                                                                      ),
-                                                                ),
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      Align(
-                                                        alignment:
-                                                            AlignmentDirectional(
-                                                                0, 0.4),
-                                                        child: Padding(
-                                                          padding:
-                                                              EdgeInsetsDirectional
-                                                                  .fromSTEB(45,
-                                                                      0, 45, 0),
-                                                          child: Row(
-                                                            mainAxisSize:
-                                                                MainAxisSize
-                                                                    .max,
-                                                            children: [
-                                                              Expanded(
-                                                                child:
-                                                                    AuthUserStreamWidget(
-                                                                  child: Text(
-                                                                    'Objectif : ${valueOrDefault<String>(
-                                                                      functions.printTarget(
-                                                                          'day',
-                                                                          currentUserDocument
-                                                                              ?.co2target),
-                                                                      '0',
-                                                                    )}',
-                                                                    textAlign:
-                                                                        TextAlign
-                                                                            .center,
-                                                                    style: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .bodyText1
-                                                                        .override(
-                                                                          fontFamily:
-                                                                              'Montserrat',
-                                                                          color:
-                                                                              FlutterFlowTheme.of(context).tertiaryColor,
-                                                                          fontSize:
-                                                                              10,
-                                                                        ),
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Expanded(
+                                child: Container(
+                                  width: MediaQuery.of(context).size.width,
+                                  child: Stack(
+                                    children: [
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            0, 0, 0, 30),
+                                        child: PageView(
+                                          controller: pageViewController ??=
+                                              PageController(initialPage: 0),
+                                          scrollDirection: Axis.horizontal,
+                                          children: [
+                                            Container(
+                                              width: 100,
+                                              height: 100,
+                                              decoration: BoxDecoration(
+                                                color: Color(0x23FFFFFF),
+                                                boxShadow: [
+                                                  BoxShadow(
+                                                    blurRadius: 35,
+                                                    color: Color(0x0E000000),
+                                                    offset: Offset(0, 10),
+                                                  )
+                                                ],
+                                                shape: BoxShape.circle,
                                               ),
-                                              Container(
-                                                width: 100,
-                                                height: 100,
-                                                decoration: BoxDecoration(
-                                                  color: Color(0x23FFFFFF),
-                                                  boxShadow: [
-                                                    BoxShadow(
-                                                      blurRadius: 35,
-                                                      color: Color(0x0E000000),
-                                                      offset: Offset(0, 10),
-                                                    )
-                                                  ],
-                                                  shape: BoxShape.circle,
-                                                ),
+                                              child: Padding(
+                                                padding: EdgeInsetsDirectional
+                                                    .fromSTEB(0, 0, 0, 2),
                                                 child: Stack(
                                                   alignment:
                                                       AlignmentDirectional(
@@ -625,13 +477,14 @@ class _HomeWidgetState extends State<HomeWidget> {
                                                     AuthUserStreamWidget(
                                                       child:
                                                           CircularPercentIndicator(
-                                                        percent: functions
-                                                            .ratioScoreGoal(
-                                                                containerUsersStatsRecord
-                                                                    .week0,
-                                                                'week',
+                                                        percent: functions.ratioScoreGoal(
+                                                            containerUsersStatsRecord
+                                                                .day0,
+                                                            'day',
+                                                            valueOrDefault(
                                                                 currentUserDocument
-                                                                    ?.co2target),
+                                                                    ?.co2target,
+                                                                0)),
                                                         radius: 100,
                                                         lineWidth: 18,
                                                         animation: true,
@@ -642,7 +495,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                                         center: Text(
                                                           functions.printScore(
                                                               containerUsersStatsRecord
-                                                                  .week0),
+                                                                  .day0),
                                                           textAlign:
                                                               TextAlign.start,
                                                           style: FlutterFlowTheme
@@ -675,7 +528,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                                           children: [
                                                             Expanded(
                                                               child: Text(
-                                                                'Cette semaine',
+                                                                'Aujourd\'hui',
                                                                 textAlign:
                                                                     TextAlign
                                                                         .center,
@@ -716,9 +569,10 @@ class _HomeWidgetState extends State<HomeWidget> {
                                                                 child: Text(
                                                                   'Objectif : ${valueOrDefault<String>(
                                                                     functions.printTarget(
-                                                                        'week',
-                                                                        currentUserDocument
-                                                                            ?.co2target),
+                                                                        'day',
+                                                                        valueOrDefault(
+                                                                            currentUserDocument?.co2target,
+                                                                            0)),
                                                                     '0',
                                                                   )}',
                                                                   textAlign:
@@ -745,52 +599,52 @@ class _HomeWidgetState extends State<HomeWidget> {
                                                   ],
                                                 ),
                                               ),
-                                              Container(
-                                                width: 100,
-                                                height: 100,
-                                                decoration: BoxDecoration(
-                                                  color: Color(0x23FFFFFF),
-                                                  boxShadow: [
-                                                    BoxShadow(
-                                                      blurRadius: 35,
-                                                      color: Color(0x0E000000),
-                                                      offset: Offset(0, 10),
-                                                    )
-                                                  ],
-                                                  shape: BoxShape.circle,
-                                                ),
-                                                child: Container(
-                                                  width: 100,
-                                                  child: Stack(
-                                                    alignment:
-                                                        AlignmentDirectional(
-                                                            0, 0),
-                                                    children: [
-                                                      AuthUserStreamWidget(
-                                                        child:
-                                                            CircularPercentIndicator(
-                                                          percent: functions
-                                                              .ratioScoreGoal(
-                                                                  containerUsersStatsRecord
-                                                                      .month0,
-                                                                  'month',
-                                                                  currentUserDocument
-                                                                      ?.co2target),
-                                                          radius: 100,
-                                                          lineWidth: 18,
-                                                          animation: true,
-                                                          progressColor:
-                                                              Color(0xB30B1E1B),
-                                                          backgroundColor:
-                                                              Color(0x98FFFFFF),
-                                                          center: Text(
-                                                            functions.printScore(
-                                                                containerUsersStatsRecord
-                                                                    .month0),
-                                                            textAlign:
-                                                                TextAlign.start,
-                                                            style: FlutterFlowTheme
-                                                                    .of(context)
+                                            ),
+                                            Container(
+                                              width: 100,
+                                              height: 100,
+                                              decoration: BoxDecoration(
+                                                color: Color(0x23FFFFFF),
+                                                boxShadow: [
+                                                  BoxShadow(
+                                                    blurRadius: 35,
+                                                    color: Color(0x0E000000),
+                                                    offset: Offset(0, 10),
+                                                  )
+                                                ],
+                                                shape: BoxShape.circle,
+                                              ),
+                                              child: Stack(
+                                                alignment:
+                                                    AlignmentDirectional(0, 0),
+                                                children: [
+                                                  AuthUserStreamWidget(
+                                                    child:
+                                                        CircularPercentIndicator(
+                                                      percent: functions.ratioScoreGoal(
+                                                          containerUsersStatsRecord
+                                                              .week0,
+                                                          'week',
+                                                          valueOrDefault(
+                                                              currentUserDocument
+                                                                  ?.co2target,
+                                                              0)),
+                                                      radius: 100,
+                                                      lineWidth: 18,
+                                                      animation: true,
+                                                      progressColor:
+                                                          Color(0xB30B1E1B),
+                                                      backgroundColor:
+                                                          Color(0x98FFFFFF),
+                                                      center: Text(
+                                                        functions.printScore(
+                                                            containerUsersStatsRecord
+                                                                .week0),
+                                                        textAlign:
+                                                            TextAlign.start,
+                                                        style:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
                                                                 .title2
                                                                 .override(
                                                                   fontFamily:
@@ -800,30 +654,220 @@ class _HomeWidgetState extends State<HomeWidget> {
                                                                       .tertiaryColor,
                                                                   fontSize: 32,
                                                                 ),
+                                                      ),
+                                                      startAngle: 0,
+                                                    ),
+                                                  ),
+                                                  Align(
+                                                    alignment:
+                                                        AlignmentDirectional(
+                                                            0, -0.4),
+                                                    child: Padding(
+                                                      padding:
+                                                          EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                                  45, 0, 45, 0),
+                                                      child: Row(
+                                                        mainAxisSize:
+                                                            MainAxisSize.max,
+                                                        children: [
+                                                          Expanded(
+                                                            child: Text(
+                                                              'Cette semaine',
+                                                              textAlign:
+                                                                  TextAlign
+                                                                      .center,
+                                                              style: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .bodyText1
+                                                                  .override(
+                                                                    fontFamily:
+                                                                        'Montserrat',
+                                                                    color: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .gronyLighter,
+                                                                    fontSize:
+                                                                        11,
+                                                                  ),
+                                                            ),
                                                           ),
-                                                          startAngle: 0,
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  Align(
+                                                    alignment:
+                                                        AlignmentDirectional(
+                                                            0, 0.4),
+                                                    child: Padding(
+                                                      padding:
+                                                          EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                                  45, 0, 45, 0),
+                                                      child: Row(
+                                                        mainAxisSize:
+                                                            MainAxisSize.max,
+                                                        children: [
+                                                          Expanded(
+                                                            child:
+                                                                AuthUserStreamWidget(
+                                                              child: Text(
+                                                                'Objectif : ${valueOrDefault<String>(
+                                                                  functions.printTarget(
+                                                                      'week',
+                                                                      valueOrDefault(
+                                                                          currentUserDocument
+                                                                              ?.co2target,
+                                                                          0)),
+                                                                  '0',
+                                                                )}',
+                                                                textAlign:
+                                                                    TextAlign
+                                                                        .center,
+                                                                style: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .bodyText1
+                                                                    .override(
+                                                                      fontFamily:
+                                                                          'Montserrat',
+                                                                      color: FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .tertiaryColor,
+                                                                      fontSize:
+                                                                          10,
+                                                                    ),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                            Container(
+                                              width: 100,
+                                              height: 100,
+                                              decoration: BoxDecoration(
+                                                color: Color(0x23FFFFFF),
+                                                boxShadow: [
+                                                  BoxShadow(
+                                                    blurRadius: 35,
+                                                    color: Color(0x0E000000),
+                                                    offset: Offset(0, 10),
+                                                  )
+                                                ],
+                                                shape: BoxShape.circle,
+                                              ),
+                                              child: Container(
+                                                width: 100,
+                                                child: Stack(
+                                                  alignment:
+                                                      AlignmentDirectional(
+                                                          0, 0),
+                                                  children: [
+                                                    AuthUserStreamWidget(
+                                                      child:
+                                                          CircularPercentIndicator(
+                                                        percent: functions.ratioScoreGoal(
+                                                            containerUsersStatsRecord
+                                                                .month0,
+                                                            'month',
+                                                            valueOrDefault(
+                                                                currentUserDocument
+                                                                    ?.co2target,
+                                                                0)),
+                                                        radius: 100,
+                                                        lineWidth: 18,
+                                                        animation: true,
+                                                        progressColor:
+                                                            Color(0xB30B1E1B),
+                                                        backgroundColor:
+                                                            Color(0x98FFFFFF),
+                                                        center: Text(
+                                                          functions.printScore(
+                                                              containerUsersStatsRecord
+                                                                  .month0),
+                                                          textAlign:
+                                                              TextAlign.start,
+                                                          style: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .title2
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Montserrat',
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .tertiaryColor,
+                                                                fontSize: 32,
+                                                              ),
+                                                        ),
+                                                        startAngle: 0,
+                                                      ),
+                                                    ),
+                                                    Align(
+                                                      alignment:
+                                                          AlignmentDirectional(
+                                                              0, -0.4),
+                                                      child: Padding(
+                                                        padding:
+                                                            EdgeInsetsDirectional
+                                                                .fromSTEB(120,
+                                                                    0, 120, 0),
+                                                        child: Row(
+                                                          mainAxisSize:
+                                                              MainAxisSize.max,
+                                                          children: [
+                                                            Expanded(
+                                                              child: Text(
+                                                                'Ce mois',
+                                                                textAlign:
+                                                                    TextAlign
+                                                                        .center,
+                                                                style: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .bodyText1
+                                                                    .override(
+                                                                      fontFamily:
+                                                                          'Montserrat',
+                                                                      color: FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .gronyLighter,
+                                                                      fontSize:
+                                                                          11,
+                                                                    ),
+                                                              ),
+                                                            ),
+                                                          ],
                                                         ),
                                                       ),
-                                                      Align(
-                                                        alignment:
-                                                            AlignmentDirectional(
-                                                                0, -0.4),
-                                                        child: Padding(
-                                                          padding:
-                                                              EdgeInsetsDirectional
-                                                                  .fromSTEB(
-                                                                      120,
-                                                                      0,
-                                                                      120,
-                                                                      0),
-                                                          child: Row(
-                                                            mainAxisSize:
-                                                                MainAxisSize
-                                                                    .max,
-                                                            children: [
-                                                              Expanded(
+                                                    ),
+                                                    Align(
+                                                      alignment:
+                                                          AlignmentDirectional(
+                                                              0, 0.4),
+                                                      child: Padding(
+                                                        padding:
+                                                            EdgeInsetsDirectional
+                                                                .fromSTEB(45, 0,
+                                                                    45, 0),
+                                                        child: Row(
+                                                          mainAxisSize:
+                                                              MainAxisSize.max,
+                                                          children: [
+                                                            Expanded(
+                                                              child:
+                                                                  AuthUserStreamWidget(
                                                                 child: Text(
-                                                                  'Ce mois',
+                                                                  'Objectif : ${valueOrDefault<String>(
+                                                                    functions.printTarget(
+                                                                        'month',
+                                                                        valueOrDefault(
+                                                                            currentUserDocument?.co2target,
+                                                                            0)),
+                                                                    '0',
+                                                                  )}',
                                                                   textAlign:
                                                                       TextAlign
                                                                           .center,
@@ -834,1729 +878,1308 @@ class _HomeWidgetState extends State<HomeWidget> {
                                                                         fontFamily:
                                                                             'Montserrat',
                                                                         color: FlutterFlowTheme.of(context)
-                                                                            .gronyLighter,
+                                                                            .tertiaryColor,
                                                                         fontSize:
-                                                                            11,
+                                                                            10,
                                                                       ),
                                                                 ),
                                                               ),
-                                                            ],
-                                                          ),
+                                                            ),
+                                                          ],
                                                         ),
                                                       ),
-                                                      Align(
-                                                        alignment:
-                                                            AlignmentDirectional(
-                                                                0, 0.4),
-                                                        child: Padding(
-                                                          padding:
-                                                              EdgeInsetsDirectional
-                                                                  .fromSTEB(45,
-                                                                      0, 45, 0),
-                                                          child: Row(
-                                                            mainAxisSize:
-                                                                MainAxisSize
-                                                                    .max,
-                                                            children: [
-                                                              Expanded(
-                                                                child:
-                                                                    AuthUserStreamWidget(
-                                                                  child: Text(
-                                                                    'Objectif : ${valueOrDefault<String>(
-                                                                      functions.printTarget(
-                                                                          'month',
-                                                                          currentUserDocument
-                                                                              ?.co2target),
-                                                                      '0',
-                                                                    )}',
-                                                                    textAlign:
-                                                                        TextAlign
-                                                                            .center,
-                                                                    style: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .bodyText1
-                                                                        .override(
-                                                                          fontFamily:
-                                                                              'Montserrat',
-                                                                          color:
-                                                                              FlutterFlowTheme.of(context).tertiaryColor,
-                                                                          fontSize:
-                                                                              10,
-                                                                        ),
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
+                                                    ),
+                                                  ],
                                                 ),
                                               ),
-                                            ],
-                                          ),
-                                        ),
-                                        Align(
-                                          alignment: AlignmentDirectional(0, 1),
-                                          child: SmoothPageIndicator(
-                                            controller: pageViewController ??=
-                                                PageController(initialPage: 0),
-                                            count: 3,
-                                            axisDirection: Axis.horizontal,
-                                            onDotClicked: (i) {
-                                              pageViewController.animateToPage(
-                                                i,
-                                                duration:
-                                                    Duration(milliseconds: 500),
-                                                curve: Curves.ease,
-                                              );
-                                            },
-                                            effect: ExpandingDotsEffect(
-                                              expansionFactor: 4,
-                                              spacing: 8,
-                                              radius: 16,
-                                              dotWidth: 8,
-                                              dotHeight: 8,
-                                              dotColor:
-                                                  FlutterFlowTheme.of(context)
-                                                      .gronyLighter,
-                                              activeDotColor:
-                                                  FlutterFlowTheme.of(context)
-                                                      .tertiaryColor,
-                                              paintStyle: PaintingStyle.fill,
                                             ),
-                                          ),
+                                          ],
                                         ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      0, 20, 0, 0),
-                                  child: Column(
-                                    mainAxisSize: MainAxisSize.max,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            40, 20, 40, 0),
-                                        child: FutureBuilder<
-                                            List<ActionCacheRecord>>(
-                                          future: queryActionCacheRecordOnce(
-                                            queryBuilder: (actionCacheRecord) =>
-                                                actionCacheRecord
-                                                    .where('user',
-                                                        isEqualTo:
-                                                            currentUserReference)
-                                                    .where('day',
-                                                        isEqualTo: dateTimeFormat(
-                                                                    'yMd',
-                                                                    getCurrentTimestamp) !=
-                                                                ''
-                                                            ? dateTimeFormat(
-                                                                'yMd',
-                                                                getCurrentTimestamp)
-                                                            : null),
-                                            singleRecord: true,
-                                          ),
-                                          builder: (context, snapshot) {
-                                            // Customize what your widget looks like when it's loading.
-                                            if (!snapshot.hasData) {
-                                              return Center(
-                                                child: SizedBox(
-                                                  width: 2,
-                                                  height: 2,
-                                                  child: SpinKitRing(
-                                                    color: Colors.transparent,
-                                                    size: 2,
-                                                  ),
-                                                ),
-                                              );
-                                            }
-                                            List<ActionCacheRecord>
-                                                rowActionCacheRecordList =
-                                                snapshot.data;
-                                            final rowActionCacheRecord =
-                                                rowActionCacheRecordList
-                                                        .isNotEmpty
-                                                    ? rowActionCacheRecordList
-                                                        .first
-                                                    : null;
-                                            return Row(
-                                              mainAxisSize: MainAxisSize.min,
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.center,
-                                              children: [
-                                                Column(
-                                                  mainAxisSize:
-                                                      MainAxisSize.max,
-                                                  children: [
-                                                    Padding(
-                                                      padding:
-                                                          EdgeInsetsDirectional
-                                                              .fromSTEB(
-                                                                  0, 0, 7, 0),
-                                                      child: InkWell(
-                                                        onTap: () async {
-                                                          logFirebaseEvent(
-                                                              'Repasbtn-ON_TAP');
-                                                          logFirebaseEvent(
-                                                              'Repasbtn-Bottom-Sheet');
-                                                          await showModalBottomSheet(
-                                                            isScrollControlled:
-                                                                true,
-                                                            backgroundColor:
-                                                                Colors
-                                                                    .transparent,
-                                                            barrierColor: Color(
-                                                                0xBF000000),
-                                                            context: context,
-                                                            builder: (context) {
-                                                              return Padding(
-                                                                padding: MediaQuery.of(
-                                                                        context)
-                                                                    .viewInsets,
-                                                                child:
-                                                                    Container(
-                                                                  height: 600,
-                                                                  child:
-                                                                      FoodFormWidget(
-                                                                    cache:
-                                                                        rowActionCacheRecord,
-                                                                  ),
-                                                                ),
-                                                              );
-                                                            },
-                                                          );
-                                                        },
-                                                        child: Container(
-                                                          width: 90,
-                                                          height: 90,
-                                                          decoration:
-                                                              BoxDecoration(
-                                                            color: Color(
-                                                                0x9FFFFFFF),
-                                                            boxShadow: [
-                                                              BoxShadow(
-                                                                blurRadius: 25,
-                                                                color: Color(
-                                                                    0x0C000000),
-                                                                offset: Offset(
-                                                                    0, 10),
-                                                              )
-                                                            ],
-                                                            shape:
-                                                                BoxShape.circle,
-                                                          ),
-                                                          alignment:
-                                                              AlignmentDirectional(
-                                                                  0, 0),
-                                                          child: Column(
-                                                            mainAxisSize:
-                                                                MainAxisSize
-                                                                    .max,
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .center,
-                                                            children: [
-                                                              Padding(
-                                                                padding:
-                                                                    EdgeInsetsDirectional
-                                                                        .fromSTEB(
-                                                                            0,
-                                                                            0,
-                                                                            0,
-                                                                            5),
-                                                                child:
-                                                                    Image.asset(
-                                                                  'assets/images/diet.png',
-                                                                  width: 50,
-                                                                  height: 50,
-                                                                  fit: BoxFit
-                                                                      .cover,
-                                                                ),
-                                                              ),
-                                                              Text(
-                                                                'Repas',
-                                                                style: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .bodyText2
-                                                                    .override(
-                                                                      fontFamily:
-                                                                          'Montserrat',
-                                                                      fontSize:
-                                                                          11,
-                                                                    ),
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                                Column(
-                                                  mainAxisSize:
-                                                      MainAxisSize.max,
-                                                  children: [
-                                                    InkWell(
-                                                      onTap: () async {
-                                                        logFirebaseEvent(
-                                                            'EnergiesBtn-ON_TAP');
-                                                        logFirebaseEvent(
-                                                            'EnergiesBtn-Bottom-Sheet');
-                                                        await showModalBottomSheet(
-                                                          isScrollControlled:
-                                                              true,
-                                                          backgroundColor:
-                                                              Colors
-                                                                  .transparent,
-                                                          barrierColor:
-                                                              Color(0xBF000000),
-                                                          context: context,
-                                                          builder: (context) {
-                                                            return Padding(
-                                                              padding: MediaQuery
-                                                                      .of(context)
-                                                                  .viewInsets,
-                                                              child: Container(
-                                                                height: 600,
-                                                                child:
-                                                                    TransportFormWidget(
-                                                                  cache:
-                                                                      rowActionCacheRecord,
-                                                                ),
-                                                              ),
-                                                            );
-                                                          },
-                                                        );
-                                                      },
-                                                      child: Container(
-                                                        width: 90,
-                                                        height: 90,
-                                                        decoration:
-                                                            BoxDecoration(
-                                                          color:
-                                                              Color(0x99FFFFFF),
-                                                          boxShadow: [
-                                                            BoxShadow(
-                                                              blurRadius: 25,
-                                                              color: Color(
-                                                                  0x0C000000),
-                                                              offset:
-                                                                  Offset(0, 10),
-                                                            )
-                                                          ],
-                                                          shape:
-                                                              BoxShape.circle,
-                                                        ),
-                                                        alignment:
-                                                            AlignmentDirectional(
-                                                                0, 0),
-                                                        child: Column(
-                                                          mainAxisSize:
-                                                              MainAxisSize.max,
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .center,
-                                                          children: [
-                                                            Padding(
-                                                              padding:
-                                                                  EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          0,
-                                                                          0,
-                                                                          0,
-                                                                          5),
-                                                              child:
-                                                                  Image.asset(
-                                                                'assets/images/vehicles.png',
-                                                                width: 50,
-                                                                height: 50,
-                                                                fit: BoxFit
-                                                                    .cover,
-                                                              ),
-                                                            ),
-                                                            Text(
-                                                              'Transports',
-                                                              style: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .bodyText2
-                                                                  .override(
-                                                                    fontFamily:
-                                                                        'Montserrat',
-                                                                    fontSize:
-                                                                        11,
-                                                                  ),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                                Padding(
-                                                  padding: EdgeInsetsDirectional
-                                                      .fromSTEB(10, 0, 0, 0),
-                                                  child: Column(
-                                                    mainAxisSize:
-                                                        MainAxisSize.max,
-                                                    children: [
-                                                      InkWell(
-                                                        onTap: () async {
-                                                          logFirebaseEvent(
-                                                              'EnergiesBtn-ON_TAP');
-                                                          logFirebaseEvent(
-                                                              'EnergiesBtn-Bottom-Sheet');
-                                                          await showModalBottomSheet(
-                                                            isScrollControlled:
-                                                                true,
-                                                            backgroundColor:
-                                                                Colors
-                                                                    .transparent,
-                                                            barrierColor: Color(
-                                                                0xBF000000),
-                                                            context: context,
-                                                            builder: (context) {
-                                                              return Padding(
-                                                                padding: MediaQuery.of(
-                                                                        context)
-                                                                    .viewInsets,
-                                                                child:
-                                                                    Container(
-                                                                  height: 362,
-                                                                  child:
-                                                                      EnergyFormWidget(
-                                                                    actioncache:
-                                                                        rowActionCacheRecord,
-                                                                  ),
-                                                                ),
-                                                              );
-                                                            },
-                                                          );
-                                                        },
-                                                        child: Container(
-                                                          width: 90,
-                                                          height: 90,
-                                                          decoration:
-                                                              BoxDecoration(
-                                                            color: Color(
-                                                                0x98FFFFFF),
-                                                            boxShadow: [
-                                                              BoxShadow(
-                                                                blurRadius: 25,
-                                                                color: Color(
-                                                                    0x0C000000),
-                                                                offset: Offset(
-                                                                    0, 10),
-                                                              )
-                                                            ],
-                                                            shape:
-                                                                BoxShape.circle,
-                                                          ),
-                                                          alignment:
-                                                              AlignmentDirectional(
-                                                                  0, 0),
-                                                          child: Column(
-                                                            mainAxisSize:
-                                                                MainAxisSize
-                                                                    .max,
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .center,
-                                                            children: [
-                                                              Padding(
-                                                                padding:
-                                                                    EdgeInsetsDirectional
-                                                                        .fromSTEB(
-                                                                            0,
-                                                                            0,
-                                                                            0,
-                                                                            5),
-                                                                child:
-                                                                    Image.asset(
-                                                                  'assets/images/utility.png',
-                                                                  width: 50,
-                                                                  height: 50,
-                                                                  fit: BoxFit
-                                                                      .cover,
-                                                                ),
-                                                              ),
-                                                              Text(
-                                                                'Energies',
-                                                                style: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .bodyText2
-                                                                    .override(
-                                                                      fontFamily:
-                                                                          'Montserrat',
-                                                                      fontSize:
-                                                                          11,
-                                                                    ),
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                              ],
+                                      ),
+                                      Align(
+                                        alignment: AlignmentDirectional(0, 1),
+                                        child: SmoothPageIndicator(
+                                          controller: pageViewController ??=
+                                              PageController(initialPage: 0),
+                                          count: 3,
+                                          axisDirection: Axis.horizontal,
+                                          onDotClicked: (i) {
+                                            pageViewController.animateToPage(
+                                              i,
+                                              duration:
+                                                  Duration(milliseconds: 500),
+                                              curve: Curves.ease,
                                             );
                                           },
+                                          effect: ExpandingDotsEffect(
+                                            expansionFactor: 4,
+                                            spacing: 8,
+                                            radius: 16,
+                                            dotWidth: 8,
+                                            dotHeight: 8,
+                                            dotColor:
+                                                FlutterFlowTheme.of(context)
+                                                    .gronyLighter,
+                                            activeDotColor:
+                                                FlutterFlowTheme.of(context)
+                                                    .tertiaryColor,
+                                            paintStyle: PaintingStyle.fill,
+                                          ),
                                         ),
                                       ),
                                     ],
                                   ),
                                 ),
-                                Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      0, 20, 0, 0),
-                                  child: Stack(
-                                    children: [
-                                      if ((FFAppState().actionActive) == true)
-                                        Column(
-                                          mainAxisSize: MainAxisSize.max,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(20, 20, 20, 0),
-                                              child: StreamBuilder<
-                                                  List<ActionCacheRecord>>(
-                                                stream: queryActionCacheRecord(
-                                                  queryBuilder:
-                                                      (actionCacheRecord) =>
-                                                          actionCacheRecord.where(
-                                                              'user',
-                                                              isEqualTo:
-                                                                  homeUsersRecord
-                                                                      .reference),
-                                                ),
-                                                builder: (context, snapshot) {
-                                                  // Customize what your widget looks like when it's loading.
-                                                  if (!snapshot.hasData) {
-                                                    return Center(
-                                                      child: SizedBox(
-                                                        width: 2,
-                                                        height: 2,
-                                                        child: SpinKitRing(
-                                                          color: Colors
-                                                              .transparent,
-                                                          size: 2,
-                                                        ),
-                                                      ),
-                                                    );
-                                                  }
-                                                  List<ActionCacheRecord>
-                                                      containerActionCacheRecordList =
-                                                      snapshot.data;
-                                                  return Container(
-                                                    width:
-                                                        MediaQuery.of(context)
-                                                            .size
-                                                            .width,
-                                                    height: 90,
-                                                    decoration: BoxDecoration(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              10),
-                                                    ),
-                                                    child: StreamBuilder<
-                                                        List<
-                                                            ActionCacheRecord>>(
-                                                      stream:
-                                                          queryActionCacheRecord(
-                                                        queryBuilder: (actionCacheRecord) =>
-                                                            actionCacheRecord
-                                                                .where('user',
-                                                                    isEqualTo:
-                                                                        currentUserReference)
-                                                                .orderBy('date',
-                                                                    descending:
-                                                                        true),
-                                                      ),
-                                                      builder:
-                                                          (context, snapshot) {
-                                                        // Customize what your widget looks like when it's loading.
-                                                        if (!snapshot.hasData) {
-                                                          return Center(
-                                                            child: SizedBox(
-                                                              width: 2,
-                                                              height: 2,
-                                                              child:
-                                                                  SpinKitRing(
-                                                                color: Colors
-                                                                    .transparent,
-                                                                size: 2,
-                                                              ),
-                                                            ),
-                                                          );
-                                                        }
-                                                        List<ActionCacheRecord>
-                                                            pageView2ActionCacheRecordList =
-                                                            snapshot.data;
-                                                        return Container(
-                                                          width: MediaQuery.of(
-                                                                  context)
-                                                              .size
-                                                              .width,
-                                                          height: MediaQuery.of(
-                                                                      context)
-                                                                  .size
-                                                                  .height *
-                                                              1,
-                                                          child:
-                                                              PageView.builder(
-                                                            physics:
-                                                                const NeverScrollableScrollPhysics(),
-                                                            controller: pageView2Controller ??=
-                                                                PageController(
-                                                                    initialPage: min(
-                                                                        0,
-                                                                        pageView2ActionCacheRecordList.length -
-                                                                            1)),
-                                                            scrollDirection:
-                                                                Axis.horizontal,
-                                                            itemCount:
-                                                                pageView2ActionCacheRecordList
-                                                                    .length,
-                                                            itemBuilder: (context,
-                                                                pageView2Index) {
-                                                              final pageView2ActionCacheRecord =
-                                                                  pageView2ActionCacheRecordList[
-                                                                      pageView2Index];
-                                                              return Padding(
-                                                                padding:
-                                                                    EdgeInsetsDirectional
-                                                                        .fromSTEB(
-                                                                            8,
-                                                                            0,
-                                                                            8,
-                                                                            0),
-                                                                child:
-                                                                    Container(
-                                                                  width: 100,
-                                                                  height: 120,
-                                                                  decoration:
-                                                                      BoxDecoration(
-                                                                    color: Color(
-                                                                        0x9F00A193),
-                                                                    borderRadius:
-                                                                        BorderRadius.circular(
-                                                                            10),
-                                                                  ),
-                                                                  child:
-                                                                      Padding(
-                                                                    padding: EdgeInsetsDirectional
-                                                                        .fromSTEB(
-                                                                            15,
-                                                                            5,
-                                                                            15,
-                                                                            5),
-                                                                    child:
-                                                                        Column(
-                                                                      mainAxisSize:
-                                                                          MainAxisSize
-                                                                              .max,
-                                                                      mainAxisAlignment:
-                                                                          MainAxisAlignment
-                                                                              .center,
-                                                                      children: [
-                                                                        Row(
-                                                                          mainAxisSize:
-                                                                              MainAxisSize.min,
-                                                                          mainAxisAlignment:
-                                                                              MainAxisAlignment.spaceBetween,
-                                                                          children: [
-                                                                            Container(
-                                                                              width: 50,
-                                                                              height: 25,
-                                                                              decoration: BoxDecoration(
-                                                                                color: Color(0x00EEEEEE),
-                                                                              ),
-                                                                              child: Visibility(
-                                                                                visible: !(functions.lastCache(containerActionCacheRecordList.length, pageView2Index)) ?? true,
-                                                                                child: Padding(
-                                                                                  padding: EdgeInsetsDirectional.fromSTEB(0, 0, 7, 0),
-                                                                                  child: InkWell(
-                                                                                    onTap: () async {
-                                                                                      logFirebaseEvent('previous-ON_TAP');
-                                                                                      logFirebaseEvent('previous-Page-View');
-                                                                                      await pageView2Controller.nextPage(
-                                                                                        duration: Duration(milliseconds: 300),
-                                                                                        curve: Curves.ease,
-                                                                                      );
-                                                                                    },
-                                                                                    child: Icon(
-                                                                                      Icons.arrow_back_ios,
-                                                                                      color: FlutterFlowTheme.of(context).primaryColor,
-                                                                                      size: 20,
-                                                                                    ),
-                                                                                  ),
-                                                                                ),
-                                                                              ),
-                                                                            ),
-                                                                            Expanded(
-                                                                              child: Stack(
-                                                                                children: [
-                                                                                  Align(
-                                                                                    alignment: AlignmentDirectional(0, 0),
-                                                                                    child: Text(
-                                                                                      'Vos actions du ${dateTimeFormat('d/M/y', pageView2ActionCacheRecord.date)}',
-                                                                                      textAlign: TextAlign.center,
-                                                                                      style: FlutterFlowTheme.of(context).bodyText1,
-                                                                                    ),
-                                                                                  ),
-                                                                                ],
-                                                                              ),
-                                                                            ),
-                                                                            Container(
-                                                                              width: 50,
-                                                                              height: 20,
-                                                                              decoration: BoxDecoration(
-                                                                                color: Color(0x00EEEEEE),
-                                                                              ),
-                                                                              child: Visibility(
-                                                                                visible: (pageView2Index) != 0,
-                                                                                child: Padding(
-                                                                                  padding: EdgeInsetsDirectional.fromSTEB(7, 0, 0, 0),
-                                                                                  child: InkWell(
-                                                                                    onTap: () async {
-                                                                                      logFirebaseEvent('next-ON_TAP');
-                                                                                      logFirebaseEvent('next-Page-View');
-                                                                                      await pageView2Controller.previousPage(
-                                                                                        duration: Duration(milliseconds: 300),
-                                                                                        curve: Curves.ease,
-                                                                                      );
-                                                                                    },
-                                                                                    child: Icon(
-                                                                                      Icons.arrow_forward_ios,
-                                                                                      color: FlutterFlowTheme.of(context).primaryColor,
-                                                                                      size: 20,
-                                                                                    ),
-                                                                                  ),
-                                                                                ),
-                                                                              ),
-                                                                            ),
-                                                                          ],
-                                                                        ),
-                                                                        Padding(
-                                                                          padding: EdgeInsetsDirectional.fromSTEB(
-                                                                              0,
-                                                                              8,
-                                                                              0,
-                                                                              0),
-                                                                          child:
-                                                                              StreamBuilder<List<ActionTypeCacheRecord>>(
-                                                                            stream:
-                                                                                queryActionTypeCacheRecord(
-                                                                              queryBuilder: (actionTypeCacheRecord) => actionTypeCacheRecord.where('actionCache', isEqualTo: pageView2ActionCacheRecord.reference).orderBy('date', descending: true),
-                                                                            ),
-                                                                            builder:
-                                                                                (context, snapshot) {
-                                                                              // Customize what your widget looks like when it's loading.
-                                                                              if (!snapshot.hasData) {
-                                                                                return Center(
-                                                                                  child: SizedBox(
-                                                                                    width: 2,
-                                                                                    height: 2,
-                                                                                    child: SpinKitRing(
-                                                                                      color: Colors.transparent,
-                                                                                      size: 2,
-                                                                                    ),
-                                                                                  ),
-                                                                                );
-                                                                              }
-                                                                              List<ActionTypeCacheRecord> rowActionTypeCacheRecordList = snapshot.data;
-                                                                              if (rowActionTypeCacheRecordList.isEmpty) {
-                                                                                return Center(
-                                                                                  child: Image.asset(
-                                                                                    'assets/images/dust.png',
-                                                                                    width: 40,
-                                                                                  ),
-                                                                                );
-                                                                              }
-                                                                              return SingleChildScrollView(
-                                                                                scrollDirection: Axis.horizontal,
-                                                                                child: Row(
-                                                                                  mainAxisSize: MainAxisSize.max,
-                                                                                  mainAxisAlignment: MainAxisAlignment.center,
-                                                                                  children: List.generate(rowActionTypeCacheRecordList.length, (rowIndex) {
-                                                                                    final rowActionTypeCacheRecord = rowActionTypeCacheRecordList[rowIndex];
-                                                                                    return Padding(
-                                                                                      padding: EdgeInsetsDirectional.fromSTEB(0, 0, 10, 0),
-                                                                                      child: Container(
-                                                                                        width: 40,
-                                                                                        height: 40,
-                                                                                        child: Stack(
-                                                                                          alignment: AlignmentDirectional(0, 0),
-                                                                                          children: [
-                                                                                            if ((rowActionTypeCacheRecord.actionType) == 'gas')
-                                                                                              InkWell(
-                                                                                                onTap: () async {
-                                                                                                  logFirebaseEvent('gasAction-ON_TAP');
-                                                                                                  logFirebaseEvent('gasAction-Bottom-Sheet');
-                                                                                                  await showModalBottomSheet(
-                                                                                                    isScrollControlled: true,
-                                                                                                    backgroundColor: Colors.transparent,
-                                                                                                    context: context,
-                                                                                                    builder: (context) {
-                                                                                                      return Padding(
-                                                                                                        padding: MediaQuery.of(context).viewInsets,
-                                                                                                        child: Container(
-                                                                                                          height: 519,
-                                                                                                          child: GazFormActionModifyWidget(
-                                                                                                            typeCache: rowActionTypeCacheRecord,
-                                                                                                          ),
-                                                                                                        ),
-                                                                                                      );
-                                                                                                    },
-                                                                                                  );
-                                                                                                },
-                                                                                                child: Container(
-                                                                                                  width: 40,
-                                                                                                  height: 40,
-                                                                                                  clipBehavior: Clip.antiAlias,
-                                                                                                  decoration: BoxDecoration(
-                                                                                                    shape: BoxShape.circle,
-                                                                                                  ),
-                                                                                                  child: Image.asset(
-                                                                                                    'assets/images/gas.png',
-                                                                                                    fit: BoxFit.cover,
-                                                                                                  ),
-                                                                                                ),
-                                                                                              ),
-                                                                                            if ((rowActionTypeCacheRecord.actionType) == 'water')
-                                                                                              InkWell(
-                                                                                                onTap: () async {
-                                                                                                  logFirebaseEvent('waterAction-ON_TAP');
-                                                                                                  logFirebaseEvent('waterAction-Bottom-Sheet');
-                                                                                                  await showModalBottomSheet(
-                                                                                                    isScrollControlled: true,
-                                                                                                    backgroundColor: Colors.transparent,
-                                                                                                    context: context,
-                                                                                                    builder: (context) {
-                                                                                                      return Padding(
-                                                                                                        padding: MediaQuery.of(context).viewInsets,
-                                                                                                        child: Container(
-                                                                                                          height: 463,
-                                                                                                          child: WaterFormActionModifWidget(
-                                                                                                            typeCache: rowActionTypeCacheRecord,
-                                                                                                          ),
-                                                                                                        ),
-                                                                                                      );
-                                                                                                    },
-                                                                                                  );
-                                                                                                },
-                                                                                                child: Container(
-                                                                                                  width: 40,
-                                                                                                  height: 40,
-                                                                                                  clipBehavior: Clip.antiAlias,
-                                                                                                  decoration: BoxDecoration(
-                                                                                                    shape: BoxShape.circle,
-                                                                                                  ),
-                                                                                                  child: Image.asset(
-                                                                                                    'assets/images/water-drop.png',
-                                                                                                    fit: BoxFit.cover,
-                                                                                                  ),
-                                                                                                ),
-                                                                                              ),
-                                                                                            if ((rowActionTypeCacheRecord.actionType) == 'electricity')
-                                                                                              InkWell(
-                                                                                                onTap: () async {
-                                                                                                  logFirebaseEvent('electricityAction-ON_TAP');
-                                                                                                  logFirebaseEvent('electricityAction-Bottom-Sheet');
-                                                                                                  await showModalBottomSheet(
-                                                                                                    isScrollControlled: true,
-                                                                                                    backgroundColor: Colors.transparent,
-                                                                                                    context: context,
-                                                                                                    builder: (context) {
-                                                                                                      return Padding(
-                                                                                                        padding: MediaQuery.of(context).viewInsets,
-                                                                                                        child: Container(
-                                                                                                          height: 526,
-                                                                                                          child: ElectricityFormActionModifyWidget(
-                                                                                                            typeCache: rowActionTypeCacheRecord,
-                                                                                                          ),
-                                                                                                        ),
-                                                                                                      );
-                                                                                                    },
-                                                                                                  );
-                                                                                                },
-                                                                                                child: Container(
-                                                                                                  width: 40,
-                                                                                                  height: 40,
-                                                                                                  clipBehavior: Clip.antiAlias,
-                                                                                                  decoration: BoxDecoration(
-                                                                                                    shape: BoxShape.circle,
-                                                                                                  ),
-                                                                                                  child: Image.asset(
-                                                                                                    'assets/images/energy.png',
-                                                                                                    fit: BoxFit.cover,
-                                                                                                  ),
-                                                                                                ),
-                                                                                              ),
-                                                                                            if ((rowActionTypeCacheRecord.actionType) == 'train')
-                                                                                              InkWell(
-                                                                                                onTap: () async {
-                                                                                                  logFirebaseEvent('trainAction-ON_TAP');
-                                                                                                  logFirebaseEvent('trainAction-Bottom-Sheet');
-                                                                                                  await showModalBottomSheet(
-                                                                                                    isScrollControlled: true,
-                                                                                                    backgroundColor: Colors.transparent,
-                                                                                                    context: context,
-                                                                                                    builder: (context) {
-                                                                                                      return Padding(
-                                                                                                        padding: MediaQuery.of(context).viewInsets,
-                                                                                                        child: Container(
-                                                                                                          height: 520,
-                                                                                                          child: TrainFormModifyWidget(
-                                                                                                            typeCache: rowActionTypeCacheRecord,
-                                                                                                          ),
-                                                                                                        ),
-                                                                                                      );
-                                                                                                    },
-                                                                                                  );
-                                                                                                },
-                                                                                                child: Container(
-                                                                                                  width: 40,
-                                                                                                  height: 40,
-                                                                                                  clipBehavior: Clip.antiAlias,
-                                                                                                  decoration: BoxDecoration(
-                                                                                                    shape: BoxShape.circle,
-                                                                                                  ),
-                                                                                                  child: SvgPicture.asset(
-                                                                                                    'assets/images/trans-train-04.svg',
-                                                                                                    fit: BoxFit.cover,
-                                                                                                  ),
-                                                                                                ),
-                                                                                              ),
-                                                                                            if ((rowActionTypeCacheRecord.actionType) == 'car')
-                                                                                              InkWell(
-                                                                                                onTap: () async {
-                                                                                                  logFirebaseEvent('carAction-ON_TAP');
-                                                                                                  logFirebaseEvent('carAction-Bottom-Sheet');
-                                                                                                  await showModalBottomSheet(
-                                                                                                    isScrollControlled: true,
-                                                                                                    backgroundColor: Colors.transparent,
-                                                                                                    context: context,
-                                                                                                    builder: (context) {
-                                                                                                      return Padding(
-                                                                                                        padding: MediaQuery.of(context).viewInsets,
-                                                                                                        child: Container(
-                                                                                                          height: 602,
-                                                                                                          child: CarFormModifyWidget(
-                                                                                                            typeAction: rowActionTypeCacheRecord,
-                                                                                                          ),
-                                                                                                        ),
-                                                                                                      );
-                                                                                                    },
-                                                                                                  );
-                                                                                                },
-                                                                                                child: Container(
-                                                                                                  width: 40,
-                                                                                                  height: 40,
-                                                                                                  clipBehavior: Clip.antiAlias,
-                                                                                                  decoration: BoxDecoration(
-                                                                                                    shape: BoxShape.circle,
-                                                                                                  ),
-                                                                                                  child: SvgPicture.asset(
-                                                                                                    'assets/images/trans-car-01.svg',
-                                                                                                    fit: BoxFit.cover,
-                                                                                                  ),
-                                                                                                ),
-                                                                                              ),
-                                                                                            if ((rowActionTypeCacheRecord.actionType) == 'bus')
-                                                                                              InkWell(
-                                                                                                onTap: () async {
-                                                                                                  logFirebaseEvent('busAction-ON_TAP');
-                                                                                                  logFirebaseEvent('busAction-Bottom-Sheet');
-                                                                                                  await showModalBottomSheet(
-                                                                                                    isScrollControlled: true,
-                                                                                                    backgroundColor: Colors.transparent,
-                                                                                                    context: context,
-                                                                                                    builder: (context) {
-                                                                                                      return Padding(
-                                                                                                        padding: MediaQuery.of(context).viewInsets,
-                                                                                                        child: Container(
-                                                                                                          height: 476,
-                                                                                                          child: BusFormModifyWidget(
-                                                                                                            typeCache: rowActionTypeCacheRecord,
-                                                                                                          ),
-                                                                                                        ),
-                                                                                                      );
-                                                                                                    },
-                                                                                                  );
-                                                                                                },
-                                                                                                child: Container(
-                                                                                                  width: 40,
-                                                                                                  height: 40,
-                                                                                                  clipBehavior: Clip.antiAlias,
-                                                                                                  decoration: BoxDecoration(
-                                                                                                    shape: BoxShape.circle,
-                                                                                                  ),
-                                                                                                  child: SvgPicture.asset(
-                                                                                                    'assets/images/trans-bus-02.svg',
-                                                                                                    fit: BoxFit.cover,
-                                                                                                  ),
-                                                                                                ),
-                                                                                              ),
-                                                                                            if ((rowActionTypeCacheRecord.actionType) == 'moto')
-                                                                                              InkWell(
-                                                                                                onTap: () async {
-                                                                                                  logFirebaseEvent('motoAction-ON_TAP');
-                                                                                                  logFirebaseEvent('motoAction-Bottom-Sheet');
-                                                                                                  await showModalBottomSheet(
-                                                                                                    isScrollControlled: true,
-                                                                                                    backgroundColor: Colors.transparent,
-                                                                                                    context: context,
-                                                                                                    builder: (context) {
-                                                                                                      return Padding(
-                                                                                                        padding: MediaQuery.of(context).viewInsets,
-                                                                                                        child: Container(
-                                                                                                          height: 342,
-                                                                                                          child: MotoFormModifyWidget(
-                                                                                                            typeCache: rowActionTypeCacheRecord,
-                                                                                                          ),
-                                                                                                        ),
-                                                                                                      );
-                                                                                                    },
-                                                                                                  );
-                                                                                                },
-                                                                                                child: Container(
-                                                                                                  width: 40,
-                                                                                                  height: 40,
-                                                                                                  clipBehavior: Clip.antiAlias,
-                                                                                                  decoration: BoxDecoration(
-                                                                                                    shape: BoxShape.circle,
-                                                                                                  ),
-                                                                                                  child: Image.asset(
-                                                                                                    'assets/images/motorcycle.png',
-                                                                                                    fit: BoxFit.cover,
-                                                                                                  ),
-                                                                                                ),
-                                                                                              ),
-                                                                                            if ((rowActionTypeCacheRecord.actionType) == 'scooter')
-                                                                                              InkWell(
-                                                                                                onTap: () async {
-                                                                                                  logFirebaseEvent('scooterAction-ON_TAP');
-                                                                                                  logFirebaseEvent('scooterAction-Bottom-Sheet');
-                                                                                                  await showModalBottomSheet(
-                                                                                                    isScrollControlled: true,
-                                                                                                    backgroundColor: Colors.transparent,
-                                                                                                    context: context,
-                                                                                                    builder: (context) {
-                                                                                                      return Padding(
-                                                                                                        padding: MediaQuery.of(context).viewInsets,
-                                                                                                        child: Container(
-                                                                                                          height: 520,
-                                                                                                          child: ScooterFormModifyWidget(
-                                                                                                            typeCache: rowActionTypeCacheRecord,
-                                                                                                          ),
-                                                                                                        ),
-                                                                                                      );
-                                                                                                    },
-                                                                                                  );
-                                                                                                },
-                                                                                                child: Container(
-                                                                                                  width: 40,
-                                                                                                  height: 40,
-                                                                                                  clipBehavior: Clip.antiAlias,
-                                                                                                  decoration: BoxDecoration(
-                                                                                                    shape: BoxShape.circle,
-                                                                                                  ),
-                                                                                                  child: SvgPicture.asset(
-                                                                                                    'assets/images/trans-motor-03.svg',
-                                                                                                    fit: BoxFit.cover,
-                                                                                                  ),
-                                                                                                ),
-                                                                                              ),
-                                                                                            if ((rowActionTypeCacheRecord.actionType) == 'metro')
-                                                                                              InkWell(
-                                                                                                onTap: () async {
-                                                                                                  logFirebaseEvent('metroAction-ON_TAP');
-                                                                                                  logFirebaseEvent('metroAction-Bottom-Sheet');
-                                                                                                  await showModalBottomSheet(
-                                                                                                    isScrollControlled: true,
-                                                                                                    backgroundColor: Colors.transparent,
-                                                                                                    context: context,
-                                                                                                    builder: (context) {
-                                                                                                      return Padding(
-                                                                                                        padding: MediaQuery.of(context).viewInsets,
-                                                                                                        child: Container(
-                                                                                                          height: 357,
-                                                                                                          child: MetroFormModifyWidget(
-                                                                                                            typeCache: rowActionTypeCacheRecord,
-                                                                                                          ),
-                                                                                                        ),
-                                                                                                      );
-                                                                                                    },
-                                                                                                  );
-                                                                                                },
-                                                                                                child: Container(
-                                                                                                  width: 40,
-                                                                                                  height: 40,
-                                                                                                  clipBehavior: Clip.antiAlias,
-                                                                                                  decoration: BoxDecoration(
-                                                                                                    shape: BoxShape.circle,
-                                                                                                  ),
-                                                                                                  child: SvgPicture.asset(
-                                                                                                    'assets/images/trans-metro-06.svg',
-                                                                                                    fit: BoxFit.cover,
-                                                                                                  ),
-                                                                                                ),
-                                                                                              ),
-                                                                                            if ((rowActionTypeCacheRecord.actionType) == 'flight')
-                                                                                              InkWell(
-                                                                                                onTap: () async {
-                                                                                                  logFirebaseEvent('flightAction-ON_TAP');
-                                                                                                  logFirebaseEvent('flightAction-Update-Local-State');
-                                                                                                  setState(() => FFAppState().actionCO2 = pageView2ActionCacheRecord.co2e);
-                                                                                                  logFirebaseEvent('flightAction-Bottom-Sheet');
-                                                                                                  await showModalBottomSheet(
-                                                                                                    isScrollControlled: true,
-                                                                                                    backgroundColor: Colors.transparent,
-                                                                                                    context: context,
-                                                                                                    builder: (context) {
-                                                                                                      return Padding(
-                                                                                                        padding: MediaQuery.of(context).viewInsets,
-                                                                                                        child: Container(
-                                                                                                          height: 356,
-                                                                                                          child: FlightFormModifyWidget(
-                                                                                                            typeCache: rowActionTypeCacheRecord,
-                                                                                                          ),
-                                                                                                        ),
-                                                                                                      );
-                                                                                                    },
-                                                                                                  );
-                                                                                                },
-                                                                                                child: Container(
-                                                                                                  width: 40,
-                                                                                                  height: 40,
-                                                                                                  clipBehavior: Clip.antiAlias,
-                                                                                                  decoration: BoxDecoration(
-                                                                                                    shape: BoxShape.circle,
-                                                                                                  ),
-                                                                                                  child: Image.asset(
-                                                                                                    'assets/images/aircraft.png',
-                                                                                                    fit: BoxFit.cover,
-                                                                                                  ),
-                                                                                                ),
-                                                                                              ),
-                                                                                            if ((rowActionTypeCacheRecord.actionType) == 'bike')
-                                                                                              InkWell(
-                                                                                                onTap: () async {
-                                                                                                  logFirebaseEvent('bikeAction-ON_TAP');
-                                                                                                  logFirebaseEvent('bikeAction-Bottom-Sheet');
-                                                                                                  await showModalBottomSheet(
-                                                                                                    isScrollControlled: true,
-                                                                                                    backgroundColor: Colors.transparent,
-                                                                                                    context: context,
-                                                                                                    builder: (context) {
-                                                                                                      return Padding(
-                                                                                                        padding: MediaQuery.of(context).viewInsets,
-                                                                                                        child: Container(
-                                                                                                          height: 477,
-                                                                                                          child: BikeFormModifyWidget(
-                                                                                                            typeCache: rowActionTypeCacheRecord,
-                                                                                                          ),
-                                                                                                        ),
-                                                                                                      );
-                                                                                                    },
-                                                                                                  );
-                                                                                                },
-                                                                                                child: Container(
-                                                                                                  width: 40,
-                                                                                                  height: 40,
-                                                                                                  clipBehavior: Clip.antiAlias,
-                                                                                                  decoration: BoxDecoration(
-                                                                                                    shape: BoxShape.circle,
-                                                                                                  ),
-                                                                                                  child: SvgPicture.asset(
-                                                                                                    'assets/images/trans-cycle-08.svg',
-                                                                                                    fit: BoxFit.cover,
-                                                                                                  ),
-                                                                                                ),
-                                                                                              ),
-                                                                                            if ((rowActionTypeCacheRecord.actionType) == 'starter')
-                                                                                              InkWell(
-                                                                                                onTap: () async {
-                                                                                                  logFirebaseEvent('starterAction-ON_TAP');
-                                                                                                  logFirebaseEvent('starterAction-Bottom-Sheet');
-                                                                                                  await showModalBottomSheet(
-                                                                                                    isScrollControlled: true,
-                                                                                                    backgroundColor: Colors.transparent,
-                                                                                                    context: context,
-                                                                                                    builder: (context) {
-                                                                                                      return Padding(
-                                                                                                        padding: MediaQuery.of(context).viewInsets,
-                                                                                                        child: Container(
-                                                                                                          height: 407,
-                                                                                                          child: StarterFormModifyWidget(
-                                                                                                            typeCache: rowActionTypeCacheRecord,
-                                                                                                          ),
-                                                                                                        ),
-                                                                                                      );
-                                                                                                    },
-                                                                                                  );
-                                                                                                },
-                                                                                                child: Container(
-                                                                                                  width: 40,
-                                                                                                  height: 40,
-                                                                                                  clipBehavior: Clip.antiAlias,
-                                                                                                  decoration: BoxDecoration(
-                                                                                                    shape: BoxShape.circle,
-                                                                                                  ),
-                                                                                                  child: Image.asset(
-                                                                                                    'assets/images/canape_(1).png',
-                                                                                                    fit: BoxFit.cover,
-                                                                                                  ),
-                                                                                                ),
-                                                                                              ),
-                                                                                            if ((rowActionTypeCacheRecord.actionType) == 'main')
-                                                                                              InkWell(
-                                                                                                onTap: () async {
-                                                                                                  logFirebaseEvent('mainAction-ON_TAP');
-                                                                                                  logFirebaseEvent('mainAction-Bottom-Sheet');
-                                                                                                  await showModalBottomSheet(
-                                                                                                    isScrollControlled: true,
-                                                                                                    backgroundColor: Colors.transparent,
-                                                                                                    context: context,
-                                                                                                    builder: (context) {
-                                                                                                      return Padding(
-                                                                                                        padding: MediaQuery.of(context).viewInsets,
-                                                                                                        child: Container(
-                                                                                                          height: 573,
-                                                                                                          child: MainFoodFormModifyWidget(
-                                                                                                            typeCache: rowActionTypeCacheRecord,
-                                                                                                          ),
-                                                                                                        ),
-                                                                                                      );
-                                                                                                    },
-                                                                                                  );
-                                                                                                },
-                                                                                                child: Container(
-                                                                                                  width: 40,
-                                                                                                  height: 40,
-                                                                                                  clipBehavior: Clip.antiAlias,
-                                                                                                  decoration: BoxDecoration(
-                                                                                                    shape: BoxShape.circle,
-                                                                                                  ),
-                                                                                                  child: Image.asset(
-                                                                                                    'assets/images/steak.png',
-                                                                                                    fit: BoxFit.cover,
-                                                                                                  ),
-                                                                                                ),
-                                                                                              ),
-                                                                                            if ((rowActionTypeCacheRecord.actionType) == 'desert')
-                                                                                              InkWell(
-                                                                                                onTap: () async {
-                                                                                                  logFirebaseEvent('desertAction-ON_TAP');
-                                                                                                  logFirebaseEvent('desertAction-Bottom-Sheet');
-                                                                                                  await showModalBottomSheet(
-                                                                                                    isScrollControlled: true,
-                                                                                                    backgroundColor: Colors.transparent,
-                                                                                                    context: context,
-                                                                                                    builder: (context) {
-                                                                                                      return Padding(
-                                                                                                        padding: MediaQuery.of(context).viewInsets,
-                                                                                                        child: Container(
-                                                                                                          height: 440,
-                                                                                                          child: DesertFormModifyWidget(
-                                                                                                            typeCache: rowActionTypeCacheRecord,
-                                                                                                          ),
-                                                                                                        ),
-                                                                                                      );
-                                                                                                    },
-                                                                                                  );
-                                                                                                },
-                                                                                                child: Container(
-                                                                                                  width: 40,
-                                                                                                  height: 40,
-                                                                                                  clipBehavior: Clip.antiAlias,
-                                                                                                  decoration: BoxDecoration(
-                                                                                                    shape: BoxShape.circle,
-                                                                                                  ),
-                                                                                                  child: Image.asset(
-                                                                                                    'assets/images/ice-cream.png',
-                                                                                                    fit: BoxFit.cover,
-                                                                                                  ),
-                                                                                                ),
-                                                                                              ),
-                                                                                            if ((rowActionTypeCacheRecord.actionType) == 'drinks')
-                                                                                              InkWell(
-                                                                                                onTap: () async {
-                                                                                                  logFirebaseEvent('drinksAction-ON_TAP');
-                                                                                                  logFirebaseEvent('drinksAction-Bottom-Sheet');
-                                                                                                  await showModalBottomSheet(
-                                                                                                    isScrollControlled: true,
-                                                                                                    backgroundColor: Colors.transparent,
-                                                                                                    context: context,
-                                                                                                    builder: (context) {
-                                                                                                      return Padding(
-                                                                                                        padding: MediaQuery.of(context).viewInsets,
-                                                                                                        child: Container(
-                                                                                                          height: 508,
-                                                                                                          child: DrinksFormModifyWidget(
-                                                                                                            typeCache: rowActionTypeCacheRecord,
-                                                                                                          ),
-                                                                                                        ),
-                                                                                                      );
-                                                                                                    },
-                                                                                                  );
-                                                                                                },
-                                                                                                child: Container(
-                                                                                                  width: 40,
-                                                                                                  height: 40,
-                                                                                                  clipBehavior: Clip.antiAlias,
-                                                                                                  decoration: BoxDecoration(
-                                                                                                    shape: BoxShape.circle,
-                                                                                                  ),
-                                                                                                  child: Image.asset(
-                                                                                                    'assets/images/soft-drink.png',
-                                                                                                    fit: BoxFit.cover,
-                                                                                                  ),
-                                                                                                ),
-                                                                                              ),
-                                                                                            if ((rowActionTypeCacheRecord.actionType) == 'cheese')
-                                                                                              InkWell(
-                                                                                                onTap: () async {
-                                                                                                  logFirebaseEvent('cheeseAction-ON_TAP');
-                                                                                                  logFirebaseEvent('cheeseAction-Bottom-Sheet');
-                                                                                                  await showModalBottomSheet(
-                                                                                                    isScrollControlled: true,
-                                                                                                    backgroundColor: Colors.transparent,
-                                                                                                    context: context,
-                                                                                                    builder: (context) {
-                                                                                                      return Padding(
-                                                                                                        padding: MediaQuery.of(context).viewInsets,
-                                                                                                        child: Container(
-                                                                                                          height: 349,
-                                                                                                          child: CheeseFormModifyWidget(
-                                                                                                            typeCache: rowActionTypeCacheRecord,
-                                                                                                          ),
-                                                                                                        ),
-                                                                                                      );
-                                                                                                    },
-                                                                                                  );
-                                                                                                },
-                                                                                                child: Container(
-                                                                                                  width: 40,
-                                                                                                  height: 40,
-                                                                                                  clipBehavior: Clip.antiAlias,
-                                                                                                  decoration: BoxDecoration(
-                                                                                                    shape: BoxShape.circle,
-                                                                                                  ),
-                                                                                                  child: Image.asset(
-                                                                                                    'assets/images/cheeses.png',
-                                                                                                    fit: BoxFit.cover,
-                                                                                                  ),
-                                                                                                ),
-                                                                                              ),
-                                                                                            if ((rowActionTypeCacheRecord.actionType) == 'bread')
-                                                                                              InkWell(
-                                                                                                onTap: () async {
-                                                                                                  logFirebaseEvent('breadAction-ON_TAP');
-                                                                                                  logFirebaseEvent('breadAction-Bottom-Sheet');
-                                                                                                  await showModalBottomSheet(
-                                                                                                    isScrollControlled: true,
-                                                                                                    backgroundColor: Colors.transparent,
-                                                                                                    context: context,
-                                                                                                    builder: (context) {
-                                                                                                      return Padding(
-                                                                                                        padding: MediaQuery.of(context).viewInsets,
-                                                                                                        child: Container(
-                                                                                                          height: 387,
-                                                                                                          child: BreadFormModifyWidget(
-                                                                                                            typeCache: rowActionTypeCacheRecord,
-                                                                                                          ),
-                                                                                                        ),
-                                                                                                      );
-                                                                                                    },
-                                                                                                  );
-                                                                                                },
-                                                                                                child: Container(
-                                                                                                  width: 40,
-                                                                                                  height: 40,
-                                                                                                  clipBehavior: Clip.antiAlias,
-                                                                                                  decoration: BoxDecoration(
-                                                                                                    shape: BoxShape.circle,
-                                                                                                  ),
-                                                                                                  child: Image.asset(
-                                                                                                    'assets/images/bread.png',
-                                                                                                    fit: BoxFit.cover,
-                                                                                                  ),
-                                                                                                ),
-                                                                                              ),
-                                                                                            if ((rowActionTypeCacheRecord.actionType) == 'coffee')
-                                                                                              InkWell(
-                                                                                                onTap: () async {
-                                                                                                  logFirebaseEvent('coffeeAction-ON_TAP');
-                                                                                                  logFirebaseEvent('coffeeAction-Bottom-Sheet');
-                                                                                                  await showModalBottomSheet(
-                                                                                                    isScrollControlled: true,
-                                                                                                    backgroundColor: Colors.transparent,
-                                                                                                    context: context,
-                                                                                                    builder: (context) {
-                                                                                                      return Padding(
-                                                                                                        padding: MediaQuery.of(context).viewInsets,
-                                                                                                        child: Container(
-                                                                                                          height: 435,
-                                                                                                          child: CoffeeFormModifyWidget(
-                                                                                                            typeCache: rowActionTypeCacheRecord,
-                                                                                                          ),
-                                                                                                        ),
-                                                                                                      );
-                                                                                                    },
-                                                                                                  );
-                                                                                                },
-                                                                                                child: Container(
-                                                                                                  width: 40,
-                                                                                                  height: 40,
-                                                                                                  clipBehavior: Clip.antiAlias,
-                                                                                                  decoration: BoxDecoration(
-                                                                                                    shape: BoxShape.circle,
-                                                                                                  ),
-                                                                                                  child: Image.asset(
-                                                                                                    'assets/images/coffee.png',
-                                                                                                    fit: BoxFit.cover,
-                                                                                                  ),
-                                                                                                ),
-                                                                                              ),
-                                                                                          ],
-                                                                                        ),
-                                                                                      ),
-                                                                                    );
-                                                                                  }),
-                                                                                ),
-                                                                              );
-                                                                            },
-                                                                          ),
-                                                                        ),
-                                                                      ],
-                                                                    ),
-                                                                  ),
-                                                                ),
-                                                              );
-                                                            },
-                                                          ),
-                                                        );
-                                                      },
-                                                    ),
-                                                  );
-                                                },
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      if ((FFAppState().actionActive) == false)
+                              ),
+                              Padding(
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                    40, 20, 40, 0),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Column(
+                                      mainAxisSize: MainAxisSize.max,
+                                      children: [
                                         Padding(
                                           padding:
                                               EdgeInsetsDirectional.fromSTEB(
-                                                  0, 2, 0, 0),
-                                          child: Column(
+                                                  0, 0, 7, 0),
+                                          child: InkWell(
+                                            onTap: () async {
+                                              logFirebaseEvent(
+                                                  'HOME_PAGE_Repasbtn_ON_TAP');
+                                              logFirebaseEvent(
+                                                  'Repasbtn_Bottom-Sheet');
+                                              await showModalBottomSheet(
+                                                isScrollControlled: true,
+                                                backgroundColor:
+                                                    Colors.transparent,
+                                                barrierColor: Color(0xBF000000),
+                                                context: context,
+                                                builder: (context) {
+                                                  return Padding(
+                                                    padding:
+                                                        MediaQuery.of(context)
+                                                            .viewInsets,
+                                                    child: Container(
+                                                      height: 600,
+                                                      child: FoodListWidget(),
+                                                    ),
+                                                  );
+                                                },
+                                              );
+                                            },
+                                            child: Container(
+                                              width: 90,
+                                              height: 90,
+                                              decoration: BoxDecoration(
+                                                color: Color(0x9FFFFFFF),
+                                                boxShadow: [
+                                                  BoxShadow(
+                                                    blurRadius: 25,
+                                                    color: Color(0x0C000000),
+                                                    offset: Offset(0, 10),
+                                                  )
+                                                ],
+                                                shape: BoxShape.circle,
+                                              ),
+                                              alignment:
+                                                  AlignmentDirectional(0, 0),
+                                              child: Column(
+                                                mainAxisSize: MainAxisSize.max,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
+                                                  Padding(
+                                                    padding:
+                                                        EdgeInsetsDirectional
+                                                            .fromSTEB(
+                                                                0, 0, 0, 5),
+                                                    child: Image.asset(
+                                                      'assets/images/diet.png',
+                                                      width: 50,
+                                                      height: 50,
+                                                      fit: BoxFit.cover,
+                                                    ),
+                                                  ),
+                                                  Text(
+                                                    'Repas',
+                                                    style: FlutterFlowTheme.of(
+                                                            context)
+                                                        .bodyText2
+                                                        .override(
+                                                          fontFamily:
+                                                              'Montserrat',
+                                                          fontSize: 11,
+                                                        ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    Column(
+                                      mainAxisSize: MainAxisSize.max,
+                                      children: [
+                                        InkWell(
+                                          onTap: () async {
+                                            logFirebaseEvent(
+                                                'HOME_PAGE_EnergiesBtn_ON_TAP');
+                                            logFirebaseEvent(
+                                                'EnergiesBtn_Bottom-Sheet');
+                                            await showModalBottomSheet(
+                                              isScrollControlled: true,
+                                              backgroundColor:
+                                                  Colors.transparent,
+                                              barrierColor: Color(0xBF000000),
+                                              context: context,
+                                              builder: (context) {
+                                                return Padding(
+                                                  padding:
+                                                      MediaQuery.of(context)
+                                                          .viewInsets,
+                                                  child: Container(
+                                                    height: 600,
+                                                    child:
+                                                        TransportListWidget(),
+                                                  ),
+                                                );
+                                              },
+                                            );
+                                          },
+                                          child: Container(
+                                            width: 90,
+                                            height: 90,
+                                            decoration: BoxDecoration(
+                                              color: Color(0x99FFFFFF),
+                                              boxShadow: [
+                                                BoxShadow(
+                                                  blurRadius: 25,
+                                                  color: Color(0x0C000000),
+                                                  offset: Offset(0, 10),
+                                                )
+                                              ],
+                                              shape: BoxShape.circle,
+                                            ),
+                                            alignment:
+                                                AlignmentDirectional(0, 0),
+                                            child: Column(
+                                              mainAxisSize: MainAxisSize.max,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Padding(
+                                                  padding: EdgeInsetsDirectional
+                                                      .fromSTEB(0, 0, 0, 5),
+                                                  child: Image.asset(
+                                                    'assets/images/vehicles.png',
+                                                    width: 50,
+                                                    height: 50,
+                                                    fit: BoxFit.cover,
+                                                  ),
+                                                ),
+                                                Text(
+                                                  'Transports',
+                                                  style: FlutterFlowTheme.of(
+                                                          context)
+                                                      .bodyText2
+                                                      .override(
+                                                        fontFamily:
+                                                            'Montserrat',
+                                                        fontSize: 11,
+                                                      ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          10, 0, 0, 0),
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.max,
+                                        children: [
+                                          InkWell(
+                                            onTap: () async {
+                                              logFirebaseEvent(
+                                                  'HOME_PAGE_EnergiesBtn_ON_TAP');
+                                              logFirebaseEvent(
+                                                  'EnergiesBtn_Bottom-Sheet');
+                                              await showModalBottomSheet(
+                                                isScrollControlled: true,
+                                                backgroundColor:
+                                                    Colors.transparent,
+                                                barrierColor: Color(0xBF000000),
+                                                context: context,
+                                                builder: (context) {
+                                                  return Padding(
+                                                    padding:
+                                                        MediaQuery.of(context)
+                                                            .viewInsets,
+                                                    child: Container(
+                                                      height: 362,
+                                                      child: EnergyListWidget(),
+                                                    ),
+                                                  );
+                                                },
+                                              );
+                                            },
+                                            child: Container(
+                                              width: 90,
+                                              height: 90,
+                                              decoration: BoxDecoration(
+                                                color: Color(0x98FFFFFF),
+                                                boxShadow: [
+                                                  BoxShadow(
+                                                    blurRadius: 25,
+                                                    color: Color(0x0C000000),
+                                                    offset: Offset(0, 10),
+                                                  )
+                                                ],
+                                                shape: BoxShape.circle,
+                                              ),
+                                              alignment:
+                                                  AlignmentDirectional(0, 0),
+                                              child: Column(
+                                                mainAxisSize: MainAxisSize.max,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
+                                                  Padding(
+                                                    padding:
+                                                        EdgeInsetsDirectional
+                                                            .fromSTEB(
+                                                                0, 0, 0, 5),
+                                                    child: Image.asset(
+                                                      'assets/images/utility.png',
+                                                      width: 50,
+                                                      height: 50,
+                                                      fit: BoxFit.cover,
+                                                    ),
+                                                  ),
+                                                  Text(
+                                                    'Energies',
+                                                    style: FlutterFlowTheme.of(
+                                                            context)
+                                                        .bodyText2
+                                                        .override(
+                                                          fontFamily:
+                                                              'Montserrat',
+                                                          fontSize: 11,
+                                                        ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Stack(
+                                children: [
+                                  if (FFAppState().actionActive ?? true)
+                                    Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          0, 15, 0, 0),
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.max,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Column(
                                             mainAxisSize: MainAxisSize.max,
                                             mainAxisAlignment:
-                                                MainAxisAlignment.center,
+                                                MainAxisAlignment.start,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.stretch,
                                             children: [
                                               Padding(
                                                 padding: EdgeInsetsDirectional
-                                                    .fromSTEB(20, 20, 20, 0),
+                                                    .fromSTEB(8, 0, 8, 0),
                                                 child: Container(
                                                   width: MediaQuery.of(context)
                                                       .size
                                                       .width,
-                                                  height: 90,
+                                                  height: 170,
                                                   decoration: BoxDecoration(
+                                                    color: Color(0x9F00A193),
                                                     borderRadius:
                                                         BorderRadius.circular(
                                                             10),
                                                   ),
-                                                  child: Container(
-                                                    width:
-                                                        MediaQuery.of(context)
-                                                            .size
-                                                            .width,
-                                                    height:
-                                                        MediaQuery.of(context)
-                                                                .size
-                                                                .height *
-                                                            1,
-                                                    child: PageView(
-                                                      physics:
-                                                          const NeverScrollableScrollPhysics(),
-                                                      controller:
-                                                          periodicsController ??=
-                                                              PageController(
-                                                                  initialPage:
-                                                                      0),
-                                                      scrollDirection:
-                                                          Axis.horizontal,
+                                                  child: Padding(
+                                                    padding:
+                                                        EdgeInsetsDirectional
+                                                            .fromSTEB(
+                                                                15, 5, 15, 5),
+                                                    child: Column(
+                                                      mainAxisSize:
+                                                          MainAxisSize.max,
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .start,
                                                       children: [
-                                                        Padding(
-                                                          padding:
-                                                              EdgeInsetsDirectional
-                                                                  .fromSTEB(8,
-                                                                      0, 8, 0),
-                                                          child: Container(
-                                                            width: 100,
-                                                            height: 120,
-                                                            decoration:
-                                                                BoxDecoration(
-                                                              color: Color(
-                                                                  0xA9F77303),
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          10),
-                                                            ),
-                                                            child: Padding(
-                                                              padding:
-                                                                  EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          15,
-                                                                          5,
-                                                                          15,
-                                                                          5),
-                                                              child: Column(
+                                                        Expanded(
+                                                          child: Row(
+                                                            mainAxisSize:
+                                                                MainAxisSize
+                                                                    .max,
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .spaceBetween,
+                                                            children: [
+                                                              Column(
                                                                 mainAxisSize:
                                                                     MainAxisSize
                                                                         .max,
-                                                                mainAxisAlignment:
-                                                                    MainAxisAlignment
-                                                                        .center,
                                                                 children: [
-                                                                  Row(
-                                                                    mainAxisSize:
-                                                                        MainAxisSize
-                                                                            .min,
-                                                                    mainAxisAlignment:
-                                                                        MainAxisAlignment
-                                                                            .spaceBetween,
-                                                                    children: [
-                                                                      Align(
-                                                                        alignment: AlignmentDirectional(
-                                                                            0,
-                                                                            0),
-                                                                        child:
-                                                                            Text(
-                                                                          'Emissions hebdomadaires : ${functions.printScore(containerUsersStatsRecord.periodics)}',
-                                                                          textAlign:
-                                                                              TextAlign.center,
-                                                                          style: FlutterFlowTheme.of(context)
-                                                                              .bodyText2
-                                                                              .override(
-                                                                                fontFamily: 'Montserrat',
-                                                                                color: FlutterFlowTheme.of(context).tertiaryColor,
-                                                                              ),
-                                                                        ),
-                                                                      ),
-                                                                    ],
-                                                                  ),
                                                                   Padding(
                                                                     padding: EdgeInsetsDirectional
                                                                         .fromSTEB(
+                                                                            7,
                                                                             0,
-                                                                            8,
                                                                             0,
                                                                             0),
-                                                                    child: StreamBuilder<
-                                                                        List<
-                                                                            EnergyPeriodicsRecord>>(
-                                                                      stream:
-                                                                          queryEnergyPeriodicsRecord(
-                                                                        queryBuilder: (energyPeriodicsRecord) => energyPeriodicsRecord.where(
-                                                                            'userId',
-                                                                            isEqualTo:
-                                                                                currentUserUid),
-                                                                      ),
-                                                                      builder:
-                                                                          (context,
-                                                                              snapshot) {
-                                                                        // Customize what your widget looks like when it's loading.
-                                                                        if (!snapshot
-                                                                            .hasData) {
-                                                                          return Center(
-                                                                            child:
-                                                                                SizedBox(
-                                                                              width: 2,
-                                                                              height: 2,
-                                                                              child: SpinKitRing(
-                                                                                color: Colors.transparent,
-                                                                                size: 2,
-                                                                              ),
-                                                                            ),
-                                                                          );
-                                                                        }
-                                                                        List<EnergyPeriodicsRecord>
-                                                                            rowEnergyPeriodicsRecordList =
-                                                                            snapshot.data;
-                                                                        if (rowEnergyPeriodicsRecordList
-                                                                            .isEmpty) {
-                                                                          return Center(
-                                                                            child:
-                                                                                Image.asset(
-                                                                              'assets/images/dust.png',
-                                                                              width: 40,
-                                                                            ),
-                                                                          );
-                                                                        }
-                                                                        return SingleChildScrollView(
-                                                                          scrollDirection:
-                                                                              Axis.horizontal,
-                                                                          child:
-                                                                              Row(
-                                                                            mainAxisSize:
-                                                                                MainAxisSize.max,
-                                                                            mainAxisAlignment:
-                                                                                MainAxisAlignment.center,
-                                                                            children:
-                                                                                List.generate(rowEnergyPeriodicsRecordList.length, (rowIndex) {
-                                                                              final rowEnergyPeriodicsRecord = rowEnergyPeriodicsRecordList[rowIndex];
-                                                                              return Padding(
-                                                                                padding: EdgeInsetsDirectional.fromSTEB(0, 0, 10, 0),
-                                                                                child: Container(
-                                                                                  width: 40,
-                                                                                  height: 40,
-                                                                                  child: Stack(
-                                                                                    alignment: AlignmentDirectional(0, 0),
-                                                                                    children: [
-                                                                                      if ((rowEnergyPeriodicsRecord.energy) == 'water')
-                                                                                        Align(
-                                                                                          alignment: AlignmentDirectional(0, 0),
-                                                                                          child: InkWell(
-                                                                                            onTap: () async {
-                                                                                              logFirebaseEvent('waterPeriodics-ON_TAP');
-                                                                                              logFirebaseEvent('waterPeriodics-Update-Local-State');
-                                                                                              setState(() => FFAppState().actionCO2 = rowEnergyPeriodicsRecord.co2e);
-                                                                                              logFirebaseEvent('waterPeriodics-Bottom-Sheet');
-                                                                                              await showModalBottomSheet(
-                                                                                                isScrollControlled: true,
-                                                                                                backgroundColor: Colors.transparent,
-                                                                                                context: context,
-                                                                                                builder: (context) {
-                                                                                                  return Padding(
-                                                                                                    padding: MediaQuery.of(context).viewInsets,
-                                                                                                    child: Container(
-                                                                                                      height: 467,
-                                                                                                      child: WaterFormPeriodicModifyWidget(
-                                                                                                        periodic: rowEnergyPeriodicsRecord,
-                                                                                                      ),
-                                                                                                    ),
-                                                                                                  );
-                                                                                                },
-                                                                                              );
-                                                                                            },
-                                                                                            child: Container(
-                                                                                              width: 40,
-                                                                                              height: 40,
-                                                                                              clipBehavior: Clip.antiAlias,
-                                                                                              decoration: BoxDecoration(
-                                                                                                shape: BoxShape.circle,
-                                                                                              ),
-                                                                                              child: Image.asset(
-                                                                                                'assets/images/water-drop.png',
-                                                                                                fit: BoxFit.cover,
-                                                                                              ),
-                                                                                            ),
-                                                                                          ),
-                                                                                        ),
-                                                                                      if ((rowEnergyPeriodicsRecord.energy) == 'gas')
-                                                                                        InkWell(
-                                                                                          onTap: () async {
-                                                                                            logFirebaseEvent('gazPeriodics-ON_TAP');
-                                                                                            logFirebaseEvent('gazPeriodics-Update-Local-State');
-                                                                                            setState(() => FFAppState().actionCO2 = rowEnergyPeriodicsRecord.co2e);
-                                                                                            logFirebaseEvent('gazPeriodics-Bottom-Sheet');
-                                                                                            await showModalBottomSheet(
-                                                                                              isScrollControlled: true,
-                                                                                              backgroundColor: Colors.transparent,
-                                                                                              context: context,
-                                                                                              builder: (context) {
-                                                                                                return Padding(
-                                                                                                  padding: MediaQuery.of(context).viewInsets,
-                                                                                                  child: Container(
-                                                                                                    height: 519,
-                                                                                                    child: GazFormPeriodicModifyWidget(
-                                                                                                      periodic: rowEnergyPeriodicsRecord,
-                                                                                                    ),
-                                                                                                  ),
-                                                                                                );
-                                                                                              },
-                                                                                            );
-                                                                                          },
-                                                                                          child: Container(
-                                                                                            width: 40,
-                                                                                            height: 40,
-                                                                                            clipBehavior: Clip.antiAlias,
-                                                                                            decoration: BoxDecoration(
-                                                                                              shape: BoxShape.circle,
-                                                                                            ),
-                                                                                            child: Image.asset(
-                                                                                              'assets/images/gas.png',
-                                                                                              fit: BoxFit.cover,
-                                                                                            ),
-                                                                                          ),
-                                                                                        ),
-                                                                                      if ((rowEnergyPeriodicsRecord.energy) == 'electricity')
-                                                                                        Align(
-                                                                                          alignment: AlignmentDirectional(0, 0),
-                                                                                          child: InkWell(
-                                                                                            onTap: () async {
-                                                                                              logFirebaseEvent('electricityPeriodics-ON_TAP');
-                                                                                              logFirebaseEvent('electricityPeriodics-Update-Local-State');
-                                                                                              setState(() => FFAppState().actionCO2 = rowEnergyPeriodicsRecord.co2e);
-                                                                                              logFirebaseEvent('electricityPeriodics-Bottom-Sheet');
-                                                                                              await showModalBottomSheet(
-                                                                                                isScrollControlled: true,
-                                                                                                backgroundColor: Colors.transparent,
-                                                                                                context: context,
-                                                                                                builder: (context) {
-                                                                                                  return Padding(
-                                                                                                    padding: MediaQuery.of(context).viewInsets,
-                                                                                                    child: Container(
-                                                                                                      height: 526,
-                                                                                                      child: ElectricityFormPeriodicModifyWidget(
-                                                                                                        periodic: rowEnergyPeriodicsRecord,
-                                                                                                      ),
-                                                                                                    ),
-                                                                                                  );
-                                                                                                },
-                                                                                              );
-                                                                                            },
-                                                                                            child: Container(
-                                                                                              width: 40,
-                                                                                              height: 40,
-                                                                                              clipBehavior: Clip.antiAlias,
-                                                                                              decoration: BoxDecoration(
-                                                                                                shape: BoxShape.circle,
-                                                                                              ),
-                                                                                              child: Image.asset(
-                                                                                                'assets/images/energy.png',
-                                                                                                fit: BoxFit.cover,
-                                                                                              ),
-                                                                                            ),
-                                                                                          ),
-                                                                                        ),
-                                                                                    ],
-                                                                                  ),
-                                                                                ),
-                                                                              );
-                                                                            }),
-                                                                          ),
-                                                                        );
+                                                                    child:
+                                                                        InkWell(
+                                                                      onTap:
+                                                                          () async {
+                                                                        logFirebaseEvent(
+                                                                            'HOME_PAGE_date_ON_TAP');
+                                                                        logFirebaseEvent(
+                                                                            'date_Update-Local-State');
+                                                                        setState(() =>
+                                                                            FFAppState().activeDate =
+                                                                                functions.setOneDayBefore(FFAppState().activeDate));
                                                                       },
+                                                                      child:
+                                                                          Icon(
+                                                                        Icons
+                                                                            .chevron_left_sharp,
+                                                                        color: FlutterFlowTheme.of(context)
+                                                                            .primaryColor,
+                                                                        size:
+                                                                            20,
+                                                                      ),
                                                                     ),
                                                                   ),
                                                                 ],
                                                               ),
+                                                              Column(
+                                                                mainAxisSize:
+                                                                    MainAxisSize
+                                                                        .max,
+                                                                children: [
+                                                                  Align(
+                                                                    alignment:
+                                                                        AlignmentDirectional(
+                                                                            0,
+                                                                            0),
+                                                                    child: Text(
+                                                                      'Vos actions du ${FFAppState().activeDate}',
+                                                                      textAlign:
+                                                                          TextAlign
+                                                                              .center,
+                                                                      style: FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .bodyText1,
+                                                                    ),
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                              Column(
+                                                                mainAxisSize:
+                                                                    MainAxisSize
+                                                                        .max,
+                                                                children: [
+                                                                  Padding(
+                                                                    padding: EdgeInsetsDirectional
+                                                                        .fromSTEB(
+                                                                            7,
+                                                                            0,
+                                                                            0,
+                                                                            0),
+                                                                    child:
+                                                                        InkWell(
+                                                                      onTap:
+                                                                          () async {
+                                                                        logFirebaseEvent(
+                                                                            'HOME_PAGE_date_ON_TAP');
+                                                                        logFirebaseEvent(
+                                                                            'date_Update-Local-State');
+                                                                        setState(() =>
+                                                                            FFAppState().activeDate =
+                                                                                functions.setOneDayAfter(FFAppState().activeDate));
+                                                                      },
+                                                                      child:
+                                                                          Icon(
+                                                                        Icons
+                                                                            .navigate_next,
+                                                                        color: FlutterFlowTheme.of(context)
+                                                                            .primaryColor,
+                                                                        size:
+                                                                            20,
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                        Padding(
+                                                          padding:
+                                                              EdgeInsetsDirectional
+                                                                  .fromSTEB(0,
+                                                                      8, 0, 0),
+                                                          child: StreamBuilder<
+                                                              List<
+                                                                  TransportActionsRecord>>(
+                                                            stream:
+                                                                queryTransportActionsRecord(
+                                                              queryBuilder: (transportActionsRecord) => transportActionsRecord
+                                                                  .where(
+                                                                      'userId',
+                                                                      isEqualTo:
+                                                                          currentUserUid)
+                                                                  .where('day',
+                                                                      isEqualTo:
+                                                                          FFAppState()
+                                                                              .activeDate)
+                                                                  .where(
+                                                                      'isPeriodic',
+                                                                      isEqualTo:
+                                                                          false)
+                                                                  .orderBy(
+                                                                      'created_time',
+                                                                      descending:
+                                                                          true),
                                                             ),
+                                                            builder: (context,
+                                                                snapshot) {
+                                                              // Customize what your widget looks like when it's loading.
+                                                              if (!snapshot
+                                                                  .hasData) {
+                                                                return Center(
+                                                                  child:
+                                                                      SizedBox(
+                                                                    width: 2,
+                                                                    height: 2,
+                                                                    child:
+                                                                        SpinKitRing(
+                                                                      color: Colors
+                                                                          .transparent,
+                                                                      size: 2,
+                                                                    ),
+                                                                  ),
+                                                                );
+                                                              }
+                                                              List<TransportActionsRecord>
+                                                                  transportsTransportActionsRecordList =
+                                                                  snapshot.data;
+                                                              if (transportsTransportActionsRecordList
+                                                                  .isEmpty) {
+                                                                return Center(
+                                                                  child: Image
+                                                                      .asset(
+                                                                    'assets/images/dust.png',
+                                                                    width: 40,
+                                                                  ),
+                                                                );
+                                                              }
+                                                              return SingleChildScrollView(
+                                                                scrollDirection:
+                                                                    Axis.horizontal,
+                                                                child: Row(
+                                                                  mainAxisSize:
+                                                                      MainAxisSize
+                                                                          .max,
+                                                                  mainAxisAlignment:
+                                                                      MainAxisAlignment
+                                                                          .center,
+                                                                  children: List.generate(
+                                                                      transportsTransportActionsRecordList
+                                                                          .length,
+                                                                      (transportsIndex) {
+                                                                    final transportsTransportActionsRecord =
+                                                                        transportsTransportActionsRecordList[
+                                                                            transportsIndex];
+                                                                    return Container(
+                                                                      width: 40,
+                                                                      height:
+                                                                          40,
+                                                                      child:
+                                                                          Stack(
+                                                                        alignment: AlignmentDirectional(
+                                                                            0,
+                                                                            0),
+                                                                        children: [
+                                                                          if ((transportsTransportActionsRecord.transport) ==
+                                                                              'car')
+                                                                            InkWell(
+                                                                              onTap: () async {
+                                                                                logFirebaseEvent('HOME_PAGE_carAction_ON_TAP');
+                                                                                logFirebaseEvent('carAction_Navigate-To');
+                                                                                await Navigator.push(
+                                                                                  context,
+                                                                                  PageTransition(
+                                                                                    type: PageTransitionType.fade,
+                                                                                    duration: Duration(milliseconds: 0),
+                                                                                    reverseDuration: Duration(milliseconds: 0),
+                                                                                    child: TransportWidget(
+                                                                                      actionRef: transportsTransportActionsRecord.reference,
+                                                                                    ),
+                                                                                  ),
+                                                                                );
+                                                                              },
+                                                                              child: Container(
+                                                                                width: 40,
+                                                                                height: 40,
+                                                                                clipBehavior: Clip.antiAlias,
+                                                                                decoration: BoxDecoration(
+                                                                                  shape: BoxShape.circle,
+                                                                                ),
+                                                                                child: SvgPicture.asset(
+                                                                                  'assets/images/trans-car-01.svg',
+                                                                                  fit: BoxFit.cover,
+                                                                                ),
+                                                                              ),
+                                                                            ),
+                                                                          if ((transportsTransportActionsRecord.transport) ==
+                                                                              'bus')
+                                                                            InkWell(
+                                                                              onTap: () async {
+                                                                                logFirebaseEvent('HOME_PAGE_busAction_ON_TAP');
+                                                                                logFirebaseEvent('busAction_Navigate-To');
+                                                                                await Navigator.push(
+                                                                                  context,
+                                                                                  PageTransition(
+                                                                                    type: PageTransitionType.fade,
+                                                                                    duration: Duration(milliseconds: 0),
+                                                                                    reverseDuration: Duration(milliseconds: 0),
+                                                                                    child: TransportWidget(
+                                                                                      actionRef: transportsTransportActionsRecord.reference,
+                                                                                    ),
+                                                                                  ),
+                                                                                );
+                                                                              },
+                                                                              child: Container(
+                                                                                width: 40,
+                                                                                height: 40,
+                                                                                clipBehavior: Clip.antiAlias,
+                                                                                decoration: BoxDecoration(
+                                                                                  shape: BoxShape.circle,
+                                                                                ),
+                                                                                child: SvgPicture.asset(
+                                                                                  'assets/images/trans-bus-02.svg',
+                                                                                  fit: BoxFit.cover,
+                                                                                ),
+                                                                              ),
+                                                                            ),
+                                                                          if ((transportsTransportActionsRecord.transport) ==
+                                                                              'scooter')
+                                                                            InkWell(
+                                                                              onTap: () async {
+                                                                                logFirebaseEvent('HOME_PAGE_scooterAction_ON_TAP');
+                                                                                logFirebaseEvent('scooterAction_Navigate-To');
+                                                                                await Navigator.push(
+                                                                                  context,
+                                                                                  PageTransition(
+                                                                                    type: PageTransitionType.fade,
+                                                                                    duration: Duration(milliseconds: 0),
+                                                                                    reverseDuration: Duration(milliseconds: 0),
+                                                                                    child: TransportWidget(
+                                                                                      actionRef: transportsTransportActionsRecord.reference,
+                                                                                    ),
+                                                                                  ),
+                                                                                );
+                                                                              },
+                                                                              child: Container(
+                                                                                width: 40,
+                                                                                height: 40,
+                                                                                clipBehavior: Clip.antiAlias,
+                                                                                decoration: BoxDecoration(
+                                                                                  shape: BoxShape.circle,
+                                                                                ),
+                                                                                child: SvgPicture.asset(
+                                                                                  'assets/images/trans-motor-03.svg',
+                                                                                  fit: BoxFit.cover,
+                                                                                ),
+                                                                              ),
+                                                                            ),
+                                                                          if ((transportsTransportActionsRecord.transport) ==
+                                                                              'moto')
+                                                                            InkWell(
+                                                                              onTap: () async {
+                                                                                logFirebaseEvent('HOME_PAGE_motoAction_ON_TAP');
+                                                                                logFirebaseEvent('motoAction_Navigate-To');
+                                                                                await Navigator.push(
+                                                                                  context,
+                                                                                  PageTransition(
+                                                                                    type: PageTransitionType.fade,
+                                                                                    duration: Duration(milliseconds: 0),
+                                                                                    reverseDuration: Duration(milliseconds: 0),
+                                                                                    child: TransportWidget(
+                                                                                      actionRef: transportsTransportActionsRecord.reference,
+                                                                                    ),
+                                                                                  ),
+                                                                                );
+                                                                              },
+                                                                              child: Container(
+                                                                                width: 40,
+                                                                                height: 40,
+                                                                                clipBehavior: Clip.antiAlias,
+                                                                                decoration: BoxDecoration(
+                                                                                  shape: BoxShape.circle,
+                                                                                ),
+                                                                                child: Image.asset(
+                                                                                  'assets/images/motorcycle.png',
+                                                                                  fit: BoxFit.cover,
+                                                                                ),
+                                                                              ),
+                                                                            ),
+                                                                          if ((transportsTransportActionsRecord.transport) ==
+                                                                              'train')
+                                                                            InkWell(
+                                                                              onTap: () async {
+                                                                                logFirebaseEvent('HOME_PAGE_trainAction_ON_TAP');
+                                                                                logFirebaseEvent('trainAction_Navigate-To');
+                                                                                await Navigator.push(
+                                                                                  context,
+                                                                                  PageTransition(
+                                                                                    type: PageTransitionType.fade,
+                                                                                    duration: Duration(milliseconds: 0),
+                                                                                    reverseDuration: Duration(milliseconds: 0),
+                                                                                    child: TransportWidget(
+                                                                                      actionRef: transportsTransportActionsRecord.reference,
+                                                                                    ),
+                                                                                  ),
+                                                                                );
+                                                                              },
+                                                                              child: Container(
+                                                                                width: 40,
+                                                                                height: 40,
+                                                                                clipBehavior: Clip.antiAlias,
+                                                                                decoration: BoxDecoration(
+                                                                                  shape: BoxShape.circle,
+                                                                                ),
+                                                                                child: SvgPicture.asset(
+                                                                                  'assets/images/trans-train-04.svg',
+                                                                                  fit: BoxFit.cover,
+                                                                                ),
+                                                                              ),
+                                                                            ),
+                                                                          if ((transportsTransportActionsRecord.transport) ==
+                                                                              'metro')
+                                                                            InkWell(
+                                                                              onTap: () async {
+                                                                                logFirebaseEvent('HOME_PAGE_metroAction_ON_TAP');
+                                                                                logFirebaseEvent('metroAction_Navigate-To');
+                                                                                await Navigator.push(
+                                                                                  context,
+                                                                                  PageTransition(
+                                                                                    type: PageTransitionType.fade,
+                                                                                    duration: Duration(milliseconds: 0),
+                                                                                    reverseDuration: Duration(milliseconds: 0),
+                                                                                    child: TransportWidget(
+                                                                                      actionRef: transportsTransportActionsRecord.reference,
+                                                                                    ),
+                                                                                  ),
+                                                                                );
+                                                                              },
+                                                                              child: Container(
+                                                                                width: 40,
+                                                                                height: 40,
+                                                                                clipBehavior: Clip.antiAlias,
+                                                                                decoration: BoxDecoration(
+                                                                                  shape: BoxShape.circle,
+                                                                                ),
+                                                                                child: SvgPicture.asset(
+                                                                                  'assets/images/trans-metro-06.svg',
+                                                                                  fit: BoxFit.cover,
+                                                                                ),
+                                                                              ),
+                                                                            ),
+                                                                          if ((transportsTransportActionsRecord.transport) ==
+                                                                              'flight')
+                                                                            InkWell(
+                                                                              onTap: () async {
+                                                                                logFirebaseEvent('HOME_PAGE_flightAction_ON_TAP');
+                                                                                logFirebaseEvent('flightAction_Navigate-To');
+                                                                                await Navigator.push(
+                                                                                  context,
+                                                                                  PageTransition(
+                                                                                    type: PageTransitionType.fade,
+                                                                                    duration: Duration(milliseconds: 0),
+                                                                                    reverseDuration: Duration(milliseconds: 0),
+                                                                                    child: TransportWidget(
+                                                                                      actionRef: transportsTransportActionsRecord.reference,
+                                                                                    ),
+                                                                                  ),
+                                                                                );
+                                                                              },
+                                                                              child: Container(
+                                                                                width: 40,
+                                                                                height: 40,
+                                                                                clipBehavior: Clip.antiAlias,
+                                                                                decoration: BoxDecoration(
+                                                                                  shape: BoxShape.circle,
+                                                                                ),
+                                                                                child: Image.asset(
+                                                                                  'assets/images/aircraft.png',
+                                                                                  fit: BoxFit.cover,
+                                                                                ),
+                                                                              ),
+                                                                            ),
+                                                                          if ((transportsTransportActionsRecord.transport) ==
+                                                                              'bike')
+                                                                            InkWell(
+                                                                              onTap: () async {
+                                                                                logFirebaseEvent('HOME_PAGE_bikeAction_ON_TAP');
+                                                                                logFirebaseEvent('bikeAction_Navigate-To');
+                                                                                await Navigator.push(
+                                                                                  context,
+                                                                                  PageTransition(
+                                                                                    type: PageTransitionType.fade,
+                                                                                    duration: Duration(milliseconds: 0),
+                                                                                    reverseDuration: Duration(milliseconds: 0),
+                                                                                    child: TransportWidget(
+                                                                                      actionRef: transportsTransportActionsRecord.reference,
+                                                                                    ),
+                                                                                  ),
+                                                                                );
+                                                                              },
+                                                                              child: Container(
+                                                                                width: 40,
+                                                                                height: 40,
+                                                                                clipBehavior: Clip.antiAlias,
+                                                                                decoration: BoxDecoration(
+                                                                                  shape: BoxShape.circle,
+                                                                                ),
+                                                                                child: SvgPicture.asset(
+                                                                                  'assets/images/trans-cycle-08.svg',
+                                                                                  fit: BoxFit.cover,
+                                                                                ),
+                                                                              ),
+                                                                            ),
+                                                                        ],
+                                                                      ),
+                                                                    );
+                                                                  }),
+                                                                ),
+                                                              );
+                                                            },
+                                                          ),
+                                                        ),
+                                                        Padding(
+                                                          padding:
+                                                              EdgeInsetsDirectional
+                                                                  .fromSTEB(0,
+                                                                      8, 0, 0),
+                                                          child: StreamBuilder<
+                                                              List<
+                                                                  EnergyActionsRecord>>(
+                                                            stream:
+                                                                queryEnergyActionsRecord(
+                                                              queryBuilder: (energyActionsRecord) => energyActionsRecord
+                                                                  .where(
+                                                                      'userId',
+                                                                      isEqualTo:
+                                                                          currentUserUid)
+                                                                  .where('day',
+                                                                      isEqualTo:
+                                                                          FFAppState()
+                                                                              .activeDate)
+                                                                  .where(
+                                                                      'isPeriodic',
+                                                                      isEqualTo:
+                                                                          false)
+                                                                  .orderBy(
+                                                                      'created_time',
+                                                                      descending:
+                                                                          true),
+                                                            ),
+                                                            builder: (context,
+                                                                snapshot) {
+                                                              // Customize what your widget looks like when it's loading.
+                                                              if (!snapshot
+                                                                  .hasData) {
+                                                                return Center(
+                                                                  child:
+                                                                      SizedBox(
+                                                                    width: 2,
+                                                                    height: 2,
+                                                                    child:
+                                                                        SpinKitRing(
+                                                                      color: Colors
+                                                                          .transparent,
+                                                                      size: 2,
+                                                                    ),
+                                                                  ),
+                                                                );
+                                                              }
+                                                              List<EnergyActionsRecord>
+                                                                  energyEnergyActionsRecordList =
+                                                                  snapshot.data;
+                                                              if (energyEnergyActionsRecordList
+                                                                  .isEmpty) {
+                                                                return Center(
+                                                                  child: Image
+                                                                      .asset(
+                                                                    'assets/images/dust.png',
+                                                                    width: 40,
+                                                                  ),
+                                                                );
+                                                              }
+                                                              return SingleChildScrollView(
+                                                                scrollDirection:
+                                                                    Axis.horizontal,
+                                                                child: Row(
+                                                                  mainAxisSize:
+                                                                      MainAxisSize
+                                                                          .max,
+                                                                  mainAxisAlignment:
+                                                                      MainAxisAlignment
+                                                                          .center,
+                                                                  children: List.generate(
+                                                                      energyEnergyActionsRecordList
+                                                                          .length,
+                                                                      (energyIndex) {
+                                                                    final energyEnergyActionsRecord =
+                                                                        energyEnergyActionsRecordList[
+                                                                            energyIndex];
+                                                                    return Container(
+                                                                      width: 40,
+                                                                      height:
+                                                                          40,
+                                                                      child:
+                                                                          Stack(
+                                                                        alignment: AlignmentDirectional(
+                                                                            0,
+                                                                            0),
+                                                                        children: [
+                                                                          if ((energyEnergyActionsRecord.energy) ==
+                                                                              'electricity')
+                                                                            InkWell(
+                                                                              onTap: () async {
+                                                                                logFirebaseEvent('HOME_PAGE_electricityAction_ON_TAP');
+                                                                                logFirebaseEvent('electricityAction_Navigate-To');
+                                                                                await Navigator.push(
+                                                                                  context,
+                                                                                  PageTransition(
+                                                                                    type: PageTransitionType.fade,
+                                                                                    duration: Duration(milliseconds: 0),
+                                                                                    reverseDuration: Duration(milliseconds: 0),
+                                                                                    child: EnergiesWidget(
+                                                                                      actionRef: energyEnergyActionsRecord.reference,
+                                                                                    ),
+                                                                                  ),
+                                                                                );
+                                                                              },
+                                                                              child: Container(
+                                                                                width: 40,
+                                                                                height: 40,
+                                                                                clipBehavior: Clip.antiAlias,
+                                                                                decoration: BoxDecoration(
+                                                                                  shape: BoxShape.circle,
+                                                                                ),
+                                                                                child: Image.asset(
+                                                                                  'assets/images/energy.png',
+                                                                                  fit: BoxFit.cover,
+                                                                                ),
+                                                                              ),
+                                                                            ),
+                                                                          if ((energyEnergyActionsRecord.energy) ==
+                                                                              'gaz')
+                                                                            InkWell(
+                                                                              onTap: () async {
+                                                                                logFirebaseEvent('HOME_PAGE_gazAction_ON_TAP');
+                                                                                logFirebaseEvent('gazAction_Navigate-To');
+                                                                                await Navigator.push(
+                                                                                  context,
+                                                                                  PageTransition(
+                                                                                    type: PageTransitionType.fade,
+                                                                                    duration: Duration(milliseconds: 0),
+                                                                                    reverseDuration: Duration(milliseconds: 0),
+                                                                                    child: EnergiesWidget(
+                                                                                      actionRef: energyEnergyActionsRecord.reference,
+                                                                                    ),
+                                                                                  ),
+                                                                                );
+                                                                              },
+                                                                              child: Container(
+                                                                                width: 40,
+                                                                                height: 40,
+                                                                                clipBehavior: Clip.antiAlias,
+                                                                                decoration: BoxDecoration(
+                                                                                  shape: BoxShape.circle,
+                                                                                ),
+                                                                                child: Image.asset(
+                                                                                  'assets/images/gas.png',
+                                                                                  fit: BoxFit.cover,
+                                                                                ),
+                                                                              ),
+                                                                            ),
+                                                                          if ((energyEnergyActionsRecord.energy) ==
+                                                                              'water')
+                                                                            InkWell(
+                                                                              onTap: () async {
+                                                                                logFirebaseEvent('HOME_PAGE_waterAction_ON_TAP');
+                                                                                logFirebaseEvent('waterAction_Navigate-To');
+                                                                                await Navigator.push(
+                                                                                  context,
+                                                                                  PageTransition(
+                                                                                    type: PageTransitionType.fade,
+                                                                                    duration: Duration(milliseconds: 0),
+                                                                                    reverseDuration: Duration(milliseconds: 0),
+                                                                                    child: EnergiesWidget(
+                                                                                      actionRef: energyEnergyActionsRecord.reference,
+                                                                                    ),
+                                                                                  ),
+                                                                                );
+                                                                              },
+                                                                              child: Container(
+                                                                                width: 40,
+                                                                                height: 40,
+                                                                                clipBehavior: Clip.antiAlias,
+                                                                                decoration: BoxDecoration(
+                                                                                  shape: BoxShape.circle,
+                                                                                ),
+                                                                                child: Image.asset(
+                                                                                  'assets/images/water-drop.png',
+                                                                                  fit: BoxFit.cover,
+                                                                                ),
+                                                                              ),
+                                                                            ),
+                                                                        ],
+                                                                      ),
+                                                                    );
+                                                                  }),
+                                                                ),
+                                                              );
+                                                            },
+                                                          ),
+                                                        ),
+                                                        Padding(
+                                                          padding:
+                                                              EdgeInsetsDirectional
+                                                                  .fromSTEB(0,
+                                                                      8, 0, 0),
+                                                          child: StreamBuilder<
+                                                              List<
+                                                                  FoodActionsRecord>>(
+                                                            stream:
+                                                                queryFoodActionsRecord(
+                                                              queryBuilder: (foodActionsRecord) => foodActionsRecord
+                                                                  .where(
+                                                                      'userId',
+                                                                      isEqualTo:
+                                                                          currentUserUid)
+                                                                  .where('day',
+                                                                      isEqualTo:
+                                                                          FFAppState()
+                                                                              .activeDate)
+                                                                  .where(
+                                                                      'isPeriodic',
+                                                                      isEqualTo:
+                                                                          false)
+                                                                  .orderBy(
+                                                                      'created_time',
+                                                                      descending:
+                                                                          true),
+                                                            ),
+                                                            builder: (context,
+                                                                snapshot) {
+                                                              // Customize what your widget looks like when it's loading.
+                                                              if (!snapshot
+                                                                  .hasData) {
+                                                                return Center(
+                                                                  child:
+                                                                      SizedBox(
+                                                                    width: 2,
+                                                                    height: 2,
+                                                                    child:
+                                                                        SpinKitRing(
+                                                                      color: Colors
+                                                                          .transparent,
+                                                                      size: 2,
+                                                                    ),
+                                                                  ),
+                                                                );
+                                                              }
+                                                              List<FoodActionsRecord>
+                                                                  foodsFoodActionsRecordList =
+                                                                  snapshot.data;
+                                                              if (foodsFoodActionsRecordList
+                                                                  .isEmpty) {
+                                                                return Center(
+                                                                  child: Image
+                                                                      .asset(
+                                                                    'assets/images/dust.png',
+                                                                    width: 40,
+                                                                  ),
+                                                                );
+                                                              }
+                                                              return SingleChildScrollView(
+                                                                scrollDirection:
+                                                                    Axis.horizontal,
+                                                                child: Row(
+                                                                  mainAxisSize:
+                                                                      MainAxisSize
+                                                                          .max,
+                                                                  mainAxisAlignment:
+                                                                      MainAxisAlignment
+                                                                          .center,
+                                                                  children: List.generate(
+                                                                      foodsFoodActionsRecordList
+                                                                          .length,
+                                                                      (foodsIndex) {
+                                                                    final foodsFoodActionsRecord =
+                                                                        foodsFoodActionsRecordList[
+                                                                            foodsIndex];
+                                                                    return Container(
+                                                                      width: 40,
+                                                                      height:
+                                                                          40,
+                                                                      child:
+                                                                          Stack(
+                                                                        alignment: AlignmentDirectional(
+                                                                            0,
+                                                                            0),
+                                                                        children: [
+                                                                          if ((foodsFoodActionsRecord.food) ==
+                                                                              'starter')
+                                                                            InkWell(
+                                                                              onTap: () async {
+                                                                                logFirebaseEvent('HOME_PAGE_starterAction_ON_TAP');
+                                                                                logFirebaseEvent('starterAction_Navigate-To');
+                                                                                await Navigator.push(
+                                                                                  context,
+                                                                                  PageTransition(
+                                                                                    type: PageTransitionType.fade,
+                                                                                    duration: Duration(milliseconds: 0),
+                                                                                    reverseDuration: Duration(milliseconds: 0),
+                                                                                    child: FoodWidget(
+                                                                                      actionRef: foodsFoodActionsRecord.reference,
+                                                                                    ),
+                                                                                  ),
+                                                                                );
+                                                                              },
+                                                                              child: Container(
+                                                                                width: 40,
+                                                                                height: 40,
+                                                                                clipBehavior: Clip.antiAlias,
+                                                                                decoration: BoxDecoration(
+                                                                                  shape: BoxShape.circle,
+                                                                                ),
+                                                                                child: Image.asset(
+                                                                                  'assets/images/canape_(1).png',
+                                                                                  fit: BoxFit.cover,
+                                                                                ),
+                                                                              ),
+                                                                            ),
+                                                                          if ((foodsFoodActionsRecord.food) ==
+                                                                              'main')
+                                                                            InkWell(
+                                                                              onTap: () async {
+                                                                                logFirebaseEvent('HOME_PAGE_mainAction_ON_TAP');
+                                                                                logFirebaseEvent('mainAction_Navigate-To');
+                                                                                await Navigator.push(
+                                                                                  context,
+                                                                                  PageTransition(
+                                                                                    type: PageTransitionType.fade,
+                                                                                    duration: Duration(milliseconds: 0),
+                                                                                    reverseDuration: Duration(milliseconds: 0),
+                                                                                    child: FoodWidget(
+                                                                                      actionRef: foodsFoodActionsRecord.reference,
+                                                                                    ),
+                                                                                  ),
+                                                                                );
+                                                                              },
+                                                                              child: Container(
+                                                                                width: 40,
+                                                                                height: 40,
+                                                                                clipBehavior: Clip.antiAlias,
+                                                                                decoration: BoxDecoration(
+                                                                                  shape: BoxShape.circle,
+                                                                                ),
+                                                                                child: Image.asset(
+                                                                                  'assets/images/steak.png',
+                                                                                  fit: BoxFit.cover,
+                                                                                ),
+                                                                              ),
+                                                                            ),
+                                                                          if ((foodsFoodActionsRecord.food) ==
+                                                                              'desert')
+                                                                            InkWell(
+                                                                              onTap: () async {
+                                                                                logFirebaseEvent('HOME_PAGE_desertAction_ON_TAP');
+                                                                                logFirebaseEvent('desertAction_Navigate-To');
+                                                                                await Navigator.push(
+                                                                                  context,
+                                                                                  PageTransition(
+                                                                                    type: PageTransitionType.fade,
+                                                                                    duration: Duration(milliseconds: 0),
+                                                                                    reverseDuration: Duration(milliseconds: 0),
+                                                                                    child: FoodWidget(
+                                                                                      actionRef: foodsFoodActionsRecord.reference,
+                                                                                    ),
+                                                                                  ),
+                                                                                );
+                                                                              },
+                                                                              child: Container(
+                                                                                width: 40,
+                                                                                height: 40,
+                                                                                clipBehavior: Clip.antiAlias,
+                                                                                decoration: BoxDecoration(
+                                                                                  shape: BoxShape.circle,
+                                                                                ),
+                                                                                child: Image.asset(
+                                                                                  'assets/images/ice-cream.png',
+                                                                                  fit: BoxFit.cover,
+                                                                                ),
+                                                                              ),
+                                                                            ),
+                                                                          if ((foodsFoodActionsRecord.food) ==
+                                                                              'drinks')
+                                                                            InkWell(
+                                                                              onTap: () async {
+                                                                                logFirebaseEvent('HOME_PAGE_drinksAction_ON_TAP');
+                                                                                logFirebaseEvent('drinksAction_Navigate-To');
+                                                                                await Navigator.push(
+                                                                                  context,
+                                                                                  PageTransition(
+                                                                                    type: PageTransitionType.fade,
+                                                                                    duration: Duration(milliseconds: 0),
+                                                                                    reverseDuration: Duration(milliseconds: 0),
+                                                                                    child: FoodWidget(
+                                                                                      actionRef: foodsFoodActionsRecord.reference,
+                                                                                    ),
+                                                                                  ),
+                                                                                );
+                                                                              },
+                                                                              child: Container(
+                                                                                width: 40,
+                                                                                height: 40,
+                                                                                clipBehavior: Clip.antiAlias,
+                                                                                decoration: BoxDecoration(
+                                                                                  shape: BoxShape.circle,
+                                                                                ),
+                                                                                child: Image.asset(
+                                                                                  'assets/images/soft-drink.png',
+                                                                                  fit: BoxFit.cover,
+                                                                                ),
+                                                                              ),
+                                                                            ),
+                                                                          if ((foodsFoodActionsRecord.food) ==
+                                                                              'cheese')
+                                                                            InkWell(
+                                                                              onTap: () async {
+                                                                                logFirebaseEvent('HOME_PAGE_cheeseAction_ON_TAP');
+                                                                                logFirebaseEvent('cheeseAction_Navigate-To');
+                                                                                await Navigator.push(
+                                                                                  context,
+                                                                                  PageTransition(
+                                                                                    type: PageTransitionType.fade,
+                                                                                    duration: Duration(milliseconds: 0),
+                                                                                    reverseDuration: Duration(milliseconds: 0),
+                                                                                    child: FoodWidget(
+                                                                                      actionRef: foodsFoodActionsRecord.reference,
+                                                                                    ),
+                                                                                  ),
+                                                                                );
+                                                                              },
+                                                                              child: Container(
+                                                                                width: 40,
+                                                                                height: 40,
+                                                                                clipBehavior: Clip.antiAlias,
+                                                                                decoration: BoxDecoration(
+                                                                                  shape: BoxShape.circle,
+                                                                                ),
+                                                                                child: Image.asset(
+                                                                                  'assets/images/cheeses.png',
+                                                                                  fit: BoxFit.cover,
+                                                                                ),
+                                                                              ),
+                                                                            ),
+                                                                          if ((foodsFoodActionsRecord.food) ==
+                                                                              'bread')
+                                                                            InkWell(
+                                                                              onTap: () async {
+                                                                                logFirebaseEvent('HOME_PAGE_breadAction_ON_TAP');
+                                                                                logFirebaseEvent('breadAction_Navigate-To');
+                                                                                await Navigator.push(
+                                                                                  context,
+                                                                                  PageTransition(
+                                                                                    type: PageTransitionType.fade,
+                                                                                    duration: Duration(milliseconds: 0),
+                                                                                    reverseDuration: Duration(milliseconds: 0),
+                                                                                    child: FoodWidget(
+                                                                                      actionRef: foodsFoodActionsRecord.reference,
+                                                                                    ),
+                                                                                  ),
+                                                                                );
+                                                                              },
+                                                                              child: Container(
+                                                                                width: 40,
+                                                                                height: 40,
+                                                                                clipBehavior: Clip.antiAlias,
+                                                                                decoration: BoxDecoration(
+                                                                                  shape: BoxShape.circle,
+                                                                                ),
+                                                                                child: Image.asset(
+                                                                                  'assets/images/bread.png',
+                                                                                  fit: BoxFit.cover,
+                                                                                ),
+                                                                              ),
+                                                                            ),
+                                                                          if ((foodsFoodActionsRecord.food) ==
+                                                                              'coffee')
+                                                                            InkWell(
+                                                                              onTap: () async {
+                                                                                logFirebaseEvent('HOME_PAGE_coffeeAction_ON_TAP');
+                                                                                logFirebaseEvent('coffeeAction_Navigate-To');
+                                                                                await Navigator.push(
+                                                                                  context,
+                                                                                  PageTransition(
+                                                                                    type: PageTransitionType.fade,
+                                                                                    duration: Duration(milliseconds: 0),
+                                                                                    reverseDuration: Duration(milliseconds: 0),
+                                                                                    child: FoodWidget(
+                                                                                      actionRef: foodsFoodActionsRecord.reference,
+                                                                                    ),
+                                                                                  ),
+                                                                                );
+                                                                              },
+                                                                              child: Container(
+                                                                                width: 40,
+                                                                                height: 40,
+                                                                                clipBehavior: Clip.antiAlias,
+                                                                                decoration: BoxDecoration(
+                                                                                  shape: BoxShape.circle,
+                                                                                ),
+                                                                                child: Image.asset(
+                                                                                  'assets/images/coffee.png',
+                                                                                  fit: BoxFit.cover,
+                                                                                ),
+                                                                              ),
+                                                                            ),
+                                                                        ],
+                                                                      ),
+                                                                    );
+                                                                  }),
+                                                                ),
+                                                              );
+                                                            },
                                                           ),
                                                         ),
                                                       ],
@@ -2566,87 +2189,1010 @@ class _HomeWidgetState extends State<HomeWidget> {
                                               ),
                                             ],
                                           ),
-                                        ),
-                                    ],
-                                  ),
-                                ),
-                                Column(
-                                  mainAxisSize: MainAxisSize.max,
-                                  children: [
-                                    Stack(
-                                      children: [
-                                        if ((FFAppState().actionActive) ==
-                                            false)
-                                          Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    0, 10, 0, 0),
-                                            child: Row(
-                                              mainAxisSize: MainAxisSize.max,
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              children: [
-                                                Padding(
-                                                  padding: EdgeInsetsDirectional
-                                                      .fromSTEB(0, 1, 0, 0),
-                                                  child: InkWell(
-                                                    onTap: () async {
-                                                      logFirebaseEvent(
-                                                          'Text-ON_TAP');
-                                                      logFirebaseEvent(
-                                                          'Text-Update-Local-State');
-                                                      setState(() => FFAppState()
-                                                          .actionActive = true);
-                                                    },
-                                                    child: Text(
-                                                      'Actions ',
-                                                      textAlign:
-                                                          TextAlign.center,
-                                                      style:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .bodyText1
-                                                              .override(
-                                                                fontFamily:
-                                                                    'Montserrat',
-                                                                color: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .primaryColor,
+                                        ],
+                                      ),
+                                    ),
+                                  if (!(FFAppState().actionActive) ?? true)
+                                    Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          0, 15, 0, 0),
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.max,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.stretch,
+                                        children: [
+                                          Column(
+                                            mainAxisSize: MainAxisSize.max,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.stretch,
+                                            children: [
+                                              Padding(
+                                                padding: EdgeInsetsDirectional
+                                                    .fromSTEB(8, 0, 8, 0),
+                                                child: Container(
+                                                  width: MediaQuery.of(context)
+                                                      .size
+                                                      .width,
+                                                  height: 180,
+                                                  decoration: BoxDecoration(
+                                                    color: Color(0xA9F77303),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10),
+                                                  ),
+                                                  child: Padding(
+                                                    padding:
+                                                        EdgeInsetsDirectional
+                                                            .fromSTEB(
+                                                                15, 5, 15, 5),
+                                                    child: Column(
+                                                      mainAxisSize:
+                                                          MainAxisSize.max,
+                                                      children: [
+                                                        Expanded(
+                                                          child: Row(
+                                                            mainAxisSize:
+                                                                MainAxisSize
+                                                                    .max,
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .center,
+                                                            children: [
+                                                              Align(
+                                                                alignment:
+                                                                    AlignmentDirectional(
+                                                                        0, 0),
+                                                                child: Text(
+                                                                  'Emissions hebdomadaires : ${functions.printScore(containerUsersStatsRecord.periodics)}',
+                                                                  textAlign:
+                                                                      TextAlign
+                                                                          .center,
+                                                                  style: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .bodyText1,
+                                                                ),
                                                               ),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                        StreamBuilder<
+                                                            List<
+                                                                TransportActionsRecord>>(
+                                                          stream:
+                                                              queryTransportActionsRecord(
+                                                            queryBuilder: (transportActionsRecord) =>
+                                                                transportActionsRecord
+                                                                    .where(
+                                                                        'userId',
+                                                                        isEqualTo:
+                                                                            currentUserUid)
+                                                                    .where(
+                                                                        'isPeriodic',
+                                                                        isEqualTo:
+                                                                            true),
+                                                          ),
+                                                          builder: (context,
+                                                              snapshot) {
+                                                            // Customize what your widget looks like when it's loading.
+                                                            if (!snapshot
+                                                                .hasData) {
+                                                              return Center(
+                                                                child: SizedBox(
+                                                                  width: 2,
+                                                                  height: 2,
+                                                                  child:
+                                                                      SpinKitRing(
+                                                                    color: Colors
+                                                                        .transparent,
+                                                                    size: 2,
+                                                                  ),
+                                                                ),
+                                                              );
+                                                            }
+                                                            List<TransportActionsRecord>
+                                                                transportsTransportActionsRecordList =
+                                                                snapshot.data;
+                                                            if (transportsTransportActionsRecordList
+                                                                .isEmpty) {
+                                                              return Image
+                                                                  .asset(
+                                                                'assets/images/dust.png',
+                                                                width: 40,
+                                                                height: 40,
+                                                              );
+                                                            }
+                                                            return Row(
+                                                              mainAxisSize:
+                                                                  MainAxisSize
+                                                                      .max,
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .center,
+                                                              children: List.generate(
+                                                                  transportsTransportActionsRecordList
+                                                                      .length,
+                                                                  (transportsIndex) {
+                                                                final transportsTransportActionsRecord =
+                                                                    transportsTransportActionsRecordList[
+                                                                        transportsIndex];
+                                                                return Container(
+                                                                  width: 40,
+                                                                  height: 40,
+                                                                  child: Stack(
+                                                                    children: [
+                                                                      if ((transportsTransportActionsRecord
+                                                                              .transport) ==
+                                                                          'car')
+                                                                        Align(
+                                                                          alignment: AlignmentDirectional(
+                                                                              0,
+                                                                              0),
+                                                                          child:
+                                                                              InkWell(
+                                                                            onTap:
+                                                                                () async {
+                                                                              logFirebaseEvent('HOME_PAGE_carPeriodics_ON_TAP');
+                                                                              logFirebaseEvent('carPeriodics_Navigate-To');
+                                                                              await Navigator.push(
+                                                                                context,
+                                                                                PageTransition(
+                                                                                  type: PageTransitionType.fade,
+                                                                                  duration: Duration(milliseconds: 0),
+                                                                                  reverseDuration: Duration(milliseconds: 0),
+                                                                                  child: TransportWidget(
+                                                                                    actionRef: transportsTransportActionsRecord.reference,
+                                                                                  ),
+                                                                                ),
+                                                                              );
+                                                                            },
+                                                                            child:
+                                                                                Container(
+                                                                              width: 40,
+                                                                              height: 40,
+                                                                              clipBehavior: Clip.antiAlias,
+                                                                              decoration: BoxDecoration(
+                                                                                shape: BoxShape.circle,
+                                                                              ),
+                                                                              child: SvgPicture.asset(
+                                                                                'assets/images/trans-car-01.svg',
+                                                                                fit: BoxFit.cover,
+                                                                              ),
+                                                                            ),
+                                                                          ),
+                                                                        ),
+                                                                      if ((transportsTransportActionsRecord
+                                                                              .transport) ==
+                                                                          'bus')
+                                                                        Align(
+                                                                          alignment: AlignmentDirectional(
+                                                                              0,
+                                                                              0),
+                                                                          child:
+                                                                              InkWell(
+                                                                            onTap:
+                                                                                () async {
+                                                                              logFirebaseEvent('HOME_PAGE_busPeriodics_ON_TAP');
+                                                                              logFirebaseEvent('busPeriodics_Navigate-To');
+                                                                              await Navigator.push(
+                                                                                context,
+                                                                                PageTransition(
+                                                                                  type: PageTransitionType.fade,
+                                                                                  duration: Duration(milliseconds: 0),
+                                                                                  reverseDuration: Duration(milliseconds: 0),
+                                                                                  child: TransportWidget(
+                                                                                    actionRef: transportsTransportActionsRecord.reference,
+                                                                                  ),
+                                                                                ),
+                                                                              );
+                                                                            },
+                                                                            child:
+                                                                                Container(
+                                                                              width: 40,
+                                                                              height: 40,
+                                                                              clipBehavior: Clip.antiAlias,
+                                                                              decoration: BoxDecoration(
+                                                                                shape: BoxShape.circle,
+                                                                              ),
+                                                                              child: SvgPicture.asset(
+                                                                                'assets/images/trans-bus-02.svg',
+                                                                                fit: BoxFit.cover,
+                                                                              ),
+                                                                            ),
+                                                                          ),
+                                                                        ),
+                                                                      if ((transportsTransportActionsRecord
+                                                                              .transport) ==
+                                                                          'scooter')
+                                                                        Align(
+                                                                          alignment: AlignmentDirectional(
+                                                                              0,
+                                                                              0),
+                                                                          child:
+                                                                              InkWell(
+                                                                            onTap:
+                                                                                () async {
+                                                                              logFirebaseEvent('HOME_PAGE_scooterPeriodics_ON_TAP');
+                                                                              logFirebaseEvent('scooterPeriodics_Navigate-To');
+                                                                              await Navigator.push(
+                                                                                context,
+                                                                                PageTransition(
+                                                                                  type: PageTransitionType.fade,
+                                                                                  duration: Duration(milliseconds: 0),
+                                                                                  reverseDuration: Duration(milliseconds: 0),
+                                                                                  child: TransportWidget(
+                                                                                    actionRef: transportsTransportActionsRecord.reference,
+                                                                                  ),
+                                                                                ),
+                                                                              );
+                                                                            },
+                                                                            child:
+                                                                                Container(
+                                                                              width: 40,
+                                                                              height: 40,
+                                                                              clipBehavior: Clip.antiAlias,
+                                                                              decoration: BoxDecoration(
+                                                                                shape: BoxShape.circle,
+                                                                              ),
+                                                                              child: SvgPicture.asset(
+                                                                                'assets/images/trans-motor-03.svg',
+                                                                                fit: BoxFit.cover,
+                                                                              ),
+                                                                            ),
+                                                                          ),
+                                                                        ),
+                                                                      if ((transportsTransportActionsRecord
+                                                                              .transport) ==
+                                                                          'moto')
+                                                                        Align(
+                                                                          alignment: AlignmentDirectional(
+                                                                              0,
+                                                                              0),
+                                                                          child:
+                                                                              InkWell(
+                                                                            onTap:
+                                                                                () async {
+                                                                              logFirebaseEvent('HOME_PAGE_motoPeriodics_ON_TAP');
+                                                                              logFirebaseEvent('motoPeriodics_Navigate-To');
+                                                                              await Navigator.push(
+                                                                                context,
+                                                                                PageTransition(
+                                                                                  type: PageTransitionType.fade,
+                                                                                  duration: Duration(milliseconds: 0),
+                                                                                  reverseDuration: Duration(milliseconds: 0),
+                                                                                  child: TransportWidget(
+                                                                                    actionRef: transportsTransportActionsRecord.reference,
+                                                                                  ),
+                                                                                ),
+                                                                              );
+                                                                            },
+                                                                            child:
+                                                                                Container(
+                                                                              width: 40,
+                                                                              height: 40,
+                                                                              clipBehavior: Clip.antiAlias,
+                                                                              decoration: BoxDecoration(
+                                                                                shape: BoxShape.circle,
+                                                                              ),
+                                                                              child: Image.asset(
+                                                                                'assets/images/motorcycle.png',
+                                                                                fit: BoxFit.cover,
+                                                                              ),
+                                                                            ),
+                                                                          ),
+                                                                        ),
+                                                                      if ((transportsTransportActionsRecord
+                                                                              .transport) ==
+                                                                          'train')
+                                                                        Align(
+                                                                          alignment: AlignmentDirectional(
+                                                                              0,
+                                                                              0),
+                                                                          child:
+                                                                              InkWell(
+                                                                            onTap:
+                                                                                () async {
+                                                                              logFirebaseEvent('HOME_PAGE_trainPeriodics_ON_TAP');
+                                                                              logFirebaseEvent('trainPeriodics_Navigate-To');
+                                                                              await Navigator.push(
+                                                                                context,
+                                                                                PageTransition(
+                                                                                  type: PageTransitionType.fade,
+                                                                                  duration: Duration(milliseconds: 0),
+                                                                                  reverseDuration: Duration(milliseconds: 0),
+                                                                                  child: TransportWidget(
+                                                                                    actionRef: transportsTransportActionsRecord.reference,
+                                                                                  ),
+                                                                                ),
+                                                                              );
+                                                                            },
+                                                                            child:
+                                                                                Container(
+                                                                              width: 40,
+                                                                              height: 40,
+                                                                              clipBehavior: Clip.antiAlias,
+                                                                              decoration: BoxDecoration(
+                                                                                shape: BoxShape.circle,
+                                                                              ),
+                                                                              child: SvgPicture.asset(
+                                                                                'assets/images/trans-train-04.svg',
+                                                                                fit: BoxFit.cover,
+                                                                              ),
+                                                                            ),
+                                                                          ),
+                                                                        ),
+                                                                      if ((transportsTransportActionsRecord
+                                                                              .transport) ==
+                                                                          'metro')
+                                                                        Align(
+                                                                          alignment: AlignmentDirectional(
+                                                                              0,
+                                                                              0),
+                                                                          child:
+                                                                              InkWell(
+                                                                            onTap:
+                                                                                () async {
+                                                                              logFirebaseEvent('HOME_PAGE_metroPeriodics_ON_TAP');
+                                                                              logFirebaseEvent('metroPeriodics_Navigate-To');
+                                                                              await Navigator.push(
+                                                                                context,
+                                                                                PageTransition(
+                                                                                  type: PageTransitionType.fade,
+                                                                                  duration: Duration(milliseconds: 0),
+                                                                                  reverseDuration: Duration(milliseconds: 0),
+                                                                                  child: TransportWidget(
+                                                                                    actionRef: transportsTransportActionsRecord.reference,
+                                                                                  ),
+                                                                                ),
+                                                                              );
+                                                                            },
+                                                                            child:
+                                                                                Container(
+                                                                              width: 40,
+                                                                              height: 40,
+                                                                              clipBehavior: Clip.antiAlias,
+                                                                              decoration: BoxDecoration(
+                                                                                shape: BoxShape.circle,
+                                                                              ),
+                                                                              child: SvgPicture.asset(
+                                                                                'assets/images/trans-metro-06.svg',
+                                                                                fit: BoxFit.cover,
+                                                                              ),
+                                                                            ),
+                                                                          ),
+                                                                        ),
+                                                                      if ((transportsTransportActionsRecord
+                                                                              .transport) ==
+                                                                          'flight')
+                                                                        Align(
+                                                                          alignment: AlignmentDirectional(
+                                                                              0,
+                                                                              0),
+                                                                          child:
+                                                                              InkWell(
+                                                                            onTap:
+                                                                                () async {
+                                                                              logFirebaseEvent('HOME_PAGE_flightPeriodics_ON_TAP');
+                                                                              logFirebaseEvent('flightPeriodics_Navigate-To');
+                                                                              await Navigator.push(
+                                                                                context,
+                                                                                PageTransition(
+                                                                                  type: PageTransitionType.fade,
+                                                                                  duration: Duration(milliseconds: 0),
+                                                                                  reverseDuration: Duration(milliseconds: 0),
+                                                                                  child: TransportWidget(
+                                                                                    actionRef: transportsTransportActionsRecord.reference,
+                                                                                  ),
+                                                                                ),
+                                                                              );
+                                                                            },
+                                                                            child:
+                                                                                Container(
+                                                                              width: 40,
+                                                                              height: 40,
+                                                                              clipBehavior: Clip.antiAlias,
+                                                                              decoration: BoxDecoration(
+                                                                                shape: BoxShape.circle,
+                                                                              ),
+                                                                              child: Image.asset(
+                                                                                'assets/images/aircraft.png',
+                                                                                fit: BoxFit.cover,
+                                                                              ),
+                                                                            ),
+                                                                          ),
+                                                                        ),
+                                                                      if ((transportsTransportActionsRecord
+                                                                              .transport) ==
+                                                                          'bike')
+                                                                        Align(
+                                                                          alignment: AlignmentDirectional(
+                                                                              0,
+                                                                              0),
+                                                                          child:
+                                                                              InkWell(
+                                                                            onTap:
+                                                                                () async {
+                                                                              logFirebaseEvent('HOME_PAGE_bikePeriodics_ON_TAP');
+                                                                              logFirebaseEvent('bikePeriodics_Navigate-To');
+                                                                              await Navigator.push(
+                                                                                context,
+                                                                                PageTransition(
+                                                                                  type: PageTransitionType.fade,
+                                                                                  duration: Duration(milliseconds: 0),
+                                                                                  reverseDuration: Duration(milliseconds: 0),
+                                                                                  child: TransportWidget(
+                                                                                    actionRef: transportsTransportActionsRecord.reference,
+                                                                                  ),
+                                                                                ),
+                                                                              );
+                                                                            },
+                                                                            child:
+                                                                                Container(
+                                                                              width: 40,
+                                                                              height: 40,
+                                                                              clipBehavior: Clip.antiAlias,
+                                                                              decoration: BoxDecoration(
+                                                                                shape: BoxShape.circle,
+                                                                              ),
+                                                                              child: SvgPicture.asset(
+                                                                                'assets/images/trans-cycle-08.svg',
+                                                                                fit: BoxFit.cover,
+                                                                              ),
+                                                                            ),
+                                                                          ),
+                                                                        ),
+                                                                    ],
+                                                                  ),
+                                                                );
+                                                              }),
+                                                            );
+                                                          },
+                                                        ),
+                                                        StreamBuilder<
+                                                            List<
+                                                                EnergyActionsRecord>>(
+                                                          stream:
+                                                              queryEnergyActionsRecord(
+                                                            queryBuilder: (energyActionsRecord) =>
+                                                                energyActionsRecord
+                                                                    .where(
+                                                                        'userId',
+                                                                        isEqualTo:
+                                                                            currentUserUid)
+                                                                    .where(
+                                                                        'isPeriodic',
+                                                                        isEqualTo:
+                                                                            true),
+                                                          ),
+                                                          builder: (context,
+                                                              snapshot) {
+                                                            // Customize what your widget looks like when it's loading.
+                                                            if (!snapshot
+                                                                .hasData) {
+                                                              return Center(
+                                                                child: SizedBox(
+                                                                  width: 2,
+                                                                  height: 2,
+                                                                  child:
+                                                                      SpinKitRing(
+                                                                    color: Colors
+                                                                        .transparent,
+                                                                    size: 2,
+                                                                  ),
+                                                                ),
+                                                              );
+                                                            }
+                                                            List<EnergyActionsRecord>
+                                                                energyEnergyActionsRecordList =
+                                                                snapshot.data;
+                                                            if (energyEnergyActionsRecordList
+                                                                .isEmpty) {
+                                                              return Image
+                                                                  .asset(
+                                                                'assets/images/dust.png',
+                                                                width: 40,
+                                                                height: 40,
+                                                              );
+                                                            }
+                                                            return Row(
+                                                              mainAxisSize:
+                                                                  MainAxisSize
+                                                                      .max,
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .center,
+                                                              children: List.generate(
+                                                                  energyEnergyActionsRecordList
+                                                                      .length,
+                                                                  (energyIndex) {
+                                                                final energyEnergyActionsRecord =
+                                                                    energyEnergyActionsRecordList[
+                                                                        energyIndex];
+                                                                return Container(
+                                                                  width: 40,
+                                                                  height: 40,
+                                                                  child: Stack(
+                                                                    children: [
+                                                                      if ((energyEnergyActionsRecord
+                                                                              .energy) ==
+                                                                          'electricity')
+                                                                        Align(
+                                                                          alignment: AlignmentDirectional(
+                                                                              0,
+                                                                              0),
+                                                                          child:
+                                                                              InkWell(
+                                                                            onTap:
+                                                                                () async {
+                                                                              logFirebaseEvent('HOME_PAGE_electricityPeriodics_ON_TAP');
+                                                                              logFirebaseEvent('electricityPeriodics_Navigate-To');
+                                                                              await Navigator.push(
+                                                                                context,
+                                                                                PageTransition(
+                                                                                  type: PageTransitionType.fade,
+                                                                                  duration: Duration(milliseconds: 0),
+                                                                                  reverseDuration: Duration(milliseconds: 0),
+                                                                                  child: EnergiesWidget(
+                                                                                    actionRef: energyEnergyActionsRecord.reference,
+                                                                                  ),
+                                                                                ),
+                                                                              );
+                                                                            },
+                                                                            child:
+                                                                                Container(
+                                                                              width: 40,
+                                                                              height: 40,
+                                                                              clipBehavior: Clip.antiAlias,
+                                                                              decoration: BoxDecoration(
+                                                                                shape: BoxShape.circle,
+                                                                              ),
+                                                                              child: Image.asset(
+                                                                                'assets/images/energy.png',
+                                                                                fit: BoxFit.cover,
+                                                                              ),
+                                                                            ),
+                                                                          ),
+                                                                        ),
+                                                                      if ((energyEnergyActionsRecord
+                                                                              .energy) ==
+                                                                          'gas')
+                                                                        Align(
+                                                                          alignment: AlignmentDirectional(
+                                                                              0,
+                                                                              0),
+                                                                          child:
+                                                                              InkWell(
+                                                                            onTap:
+                                                                                () async {
+                                                                              logFirebaseEvent('HOME_PAGE_gasPeriodics_ON_TAP');
+                                                                              logFirebaseEvent('gasPeriodics_Navigate-To');
+                                                                              await Navigator.push(
+                                                                                context,
+                                                                                PageTransition(
+                                                                                  type: PageTransitionType.fade,
+                                                                                  duration: Duration(milliseconds: 0),
+                                                                                  reverseDuration: Duration(milliseconds: 0),
+                                                                                  child: EnergiesWidget(
+                                                                                    actionRef: energyEnergyActionsRecord.reference,
+                                                                                  ),
+                                                                                ),
+                                                                              );
+                                                                            },
+                                                                            child:
+                                                                                Container(
+                                                                              width: 40,
+                                                                              height: 40,
+                                                                              clipBehavior: Clip.antiAlias,
+                                                                              decoration: BoxDecoration(
+                                                                                shape: BoxShape.circle,
+                                                                              ),
+                                                                              child: Image.asset(
+                                                                                'assets/images/gas.png',
+                                                                                fit: BoxFit.cover,
+                                                                              ),
+                                                                            ),
+                                                                          ),
+                                                                        ),
+                                                                      if ((energyEnergyActionsRecord
+                                                                              .energy) ==
+                                                                          'water')
+                                                                        Align(
+                                                                          alignment: AlignmentDirectional(
+                                                                              0,
+                                                                              0),
+                                                                          child:
+                                                                              InkWell(
+                                                                            onTap:
+                                                                                () async {
+                                                                              logFirebaseEvent('HOME_PAGE_waterPeriodics_ON_TAP');
+                                                                              logFirebaseEvent('waterPeriodics_Navigate-To');
+                                                                              await Navigator.push(
+                                                                                context,
+                                                                                PageTransition(
+                                                                                  type: PageTransitionType.fade,
+                                                                                  duration: Duration(milliseconds: 0),
+                                                                                  reverseDuration: Duration(milliseconds: 0),
+                                                                                  child: EnergiesWidget(
+                                                                                    actionRef: energyEnergyActionsRecord.reference,
+                                                                                  ),
+                                                                                ),
+                                                                              );
+                                                                            },
+                                                                            child:
+                                                                                Container(
+                                                                              width: 40,
+                                                                              height: 40,
+                                                                              clipBehavior: Clip.antiAlias,
+                                                                              decoration: BoxDecoration(
+                                                                                shape: BoxShape.circle,
+                                                                              ),
+                                                                              child: Image.asset(
+                                                                                'assets/images/water-drop.png',
+                                                                                fit: BoxFit.cover,
+                                                                              ),
+                                                                            ),
+                                                                          ),
+                                                                        ),
+                                                                    ],
+                                                                  ),
+                                                                );
+                                                              }),
+                                                            );
+                                                          },
+                                                        ),
+                                                        Padding(
+                                                          padding:
+                                                              EdgeInsetsDirectional
+                                                                  .fromSTEB(0,
+                                                                      8, 0, 0),
+                                                          child: StreamBuilder<
+                                                              List<
+                                                                  FoodActionsRecord>>(
+                                                            stream:
+                                                                queryFoodActionsRecord(
+                                                              queryBuilder: (foodActionsRecord) => foodActionsRecord
+                                                                  .where(
+                                                                      'userId',
+                                                                      isEqualTo:
+                                                                          currentUserUid)
+                                                                  .where(
+                                                                      'isPeriodic',
+                                                                      isEqualTo:
+                                                                          true)
+                                                                  .orderBy(
+                                                                      'created_time',
+                                                                      descending:
+                                                                          true),
+                                                            ),
+                                                            builder: (context,
+                                                                snapshot) {
+                                                              // Customize what your widget looks like when it's loading.
+                                                              if (!snapshot
+                                                                  .hasData) {
+                                                                return Center(
+                                                                  child:
+                                                                      SizedBox(
+                                                                    width: 2,
+                                                                    height: 2,
+                                                                    child:
+                                                                        SpinKitRing(
+                                                                      color: Colors
+                                                                          .transparent,
+                                                                      size: 2,
+                                                                    ),
+                                                                  ),
+                                                                );
+                                                              }
+                                                              List<FoodActionsRecord>
+                                                                  foodsFoodActionsRecordList =
+                                                                  snapshot.data;
+                                                              if (foodsFoodActionsRecordList
+                                                                  .isEmpty) {
+                                                                return Center(
+                                                                  child: Image
+                                                                      .asset(
+                                                                    'assets/images/dust.png',
+                                                                    width: 40,
+                                                                  ),
+                                                                );
+                                                              }
+                                                              return SingleChildScrollView(
+                                                                scrollDirection:
+                                                                    Axis.horizontal,
+                                                                child: Row(
+                                                                  mainAxisSize:
+                                                                      MainAxisSize
+                                                                          .max,
+                                                                  mainAxisAlignment:
+                                                                      MainAxisAlignment
+                                                                          .center,
+                                                                  children: List.generate(
+                                                                      foodsFoodActionsRecordList
+                                                                          .length,
+                                                                      (foodsIndex) {
+                                                                    final foodsFoodActionsRecord =
+                                                                        foodsFoodActionsRecordList[
+                                                                            foodsIndex];
+                                                                    return Container(
+                                                                      width: 40,
+                                                                      height:
+                                                                          40,
+                                                                      child:
+                                                                          Stack(
+                                                                        alignment: AlignmentDirectional(
+                                                                            0,
+                                                                            0),
+                                                                        children: [
+                                                                          if ((foodsFoodActionsRecord.food) ==
+                                                                              'starter')
+                                                                            InkWell(
+                                                                              onTap: () async {
+                                                                                logFirebaseEvent('HOME_PAGE_starterAction_ON_TAP');
+                                                                                logFirebaseEvent('starterAction_Navigate-To');
+                                                                                await Navigator.push(
+                                                                                  context,
+                                                                                  PageTransition(
+                                                                                    type: PageTransitionType.fade,
+                                                                                    duration: Duration(milliseconds: 0),
+                                                                                    reverseDuration: Duration(milliseconds: 0),
+                                                                                    child: FoodWidget(
+                                                                                      actionRef: foodsFoodActionsRecord.reference,
+                                                                                    ),
+                                                                                  ),
+                                                                                );
+                                                                              },
+                                                                              child: Container(
+                                                                                width: 40,
+                                                                                height: 40,
+                                                                                clipBehavior: Clip.antiAlias,
+                                                                                decoration: BoxDecoration(
+                                                                                  shape: BoxShape.circle,
+                                                                                ),
+                                                                                child: Image.asset(
+                                                                                  'assets/images/canape_(1).png',
+                                                                                  fit: BoxFit.cover,
+                                                                                ),
+                                                                              ),
+                                                                            ),
+                                                                          if ((foodsFoodActionsRecord.food) ==
+                                                                              'main')
+                                                                            InkWell(
+                                                                              onTap: () async {
+                                                                                logFirebaseEvent('HOME_PAGE_mainAction_ON_TAP');
+                                                                                logFirebaseEvent('mainAction_Navigate-To');
+                                                                                await Navigator.push(
+                                                                                  context,
+                                                                                  PageTransition(
+                                                                                    type: PageTransitionType.fade,
+                                                                                    duration: Duration(milliseconds: 0),
+                                                                                    reverseDuration: Duration(milliseconds: 0),
+                                                                                    child: FoodWidget(
+                                                                                      actionRef: foodsFoodActionsRecord.reference,
+                                                                                    ),
+                                                                                  ),
+                                                                                );
+                                                                              },
+                                                                              child: Container(
+                                                                                width: 40,
+                                                                                height: 40,
+                                                                                clipBehavior: Clip.antiAlias,
+                                                                                decoration: BoxDecoration(
+                                                                                  shape: BoxShape.circle,
+                                                                                ),
+                                                                                child: Image.asset(
+                                                                                  'assets/images/steak.png',
+                                                                                  fit: BoxFit.cover,
+                                                                                ),
+                                                                              ),
+                                                                            ),
+                                                                          if ((foodsFoodActionsRecord.food) ==
+                                                                              'desert')
+                                                                            InkWell(
+                                                                              onTap: () async {
+                                                                                logFirebaseEvent('HOME_PAGE_desertAction_ON_TAP');
+                                                                                logFirebaseEvent('desertAction_Navigate-To');
+                                                                                await Navigator.push(
+                                                                                  context,
+                                                                                  PageTransition(
+                                                                                    type: PageTransitionType.fade,
+                                                                                    duration: Duration(milliseconds: 0),
+                                                                                    reverseDuration: Duration(milliseconds: 0),
+                                                                                    child: FoodWidget(
+                                                                                      actionRef: foodsFoodActionsRecord.reference,
+                                                                                    ),
+                                                                                  ),
+                                                                                );
+                                                                              },
+                                                                              child: Container(
+                                                                                width: 40,
+                                                                                height: 40,
+                                                                                clipBehavior: Clip.antiAlias,
+                                                                                decoration: BoxDecoration(
+                                                                                  shape: BoxShape.circle,
+                                                                                ),
+                                                                                child: Image.asset(
+                                                                                  'assets/images/ice-cream.png',
+                                                                                  fit: BoxFit.cover,
+                                                                                ),
+                                                                              ),
+                                                                            ),
+                                                                          if ((foodsFoodActionsRecord.food) ==
+                                                                              'drinks')
+                                                                            InkWell(
+                                                                              onTap: () async {
+                                                                                logFirebaseEvent('HOME_PAGE_drinksAction_ON_TAP');
+                                                                                logFirebaseEvent('drinksAction_Navigate-To');
+                                                                                await Navigator.push(
+                                                                                  context,
+                                                                                  PageTransition(
+                                                                                    type: PageTransitionType.fade,
+                                                                                    duration: Duration(milliseconds: 0),
+                                                                                    reverseDuration: Duration(milliseconds: 0),
+                                                                                    child: FoodWidget(
+                                                                                      actionRef: foodsFoodActionsRecord.reference,
+                                                                                    ),
+                                                                                  ),
+                                                                                );
+                                                                              },
+                                                                              child: Container(
+                                                                                width: 40,
+                                                                                height: 40,
+                                                                                clipBehavior: Clip.antiAlias,
+                                                                                decoration: BoxDecoration(
+                                                                                  shape: BoxShape.circle,
+                                                                                ),
+                                                                                child: Image.asset(
+                                                                                  'assets/images/soft-drink.png',
+                                                                                  fit: BoxFit.cover,
+                                                                                ),
+                                                                              ),
+                                                                            ),
+                                                                          if ((foodsFoodActionsRecord.food) ==
+                                                                              'cheese')
+                                                                            InkWell(
+                                                                              onTap: () async {
+                                                                                logFirebaseEvent('HOME_PAGE_cheeseAction_ON_TAP');
+                                                                                logFirebaseEvent('cheeseAction_Navigate-To');
+                                                                                await Navigator.push(
+                                                                                  context,
+                                                                                  PageTransition(
+                                                                                    type: PageTransitionType.fade,
+                                                                                    duration: Duration(milliseconds: 0),
+                                                                                    reverseDuration: Duration(milliseconds: 0),
+                                                                                    child: FoodWidget(
+                                                                                      actionRef: foodsFoodActionsRecord.reference,
+                                                                                    ),
+                                                                                  ),
+                                                                                );
+                                                                              },
+                                                                              child: Container(
+                                                                                width: 40,
+                                                                                height: 40,
+                                                                                clipBehavior: Clip.antiAlias,
+                                                                                decoration: BoxDecoration(
+                                                                                  shape: BoxShape.circle,
+                                                                                ),
+                                                                                child: Image.asset(
+                                                                                  'assets/images/cheeses.png',
+                                                                                  fit: BoxFit.cover,
+                                                                                ),
+                                                                              ),
+                                                                            ),
+                                                                          if ((foodsFoodActionsRecord.food) ==
+                                                                              'bread')
+                                                                            InkWell(
+                                                                              onTap: () async {
+                                                                                logFirebaseEvent('HOME_PAGE_breadAction_ON_TAP');
+                                                                                logFirebaseEvent('breadAction_Navigate-To');
+                                                                                await Navigator.push(
+                                                                                  context,
+                                                                                  PageTransition(
+                                                                                    type: PageTransitionType.fade,
+                                                                                    duration: Duration(milliseconds: 0),
+                                                                                    reverseDuration: Duration(milliseconds: 0),
+                                                                                    child: FoodWidget(
+                                                                                      actionRef: foodsFoodActionsRecord.reference,
+                                                                                    ),
+                                                                                  ),
+                                                                                );
+                                                                              },
+                                                                              child: Container(
+                                                                                width: 40,
+                                                                                height: 40,
+                                                                                clipBehavior: Clip.antiAlias,
+                                                                                decoration: BoxDecoration(
+                                                                                  shape: BoxShape.circle,
+                                                                                ),
+                                                                                child: Image.asset(
+                                                                                  'assets/images/bread.png',
+                                                                                  fit: BoxFit.cover,
+                                                                                ),
+                                                                              ),
+                                                                            ),
+                                                                          if ((foodsFoodActionsRecord.food) ==
+                                                                              'coffee')
+                                                                            InkWell(
+                                                                              onTap: () async {
+                                                                                logFirebaseEvent('HOME_PAGE_coffeeAction_ON_TAP');
+                                                                                logFirebaseEvent('coffeeAction_Navigate-To');
+                                                                                await Navigator.push(
+                                                                                  context,
+                                                                                  PageTransition(
+                                                                                    type: PageTransitionType.fade,
+                                                                                    duration: Duration(milliseconds: 0),
+                                                                                    reverseDuration: Duration(milliseconds: 0),
+                                                                                    child: FoodWidget(
+                                                                                      actionRef: foodsFoodActionsRecord.reference,
+                                                                                    ),
+                                                                                  ),
+                                                                                );
+                                                                              },
+                                                                              child: Container(
+                                                                                width: 40,
+                                                                                height: 40,
+                                                                                clipBehavior: Clip.antiAlias,
+                                                                                decoration: BoxDecoration(
+                                                                                  shape: BoxShape.circle,
+                                                                                ),
+                                                                                child: Image.asset(
+                                                                                  'assets/images/coffee.png',
+                                                                                  fit: BoxFit.cover,
+                                                                                ),
+                                                                              ),
+                                                                            ),
+                                                                        ],
+                                                                      ),
+                                                                    );
+                                                                  }),
+                                                                ),
+                                                              );
+                                                            },
+                                                          ),
+                                                        ),
+                                                      ],
                                                     ),
                                                   ),
                                                 ),
-                                                Icon(
-                                                  Icons.alarm_add_outlined,
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .primaryColor,
-                                                  size: 24,
-                                                ),
-                                              ],
-                                            ),
+                                              ),
+                                            ],
                                           ),
-                                        if ((FFAppState().actionActive) == true)
-                                          Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    0, 10, 0, 0),
-                                            child: Row(
-                                              mainAxisSize: MainAxisSize.max,
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              children: [
-                                                InkWell(
+                                        ],
+                                      ),
+                                    ),
+                                ],
+                              ),
+                              Column(
+                                mainAxisSize: MainAxisSize.max,
+                                children: [
+                                  Stack(
+                                    children: [
+                                      if ((FFAppState().actionActive) == false)
+                                        Padding(
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  0, 10, 0, 0),
+                                          child: Row(
+                                            mainAxisSize: MainAxisSize.max,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Padding(
+                                                padding: EdgeInsetsDirectional
+                                                    .fromSTEB(0, 1, 0, 0),
+                                                child: InkWell(
                                                   onTap: () async {
                                                     logFirebaseEvent(
-                                                        'Text-ON_TAP');
+                                                        'HOME_PAGE_Text_oij3eqfy_ON_TAP');
                                                     logFirebaseEvent(
-                                                        'Text-Update-Local-State');
+                                                        'Text_Update-Local-State');
                                                     setState(() => FFAppState()
-                                                        .actionActive = false);
+                                                        .actionActive = true);
                                                   },
                                                   child: Text(
-                                                    'Actions récurrentes',
+                                                    'Actions ',
                                                     textAlign: TextAlign.center,
                                                     style: FlutterFlowTheme.of(
                                                             context)
@@ -2660,22 +3206,67 @@ class _HomeWidgetState extends State<HomeWidget> {
                                                         ),
                                                   ),
                                                 ),
-                                                Icon(
-                                                  Icons.update,
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .primaryColor,
-                                                  size: 24,
-                                                ),
-                                              ],
-                                            ),
+                                              ),
+                                              Icon(
+                                                Icons.alarm_add_outlined,
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .primaryColor,
+                                                size: 24,
+                                              ),
+                                            ],
                                           ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
+                                        ),
+                                      if ((FFAppState().actionActive) == true)
+                                        Padding(
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  0, 10, 0, 0),
+                                          child: Row(
+                                            mainAxisSize: MainAxisSize.max,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              InkWell(
+                                                onTap: () async {
+                                                  logFirebaseEvent(
+                                                      'HOME_PAGE_Text_qdgwfwwm_ON_TAP');
+                                                  logFirebaseEvent(
+                                                      'Text_Update-Local-State');
+                                                  setState(() => FFAppState()
+                                                      .actionActive = false);
+                                                },
+                                                child: Text(
+                                                  'Actions récurrentes',
+                                                  textAlign: TextAlign.center,
+                                                  style: FlutterFlowTheme.of(
+                                                          context)
+                                                      .bodyText1
+                                                      .override(
+                                                        fontFamily:
+                                                            'Montserrat',
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .primaryColor,
+                                                      ),
+                                                ),
+                                              ),
+                                              Icon(
+                                                Icons.update,
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .primaryColor,
+                                                size: 24,
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ],
                           ),
                         ),
                       ),
