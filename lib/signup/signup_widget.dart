@@ -537,8 +537,12 @@ class _SignupWidgetState extends State<SignupWidget> {
                                           'iconButton_Navigate-To');
                                       await Navigator.push(
                                         context,
-                                        MaterialPageRoute(
-                                          builder: (context) => LoginWidget(),
+                                        PageTransition(
+                                          type: PageTransitionType.fade,
+                                          duration: Duration(milliseconds: 0),
+                                          reverseDuration:
+                                              Duration(milliseconds: 0),
+                                          child: LoginWidget(),
                                         ),
                                       );
                                     },
@@ -653,9 +657,16 @@ class _SignupWidgetState extends State<SignupWidget> {
                                                         'IconButton_Navigate-To');
                                                     await Navigator.push(
                                                       context,
-                                                      MaterialPageRoute(
-                                                        builder: (context) =>
-                                                            SplashWidget(),
+                                                      PageTransition(
+                                                        type: PageTransitionType
+                                                            .fade,
+                                                        duration: Duration(
+                                                            milliseconds: 0),
+                                                        reverseDuration:
+                                                            Duration(
+                                                                milliseconds:
+                                                                    0),
+                                                        child: SplashWidget(),
                                                       ),
                                                     );
                                                   },
@@ -703,9 +714,16 @@ class _SignupWidgetState extends State<SignupWidget> {
                                                         'IconButton_Navigate-To');
                                                     await Navigator.push(
                                                       context,
-                                                      MaterialPageRoute(
-                                                        builder: (context) =>
-                                                            SplashWidget(),
+                                                      PageTransition(
+                                                        type: PageTransitionType
+                                                            .fade,
+                                                        duration: Duration(
+                                                            milliseconds: 0),
+                                                        reverseDuration:
+                                                            Duration(
+                                                                milliseconds:
+                                                                    0),
+                                                        child: SplashWidget(),
                                                       ),
                                                     );
                                                   },
@@ -748,9 +766,14 @@ class _SignupWidgetState extends State<SignupWidget> {
                                                   await Navigator
                                                       .pushAndRemoveUntil(
                                                     context,
-                                                    MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          HomeWidget(),
+                                                    PageTransition(
+                                                      type: PageTransitionType
+                                                          .fade,
+                                                      duration: Duration(
+                                                          milliseconds: 0),
+                                                      reverseDuration: Duration(
+                                                          milliseconds: 0),
+                                                      child: HomeWidget(),
                                                     ),
                                                     (r) => false,
                                                   );
@@ -795,9 +818,13 @@ class _SignupWidgetState extends State<SignupWidget> {
                                                   'Text_Navigate-To');
                                               await Navigator.push(
                                                 context,
-                                                MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      LoginWidget(),
+                                                PageTransition(
+                                                  type: PageTransitionType.fade,
+                                                  duration:
+                                                      Duration(milliseconds: 0),
+                                                  reverseDuration:
+                                                      Duration(milliseconds: 0),
+                                                  child: LoginWidget(),
                                                 ),
                                               );
                                             },

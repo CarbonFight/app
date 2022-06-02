@@ -1747,8 +1747,11 @@ class _StatistiquesWidgetState extends State<StatistiquesWidget> {
                                 logFirebaseEvent('Container_Navigate-To');
                                 await Navigator.push(
                                   context,
-                                  MaterialPageRoute(
-                                    builder: (context) => HomeWidget(),
+                                  PageTransition(
+                                    type: PageTransitionType.fade,
+                                    duration: Duration(milliseconds: 0),
+                                    reverseDuration: Duration(milliseconds: 0),
+                                    child: HomeWidget(),
                                   ),
                                 );
                               },
@@ -1799,8 +1802,11 @@ class _StatistiquesWidgetState extends State<StatistiquesWidget> {
                                 logFirebaseEvent('Container_Navigate-To');
                                 await Navigator.push(
                                   context,
-                                  MaterialPageRoute(
-                                    builder: (context) => StatistiquesWidget(),
+                                  PageTransition(
+                                    type: PageTransitionType.fade,
+                                    duration: Duration(milliseconds: 0),
+                                    reverseDuration: Duration(milliseconds: 0),
+                                    child: StatistiquesWidget(),
                                   ),
                                 );
                               },

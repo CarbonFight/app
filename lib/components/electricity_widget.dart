@@ -12,12 +12,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class ElectricityWidget extends StatefulWidget {
-  const ElectricityWidget({
-    Key key,
-    this.cache,
-  }) : super(key: key);
-
-  final ActionCacheRecord cache;
+  const ElectricityWidget({Key key}) : super(key: key);
 
   @override
   _ElectricityWidgetState createState() => _ElectricityWidgetState();
@@ -258,7 +253,7 @@ class _ElectricityWidgetState extends State<ElectricityWidget> {
                                 'Géothermique',
                                 'Fioul',
                                 'Charbon'
-                              ].toList(),
+                              ],
                               onChanged: (val) =>
                                   setState(() => powertypeValue = val),
                               width: 180,
@@ -293,8 +288,7 @@ class _ElectricityWidgetState extends State<ElectricityWidget> {
                       children: [
                         Expanded(
                           child: FlutterFlowDropDown(
-                            options: ['1', '2', '3', '4', '5', '6', '7', '8']
-                                .toList(),
+                            options: ['1', '2', '3', '4', '5', '6', '7', '8'],
                             onChanged: (val) =>
                                 setState(() => peopleSharingValue = val),
                             width: 180,

@@ -46,7 +46,10 @@ abstract class TransportActionsRecord
   bool get isPeriodic;
 
   @nullable
-  bool get favorite;
+  bool get isTemporary;
+
+  @nullable
+  bool get isFavorite;
 
   @nullable
   @BuiltValueField(wireName: kDocumentReferenceField)
@@ -64,7 +67,8 @@ abstract class TransportActionsRecord
         ..periodicity = ListBuilder()
         ..roundTrip = false
         ..isPeriodic = false
-        ..favorite = false;
+        ..isTemporary = false
+        ..isFavorite = false;
 
   static CollectionReference get collection =>
       FirebaseFirestore.instance.collection('transportActions');
@@ -100,7 +104,8 @@ Map<String, dynamic> createTransportActionsRecordData({
   String day,
   bool roundTrip,
   bool isPeriodic,
-  bool favorite,
+  bool isTemporary,
+  bool isFavorite,
 }) =>
     serializers.toFirestore(
         TransportActionsRecord.serializer,
@@ -116,4 +121,5 @@ Map<String, dynamic> createTransportActionsRecordData({
           ..periodicity = null
           ..roundTrip = roundTrip
           ..isPeriodic = isPeriodic
-          ..favorite = favorite));
+          ..isTemporary = isTemporary
+          ..isFavorite = isFavorite));

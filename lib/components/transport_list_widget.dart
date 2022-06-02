@@ -1,9 +1,9 @@
 import '../auth/auth_util.dart';
 import '../backend/backend.dart';
-import '../components/transports_widget.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
+import '../transport/transport_widget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -11,12 +11,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class TransportListWidget extends StatefulWidget {
-  const TransportListWidget({
-    Key key,
-    this.cache,
-  }) : super(key: key);
-
-  final ActionCacheRecord cache;
+  const TransportListWidget({Key key}) : super(key: key);
 
   @override
   _TransportListWidgetState createState() => _TransportListWidgetState();
@@ -110,7 +105,8 @@ class _TransportListWidgetState extends State<TransportListWidget> {
                                 day: dateTimeFormat('yMd', getCurrentTimestamp),
                                 roundTrip: false,
                                 isPeriodic: false,
-                                favorite: false,
+                                isTemporary: true,
+                                isFavorite: false,
                               );
                               var transportActionsRecordReference =
                                   TransportActionsRecord.collection.doc();
@@ -120,23 +116,17 @@ class _TransportListWidgetState extends State<TransportListWidget> {
                                   TransportActionsRecord.getDocumentFromData(
                                       transportActionsCreateData,
                                       transportActionsRecordReference);
-                              logFirebaseEvent('Container_Bottom-Sheet');
-                              await showModalBottomSheet(
-                                isScrollControlled: true,
-                                backgroundColor: Colors.transparent,
-                                barrierColor: Color(0xBF000000),
-                                context: context,
-                                builder: (context) {
-                                  return Padding(
-                                    padding: MediaQuery.of(context).viewInsets,
-                                    child: Container(
-                                      height: 700,
-                                      child: TransportsWidget(
-                                        actionRef: newCar.reference,
-                                      ),
-                                    ),
-                                  );
-                                },
+                              logFirebaseEvent('Container_Navigate-To');
+                              await Navigator.push(
+                                context,
+                                PageTransition(
+                                  type: PageTransitionType.fade,
+                                  duration: Duration(milliseconds: 0),
+                                  reverseDuration: Duration(milliseconds: 0),
+                                  child: TransportWidget(
+                                    actionRef: newCar.reference,
+                                  ),
+                                ),
                               );
 
                               setState(() {});
@@ -197,7 +187,7 @@ class _TransportListWidgetState extends State<TransportListWidget> {
                                 day: dateTimeFormat('yMd', getCurrentTimestamp),
                                 roundTrip: false,
                                 isPeriodic: false,
-                                favorite: false,
+                                isFavorite: false,
                               );
                               var transportActionsRecordReference =
                                   TransportActionsRecord.collection.doc();
@@ -207,23 +197,17 @@ class _TransportListWidgetState extends State<TransportListWidget> {
                                   TransportActionsRecord.getDocumentFromData(
                                       transportActionsCreateData,
                                       transportActionsRecordReference);
-                              logFirebaseEvent('Container_Bottom-Sheet');
-                              await showModalBottomSheet(
-                                isScrollControlled: true,
-                                backgroundColor: Colors.transparent,
-                                barrierColor: Color(0xBF000000),
-                                context: context,
-                                builder: (context) {
-                                  return Padding(
-                                    padding: MediaQuery.of(context).viewInsets,
-                                    child: Container(
-                                      height: 700,
-                                      child: TransportsWidget(
-                                        actionRef: newBus.reference,
-                                      ),
-                                    ),
-                                  );
-                                },
+                              logFirebaseEvent('Container_Navigate-To');
+                              await Navigator.push(
+                                context,
+                                PageTransition(
+                                  type: PageTransitionType.fade,
+                                  duration: Duration(milliseconds: 0),
+                                  reverseDuration: Duration(milliseconds: 0),
+                                  child: TransportWidget(
+                                    actionRef: newBus.reference,
+                                  ),
+                                ),
                               );
 
                               setState(() {});
@@ -293,8 +277,8 @@ class _TransportListWidgetState extends State<TransportListWidget> {
                                 day: dateTimeFormat('yMd', getCurrentTimestamp),
                                 roundTrip: false,
                                 isPeriodic: false,
-                                favorite: false,
                                 powertype: 'Thermique',
+                                isFavorite: false,
                               );
                               var transportActionsRecordReference =
                                   TransportActionsRecord.collection.doc();
@@ -304,23 +288,17 @@ class _TransportListWidgetState extends State<TransportListWidget> {
                                   TransportActionsRecord.getDocumentFromData(
                                       transportActionsCreateData,
                                       transportActionsRecordReference);
-                              logFirebaseEvent('Container_Bottom-Sheet');
-                              await showModalBottomSheet(
-                                isScrollControlled: true,
-                                backgroundColor: Colors.transparent,
-                                barrierColor: Color(0xBF000000),
-                                context: context,
-                                builder: (context) {
-                                  return Padding(
-                                    padding: MediaQuery.of(context).viewInsets,
-                                    child: Container(
-                                      height: 700,
-                                      child: TransportsWidget(
-                                        actionRef: newScooter.reference,
-                                      ),
-                                    ),
-                                  );
-                                },
+                              logFirebaseEvent('Container_Navigate-To');
+                              await Navigator.push(
+                                context,
+                                PageTransition(
+                                  type: PageTransitionType.fade,
+                                  duration: Duration(milliseconds: 0),
+                                  reverseDuration: Duration(milliseconds: 0),
+                                  child: TransportWidget(
+                                    actionRef: newScooter.reference,
+                                  ),
+                                ),
                               );
 
                               setState(() {});
@@ -381,7 +359,8 @@ class _TransportListWidgetState extends State<TransportListWidget> {
                                 day: dateTimeFormat('yMd', getCurrentTimestamp),
                                 roundTrip: false,
                                 isPeriodic: false,
-                                favorite: false,
+                                powertype: 'Thermique',
+                                isFavorite: false,
                               );
                               var transportActionsRecordReference =
                                   TransportActionsRecord.collection.doc();
@@ -391,23 +370,17 @@ class _TransportListWidgetState extends State<TransportListWidget> {
                                   TransportActionsRecord.getDocumentFromData(
                                       transportActionsCreateData,
                                       transportActionsRecordReference);
-                              logFirebaseEvent('Container_Bottom-Sheet');
-                              await showModalBottomSheet(
-                                isScrollControlled: true,
-                                backgroundColor: Colors.transparent,
-                                barrierColor: Color(0xBF000000),
-                                context: context,
-                                builder: (context) {
-                                  return Padding(
-                                    padding: MediaQuery.of(context).viewInsets,
-                                    child: Container(
-                                      height: 700,
-                                      child: TransportsWidget(
-                                        actionRef: newMoto.reference,
-                                      ),
-                                    ),
-                                  );
-                                },
+                              logFirebaseEvent('Container_Navigate-To');
+                              await Navigator.push(
+                                context,
+                                PageTransition(
+                                  type: PageTransitionType.fade,
+                                  duration: Duration(milliseconds: 0),
+                                  reverseDuration: Duration(milliseconds: 0),
+                                  child: TransportWidget(
+                                    actionRef: newMoto.reference,
+                                  ),
+                                ),
                               );
 
                               setState(() {});
@@ -477,7 +450,8 @@ class _TransportListWidgetState extends State<TransportListWidget> {
                                 day: dateTimeFormat('yMd', getCurrentTimestamp),
                                 roundTrip: false,
                                 isPeriodic: false,
-                                favorite: false,
+                                powertype: 'RER',
+                                isFavorite: false,
                               );
                               var transportActionsRecordReference =
                                   TransportActionsRecord.collection.doc();
@@ -487,23 +461,17 @@ class _TransportListWidgetState extends State<TransportListWidget> {
                                   TransportActionsRecord.getDocumentFromData(
                                       transportActionsCreateData,
                                       transportActionsRecordReference);
-                              logFirebaseEvent('Container_Bottom-Sheet');
-                              await showModalBottomSheet(
-                                isScrollControlled: true,
-                                backgroundColor: Colors.transparent,
-                                barrierColor: Color(0xBF000000),
-                                context: context,
-                                builder: (context) {
-                                  return Padding(
-                                    padding: MediaQuery.of(context).viewInsets,
-                                    child: Container(
-                                      height: 700,
-                                      child: TransportsWidget(
-                                        actionRef: newTrain.reference,
-                                      ),
-                                    ),
-                                  );
-                                },
+                              logFirebaseEvent('Container_Navigate-To');
+                              await Navigator.push(
+                                context,
+                                PageTransition(
+                                  type: PageTransitionType.fade,
+                                  duration: Duration(milliseconds: 0),
+                                  reverseDuration: Duration(milliseconds: 0),
+                                  child: TransportWidget(
+                                    actionRef: newTrain.reference,
+                                  ),
+                                ),
                               );
 
                               setState(() {});
@@ -564,7 +532,8 @@ class _TransportListWidgetState extends State<TransportListWidget> {
                                 day: dateTimeFormat('yMd', getCurrentTimestamp),
                                 roundTrip: false,
                                 isPeriodic: false,
-                                favorite: false,
+                                powertype: 'RATP',
+                                isFavorite: false,
                               );
                               var transportActionsRecordReference =
                                   TransportActionsRecord.collection.doc();
@@ -574,23 +543,17 @@ class _TransportListWidgetState extends State<TransportListWidget> {
                                   TransportActionsRecord.getDocumentFromData(
                                       transportActionsCreateData,
                                       transportActionsRecordReference);
-                              logFirebaseEvent('Container_Bottom-Sheet');
-                              await showModalBottomSheet(
-                                isScrollControlled: true,
-                                backgroundColor: Colors.transparent,
-                                barrierColor: Color(0xBF000000),
-                                context: context,
-                                builder: (context) {
-                                  return Padding(
-                                    padding: MediaQuery.of(context).viewInsets,
-                                    child: Container(
-                                      height: 700,
-                                      child: TransportsWidget(
-                                        actionRef: newMetro.reference,
-                                      ),
-                                    ),
-                                  );
-                                },
+                              logFirebaseEvent('Container_Navigate-To');
+                              await Navigator.push(
+                                context,
+                                PageTransition(
+                                  type: PageTransitionType.fade,
+                                  duration: Duration(milliseconds: 0),
+                                  reverseDuration: Duration(milliseconds: 0),
+                                  child: TransportWidget(
+                                    actionRef: newMetro.reference,
+                                  ),
+                                ),
                               );
 
                               setState(() {});
@@ -663,7 +626,8 @@ class _TransportListWidgetState extends State<TransportListWidget> {
                           day: dateTimeFormat('yMd', getCurrentTimestamp),
                           roundTrip: false,
                           isPeriodic: false,
-                          favorite: false,
+                          powertype: 'Avion commercial',
+                          isFavorite: false,
                         );
                         var transportActionsRecordReference =
                             TransportActionsRecord.collection.doc();
@@ -672,23 +636,17 @@ class _TransportListWidgetState extends State<TransportListWidget> {
                         newFlight = TransportActionsRecord.getDocumentFromData(
                             transportActionsCreateData,
                             transportActionsRecordReference);
-                        logFirebaseEvent('Container_Bottom-Sheet');
-                        await showModalBottomSheet(
-                          isScrollControlled: true,
-                          backgroundColor: Colors.transparent,
-                          barrierColor: Color(0xBF000000),
-                          context: context,
-                          builder: (context) {
-                            return Padding(
-                              padding: MediaQuery.of(context).viewInsets,
-                              child: Container(
-                                height: 700,
-                                child: TransportsWidget(
-                                  actionRef: newFlight.reference,
-                                ),
-                              ),
-                            );
-                          },
+                        logFirebaseEvent('Container_Navigate-To');
+                        await Navigator.push(
+                          context,
+                          PageTransition(
+                            type: PageTransitionType.fade,
+                            duration: Duration(milliseconds: 0),
+                            reverseDuration: Duration(milliseconds: 0),
+                            child: TransportWidget(
+                              actionRef: newFlight.reference,
+                            ),
+                          ),
                         );
 
                         setState(() {});
@@ -748,8 +706,8 @@ class _TransportListWidgetState extends State<TransportListWidget> {
                           day: dateTimeFormat('yMd', getCurrentTimestamp),
                           roundTrip: false,
                           isPeriodic: false,
-                          favorite: false,
                           powertype: 'Classique',
+                          isFavorite: false,
                         );
                         var transportActionsRecordReference =
                             TransportActionsRecord.collection.doc();
@@ -758,23 +716,17 @@ class _TransportListWidgetState extends State<TransportListWidget> {
                         newBike = TransportActionsRecord.getDocumentFromData(
                             transportActionsCreateData,
                             transportActionsRecordReference);
-                        logFirebaseEvent('Container_Bottom-Sheet');
-                        await showModalBottomSheet(
-                          isScrollControlled: true,
-                          backgroundColor: Colors.transparent,
-                          barrierColor: Color(0xBF000000),
-                          context: context,
-                          builder: (context) {
-                            return Padding(
-                              padding: MediaQuery.of(context).viewInsets,
-                              child: Container(
-                                height: 700,
-                                child: TransportsWidget(
-                                  actionRef: newBike.reference,
-                                ),
-                              ),
-                            );
-                          },
+                        logFirebaseEvent('Container_Navigate-To');
+                        await Navigator.push(
+                          context,
+                          PageTransition(
+                            type: PageTransitionType.fade,
+                            duration: Duration(milliseconds: 0),
+                            reverseDuration: Duration(milliseconds: 0),
+                            child: TransportWidget(
+                              actionRef: newBike.reference,
+                            ),
+                          ),
                         );
 
                         setState(() {});

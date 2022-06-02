@@ -13,12 +13,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class GazWidget extends StatefulWidget {
-  const GazWidget({
-    Key key,
-    this.cache,
-  }) : super(key: key);
-
-  final ActionCacheRecord cache;
+  const GazWidget({Key key}) : super(key: key);
 
   @override
   _GazWidgetState createState() => _GazWidgetState();
@@ -254,7 +249,7 @@ class _GazWidgetState extends State<GazWidget> {
                                 'Gaz naturel',
                                 'Gaz de cokerie',
                                 'Gaz de haut fourneau'
-                              ].toList(),
+                              ],
                               onChanged: (val) =>
                                   setState(() => powertypeValue = val),
                               width: 180,
@@ -288,8 +283,7 @@ class _GazWidgetState extends State<GazWidget> {
                       children: [
                         Expanded(
                           child: FlutterFlowDropDown(
-                            options: ['1', '2', '3', '4', '5', '6', '7', '8']
-                                .toList(),
+                            options: ['1', '2', '3', '4', '5', '6', '7', '8'],
                             onChanged: (val) =>
                                 setState(() => peopleSharingValue = val),
                             width: 180,

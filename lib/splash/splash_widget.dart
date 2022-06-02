@@ -263,9 +263,16 @@ class _SplashWidgetState extends State<SplashWidget> {
                                                         'Text_Navigate-To');
                                                     await Navigator.push(
                                                       context,
-                                                      MaterialPageRoute(
-                                                        builder: (context) =>
-                                                            HomeWidget(),
+                                                      PageTransition(
+                                                        type: PageTransitionType
+                                                            .fade,
+                                                        duration: Duration(
+                                                            milliseconds: 0),
+                                                        reverseDuration:
+                                                            Duration(
+                                                                milliseconds:
+                                                                    0),
+                                                        child: HomeWidget(),
                                                       ),
                                                     );
                                                   },
@@ -513,9 +520,16 @@ class _SplashWidgetState extends State<SplashWidget> {
                                                         'Text_Navigate-To');
                                                     await Navigator.push(
                                                       context,
-                                                      MaterialPageRoute(
-                                                        builder: (context) =>
-                                                            HomeWidget(),
+                                                      PageTransition(
+                                                        type: PageTransitionType
+                                                            .fade,
+                                                        duration: Duration(
+                                                            milliseconds: 0),
+                                                        reverseDuration:
+                                                            Duration(
+                                                                milliseconds:
+                                                                    0),
+                                                        child: HomeWidget(),
                                                       ),
                                                     );
                                                   },
@@ -763,9 +777,16 @@ class _SplashWidgetState extends State<SplashWidget> {
                                                         'Text_Navigate-To');
                                                     await Navigator.push(
                                                       context,
-                                                      MaterialPageRoute(
-                                                        builder: (context) =>
-                                                            HomeWidget(),
+                                                      PageTransition(
+                                                        type: PageTransitionType
+                                                            .fade,
+                                                        duration: Duration(
+                                                            milliseconds: 0),
+                                                        reverseDuration:
+                                                            Duration(
+                                                                milliseconds:
+                                                                    0),
+                                                        child: HomeWidget(),
                                                       ),
                                                     );
                                                   },
@@ -978,9 +999,16 @@ class _SplashWidgetState extends State<SplashWidget> {
                                                         'iconButton_Navigate-To');
                                                     await Navigator.push(
                                                       context,
-                                                      MaterialPageRoute(
-                                                        builder: (context) =>
-                                                            HomeWidget(),
+                                                      PageTransition(
+                                                        type: PageTransitionType
+                                                            .fade,
+                                                        duration: Duration(
+                                                            milliseconds: 0),
+                                                        reverseDuration:
+                                                            Duration(
+                                                                milliseconds:
+                                                                    0),
+                                                        child: HomeWidget(),
                                                       ),
                                                     );
                                                   },

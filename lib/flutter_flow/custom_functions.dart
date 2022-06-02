@@ -243,8 +243,8 @@ int energyPeriodicsCO2e(
 
 int foodActionsCO2e(
   String food,
-  String mainComponent,
-  String sideComponent,
+  List<String> mainComponents,
+  List<String> sideComponents,
   int portions,
 ) {
   double co2e = 0.0;
@@ -331,115 +331,156 @@ int foodActionsCO2e(
   // JUNK FOOD needs portions
 
   if (food == "starter") {
-    switch (mainComponent) {
-      case "Végétarienne":
-        co2e += 75;
-        break;
-      case "Mixte":
-        co2e += 150;
-        break;
-      case "Viande":
-        co2e += 300;
-        break;
+    for (var i = 0; i < mainComponents.length; i++) {
+      String currentMainComponent = mainComponents[i];
+      switch (currentMainComponent) {
+        case "Végétarienne":
+          co2e += 75;
+          break;
+        case "Mixte":
+          co2e += 150;
+          break;
+        case "Viande":
+          co2e += 300;
+          break;
+      }
     }
+
+    // Divide by number of components
+    co2e = co2e / mainComponents.length;
   } else if (food == "main") {
-    switch (mainComponent) {
-      case "Oeuf":
-        co2e += co2eEgg;
-        break;
-      case "Poisson":
-        co2e += co2eFish;
-        break;
-      case "Viande rouge":
-        co2e += co2eMeat;
-        break;
-      case "Viande blanche":
-        co2e += co2ePoultry;
-        break;
+    double co2eMain = 0.0;
+    double co2eSide = 0.0;
+
+    for (var i = 0; i < sideComponents.length; i++) {
+      String currentSideComponents = sideComponents[i];
+      switch (currentSideComponents) {
+        case "Riz":
+          co2eSide += co2eRicePastaWheat;
+          break;
+        case "Pâtes":
+          co2eSide += co2eRicePastaWheat;
+          break;
+        case "Blé":
+          co2eSide += co2eRicePastaWheat;
+          break;
+        case "Légumes":
+          co2eSide += co2eVegetables;
+          break;
+        case "Pommes de terre":
+          co2eSide += co2ePotatoes;
+          break;
+      }
     }
 
-    switch (sideComponent) {
-      case "Riz":
-        co2e += co2eRicePastaWheat;
-        break;
-      case "Pâtes":
-        co2e += co2eRicePastaWheat;
-        break;
-      case "Blé":
-        co2e += co2eRicePastaWheat;
-        break;
-      case "Légumes":
-        co2e += co2eVegetables;
-        break;
-      case "Pommes de terre":
-        co2e += co2ePotatoes;
-        break;
+    // Divide by number of components
+    co2eSide = co2eSide / (sideComponents.length);
+
+    for (var i = 0; i < mainComponents.length; i++) {
+      String currentMainComponent = mainComponents[i];
+      switch (currentMainComponent) {
+        case "Oeuf":
+          co2eMain += co2eEgg;
+          break;
+        case "Poisson":
+          co2eMain += co2eFish;
+          break;
+        case "Viande rouge":
+          co2eMain += co2eMeat;
+          break;
+        case "Viande blanche":
+          co2eMain += co2ePoultry;
+          break;
+        case "Végétarien":
+          co2eMain += co2e * 2;
+          break;
+      }
     }
 
-    if (mainComponent == "Végétarien") {
-      co2e = co2e * 2;
-    }
+    // Divide by number of components
+    co2eMain = co2eMain / (mainComponents.length);
+
+    // Divide by number of components
+    co2e = co2eMain + co2eSide;
   } else if (food == "desert") {
-    switch (mainComponent) {
-      case "Fruits":
-        co2e += co2eFruit;
-        break;
-      case "Fruits transformés":
-        co2e += co2eTransformedFruit;
-        break;
-      case "Yaourt":
-        co2e += co2eYogurt;
-        break;
-      case "Pâtisserie":
-        co2e += co2eCakePastry;
-        break;
-      case "Glace":
-        co2e += co2eIcecream;
-        break;
-      case "Crême dessert":
-        co2e += co2eCustard;
-        break;
+    for (var i = 0; i < mainComponents.length; i++) {
+      String currentMainComponent = mainComponents[i];
+      switch (currentMainComponent) {
+        case "Fruits":
+          co2e += co2eFruit;
+          break;
+        case "Fruits transformés":
+          co2e += co2eTransformedFruit;
+          break;
+        case "Yaourt":
+          co2e += co2eYogurt;
+          break;
+        case "Pâtisserie":
+          co2e += co2eCakePastry;
+          break;
+        case "Glace":
+          co2e += co2eIcecream;
+          break;
+        case "Crême dessert":
+          co2e += co2eCustard;
+          break;
+      }
     }
+
+    // Divide by number of components
+    co2e = co2e / mainComponents.length;
   } else if (food == "drinks") {
-    switch (mainComponent) {
-      case "Eau en bouteille":
-        co2e += co2eBottleWater;
-        break;
-      case "Eau du robinet":
-        co2e += co2eTapWater;
-        break;
-      case "Jus de fruit":
-        co2e += co2eFruitJuice;
-        break;
-      case "Soupe":
-        co2e += co2eSoup;
-        break;
-      case "Alcool":
-        co2e += co2eAlcohol;
-        break;
-      case "Boisson chaude":
-        co2e += co2eHotDrink;
-        break;
-      case "Soda":
-        co2e += co2eSoda;
-        break;
+    for (var i = 0; i < mainComponents.length; i++) {
+      String currentMainComponent = mainComponents[i];
+      switch (currentMainComponent) {
+        case "Eau en bouteille":
+          co2e += co2eBottleWater;
+          break;
+        case "Eau du robinet":
+          co2e += co2eTapWater;
+          break;
+        case "Jus de fruit":
+          co2e += co2eFruitJuice;
+          break;
+        case "Soupe":
+          co2e += co2eSoup;
+          break;
+        case "Alcool":
+          co2e += co2eAlcohol;
+          break;
+        case "Boisson chaude":
+          co2e += co2eHotDrink;
+          break;
+        case "Soda":
+          co2e += co2eSoda;
+          break;
+      }
     }
+
+    // Divide by number of components
+    co2e = co2e / mainComponents.length;
   } else if (food == "cheese") {
     co2e += co2eCheese;
   } else if (food == "bread") {
     co2e += co2eBread;
   } else if (food == "coffee") {
-    switch (mainComponent) {
-      case "Café filtre":
-        co2e += co2eCoffeeFilter;
-        break;
-      case "Expresso":
-        co2e += co2eCoffeeExpresso;
-        break;
-      case "Capsule":
-        co2e += co2eCoffeeCapsule;
-        break;
+    for (var i = 0; i < mainComponents.length; i++) {
+      String currentMainComponent = mainComponents[i];
+      switch (currentMainComponent) {
+        case "Café filtre":
+          co2e += co2eCoffeeFilter;
+          break;
+        case "Expresso":
+          co2e += co2eCoffeeExpresso;
+          break;
+        case "Capsule":
+          co2e += co2eCoffeeCapsule;
+          break;
+      }
     }
+
+    // Divide by number of components
+    co2e = co2e / mainComponents.length;
   }
 
   // Breakfast
@@ -601,13 +642,100 @@ List<String> getTransportPowerType(String transport) {
       params.add('Électrique');
       break;
     case "flight":
-      params.add('Non applicable');
+      params.add('Avion commercial');
       break;
     case "metro":
-      params.add('Non applicable');
+      params.add('RATP');
       break;
     case "moto":
-      params.add('Non applicable');
+      params.add('Thermique');
+      params.add('Électrique');
+      break;
+  }
+
+  return params;
+}
+
+List<String> getEnergyPowertype(String energy) {
+  List<String> params = [];
+
+  switch (energy) {
+    case "electricity":
+      params.add('Nucléaire');
+      params.add('Éolienne (mer)');
+      params.add('Éolienne (terre)');
+      params.add('Hydroélectrique');
+      params.add('Biomasse');
+      params.add('Géothermique');
+      params.add('Fioul');
+      params.add('Charbon');
+      break;
+    case "gas":
+      params.add('Gaz naturel');
+      params.add('Gaz de cokerie');
+      params.add('Gaz de haut fourneau');
+      break;
+    case "water":
+      params.add('Circuit France');
+      break;
+  }
+
+  return params;
+}
+
+List<String> getFoodMainComponents(String food) {
+  List<String> params = [];
+
+  switch (food) {
+    case "starter":
+      params.add('Végétarienne');
+      params.add('Mixte');
+      params.add('Viande');
+      break;
+    case "main":
+      params.add('Végétarien');
+      params.add('Oeuf');
+      params.add('Poisson');
+      params.add('Viande rouge');
+      params.add('Viande blanche');
+      break;
+    case "desert":
+      params.add('Fruits');
+      params.add('Fruits transformés');
+      params.add('Yaourt');
+      params.add('Pâtisserie');
+      params.add('Glace');
+      params.add('Crême dessert');
+      break;
+    case "drinks":
+      params.add('Eau en bouteille');
+      params.add('Eau du robinet');
+      params.add('Jus de fruit');
+      params.add('Soupe');
+      params.add('Alcool');
+      params.add('Boisson chaude');
+      params.add('Soda');
+      break;
+    case "coffee":
+      params.add('Café filtre');
+      params.add('Expresso');
+      params.add('Capsule');
+      break;
+  }
+
+  return params;
+}
+
+List<String> getFoodSideComponents(String food) {
+  List<String> params = [];
+
+  switch (food) {
+    case "main":
+      params.add('Riz');
+      params.add('Pâtes');
+      params.add('Blé');
+      params.add('Légumes');
+      params.add('Pommes de terre');
       break;
   }
 

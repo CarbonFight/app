@@ -151,8 +151,11 @@ class _DrawerWidgetState extends State<DrawerWidget>
                                 logFirebaseEvent('Row_Navigate-To');
                                 await Navigator.push(
                                   context,
-                                  MaterialPageRoute(
-                                    builder: (context) => FeedbackWidget(),
+                                  PageTransition(
+                                    type: PageTransitionType.fade,
+                                    duration: Duration(milliseconds: 0),
+                                    reverseDuration: Duration(milliseconds: 0),
+                                    child: FeedbackWidget(),
                                   ),
                                 );
                               },
@@ -177,9 +180,12 @@ class _DrawerWidgetState extends State<DrawerWidget>
                                         logFirebaseEvent('Text_Navigate-To');
                                         await Navigator.push(
                                           context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                FeedbackWidget(),
+                                          PageTransition(
+                                            type: PageTransitionType.fade,
+                                            duration: Duration(milliseconds: 0),
+                                            reverseDuration:
+                                                Duration(milliseconds: 0),
+                                            child: FeedbackWidget(),
                                           ),
                                         );
                                       },
@@ -217,8 +223,11 @@ class _DrawerWidgetState extends State<DrawerWidget>
                                 logFirebaseEvent('Row_Navigate-To');
                                 await Navigator.push(
                                   context,
-                                  MaterialPageRoute(
-                                    builder: (context) => SplashWidget(),
+                                  PageTransition(
+                                    type: PageTransitionType.fade,
+                                    duration: Duration(milliseconds: 0),
+                                    reverseDuration: Duration(milliseconds: 0),
+                                    child: SplashWidget(),
                                   ),
                                 );
                               },
@@ -243,9 +252,12 @@ class _DrawerWidgetState extends State<DrawerWidget>
                                         logFirebaseEvent('Text_Navigate-To');
                                         await Navigator.push(
                                           context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                SplashWidget(),
+                                          PageTransition(
+                                            type: PageTransitionType.fade,
+                                            duration: Duration(milliseconds: 0),
+                                            reverseDuration:
+                                                Duration(milliseconds: 0),
+                                            child: SplashWidget(),
                                           ),
                                         );
                                       },
@@ -283,8 +295,11 @@ class _DrawerWidgetState extends State<DrawerWidget>
                                 logFirebaseEvent('Row_Navigate-To');
                                 await Navigator.push(
                                   context,
-                                  MaterialPageRoute(
-                                    builder: (context) => FaqWidget(),
+                                  PageTransition(
+                                    type: PageTransitionType.fade,
+                                    duration: Duration(milliseconds: 0),
+                                    reverseDuration: Duration(milliseconds: 0),
+                                    child: FaqWidget(),
                                   ),
                                 );
                               },
@@ -309,8 +324,12 @@ class _DrawerWidgetState extends State<DrawerWidget>
                                         logFirebaseEvent('Text_Navigate-To');
                                         await Navigator.push(
                                           context,
-                                          MaterialPageRoute(
-                                            builder: (context) => FaqWidget(),
+                                          PageTransition(
+                                            type: PageTransitionType.fade,
+                                            duration: Duration(milliseconds: 0),
+                                            reverseDuration:
+                                                Duration(milliseconds: 0),
+                                            child: FaqWidget(),
                                           ),
                                         );
                                       },
@@ -529,8 +548,11 @@ class _DrawerWidgetState extends State<DrawerWidget>
                                 await signOut();
                                 await Navigator.pushAndRemoveUntil(
                                   context,
-                                  MaterialPageRoute(
-                                    builder: (context) => LoginWidget(),
+                                  PageTransition(
+                                    type: PageTransitionType.fade,
+                                    duration: Duration(milliseconds: 0),
+                                    reverseDuration: Duration(milliseconds: 0),
+                                    child: LoginWidget(),
                                   ),
                                   (r) => false,
                                 );

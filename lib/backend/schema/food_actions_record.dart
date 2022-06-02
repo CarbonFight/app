@@ -18,12 +18,6 @@ abstract class FoodActionsRecord
   String get food;
 
   @nullable
-  String get mainComponent;
-
-  @nullable
-  String get sideComponent;
-
-  @nullable
   @BuiltValueField(wireName: 'created_time')
   DateTime get createdTime;
 
@@ -37,17 +31,39 @@ abstract class FoodActionsRecord
   int get portions;
 
   @nullable
+  BuiltList<String> get periodicity;
+
+  @nullable
+  bool get isPeriodic;
+
+  @nullable
+  bool get isFavorite;
+
+  @nullable
+  bool get isTemporary;
+
+  @nullable
+  BuiltList<String> get mainComponent;
+
+  @nullable
+  BuiltList<String> get sideComponent;
+
+  @nullable
   @BuiltValueField(wireName: kDocumentReferenceField)
   DocumentReference get reference;
 
   static void _initializeBuilder(FoodActionsRecordBuilder builder) => builder
     ..co2e = 0
     ..food = ''
-    ..mainComponent = ''
-    ..sideComponent = ''
     ..userId = ''
     ..day = ''
-    ..portions = 0;
+    ..portions = 0
+    ..periodicity = ListBuilder()
+    ..isPeriodic = false
+    ..isFavorite = false
+    ..isTemporary = false
+    ..mainComponent = ListBuilder()
+    ..sideComponent = ListBuilder();
 
   static CollectionReference get collection =>
       FirebaseFirestore.instance.collection('foodActions');
@@ -73,21 +89,26 @@ abstract class FoodActionsRecord
 Map<String, dynamic> createFoodActionsRecordData({
   int co2e,
   String food,
-  String mainComponent,
-  String sideComponent,
   DateTime createdTime,
   String userId,
   String day,
   int portions,
+  bool isPeriodic,
+  bool isFavorite,
+  bool isTemporary,
 }) =>
     serializers.toFirestore(
         FoodActionsRecord.serializer,
         FoodActionsRecord((f) => f
           ..co2e = co2e
           ..food = food
-          ..mainComponent = mainComponent
-          ..sideComponent = sideComponent
           ..createdTime = createdTime
           ..userId = userId
           ..day = day
-          ..portions = portions));
+          ..portions = portions
+          ..periodicity = null
+          ..isPeriodic = isPeriodic
+          ..isFavorite = isFavorite
+          ..isTemporary = isTemporary
+          ..mainComponent = null
+          ..sideComponent = null));

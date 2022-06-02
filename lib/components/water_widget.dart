@@ -12,12 +12,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class WaterWidget extends StatefulWidget {
-  const WaterWidget({
-    Key key,
-    this.cache,
-  }) : super(key: key);
-
-  final ActionCacheRecord cache;
+  const WaterWidget({Key key}) : super(key: key);
 
   @override
   _WaterWidgetState createState() => _WaterWidgetState();
@@ -246,8 +241,7 @@ class _WaterWidgetState extends State<WaterWidget> {
                       children: [
                         Expanded(
                           child: FlutterFlowDropDown(
-                            options: ['1', '2', '3', '4', '5', '6', '7', '8']
-                                .toList(),
+                            options: ['1', '2', '3', '4', '5', '6', '7', '8'],
                             onChanged: (val) =>
                                 setState(() => peopleSharingValue = val),
                             width: 180,

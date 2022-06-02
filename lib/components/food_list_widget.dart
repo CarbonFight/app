@@ -1,31 +1,30 @@
+import '../auth/auth_util.dart';
 import '../backend/backend.dart';
-import '../components/bread_widget.dart';
-import '../components/cheese_widget.dart';
-import '../components/coffee_widget.dart';
-import '../components/desert_widget.dart';
-import '../components/drinks_widget.dart';
-import '../components/main_food_widget.dart';
-import '../components/starter_widget.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
+import '../food/food_widget.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class FoodWidget extends StatefulWidget {
-  const FoodWidget({
-    Key key,
-    this.cache,
-  }) : super(key: key);
-
-  final ActionCacheRecord cache;
+class FoodListWidget extends StatefulWidget {
+  const FoodListWidget({Key key}) : super(key: key);
 
   @override
-  _FoodWidgetState createState() => _FoodWidgetState();
+  _FoodListWidgetState createState() => _FoodListWidgetState();
 }
 
-class _FoodWidgetState extends State<FoodWidget> {
+class _FoodListWidgetState extends State<FoodListWidget> {
+  FoodActionsRecord newBread;
+  FoodActionsRecord newCheese;
+  FoodActionsRecord newDesert;
+  FoodActionsRecord newDrinks;
+  FoodActionsRecord newMain;
+  FoodActionsRecord newStarter;
+  FoodActionsRecord newCoffee;
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -68,7 +67,7 @@ class _FoodWidgetState extends State<FoodWidget> {
                       size: 24,
                     ),
                     onPressed: () async {
-                      logFirebaseEvent('FOOD_COMP_close_ICON_ON_TAP');
+                      logFirebaseEvent('FOOD_LIST_COMP_close_ICON_ON_TAP');
                       logFirebaseEvent('IconButton_Navigate-Back');
                       Navigator.pop(context);
                     },
@@ -89,27 +88,48 @@ class _FoodWidgetState extends State<FoodWidget> {
                           InkWell(
                             onTap: () async {
                               logFirebaseEvent(
-                                  'FOOD_COMP_Container_ny9yoj7o_ON_TAP');
+                                  'FOOD_LIST_COMP_Container_ny9yoj7o_ON_TAP');
                               logFirebaseEvent('Container_Navigate-Back');
                               Navigator.pop(context);
-                              logFirebaseEvent('Container_Update-Local-State');
-                              setState(() => FFAppState().actionCO2 = 0);
-                              logFirebaseEvent('Container_Bottom-Sheet');
-                              await showModalBottomSheet(
-                                isScrollControlled: true,
-                                backgroundColor: Colors.transparent,
-                                barrierColor: Color(0xBF000000),
-                                context: context,
-                                builder: (context) {
-                                  return Padding(
-                                    padding: MediaQuery.of(context).viewInsets,
-                                    child: Container(
-                                      height: 341,
-                                      child: StarterWidget(),
-                                    ),
-                                  );
-                                },
+                              logFirebaseEvent('Container_Backend-Call');
+
+                              final foodActionsCreateData = {
+                                ...createFoodActionsRecordData(
+                                  userId: currentUserUid,
+                                  co2e: 0,
+                                  createdTime: getCurrentTimestamp,
+                                  day: dateTimeFormat(
+                                      'yMd', getCurrentTimestamp),
+                                  isPeriodic: false,
+                                  isTemporary: true,
+                                  isFavorite: false,
+                                  food: 'starter',
+                                  portions: 1,
+                                ),
+                                'sideComponent': ['null'],
+                              };
+                              var foodActionsRecordReference =
+                                  FoodActionsRecord.collection.doc();
+                              await foodActionsRecordReference
+                                  .set(foodActionsCreateData);
+                              newStarter =
+                                  FoodActionsRecord.getDocumentFromData(
+                                      foodActionsCreateData,
+                                      foodActionsRecordReference);
+                              logFirebaseEvent('Container_Navigate-To');
+                              await Navigator.push(
+                                context,
+                                PageTransition(
+                                  type: PageTransitionType.fade,
+                                  duration: Duration(milliseconds: 0),
+                                  reverseDuration: Duration(milliseconds: 0),
+                                  child: FoodWidget(
+                                    actionRef: newStarter.reference,
+                                  ),
+                                ),
                               );
+
+                              setState(() {});
                             },
                             child: Container(
                               width: 135,
@@ -152,27 +172,44 @@ class _FoodWidgetState extends State<FoodWidget> {
                           InkWell(
                             onTap: () async {
                               logFirebaseEvent(
-                                  'FOOD_COMP_Container_q1yosrnh_ON_TAP');
+                                  'FOOD_LIST_COMP_Container_q1yosrnh_ON_TAP');
                               logFirebaseEvent('Container_Navigate-Back');
                               Navigator.pop(context);
-                              logFirebaseEvent('Container_Update-Local-State');
-                              setState(() => FFAppState().actionCO2 = 0);
-                              logFirebaseEvent('Container_Bottom-Sheet');
-                              await showModalBottomSheet(
-                                isScrollControlled: true,
-                                backgroundColor: Colors.transparent,
-                                barrierColor: Color(0xBF000000),
-                                context: context,
-                                builder: (context) {
-                                  return Padding(
-                                    padding: MediaQuery.of(context).viewInsets,
-                                    child: Container(
-                                      height: 519,
-                                      child: MainFoodWidget(),
-                                    ),
-                                  );
-                                },
+                              logFirebaseEvent('Container_Backend-Call');
+
+                              final foodActionsCreateData =
+                                  createFoodActionsRecordData(
+                                userId: currentUserUid,
+                                co2e: 0,
+                                createdTime: getCurrentTimestamp,
+                                day: dateTimeFormat('yMd', getCurrentTimestamp),
+                                isPeriodic: false,
+                                isTemporary: true,
+                                isFavorite: false,
+                                food: 'main',
+                                portions: 1,
                               );
+                              var foodActionsRecordReference =
+                                  FoodActionsRecord.collection.doc();
+                              await foodActionsRecordReference
+                                  .set(foodActionsCreateData);
+                              newMain = FoodActionsRecord.getDocumentFromData(
+                                  foodActionsCreateData,
+                                  foodActionsRecordReference);
+                              logFirebaseEvent('Container_Navigate-To');
+                              await Navigator.push(
+                                context,
+                                PageTransition(
+                                  type: PageTransitionType.fade,
+                                  duration: Duration(milliseconds: 0),
+                                  reverseDuration: Duration(milliseconds: 0),
+                                  child: FoodWidget(
+                                    actionRef: newMain.reference,
+                                  ),
+                                ),
+                              );
+
+                              setState(() {});
                             },
                             child: Container(
                               width: 135,
@@ -224,27 +261,47 @@ class _FoodWidgetState extends State<FoodWidget> {
                           InkWell(
                             onTap: () async {
                               logFirebaseEvent(
-                                  'FOOD_COMP_Container_r0c1o7ht_ON_TAP');
+                                  'FOOD_LIST_COMP_Container_r0c1o7ht_ON_TAP');
                               logFirebaseEvent('Container_Navigate-Back');
                               Navigator.pop(context);
-                              logFirebaseEvent('Container_Update-Local-State');
-                              setState(() => FFAppState().actionCO2 = 0);
-                              logFirebaseEvent('Container_Bottom-Sheet');
-                              await showModalBottomSheet(
-                                isScrollControlled: true,
-                                backgroundColor: Colors.transparent,
-                                barrierColor: Color(0xBF000000),
-                                context: context,
-                                builder: (context) {
-                                  return Padding(
-                                    padding: MediaQuery.of(context).viewInsets,
-                                    child: Container(
-                                      height: 393,
-                                      child: DesertWidget(),
-                                    ),
-                                  );
-                                },
+                              logFirebaseEvent('Container_Backend-Call');
+
+                              final foodActionsCreateData = {
+                                ...createFoodActionsRecordData(
+                                  userId: currentUserUid,
+                                  co2e: 0,
+                                  createdTime: getCurrentTimestamp,
+                                  day: dateTimeFormat(
+                                      'yMd', getCurrentTimestamp),
+                                  isPeriodic: false,
+                                  isTemporary: true,
+                                  isFavorite: false,
+                                  food: 'desert',
+                                  portions: 1,
+                                ),
+                                'sideComponent': ['null'],
+                              };
+                              var foodActionsRecordReference =
+                                  FoodActionsRecord.collection.doc();
+                              await foodActionsRecordReference
+                                  .set(foodActionsCreateData);
+                              newDesert = FoodActionsRecord.getDocumentFromData(
+                                  foodActionsCreateData,
+                                  foodActionsRecordReference);
+                              logFirebaseEvent('Container_Navigate-To');
+                              await Navigator.push(
+                                context,
+                                PageTransition(
+                                  type: PageTransitionType.fade,
+                                  duration: Duration(milliseconds: 0),
+                                  reverseDuration: Duration(milliseconds: 0),
+                                  child: FoodWidget(
+                                    actionRef: newDesert.reference,
+                                  ),
+                                ),
                               );
+
+                              setState(() {});
                             },
                             child: Container(
                               width: 135,
@@ -287,27 +344,47 @@ class _FoodWidgetState extends State<FoodWidget> {
                           InkWell(
                             onTap: () async {
                               logFirebaseEvent(
-                                  'FOOD_COMP_Container_31uzdmwx_ON_TAP');
+                                  'FOOD_LIST_COMP_Container_31uzdmwx_ON_TAP');
                               logFirebaseEvent('Container_Navigate-Back');
                               Navigator.pop(context);
-                              logFirebaseEvent('Container_Update-Local-State');
-                              setState(() => FFAppState().actionCO2 = 0);
-                              logFirebaseEvent('Container_Bottom-Sheet');
-                              await showModalBottomSheet(
-                                isScrollControlled: true,
-                                backgroundColor: Colors.transparent,
-                                barrierColor: Color(0xBF000000),
-                                context: context,
-                                builder: (context) {
-                                  return Padding(
-                                    padding: MediaQuery.of(context).viewInsets,
-                                    child: Container(
-                                      height: 474,
-                                      child: DrinksWidget(),
-                                    ),
-                                  );
-                                },
+                              logFirebaseEvent('Container_Backend-Call');
+
+                              final foodActionsCreateData = {
+                                ...createFoodActionsRecordData(
+                                  userId: currentUserUid,
+                                  co2e: 0,
+                                  createdTime: getCurrentTimestamp,
+                                  day: dateTimeFormat(
+                                      'yMd', getCurrentTimestamp),
+                                  isPeriodic: false,
+                                  isTemporary: true,
+                                  isFavorite: false,
+                                  food: 'drinks',
+                                  portions: 1,
+                                ),
+                                'sideComponent': ['null'],
+                              };
+                              var foodActionsRecordReference =
+                                  FoodActionsRecord.collection.doc();
+                              await foodActionsRecordReference
+                                  .set(foodActionsCreateData);
+                              newDrinks = FoodActionsRecord.getDocumentFromData(
+                                  foodActionsCreateData,
+                                  foodActionsRecordReference);
+                              logFirebaseEvent('Container_Navigate-To');
+                              await Navigator.push(
+                                context,
+                                PageTransition(
+                                  type: PageTransitionType.fade,
+                                  duration: Duration(milliseconds: 0),
+                                  reverseDuration: Duration(milliseconds: 0),
+                                  child: FoodWidget(
+                                    actionRef: newDrinks.reference,
+                                  ),
+                                ),
                               );
+
+                              setState(() {});
                             },
                             child: Container(
                               width: 135,
@@ -359,27 +436,48 @@ class _FoodWidgetState extends State<FoodWidget> {
                           InkWell(
                             onTap: () async {
                               logFirebaseEvent(
-                                  'FOOD_COMP_Container_4dtnptq5_ON_TAP');
+                                  'FOOD_LIST_COMP_Container_4dtnptq5_ON_TAP');
                               logFirebaseEvent('Container_Navigate-Back');
                               Navigator.pop(context);
-                              logFirebaseEvent('Container_Update-Local-State');
-                              setState(() => FFAppState().actionCO2 = 0);
-                              logFirebaseEvent('Container_Bottom-Sheet');
-                              await showModalBottomSheet(
-                                isScrollControlled: true,
-                                backgroundColor: Colors.transparent,
-                                barrierColor: Color(0xBF000000),
-                                context: context,
-                                builder: (context) {
-                                  return Padding(
-                                    padding: MediaQuery.of(context).viewInsets,
-                                    child: Container(
-                                      height: 315,
-                                      child: CheeseWidget(),
-                                    ),
-                                  );
-                                },
+                              logFirebaseEvent('Container_Backend-Call');
+
+                              final foodActionsCreateData = {
+                                ...createFoodActionsRecordData(
+                                  userId: currentUserUid,
+                                  co2e: 0,
+                                  createdTime: getCurrentTimestamp,
+                                  day: dateTimeFormat(
+                                      'yMd', getCurrentTimestamp),
+                                  isPeriodic: false,
+                                  isTemporary: true,
+                                  isFavorite: false,
+                                  food: 'cheese',
+                                  portions: 1,
+                                ),
+                                'mainComponent': ['null'],
+                                'sideComponent': ['null'],
+                              };
+                              var foodActionsRecordReference =
+                                  FoodActionsRecord.collection.doc();
+                              await foodActionsRecordReference
+                                  .set(foodActionsCreateData);
+                              newCheese = FoodActionsRecord.getDocumentFromData(
+                                  foodActionsCreateData,
+                                  foodActionsRecordReference);
+                              logFirebaseEvent('Container_Navigate-To');
+                              await Navigator.push(
+                                context,
+                                PageTransition(
+                                  type: PageTransitionType.fade,
+                                  duration: Duration(milliseconds: 0),
+                                  reverseDuration: Duration(milliseconds: 0),
+                                  child: FoodWidget(
+                                    actionRef: newCheese.reference,
+                                  ),
+                                ),
                               );
+
+                              setState(() {});
                             },
                             child: Container(
                               width: 135,
@@ -422,27 +520,48 @@ class _FoodWidgetState extends State<FoodWidget> {
                           InkWell(
                             onTap: () async {
                               logFirebaseEvent(
-                                  'FOOD_COMP_Container_rbnj7k2p_ON_TAP');
+                                  'FOOD_LIST_COMP_Container_rbnj7k2p_ON_TAP');
                               logFirebaseEvent('Container_Navigate-Back');
                               Navigator.pop(context);
-                              logFirebaseEvent('Container_Update-Local-State');
-                              setState(() => FFAppState().actionCO2 = 0);
-                              logFirebaseEvent('Container_Bottom-Sheet');
-                              await showModalBottomSheet(
-                                isScrollControlled: true,
-                                backgroundColor: Colors.transparent,
-                                barrierColor: Color(0xBF000000),
-                                context: context,
-                                builder: (context) {
-                                  return Padding(
-                                    padding: MediaQuery.of(context).viewInsets,
-                                    child: Container(
-                                      height: 318,
-                                      child: BreadWidget(),
-                                    ),
-                                  );
-                                },
+                              logFirebaseEvent('Container_Backend-Call');
+
+                              final foodActionsCreateData = {
+                                ...createFoodActionsRecordData(
+                                  userId: currentUserUid,
+                                  co2e: 0,
+                                  createdTime: getCurrentTimestamp,
+                                  day: dateTimeFormat(
+                                      'yMd', getCurrentTimestamp),
+                                  isPeriodic: false,
+                                  isTemporary: true,
+                                  isFavorite: false,
+                                  food: 'bread',
+                                  portions: 1,
+                                ),
+                                'mainComponent': ['null'],
+                                'sideComponent': ['null'],
+                              };
+                              var foodActionsRecordReference =
+                                  FoodActionsRecord.collection.doc();
+                              await foodActionsRecordReference
+                                  .set(foodActionsCreateData);
+                              newBread = FoodActionsRecord.getDocumentFromData(
+                                  foodActionsCreateData,
+                                  foodActionsRecordReference);
+                              logFirebaseEvent('Container_Navigate-To');
+                              await Navigator.push(
+                                context,
+                                PageTransition(
+                                  type: PageTransitionType.fade,
+                                  duration: Duration(milliseconds: 0),
+                                  reverseDuration: Duration(milliseconds: 0),
+                                  child: FoodWidget(
+                                    actionRef: newBread.reference,
+                                  ),
+                                ),
                               );
+
+                              setState(() {});
                             },
                             child: Container(
                               width: 135,
@@ -496,27 +615,46 @@ class _FoodWidgetState extends State<FoodWidget> {
                   children: [
                     InkWell(
                       onTap: () async {
-                        logFirebaseEvent('FOOD_COMP_Container_h1fkx9l7_ON_TAP');
+                        logFirebaseEvent(
+                            'FOOD_LIST_COMP_Container_h1fkx9l7_ON_TAP');
                         logFirebaseEvent('Container_Navigate-Back');
                         Navigator.pop(context);
-                        logFirebaseEvent('Container_Update-Local-State');
-                        setState(() => FFAppState().actionCO2 = 0);
-                        logFirebaseEvent('Container_Bottom-Sheet');
-                        await showModalBottomSheet(
-                          isScrollControlled: true,
-                          backgroundColor: Colors.transparent,
-                          barrierColor: Color(0xBF000000),
-                          context: context,
-                          builder: (context) {
-                            return Padding(
-                              padding: MediaQuery.of(context).viewInsets,
-                              child: Container(
-                                height: 406,
-                                child: CoffeeWidget(),
-                              ),
-                            );
-                          },
+                        logFirebaseEvent('Container_Backend-Call');
+
+                        final foodActionsCreateData = {
+                          ...createFoodActionsRecordData(
+                            userId: currentUserUid,
+                            co2e: 0,
+                            createdTime: getCurrentTimestamp,
+                            day: dateTimeFormat('yMd', getCurrentTimestamp),
+                            isPeriodic: false,
+                            isTemporary: true,
+                            isFavorite: false,
+                            food: 'coffee',
+                            portions: 1,
+                          ),
+                          'sideComponent': ['null'],
+                        };
+                        var foodActionsRecordReference =
+                            FoodActionsRecord.collection.doc();
+                        await foodActionsRecordReference
+                            .set(foodActionsCreateData);
+                        newCoffee = FoodActionsRecord.getDocumentFromData(
+                            foodActionsCreateData, foodActionsRecordReference);
+                        logFirebaseEvent('Container_Navigate-To');
+                        await Navigator.push(
+                          context,
+                          PageTransition(
+                            type: PageTransitionType.fade,
+                            duration: Duration(milliseconds: 0),
+                            reverseDuration: Duration(milliseconds: 0),
+                            child: FoodWidget(
+                              actionRef: newCoffee.reference,
+                            ),
+                          ),
                         );
+
+                        setState(() {});
                       },
                       child: Container(
                         width: 135,

@@ -209,8 +209,11 @@ class _DeleteAccountWidgetState extends State<DeleteAccountWidget> {
                                 logFirebaseEvent('iconButton_Navigate-To');
                                 await Navigator.push(
                                   context,
-                                  MaterialPageRoute(
-                                    builder: (context) => LoginWidget(),
+                                  PageTransition(
+                                    type: PageTransitionType.fade,
+                                    duration: Duration(milliseconds: 0),
+                                    reverseDuration: Duration(milliseconds: 0),
+                                    child: LoginWidget(),
                                   ),
                                 );
                               },

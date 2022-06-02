@@ -78,6 +78,15 @@ class _PushNotificationsHandlerState extends State<PushNotificationsHandler> {
 }
 
 final pageBuilderMap = <String, Future<Widget> Function(Map<String, dynamic>)>{
+  'Energies': (data) async => EnergiesWidget(
+        actionRef: getParameter(data, 'actionRef'),
+      ),
+  'Transport': (data) async => TransportWidget(
+        actionRef: getParameter(data, 'actionRef'),
+      ),
+  'Food': (data) async => FoodWidget(
+        actionRef: getParameter(data, 'actionRef'),
+      ),
   'Splash': (data) async => SplashWidget(),
   'Login': (data) async => LoginWidget(),
   'Signup': (data) async => SignupWidget(),

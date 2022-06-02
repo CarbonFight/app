@@ -35,10 +35,6 @@ class FFAppState {
   bool actionActive = true;
 
   String activeDate = '';
-
-  bool optionsON = false;
-
-  bool datesON = false;
 }
 
 LatLng _latLngFromString(String val) {

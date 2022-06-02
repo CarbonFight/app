@@ -37,6 +37,12 @@ abstract class EnergyActionsRecord
   String get day;
 
   @nullable
+  bool get isTemporary;
+
+  @nullable
+  bool get isPeriodic;
+
+  @nullable
   @BuiltValueField(wireName: kDocumentReferenceField)
   DocumentReference get reference;
 
@@ -47,7 +53,9 @@ abstract class EnergyActionsRecord
     ..userId = ''
     ..co2e = 0
     ..peopleSharing = ''
-    ..day = '';
+    ..day = ''
+    ..isTemporary = false
+    ..isPeriodic = false;
 
   static CollectionReference get collection =>
       FirebaseFirestore.instance.collection('energyActions');
@@ -80,6 +88,8 @@ Map<String, dynamic> createEnergyActionsRecordData({
   DateTime createdTime,
   String peopleSharing,
   String day,
+  bool isTemporary,
+  bool isPeriodic,
 }) =>
     serializers.toFirestore(
         EnergyActionsRecord.serializer,
@@ -91,4 +101,6 @@ Map<String, dynamic> createEnergyActionsRecordData({
           ..co2e = co2e
           ..createdTime = createdTime
           ..peopleSharing = peopleSharing
-          ..day = day));
+          ..day = day
+          ..isTemporary = isTemporary
+          ..isPeriodic = isPeriodic));

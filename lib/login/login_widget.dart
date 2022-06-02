@@ -379,9 +379,12 @@ class _LoginWidgetState extends State<LoginWidget> {
                                             'iconButton_Navigate-To');
                                         await Navigator.push(
                                           context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                SplashWidget(),
+                                          PageTransition(
+                                            type: PageTransitionType.fade,
+                                            duration: Duration(milliseconds: 0),
+                                            reverseDuration:
+                                                Duration(milliseconds: 0),
+                                            child: SplashWidget(),
                                           ),
                                         );
                                       } else {
@@ -389,8 +392,12 @@ class _LoginWidgetState extends State<LoginWidget> {
                                             'iconButton_Navigate-To');
                                         await Navigator.push(
                                           context,
-                                          MaterialPageRoute(
-                                            builder: (context) => HomeWidget(),
+                                          PageTransition(
+                                            type: PageTransitionType.fade,
+                                            duration: Duration(milliseconds: 0),
+                                            reverseDuration:
+                                                Duration(milliseconds: 0),
+                                            child: HomeWidget(),
                                           ),
                                         );
                                       }
@@ -508,9 +515,17 @@ class _LoginWidgetState extends State<LoginWidget> {
                                                           'IconButton_Navigate-To');
                                                       await Navigator.push(
                                                         context,
-                                                        MaterialPageRoute(
-                                                          builder: (context) =>
-                                                              SplashWidget(),
+                                                        PageTransition(
+                                                          type:
+                                                              PageTransitionType
+                                                                  .fade,
+                                                          duration: Duration(
+                                                              milliseconds: 0),
+                                                          reverseDuration:
+                                                              Duration(
+                                                                  milliseconds:
+                                                                      0),
+                                                          child: SplashWidget(),
                                                         ),
                                                       );
                                                     } else {
@@ -518,9 +533,17 @@ class _LoginWidgetState extends State<LoginWidget> {
                                                           'IconButton_Navigate-To');
                                                       await Navigator.push(
                                                         context,
-                                                        MaterialPageRoute(
-                                                          builder: (context) =>
-                                                              HomeWidget(),
+                                                        PageTransition(
+                                                          type:
+                                                              PageTransitionType
+                                                                  .fade,
+                                                          duration: Duration(
+                                                              milliseconds: 0),
+                                                          reverseDuration:
+                                                              Duration(
+                                                                  milliseconds:
+                                                                      0),
+                                                          child: HomeWidget(),
                                                         ),
                                                       );
                                                     }
@@ -547,9 +570,16 @@ class _LoginWidgetState extends State<LoginWidget> {
                                                         'Card_Navigate-To');
                                                     await Navigator.push(
                                                       context,
-                                                      MaterialPageRoute(
-                                                        builder: (context) =>
-                                                            SplashWidget(),
+                                                      PageTransition(
+                                                        type: PageTransitionType
+                                                            .fade,
+                                                        duration: Duration(
+                                                            milliseconds: 0),
+                                                        reverseDuration:
+                                                            Duration(
+                                                                milliseconds:
+                                                                    0),
+                                                        child: SplashWidget(),
                                                       ),
                                                     );
                                                   } else {
@@ -557,9 +587,16 @@ class _LoginWidgetState extends State<LoginWidget> {
                                                         'Card_Navigate-To');
                                                     await Navigator.push(
                                                       context,
-                                                      MaterialPageRoute(
-                                                        builder: (context) =>
-                                                            HomeWidget(),
+                                                      PageTransition(
+                                                        type: PageTransitionType
+                                                            .fade,
+                                                        duration: Duration(
+                                                            milliseconds: 0),
+                                                        reverseDuration:
+                                                            Duration(
+                                                                milliseconds:
+                                                                    0),
+                                                        child: HomeWidget(),
                                                       ),
                                                     );
                                                   }
@@ -606,8 +643,18 @@ class _LoginWidgetState extends State<LoginWidget> {
                                                             'IconButton_Navigate-To');
                                                         await Navigator.push(
                                                           context,
-                                                          MaterialPageRoute(
-                                                            builder: (context) =>
+                                                          PageTransition(
+                                                            type:
+                                                                PageTransitionType
+                                                                    .fade,
+                                                            duration: Duration(
+                                                                milliseconds:
+                                                                    0),
+                                                            reverseDuration:
+                                                                Duration(
+                                                                    milliseconds:
+                                                                        0),
+                                                            child:
                                                                 SplashWidget(),
                                                           ),
                                                         );
@@ -616,9 +663,18 @@ class _LoginWidgetState extends State<LoginWidget> {
                                                             'IconButton_Navigate-To');
                                                         await Navigator.push(
                                                           context,
-                                                          MaterialPageRoute(
-                                                            builder: (context) =>
-                                                                HomeWidget(),
+                                                          PageTransition(
+                                                            type:
+                                                                PageTransitionType
+                                                                    .fade,
+                                                            duration: Duration(
+                                                                milliseconds:
+                                                                    0),
+                                                            reverseDuration:
+                                                                Duration(
+                                                                    milliseconds:
+                                                                        0),
+                                                            child: HomeWidget(),
                                                           ),
                                                         );
                                                       }
@@ -663,9 +719,14 @@ class _LoginWidgetState extends State<LoginWidget> {
                                                   await Navigator
                                                       .pushAndRemoveUntil(
                                                     context,
-                                                    MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          HomeWidget(),
+                                                    PageTransition(
+                                                      type: PageTransitionType
+                                                          .fade,
+                                                      duration: Duration(
+                                                          milliseconds: 0),
+                                                      reverseDuration: Duration(
+                                                          milliseconds: 0),
+                                                      child: HomeWidget(),
                                                     ),
                                                     (r) => false,
                                                   );
@@ -710,9 +771,13 @@ class _LoginWidgetState extends State<LoginWidget> {
                                                   'Text_Navigate-To');
                                               await Navigator.push(
                                                 context,
-                                                MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      SignupWidget(),
+                                                PageTransition(
+                                                  type: PageTransitionType.fade,
+                                                  duration:
+                                                      Duration(milliseconds: 0),
+                                                  reverseDuration:
+                                                      Duration(milliseconds: 0),
+                                                  child: SignupWidget(),
                                                 ),
                                               );
                                             },

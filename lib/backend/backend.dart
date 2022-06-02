@@ -7,10 +7,7 @@ import '../flutter_flow/flutter_flow_util.dart';
 import 'schema/transport_actions_record.dart';
 import 'schema/energy_actions_record.dart';
 import 'schema/users_record.dart';
-import 'schema/energy_periodics_record.dart';
 import 'schema/food_actions_record.dart';
-import 'schema/action_cache_record.dart';
-import 'schema/action_type_cache_record.dart';
 import 'schema/users_stats_record.dart';
 import 'schema/serializers.dart';
 
@@ -22,10 +19,7 @@ export 'schema/serializers.dart';
 export 'schema/transport_actions_record.dart';
 export 'schema/energy_actions_record.dart';
 export 'schema/users_record.dart';
-export 'schema/energy_periodics_record.dart';
 export 'schema/food_actions_record.dart';
-export 'schema/action_cache_record.dart';
-export 'schema/action_type_cache_record.dart';
 export 'schema/users_stats_record.dart';
 
 /// Functions to query TransportActionsRecords (as a Stream and as a Future).
@@ -155,48 +149,6 @@ Future<FFFirestorePage<UsersRecord>> queryUsersRecordPage({
       isStream: isStream,
     );
 
-/// Functions to query EnergyPeriodicsRecords (as a Stream and as a Future).
-Stream<List<EnergyPeriodicsRecord>> queryEnergyPeriodicsRecord({
-  Query Function(Query) queryBuilder,
-  int limit = -1,
-  bool singleRecord = false,
-}) =>
-    queryCollection(
-      EnergyPeriodicsRecord.collection,
-      EnergyPeriodicsRecord.serializer,
-      queryBuilder: queryBuilder,
-      limit: limit,
-      singleRecord: singleRecord,
-    );
-
-Future<List<EnergyPeriodicsRecord>> queryEnergyPeriodicsRecordOnce({
-  Query Function(Query) queryBuilder,
-  int limit = -1,
-  bool singleRecord = false,
-}) =>
-    queryCollectionOnce(
-      EnergyPeriodicsRecord.collection,
-      EnergyPeriodicsRecord.serializer,
-      queryBuilder: queryBuilder,
-      limit: limit,
-      singleRecord: singleRecord,
-    );
-
-Future<FFFirestorePage<EnergyPeriodicsRecord>> queryEnergyPeriodicsRecordPage({
-  Query Function(Query) queryBuilder,
-  DocumentSnapshot nextPageMarker,
-  int pageSize,
-  bool isStream,
-}) =>
-    queryCollectionPage(
-      EnergyPeriodicsRecord.collection,
-      EnergyPeriodicsRecord.serializer,
-      queryBuilder: queryBuilder,
-      nextPageMarker: nextPageMarker,
-      pageSize: pageSize,
-      isStream: isStream,
-    );
-
 /// Functions to query FoodActionsRecords (as a Stream and as a Future).
 Stream<List<FoodActionsRecord>> queryFoodActionsRecord({
   Query Function(Query) queryBuilder,
@@ -233,90 +185,6 @@ Future<FFFirestorePage<FoodActionsRecord>> queryFoodActionsRecordPage({
     queryCollectionPage(
       FoodActionsRecord.collection,
       FoodActionsRecord.serializer,
-      queryBuilder: queryBuilder,
-      nextPageMarker: nextPageMarker,
-      pageSize: pageSize,
-      isStream: isStream,
-    );
-
-/// Functions to query ActionCacheRecords (as a Stream and as a Future).
-Stream<List<ActionCacheRecord>> queryActionCacheRecord({
-  Query Function(Query) queryBuilder,
-  int limit = -1,
-  bool singleRecord = false,
-}) =>
-    queryCollection(
-      ActionCacheRecord.collection,
-      ActionCacheRecord.serializer,
-      queryBuilder: queryBuilder,
-      limit: limit,
-      singleRecord: singleRecord,
-    );
-
-Future<List<ActionCacheRecord>> queryActionCacheRecordOnce({
-  Query Function(Query) queryBuilder,
-  int limit = -1,
-  bool singleRecord = false,
-}) =>
-    queryCollectionOnce(
-      ActionCacheRecord.collection,
-      ActionCacheRecord.serializer,
-      queryBuilder: queryBuilder,
-      limit: limit,
-      singleRecord: singleRecord,
-    );
-
-Future<FFFirestorePage<ActionCacheRecord>> queryActionCacheRecordPage({
-  Query Function(Query) queryBuilder,
-  DocumentSnapshot nextPageMarker,
-  int pageSize,
-  bool isStream,
-}) =>
-    queryCollectionPage(
-      ActionCacheRecord.collection,
-      ActionCacheRecord.serializer,
-      queryBuilder: queryBuilder,
-      nextPageMarker: nextPageMarker,
-      pageSize: pageSize,
-      isStream: isStream,
-    );
-
-/// Functions to query ActionTypeCacheRecords (as a Stream and as a Future).
-Stream<List<ActionTypeCacheRecord>> queryActionTypeCacheRecord({
-  Query Function(Query) queryBuilder,
-  int limit = -1,
-  bool singleRecord = false,
-}) =>
-    queryCollection(
-      ActionTypeCacheRecord.collection,
-      ActionTypeCacheRecord.serializer,
-      queryBuilder: queryBuilder,
-      limit: limit,
-      singleRecord: singleRecord,
-    );
-
-Future<List<ActionTypeCacheRecord>> queryActionTypeCacheRecordOnce({
-  Query Function(Query) queryBuilder,
-  int limit = -1,
-  bool singleRecord = false,
-}) =>
-    queryCollectionOnce(
-      ActionTypeCacheRecord.collection,
-      ActionTypeCacheRecord.serializer,
-      queryBuilder: queryBuilder,
-      limit: limit,
-      singleRecord: singleRecord,
-    );
-
-Future<FFFirestorePage<ActionTypeCacheRecord>> queryActionTypeCacheRecordPage({
-  Query Function(Query) queryBuilder,
-  DocumentSnapshot nextPageMarker,
-  int pageSize,
-  bool isStream,
-}) =>
-    queryCollectionPage(
-      ActionTypeCacheRecord.collection,
-      ActionTypeCacheRecord.serializer,
       queryBuilder: queryBuilder,
       nextPageMarker: nextPageMarker,
       pageSize: pageSize,
