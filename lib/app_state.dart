@@ -15,11 +15,15 @@ class FFAppState {
   Future initializePersistedState() async {
     prefs = await SharedPreferences.getInstance();
     _showSplash = prefs.getBool('ff_showSplash') ?? _showSplash;
+    _displayFoodActions =
+        prefs.getBool('ff_displayFoodActions') ?? _displayFoodActions;
+    _displayEnergyActions =
+        prefs.getBool('ff_displayEnergyActions') ?? _displayEnergyActions;
+    _displayTransportActions =
+        prefs.getBool('ff_displayTransportActions') ?? _displayTransportActions;
   }
 
   SharedPreferences prefs;
-
-  bool addButtonsHome = false;
 
   bool _showSplash = true;
   bool get showSplash => _showSplash;
@@ -32,9 +36,42 @@ class FFAppState {
 
   bool loading = false;
 
-  bool actionActive = true;
-
   String activeDate = '';
+
+  int activeDateRelative = 0;
+
+  bool _displayFoodActions = true;
+  bool get displayFoodActions => _displayFoodActions;
+  set displayFoodActions(bool _value) {
+    _displayFoodActions = _value;
+    prefs.setBool('ff_displayFoodActions', _value);
+  }
+
+  bool _displayEnergyActions = true;
+  bool get displayEnergyActions => _displayEnergyActions;
+  set displayEnergyActions(bool _value) {
+    _displayEnergyActions = _value;
+    prefs.setBool('ff_displayEnergyActions', _value);
+  }
+
+  bool _displayTransportActions = true;
+  bool get displayTransportActions => _displayTransportActions;
+  set displayTransportActions(bool _value) {
+    _displayTransportActions = _value;
+    prefs.setBool('ff_displayTransportActions', _value);
+  }
+
+  List<int> XAxisDays = [-6, -5, -4, -3, -2, -1, 0];
+
+  List<int> XAxisWeeks = [-3, -2, -1, 0];
+
+  List<int> XAxisMonths = [-3, -2, -1, 0];
+
+  bool displayOptions = false;
+
+  bool displayDates = false;
+
+  bool displayDays = false;
 }
 
 LatLng _latLngFromString(String val) {

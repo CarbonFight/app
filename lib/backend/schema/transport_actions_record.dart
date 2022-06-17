@@ -15,9 +15,6 @@ abstract class TransportActionsRecord
   String get transport;
 
   @nullable
-  int get distance;
-
-  @nullable
   String get powertype;
 
   @nullable
@@ -46,10 +43,10 @@ abstract class TransportActionsRecord
   bool get isPeriodic;
 
   @nullable
-  bool get isTemporary;
+  bool get isFavorite;
 
   @nullable
-  bool get isFavorite;
+  String get distance;
 
   @nullable
   @BuiltValueField(wireName: kDocumentReferenceField)
@@ -58,7 +55,6 @@ abstract class TransportActionsRecord
   static void _initializeBuilder(TransportActionsRecordBuilder builder) =>
       builder
         ..transport = ''
-        ..distance = 0
         ..powertype = ''
         ..userId = ''
         ..co2e = 0
@@ -67,8 +63,8 @@ abstract class TransportActionsRecord
         ..periodicity = ListBuilder()
         ..roundTrip = false
         ..isPeriodic = false
-        ..isTemporary = false
-        ..isFavorite = false;
+        ..isFavorite = false
+        ..distance = '';
 
   static CollectionReference get collection =>
       FirebaseFirestore.instance.collection('transportActions');
@@ -95,7 +91,6 @@ abstract class TransportActionsRecord
 
 Map<String, dynamic> createTransportActionsRecordData({
   String transport,
-  int distance,
   String powertype,
   String userId,
   int co2e,
@@ -104,14 +99,13 @@ Map<String, dynamic> createTransportActionsRecordData({
   String day,
   bool roundTrip,
   bool isPeriodic,
-  bool isTemporary,
   bool isFavorite,
+  String distance,
 }) =>
     serializers.toFirestore(
         TransportActionsRecord.serializer,
         TransportActionsRecord((t) => t
           ..transport = transport
-          ..distance = distance
           ..powertype = powertype
           ..userId = userId
           ..co2e = co2e
@@ -121,5 +115,5 @@ Map<String, dynamic> createTransportActionsRecordData({
           ..periodicity = null
           ..roundTrip = roundTrip
           ..isPeriodic = isPeriodic
-          ..isTemporary = isTemporary
-          ..isFavorite = isFavorite));
+          ..isFavorite = isFavorite
+          ..distance = distance));

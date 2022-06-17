@@ -70,8 +70,7 @@ class _ForgotPasswordWidgetState extends State<ForgotPasswordWidget> {
                       size: 24,
                     ),
                     onPressed: () async {
-                      logFirebaseEvent(
-                          'FORGOT_PASSWORD_COMP_close_ICON_ON_TAP');
+                      logFirebaseEvent('FORGOT_PASSWORD_COMP_close_ICN_ON_TAP');
                       logFirebaseEvent('IconButton_Navigate-Back');
                       Navigator.pop(context);
                     },
@@ -160,7 +159,7 @@ class _ForgotPasswordWidgetState extends State<ForgotPasswordWidget> {
                             child: InkWell(
                               onTap: () async {
                                 logFirebaseEvent(
-                                    'FORGOT_PASSWORD_COMP_Container_c6apebad_ON_TAP');
+                                    'FORGOT_PASSWORD_Container_c6apebad_ON_TA');
                                 logFirebaseEvent('iconButton_Auth');
                                 if (emailController.text.isEmpty) {
                                   ScaffoldMessenger.of(context).showSnackBar(

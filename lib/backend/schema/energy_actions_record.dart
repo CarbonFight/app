@@ -15,9 +15,6 @@ abstract class EnergyActionsRecord
   String get energy;
 
   @nullable
-  int get volume;
-
-  @nullable
   String get powertype;
 
   @nullable
@@ -37,10 +34,13 @@ abstract class EnergyActionsRecord
   String get day;
 
   @nullable
-  bool get isTemporary;
+  bool get isPeriodic;
 
   @nullable
-  bool get isPeriodic;
+  String get volume;
+
+  @nullable
+  bool get isNew;
 
   @nullable
   @BuiltValueField(wireName: kDocumentReferenceField)
@@ -48,14 +48,14 @@ abstract class EnergyActionsRecord
 
   static void _initializeBuilder(EnergyActionsRecordBuilder builder) => builder
     ..energy = ''
-    ..volume = 0
     ..powertype = ''
     ..userId = ''
     ..co2e = 0
     ..peopleSharing = ''
     ..day = ''
-    ..isTemporary = false
-    ..isPeriodic = false;
+    ..isPeriodic = false
+    ..volume = ''
+    ..isNew = false;
 
   static CollectionReference get collection =>
       FirebaseFirestore.instance.collection('energyActions');
@@ -81,26 +81,26 @@ abstract class EnergyActionsRecord
 
 Map<String, dynamic> createEnergyActionsRecordData({
   String energy,
-  int volume,
   String powertype,
   String userId,
   int co2e,
   DateTime createdTime,
   String peopleSharing,
   String day,
-  bool isTemporary,
   bool isPeriodic,
+  String volume,
+  bool isNew,
 }) =>
     serializers.toFirestore(
         EnergyActionsRecord.serializer,
         EnergyActionsRecord((e) => e
           ..energy = energy
-          ..volume = volume
           ..powertype = powertype
           ..userId = userId
           ..co2e = co2e
           ..createdTime = createdTime
           ..peopleSharing = peopleSharing
           ..day = day
-          ..isTemporary = isTemporary
-          ..isPeriodic = isPeriodic));
+          ..isPeriodic = isPeriodic
+          ..volume = volume
+          ..isNew = isNew));

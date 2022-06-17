@@ -35,7 +35,7 @@ class _TransportListWidgetState extends State<TransportListWidget> {
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height * 1,
         decoration: BoxDecoration(
-          color: FlutterFlowTheme.of(context).tertiaryColor,
+          color: Color(0xCCFFFFFF),
           boxShadow: [
             BoxShadow(
               blurRadius: 10,
@@ -69,7 +69,7 @@ class _TransportListWidgetState extends State<TransportListWidget> {
                       size: 24,
                     ),
                     onPressed: () async {
-                      logFirebaseEvent('TRANSPORT_LIST_COMP_close_ICON_ON_TAP');
+                      logFirebaseEvent('TRANSPORT_LIST_COMP_close_ICN_ON_TAP');
                       logFirebaseEvent('IconButton_Navigate-Back');
                       Navigator.pop(context);
                     },
@@ -90,22 +90,19 @@ class _TransportListWidgetState extends State<TransportListWidget> {
                           InkWell(
                             onTap: () async {
                               logFirebaseEvent(
-                                  'TRANSPORT_LIST_COMP_Container_ug5dagzi_ON_TAP');
-                              logFirebaseEvent('Container_Navigate-Back');
-                              Navigator.pop(context);
+                                  'TRANSPORT_LIST_Container_ug5dagzi_ON_TAP');
                               logFirebaseEvent('Container_Backend-Call');
 
                               final transportActionsCreateData =
                                   createTransportActionsRecordData(
                                 transport: 'car',
-                                distance: 0,
                                 userId: currentUserUid,
                                 co2e: 0,
                                 createdTime: getCurrentTimestamp,
-                                day: dateTimeFormat('yMd', getCurrentTimestamp),
+                                day: dateTimeFormat(
+                                    'd/M/y', getCurrentTimestamp),
                                 roundTrip: false,
                                 isPeriodic: false,
-                                isTemporary: true,
                                 isFavorite: false,
                               );
                               var transportActionsRecordReference =
@@ -116,6 +113,13 @@ class _TransportListWidgetState extends State<TransportListWidget> {
                                   TransportActionsRecord.getDocumentFromData(
                                       transportActionsCreateData,
                                       transportActionsRecordReference);
+                              logFirebaseEvent('Container_Update-Local-State');
+                              setState(
+                                  () => FFAppState().displayOptions = false);
+                              logFirebaseEvent('Container_Update-Local-State');
+                              setState(() => FFAppState().displayDates = false);
+                              logFirebaseEvent('Container_Update-Local-State');
+                              setState(() => FFAppState().displayDays = false);
                               logFirebaseEvent('Container_Navigate-To');
                               await Navigator.push(
                                 context,
@@ -145,6 +149,7 @@ class _TransportListWidgetState extends State<TransportListWidget> {
                                     5, 10, 5, 10),
                                 child: Column(
                                   mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
                                     SvgPicture.asset(
                                       'assets/images/trans-car-01.svg',
@@ -172,19 +177,17 @@ class _TransportListWidgetState extends State<TransportListWidget> {
                           InkWell(
                             onTap: () async {
                               logFirebaseEvent(
-                                  'TRANSPORT_LIST_COMP_Container_n7qgj70o_ON_TAP');
-                              logFirebaseEvent('Container_Navigate-Back');
-                              Navigator.pop(context);
+                                  'TRANSPORT_LIST_Container_n7qgj70o_ON_TAP');
                               logFirebaseEvent('Container_Backend-Call');
 
                               final transportActionsCreateData =
                                   createTransportActionsRecordData(
                                 transport: 'bus',
-                                distance: 0,
                                 userId: currentUserUid,
                                 co2e: 0,
                                 createdTime: getCurrentTimestamp,
-                                day: dateTimeFormat('yMd', getCurrentTimestamp),
+                                day: dateTimeFormat(
+                                    'd/M/y', getCurrentTimestamp),
                                 roundTrip: false,
                                 isPeriodic: false,
                                 isFavorite: false,
@@ -197,6 +200,13 @@ class _TransportListWidgetState extends State<TransportListWidget> {
                                   TransportActionsRecord.getDocumentFromData(
                                       transportActionsCreateData,
                                       transportActionsRecordReference);
+                              logFirebaseEvent('Container_Update-Local-State');
+                              setState(
+                                  () => FFAppState().displayOptions = false);
+                              logFirebaseEvent('Container_Update-Local-State');
+                              setState(() => FFAppState().displayDates = false);
+                              logFirebaseEvent('Container_Update-Local-State');
+                              setState(() => FFAppState().displayDays = false);
                               logFirebaseEvent('Container_Navigate-To');
                               await Navigator.push(
                                 context,
@@ -262,19 +272,17 @@ class _TransportListWidgetState extends State<TransportListWidget> {
                           InkWell(
                             onTap: () async {
                               logFirebaseEvent(
-                                  'TRANSPORT_LIST_COMP_Container_tyekub91_ON_TAP');
-                              logFirebaseEvent('Container_Navigate-Back');
-                              Navigator.pop(context);
+                                  'TRANSPORT_LIST_Container_tyekub91_ON_TAP');
                               logFirebaseEvent('Container_Backend-Call');
 
                               final transportActionsCreateData =
                                   createTransportActionsRecordData(
                                 transport: 'scooter',
-                                distance: 0,
                                 userId: currentUserUid,
                                 co2e: 0,
                                 createdTime: getCurrentTimestamp,
-                                day: dateTimeFormat('yMd', getCurrentTimestamp),
+                                day: dateTimeFormat(
+                                    'd/M/y', getCurrentTimestamp),
                                 roundTrip: false,
                                 isPeriodic: false,
                                 powertype: 'Thermique',
@@ -288,6 +296,13 @@ class _TransportListWidgetState extends State<TransportListWidget> {
                                   TransportActionsRecord.getDocumentFromData(
                                       transportActionsCreateData,
                                       transportActionsRecordReference);
+                              logFirebaseEvent('Container_Update-Local-State');
+                              setState(
+                                  () => FFAppState().displayOptions = false);
+                              logFirebaseEvent('Container_Update-Local-State');
+                              setState(() => FFAppState().displayDates = false);
+                              logFirebaseEvent('Container_Update-Local-State');
+                              setState(() => FFAppState().displayDays = false);
                               logFirebaseEvent('Container_Navigate-To');
                               await Navigator.push(
                                 context,
@@ -344,19 +359,17 @@ class _TransportListWidgetState extends State<TransportListWidget> {
                           InkWell(
                             onTap: () async {
                               logFirebaseEvent(
-                                  'TRANSPORT_LIST_COMP_Container_ku2qonrh_ON_TAP');
-                              logFirebaseEvent('Container_Navigate-Back');
-                              Navigator.pop(context);
+                                  'TRANSPORT_LIST_Container_ku2qonrh_ON_TAP');
                               logFirebaseEvent('Container_Backend-Call');
 
                               final transportActionsCreateData =
                                   createTransportActionsRecordData(
                                 transport: 'moto',
-                                distance: 0,
                                 userId: currentUserUid,
                                 co2e: 0,
                                 createdTime: getCurrentTimestamp,
-                                day: dateTimeFormat('yMd', getCurrentTimestamp),
+                                day: dateTimeFormat(
+                                    'd/M/y', getCurrentTimestamp),
                                 roundTrip: false,
                                 isPeriodic: false,
                                 powertype: 'Thermique',
@@ -370,6 +383,13 @@ class _TransportListWidgetState extends State<TransportListWidget> {
                                   TransportActionsRecord.getDocumentFromData(
                                       transportActionsCreateData,
                                       transportActionsRecordReference);
+                              logFirebaseEvent('Container_Update-Local-State');
+                              setState(
+                                  () => FFAppState().displayOptions = false);
+                              logFirebaseEvent('Container_Update-Local-State');
+                              setState(() => FFAppState().displayDates = false);
+                              logFirebaseEvent('Container_Update-Local-State');
+                              setState(() => FFAppState().displayDays = false);
                               logFirebaseEvent('Container_Navigate-To');
                               await Navigator.push(
                                 context,
@@ -435,19 +455,17 @@ class _TransportListWidgetState extends State<TransportListWidget> {
                           InkWell(
                             onTap: () async {
                               logFirebaseEvent(
-                                  'TRANSPORT_LIST_COMP_Container_joxhzjb4_ON_TAP');
-                              logFirebaseEvent('Container_Navigate-Back');
-                              Navigator.pop(context);
+                                  'TRANSPORT_LIST_Container_joxhzjb4_ON_TAP');
                               logFirebaseEvent('Container_Backend-Call');
 
                               final transportActionsCreateData =
                                   createTransportActionsRecordData(
                                 transport: 'train',
-                                distance: 0,
                                 userId: currentUserUid,
                                 co2e: 0,
                                 createdTime: getCurrentTimestamp,
-                                day: dateTimeFormat('yMd', getCurrentTimestamp),
+                                day: dateTimeFormat(
+                                    'd/M/y', getCurrentTimestamp),
                                 roundTrip: false,
                                 isPeriodic: false,
                                 powertype: 'RER',
@@ -461,6 +479,13 @@ class _TransportListWidgetState extends State<TransportListWidget> {
                                   TransportActionsRecord.getDocumentFromData(
                                       transportActionsCreateData,
                                       transportActionsRecordReference);
+                              logFirebaseEvent('Container_Update-Local-State');
+                              setState(
+                                  () => FFAppState().displayOptions = false);
+                              logFirebaseEvent('Container_Update-Local-State');
+                              setState(() => FFAppState().displayDates = false);
+                              logFirebaseEvent('Container_Update-Local-State');
+                              setState(() => FFAppState().displayDays = false);
                               logFirebaseEvent('Container_Navigate-To');
                               await Navigator.push(
                                 context,
@@ -517,19 +542,17 @@ class _TransportListWidgetState extends State<TransportListWidget> {
                           InkWell(
                             onTap: () async {
                               logFirebaseEvent(
-                                  'TRANSPORT_LIST_COMP_Container_b62z2687_ON_TAP');
-                              logFirebaseEvent('Container_Navigate-Back');
-                              Navigator.pop(context);
+                                  'TRANSPORT_LIST_Container_b62z2687_ON_TAP');
                               logFirebaseEvent('Container_Backend-Call');
 
                               final transportActionsCreateData =
                                   createTransportActionsRecordData(
                                 transport: 'metro',
-                                distance: 0,
                                 userId: currentUserUid,
                                 co2e: 0,
                                 createdTime: getCurrentTimestamp,
-                                day: dateTimeFormat('yMd', getCurrentTimestamp),
+                                day: dateTimeFormat(
+                                    'd/M/y', getCurrentTimestamp),
                                 roundTrip: false,
                                 isPeriodic: false,
                                 powertype: 'RATP',
@@ -543,6 +566,13 @@ class _TransportListWidgetState extends State<TransportListWidget> {
                                   TransportActionsRecord.getDocumentFromData(
                                       transportActionsCreateData,
                                       transportActionsRecordReference);
+                              logFirebaseEvent('Container_Update-Local-State');
+                              setState(
+                                  () => FFAppState().displayOptions = false);
+                              logFirebaseEvent('Container_Update-Local-State');
+                              setState(() => FFAppState().displayDates = false);
+                              logFirebaseEvent('Container_Update-Local-State');
+                              setState(() => FFAppState().displayDays = false);
                               logFirebaseEvent('Container_Navigate-To');
                               await Navigator.push(
                                 context,
@@ -611,19 +641,16 @@ class _TransportListWidgetState extends State<TransportListWidget> {
                     InkWell(
                       onTap: () async {
                         logFirebaseEvent(
-                            'TRANSPORT_LIST_COMP_Container_8hx7eqtt_ON_TAP');
-                        logFirebaseEvent('Container_Navigate-Back');
-                        Navigator.pop(context);
+                            'TRANSPORT_LIST_Container_8hx7eqtt_ON_TAP');
                         logFirebaseEvent('Container_Backend-Call');
 
                         final transportActionsCreateData =
                             createTransportActionsRecordData(
                           transport: 'flight',
-                          distance: 0,
                           userId: currentUserUid,
                           co2e: 0,
                           createdTime: getCurrentTimestamp,
-                          day: dateTimeFormat('yMd', getCurrentTimestamp),
+                          day: dateTimeFormat('d/M/y', getCurrentTimestamp),
                           roundTrip: false,
                           isPeriodic: false,
                           powertype: 'Avion commercial',
@@ -636,6 +663,12 @@ class _TransportListWidgetState extends State<TransportListWidget> {
                         newFlight = TransportActionsRecord.getDocumentFromData(
                             transportActionsCreateData,
                             transportActionsRecordReference);
+                        logFirebaseEvent('Container_Update-Local-State');
+                        setState(() => FFAppState().displayOptions = false);
+                        logFirebaseEvent('Container_Update-Local-State');
+                        setState(() => FFAppState().displayDates = false);
+                        logFirebaseEvent('Container_Update-Local-State');
+                        setState(() => FFAppState().displayDays = false);
                         logFirebaseEvent('Container_Navigate-To');
                         await Navigator.push(
                           context,
@@ -691,19 +724,16 @@ class _TransportListWidgetState extends State<TransportListWidget> {
                     InkWell(
                       onTap: () async {
                         logFirebaseEvent(
-                            'TRANSPORT_LIST_COMP_Container_nanmgc4h_ON_TAP');
-                        logFirebaseEvent('Container_Navigate-Back');
-                        Navigator.pop(context);
+                            'TRANSPORT_LIST_Container_nanmgc4h_ON_TAP');
                         logFirebaseEvent('Container_Backend-Call');
 
                         final transportActionsCreateData =
                             createTransportActionsRecordData(
                           transport: 'bike',
-                          distance: 0,
                           userId: currentUserUid,
                           co2e: 0,
                           createdTime: getCurrentTimestamp,
-                          day: dateTimeFormat('yMd', getCurrentTimestamp),
+                          day: dateTimeFormat('d/M/y', getCurrentTimestamp),
                           roundTrip: false,
                           isPeriodic: false,
                           powertype: 'Classique',
@@ -716,6 +746,12 @@ class _TransportListWidgetState extends State<TransportListWidget> {
                         newBike = TransportActionsRecord.getDocumentFromData(
                             transportActionsCreateData,
                             transportActionsRecordReference);
+                        logFirebaseEvent('Container_Update-Local-State');
+                        setState(() => FFAppState().displayOptions = false);
+                        logFirebaseEvent('Container_Update-Local-State');
+                        setState(() => FFAppState().displayDates = false);
+                        logFirebaseEvent('Container_Update-Local-State');
+                        setState(() => FFAppState().displayDays = false);
                         logFirebaseEvent('Container_Navigate-To');
                         await Navigator.push(
                           context,

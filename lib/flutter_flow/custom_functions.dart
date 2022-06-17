@@ -11,13 +11,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../auth/auth_util.dart';
 
 int transportActionsCO2e(
-  int distance,
+  String distance,
   String passengers,
   String powertype,
   String transport,
   bool roundTrip,
 ) {
   double co2e = 0;
+  int dist = int.parse(distance);
   var passengersInt = int.parse(passengers);
 
   if (transport == "car") {
@@ -37,7 +38,7 @@ int transportActionsCO2e(
     }
 
     // Co2 is distance * co2 per km for powertype * ratio of ownership / nomber of passengers
-    co2e = (distance * co2powertype) / passengersInt;
+    co2e = (dist * co2powertype) / passengersInt;
   }
 
   // Bike
@@ -53,19 +54,19 @@ int transportActionsCO2e(
         co2powertype = 2;
         break;
     }
-    co2e = distance * co2powertype;
+    co2e = dist * co2powertype;
   }
 
   // Moto
   else if (transport == "moto") {
     double co2perkm = 168;
-    co2e = distance * co2perkm;
+    co2e = dist * co2perkm;
   }
 
   // Flight
   else if (transport == "flight") {
     double co2perkm = 82.8;
-    co2e = distance * co2perkm;
+    co2e = dist * co2perkm;
   }
 
   // Metro
@@ -75,7 +76,7 @@ int transportActionsCO2e(
     // ~0.57 Km between 2 stations (Paris)
     double co2perkm = 2.5;
     double distanceBetweenTwoStations = 0.570;
-    co2e = distance * co2perkm * distanceBetweenTwoStations;
+    co2e = dist * co2perkm * distanceBetweenTwoStations;
   }
 
   // TGV (High Speed Train)
@@ -101,7 +102,7 @@ int transportActionsCO2e(
         co2perkm = 2.2;
         break;
     }
-    co2e = distance * co2perkm;
+    co2e = dist * co2perkm;
   }
 
   // Train bus
@@ -119,7 +120,7 @@ int transportActionsCO2e(
         co2perkm = 113;
         break;
     }
-    co2e = distance * co2perkm;
+    co2e = dist * co2perkm;
   } else if (transport == "scooter") {
     // powertype : CO2 per Km
     // Default is Thermic
@@ -134,7 +135,7 @@ int transportActionsCO2e(
     }
 
     // Co2 is distance * co2 per km for powertype * ratio of ownership / nomber of passengers
-    co2e = (distance * co2powertype) / passengersInt;
+    co2e = (dist * co2powertype) / passengersInt;
   }
 
   // If roundTrip is Truc, co2e is *2
@@ -170,11 +171,12 @@ String printScore(int score) {
 
 int energyPeriodicsCO2e(
   String energy,
-  int volume,
+  String volume,
   String powertype,
   String peopleSharing,
 ) {
   double co2e = 0;
+  int vol = int.parse(volume);
   int peopleSharingInt = int.parse(peopleSharing);
 
   // Electricity
@@ -210,7 +212,7 @@ int energyPeriodicsCO2e(
     }
 
     // Co2 volume * gCo2z/volume dividied by the number of people in the house
-    co2e = (volume * co2powertype) / peopleSharingInt / 365;
+    co2e = (vol * co2powertype) / peopleSharingInt / 365;
   }
 
   // Gas
@@ -229,13 +231,13 @@ int energyPeriodicsCO2e(
         co2powertype = 968;
         break;
     }
-    co2e = (volume * co2powertype) / peopleSharingInt / 365;
+    co2e = (vol * co2powertype) / peopleSharingInt / 365;
   }
 
   // Water
   else if (energy == "water") {
-    double co2PerM3 = 7575;
-    co2e = (volume * co2PerM3) / peopleSharingInt / 365;
+    double co2PerM3 = 394;
+    co2e = (vol * co2PerM3) / peopleSharingInt / 365;
   }
 
   return co2e.round();
@@ -243,7 +245,7 @@ int energyPeriodicsCO2e(
 
 int foodActionsCO2e(
   String food,
-  List<String> mainComponents,
+  String mainComponents,
   List<String> sideComponents,
   int portions,
 ) {
@@ -331,23 +333,17 @@ int foodActionsCO2e(
   // JUNK FOOD needs portions
 
   if (food == "starter") {
-    for (var i = 0; i < mainComponents.length; i++) {
-      String currentMainComponent = mainComponents[i];
-      switch (currentMainComponent) {
-        case "Végétarienne":
-          co2e += 75;
-          break;
-        case "Mixte":
-          co2e += 150;
-          break;
-        case "Viande":
-          co2e += 300;
-          break;
-      }
+    switch (mainComponents) {
+      case "Végétarienne":
+        co2e += 75;
+        break;
+      case "Mixte":
+        co2e += 150;
+        break;
+      case "Viande":
+        co2e += 300;
+        break;
     }
-
-    // Divide by number of components
-    co2e = co2e / mainComponents.length;
   } else if (food == "main") {
     double co2eMain = 0.0;
     double co2eSide = 0.0;
@@ -376,111 +372,87 @@ int foodActionsCO2e(
     // Divide by number of components
     co2eSide = co2eSide / (sideComponents.length);
 
-    for (var i = 0; i < mainComponents.length; i++) {
-      String currentMainComponent = mainComponents[i];
-      switch (currentMainComponent) {
-        case "Oeuf":
-          co2eMain += co2eEgg;
-          break;
-        case "Poisson":
-          co2eMain += co2eFish;
-          break;
-        case "Viande rouge":
-          co2eMain += co2eMeat;
-          break;
-        case "Viande blanche":
-          co2eMain += co2ePoultry;
-          break;
-        case "Végétarien":
-          co2eMain += co2e * 2;
-          break;
-      }
+    switch (mainComponents) {
+      case "Oeuf":
+        co2eMain += co2eEgg;
+        break;
+      case "Poisson":
+        co2eMain += co2eFish;
+        break;
+      case "Viande rouge":
+        co2eMain += co2eMeat;
+        break;
+      case "Viande blanche":
+        co2eMain += co2ePoultry;
+        break;
+      case "Végétarien":
+        co2eMain += co2e * 2;
+        break;
     }
-
-    // Divide by number of components
-    co2eMain = co2eMain / (mainComponents.length);
 
     // Divide by number of components
     co2e = co2eMain + co2eSide;
   } else if (food == "desert") {
-    for (var i = 0; i < mainComponents.length; i++) {
-      String currentMainComponent = mainComponents[i];
-      switch (currentMainComponent) {
-        case "Fruits":
-          co2e += co2eFruit;
-          break;
-        case "Fruits transformés":
-          co2e += co2eTransformedFruit;
-          break;
-        case "Yaourt":
-          co2e += co2eYogurt;
-          break;
-        case "Pâtisserie":
-          co2e += co2eCakePastry;
-          break;
-        case "Glace":
-          co2e += co2eIcecream;
-          break;
-        case "Crême dessert":
-          co2e += co2eCustard;
-          break;
-      }
+    switch (mainComponents) {
+      case "Fruits":
+        co2e += co2eFruit;
+        break;
+      case "Fruits transformés":
+        co2e += co2eTransformedFruit;
+        break;
+      case "Yaourt":
+        co2e += co2eYogurt;
+        break;
+      case "Pâtisserie":
+        co2e += co2eCakePastry;
+        break;
+      case "Glace":
+        co2e += co2eIcecream;
+        break;
+      case "Crême dessert":
+        co2e += co2eCustard;
+        break;
     }
-
-    // Divide by number of components
-    co2e = co2e / mainComponents.length;
   } else if (food == "drinks") {
-    for (var i = 0; i < mainComponents.length; i++) {
-      String currentMainComponent = mainComponents[i];
-      switch (currentMainComponent) {
-        case "Eau en bouteille":
-          co2e += co2eBottleWater;
-          break;
-        case "Eau du robinet":
-          co2e += co2eTapWater;
-          break;
-        case "Jus de fruit":
-          co2e += co2eFruitJuice;
-          break;
-        case "Soupe":
-          co2e += co2eSoup;
-          break;
-        case "Alcool":
-          co2e += co2eAlcohol;
-          break;
-        case "Boisson chaude":
-          co2e += co2eHotDrink;
-          break;
-        case "Soda":
-          co2e += co2eSoda;
-          break;
-      }
+    switch (mainComponents) {
+      case "Eau en bouteille":
+        co2e += co2eBottleWater;
+        break;
+      case "Eau du robinet":
+        co2e += co2eTapWater;
+        break;
+      case "Jus de fruit":
+        co2e += co2eFruitJuice;
+        break;
+      case "Soupe":
+        co2e += co2eSoup;
+        break;
+      case "Alcool":
+        co2e += co2eAlcohol;
+        break;
+      case "Boisson chaude":
+        co2e += co2eHotDrink;
+        break;
+      case "Soda":
+        co2e += co2eSoda;
+        break;
     }
-
-    // Divide by number of components
-    co2e = co2e / mainComponents.length;
   } else if (food == "cheese") {
     co2e += co2eCheese;
   } else if (food == "bread") {
     co2e += co2eBread;
   } else if (food == "coffee") {
-    for (var i = 0; i < mainComponents.length; i++) {
-      String currentMainComponent = mainComponents[i];
-      switch (currentMainComponent) {
-        case "Café filtre":
-          co2e += co2eCoffeeFilter;
-          break;
-        case "Expresso":
-          co2e += co2eCoffeeExpresso;
-          break;
-        case "Capsule":
-          co2e += co2eCoffeeCapsule;
-          break;
-      }
+    switch (mainComponents) {
+      case "Café filtre":
+        co2e += co2eCoffeeFilter;
+        break;
+      case "Expresso":
+        co2e += co2eCoffeeExpresso;
+        break;
+      case "Capsule":
+        co2e += co2eCoffeeCapsule;
+        break;
     }
-
-    // Divide by number of components
-    co2e = co2e / mainComponents.length;
   }
 
   // Breakfast
@@ -491,97 +463,26 @@ int foodActionsCO2e(
   return co2e.round();
 }
 
-double ratioScoreGoal(
-  int score,
-  String period,
-  int goal,
-) {
-  int goalGrammes = goal * 1000;
-  int divider = goalGrammes;
-
-  if (period == "day") {
-    divider = goalGrammes;
-  } else if (period == "week") {
-    divider = goalGrammes * 7;
-  } else if (period == "month") {
-    divider = goalGrammes * 30;
-  }
-
-  double percent = score / divider;
-
-  if (percent > 1) {
-    return 1;
-  } else {
-    // 1 digit only
-    return double.parse(percent.toStringAsFixed(2));
-  }
-}
-
-String printTarget(
-  String period,
-  int co2target,
-) {
-  int periodTarget = 0;
-
-  if (period == "day") {
-    periodTarget = co2target;
-  } else if (period == "week") {
-    periodTarget = co2target * 7;
-  } else if (period == "month") {
-    periodTarget = co2target * 30;
-  }
-
-  return periodTarget.toString() + " kg";
-}
-
-String printLevel(int level) {
-  String levelString = "Débutant";
-
-  if (level == 1) {
-    return "Débutant";
-  } else if (level == 2) {
-    return "Confirmé";
-  } else if (level == 3) {
-    return "CarbonFighter";
-  }
-
-  return levelString;
-}
-
-bool lastCache(
-  int actionCache,
-  int index,
-) {
-  // If it's last cache, "cache size" - "index" = 1
-  // If true, hide the arrow to next cache screen
-  var isLastCache = actionCache - index;
-  if (isLastCache == 1) {
-    return true;
-  } else {
-    return false;
-  }
-}
-
 String timestampToDay(DateTime timestamp) {
   // Add your function code here!
-  var formatter = DateFormat('yMd');
+  var formatter = DateFormat('d/M/y');
   String formattedDate = formatter.format(timestamp);
-  //return DateTime.parse(formattedDate); // change to 7/25/2022
+  //return DateTime.parse(formattedDate); // change to 25/7/2022
   return formattedDate;
 }
 
 String setOneDayBefore(String activeDate) {
-  var parsedDate = DateFormat('yMd').parse(activeDate);
+  var parsedDate = DateFormat('d/M/y').parse(activeDate);
   DateTime oneDayAgo = parsedDate.subtract(new Duration(days: 1));
-  String formattedDate = DateFormat('yMd').format(oneDayAgo);
+  String formattedDate = DateFormat('d/M/y').format(oneDayAgo);
 
   return formattedDate;
 }
 
 String setOneDayAfter(String activeDate) {
-  var parsedDate = DateFormat('yMd').parse(activeDate);
+  var parsedDate = DateFormat('d/M/y').parse(activeDate);
   DateTime oneDayAfter = parsedDate.add(new Duration(days: 1));
-  String formattedDate = DateFormat('yMd').format(oneDayAfter);
+  String formattedDate = DateFormat('d/M/y').format(oneDayAfter);
 
   return formattedDate;
 }
@@ -592,6 +493,9 @@ double ratioScoreTotal(
 ) {
   // Add your function code here!
   var ratio = (score / total);
+  if (ratio > 1) {
+    ratio = 1;
+  }
   var output = ratio.toStringAsFixed(2);
   return double.parse(output);
 }
@@ -816,4 +720,36 @@ String getTransportDistanceLabel(String transport) {
   }
 
   return label;
+}
+
+String getEnergyVolumeLabel(String energy) {
+  String label = "";
+
+  switch (energy) {
+    case "electricity":
+      label = "Consommation annuelle en KWH";
+      break;
+    case "gas":
+      label = "Consommation annuelle en KWH";
+      break;
+    case "water":
+      label = "Consommation annuelle en M3";
+      break;
+  }
+
+  return label;
+}
+
+int getActiveScore(
+  List<int> scores,
+  int dayRelative,
+) {
+  return scores[dayRelative];
+}
+
+String printRank(int rank) {
+  // Rank starts at 0
+  var newRank = rank + 1;
+  var newRankString = "#" + newRank.toString();
+  return newRankString;
 }

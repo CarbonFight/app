@@ -9,6 +9,7 @@ import 'schema/energy_actions_record.dart';
 import 'schema/users_record.dart';
 import 'schema/food_actions_record.dart';
 import 'schema/users_stats_record.dart';
+import 'schema/users_trophies_record.dart';
 import 'schema/serializers.dart';
 
 export 'dart:async' show StreamSubscription;
@@ -21,6 +22,7 @@ export 'schema/energy_actions_record.dart';
 export 'schema/users_record.dart';
 export 'schema/food_actions_record.dart';
 export 'schema/users_stats_record.dart';
+export 'schema/users_trophies_record.dart';
 
 /// Functions to query TransportActionsRecords (as a Stream and as a Future).
 Stream<List<TransportActionsRecord>> queryTransportActionsRecord({
@@ -227,6 +229,48 @@ Future<FFFirestorePage<UsersStatsRecord>> queryUsersStatsRecordPage({
     queryCollectionPage(
       UsersStatsRecord.collection,
       UsersStatsRecord.serializer,
+      queryBuilder: queryBuilder,
+      nextPageMarker: nextPageMarker,
+      pageSize: pageSize,
+      isStream: isStream,
+    );
+
+/// Functions to query UsersTrophiesRecords (as a Stream and as a Future).
+Stream<List<UsersTrophiesRecord>> queryUsersTrophiesRecord({
+  Query Function(Query) queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollection(
+      UsersTrophiesRecord.collection,
+      UsersTrophiesRecord.serializer,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+Future<List<UsersTrophiesRecord>> queryUsersTrophiesRecordOnce({
+  Query Function(Query) queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollectionOnce(
+      UsersTrophiesRecord.collection,
+      UsersTrophiesRecord.serializer,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+Future<FFFirestorePage<UsersTrophiesRecord>> queryUsersTrophiesRecordPage({
+  Query Function(Query) queryBuilder,
+  DocumentSnapshot nextPageMarker,
+  int pageSize,
+  bool isStream,
+}) =>
+    queryCollectionPage(
+      UsersTrophiesRecord.collection,
+      UsersTrophiesRecord.serializer,
       queryBuilder: queryBuilder,
       nextPageMarker: nextPageMarker,
       pageSize: pageSize,

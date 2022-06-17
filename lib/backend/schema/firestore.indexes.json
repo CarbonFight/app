@@ -13,21 +13,7 @@
           "order": "ASCENDING"
         },
         {
-          "fieldPath": "created_time",
-          "order": "DESCENDING"
-        }
-      ]
-    },
-    {
-      "collectionGroup": "transportActions",
-      "queryScope": "COLLECTION",
-      "fields": [
-        {
-          "fieldPath": "userId",
-          "order": "ASCENDING"
-        },
-        {
-          "fieldPath": "day",
+          "fieldPath": "isPeriodic",
           "order": "ASCENDING"
         },
         {
@@ -37,7 +23,7 @@
       ]
     },
     {
-      "collectionGroup": "energyActions",
+      "collectionGroup": "foodActions",
       "queryScope": "COLLECTION",
       "fields": [
         {
@@ -45,7 +31,7 @@
           "order": "ASCENDING"
         },
         {
-          "fieldPath": "day",
+          "fieldPath": "isPeriodic",
           "order": "ASCENDING"
         },
         {
@@ -99,19 +85,11 @@
       ]
     },
     {
-      "collectionGroup": "foodActions",
+      "collectionGroup": "transportActions",
       "queryScope": "COLLECTION",
       "fields": [
         {
           "fieldPath": "userId",
-          "order": "ASCENDING"
-        },
-        {
-          "fieldPath": "day",
-          "order": "ASCENDING"
-        },
-        {
-          "fieldPath": "isPeriodic",
           "order": "ASCENDING"
         },
         {
@@ -129,26 +107,22 @@
           "order": "ASCENDING"
         },
         {
-          "fieldPath": "isPeriodic",
-          "order": "ASCENDING"
-        },
-        {
           "fieldPath": "created_time",
           "order": "DESCENDING"
         }
       ]
     },
     {
-      "collectionGroup": "users",
+      "collectionGroup": "energyActions",
       "queryScope": "COLLECTION",
       "fields": [
         {
-          "fieldPath": "level",
+          "fieldPath": "userId",
           "order": "ASCENDING"
         },
         {
-          "fieldPath": "global_score",
-          "order": "ASCENDING"
+          "fieldPath": "created_time",
+          "order": "DESCENDING"
         }
       ]
     }

@@ -293,7 +293,7 @@ class _FeedbackWidgetState extends State<FeedbackWidget> {
                             ),
                             onPressed: () async {
                               logFirebaseEvent(
-                                  'FEEDBACK_PAGE_arrow_back_ICON_ON_TAP');
+                                  'FEEDBACK_PAGE_arrow_back_ICN_ON_TAP');
                               logFirebaseEvent('IconButton_Navigate-Back');
                               Navigator.pop(context);
                             },

@@ -12,90 +12,66 @@ abstract class UsersStatsRecord
       _$usersStatsRecordSerializer;
 
   @nullable
-  int get day0;
-
-  @nullable
-  int get day1;
-
-  @nullable
-  int get day2;
-
-  @nullable
-  int get day3;
-
-  @nullable
-  int get day4;
-
-  @nullable
-  int get day5;
-
-  @nullable
-  int get day6;
-
-  @nullable
-  int get month0;
-
-  @nullable
-  int get month1;
-
-  @nullable
-  int get month2;
-
-  @nullable
-  int get month3;
-
-  @nullable
   String get uid;
-
-  @nullable
-  int get week0;
-
-  @nullable
-  int get week1;
-
-  @nullable
-  int get week2;
-
-  @nullable
-  int get week3;
 
   @nullable
   int get periodics;
 
   @nullable
-  int get transportDay0;
+  BuiltList<int> get days;
 
   @nullable
-  int get energyDay0;
+  BuiltList<int> get weeks;
 
   @nullable
-  int get foodDay0;
+  BuiltList<int> get months;
+
+  @nullable
+  BuiltList<int> get transports;
+
+  @nullable
+  BuiltList<int> get energies;
+
+  @nullable
+  BuiltList<int> get foods;
+
+  @nullable
+  int get energyPeriodics;
+
+  @nullable
+  int get foodPeriodics;
+
+  @nullable
+  int get transportPeriodics;
+
+  @nullable
+  BuiltList<double> get daysChart;
+
+  @nullable
+  BuiltList<double> get weeksChart;
+
+  @nullable
+  BuiltList<double> get monthsChart;
 
   @nullable
   @BuiltValueField(wireName: kDocumentReferenceField)
   DocumentReference get reference;
 
   static void _initializeBuilder(UsersStatsRecordBuilder builder) => builder
-    ..day0 = 0
-    ..day1 = 0
-    ..day2 = 0
-    ..day3 = 0
-    ..day4 = 0
-    ..day5 = 0
-    ..day6 = 0
-    ..month0 = 0
-    ..month1 = 0
-    ..month2 = 0
-    ..month3 = 0
     ..uid = ''
-    ..week0 = 0
-    ..week1 = 0
-    ..week2 = 0
-    ..week3 = 0
     ..periodics = 0
-    ..transportDay0 = 0
-    ..energyDay0 = 0
-    ..foodDay0 = 0;
+    ..days = ListBuilder()
+    ..weeks = ListBuilder()
+    ..months = ListBuilder()
+    ..transports = ListBuilder()
+    ..energies = ListBuilder()
+    ..foods = ListBuilder()
+    ..energyPeriodics = 0
+    ..foodPeriodics = 0
+    ..transportPeriodics = 0
+    ..daysChart = ListBuilder()
+    ..weeksChart = ListBuilder()
+    ..monthsChart = ListBuilder();
 
   static CollectionReference get collection =>
       FirebaseFirestore.instance.collection('usersStats');
@@ -119,47 +95,26 @@ abstract class UsersStatsRecord
 }
 
 Map<String, dynamic> createUsersStatsRecordData({
-  int day0,
-  int day1,
-  int day2,
-  int day3,
-  int day4,
-  int day5,
-  int day6,
-  int month0,
-  int month1,
-  int month2,
-  int month3,
   String uid,
-  int week0,
-  int week1,
-  int week2,
-  int week3,
   int periodics,
-  int transportDay0,
-  int energyDay0,
-  int foodDay0,
+  int energyPeriodics,
+  int foodPeriodics,
+  int transportPeriodics,
 }) =>
     serializers.toFirestore(
         UsersStatsRecord.serializer,
         UsersStatsRecord((u) => u
-          ..day0 = day0
-          ..day1 = day1
-          ..day2 = day2
-          ..day3 = day3
-          ..day4 = day4
-          ..day5 = day5
-          ..day6 = day6
-          ..month0 = month0
-          ..month1 = month1
-          ..month2 = month2
-          ..month3 = month3
           ..uid = uid
-          ..week0 = week0
-          ..week1 = week1
-          ..week2 = week2
-          ..week3 = week3
           ..periodics = periodics
-          ..transportDay0 = transportDay0
-          ..energyDay0 = energyDay0
-          ..foodDay0 = foodDay0));
+          ..days = null
+          ..weeks = null
+          ..months = null
+          ..transports = null
+          ..energies = null
+          ..foods = null
+          ..energyPeriodics = energyPeriodics
+          ..foodPeriodics = foodPeriodics
+          ..transportPeriodics = transportPeriodics
+          ..daysChart = null
+          ..weeksChart = null
+          ..monthsChart = null));

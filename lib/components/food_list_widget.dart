@@ -67,7 +67,7 @@ class _FoodListWidgetState extends State<FoodListWidget> {
                       size: 24,
                     ),
                     onPressed: () async {
-                      logFirebaseEvent('FOOD_LIST_COMP_close_ICON_ON_TAP');
+                      logFirebaseEvent('FOOD_LIST_COMP_close_ICN_ON_TAP');
                       logFirebaseEvent('IconButton_Navigate-Back');
                       Navigator.pop(context);
                     },
@@ -89,8 +89,6 @@ class _FoodListWidgetState extends State<FoodListWidget> {
                             onTap: () async {
                               logFirebaseEvent(
                                   'FOOD_LIST_COMP_Container_ny9yoj7o_ON_TAP');
-                              logFirebaseEvent('Container_Navigate-Back');
-                              Navigator.pop(context);
                               logFirebaseEvent('Container_Backend-Call');
 
                               final foodActionsCreateData = {
@@ -99,12 +97,11 @@ class _FoodListWidgetState extends State<FoodListWidget> {
                                   co2e: 0,
                                   createdTime: getCurrentTimestamp,
                                   day: dateTimeFormat(
-                                      'yMd', getCurrentTimestamp),
+                                      'd/M/y', getCurrentTimestamp),
                                   isPeriodic: false,
-                                  isTemporary: true,
-                                  isFavorite: false,
                                   food: 'starter',
                                   portions: 1,
+                                  mainComponent: 'Mixte',
                                 ),
                                 'sideComponent': ['null'],
                               };
@@ -116,6 +113,10 @@ class _FoodListWidgetState extends State<FoodListWidget> {
                                   FoodActionsRecord.getDocumentFromData(
                                       foodActionsCreateData,
                                       foodActionsRecordReference);
+                              logFirebaseEvent('Container_Update-Local-State');
+                              setState(() => FFAppState().displayDates = false);
+                              logFirebaseEvent('Container_Update-Local-State');
+                              setState(() => FFAppState().displayDays = false);
                               logFirebaseEvent('Container_Navigate-To');
                               await Navigator.push(
                                 context,
@@ -173,8 +174,6 @@ class _FoodListWidgetState extends State<FoodListWidget> {
                             onTap: () async {
                               logFirebaseEvent(
                                   'FOOD_LIST_COMP_Container_q1yosrnh_ON_TAP');
-                              logFirebaseEvent('Container_Navigate-Back');
-                              Navigator.pop(context);
                               logFirebaseEvent('Container_Backend-Call');
 
                               final foodActionsCreateData =
@@ -182,9 +181,9 @@ class _FoodListWidgetState extends State<FoodListWidget> {
                                 userId: currentUserUid,
                                 co2e: 0,
                                 createdTime: getCurrentTimestamp,
-                                day: dateTimeFormat('yMd', getCurrentTimestamp),
+                                day: dateTimeFormat(
+                                    'd/M/y', getCurrentTimestamp),
                                 isPeriodic: false,
-                                isTemporary: true,
                                 isFavorite: false,
                                 food: 'main',
                                 portions: 1,
@@ -196,6 +195,10 @@ class _FoodListWidgetState extends State<FoodListWidget> {
                               newMain = FoodActionsRecord.getDocumentFromData(
                                   foodActionsCreateData,
                                   foodActionsRecordReference);
+                              logFirebaseEvent('Container_Update-Local-State');
+                              setState(() => FFAppState().displayDates = false);
+                              logFirebaseEvent('Container_Update-Local-State');
+                              setState(() => FFAppState().displayDays = false);
                               logFirebaseEvent('Container_Navigate-To');
                               await Navigator.push(
                                 context,
@@ -227,7 +230,7 @@ class _FoodListWidgetState extends State<FoodListWidget> {
                                   mainAxisSize: MainAxisSize.max,
                                   children: [
                                     Image.asset(
-                                      'assets/images/steak.png',
+                                      'assets/images/hot-pot.png',
                                       width: 50,
                                       height: 50,
                                       fit: BoxFit.cover,
@@ -262,8 +265,6 @@ class _FoodListWidgetState extends State<FoodListWidget> {
                             onTap: () async {
                               logFirebaseEvent(
                                   'FOOD_LIST_COMP_Container_r0c1o7ht_ON_TAP');
-                              logFirebaseEvent('Container_Navigate-Back');
-                              Navigator.pop(context);
                               logFirebaseEvent('Container_Backend-Call');
 
                               final foodActionsCreateData = {
@@ -272,9 +273,8 @@ class _FoodListWidgetState extends State<FoodListWidget> {
                                   co2e: 0,
                                   createdTime: getCurrentTimestamp,
                                   day: dateTimeFormat(
-                                      'yMd', getCurrentTimestamp),
+                                      'd/M/y', getCurrentTimestamp),
                                   isPeriodic: false,
-                                  isTemporary: true,
                                   isFavorite: false,
                                   food: 'desert',
                                   portions: 1,
@@ -288,6 +288,10 @@ class _FoodListWidgetState extends State<FoodListWidget> {
                               newDesert = FoodActionsRecord.getDocumentFromData(
                                   foodActionsCreateData,
                                   foodActionsRecordReference);
+                              logFirebaseEvent('Container_Update-Local-State');
+                              setState(() => FFAppState().displayDates = false);
+                              logFirebaseEvent('Container_Update-Local-State');
+                              setState(() => FFAppState().displayDays = false);
                               logFirebaseEvent('Container_Navigate-To');
                               await Navigator.push(
                                 context,
@@ -345,8 +349,6 @@ class _FoodListWidgetState extends State<FoodListWidget> {
                             onTap: () async {
                               logFirebaseEvent(
                                   'FOOD_LIST_COMP_Container_31uzdmwx_ON_TAP');
-                              logFirebaseEvent('Container_Navigate-Back');
-                              Navigator.pop(context);
                               logFirebaseEvent('Container_Backend-Call');
 
                               final foodActionsCreateData = {
@@ -355,9 +357,8 @@ class _FoodListWidgetState extends State<FoodListWidget> {
                                   co2e: 0,
                                   createdTime: getCurrentTimestamp,
                                   day: dateTimeFormat(
-                                      'yMd', getCurrentTimestamp),
+                                      'd/M/y', getCurrentTimestamp),
                                   isPeriodic: false,
-                                  isTemporary: true,
                                   isFavorite: false,
                                   food: 'drinks',
                                   portions: 1,
@@ -371,6 +372,10 @@ class _FoodListWidgetState extends State<FoodListWidget> {
                               newDrinks = FoodActionsRecord.getDocumentFromData(
                                   foodActionsCreateData,
                                   foodActionsRecordReference);
+                              logFirebaseEvent('Container_Update-Local-State');
+                              setState(() => FFAppState().displayDates = false);
+                              logFirebaseEvent('Container_Update-Local-State');
+                              setState(() => FFAppState().displayDays = false);
                               logFirebaseEvent('Container_Navigate-To');
                               await Navigator.push(
                                 context,
@@ -437,8 +442,6 @@ class _FoodListWidgetState extends State<FoodListWidget> {
                             onTap: () async {
                               logFirebaseEvent(
                                   'FOOD_LIST_COMP_Container_4dtnptq5_ON_TAP');
-                              logFirebaseEvent('Container_Navigate-Back');
-                              Navigator.pop(context);
                               logFirebaseEvent('Container_Backend-Call');
 
                               final foodActionsCreateData = {
@@ -447,14 +450,13 @@ class _FoodListWidgetState extends State<FoodListWidget> {
                                   co2e: 0,
                                   createdTime: getCurrentTimestamp,
                                   day: dateTimeFormat(
-                                      'yMd', getCurrentTimestamp),
+                                      'd/M/y', getCurrentTimestamp),
                                   isPeriodic: false,
-                                  isTemporary: true,
                                   isFavorite: false,
                                   food: 'cheese',
                                   portions: 1,
+                                  mainComponent: 'null',
                                 ),
-                                'mainComponent': ['null'],
                                 'sideComponent': ['null'],
                               };
                               var foodActionsRecordReference =
@@ -464,6 +466,10 @@ class _FoodListWidgetState extends State<FoodListWidget> {
                               newCheese = FoodActionsRecord.getDocumentFromData(
                                   foodActionsCreateData,
                                   foodActionsRecordReference);
+                              logFirebaseEvent('Container_Update-Local-State');
+                              setState(() => FFAppState().displayDates = false);
+                              logFirebaseEvent('Container_Update-Local-State');
+                              setState(() => FFAppState().displayDays = false);
                               logFirebaseEvent('Container_Navigate-To');
                               await Navigator.push(
                                 context,
@@ -521,8 +527,6 @@ class _FoodListWidgetState extends State<FoodListWidget> {
                             onTap: () async {
                               logFirebaseEvent(
                                   'FOOD_LIST_COMP_Container_rbnj7k2p_ON_TAP');
-                              logFirebaseEvent('Container_Navigate-Back');
-                              Navigator.pop(context);
                               logFirebaseEvent('Container_Backend-Call');
 
                               final foodActionsCreateData = {
@@ -531,14 +535,13 @@ class _FoodListWidgetState extends State<FoodListWidget> {
                                   co2e: 0,
                                   createdTime: getCurrentTimestamp,
                                   day: dateTimeFormat(
-                                      'yMd', getCurrentTimestamp),
+                                      'd/M/y', getCurrentTimestamp),
                                   isPeriodic: false,
-                                  isTemporary: true,
                                   isFavorite: false,
                                   food: 'bread',
                                   portions: 1,
+                                  mainComponent: 'null',
                                 ),
-                                'mainComponent': ['null'],
                                 'sideComponent': ['null'],
                               };
                               var foodActionsRecordReference =
@@ -548,6 +551,10 @@ class _FoodListWidgetState extends State<FoodListWidget> {
                               newBread = FoodActionsRecord.getDocumentFromData(
                                   foodActionsCreateData,
                                   foodActionsRecordReference);
+                              logFirebaseEvent('Container_Update-Local-State');
+                              setState(() => FFAppState().displayDates = false);
+                              logFirebaseEvent('Container_Update-Local-State');
+                              setState(() => FFAppState().displayDays = false);
                               logFirebaseEvent('Container_Navigate-To');
                               await Navigator.push(
                                 context,
@@ -617,8 +624,6 @@ class _FoodListWidgetState extends State<FoodListWidget> {
                       onTap: () async {
                         logFirebaseEvent(
                             'FOOD_LIST_COMP_Container_h1fkx9l7_ON_TAP');
-                        logFirebaseEvent('Container_Navigate-Back');
-                        Navigator.pop(context);
                         logFirebaseEvent('Container_Backend-Call');
 
                         final foodActionsCreateData = {
@@ -626,14 +631,14 @@ class _FoodListWidgetState extends State<FoodListWidget> {
                             userId: currentUserUid,
                             co2e: 0,
                             createdTime: getCurrentTimestamp,
-                            day: dateTimeFormat('yMd', getCurrentTimestamp),
+                            day: dateTimeFormat('d/M/y', getCurrentTimestamp),
                             isPeriodic: false,
-                            isTemporary: true,
                             isFavorite: false,
                             food: 'coffee',
                             portions: 1,
+                            mainComponent: 'Expresso',
                           ),
-                          'sideComponent': ['null'],
+                          'sideComponent': ['default'],
                         };
                         var foodActionsRecordReference =
                             FoodActionsRecord.collection.doc();
@@ -641,6 +646,10 @@ class _FoodListWidgetState extends State<FoodListWidget> {
                             .set(foodActionsCreateData);
                         newCoffee = FoodActionsRecord.getDocumentFromData(
                             foodActionsCreateData, foodActionsRecordReference);
+                        logFirebaseEvent('Container_Update-Local-State');
+                        setState(() => FFAppState().displayDates = false);
+                        logFirebaseEvent('Container_Update-Local-State');
+                        setState(() => FFAppState().displayDays = false);
                         logFirebaseEvent('Container_Navigate-To');
                         await Navigator.push(
                           context,

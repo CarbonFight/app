@@ -644,7 +644,7 @@ class _SignupWidgetState extends State<SignupWidget> {
                                                   ),
                                                   onPressed: () async {
                                                     logFirebaseEvent(
-                                                        'SIGNUP_PAGE_facebookF_ICON_ON_TAP');
+                                                        'SIGNUP_PAGE_facebookF_ICN_ON_TAP');
                                                     logFirebaseEvent(
                                                         'IconButton_Auth');
                                                     final user =
@@ -701,7 +701,7 @@ class _SignupWidgetState extends State<SignupWidget> {
                                                   ),
                                                   onPressed: () async {
                                                     logFirebaseEvent(
-                                                        'SIGNUP_PAGE_google_ICON_ON_TAP');
+                                                        'SIGNUP_PAGE_google_ICN_ON_TAP');
                                                     logFirebaseEvent(
                                                         'IconButton_Auth');
                                                     final user =
@@ -754,7 +754,7 @@ class _SignupWidgetState extends State<SignupWidget> {
                                                 ),
                                                 onPressed: () async {
                                                   logFirebaseEvent(
-                                                      'SIGNUP_PAGE_apple_ICON_ON_TAP');
+                                                      'SIGNUP_PAGE_apple_ICN_ON_TAP');
                                                   logFirebaseEvent(
                                                       'IconButton_Auth');
                                                   final user =
