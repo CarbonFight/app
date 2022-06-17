@@ -502,7 +502,7 @@ class _DrawerWidgetState extends State<DrawerWidget>
                                         Navigator.pop(context);
                                         logFirebaseEvent('Text_Launch-U-R-L');
                                         await launchURL(
-                                            'https://discord.gg/e7weuGA4UW');
+                                            'https://discord.gg/tXRBhTGzG5');
                                       },
                                       child: Text(
                                         'Discussion (Discord)',
@@ -599,31 +599,6 @@ class _DrawerWidgetState extends State<DrawerWidget>
                                             padding:
                                                 EdgeInsetsDirectional.fromSTEB(
                                                     0, 3, 0, 0),
-                                            child: Text(
-                                              'Version 1.0.6',
-                                              style: FlutterFlowTheme.of(
-                                                      context)
-                                                  .bodyText2
-                                                  .override(
-                                                    fontFamily: 'Montserrat',
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .gray,
-                                                    fontSize: 11,
-                                                  ),
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      children: [
-                                        Expanded(
-                                          child: Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    0, 3, 0, 0),
                                             child: InkWell(
                                               onTap: () async {
                                                 logFirebaseEvent(
@@ -641,7 +616,7 @@ class _DrawerWidgetState extends State<DrawerWidget>
                                                           MediaQuery.of(context)
                                                               .viewInsets,
                                                       child: Container(
-                                                        height: 476,
+                                                        height: 405,
                                                         child:
                                                             DeleteAccountWidget(),
                                                       ),

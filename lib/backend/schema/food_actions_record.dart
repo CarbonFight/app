@@ -40,13 +40,10 @@ abstract class FoodActionsRecord
   bool get isFavorite;
 
   @nullable
-  bool get isTemporary;
-
-  @nullable
-  BuiltList<String> get mainComponent;
-
-  @nullable
   BuiltList<String> get sideComponent;
+
+  @nullable
+  String get mainComponent;
 
   @nullable
   @BuiltValueField(wireName: kDocumentReferenceField)
@@ -61,9 +58,8 @@ abstract class FoodActionsRecord
     ..periodicity = ListBuilder()
     ..isPeriodic = false
     ..isFavorite = false
-    ..isTemporary = false
-    ..mainComponent = ListBuilder()
-    ..sideComponent = ListBuilder();
+    ..sideComponent = ListBuilder()
+    ..mainComponent = '';
 
   static CollectionReference get collection =>
       FirebaseFirestore.instance.collection('foodActions');
@@ -95,7 +91,7 @@ Map<String, dynamic> createFoodActionsRecordData({
   int portions,
   bool isPeriodic,
   bool isFavorite,
-  bool isTemporary,
+  String mainComponent,
 }) =>
     serializers.toFirestore(
         FoodActionsRecord.serializer,
@@ -109,6 +105,5 @@ Map<String, dynamic> createFoodActionsRecordData({
           ..periodicity = null
           ..isPeriodic = isPeriodic
           ..isFavorite = isFavorite
-          ..isTemporary = isTemporary
-          ..mainComponent = null
-          ..sideComponent = null));
+          ..sideComponent = null
+          ..mainComponent = mainComponent));

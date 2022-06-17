@@ -62,7 +62,7 @@ class _NextVersionAlertWidgetState extends State<NextVersionAlertWidget> {
                     ),
                     onPressed: () async {
                       logFirebaseEvent(
-                          'NEXT_VERSION_ALERT_COMP_close_ICON_ON_TAP');
+                          'NEXT_VERSION_ALERT_COMP_close_ICN_ON_TAP');
                       logFirebaseEvent('IconButton_Navigate-Back');
                       Navigator.pop(context);
                     },
@@ -100,7 +100,7 @@ class _NextVersionAlertWidgetState extends State<NextVersionAlertWidget> {
                         InkWell(
                           onTap: () async {
                             logFirebaseEvent(
-                                'NEXT_VERSION_ALERT_COMP_Container_etc6i9og_ON_TAP');
+                                'NEXT_VERSION_ALERT_Container_etc6i9og_ON');
                             logFirebaseEvent('iconButton_Navigate-Back');
                             Navigator.pop(context);
                           },

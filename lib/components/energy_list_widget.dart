@@ -63,7 +63,7 @@ class _EnergyListWidgetState extends State<EnergyListWidget> {
                       size: 24,
                     ),
                     onPressed: () async {
-                      logFirebaseEvent('ENERGY_LIST_COMP_close_ICON_ON_TAP');
+                      logFirebaseEvent('ENERGY_LIST_COMP_close_ICN_ON_TAP');
                       logFirebaseEvent('IconButton_Navigate-Back');
                       Navigator.pop(context);
                     },
@@ -84,9 +84,7 @@ class _EnergyListWidgetState extends State<EnergyListWidget> {
                           InkWell(
                             onTap: () async {
                               logFirebaseEvent(
-                                  'ENERGY_LIST_COMP_Container_5r5c5s62_ON_TAP');
-                              logFirebaseEvent('Container_Navigate-Back');
-                              Navigator.pop(context);
+                                  'ENERGY_LIST_Container_5r5c5s62_ON_TAP');
                               logFirebaseEvent('Container_Backend-Call');
 
                               final energyActionsCreateData =
@@ -94,13 +92,11 @@ class _EnergyListWidgetState extends State<EnergyListWidget> {
                                 userId: currentUserUid,
                                 co2e: 0,
                                 createdTime: getCurrentTimestamp,
-                                day: dateTimeFormat('yMd', getCurrentTimestamp),
-                                isPeriodic: true,
-                                isTemporary: true,
+                                day: dateTimeFormat(
+                                    'd/M/y', getCurrentTimestamp),
+                                isPeriodic: false,
                                 energy: 'electricity',
-                                volume: 0,
-                                powertype: '',
-                                peopleSharing: '1',
+                                isNew: true,
                               );
                               var energyActionsRecordReference =
                                   EnergyActionsRecord.collection.doc();
@@ -110,6 +106,9 @@ class _EnergyListWidgetState extends State<EnergyListWidget> {
                                   EnergyActionsRecord.getDocumentFromData(
                                       energyActionsCreateData,
                                       energyActionsRecordReference);
+                              logFirebaseEvent('Container_Update-Local-State');
+                              setState(
+                                  () => FFAppState().displayOptions = false);
                               logFirebaseEvent('Container_Navigate-To');
                               await Navigator.push(
                                 context,
@@ -166,9 +165,7 @@ class _EnergyListWidgetState extends State<EnergyListWidget> {
                           InkWell(
                             onTap: () async {
                               logFirebaseEvent(
-                                  'ENERGY_LIST_COMP_Container_iugd5of2_ON_TAP');
-                              logFirebaseEvent('Container_Navigate-Back');
-                              Navigator.pop(context);
+                                  'ENERGY_LIST_Container_iugd5of2_ON_TAP');
                               logFirebaseEvent('Container_Backend-Call');
 
                               final energyActionsCreateData =
@@ -176,13 +173,11 @@ class _EnergyListWidgetState extends State<EnergyListWidget> {
                                 userId: currentUserUid,
                                 co2e: 0,
                                 createdTime: getCurrentTimestamp,
-                                day: dateTimeFormat('yMd', getCurrentTimestamp),
-                                isPeriodic: true,
-                                isTemporary: true,
+                                day: dateTimeFormat(
+                                    'd/M/y', getCurrentTimestamp),
+                                isPeriodic: false,
                                 energy: 'gas',
-                                volume: 0,
-                                powertype: 'Gaz naturel',
-                                peopleSharing: '1',
+                                isNew: true,
                               );
                               var energyActionsRecordReference =
                                   EnergyActionsRecord.collection.doc();
@@ -191,6 +186,9 @@ class _EnergyListWidgetState extends State<EnergyListWidget> {
                               newGas = EnergyActionsRecord.getDocumentFromData(
                                   energyActionsCreateData,
                                   energyActionsRecordReference);
+                              logFirebaseEvent('Container_Update-Local-State');
+                              setState(
+                                  () => FFAppState().displayOptions = false);
                               logFirebaseEvent('Container_Navigate-To');
                               await Navigator.push(
                                 context,
@@ -256,9 +254,7 @@ class _EnergyListWidgetState extends State<EnergyListWidget> {
                           InkWell(
                             onTap: () async {
                               logFirebaseEvent(
-                                  'ENERGY_LIST_COMP_Container_sy6f42xq_ON_TAP');
-                              logFirebaseEvent('Container_Navigate-Back');
-                              Navigator.pop(context);
+                                  'ENERGY_LIST_Container_sy6f42xq_ON_TAP');
                               logFirebaseEvent('Container_Backend-Call');
 
                               final energyActionsCreateData =
@@ -266,13 +262,11 @@ class _EnergyListWidgetState extends State<EnergyListWidget> {
                                 userId: currentUserUid,
                                 co2e: 0,
                                 createdTime: getCurrentTimestamp,
-                                day: dateTimeFormat('yMd', getCurrentTimestamp),
-                                isPeriodic: true,
-                                isTemporary: true,
+                                day: dateTimeFormat(
+                                    'd/M/y', getCurrentTimestamp),
+                                isPeriodic: false,
                                 energy: 'water',
-                                volume: 0,
-                                powertype: 'Circuit France',
-                                peopleSharing: '1',
+                                isNew: true,
                               );
                               var energyActionsRecordReference =
                                   EnergyActionsRecord.collection.doc();
@@ -282,6 +276,9 @@ class _EnergyListWidgetState extends State<EnergyListWidget> {
                                   EnergyActionsRecord.getDocumentFromData(
                                       energyActionsCreateData,
                                       energyActionsRecordReference);
+                              logFirebaseEvent('Container_Update-Local-State');
+                              setState(
+                                  () => FFAppState().displayOptions = false);
                               logFirebaseEvent('Container_Navigate-To');
                               await Navigator.push(
                                 context,

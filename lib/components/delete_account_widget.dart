@@ -71,7 +71,7 @@ class _DeleteAccountWidgetState extends State<DeleteAccountWidget> {
                       size: 24,
                     ),
                     onPressed: () async {
-                      logFirebaseEvent('DELETE_ACCOUNT_COMP_close_ICON_ON_TAP');
+                      logFirebaseEvent('DELETE_ACCOUNT_COMP_close_ICN_ON_TAP');
                       logFirebaseEvent('IconButton_Navigate-Back');
                       Navigator.pop(context);
                     },
@@ -90,13 +90,14 @@ class _DeleteAccountWidgetState extends State<DeleteAccountWidget> {
                         children: [
                           Expanded(
                             child: Text(
-                              'Attention, toute suppression est définitive.\n\nL\'intégralité de vos données seront  supprimées. Il n\'est pas possible de les restaurer.\n\nVeuillez confirmer l\'adresse e-mail utilisée sur ce compte et cliquez sur le bouton supprimer.',
+                              'Attention, toute suppression est définitive.\n\nL\'intégralité de vos données seront  supprimées. Il n\'est pas possible de les restaurer.\n\nPour confirmer, tapez le mot \"supprimer\" puis validez la suppression.',
                               style: FlutterFlowTheme.of(context)
                                   .bodyText1
                                   .override(
                                     fontFamily: 'Montserrat',
                                     color: FlutterFlowTheme.of(context)
                                         .primaryColor,
+                                    fontSize: 12,
                                   ),
                             ),
                           ),
@@ -113,8 +114,7 @@ class _DeleteAccountWidgetState extends State<DeleteAccountWidget> {
                               controller: emailController,
                               obscureText: false,
                               decoration: InputDecoration(
-                                labelText: 'Adresse email',
-                                hintText: 'Adresse email',
+                                labelText: 'supprimer',
                                 enabledBorder: OutlineInputBorder(
                                   borderSide: BorderSide(
                                     color:
@@ -133,17 +133,12 @@ class _DeleteAccountWidgetState extends State<DeleteAccountWidget> {
                                 ),
                                 filled: true,
                                 fillColor: Color(0x40EEF1F0),
-                                prefixIcon: Icon(
-                                  Icons.email_outlined,
-                                  color: FlutterFlowTheme.of(context)
-                                      .secondaryColor,
-                                  size: 16,
-                                ),
                               ),
                               style: FlutterFlowTheme.of(context)
                                   .bodyText2
                                   .override(
                                     fontFamily: 'Montserrat',
+                                    fontSize: 12,
                                     fontWeight: FontWeight.w500,
                                   ),
                               keyboardType: TextInputType.emailAddress,
@@ -161,9 +156,8 @@ class _DeleteAccountWidgetState extends State<DeleteAccountWidget> {
                             child: InkWell(
                               onTap: () async {
                                 logFirebaseEvent(
-                                    'DELETE_ACCOUNT_COMP_Container_2n8nomcm_ON_TAP');
-                                if ((emailController.text) ==
-                                    (currentUserEmail)) {
+                                    'DELETE_ACCOUNT_Container_2n8nomcm_ON_TAP');
+                                if ((emailController.text) == 'supprimer') {
                                   logFirebaseEvent('iconButton_Auth');
                                   await deleteUser(context);
                                   logFirebaseEvent('iconButton_Alert-Dialog');
@@ -192,7 +186,7 @@ class _DeleteAccountWidgetState extends State<DeleteAccountWidget> {
                                       return AlertDialog(
                                         title: Text('Erreur'),
                                         content: Text(
-                                            'L\'email inidqué ne correspond pas à celui de votre compte.\nLe compte n\'a pas été supprimé.'),
+                                            'Afin d\'éviter toute erreur de manipulation, merci d\'écrire \"supprimer\" (sans \"\") dans le champ du formulaire.\nLe compte n\'a pas été supprimé.'),
                                         actions: [
                                           TextButton(
                                             onPressed: () => Navigator.pop(
@@ -227,7 +221,7 @@ class _DeleteAccountWidgetState extends State<DeleteAccountWidget> {
                                       .tertiaryColor,
                                   size: 18,
                                 ),
-                                text: 'Supprimer définitivement',
+                                text: 'Valider la suppression',
                               ),
                             ),
                           ),

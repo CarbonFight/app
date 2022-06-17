@@ -21,13 +21,6 @@ abstract class UsersRecord implements Built<UsersRecord, UsersRecordBuilder> {
   String get email;
 
   @nullable
-  @BuiltValueField(wireName: 'global_score')
-  int get globalScore;
-
-  @nullable
-  int get level;
-
-  @nullable
   @BuiltValueField(wireName: 'phone_number')
   String get phoneNumber;
 
@@ -39,17 +32,16 @@ abstract class UsersRecord implements Built<UsersRecord, UsersRecordBuilder> {
   String get photoUrl;
 
   @nullable
-  int get activity;
-
-  @nullable
-  int get rank;
-
-  @nullable
-  @BuiltValueField(wireName: 'rank_size')
-  int get rankSize;
-
-  @nullable
   int get co2target;
+
+  @nullable
+  int get totalPoints;
+
+  @nullable
+  int get globalScore;
+
+  @nullable
+  int get globalProjection;
 
   @nullable
   @BuiltValueField(wireName: kDocumentReferenceField)
@@ -58,15 +50,13 @@ abstract class UsersRecord implements Built<UsersRecord, UsersRecordBuilder> {
   static void _initializeBuilder(UsersRecordBuilder builder) => builder
     ..displayName = ''
     ..email = ''
-    ..globalScore = 0
-    ..level = 0
     ..phoneNumber = ''
     ..uid = ''
     ..photoUrl = ''
-    ..activity = 0
-    ..rank = 0
-    ..rankSize = 0
-    ..co2target = 0;
+    ..co2target = 0
+    ..totalPoints = 0
+    ..globalScore = 0
+    ..globalProjection = 0;
 
   static CollectionReference get collection =>
       FirebaseFirestore.instance.collection('users');
@@ -93,15 +83,13 @@ Map<String, dynamic> createUsersRecordData({
   DateTime createdTime,
   String displayName,
   String email,
-  int globalScore,
-  int level,
   String phoneNumber,
   String uid,
   String photoUrl,
-  int activity,
-  int rank,
-  int rankSize,
   int co2target,
+  int totalPoints,
+  int globalScore,
+  int globalProjection,
 }) =>
     serializers.toFirestore(
         UsersRecord.serializer,
@@ -109,12 +97,10 @@ Map<String, dynamic> createUsersRecordData({
           ..createdTime = createdTime
           ..displayName = displayName
           ..email = email
-          ..globalScore = globalScore
-          ..level = level
           ..phoneNumber = phoneNumber
           ..uid = uid
           ..photoUrl = photoUrl
-          ..activity = activity
-          ..rank = rank
-          ..rankSize = rankSize
-          ..co2target = co2target));
+          ..co2target = co2target
+          ..totalPoints = totalPoints
+          ..globalScore = globalScore
+          ..globalProjection = globalProjection));

@@ -324,7 +324,7 @@ class _FaqWidgetState extends State<FaqWidget> {
                             ),
                             onPressed: () async {
                               logFirebaseEvent(
-                                  'FAQ_PAGE_arrow_back_ICON_ON_TAP');
+                                  'FAQ_PAGE_arrow_back_ICN_ON_TAP');
                               logFirebaseEvent('IconButton_Navigate-Back');
                               Navigator.pop(context);
                             },

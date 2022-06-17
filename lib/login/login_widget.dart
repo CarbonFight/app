@@ -500,7 +500,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                                                   ),
                                                   onPressed: () async {
                                                     logFirebaseEvent(
-                                                        'LOGIN_PAGE_facebookF_ICON_ON_TAP');
+                                                        'LOGIN_PAGE_facebookF_ICN_ON_TAP');
                                                     logFirebaseEvent(
                                                         'IconButton_Auth');
                                                     final user =
@@ -628,7 +628,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                                                     ),
                                                     onPressed: () async {
                                                       logFirebaseEvent(
-                                                          'LOGIN_PAGE_google_ICON_ON_TAP');
+                                                          'LOGIN_PAGE_google_ICN_ON_TAP');
                                                       logFirebaseEvent(
                                                           'IconButton_Auth');
                                                       final user =
@@ -707,7 +707,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                                                 ),
                                                 onPressed: () async {
                                                   logFirebaseEvent(
-                                                      'LOGIN_PAGE_apple_ICON_ON_TAP');
+                                                      'LOGIN_PAGE_apple_ICN_ON_TAP');
                                                   logFirebaseEvent(
                                                       'IconButton_Auth');
                                                   final user =
