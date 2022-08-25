@@ -11,46 +11,34 @@ abstract class TransportActionsRecord
   static Serializer<TransportActionsRecord> get serializer =>
       _$transportActionsRecordSerializer;
 
-  @nullable
-  String get transport;
+  String? get transport;
 
-  @nullable
-  String get powertype;
+  String? get powertype;
 
-  @nullable
-  String get userId;
+  String? get userId;
 
-  @nullable
-  int get co2e;
+  int? get co2e;
 
-  @nullable
   @BuiltValueField(wireName: 'created_time')
-  DateTime get createdTime;
+  DateTime? get createdTime;
 
-  @nullable
-  String get passengers;
+  String? get passengers;
 
-  @nullable
-  String get day;
+  String? get day;
 
-  @nullable
-  BuiltList<String> get periodicity;
+  BuiltList<String>? get periodicity;
 
-  @nullable
-  bool get roundTrip;
+  bool? get roundTrip;
 
-  @nullable
-  bool get isPeriodic;
+  bool? get isPeriodic;
 
-  @nullable
-  bool get isFavorite;
+  bool? get isFavorite;
 
-  @nullable
-  String get distance;
+  String? get distance;
 
-  @nullable
   @BuiltValueField(wireName: kDocumentReferenceField)
-  DocumentReference get reference;
+  DocumentReference? get ffRef;
+  DocumentReference get reference => ffRef!;
 
   static void _initializeBuilder(TransportActionsRecordBuilder builder) =>
       builder
@@ -71,12 +59,12 @@ abstract class TransportActionsRecord
 
   static Stream<TransportActionsRecord> getDocument(DocumentReference ref) =>
       ref.snapshots().map(
-          (s) => serializers.deserializeWith(serializer, serializedData(s)));
+          (s) => serializers.deserializeWith(serializer, serializedData(s))!);
 
   static Future<TransportActionsRecord> getDocumentOnce(
           DocumentReference ref) =>
       ref.get().then(
-          (s) => serializers.deserializeWith(serializer, serializedData(s)));
+          (s) => serializers.deserializeWith(serializer, serializedData(s))!);
 
   TransportActionsRecord._();
   factory TransportActionsRecord(
@@ -86,34 +74,40 @@ abstract class TransportActionsRecord
   static TransportActionsRecord getDocumentFromData(
           Map<String, dynamic> data, DocumentReference reference) =>
       serializers.deserializeWith(serializer,
-          {...mapFromFirestore(data), kDocumentReferenceField: reference});
+          {...mapFromFirestore(data), kDocumentReferenceField: reference})!;
 }
 
 Map<String, dynamic> createTransportActionsRecordData({
-  String transport,
-  String powertype,
-  String userId,
-  int co2e,
-  DateTime createdTime,
-  String passengers,
-  String day,
-  bool roundTrip,
-  bool isPeriodic,
-  bool isFavorite,
-  String distance,
-}) =>
-    serializers.toFirestore(
-        TransportActionsRecord.serializer,
-        TransportActionsRecord((t) => t
-          ..transport = transport
-          ..powertype = powertype
-          ..userId = userId
-          ..co2e = co2e
-          ..createdTime = createdTime
-          ..passengers = passengers
-          ..day = day
-          ..periodicity = null
-          ..roundTrip = roundTrip
-          ..isPeriodic = isPeriodic
-          ..isFavorite = isFavorite
-          ..distance = distance));
+  String? transport,
+  String? powertype,
+  String? userId,
+  int? co2e,
+  DateTime? createdTime,
+  String? passengers,
+  String? day,
+  bool? roundTrip,
+  bool? isPeriodic,
+  bool? isFavorite,
+  String? distance,
+}) {
+  final firestoreData = serializers.toFirestore(
+    TransportActionsRecord.serializer,
+    TransportActionsRecord(
+      (t) => t
+        ..transport = transport
+        ..powertype = powertype
+        ..userId = userId
+        ..co2e = co2e
+        ..createdTime = createdTime
+        ..passengers = passengers
+        ..day = day
+        ..periodicity = null
+        ..roundTrip = roundTrip
+        ..isPeriodic = isPeriodic
+        ..isFavorite = isFavorite
+        ..distance = distance,
+    ),
+  );
+
+  return firestoreData;
+}

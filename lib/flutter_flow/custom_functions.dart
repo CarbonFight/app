@@ -11,15 +11,15 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../auth/auth_util.dart';
 
 int transportActionsCO2e(
-  String distance,
-  String passengers,
-  String powertype,
-  String transport,
-  bool roundTrip,
+  String? distance,
+  String? passengers,
+  String? powertype,
+  String? transport,
+  bool? roundTrip,
 ) {
   double co2e = 0;
-  int dist = int.parse(distance);
-  var passengersInt = int.parse(passengers);
+  int dist = int.parse(distance!);
+  var passengersInt = int.parse(passengers!);
 
   if (transport == "car") {
     // powertype : CO2 per Km
@@ -139,18 +139,18 @@ int transportActionsCO2e(
   }
 
   // If roundTrip is Truc, co2e is *2
-  if (roundTrip) {
+  if (roundTrip!) {
     co2e = co2e * 2;
   }
 
   return co2e.round();
 }
 
-String printScore(int score) {
+String printScore(int? score) {
   String co2 = "0";
   String unit = "g";
 
-  if (score < 1000) {
+  if (score! < 1000) {
     co2 = score.toString();
     unit = "g";
   } else if (score >= 1000 && score < 10000) {
@@ -170,14 +170,14 @@ String printScore(int score) {
 }
 
 int energyPeriodicsCO2e(
-  String energy,
-  String volume,
-  String powertype,
-  String peopleSharing,
+  String? energy,
+  String? volume,
+  String? powertype,
+  String? peopleSharing,
 ) {
   double co2e = 0;
-  int vol = int.parse(volume);
-  int peopleSharingInt = int.parse(peopleSharing);
+  int vol = int.parse(volume!);
+  int peopleSharingInt = int.parse(peopleSharing!);
 
   // Electricity
   if (energy == "electricity") {
@@ -244,10 +244,10 @@ int energyPeriodicsCO2e(
 }
 
 int foodActionsCO2e(
-  String food,
-  String mainComponents,
-  List<String> sideComponents,
-  int portions,
+  String? food,
+  String? mainComponents,
+  List<String>? sideComponents,
+  int? portions,
 ) {
   double co2e = 0.0;
 
@@ -274,6 +274,9 @@ int foodActionsCO2e(
   double co2eDeli = 7.0 * 110;
   // Offal : 7.36 g.co2e / g | 110g / portion
   double co2eOffal = 7.36 * 110;
+  // Pizza : https://agribalyse.ademe.fr/app/aliments/25435
+  // 2.85 kg CO2 eq/kg | 330g / portion
+  double co2ePizza = 950;
 
   // VEGETABLES / CEREALS / STARCHES
   // Breakfast cereals : 0.34 g.co2e / g | 80g / portion
@@ -348,7 +351,7 @@ int foodActionsCO2e(
     double co2eMain = 0.0;
     double co2eSide = 0.0;
 
-    for (var i = 0; i < sideComponents.length; i++) {
+    for (var i = 0; i < sideComponents!.length; i++) {
       String currentSideComponents = sideComponents[i];
       switch (currentSideComponents) {
         case "Riz":
@@ -369,8 +372,13 @@ int foodActionsCO2e(
       }
     }
 
-    // Divide by number of components
-    co2eSide = co2eSide / (sideComponents.length);
+    int divider = sideComponents.length;
+
+    if (divider == 0) {
+      co2eSide = 0;
+    } else {
+      co2eSide = co2eSide / divider;
+    }
 
     switch (mainComponents) {
       case "Oeuf":
@@ -387,6 +395,9 @@ int foodActionsCO2e(
         break;
       case "Végétarien":
         co2eMain += co2e * 2;
+        break;
+      case "Pizza":
+        co2eMain += co2ePizza;
         break;
     }
 
@@ -458,29 +469,29 @@ int foodActionsCO2e(
   // Breakfast
 
   // Portions
-  co2e = co2e * portions;
+  co2e = co2e * portions!;
 
   return co2e.round();
 }
 
-String timestampToDay(DateTime timestamp) {
+String timestampToDay(DateTime? timestamp) {
   // Add your function code here!
   var formatter = DateFormat('d/M/y');
-  String formattedDate = formatter.format(timestamp);
+  String formattedDate = formatter.format(timestamp!);
   //return DateTime.parse(formattedDate); // change to 25/7/2022
   return formattedDate;
 }
 
-String setOneDayBefore(String activeDate) {
-  var parsedDate = DateFormat('d/M/y').parse(activeDate);
+String setOneDayBefore(String? activeDate) {
+  var parsedDate = DateFormat('d/M/y').parse(activeDate!);
   DateTime oneDayAgo = parsedDate.subtract(new Duration(days: 1));
   String formattedDate = DateFormat('d/M/y').format(oneDayAgo);
 
   return formattedDate;
 }
 
-String setOneDayAfter(String activeDate) {
-  var parsedDate = DateFormat('d/M/y').parse(activeDate);
+String setOneDayAfter(String? activeDate) {
+  var parsedDate = DateFormat('d/M/y').parse(activeDate!);
   DateTime oneDayAfter = parsedDate.add(new Duration(days: 1));
   String formattedDate = DateFormat('d/M/y').format(oneDayAfter);
 
@@ -488,11 +499,11 @@ String setOneDayAfter(String activeDate) {
 }
 
 double ratioScoreTotal(
-  int score,
-  int total,
+  int? score,
+  int? total,
 ) {
   // Add your function code here!
-  var ratio = (score / total);
+  var ratio = (score! / total!);
   if (ratio > 1) {
     ratio = 1;
   }
@@ -501,21 +512,21 @@ double ratioScoreTotal(
 }
 
 String printRatioScoreTotal(
-  int score,
-  int total,
+  int? score,
+  int? total,
 ) {
   if (total == 0) {
     total = 1; // No divide by zero
   }
 
   // Add your function code here!
-  var ratio = 100 * (score / total);
+  var ratio = 100 * (score! / total!);
   var val = ratio.toStringAsFixed(0);
   var unit = '%';
   return val + " " + unit;
 }
 
-List<String> getTransportPowerType(String transport) {
+List<String> getTransportPowerType(String? transport) {
   List<String> params = [];
 
   switch (transport) {
@@ -560,7 +571,7 @@ List<String> getTransportPowerType(String transport) {
   return params;
 }
 
-List<String> getEnergyPowertype(String energy) {
+List<String> getEnergyPowertype(String? energy) {
   List<String> params = [];
 
   switch (energy) {
@@ -587,7 +598,7 @@ List<String> getEnergyPowertype(String energy) {
   return params;
 }
 
-List<String> getFoodMainComponents(String food) {
+List<String> getFoodMainComponents(String? food) {
   List<String> params = [];
 
   switch (food) {
@@ -602,6 +613,7 @@ List<String> getFoodMainComponents(String food) {
       params.add('Poisson');
       params.add('Viande rouge');
       params.add('Viande blanche');
+      params.add('Pizza');
       break;
     case "desert":
       params.add('Fruits');
@@ -630,7 +642,7 @@ List<String> getFoodMainComponents(String food) {
   return params;
 }
 
-List<String> getFoodSideComponents(String food) {
+List<String> getFoodSideComponents(String? food) {
   List<String> params = [];
 
   switch (food) {
@@ -646,7 +658,7 @@ List<String> getFoodSideComponents(String food) {
   return params;
 }
 
-List<String> getTransportPassengers(String transport) {
+List<String> getTransportPassengers(String? transport) {
   List<String> params = [];
 
   switch (transport) {
@@ -689,7 +701,7 @@ List<String> getTransportPassengers(String transport) {
   return params;
 }
 
-String getTransportDistanceLabel(String transport) {
+String getTransportDistanceLabel(String? transport) {
   String label = "";
 
   switch (transport) {
@@ -722,7 +734,7 @@ String getTransportDistanceLabel(String transport) {
   return label;
 }
 
-String getEnergyVolumeLabel(String energy) {
+String getEnergyVolumeLabel(String? energy) {
   String label = "";
 
   switch (energy) {
@@ -741,15 +753,15 @@ String getEnergyVolumeLabel(String energy) {
 }
 
 int getActiveScore(
-  List<int> scores,
-  int dayRelative,
+  List<int>? scores,
+  int? dayRelative,
 ) {
-  return scores[dayRelative];
+  return scores![dayRelative!];
 }
 
-String printRank(int rank) {
+String printRank(int? rank) {
   // Rank starts at 0
-  var newRank = rank + 1;
+  var newRank = rank! + 1;
   var newRankString = "#" + newRank.toString();
   return newRankString;
 }

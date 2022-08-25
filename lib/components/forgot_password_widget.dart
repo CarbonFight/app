@@ -8,14 +8,14 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class ForgotPasswordWidget extends StatefulWidget {
-  const ForgotPasswordWidget({Key key}) : super(key: key);
+  const ForgotPasswordWidget({Key? key}) : super(key: key);
 
   @override
   _ForgotPasswordWidgetState createState() => _ForgotPasswordWidgetState();
 }
 
 class _ForgotPasswordWidgetState extends State<ForgotPasswordWidget> {
-  TextEditingController emailController;
+  TextEditingController? emailController;
 
   @override
   void initState() {
@@ -161,7 +161,7 @@ class _ForgotPasswordWidgetState extends State<ForgotPasswordWidget> {
                                 logFirebaseEvent(
                                     'FORGOT_PASSWORD_Container_c6apebad_ON_TA');
                                 logFirebaseEvent('iconButton_Auth');
-                                if (emailController.text.isEmpty) {
+                                if (emailController!.text.isEmpty) {
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     SnackBar(
                                       content: Text(
@@ -172,7 +172,7 @@ class _ForgotPasswordWidgetState extends State<ForgotPasswordWidget> {
                                   return;
                                 }
                                 await resetPassword(
-                                  email: emailController.text,
+                                  email: emailController!.text,
                                   context: context,
                                 );
                               },

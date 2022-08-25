@@ -6,17 +6,17 @@ import 'package:google_fonts/google_fonts.dart';
 
 class IconButtonWidget extends StatefulWidget {
   const IconButtonWidget({
-    Key key,
+    Key? key,
     this.fillColor,
     this.fontColor,
     this.icon,
     this.text,
   }) : super(key: key);
 
-  final Color fillColor;
-  final Color fontColor;
-  final Widget icon;
-  final String text;
+  final Color? fillColor;
+  final Color? fontColor;
+  final Widget? icon;
+  final String? text;
 
   @override
   _IconButtonWidgetState createState() => _IconButtonWidgetState();
@@ -63,13 +63,13 @@ class _IconButtonWidgetState extends State<IconButtonWidget> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  widget.text,
+                  widget.text!,
                   style: FlutterFlowTheme.of(context).subtitle2.override(
                         fontFamily: 'Montserrat',
                         color: widget.fontColor,
                       ),
                 ),
-                widget.icon,
+                widget.icon!,
               ],
             ),
           ),

@@ -11,21 +11,21 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class TransportListWidget extends StatefulWidget {
-  const TransportListWidget({Key key}) : super(key: key);
+  const TransportListWidget({Key? key}) : super(key: key);
 
   @override
   _TransportListWidgetState createState() => _TransportListWidgetState();
 }
 
 class _TransportListWidgetState extends State<TransportListWidget> {
-  TransportActionsRecord newBike;
-  TransportActionsRecord newFlight;
-  TransportActionsRecord newBus;
-  TransportActionsRecord newCar;
-  TransportActionsRecord newMoto;
-  TransportActionsRecord newScooter;
-  TransportActionsRecord newMetro;
-  TransportActionsRecord newTrain;
+  TransportActionsRecord? newBike;
+  TransportActionsRecord? newFlight;
+  TransportActionsRecord? newBus;
+  TransportActionsRecord? newCar;
+  TransportActionsRecord? newMoto;
+  TransportActionsRecord? newScooter;
+  TransportActionsRecord? newMetro;
+  TransportActionsRecord? newTrain;
 
   @override
   Widget build(BuildContext context) {
@@ -128,7 +128,7 @@ class _TransportListWidgetState extends State<TransportListWidget> {
                                   duration: Duration(milliseconds: 0),
                                   reverseDuration: Duration(milliseconds: 0),
                                   child: TransportWidget(
-                                    actionRef: newCar.reference,
+                                    actionRef: newCar!.reference,
                                   ),
                                 ),
                               );
@@ -215,7 +215,7 @@ class _TransportListWidgetState extends State<TransportListWidget> {
                                   duration: Duration(milliseconds: 0),
                                   reverseDuration: Duration(milliseconds: 0),
                                   child: TransportWidget(
-                                    actionRef: newBus.reference,
+                                    actionRef: newBus!.reference,
                                   ),
                                 ),
                               );
@@ -311,7 +311,7 @@ class _TransportListWidgetState extends State<TransportListWidget> {
                                   duration: Duration(milliseconds: 0),
                                   reverseDuration: Duration(milliseconds: 0),
                                   child: TransportWidget(
-                                    actionRef: newScooter.reference,
+                                    actionRef: newScooter!.reference,
                                   ),
                                 ),
                               );
@@ -398,7 +398,7 @@ class _TransportListWidgetState extends State<TransportListWidget> {
                                   duration: Duration(milliseconds: 0),
                                   reverseDuration: Duration(milliseconds: 0),
                                   child: TransportWidget(
-                                    actionRef: newMoto.reference,
+                                    actionRef: newMoto!.reference,
                                   ),
                                 ),
                               );
@@ -494,7 +494,7 @@ class _TransportListWidgetState extends State<TransportListWidget> {
                                   duration: Duration(milliseconds: 0),
                                   reverseDuration: Duration(milliseconds: 0),
                                   child: TransportWidget(
-                                    actionRef: newTrain.reference,
+                                    actionRef: newTrain!.reference,
                                   ),
                                 ),
                               );
@@ -581,7 +581,7 @@ class _TransportListWidgetState extends State<TransportListWidget> {
                                   duration: Duration(milliseconds: 0),
                                   reverseDuration: Duration(milliseconds: 0),
                                   child: TransportWidget(
-                                    actionRef: newMetro.reference,
+                                    actionRef: newMetro!.reference,
                                   ),
                                 ),
                               );
@@ -677,7 +677,7 @@ class _TransportListWidgetState extends State<TransportListWidget> {
                             duration: Duration(milliseconds: 0),
                             reverseDuration: Duration(milliseconds: 0),
                             child: TransportWidget(
-                              actionRef: newFlight.reference,
+                              actionRef: newFlight!.reference,
                             ),
                           ),
                         );
@@ -760,7 +760,7 @@ class _TransportListWidgetState extends State<TransportListWidget> {
                             duration: Duration(milliseconds: 0),
                             reverseDuration: Duration(milliseconds: 0),
                             child: TransportWidget(
-                              actionRef: newBike.reference,
+                              actionRef: newBike!.reference,
                             ),
                           ),
                         );

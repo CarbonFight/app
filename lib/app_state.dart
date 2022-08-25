@@ -23,7 +23,7 @@ class FFAppState {
         prefs.getBool('ff_displayTransportActions') ?? _displayTransportActions;
   }
 
-  SharedPreferences prefs;
+  late SharedPreferences prefs;
 
   bool _showSplash = true;
   bool get showSplash => _showSplash;
@@ -61,20 +61,20 @@ class FFAppState {
     prefs.setBool('ff_displayTransportActions', _value);
   }
 
-  List<int> XAxisDays = [-6, -5, -4, -3, -2, -1, 0];
-
-  List<int> XAxisWeeks = [-3, -2, -1, 0];
-
-  List<int> XAxisMonths = [-3, -2, -1, 0];
-
   bool displayOptions = false;
 
   bool displayDates = false;
 
   bool displayDays = false;
+
+  List<double> XAxisDays = [-6, -5, -4, -3, -2, -1, 0];
+
+  List<double> XAxisWeeks = [-3, -2, -1, 0];
+
+  List<double> XAxisMonths = [-3, -2, -1, 0];
 }
 
-LatLng _latLngFromString(String val) {
+LatLng? _latLngFromString(String? val) {
   if (val == null) {
     return null;
   }

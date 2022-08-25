@@ -11,40 +11,30 @@ abstract class EnergyActionsRecord
   static Serializer<EnergyActionsRecord> get serializer =>
       _$energyActionsRecordSerializer;
 
-  @nullable
-  String get energy;
+  String? get energy;
 
-  @nullable
-  String get powertype;
+  String? get powertype;
 
-  @nullable
-  String get userId;
+  String? get userId;
 
-  @nullable
-  int get co2e;
+  int? get co2e;
 
-  @nullable
   @BuiltValueField(wireName: 'created_time')
-  DateTime get createdTime;
+  DateTime? get createdTime;
 
-  @nullable
-  String get peopleSharing;
+  String? get peopleSharing;
 
-  @nullable
-  String get day;
+  String? get day;
 
-  @nullable
-  bool get isPeriodic;
+  bool? get isPeriodic;
 
-  @nullable
-  String get volume;
+  String? get volume;
 
-  @nullable
-  bool get isNew;
+  bool? get isNew;
 
-  @nullable
   @BuiltValueField(wireName: kDocumentReferenceField)
-  DocumentReference get reference;
+  DocumentReference? get ffRef;
+  DocumentReference get reference => ffRef!;
 
   static void _initializeBuilder(EnergyActionsRecordBuilder builder) => builder
     ..energy = ''
@@ -62,11 +52,11 @@ abstract class EnergyActionsRecord
 
   static Stream<EnergyActionsRecord> getDocument(DocumentReference ref) => ref
       .snapshots()
-      .map((s) => serializers.deserializeWith(serializer, serializedData(s)));
+      .map((s) => serializers.deserializeWith(serializer, serializedData(s))!);
 
   static Future<EnergyActionsRecord> getDocumentOnce(DocumentReference ref) =>
       ref.get().then(
-          (s) => serializers.deserializeWith(serializer, serializedData(s)));
+          (s) => serializers.deserializeWith(serializer, serializedData(s))!);
 
   EnergyActionsRecord._();
   factory EnergyActionsRecord(
@@ -76,31 +66,37 @@ abstract class EnergyActionsRecord
   static EnergyActionsRecord getDocumentFromData(
           Map<String, dynamic> data, DocumentReference reference) =>
       serializers.deserializeWith(serializer,
-          {...mapFromFirestore(data), kDocumentReferenceField: reference});
+          {...mapFromFirestore(data), kDocumentReferenceField: reference})!;
 }
 
 Map<String, dynamic> createEnergyActionsRecordData({
-  String energy,
-  String powertype,
-  String userId,
-  int co2e,
-  DateTime createdTime,
-  String peopleSharing,
-  String day,
-  bool isPeriodic,
-  String volume,
-  bool isNew,
-}) =>
-    serializers.toFirestore(
-        EnergyActionsRecord.serializer,
-        EnergyActionsRecord((e) => e
-          ..energy = energy
-          ..powertype = powertype
-          ..userId = userId
-          ..co2e = co2e
-          ..createdTime = createdTime
-          ..peopleSharing = peopleSharing
-          ..day = day
-          ..isPeriodic = isPeriodic
-          ..volume = volume
-          ..isNew = isNew));
+  String? energy,
+  String? powertype,
+  String? userId,
+  int? co2e,
+  DateTime? createdTime,
+  String? peopleSharing,
+  String? day,
+  bool? isPeriodic,
+  String? volume,
+  bool? isNew,
+}) {
+  final firestoreData = serializers.toFirestore(
+    EnergyActionsRecord.serializer,
+    EnergyActionsRecord(
+      (e) => e
+        ..energy = energy
+        ..powertype = powertype
+        ..userId = userId
+        ..co2e = co2e
+        ..createdTime = createdTime
+        ..peopleSharing = peopleSharing
+        ..day = day
+        ..isPeriodic = isPeriodic
+        ..volume = volume
+        ..isNew = isNew,
+    ),
+  );
+
+  return firestoreData;
+}

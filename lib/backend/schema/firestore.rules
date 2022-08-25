@@ -2,45 +2,45 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
     match /transportActions/{document} {
-      allow create: if request.auth != null;
-      allow read: if true;
-      allow write: if true;
-      allow delete: if request.auth != null;
+      allow create: if request.auth.uid == request.resource.data.userId;
+      allow read: if request.auth.uid == resource.data.userId;
+      allow write: if request.auth.uid == resource.data.userId;
+      allow delete: if request.auth.uid == resource.data.userId;
     }
 
     match /energyActions/{document} {
-      allow create: if request.auth != null;
-      allow read: if true;
-      allow write: if true;
-      allow delete: if request.auth != null;
+      allow create: if request.auth.uid == request.resource.data.userId;
+      allow read: if request.auth.uid == resource.data.userId;
+      allow write: if request.auth.uid == resource.data.userId;
+      allow delete: if request.auth.uid == resource.data.userId;
     }
 
     match /users/{document} {
-      allow create: if request.auth != null;
+      allow create: if true;
       allow read: if true;
       allow write: if true;
-      allow delete: if false;
+      allow delete: if request.auth.uid == resource.data.uid;
     }
 
     match /foodActions/{document} {
-      allow create: if request.auth != null;
-      allow read: if true;
-      allow write: if true;
-      allow delete: if request.auth != null;
+      allow create: if request.auth.uid == request.resource.data.userId;
+      allow read: if request.auth.uid == resource.data.userId;
+      allow write: if request.auth.uid == resource.data.userId;
+      allow delete: if request.auth.uid == resource.data.userId;
     }
 
     match /usersStats/{document} {
-      allow create: if request.auth != null;
-      allow read: if true;
-      allow write: if true;
-      allow delete: if false;
+      allow create: if request.auth.uid == request.resource.data.uid;
+      allow read: if request.auth.uid == resource.data.uid;
+      allow write: if request.auth.uid == resource.data.uid;
+      allow delete: if request.auth.uid == resource.data.uid;
     }
 
     match /usersTrophies/{document} {
-      allow create: if request.auth != null;
-      allow read: if true;
-      allow write: if true;
-      allow delete: if false;
+      allow create: if request.auth.uid == request.resource.data.uid;
+      allow read: if request.auth.uid == resource.data.uid;
+      allow write: if request.auth.uid == resource.data.uid;
+      allow delete: if request.auth.uid == resource.data.uid;
     }
   }
 }

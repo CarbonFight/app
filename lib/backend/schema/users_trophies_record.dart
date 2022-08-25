@@ -11,39 +11,29 @@ abstract class UsersTrophiesRecord
   static Serializer<UsersTrophiesRecord> get serializer =>
       _$usersTrophiesRecordSerializer;
 
-  @nullable
-  String get uid;
+  String? get uid;
 
-  @nullable
-  bool get hasStart;
+  bool? get hasStart;
 
-  @nullable
-  bool get hasParams;
+  bool? get hasParams;
 
-  @nullable
-  bool get hasGoals;
+  bool? get hasGoals;
 
-  @nullable
-  bool get has3Periodics;
+  bool? get has3Periodics;
 
-  @nullable
-  bool get has50Actions;
+  bool? get has50Actions;
 
-  @nullable
-  bool get has7DaysStreak;
+  bool? get has7DaysStreak;
 
-  @nullable
-  bool get has2Invites;
+  bool? get has2Invites;
 
-  @nullable
-  bool get has5Likes;
+  bool? get has5Likes;
 
-  @nullable
-  bool get hasReviewApp;
+  bool? get hasReviewApp;
 
-  @nullable
   @BuiltValueField(wireName: kDocumentReferenceField)
-  DocumentReference get reference;
+  DocumentReference? get ffRef;
+  DocumentReference get reference => ffRef!;
 
   static void _initializeBuilder(UsersTrophiesRecordBuilder builder) => builder
     ..uid = ''
@@ -62,11 +52,11 @@ abstract class UsersTrophiesRecord
 
   static Stream<UsersTrophiesRecord> getDocument(DocumentReference ref) => ref
       .snapshots()
-      .map((s) => serializers.deserializeWith(serializer, serializedData(s)));
+      .map((s) => serializers.deserializeWith(serializer, serializedData(s))!);
 
   static Future<UsersTrophiesRecord> getDocumentOnce(DocumentReference ref) =>
       ref.get().then(
-          (s) => serializers.deserializeWith(serializer, serializedData(s)));
+          (s) => serializers.deserializeWith(serializer, serializedData(s))!);
 
   UsersTrophiesRecord._();
   factory UsersTrophiesRecord(
@@ -76,31 +66,37 @@ abstract class UsersTrophiesRecord
   static UsersTrophiesRecord getDocumentFromData(
           Map<String, dynamic> data, DocumentReference reference) =>
       serializers.deserializeWith(serializer,
-          {...mapFromFirestore(data), kDocumentReferenceField: reference});
+          {...mapFromFirestore(data), kDocumentReferenceField: reference})!;
 }
 
 Map<String, dynamic> createUsersTrophiesRecordData({
-  String uid,
-  bool hasStart,
-  bool hasParams,
-  bool hasGoals,
-  bool has3Periodics,
-  bool has50Actions,
-  bool has7DaysStreak,
-  bool has2Invites,
-  bool has5Likes,
-  bool hasReviewApp,
-}) =>
-    serializers.toFirestore(
-        UsersTrophiesRecord.serializer,
-        UsersTrophiesRecord((u) => u
-          ..uid = uid
-          ..hasStart = hasStart
-          ..hasParams = hasParams
-          ..hasGoals = hasGoals
-          ..has3Periodics = has3Periodics
-          ..has50Actions = has50Actions
-          ..has7DaysStreak = has7DaysStreak
-          ..has2Invites = has2Invites
-          ..has5Likes = has5Likes
-          ..hasReviewApp = hasReviewApp));
+  String? uid,
+  bool? hasStart,
+  bool? hasParams,
+  bool? hasGoals,
+  bool? has3Periodics,
+  bool? has50Actions,
+  bool? has7DaysStreak,
+  bool? has2Invites,
+  bool? has5Likes,
+  bool? hasReviewApp,
+}) {
+  final firestoreData = serializers.toFirestore(
+    UsersTrophiesRecord.serializer,
+    UsersTrophiesRecord(
+      (u) => u
+        ..uid = uid
+        ..hasStart = hasStart
+        ..hasParams = hasParams
+        ..hasGoals = hasGoals
+        ..has3Periodics = has3Periodics
+        ..has50Actions = has50Actions
+        ..has7DaysStreak = has7DaysStreak
+        ..has2Invites = has2Invites
+        ..has5Likes = has5Likes
+        ..hasReviewApp = hasReviewApp,
+    ),
+  );
+
+  return firestoreData;
+}

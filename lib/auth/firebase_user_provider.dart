@@ -3,11 +3,11 @@ import 'package:rxdart/rxdart.dart';
 
 class CarbonFightFirebaseUser {
   CarbonFightFirebaseUser(this.user);
-  User user;
+  User? user;
   bool get loggedIn => user != null;
 }
 
-CarbonFightFirebaseUser currentUser;
+CarbonFightFirebaseUser? currentUser;
 bool get loggedIn => currentUser?.loggedIn ?? false;
 Stream<CarbonFightFirebaseUser> carbonFightFirebaseUserStream() => FirebaseAuth
     .instance

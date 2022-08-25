@@ -1,13 +1,11 @@
 import '../auth/auth_util.dart';
 import '../backend/backend.dart';
-import '../components/next_version_alert_widget.dart';
 import '../drawer/drawer_widget.dart';
 import '../energies/energies_widget.dart';
 import '../flutter_flow/flutter_flow_animations.dart';
 import '../flutter_flow/flutter_flow_choice_chips.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
-import '../flutter_flow/flutter_flow_widgets.dart';
 import '../food/food_widget.dart';
 import '../home/home_widget.dart';
 import '../statistiques/statistiques_widget.dart';
@@ -21,7 +19,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class ProfileWidget extends StatefulWidget {
-  const ProfileWidget({Key key}) : super(key: key);
+  const ProfileWidget({Key? key}) : super(key: key);
 
   @override
   _ProfileWidgetState createState() => _ProfileWidgetState();
@@ -29,12 +27,13 @@ class ProfileWidget extends StatefulWidget {
 
 class _ProfileWidgetState extends State<ProfileWidget>
     with TickerProviderStateMixin {
-  String activeProfilePartValue;
+  String? activeProfilePartValue;
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final animationsMap = {
     'containerOnPageLoadAnimation1': AnimationInfo(
       trigger: AnimationTrigger.onPageLoad,
       duration: 600,
+      hideBeforeAnimating: false,
       fadeIn: true,
       initialState: AnimationState(
         offset: Offset(0, 90),
@@ -50,6 +49,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
     'containerOnPageLoadAnimation2': AnimationInfo(
       trigger: AnimationTrigger.onPageLoad,
       duration: 600,
+      hideBeforeAnimating: false,
       fadeIn: true,
       initialState: AnimationState(
         offset: Offset(0, 90),
@@ -65,9 +65,26 @@ class _ProfileWidgetState extends State<ProfileWidget>
     'containerOnPageLoadAnimation3': AnimationInfo(
       trigger: AnimationTrigger.onPageLoad,
       duration: 600,
+      hideBeforeAnimating: false,
       fadeIn: true,
       initialState: AnimationState(
         offset: Offset(0, 90),
+        scale: 1,
+        opacity: 0,
+      ),
+      finalState: AnimationState(
+        offset: Offset(0, 0),
+        scale: 1,
+        opacity: 1,
+      ),
+    ),
+    'containerOnPageLoadAnimation4': AnimationInfo(
+      trigger: AnimationTrigger.onPageLoad,
+      duration: 600,
+      hideBeforeAnimating: false,
+      fadeIn: true,
+      initialState: AnimationState(
+        offset: Offset(0, 30),
         scale: 1,
         opacity: 0,
       ),
@@ -122,9 +139,9 @@ class _ProfileWidgetState extends State<ProfileWidget>
                       ),
                     );
                   }
-                  List<UsersRecord> containerUsersRecordList = snapshot.data;
+                  List<UsersRecord> containerUsersRecordList = snapshot.data!;
                   // Return an empty Container when the document does not exist.
-                  if (snapshot.data.isEmpty) {
+                  if (snapshot.data!.isEmpty) {
                     return Container();
                   }
                   final containerUsersRecord =
@@ -487,7 +504,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                 ),
                                               ),
                                               Text(
-                                                'Points trophés : ${containerUsersRecord.totalPoints.toString()}',
+                                                'Points trophés : ${containerUsersRecord!.totalPoints?.toString()}',
                                                 textAlign: TextAlign.center,
                                                 style: FlutterFlowTheme.of(
                                                         context)
@@ -502,7 +519,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                     ),
                                               ),
                                               Text(
-                                                'Objectifs journaliers : ${functions.printScore(containerUsersRecord.co2target)}',
+                                                'Objectif journalier : ${functions.printScore(containerUsersRecord!.co2target)}',
                                                 style: FlutterFlowTheme.of(
                                                         context)
                                                     .bodyText2
@@ -516,7 +533,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                     ),
                                               ),
                                               Text(
-                                                'CO2 total enregistré : ${functions.printScore(containerUsersRecord.globalScore)}',
+                                                'CO2 total enregistré : ${functions.printScore(containerUsersRecord!.globalScore)}',
                                                 textAlign: TextAlign.center,
                                                 style: FlutterFlowTheme.of(
                                                         context)
@@ -531,7 +548,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                     ),
                                               ),
                                               Text(
-                                                'Projection annuelle : ${functions.printScore(containerUsersRecord.globalProjection)}',
+                                                'Projection annuelle : ${functions.printScore(containerUsersRecord!.globalProjection)}',
                                                 style: FlutterFlowTheme.of(
                                                         context)
                                                     .bodyText2
@@ -566,7 +583,9 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                             child: FlutterFlowChoiceChips(
                                               initiallySelected:
                                                   activeProfilePartValue != null
-                                                      ? [activeProfilePartValue]
+                                                      ? [
+                                                          activeProfilePartValue!
+                                                        ]
                                                       : ['Trophés'],
                                               options: [
                                                 ChipData('Trophés',
@@ -584,7 +603,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                               ],
                                               onChanged: (val) => setState(() =>
                                                   activeProfilePartValue =
-                                                      val.first),
+                                                      val?.first),
                                               selectedChipStyle: ChipStyle(
                                                 backgroundColor:
                                                     Color(0xFF323B45),
@@ -629,7 +648,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                       ],
                                     ),
                                   ),
-                                  if ((activeProfilePartValue) == 'Trophés')
+                                  if (activeProfilePartValue == 'Trophés')
                                     StreamBuilder<List<UsersTrophiesRecord>>(
                                       stream: queryUsersTrophiesRecord(
                                         queryBuilder: (usersTrophiesRecord) =>
@@ -653,9 +672,9 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                         }
                                         List<UsersTrophiesRecord>
                                             trophiesUsersTrophiesRecordList =
-                                            snapshot.data;
+                                            snapshot.data!;
                                         // Return an empty Container when the document does not exist.
-                                        if (snapshot.data.isEmpty) {
+                                        if (snapshot.data!.isEmpty) {
                                           return Container();
                                         }
                                         final trophiesUsersTrophiesRecord =
@@ -780,7 +799,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                         children: [
                                                           Stack(
                                                             children: [
-                                                              if (trophiesUsersTrophiesRecord
+                                                              if (trophiesUsersTrophiesRecord!
                                                                       .hasParams ??
                                                                   true)
                                                                 ClipRRect(
@@ -797,9 +816,8 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                                         .cover,
                                                                   ),
                                                                 ),
-                                                              if (!(trophiesUsersTrophiesRecord
-                                                                      .hasParams) ??
-                                                                  true)
+                                                              if (!trophiesUsersTrophiesRecord!
+                                                                  .hasParams!)
                                                                 ClipRRect(
                                                                   borderRadius:
                                                                       BorderRadius
@@ -885,7 +903,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                         children: [
                                                           Stack(
                                                             children: [
-                                                              if (trophiesUsersTrophiesRecord
+                                                              if (trophiesUsersTrophiesRecord!
                                                                       .hasGoals ??
                                                                   true)
                                                                 ClipRRect(
@@ -902,9 +920,8 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                                         .cover,
                                                                   ),
                                                                 ),
-                                                              if (!(trophiesUsersTrophiesRecord
-                                                                      .hasGoals) ??
-                                                                  true)
+                                                              if (!trophiesUsersTrophiesRecord!
+                                                                  .hasGoals!)
                                                                 ClipRRect(
                                                                   borderRadius:
                                                                       BorderRadius
@@ -1000,7 +1017,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                         children: [
                                                           Stack(
                                                             children: [
-                                                              if (trophiesUsersTrophiesRecord
+                                                              if (trophiesUsersTrophiesRecord!
                                                                       .has50Actions ??
                                                                   true)
                                                                 ClipRRect(
@@ -1017,9 +1034,8 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                                         .cover,
                                                                   ),
                                                                 ),
-                                                              if (!(trophiesUsersTrophiesRecord
-                                                                      .has50Actions) ??
-                                                                  true)
+                                                              if (!trophiesUsersTrophiesRecord!
+                                                                  .has50Actions!)
                                                                 ClipRRect(
                                                                   borderRadius:
                                                                       BorderRadius
@@ -1105,7 +1121,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                         children: [
                                                           Stack(
                                                             children: [
-                                                              if (trophiesUsersTrophiesRecord
+                                                              if (trophiesUsersTrophiesRecord!
                                                                       .has7DaysStreak ??
                                                                   true)
                                                                 ClipRRect(
@@ -1122,9 +1138,8 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                                         .cover,
                                                                   ),
                                                                 ),
-                                                              if (!(trophiesUsersTrophiesRecord
-                                                                      .has7DaysStreak) ??
-                                                                  true)
+                                                              if (!trophiesUsersTrophiesRecord!
+                                                                  .has7DaysStreak!)
                                                                 ClipRRect(
                                                                   borderRadius:
                                                                       BorderRadius
@@ -1210,7 +1225,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                         children: [
                                                           Stack(
                                                             children: [
-                                                              if (trophiesUsersTrophiesRecord
+                                                              if (trophiesUsersTrophiesRecord!
                                                                       .has3Periodics ??
                                                                   true)
                                                                 ClipRRect(
@@ -1227,9 +1242,8 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                                         .cover,
                                                                   ),
                                                                 ),
-                                                              if (!(trophiesUsersTrophiesRecord
-                                                                      .has3Periodics) ??
-                                                                  true)
+                                                              if (!trophiesUsersTrophiesRecord!
+                                                                  .has3Periodics!)
                                                                 ClipRRect(
                                                                   borderRadius:
                                                                       BorderRadius
@@ -1328,7 +1342,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                         children: [
                                                           Stack(
                                                             children: [
-                                                              if (trophiesUsersTrophiesRecord
+                                                              if (trophiesUsersTrophiesRecord!
                                                                       .has2Invites ??
                                                                   true)
                                                                 ClipRRect(
@@ -1345,9 +1359,8 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                                         .cover,
                                                                   ),
                                                                 ),
-                                                              if (!(trophiesUsersTrophiesRecord
-                                                                      .has2Invites) ??
-                                                                  true)
+                                                              if (!trophiesUsersTrophiesRecord!
+                                                                  .has2Invites!)
                                                                 ClipRRect(
                                                                   borderRadius:
                                                                       BorderRadius
@@ -1433,7 +1446,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                         children: [
                                                           Stack(
                                                             children: [
-                                                              if (trophiesUsersTrophiesRecord
+                                                              if (trophiesUsersTrophiesRecord!
                                                                       .has5Likes ??
                                                                   true)
                                                                 ClipRRect(
@@ -1450,9 +1463,8 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                                         .cover,
                                                                   ),
                                                                 ),
-                                                              if (!(trophiesUsersTrophiesRecord
-                                                                      .has5Likes) ??
-                                                                  true)
+                                                              if (!trophiesUsersTrophiesRecord!
+                                                                  .has5Likes!)
                                                                 ClipRRect(
                                                                   borderRadius:
                                                                       BorderRadius
@@ -1535,7 +1547,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                         children: [
                                                           Stack(
                                                             children: [
-                                                              if (trophiesUsersTrophiesRecord
+                                                              if (trophiesUsersTrophiesRecord!
                                                                       .hasReviewApp ??
                                                                   true)
                                                                 ClipRRect(
@@ -1552,9 +1564,8 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                                         .cover,
                                                                   ),
                                                                 ),
-                                                              if (!(trophiesUsersTrophiesRecord
-                                                                      .hasReviewApp) ??
-                                                                  true)
+                                                              if (!trophiesUsersTrophiesRecord!
+                                                                  .hasReviewApp!)
                                                                 ClipRRect(
                                                                   borderRadius:
                                                                       BorderRadius
@@ -1631,7 +1642,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                         );
                                       },
                                     ),
-                                  if ((activeProfilePartValue) == 'Objectifs')
+                                  if (activeProfilePartValue == 'Objectifs')
                                     StreamBuilder<List<UsersTrophiesRecord>>(
                                       stream: queryUsersTrophiesRecord(
                                         queryBuilder: (usersTrophiesRecord) =>
@@ -1655,9 +1666,9 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                         }
                                         List<UsersTrophiesRecord>
                                             goalsUsersTrophiesRecordList =
-                                            snapshot.data;
+                                            snapshot.data!;
                                         // Return an empty Container when the document does not exist.
-                                        if (snapshot.data.isEmpty) {
+                                        if (snapshot.data!.isEmpty) {
                                           return Container();
                                         }
                                         final goalsUsersTrophiesRecord =
@@ -1688,7 +1699,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                             .center,
                                                     children: [
                                                       Text(
-                                                        'Objectifs',
+                                                        'Votre objectif',
                                                         style:
                                                             FlutterFlowTheme.of(
                                                                     context)
@@ -1715,7 +1726,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                             .center,
                                                     children: [
                                                       Text(
-                                                        'En KG par jour et par habitant',
+                                                        'En kg / habitant / jour',
                                                         style:
                                                             FlutterFlowTheme.of(
                                                                     context)
@@ -1753,7 +1764,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                               createUsersRecordData(
                                                             co2target: 3000,
                                                           );
-                                                          await containerUsersRecord
+                                                          await containerUsersRecord!
                                                               .reference
                                                               .update(
                                                                   usersUpdateData);
@@ -1863,12 +1874,31 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                                     ),
                                                                   ),
                                                                 ),
-                                                                Icon(
-                                                                  Icons
-                                                                      .arrow_drop_up,
-                                                                  color: Colors
-                                                                      .black,
-                                                                  size: 24,
+                                                                Stack(
+                                                                  children: [
+                                                                    if (containerUsersRecord!
+                                                                            .co2target ==
+                                                                        3000)
+                                                                      Icon(
+                                                                        Icons
+                                                                            .check_circle_outline_sharp,
+                                                                        color: Color(
+                                                                            0xCB272D30),
+                                                                        size:
+                                                                            24,
+                                                                      ),
+                                                                    if (containerUsersRecord!
+                                                                            .co2target !=
+                                                                        3000)
+                                                                      Icon(
+                                                                        Icons
+                                                                            .radio_button_off_rounded,
+                                                                        color: Color(
+                                                                            0xCC272D30),
+                                                                        size:
+                                                                            24,
+                                                                      ),
+                                                                  ],
                                                                 ),
                                                               ],
                                                             ),
@@ -1886,7 +1916,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                               createUsersRecordData(
                                                             co2target: 5000,
                                                           );
-                                                          await containerUsersRecord
+                                                          await containerUsersRecord!
                                                               .reference
                                                               .update(
                                                                   usersUpdateData);
@@ -2008,72 +2038,36 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                                     ),
                                                                   ),
                                                                 ),
-                                                                Icon(
-                                                                  Icons
-                                                                      .arrow_drop_up,
-                                                                  color: Colors
-                                                                      .black,
-                                                                  size: 24,
+                                                                Stack(
+                                                                  children: [
+                                                                    if (containerUsersRecord!
+                                                                            .co2target ==
+                                                                        5000)
+                                                                      Icon(
+                                                                        Icons
+                                                                            .check_circle_outline_sharp,
+                                                                        color: Color(
+                                                                            0xCB272D30),
+                                                                        size:
+                                                                            24,
+                                                                      ),
+                                                                    if (containerUsersRecord!
+                                                                            .co2target !=
+                                                                        5000)
+                                                                      Icon(
+                                                                        Icons
+                                                                            .radio_button_off_rounded,
+                                                                        color: Color(
+                                                                            0xCC272D30),
+                                                                        size:
+                                                                            24,
+                                                                      ),
+                                                                  ],
                                                                 ),
                                                               ],
                                                             ),
                                                           ),
                                                         ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                                Padding(
-                                                  padding: EdgeInsetsDirectional
-                                                      .fromSTEB(0, 10, 0, 0),
-                                                  child: Row(
-                                                    mainAxisSize:
-                                                        MainAxisSize.max,
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .center,
-                                                    children: [
-                                                      Text(
-                                                        'Moyennes nationales',
-                                                        style:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .title3
-                                                                .override(
-                                                                  fontFamily:
-                                                                      'Montserrat',
-                                                                  color: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .tertiaryColor,
-                                                                ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                                Padding(
-                                                  padding: EdgeInsetsDirectional
-                                                      .fromSTEB(0, 2, 0, 15),
-                                                  child: Row(
-                                                    mainAxisSize:
-                                                        MainAxisSize.max,
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .center,
-                                                    children: [
-                                                      Text(
-                                                        'En KG par jour et par habitant',
-                                                        style:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .subtitle2
-                                                                .override(
-                                                                  fontFamily:
-                                                                      'Montserrat',
-                                                                  color: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .tertiaryColor,
-                                                                  fontSize: 8,
-                                                                ),
                                                       ),
                                                     ],
                                                   ),
@@ -2099,7 +2093,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                               createUsersRecordData(
                                                             co2target: 12000,
                                                           );
-                                                          await containerUsersRecord
+                                                          await containerUsersRecord!
                                                               .reference
                                                               .update(
                                                                   usersUpdateData);
@@ -2209,12 +2203,31 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                                     ),
                                                                   ),
                                                                 ),
-                                                                Icon(
-                                                                  Icons
-                                                                      .arrow_drop_up,
-                                                                  color: Colors
-                                                                      .black,
-                                                                  size: 24,
+                                                                Stack(
+                                                                  children: [
+                                                                    if (containerUsersRecord!
+                                                                            .co2target ==
+                                                                        12000)
+                                                                      Icon(
+                                                                        Icons
+                                                                            .check_circle_outline_sharp,
+                                                                        color: Color(
+                                                                            0xCB272D30),
+                                                                        size:
+                                                                            24,
+                                                                      ),
+                                                                    if (containerUsersRecord!
+                                                                            .co2target !=
+                                                                        12000)
+                                                                      Icon(
+                                                                        Icons
+                                                                            .radio_button_off_rounded,
+                                                                        color: Color(
+                                                                            0xCC272D30),
+                                                                        size:
+                                                                            24,
+                                                                      ),
+                                                                  ],
                                                                 ),
                                                               ],
                                                             ),
@@ -2232,7 +2245,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                               createUsersRecordData(
                                                             co2target: 24000,
                                                           );
-                                                          await containerUsersRecord
+                                                          await containerUsersRecord!
                                                               .reference
                                                               .update(
                                                                   usersUpdateData);
@@ -2342,12 +2355,31 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                                     ),
                                                                   ),
                                                                 ),
-                                                                Icon(
-                                                                  Icons
-                                                                      .arrow_drop_up,
-                                                                  color: Colors
-                                                                      .black,
-                                                                  size: 24,
+                                                                Stack(
+                                                                  children: [
+                                                                    if (containerUsersRecord!
+                                                                            .co2target ==
+                                                                        24000)
+                                                                      Icon(
+                                                                        Icons
+                                                                            .check_circle_outline_sharp,
+                                                                        color: Color(
+                                                                            0xCB272D30),
+                                                                        size:
+                                                                            24,
+                                                                      ),
+                                                                    if (containerUsersRecord!
+                                                                            .co2target !=
+                                                                        24000)
+                                                                      Icon(
+                                                                        Icons
+                                                                            .radio_button_off_rounded,
+                                                                        color: Color(
+                                                                            0xCC272D30),
+                                                                        size:
+                                                                            24,
+                                                                      ),
+                                                                  ],
                                                                 ),
                                                               ],
                                                             ),
@@ -2378,7 +2410,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                               createUsersRecordData(
                                                             co2target: 15000,
                                                           );
-                                                          await containerUsersRecord
+                                                          await containerUsersRecord!
                                                               .reference
                                                               .update(
                                                                   usersUpdateData);
@@ -2488,12 +2520,31 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                                     ),
                                                                   ),
                                                                 ),
-                                                                Icon(
-                                                                  Icons
-                                                                      .arrow_drop_up,
-                                                                  color: Colors
-                                                                      .black,
-                                                                  size: 24,
+                                                                Stack(
+                                                                  children: [
+                                                                    if (containerUsersRecord!
+                                                                            .co2target ==
+                                                                        15000)
+                                                                      Icon(
+                                                                        Icons
+                                                                            .check_circle_outline_sharp,
+                                                                        color: Color(
+                                                                            0xCB272D30),
+                                                                        size:
+                                                                            24,
+                                                                      ),
+                                                                    if (containerUsersRecord!
+                                                                            .co2target !=
+                                                                        15000)
+                                                                      Icon(
+                                                                        Icons
+                                                                            .radio_button_off_rounded,
+                                                                        color: Color(
+                                                                            0xCC272D30),
+                                                                        size:
+                                                                            24,
+                                                                      ),
+                                                                  ],
                                                                 ),
                                                               ],
                                                             ),
@@ -2509,9 +2560,9 @@ class _ProfileWidgetState extends State<ProfileWidget>
 
                                                           final usersUpdateData =
                                                               createUsersRecordData(
-                                                            co2target: 15000,
+                                                            co2target: 14000,
                                                           );
-                                                          await containerUsersRecord
+                                                          await containerUsersRecord!
                                                               .reference
                                                               .update(
                                                                   usersUpdateData);
@@ -2607,7 +2658,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                                               MainAxisSize.max,
                                                                           children: [
                                                                             Text(
-                                                                              '15 Kg',
+                                                                              '14 Kg',
                                                                               style: FlutterFlowTheme.of(context).bodyText2.override(
                                                                                     fontFamily: 'Outfit',
                                                                                     color: Color(0xFF57636C),
@@ -2621,12 +2672,31 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                                     ),
                                                                   ),
                                                                 ),
-                                                                Icon(
-                                                                  Icons
-                                                                      .arrow_drop_up,
-                                                                  color: Colors
-                                                                      .black,
-                                                                  size: 24,
+                                                                Stack(
+                                                                  children: [
+                                                                    if (containerUsersRecord!
+                                                                            .co2target ==
+                                                                        14000)
+                                                                      Icon(
+                                                                        Icons
+                                                                            .check_circle_outline_sharp,
+                                                                        color: Color(
+                                                                            0xCB272D30),
+                                                                        size:
+                                                                            24,
+                                                                      ),
+                                                                    if (containerUsersRecord!
+                                                                            .co2target !=
+                                                                        14000)
+                                                                      Icon(
+                                                                        Icons
+                                                                            .radio_button_off_rounded,
+                                                                        color: Color(
+                                                                            0xCC272D30),
+                                                                        size:
+                                                                            24,
+                                                                      ),
+                                                                  ],
                                                                 ),
                                                               ],
                                                             ),
@@ -2657,7 +2727,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                               createUsersRecordData(
                                                             co2target: 10000,
                                                           );
-                                                          await containerUsersRecord
+                                                          await containerUsersRecord!
                                                               .reference
                                                               .update(
                                                                   usersUpdateData);
@@ -2753,7 +2823,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                                               MainAxisSize.max,
                                                                           children: [
                                                                             Text(
-                                                                              '10 Kg',
+                                                                              '11 Kg',
                                                                               style: FlutterFlowTheme.of(context).bodyText2.override(
                                                                                     fontFamily: 'Outfit',
                                                                                     color: Color(0xFF57636C),
@@ -2767,12 +2837,31 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                                     ),
                                                                   ),
                                                                 ),
-                                                                Icon(
-                                                                  Icons
-                                                                      .arrow_drop_up,
-                                                                  color: Colors
-                                                                      .black,
-                                                                  size: 24,
+                                                                Stack(
+                                                                  children: [
+                                                                    if (containerUsersRecord!
+                                                                            .co2target ==
+                                                                        11000)
+                                                                      Icon(
+                                                                        Icons
+                                                                            .check_circle_outline_sharp,
+                                                                        color: Color(
+                                                                            0xCB272D30),
+                                                                        size:
+                                                                            24,
+                                                                      ),
+                                                                    if (containerUsersRecord!
+                                                                            .co2target !=
+                                                                        11000)
+                                                                      Icon(
+                                                                        Icons
+                                                                            .radio_button_off_rounded,
+                                                                        color: Color(
+                                                                            0xCC272D30),
+                                                                        size:
+                                                                            24,
+                                                                      ),
+                                                                  ],
                                                                 ),
                                                               ],
                                                             ),
@@ -2790,7 +2879,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                               createUsersRecordData(
                                                             co2target: 22000,
                                                           );
-                                                          await containerUsersRecord
+                                                          await containerUsersRecord!
                                                               .reference
                                                               .update(
                                                                   usersUpdateData);
@@ -2900,12 +2989,31 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                                     ),
                                                                   ),
                                                                 ),
-                                                                Icon(
-                                                                  Icons
-                                                                      .arrow_drop_up,
-                                                                  color: Colors
-                                                                      .black,
-                                                                  size: 24,
+                                                                Stack(
+                                                                  children: [
+                                                                    if (containerUsersRecord!
+                                                                            .co2target ==
+                                                                        22000)
+                                                                      Icon(
+                                                                        Icons
+                                                                            .check_circle_outline_sharp,
+                                                                        color: Color(
+                                                                            0xCB272D30),
+                                                                        size:
+                                                                            24,
+                                                                      ),
+                                                                    if (containerUsersRecord!
+                                                                            .co2target !=
+                                                                        22000)
+                                                                      Icon(
+                                                                        Icons
+                                                                            .radio_button_off_rounded,
+                                                                        color: Color(
+                                                                            0xCC272D30),
+                                                                        size:
+                                                                            24,
+                                                                      ),
+                                                                  ],
                                                                 ),
                                                               ],
                                                             ),
@@ -2934,9 +3042,9 @@ class _ProfileWidgetState extends State<ProfileWidget>
 
                                                           final usersUpdateData =
                                                               createUsersRecordData(
-                                                            co2target: 15000,
+                                                            co2target: 16000,
                                                           );
-                                                          await containerUsersRecord
+                                                          await containerUsersRecord!
                                                               .reference
                                                               .update(
                                                                   usersUpdateData);
@@ -3032,7 +3140,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                                               MainAxisSize.max,
                                                                           children: [
                                                                             Text(
-                                                                              '15 Kg',
+                                                                              '16 Kg',
                                                                               style: FlutterFlowTheme.of(context).bodyText2.override(
                                                                                     fontFamily: 'Outfit',
                                                                                     color: Color(0xFF57636C),
@@ -3046,12 +3154,31 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                                     ),
                                                                   ),
                                                                 ),
-                                                                Icon(
-                                                                  Icons
-                                                                      .arrow_drop_up,
-                                                                  color: Colors
-                                                                      .black,
-                                                                  size: 24,
+                                                                Stack(
+                                                                  children: [
+                                                                    if (containerUsersRecord!
+                                                                            .co2target ==
+                                                                        16000)
+                                                                      Icon(
+                                                                        Icons
+                                                                            .check_circle_outline_sharp,
+                                                                        color: Color(
+                                                                            0xCB272D30),
+                                                                        size:
+                                                                            24,
+                                                                      ),
+                                                                    if (containerUsersRecord!
+                                                                            .co2target !=
+                                                                        16000)
+                                                                      Icon(
+                                                                        Icons
+                                                                            .radio_button_off_rounded,
+                                                                        color: Color(
+                                                                            0xCC272D30),
+                                                                        size:
+                                                                            24,
+                                                                      ),
+                                                                  ],
                                                                 ),
                                                               ],
                                                             ),
@@ -3067,9 +3194,9 @@ class _ProfileWidgetState extends State<ProfileWidget>
 
                                                           final usersUpdateData =
                                                               createUsersRecordData(
-                                                            co2target: 24000,
+                                                            co2target: 25000,
                                                           );
-                                                          await containerUsersRecord
+                                                          await containerUsersRecord!
                                                               .reference
                                                               .update(
                                                                   usersUpdateData);
@@ -3165,7 +3292,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                                               MainAxisSize.max,
                                                                           children: [
                                                                             Text(
-                                                                              '24 Kg',
+                                                                              '25 Kg',
                                                                               style: FlutterFlowTheme.of(context).bodyText2.override(
                                                                                     fontFamily: 'Outfit',
                                                                                     color: Color(0xFF57636C),
@@ -3179,12 +3306,31 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                                     ),
                                                                   ),
                                                                 ),
-                                                                Icon(
-                                                                  Icons
-                                                                      .arrow_drop_up,
-                                                                  color: Colors
-                                                                      .black,
-                                                                  size: 24,
+                                                                Stack(
+                                                                  children: [
+                                                                    if (containerUsersRecord!
+                                                                            .co2target ==
+                                                                        25000)
+                                                                      Icon(
+                                                                        Icons
+                                                                            .check_circle_outline_sharp,
+                                                                        color: Color(
+                                                                            0xCB272D30),
+                                                                        size:
+                                                                            24,
+                                                                      ),
+                                                                    if (containerUsersRecord!
+                                                                            .co2target !=
+                                                                        25000)
+                                                                      Icon(
+                                                                        Icons
+                                                                            .radio_button_off_rounded,
+                                                                        color: Color(
+                                                                            0xCC272D30),
+                                                                        size:
+                                                                            24,
+                                                                      ),
+                                                                  ],
                                                                 ),
                                                               ],
                                                             ),
@@ -3215,7 +3361,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                               createUsersRecordData(
                                                             co2target: 43000,
                                                           );
-                                                          await containerUsersRecord
+                                                          await containerUsersRecord!
                                                               .reference
                                                               .update(
                                                                   usersUpdateData);
@@ -3325,12 +3471,31 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                                     ),
                                                                   ),
                                                                 ),
-                                                                Icon(
-                                                                  Icons
-                                                                      .arrow_drop_up,
-                                                                  color: Colors
-                                                                      .black,
-                                                                  size: 24,
+                                                                Stack(
+                                                                  children: [
+                                                                    if (containerUsersRecord!
+                                                                            .co2target ==
+                                                                        43000)
+                                                                      Icon(
+                                                                        Icons
+                                                                            .check_circle_outline_sharp,
+                                                                        color: Color(
+                                                                            0xCB272D30),
+                                                                        size:
+                                                                            24,
+                                                                      ),
+                                                                    if (containerUsersRecord!
+                                                                            .co2target !=
+                                                                        43000)
+                                                                      Icon(
+                                                                        Icons
+                                                                            .radio_button_off_rounded,
+                                                                        color: Color(
+                                                                            0xCC272D30),
+                                                                        size:
+                                                                            24,
+                                                                      ),
+                                                                  ],
                                                                 ),
                                                               ],
                                                             ),
@@ -3348,7 +3513,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                               createUsersRecordData(
                                                             co2target: 6000,
                                                           );
-                                                          await containerUsersRecord
+                                                          await containerUsersRecord!
                                                               .reference
                                                               .update(
                                                                   usersUpdateData);
@@ -3458,12 +3623,31 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                                     ),
                                                                   ),
                                                                 ),
-                                                                Icon(
-                                                                  Icons
-                                                                      .arrow_drop_up,
-                                                                  color: Colors
-                                                                      .black,
-                                                                  size: 24,
+                                                                Stack(
+                                                                  children: [
+                                                                    if (containerUsersRecord!
+                                                                            .co2target ==
+                                                                        6000)
+                                                                      Icon(
+                                                                        Icons
+                                                                            .check_circle_outline_sharp,
+                                                                        color: Color(
+                                                                            0xCB272D30),
+                                                                        size:
+                                                                            24,
+                                                                      ),
+                                                                    if (containerUsersRecord!
+                                                                            .co2target !=
+                                                                        6000)
+                                                                      Icon(
+                                                                        Icons
+                                                                            .radio_button_off_rounded,
+                                                                        color: Color(
+                                                                            0xCC272D30),
+                                                                        size:
+                                                                            24,
+                                                                      ),
+                                                                  ],
                                                                 ),
                                                               ],
                                                             ),
@@ -3494,7 +3678,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                               createUsersRecordData(
                                                             co2target: 4000,
                                                           );
-                                                          await containerUsersRecord
+                                                          await containerUsersRecord!
                                                               .reference
                                                               .update(
                                                                   usersUpdateData);
@@ -3604,12 +3788,31 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                                     ),
                                                                   ),
                                                                 ),
-                                                                Icon(
-                                                                  Icons
-                                                                      .arrow_drop_up,
-                                                                  color: Colors
-                                                                      .black,
-                                                                  size: 24,
+                                                                Stack(
+                                                                  children: [
+                                                                    if (containerUsersRecord!
+                                                                            .co2target ==
+                                                                        4000)
+                                                                      Icon(
+                                                                        Icons
+                                                                            .check_circle_outline_sharp,
+                                                                        color: Color(
+                                                                            0xCB272D30),
+                                                                        size:
+                                                                            24,
+                                                                      ),
+                                                                    if (containerUsersRecord!
+                                                                            .co2target !=
+                                                                        4000)
+                                                                      Icon(
+                                                                        Icons
+                                                                            .radio_button_off_rounded,
+                                                                        color: Color(
+                                                                            0xCC272D30),
+                                                                        size:
+                                                                            24,
+                                                                      ),
+                                                                  ],
                                                                 ),
                                                               ],
                                                             ),
@@ -3627,7 +3830,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                               createUsersRecordData(
                                                             co2target: 40000,
                                                           );
-                                                          await containerUsersRecord
+                                                          await containerUsersRecord!
                                                               .reference
                                                               .update(
                                                                   usersUpdateData);
@@ -3737,12 +3940,31 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                                     ),
                                                                   ),
                                                                 ),
-                                                                Icon(
-                                                                  Icons
-                                                                      .arrow_drop_up,
-                                                                  color: Colors
-                                                                      .black,
-                                                                  size: 24,
+                                                                Stack(
+                                                                  children: [
+                                                                    if (containerUsersRecord!
+                                                                            .co2target ==
+                                                                        40000)
+                                                                      Icon(
+                                                                        Icons
+                                                                            .check_circle_outline_sharp,
+                                                                        color: Color(
+                                                                            0xCB272D30),
+                                                                        size:
+                                                                            24,
+                                                                      ),
+                                                                    if (containerUsersRecord!
+                                                                            .co2target !=
+                                                                        40000)
+                                                                      Icon(
+                                                                        Icons
+                                                                            .radio_button_off_rounded,
+                                                                        color: Color(
+                                                                            0xCC272D30),
+                                                                        size:
+                                                                            24,
+                                                                      ),
+                                                                  ],
                                                                 ),
                                                               ],
                                                             ),
@@ -3773,7 +3995,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                               createUsersRecordData(
                                                             co2target: 18000,
                                                           );
-                                                          await containerUsersRecord
+                                                          await containerUsersRecord!
                                                               .reference
                                                               .update(
                                                                   usersUpdateData);
@@ -3890,6 +4112,32 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                                       .black,
                                                                   size: 24,
                                                                 ),
+                                                                Stack(
+                                                                  children: [
+                                                                    if (containerUsersRecord!
+                                                                            .co2target ==
+                                                                        18000)
+                                                                      Icon(
+                                                                        Icons
+                                                                            .check_circle_outline_sharp,
+                                                                        color: Color(
+                                                                            0xCB272D30),
+                                                                        size:
+                                                                            24,
+                                                                      ),
+                                                                    if (containerUsersRecord!
+                                                                            .co2target !=
+                                                                        18000)
+                                                                      Icon(
+                                                                        Icons
+                                                                            .radio_button_off_rounded,
+                                                                        color: Color(
+                                                                            0xCC272D30),
+                                                                        size:
+                                                                            24,
+                                                                      ),
+                                                                  ],
+                                                                ),
                                                               ],
                                                             ),
                                                           ),
@@ -3906,7 +4154,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                               createUsersRecordData(
                                                             co2target: 29000,
                                                           );
-                                                          await containerUsersRecord
+                                                          await containerUsersRecord!
                                                               .reference
                                                               .update(
                                                                   usersUpdateData);
@@ -4016,12 +4264,31 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                                     ),
                                                                   ),
                                                                 ),
-                                                                Icon(
-                                                                  Icons
-                                                                      .arrow_drop_up,
-                                                                  color: Colors
-                                                                      .black,
-                                                                  size: 24,
+                                                                Stack(
+                                                                  children: [
+                                                                    if (containerUsersRecord!
+                                                                            .co2target ==
+                                                                        29000)
+                                                                      Icon(
+                                                                        Icons
+                                                                            .check_circle_outline_sharp,
+                                                                        color: Color(
+                                                                            0xCB272D30),
+                                                                        size:
+                                                                            24,
+                                                                      ),
+                                                                    if (containerUsersRecord!
+                                                                            .co2target !=
+                                                                        29000)
+                                                                      Icon(
+                                                                        Icons
+                                                                            .radio_button_off_rounded,
+                                                                        color: Color(
+                                                                            0xCC272D30),
+                                                                        size:
+                                                                            24,
+                                                                      ),
+                                                                  ],
                                                                 ),
                                                               ],
                                                             ),
@@ -4052,7 +4319,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                               createUsersRecordData(
                                                             co2target: 1000,
                                                           );
-                                                          await containerUsersRecord
+                                                          await containerUsersRecord!
                                                               .reference
                                                               .update(
                                                                   usersUpdateData);
@@ -4162,12 +4429,31 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                                     ),
                                                                   ),
                                                                 ),
-                                                                Icon(
-                                                                  Icons
-                                                                      .arrow_drop_up,
-                                                                  color: Colors
-                                                                      .black,
-                                                                  size: 24,
+                                                                Stack(
+                                                                  children: [
+                                                                    if (containerUsersRecord!
+                                                                            .co2target ==
+                                                                        1000)
+                                                                      Icon(
+                                                                        Icons
+                                                                            .check_circle_outline_sharp,
+                                                                        color: Color(
+                                                                            0xCB272D30),
+                                                                        size:
+                                                                            24,
+                                                                      ),
+                                                                    if (containerUsersRecord!
+                                                                            .co2target !=
+                                                                        1000)
+                                                                      Icon(
+                                                                        Icons
+                                                                            .radio_button_off_rounded,
+                                                                        color: Color(
+                                                                            0xCC272D30),
+                                                                        size:
+                                                                            24,
+                                                                      ),
+                                                                  ],
                                                                 ),
                                                               ],
                                                             ),
@@ -4185,7 +4471,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                               createUsersRecordData(
                                                             co2target: 83000,
                                                           );
-                                                          await containerUsersRecord
+                                                          await containerUsersRecord!
                                                               .reference
                                                               .update(
                                                                   usersUpdateData);
@@ -4295,12 +4581,31 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                                     ),
                                                                   ),
                                                                 ),
-                                                                Icon(
-                                                                  Icons
-                                                                      .arrow_drop_up,
-                                                                  color: Colors
-                                                                      .black,
-                                                                  size: 24,
+                                                                Stack(
+                                                                  children: [
+                                                                    if (containerUsersRecord!
+                                                                            .co2target ==
+                                                                        83000)
+                                                                      Icon(
+                                                                        Icons
+                                                                            .check_circle_outline_sharp,
+                                                                        color: Color(
+                                                                            0xCB272D30),
+                                                                        size:
+                                                                            24,
+                                                                      ),
+                                                                    if (containerUsersRecord!
+                                                                            .co2target !=
+                                                                        83000)
+                                                                      Icon(
+                                                                        Icons
+                                                                            .radio_button_off_rounded,
+                                                                        color: Color(
+                                                                            0xCC272D30),
+                                                                        size:
+                                                                            24,
+                                                                      ),
+                                                                  ],
                                                                 ),
                                                               ],
                                                             ),
@@ -4316,12 +4621,9 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                         );
                                       },
                                     ),
-                                  if ((activeProfilePartValue) == 'Classement')
+                                  if (activeProfilePartValue == 'Classement')
                                     Container(
                                       width: MediaQuery.of(context).size.width,
-                                      height:
-                                          MediaQuery.of(context).size.height *
-                                              1,
                                       decoration: BoxDecoration(
                                         color: Color(0x00EEEEEE),
                                       ),
@@ -4351,9 +4653,11 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                             }
                                             List<UsersRecord>
                                                 listViewUsersRecordList =
-                                                snapshot.data;
+                                                snapshot.data!;
                                             return ListView.builder(
                                               padding: EdgeInsets.zero,
+                                              primary: false,
+                                              shrinkWrap: true,
                                               scrollDirection: Axis.vertical,
                                               itemCount: listViewUsersRecordList
                                                   .length,
@@ -4431,7 +4735,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                             child:
                                                                 Image.network(
                                                               listViewUsersRecord
-                                                                  .photoUrl,
+                                                                  .photoUrl!,
                                                               width: 36,
                                                               height: 36,
                                                               fit: BoxFit.cover,
@@ -4459,7 +4763,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                                 children: [
                                                                   Text(
                                                                     listViewUsersRecord
-                                                                        .displayName,
+                                                                        .displayName!,
                                                                     style: FlutterFlowTheme.of(
                                                                             context)
                                                                         .bodyText1
@@ -4469,93 +4773,85 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                                           color:
                                                                               Color(0xFF0F1113),
                                                                           fontSize:
-                                                                              14,
+                                                                              16,
                                                                           fontWeight:
-                                                                              FontWeight.normal,
+                                                                              FontWeight.w600,
                                                                         ),
-                                                                  ),
-                                                                  Row(
-                                                                    mainAxisSize:
-                                                                        MainAxisSize
-                                                                            .max,
-                                                                    children: [
-                                                                      Text(
-                                                                        'Points : ${listViewUsersRecord.totalPoints.toString()}',
-                                                                        style: FlutterFlowTheme.of(context)
-                                                                            .bodyText2
-                                                                            .override(
-                                                                              fontFamily: 'Outfit',
-                                                                              color: Color(0xFF57636C),
-                                                                              fontSize: 14,
-                                                                              fontWeight: FontWeight.normal,
-                                                                            ),
-                                                                      ),
-                                                                    ],
                                                                   ),
                                                                 ],
                                                               ),
                                                             ),
                                                           ),
-                                                          FFButtonWidget(
-                                                            onPressed:
-                                                                () async {
-                                                              logFirebaseEvent(
-                                                                  'PROFILE_PAGE_TROPHÉS_BTN_ON_TAP');
-                                                              logFirebaseEvent(
-                                                                  'Button_Bottom-Sheet');
-                                                              await showModalBottomSheet(
-                                                                isScrollControlled:
-                                                                    true,
-                                                                backgroundColor:
-                                                                    Colors
-                                                                        .transparent,
-                                                                context:
-                                                                    context,
-                                                                builder:
-                                                                    (context) {
-                                                                  return Padding(
-                                                                    padding: MediaQuery.of(
+                                                          Expanded(
+                                                            child: Padding(
+                                                              padding:
+                                                                  EdgeInsetsDirectional
+                                                                      .fromSTEB(
+                                                                          12,
+                                                                          0,
+                                                                          0,
+                                                                          0),
+                                                              child: Column(
+                                                                mainAxisSize:
+                                                                    MainAxisSize
+                                                                        .max,
+                                                                mainAxisAlignment:
+                                                                    MainAxisAlignment
+                                                                        .center,
+                                                                crossAxisAlignment:
+                                                                    CrossAxisAlignment
+                                                                        .start,
+                                                                children: [
+                                                                  Text(
+                                                                    'Trophés : ${listViewUsersRecord.totalPoints?.toString()} points',
+                                                                    style: FlutterFlowTheme.of(
                                                                             context)
-                                                                        .viewInsets,
-                                                                    child:
-                                                                        Container(
-                                                                      height:
-                                                                          310,
-                                                                      child:
-                                                                          NextVersionAlertWidget(),
-                                                                    ),
-                                                                  );
-                                                                },
-                                                              );
-                                                            },
-                                                            text: 'Trophés',
-                                                            options:
-                                                                FFButtonOptions(
-                                                              width: 80,
-                                                              height: 36,
-                                                              color: Color(
-                                                                  0xFFF1F4F8),
-                                                              textStyle:
-                                                                  FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .bodyText1
-                                                                      .override(
-                                                                        fontFamily:
-                                                                            'Outfit',
-                                                                        color: Color(
-                                                                            0xFF0F1113),
-                                                                        fontSize:
-                                                                            14,
-                                                                        fontWeight:
-                                                                            FontWeight.normal,
-                                                                      ),
-                                                              borderSide:
-                                                                  BorderSide(
-                                                                color: Colors
-                                                                    .transparent,
-                                                                width: 1,
+                                                                        .bodyText2
+                                                                        .override(
+                                                                          fontFamily:
+                                                                              'Outfit',
+                                                                          color:
+                                                                              Color(0xFF57636C),
+                                                                          fontSize:
+                                                                              10,
+                                                                          fontWeight:
+                                                                              FontWeight.normal,
+                                                                        ),
+                                                                  ),
+                                                                  Text(
+                                                                    'Enregistré : ${functions.printScore(listViewUsersRecord.globalScore)}',
+                                                                    style: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .bodyText2
+                                                                        .override(
+                                                                          fontFamily:
+                                                                              'Outfit',
+                                                                          color:
+                                                                              Color(0xFF57636C),
+                                                                          fontSize:
+                                                                              10,
+                                                                          fontWeight:
+                                                                              FontWeight.normal,
+                                                                        ),
+                                                                  ),
+                                                                  Text(
+                                                                    'Projection : ${functions.printScore(listViewUsersRecord.globalProjection)}',
+                                                                    style: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .bodyText2
+                                                                        .override(
+                                                                          fontFamily:
+                                                                              'Outfit',
+                                                                          color:
+                                                                              Color(0xFF57636C),
+                                                                          fontSize:
+                                                                              10,
+                                                                          fontWeight:
+                                                                              FontWeight.normal,
+                                                                        ),
+                                                                  ),
+                                                                ],
                                                               ),
-                                                              borderRadius: 8,
                                                             ),
                                                           ),
                                                         ],
@@ -4569,7 +4865,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                         ),
                                       ),
                                     ),
-                                  if ((activeProfilePartValue) == 'Historique')
+                                  if (activeProfilePartValue == 'Historique')
                                     Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
                                           0, 10, 0, 0),
@@ -4637,7 +4933,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                   }
                                                   List<TransportActionsRecord>
                                                       listViewTransportActionsRecordList =
-                                                      snapshot.data;
+                                                      snapshot.data!;
                                                   return ListView.builder(
                                                     padding: EdgeInsets.zero,
                                                     scrollDirection:
@@ -4701,7 +4997,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                                             0,
                                                                             0),
                                                                         children: [
-                                                                          if ((listViewTransportActionsRecord.transport) ==
+                                                                          if (listViewTransportActionsRecord.transport ==
                                                                               'car')
                                                                             InkWell(
                                                                               onTap: () async {
@@ -4732,7 +5028,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                                                 ),
                                                                               ),
                                                                             ),
-                                                                          if ((listViewTransportActionsRecord.transport) ==
+                                                                          if (listViewTransportActionsRecord.transport ==
                                                                               'bus')
                                                                             InkWell(
                                                                               onTap: () async {
@@ -4763,7 +5059,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                                                 ),
                                                                               ),
                                                                             ),
-                                                                          if ((listViewTransportActionsRecord.transport) ==
+                                                                          if (listViewTransportActionsRecord.transport ==
                                                                               'scooter')
                                                                             InkWell(
                                                                               onTap: () async {
@@ -4794,7 +5090,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                                                 ),
                                                                               ),
                                                                             ),
-                                                                          if ((listViewTransportActionsRecord.transport) ==
+                                                                          if (listViewTransportActionsRecord.transport ==
                                                                               'moto')
                                                                             InkWell(
                                                                               onTap: () async {
@@ -4825,7 +5121,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                                                 ),
                                                                               ),
                                                                             ),
-                                                                          if ((listViewTransportActionsRecord.transport) ==
+                                                                          if (listViewTransportActionsRecord.transport ==
                                                                               'train')
                                                                             InkWell(
                                                                               onTap: () async {
@@ -4856,7 +5152,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                                                 ),
                                                                               ),
                                                                             ),
-                                                                          if ((listViewTransportActionsRecord.transport) ==
+                                                                          if (listViewTransportActionsRecord.transport ==
                                                                               'metro')
                                                                             InkWell(
                                                                               onTap: () async {
@@ -4887,7 +5183,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                                                 ),
                                                                               ),
                                                                             ),
-                                                                          if ((listViewTransportActionsRecord.transport) ==
+                                                                          if (listViewTransportActionsRecord.transport ==
                                                                               'flight')
                                                                             InkWell(
                                                                               onTap: () async {
@@ -4918,7 +5214,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                                                 ),
                                                                               ),
                                                                             ),
-                                                                          if ((listViewTransportActionsRecord.transport) ==
+                                                                          if (listViewTransportActionsRecord.transport ==
                                                                               'bike')
                                                                             InkWell(
                                                                               onTap: () async {
@@ -5011,7 +5307,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                                 ),
                                                                 Text(
                                                                   listViewTransportActionsRecord
-                                                                      .day,
+                                                                      .day!,
                                                                   textAlign:
                                                                       TextAlign
                                                                           .center,
@@ -5055,7 +5351,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                           ),
                                                         ).animated([
                                                           animationsMap[
-                                                              'containerOnPageLoadAnimation1']
+                                                              'containerOnPageLoadAnimation1']!
                                                         ]),
                                                       );
                                                     },
@@ -5124,7 +5420,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                   }
                                                   List<FoodActionsRecord>
                                                       foodLisFoodActionsRecordList =
-                                                      snapshot.data;
+                                                      snapshot.data!;
                                                   return ListView.builder(
                                                     padding: EdgeInsets.zero,
                                                     scrollDirection:
@@ -5188,7 +5484,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                                             0,
                                                                             0),
                                                                         children: [
-                                                                          if ((foodLisFoodActionsRecord.food) ==
+                                                                          if (foodLisFoodActionsRecord.food ==
                                                                               'starter')
                                                                             InkWell(
                                                                               onTap: () async {
@@ -5219,7 +5515,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                                                 ),
                                                                               ),
                                                                             ),
-                                                                          if ((foodLisFoodActionsRecord.food) ==
+                                                                          if (foodLisFoodActionsRecord.food ==
                                                                               'main')
                                                                             InkWell(
                                                                               onTap: () async {
@@ -5250,7 +5546,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                                                 ),
                                                                               ),
                                                                             ),
-                                                                          if ((foodLisFoodActionsRecord.food) ==
+                                                                          if (foodLisFoodActionsRecord.food ==
                                                                               'desert')
                                                                             InkWell(
                                                                               onTap: () async {
@@ -5281,7 +5577,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                                                 ),
                                                                               ),
                                                                             ),
-                                                                          if ((foodLisFoodActionsRecord.food) ==
+                                                                          if (foodLisFoodActionsRecord.food ==
                                                                               'drinks')
                                                                             InkWell(
                                                                               onTap: () async {
@@ -5312,7 +5608,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                                                 ),
                                                                               ),
                                                                             ),
-                                                                          if ((foodLisFoodActionsRecord.food) ==
+                                                                          if (foodLisFoodActionsRecord.food ==
                                                                               'cheese')
                                                                             InkWell(
                                                                               onTap: () async {
@@ -5343,7 +5639,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                                                 ),
                                                                               ),
                                                                             ),
-                                                                          if ((foodLisFoodActionsRecord.food) ==
+                                                                          if (foodLisFoodActionsRecord.food ==
                                                                               'bread')
                                                                             InkWell(
                                                                               onTap: () async {
@@ -5374,7 +5670,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                                                 ),
                                                                               ),
                                                                             ),
-                                                                          if ((foodLisFoodActionsRecord.food) ==
+                                                                          if (foodLisFoodActionsRecord.food ==
                                                                               'coffee')
                                                                             InkWell(
                                                                               onTap: () async {
@@ -5467,7 +5763,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                                 ),
                                                                 Text(
                                                                   foodLisFoodActionsRecord
-                                                                      .day,
+                                                                      .day!,
                                                                   textAlign:
                                                                       TextAlign
                                                                           .center,
@@ -5511,7 +5807,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                           ),
                                                         ).animated([
                                                           animationsMap[
-                                                              'containerOnPageLoadAnimation2']
+                                                              'containerOnPageLoadAnimation2']!
                                                         ]),
                                                       );
                                                     },
@@ -5582,7 +5878,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                   }
                                                   List<EnergyActionsRecord>
                                                       listViewEnergyActionsRecordList =
-                                                      snapshot.data;
+                                                      snapshot.data!;
                                                   return ListView.builder(
                                                     padding: EdgeInsets.zero,
                                                     scrollDirection:
@@ -5646,7 +5942,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                                             0,
                                                                             0),
                                                                         children: [
-                                                                          if ((listViewEnergyActionsRecord.energy) ==
+                                                                          if (listViewEnergyActionsRecord.energy ==
                                                                               'electricity')
                                                                             InkWell(
                                                                               onTap: () async {
@@ -5677,7 +5973,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                                                 ),
                                                                               ),
                                                                             ),
-                                                                          if ((listViewEnergyActionsRecord.energy) ==
+                                                                          if (listViewEnergyActionsRecord.energy ==
                                                                               'gas')
                                                                             InkWell(
                                                                               onTap: () async {
@@ -5708,7 +6004,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                                                 ),
                                                                               ),
                                                                             ),
-                                                                          if ((listViewEnergyActionsRecord.energy) ==
+                                                                          if (listViewEnergyActionsRecord.energy ==
                                                                               'water')
                                                                             InkWell(
                                                                               onTap: () async {
@@ -5801,7 +6097,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                                 ),
                                                                 Text(
                                                                   listViewEnergyActionsRecord
-                                                                      .day,
+                                                                      .day!,
                                                                   textAlign:
                                                                       TextAlign
                                                                           .center,
@@ -5845,7 +6141,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                           ),
                                                         ).animated([
                                                           animationsMap[
-                                                              'containerOnPageLoadAnimation3']
+                                                              'containerOnPageLoadAnimation3']!
                                                         ]),
                                                       );
                                                     },
@@ -5855,6 +6151,85 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                             ),
                                           ),
                                         ],
+                                      ),
+                                    ),
+                                  if (activeProfilePartValue == 'Paramètres')
+                                    Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          0, 20, 0, 0),
+                                      child: Container(
+                                        width:
+                                            MediaQuery.of(context).size.width,
+                                        decoration: BoxDecoration(),
+                                        child: Padding(
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  16, 0, 16, 12),
+                                          child: Container(
+                                            width: double.infinity,
+                                            decoration: BoxDecoration(
+                                              color: Colors.white,
+                                              borderRadius:
+                                                  BorderRadius.circular(8),
+                                              border: Border.all(
+                                                color: Color(0xFFE0E3E7),
+                                                width: 2,
+                                              ),
+                                            ),
+                                            child: Padding(
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(12, 12, 12, 12),
+                                              child: Column(
+                                                mainAxisSize: MainAxisSize.max,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.center,
+                                                children: [
+                                                  Text(
+                                                    'Paramètres',
+                                                    textAlign: TextAlign.center,
+                                                    style: FlutterFlowTheme.of(
+                                                            context)
+                                                        .title3
+                                                        .override(
+                                                          fontFamily: 'Outfit',
+                                                          color:
+                                                              Color(0xFF101213),
+                                                          fontSize: 20,
+                                                          fontWeight:
+                                                              FontWeight.w500,
+                                                        ),
+                                                  ),
+                                                  Padding(
+                                                    padding:
+                                                        EdgeInsetsDirectional
+                                                            .fromSTEB(
+                                                                0, 10, 0, 0),
+                                                    child: Text(
+                                                      'Dans la prochaine version, vous pourrez régler vos paramètres par défaut (type de véhicule, transports en commun, taille du foyer, etc).',
+                                                      style:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .bodyText2
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Outfit',
+                                                                color: Color(
+                                                                    0xFF57636C),
+                                                                fontSize: 14,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .normal,
+                                                              ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ).animated([
+                                            animationsMap[
+                                                'containerOnPageLoadAnimation4']!
+                                          ]),
+                                        ),
                                       ),
                                     ),
                                 ],
