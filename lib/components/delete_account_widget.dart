@@ -9,14 +9,14 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class DeleteAccountWidget extends StatefulWidget {
-  const DeleteAccountWidget({Key key}) : super(key: key);
+  const DeleteAccountWidget({Key? key}) : super(key: key);
 
   @override
   _DeleteAccountWidgetState createState() => _DeleteAccountWidgetState();
 }
 
 class _DeleteAccountWidgetState extends State<DeleteAccountWidget> {
-  TextEditingController emailController;
+  TextEditingController? emailController;
 
   @override
   void initState() {
@@ -157,7 +157,7 @@ class _DeleteAccountWidgetState extends State<DeleteAccountWidget> {
                               onTap: () async {
                                 logFirebaseEvent(
                                     'DELETE_ACCOUNT_Container_2n8nomcm_ON_TAP');
-                                if ((emailController.text) == 'supprimer') {
+                                if (emailController!.text == 'supprimer') {
                                   logFirebaseEvent('iconButton_Auth');
                                   await deleteUser(context);
                                   logFirebaseEvent('iconButton_Alert-Dialog');

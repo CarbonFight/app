@@ -14,6 +14,7 @@ import '../food/food_widget.dart';
 import '../profile/profile_widget.dart';
 import '../statistiques/statistiques_widget.dart';
 import '../transport/transport_widget.dart';
+import '../custom_code/actions/index.dart' as actions;
 import '../flutter_flow/custom_functions.dart' as functions;
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -23,7 +24,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 
 class HomeWidget extends StatefulWidget {
-  const HomeWidget({Key key}) : super(key: key);
+  const HomeWidget({Key? key}) : super(key: key);
 
   @override
   _HomeWidgetState createState() => _HomeWidgetState();
@@ -34,6 +35,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
     'containerOnPageLoadAnimation1': AnimationInfo(
       trigger: AnimationTrigger.onPageLoad,
       duration: 600,
+      hideBeforeAnimating: false,
       fadeIn: true,
       initialState: AnimationState(
         offset: Offset(0, 70),
@@ -49,6 +51,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
     'containerOnPageLoadAnimation2': AnimationInfo(
       trigger: AnimationTrigger.onPageLoad,
       duration: 600,
+      hideBeforeAnimating: false,
       fadeIn: true,
       initialState: AnimationState(
         offset: Offset(0, 70),
@@ -64,6 +67,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
     'containerOnPageLoadAnimation3': AnimationInfo(
       trigger: AnimationTrigger.onPageLoad,
       duration: 600,
+      hideBeforeAnimating: false,
       fadeIn: true,
       initialState: AnimationState(
         offset: Offset(0, 70),
@@ -83,11 +87,15 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
   void initState() {
     super.initState();
     // On page load action.
-    SchedulerBinding.instance?.addPostFrameCallback((_) async {
+    SchedulerBinding.instance.addPostFrameCallback((_) async {
       logFirebaseEvent('HOME_PAGE_Home_ON_PAGE_LOAD');
+      logFirebaseEvent('Home_Custom-Action');
+      await actions.lockOrientation();
       logFirebaseEvent('Home_Update-Local-State');
       setState(() => FFAppState().activeDate =
           dateTimeFormat('d/M/y', getCurrentTimestamp));
+      logFirebaseEvent('Home_Update-Local-State');
+      setState(() => FFAppState().activeDateRelative = 0);
     });
 
     logFirebaseEvent('screen_view', parameters: {'screen_name': 'Home'});
@@ -101,7 +109,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<UsersRecord>(
-      stream: UsersRecord.getDocument(currentUserReference),
+      stream: UsersRecord.getDocument(currentUserReference!),
       builder: (context, snapshot) {
         // Customize what your widget looks like when it's loading.
         if (!snapshot.hasData) {
@@ -116,7 +124,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
             ),
           );
         }
-        final homeUsersRecord = snapshot.data;
+        final homeUsersRecord = snapshot.data!;
         return Scaffold(
           key: scaffoldKey,
           backgroundColor: FlutterFlowTheme.of(context).primaryColor,
@@ -145,7 +153,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                       );
                     }
                     List<UsersStatsRecord> containerUsersStatsRecordList =
-                        snapshot.data;
+                        snapshot.data!;
                     final containerUsersStatsRecord =
                         containerUsersStatsRecordList.isNotEmpty
                             ? containerUsersStatsRecordList.first
@@ -446,8 +454,8 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                             CircularPercentIndicator(
                                               percent: functions.ratioScoreTotal(
                                                   functions.getActiveScore(
-                                                      containerUsersStatsRecord
-                                                          .days
+                                                      containerUsersStatsRecord!
+                                                          .days!
                                                           .toList(),
                                                       FFAppState()
                                                           .activeDateRelative),
@@ -461,8 +469,8 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                               center: Text(
                                                 functions.printScore(
                                                     functions.getActiveScore(
-                                                        containerUsersStatsRecord
-                                                            .days
+                                                        containerUsersStatsRecord!
+                                                            .days!
                                                             .toList(),
                                                         FFAppState()
                                                             .activeDateRelative)),
@@ -529,8 +537,8 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                 children: [
                                                   Stack(
                                                     children: [
-                                                      if ((FFAppState()
-                                                              .activeDateRelative) >=
+                                                      if (FFAppState()
+                                                              .activeDateRelative >=
                                                           6)
                                                         FlutterFlowIconButton(
                                                           borderColor: Colors
@@ -549,8 +557,8 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                 'previousDisabled pressed ...');
                                                           },
                                                         ),
-                                                      if ((FFAppState()
-                                                              .activeDateRelative) <
+                                                      if (FFAppState()
+                                                              .activeDateRelative <
                                                           6)
                                                         FlutterFlowIconButton(
                                                           borderColor: Colors
@@ -601,8 +609,8 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                   ),
                                                   Stack(
                                                     children: [
-                                                      if ((FFAppState()
-                                                              .activeDateRelative) >
+                                                      if (FFAppState()
+                                                              .activeDateRelative >
                                                           0)
                                                         FlutterFlowIconButton(
                                                           borderColor: Colors
@@ -635,8 +643,8 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                     -1);
                                                           },
                                                         ),
-                                                      if ((FFAppState()
-                                                              .activeDateRelative) <=
+                                                      if (FFAppState()
+                                                              .activeDateRelative <=
                                                           0)
                                                         FlutterFlowIconButton(
                                                           borderColor: Colors
@@ -694,8 +702,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                       child: Stack(
                                                         children: [
                                                           if (FFAppState()
-                                                                  .displayFoodActions ??
-                                                              true)
+                                                              .displayFoodActions)
                                                             Padding(
                                                               padding:
                                                                   EdgeInsetsDirectional
@@ -741,8 +748,8 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                   ),
                                                                   Text(
                                                                     functions.printScore(functions.getActiveScore(
-                                                                        containerUsersStatsRecord
-                                                                            .foods
+                                                                        containerUsersStatsRecord!
+                                                                            .foods!
                                                                             .toList(),
                                                                         FFAppState()
                                                                             .activeDateRelative)),
@@ -761,7 +768,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                         ),
                                                                   ),
                                                                   Text(
-                                                                    '${functions.printRatioScoreTotal(functions.getActiveScore(containerUsersStatsRecord.foods.toList(), FFAppState().activeDateRelative), functions.getActiveScore(containerUsersStatsRecord.days.toList(), FFAppState().activeDateRelative))} de votre journée',
+                                                                    '${functions.printRatioScoreTotal(functions.getActiveScore(containerUsersStatsRecord!.foods!.toList(), FFAppState().activeDateRelative), functions.getActiveScore(containerUsersStatsRecord!.days!.toList(), FFAppState().activeDateRelative))} de votre journée',
                                                                     style: FlutterFlowTheme.of(
                                                                             context)
                                                                         .bodyText2
@@ -779,9 +786,8 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                 ],
                                                               ),
                                                             ),
-                                                          if (!(FFAppState()
-                                                                  .displayFoodActions) ??
-                                                              true)
+                                                          if (!FFAppState()
+                                                              .displayFoodActions)
                                                             Padding(
                                                               padding:
                                                                   EdgeInsetsDirectional
@@ -827,7 +833,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                   ),
                                                                   Text(
                                                                     functions.printScore(
-                                                                        containerUsersStatsRecord
+                                                                        containerUsersStatsRecord!
                                                                             .foodPeriodics),
                                                                     style: FlutterFlowTheme.of(
                                                                             context)
@@ -844,7 +850,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                         ),
                                                                   ),
                                                                   Text(
-                                                                    '${functions.printRatioScoreTotal(containerUsersStatsRecord.foodPeriodics, containerUsersStatsRecord.periodics)} de vos émissions récurrentes',
+                                                                    '${functions.printRatioScoreTotal(containerUsersStatsRecord!.foodPeriodics, containerUsersStatsRecord!.periodics)} de vos émissions récurrentes',
                                                                     style: FlutterFlowTheme.of(
                                                                             context)
                                                                         .bodyText2
@@ -974,8 +980,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                         Stack(
                                                           children: [
                                                             if (FFAppState()
-                                                                    .displayFoodActions ??
-                                                                true)
+                                                                .displayFoodActions)
                                                               StreamBuilder<
                                                                   List<
                                                                       FoodActionsRecord>>(
@@ -995,9 +1000,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                           isEqualTo:
                                                                               false)
                                                                       .orderBy(
-                                                                          'created_time',
-                                                                          descending:
-                                                                              true),
+                                                                          'created_time'),
                                                                 ),
                                                                 builder: (context,
                                                                     snapshot) {
@@ -1024,7 +1027,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                   List<FoodActionsRecord>
                                                                       foodsFoodActionsRecordList =
                                                                       snapshot
-                                                                          .data;
+                                                                          .data!;
                                                                   return SingleChildScrollView(
                                                                     scrollDirection:
                                                                         Axis.horizontal,
@@ -1051,7 +1054,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                             alignment:
                                                                                 AlignmentDirectional(0, 0),
                                                                             children: [
-                                                                              if ((foodsFoodActionsRecord.food) == 'starter')
+                                                                              if (foodsFoodActionsRecord.food == 'starter')
                                                                                 InkWell(
                                                                                   onTap: () async {
                                                                                     logFirebaseEvent('HOME_PAGE_starterAction_ON_TAP');
@@ -1079,7 +1082,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                                     ),
                                                                                   ),
                                                                                 ),
-                                                                              if ((foodsFoodActionsRecord.food) == 'main')
+                                                                              if (foodsFoodActionsRecord.food == 'main')
                                                                                 InkWell(
                                                                                   onTap: () async {
                                                                                     logFirebaseEvent('HOME_PAGE_mainAction_ON_TAP');
@@ -1097,8 +1100,6 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                                     );
                                                                                   },
                                                                                   child: Container(
-                                                                                    width: 40,
-                                                                                    height: 40,
                                                                                     clipBehavior: Clip.antiAlias,
                                                                                     decoration: BoxDecoration(
                                                                                       shape: BoxShape.circle,
@@ -1109,7 +1110,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                                     ),
                                                                                   ),
                                                                                 ),
-                                                                              if ((foodsFoodActionsRecord.food) == 'desert')
+                                                                              if (foodsFoodActionsRecord.food == 'desert')
                                                                                 InkWell(
                                                                                   onTap: () async {
                                                                                     logFirebaseEvent('HOME_PAGE_desertAction_ON_TAP');
@@ -1127,8 +1128,6 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                                     );
                                                                                   },
                                                                                   child: Container(
-                                                                                    width: 40,
-                                                                                    height: 40,
                                                                                     clipBehavior: Clip.antiAlias,
                                                                                     decoration: BoxDecoration(
                                                                                       shape: BoxShape.circle,
@@ -1139,7 +1138,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                                     ),
                                                                                   ),
                                                                                 ),
-                                                                              if ((foodsFoodActionsRecord.food) == 'drinks')
+                                                                              if (foodsFoodActionsRecord.food == 'drinks')
                                                                                 InkWell(
                                                                                   onTap: () async {
                                                                                     logFirebaseEvent('HOME_PAGE_drinksAction_ON_TAP');
@@ -1157,8 +1156,6 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                                     );
                                                                                   },
                                                                                   child: Container(
-                                                                                    width: 40,
-                                                                                    height: 40,
                                                                                     clipBehavior: Clip.antiAlias,
                                                                                     decoration: BoxDecoration(
                                                                                       shape: BoxShape.circle,
@@ -1169,7 +1166,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                                     ),
                                                                                   ),
                                                                                 ),
-                                                                              if ((foodsFoodActionsRecord.food) == 'cheese')
+                                                                              if (foodsFoodActionsRecord.food == 'cheese')
                                                                                 InkWell(
                                                                                   onTap: () async {
                                                                                     logFirebaseEvent('HOME_PAGE_cheeseAction_ON_TAP');
@@ -1187,8 +1184,6 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                                     );
                                                                                   },
                                                                                   child: Container(
-                                                                                    width: 40,
-                                                                                    height: 40,
                                                                                     clipBehavior: Clip.antiAlias,
                                                                                     decoration: BoxDecoration(
                                                                                       shape: BoxShape.circle,
@@ -1199,7 +1194,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                                     ),
                                                                                   ),
                                                                                 ),
-                                                                              if ((foodsFoodActionsRecord.food) == 'bread')
+                                                                              if (foodsFoodActionsRecord.food == 'bread')
                                                                                 InkWell(
                                                                                   onTap: () async {
                                                                                     logFirebaseEvent('HOME_PAGE_breadAction_ON_TAP');
@@ -1217,8 +1212,6 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                                     );
                                                                                   },
                                                                                   child: Container(
-                                                                                    width: 40,
-                                                                                    height: 40,
                                                                                     clipBehavior: Clip.antiAlias,
                                                                                     decoration: BoxDecoration(
                                                                                       shape: BoxShape.circle,
@@ -1229,7 +1222,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                                     ),
                                                                                   ),
                                                                                 ),
-                                                                              if ((foodsFoodActionsRecord.food) == 'coffee')
+                                                                              if (foodsFoodActionsRecord.food == 'coffee')
                                                                                 InkWell(
                                                                                   onTap: () async {
                                                                                     logFirebaseEvent('HOME_PAGE_coffeeAction_ON_TAP');
@@ -1247,8 +1240,6 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                                     );
                                                                                   },
                                                                                   child: Container(
-                                                                                    width: 40,
-                                                                                    height: 40,
                                                                                     clipBehavior: Clip.antiAlias,
                                                                                     decoration: BoxDecoration(
                                                                                       shape: BoxShape.circle,
@@ -1267,9 +1258,8 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                   );
                                                                 },
                                                               ),
-                                                            if (!(FFAppState()
-                                                                    .displayFoodActions) ??
-                                                                true)
+                                                            if (!FFAppState()
+                                                                .displayFoodActions)
                                                               Align(
                                                                 alignment:
                                                                     AlignmentDirectional(
@@ -1287,10 +1277,6 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                         .where(
                                                                             'isPeriodic',
                                                                             isEqualTo:
-                                                                                true)
-                                                                        .orderBy(
-                                                                            'created_time',
-                                                                            descending:
                                                                                 true),
                                                                   ),
                                                                   builder: (context,
@@ -1318,7 +1304,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                     List<FoodActionsRecord>
                                                                         foodPeriodicsFoodActionsRecordList =
                                                                         snapshot
-                                                                            .data;
+                                                                            .data!;
                                                                     return SingleChildScrollView(
                                                                       scrollDirection:
                                                                           Axis.horizontal,
@@ -1342,7 +1328,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                                 Stack(
                                                                               alignment: AlignmentDirectional(0, 0),
                                                                               children: [
-                                                                                if ((foodPeriodicsFoodActionsRecord.food) == 'starter')
+                                                                                if (foodPeriodicsFoodActionsRecord.food == 'starter')
                                                                                   InkWell(
                                                                                     onTap: () async {
                                                                                       logFirebaseEvent('HOME_PAGE_starterPeriodics_ON_TAP');
@@ -1360,8 +1346,6 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                                       );
                                                                                     },
                                                                                     child: Container(
-                                                                                      width: 40,
-                                                                                      height: 40,
                                                                                       clipBehavior: Clip.antiAlias,
                                                                                       decoration: BoxDecoration(
                                                                                         shape: BoxShape.circle,
@@ -1372,7 +1356,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                                       ),
                                                                                     ),
                                                                                   ),
-                                                                                if ((foodPeriodicsFoodActionsRecord.food) == 'main')
+                                                                                if (foodPeriodicsFoodActionsRecord.food == 'main')
                                                                                   InkWell(
                                                                                     onTap: () async {
                                                                                       logFirebaseEvent('HOME_PAGE_mainPeriodics_ON_TAP');
@@ -1390,8 +1374,6 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                                       );
                                                                                     },
                                                                                     child: Container(
-                                                                                      width: 40,
-                                                                                      height: 40,
                                                                                       clipBehavior: Clip.antiAlias,
                                                                                       decoration: BoxDecoration(
                                                                                         shape: BoxShape.circle,
@@ -1402,7 +1384,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                                       ),
                                                                                     ),
                                                                                   ),
-                                                                                if ((foodPeriodicsFoodActionsRecord.food) == 'desert')
+                                                                                if (foodPeriodicsFoodActionsRecord.food == 'desert')
                                                                                   InkWell(
                                                                                     onTap: () async {
                                                                                       logFirebaseEvent('HOME_PAGE_desertPeriodics_ON_TAP');
@@ -1420,8 +1402,6 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                                       );
                                                                                     },
                                                                                     child: Container(
-                                                                                      width: 40,
-                                                                                      height: 40,
                                                                                       clipBehavior: Clip.antiAlias,
                                                                                       decoration: BoxDecoration(
                                                                                         shape: BoxShape.circle,
@@ -1432,7 +1412,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                                       ),
                                                                                     ),
                                                                                   ),
-                                                                                if ((foodPeriodicsFoodActionsRecord.food) == 'drinks')
+                                                                                if (foodPeriodicsFoodActionsRecord.food == 'drinks')
                                                                                   InkWell(
                                                                                     onTap: () async {
                                                                                       logFirebaseEvent('HOME_PAGE_drinksPeriodics_ON_TAP');
@@ -1450,8 +1430,6 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                                       );
                                                                                     },
                                                                                     child: Container(
-                                                                                      width: 40,
-                                                                                      height: 40,
                                                                                       clipBehavior: Clip.antiAlias,
                                                                                       decoration: BoxDecoration(
                                                                                         shape: BoxShape.circle,
@@ -1462,7 +1440,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                                       ),
                                                                                     ),
                                                                                   ),
-                                                                                if ((foodPeriodicsFoodActionsRecord.food) == 'cheese')
+                                                                                if (foodPeriodicsFoodActionsRecord.food == 'cheese')
                                                                                   InkWell(
                                                                                     onTap: () async {
                                                                                       logFirebaseEvent('HOME_PAGE_cheesePeriodics_ON_TAP');
@@ -1480,8 +1458,6 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                                       );
                                                                                     },
                                                                                     child: Container(
-                                                                                      width: 40,
-                                                                                      height: 40,
                                                                                       clipBehavior: Clip.antiAlias,
                                                                                       decoration: BoxDecoration(
                                                                                         shape: BoxShape.circle,
@@ -1492,7 +1468,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                                       ),
                                                                                     ),
                                                                                   ),
-                                                                                if ((foodPeriodicsFoodActionsRecord.food) == 'bread')
+                                                                                if (foodPeriodicsFoodActionsRecord.food == 'bread')
                                                                                   InkWell(
                                                                                     onTap: () async {
                                                                                       logFirebaseEvent('HOME_PAGE_breadPeriodics_ON_TAP');
@@ -1510,8 +1486,6 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                                       );
                                                                                     },
                                                                                     child: Container(
-                                                                                      width: 40,
-                                                                                      height: 40,
                                                                                       clipBehavior: Clip.antiAlias,
                                                                                       decoration: BoxDecoration(
                                                                                         shape: BoxShape.circle,
@@ -1522,7 +1496,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                                       ),
                                                                                     ),
                                                                                   ),
-                                                                                if ((foodPeriodicsFoodActionsRecord.food) == 'coffee')
+                                                                                if (foodPeriodicsFoodActionsRecord.food == 'coffee')
                                                                                   InkWell(
                                                                                     onTap: () async {
                                                                                       logFirebaseEvent('HOME_PAGE_coffeePeriodics_ON_TAP');
@@ -1540,8 +1514,6 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                                       );
                                                                                     },
                                                                                     child: Container(
-                                                                                      width: 40,
-                                                                                      height: 40,
                                                                                       clipBehavior: Clip.antiAlias,
                                                                                       decoration: BoxDecoration(
                                                                                         shape: BoxShape.circle,
@@ -1614,7 +1586,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                           ),
                                         ).animated([
                                           animationsMap[
-                                              'containerOnPageLoadAnimation1']
+                                              'containerOnPageLoadAnimation1']!
                                         ]),
                                       ),
                                       Padding(
@@ -1648,8 +1620,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                       child: Stack(
                                                         children: [
                                                           if (FFAppState()
-                                                                  .displayTransportActions ??
-                                                              true)
+                                                              .displayTransportActions)
                                                             Padding(
                                                               padding:
                                                                   EdgeInsetsDirectional
@@ -1695,8 +1666,8 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                   ),
                                                                   Text(
                                                                     functions.printScore(functions.getActiveScore(
-                                                                        containerUsersStatsRecord
-                                                                            .transports
+                                                                        containerUsersStatsRecord!
+                                                                            .transports!
                                                                             .toList(),
                                                                         FFAppState()
                                                                             .activeDateRelative)),
@@ -1715,7 +1686,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                         ),
                                                                   ),
                                                                   Text(
-                                                                    '${functions.printRatioScoreTotal(functions.getActiveScore(containerUsersStatsRecord.transports.toList(), FFAppState().activeDateRelative), functions.getActiveScore(containerUsersStatsRecord.days.toList(), FFAppState().activeDateRelative))} de votre journée',
+                                                                    '${functions.printRatioScoreTotal(functions.getActiveScore(containerUsersStatsRecord!.transports!.toList(), FFAppState().activeDateRelative), functions.getActiveScore(containerUsersStatsRecord!.days!.toList(), FFAppState().activeDateRelative))} de votre journée',
                                                                     style: FlutterFlowTheme.of(
                                                                             context)
                                                                         .bodyText2
@@ -1733,9 +1704,8 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                 ],
                                                               ),
                                                             ),
-                                                          if (!(FFAppState()
-                                                                  .displayTransportActions) ??
-                                                              true)
+                                                          if (!FFAppState()
+                                                              .displayTransportActions)
                                                             Padding(
                                                               padding:
                                                                   EdgeInsetsDirectional
@@ -1781,7 +1751,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                   ),
                                                                   Text(
                                                                     functions.printScore(
-                                                                        containerUsersStatsRecord
+                                                                        containerUsersStatsRecord!
                                                                             .transportPeriodics),
                                                                     style: FlutterFlowTheme.of(
                                                                             context)
@@ -1798,7 +1768,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                         ),
                                                                   ),
                                                                   Text(
-                                                                    '${functions.printRatioScoreTotal(containerUsersStatsRecord.transportPeriodics, containerUsersStatsRecord.periodics)} de vos émissions récurrentes',
+                                                                    '${functions.printRatioScoreTotal(containerUsersStatsRecord!.transportPeriodics, containerUsersStatsRecord!.periodics)} de vos émissions récurrentes',
                                                                     style: FlutterFlowTheme.of(
                                                                             context)
                                                                         .bodyText2
@@ -1928,8 +1898,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                         Stack(
                                                           children: [
                                                             if (FFAppState()
-                                                                    .displayTransportActions ??
-                                                                true)
+                                                                .displayTransportActions)
                                                               StreamBuilder<
                                                                   List<
                                                                       TransportActionsRecord>>(
@@ -1949,9 +1918,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                           isEqualTo:
                                                                               false)
                                                                       .orderBy(
-                                                                          'created_time',
-                                                                          descending:
-                                                                              true),
+                                                                          'created_time'),
                                                                 ),
                                                                 builder: (context,
                                                                     snapshot) {
@@ -1978,7 +1945,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                   List<TransportActionsRecord>
                                                                       transportsTransportActionsRecordList =
                                                                       snapshot
-                                                                          .data;
+                                                                          .data!;
                                                                   return SingleChildScrollView(
                                                                     scrollDirection:
                                                                         Axis.horizontal,
@@ -2005,7 +1972,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                             alignment:
                                                                                 AlignmentDirectional(0, 0),
                                                                             children: [
-                                                                              if ((transportsTransportActionsRecord.transport) == 'car')
+                                                                              if (transportsTransportActionsRecord.transport == 'car')
                                                                                 InkWell(
                                                                                   onTap: () async {
                                                                                     logFirebaseEvent('HOME_PAGE_carAction_ON_TAP');
@@ -2029,8 +1996,6 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                                     );
                                                                                   },
                                                                                   child: Container(
-                                                                                    width: 40,
-                                                                                    height: 40,
                                                                                     clipBehavior: Clip.antiAlias,
                                                                                     decoration: BoxDecoration(
                                                                                       shape: BoxShape.circle,
@@ -2041,7 +2006,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                                     ),
                                                                                   ),
                                                                                 ),
-                                                                              if ((transportsTransportActionsRecord.transport) == 'bus')
+                                                                              if (transportsTransportActionsRecord.transport == 'bus')
                                                                                 InkWell(
                                                                                   onTap: () async {
                                                                                     logFirebaseEvent('HOME_PAGE_busAction_ON_TAP');
@@ -2065,8 +2030,6 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                                     );
                                                                                   },
                                                                                   child: Container(
-                                                                                    width: 40,
-                                                                                    height: 40,
                                                                                     clipBehavior: Clip.antiAlias,
                                                                                     decoration: BoxDecoration(
                                                                                       shape: BoxShape.circle,
@@ -2077,7 +2040,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                                     ),
                                                                                   ),
                                                                                 ),
-                                                                              if ((transportsTransportActionsRecord.transport) == 'scooter')
+                                                                              if (transportsTransportActionsRecord.transport == 'scooter')
                                                                                 InkWell(
                                                                                   onTap: () async {
                                                                                     logFirebaseEvent('HOME_PAGE_scooterAction_ON_TAP');
@@ -2101,8 +2064,6 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                                     );
                                                                                   },
                                                                                   child: Container(
-                                                                                    width: 40,
-                                                                                    height: 40,
                                                                                     clipBehavior: Clip.antiAlias,
                                                                                     decoration: BoxDecoration(
                                                                                       shape: BoxShape.circle,
@@ -2113,7 +2074,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                                     ),
                                                                                   ),
                                                                                 ),
-                                                                              if ((transportsTransportActionsRecord.transport) == 'moto')
+                                                                              if (transportsTransportActionsRecord.transport == 'moto')
                                                                                 InkWell(
                                                                                   onTap: () async {
                                                                                     logFirebaseEvent('HOME_PAGE_motoAction_ON_TAP');
@@ -2137,8 +2098,6 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                                     );
                                                                                   },
                                                                                   child: Container(
-                                                                                    width: 40,
-                                                                                    height: 40,
                                                                                     clipBehavior: Clip.antiAlias,
                                                                                     decoration: BoxDecoration(
                                                                                       shape: BoxShape.circle,
@@ -2149,7 +2108,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                                     ),
                                                                                   ),
                                                                                 ),
-                                                                              if ((transportsTransportActionsRecord.transport) == 'train')
+                                                                              if (transportsTransportActionsRecord.transport == 'train')
                                                                                 InkWell(
                                                                                   onTap: () async {
                                                                                     logFirebaseEvent('HOME_PAGE_trainAction_ON_TAP');
@@ -2173,8 +2132,6 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                                     );
                                                                                   },
                                                                                   child: Container(
-                                                                                    width: 40,
-                                                                                    height: 40,
                                                                                     clipBehavior: Clip.antiAlias,
                                                                                     decoration: BoxDecoration(
                                                                                       shape: BoxShape.circle,
@@ -2185,7 +2142,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                                     ),
                                                                                   ),
                                                                                 ),
-                                                                              if ((transportsTransportActionsRecord.transport) == 'metro')
+                                                                              if (transportsTransportActionsRecord.transport == 'metro')
                                                                                 InkWell(
                                                                                   onTap: () async {
                                                                                     logFirebaseEvent('HOME_PAGE_metroAction_ON_TAP');
@@ -2209,8 +2166,6 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                                     );
                                                                                   },
                                                                                   child: Container(
-                                                                                    width: 40,
-                                                                                    height: 40,
                                                                                     clipBehavior: Clip.antiAlias,
                                                                                     decoration: BoxDecoration(
                                                                                       shape: BoxShape.circle,
@@ -2221,7 +2176,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                                     ),
                                                                                   ),
                                                                                 ),
-                                                                              if ((transportsTransportActionsRecord.transport) == 'flight')
+                                                                              if (transportsTransportActionsRecord.transport == 'flight')
                                                                                 InkWell(
                                                                                   onTap: () async {
                                                                                     logFirebaseEvent('HOME_PAGE_flightAction_ON_TAP');
@@ -2245,8 +2200,6 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                                     );
                                                                                   },
                                                                                   child: Container(
-                                                                                    width: 40,
-                                                                                    height: 40,
                                                                                     clipBehavior: Clip.antiAlias,
                                                                                     decoration: BoxDecoration(
                                                                                       shape: BoxShape.circle,
@@ -2257,7 +2210,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                                     ),
                                                                                   ),
                                                                                 ),
-                                                                              if ((transportsTransportActionsRecord.transport) == 'bike')
+                                                                              if (transportsTransportActionsRecord.transport == 'bike')
                                                                                 InkWell(
                                                                                   onTap: () async {
                                                                                     logFirebaseEvent('HOME_PAGE_bikeAction_ON_TAP');
@@ -2281,8 +2234,6 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                                     );
                                                                                   },
                                                                                   child: Container(
-                                                                                    width: 40,
-                                                                                    height: 40,
                                                                                     clipBehavior: Clip.antiAlias,
                                                                                     decoration: BoxDecoration(
                                                                                       shape: BoxShape.circle,
@@ -2301,9 +2252,8 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                   );
                                                                 },
                                                               ),
-                                                            if (!(FFAppState()
-                                                                    .displayTransportActions) ??
-                                                                true)
+                                                            if (!FFAppState()
+                                                                .displayTransportActions)
                                                               StreamBuilder<
                                                                   List<
                                                                       TransportActionsRecord>>(
@@ -2344,7 +2294,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                   List<TransportActionsRecord>
                                                                       transportPeriodicsTransportActionsRecordList =
                                                                       snapshot
-                                                                          .data;
+                                                                          .data!;
                                                                   return Row(
                                                                     mainAxisSize:
                                                                         MainAxisSize
@@ -2367,7 +2317,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                         child:
                                                                             Stack(
                                                                           children: [
-                                                                            if ((transportPeriodicsTransportActionsRecord.transport) ==
+                                                                            if (transportPeriodicsTransportActionsRecord.transport ==
                                                                                 'car')
                                                                               Align(
                                                                                 alignment: AlignmentDirectional(0, 0),
@@ -2394,8 +2344,6 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                                     );
                                                                                   },
                                                                                   child: Container(
-                                                                                    width: 40,
-                                                                                    height: 40,
                                                                                     clipBehavior: Clip.antiAlias,
                                                                                     decoration: BoxDecoration(
                                                                                       shape: BoxShape.circle,
@@ -2407,7 +2355,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                                   ),
                                                                                 ),
                                                                               ),
-                                                                            if ((transportPeriodicsTransportActionsRecord.transport) ==
+                                                                            if (transportPeriodicsTransportActionsRecord.transport ==
                                                                                 'bus')
                                                                               Align(
                                                                                 alignment: AlignmentDirectional(0, 0),
@@ -2434,8 +2382,6 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                                     );
                                                                                   },
                                                                                   child: Container(
-                                                                                    width: 40,
-                                                                                    height: 40,
                                                                                     clipBehavior: Clip.antiAlias,
                                                                                     decoration: BoxDecoration(
                                                                                       shape: BoxShape.circle,
@@ -2447,7 +2393,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                                   ),
                                                                                 ),
                                                                               ),
-                                                                            if ((transportPeriodicsTransportActionsRecord.transport) ==
+                                                                            if (transportPeriodicsTransportActionsRecord.transport ==
                                                                                 'scooter')
                                                                               Align(
                                                                                 alignment: AlignmentDirectional(0, 0),
@@ -2474,8 +2420,6 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                                     );
                                                                                   },
                                                                                   child: Container(
-                                                                                    width: 40,
-                                                                                    height: 40,
                                                                                     clipBehavior: Clip.antiAlias,
                                                                                     decoration: BoxDecoration(
                                                                                       shape: BoxShape.circle,
@@ -2487,7 +2431,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                                   ),
                                                                                 ),
                                                                               ),
-                                                                            if ((transportPeriodicsTransportActionsRecord.transport) ==
+                                                                            if (transportPeriodicsTransportActionsRecord.transport ==
                                                                                 'moto')
                                                                               Align(
                                                                                 alignment: AlignmentDirectional(0, 0),
@@ -2514,8 +2458,6 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                                     );
                                                                                   },
                                                                                   child: Container(
-                                                                                    width: 40,
-                                                                                    height: 40,
                                                                                     clipBehavior: Clip.antiAlias,
                                                                                     decoration: BoxDecoration(
                                                                                       shape: BoxShape.circle,
@@ -2527,7 +2469,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                                   ),
                                                                                 ),
                                                                               ),
-                                                                            if ((transportPeriodicsTransportActionsRecord.transport) ==
+                                                                            if (transportPeriodicsTransportActionsRecord.transport ==
                                                                                 'train')
                                                                               Align(
                                                                                 alignment: AlignmentDirectional(0, 0),
@@ -2554,8 +2496,6 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                                     );
                                                                                   },
                                                                                   child: Container(
-                                                                                    width: 40,
-                                                                                    height: 40,
                                                                                     clipBehavior: Clip.antiAlias,
                                                                                     decoration: BoxDecoration(
                                                                                       shape: BoxShape.circle,
@@ -2567,7 +2507,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                                   ),
                                                                                 ),
                                                                               ),
-                                                                            if ((transportPeriodicsTransportActionsRecord.transport) ==
+                                                                            if (transportPeriodicsTransportActionsRecord.transport ==
                                                                                 'metro')
                                                                               Align(
                                                                                 alignment: AlignmentDirectional(0, 0),
@@ -2594,8 +2534,6 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                                     );
                                                                                   },
                                                                                   child: Container(
-                                                                                    width: 40,
-                                                                                    height: 40,
                                                                                     clipBehavior: Clip.antiAlias,
                                                                                     decoration: BoxDecoration(
                                                                                       shape: BoxShape.circle,
@@ -2607,7 +2545,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                                   ),
                                                                                 ),
                                                                               ),
-                                                                            if ((transportPeriodicsTransportActionsRecord.transport) ==
+                                                                            if (transportPeriodicsTransportActionsRecord.transport ==
                                                                                 'flight')
                                                                               Align(
                                                                                 alignment: AlignmentDirectional(0, 0),
@@ -2634,8 +2572,6 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                                     );
                                                                                   },
                                                                                   child: Container(
-                                                                                    width: 40,
-                                                                                    height: 40,
                                                                                     clipBehavior: Clip.antiAlias,
                                                                                     decoration: BoxDecoration(
                                                                                       shape: BoxShape.circle,
@@ -2647,7 +2583,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                                   ),
                                                                                 ),
                                                                               ),
-                                                                            if ((transportPeriodicsTransportActionsRecord.transport) ==
+                                                                            if (transportPeriodicsTransportActionsRecord.transport ==
                                                                                 'bike')
                                                                               Align(
                                                                                 alignment: AlignmentDirectional(0, 0),
@@ -2674,8 +2610,6 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                                     );
                                                                                   },
                                                                                   child: Container(
-                                                                                    width: 40,
-                                                                                    height: 40,
                                                                                     clipBehavior: Clip.antiAlias,
                                                                                     decoration: BoxDecoration(
                                                                                       shape: BoxShape.circle,
@@ -2747,7 +2681,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                           ),
                                         ).animated([
                                           animationsMap[
-                                              'containerOnPageLoadAnimation2']
+                                              'containerOnPageLoadAnimation2']!
                                         ]),
                                       ),
                                       Padding(
@@ -2781,8 +2715,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                       child: Stack(
                                                         children: [
                                                           if (FFAppState()
-                                                                  .displayEnergyActions ??
-                                                              true)
+                                                              .displayEnergyActions)
                                                             Padding(
                                                               padding:
                                                                   EdgeInsetsDirectional
@@ -2828,8 +2761,8 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                   ),
                                                                   Text(
                                                                     functions.printScore(functions.getActiveScore(
-                                                                        containerUsersStatsRecord
-                                                                            .energies
+                                                                        containerUsersStatsRecord!
+                                                                            .energies!
                                                                             .toList(),
                                                                         FFAppState()
                                                                             .activeDateRelative)),
@@ -2848,7 +2781,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                         ),
                                                                   ),
                                                                   Text(
-                                                                    '${functions.printRatioScoreTotal(functions.getActiveScore(containerUsersStatsRecord.energies.toList(), FFAppState().activeDateRelative), functions.getActiveScore(containerUsersStatsRecord.days.toList(), FFAppState().activeDateRelative))} de votre journée',
+                                                                    '${functions.printRatioScoreTotal(functions.getActiveScore(containerUsersStatsRecord!.energies!.toList(), FFAppState().activeDateRelative), functions.getActiveScore(containerUsersStatsRecord!.days!.toList(), FFAppState().activeDateRelative))} de votre journée',
                                                                     style: FlutterFlowTheme.of(
                                                                             context)
                                                                         .bodyText2
@@ -2866,9 +2799,8 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                 ],
                                                               ),
                                                             ),
-                                                          if (!(FFAppState()
-                                                                  .displayEnergyActions) ??
-                                                              true)
+                                                          if (!FFAppState()
+                                                              .displayEnergyActions)
                                                             Padding(
                                                               padding:
                                                                   EdgeInsetsDirectional
@@ -2914,7 +2846,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                   ),
                                                                   Text(
                                                                     functions.printScore(
-                                                                        containerUsersStatsRecord
+                                                                        containerUsersStatsRecord!
                                                                             .energyPeriodics),
                                                                     style: FlutterFlowTheme.of(
                                                                             context)
@@ -2931,7 +2863,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                         ),
                                                                   ),
                                                                   Text(
-                                                                    '${functions.printRatioScoreTotal(containerUsersStatsRecord.energyPeriodics, containerUsersStatsRecord.periodics)} de vos émissions récurrentes',
+                                                                    '${functions.printRatioScoreTotal(containerUsersStatsRecord!.energyPeriodics, containerUsersStatsRecord!.periodics)} de vos émissions récurrentes',
                                                                     style: FlutterFlowTheme.of(
                                                                             context)
                                                                         .bodyText2
@@ -3061,8 +2993,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                         Stack(
                                                           children: [
                                                             if (FFAppState()
-                                                                    .displayEnergyActions ??
-                                                                true)
+                                                                .displayEnergyActions)
                                                               StreamBuilder<
                                                                   List<
                                                                       EnergyActionsRecord>>(
@@ -3082,9 +3013,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                           isEqualTo:
                                                                               false)
                                                                       .orderBy(
-                                                                          'created_time',
-                                                                          descending:
-                                                                              true),
+                                                                          'created_time'),
                                                                 ),
                                                                 builder: (context,
                                                                     snapshot) {
@@ -3111,7 +3040,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                   List<EnergyActionsRecord>
                                                                       energyEnergyActionsRecordList =
                                                                       snapshot
-                                                                          .data;
+                                                                          .data!;
                                                                   return Row(
                                                                     mainAxisSize:
                                                                         MainAxisSize
@@ -3137,7 +3066,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                               0,
                                                                               0),
                                                                           children: [
-                                                                            if ((energyEnergyActionsRecord.energy) ==
+                                                                            if (energyEnergyActionsRecord.energy ==
                                                                                 'electricity')
                                                                               InkWell(
                                                                                 onTap: () async {
@@ -3156,8 +3085,6 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                                   );
                                                                                 },
                                                                                 child: Container(
-                                                                                  width: 40,
-                                                                                  height: 40,
                                                                                   clipBehavior: Clip.antiAlias,
                                                                                   decoration: BoxDecoration(
                                                                                     shape: BoxShape.circle,
@@ -3168,7 +3095,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                                   ),
                                                                                 ),
                                                                               ),
-                                                                            if ((energyEnergyActionsRecord.energy) ==
+                                                                            if (energyEnergyActionsRecord.energy ==
                                                                                 'gas')
                                                                               InkWell(
                                                                                 onTap: () async {
@@ -3197,7 +3124,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                                   ),
                                                                                 ),
                                                                               ),
-                                                                            if ((energyEnergyActionsRecord.energy) ==
+                                                                            if (energyEnergyActionsRecord.energy ==
                                                                                 'water')
                                                                               InkWell(
                                                                                 onTap: () async {
@@ -3216,8 +3143,6 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                                   );
                                                                                 },
                                                                                 child: Container(
-                                                                                  width: 40,
-                                                                                  height: 40,
                                                                                   clipBehavior: Clip.antiAlias,
                                                                                   decoration: BoxDecoration(
                                                                                     shape: BoxShape.circle,
@@ -3235,9 +3160,8 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                   );
                                                                 },
                                                               ),
-                                                            if (!(FFAppState()
-                                                                    .displayEnergyActions) ??
-                                                                true)
+                                                            if (!FFAppState()
+                                                                .displayEnergyActions)
                                                               StreamBuilder<
                                                                   List<
                                                                       EnergyActionsRecord>>(
@@ -3278,7 +3202,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                   List<EnergyActionsRecord>
                                                                       energyPeriodicsEnergyActionsRecordList =
                                                                       snapshot
-                                                                          .data;
+                                                                          .data!;
                                                                   return Row(
                                                                     mainAxisSize:
                                                                         MainAxisSize
@@ -3301,7 +3225,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                         child:
                                                                             Stack(
                                                                           children: [
-                                                                            if ((energyPeriodicsEnergyActionsRecord.energy) ==
+                                                                            if (energyPeriodicsEnergyActionsRecord.energy ==
                                                                                 'electricity')
                                                                               Align(
                                                                                 alignment: AlignmentDirectional(0, 0),
@@ -3322,8 +3246,6 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                                     );
                                                                                   },
                                                                                   child: Container(
-                                                                                    width: 40,
-                                                                                    height: 40,
                                                                                     clipBehavior: Clip.antiAlias,
                                                                                     decoration: BoxDecoration(
                                                                                       shape: BoxShape.circle,
@@ -3335,7 +3257,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                                   ),
                                                                                 ),
                                                                               ),
-                                                                            if ((energyPeriodicsEnergyActionsRecord.energy) ==
+                                                                            if (energyPeriodicsEnergyActionsRecord.energy ==
                                                                                 'gas')
                                                                               Align(
                                                                                 alignment: AlignmentDirectional(0, 0),
@@ -3356,8 +3278,6 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                                     );
                                                                                   },
                                                                                   child: Container(
-                                                                                    width: 40,
-                                                                                    height: 40,
                                                                                     clipBehavior: Clip.antiAlias,
                                                                                     decoration: BoxDecoration(
                                                                                       shape: BoxShape.circle,
@@ -3369,7 +3289,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                                   ),
                                                                                 ),
                                                                               ),
-                                                                            if ((energyPeriodicsEnergyActionsRecord.energy) ==
+                                                                            if (energyPeriodicsEnergyActionsRecord.energy ==
                                                                                 'water')
                                                                               Align(
                                                                                 alignment: AlignmentDirectional(0, 0),
@@ -3390,8 +3310,6 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                                     );
                                                                                   },
                                                                                   child: Container(
-                                                                                    width: 40,
-                                                                                    height: 40,
                                                                                     clipBehavior: Clip.antiAlias,
                                                                                     decoration: BoxDecoration(
                                                                                       shape: BoxShape.circle,
@@ -3463,7 +3381,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                           ),
                                         ).animated([
                                           animationsMap[
-                                              'containerOnPageLoadAnimation3']
+                                              'containerOnPageLoadAnimation3']!
                                         ]),
                                       ),
                                     ],

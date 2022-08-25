@@ -10,16 +10,16 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class EnergyListWidget extends StatefulWidget {
-  const EnergyListWidget({Key key}) : super(key: key);
+  const EnergyListWidget({Key? key}) : super(key: key);
 
   @override
   _EnergyListWidgetState createState() => _EnergyListWidgetState();
 }
 
 class _EnergyListWidgetState extends State<EnergyListWidget> {
-  EnergyActionsRecord newElectricity;
-  EnergyActionsRecord newGas;
-  EnergyActionsRecord newWater;
+  EnergyActionsRecord? newElectricity;
+  EnergyActionsRecord? newGas;
+  EnergyActionsRecord? newWater;
 
   @override
   Widget build(BuildContext context) {
@@ -117,7 +117,7 @@ class _EnergyListWidgetState extends State<EnergyListWidget> {
                                   duration: Duration(milliseconds: 0),
                                   reverseDuration: Duration(milliseconds: 0),
                                   child: EnergiesWidget(
-                                    actionRef: newElectricity.reference,
+                                    actionRef: newElectricity!.reference,
                                   ),
                                 ),
                               );
@@ -197,7 +197,7 @@ class _EnergyListWidgetState extends State<EnergyListWidget> {
                                   duration: Duration(milliseconds: 0),
                                   reverseDuration: Duration(milliseconds: 0),
                                   child: EnergiesWidget(
-                                    actionRef: newGas.reference,
+                                    actionRef: newGas!.reference,
                                   ),
                                 ),
                               );
@@ -287,7 +287,7 @@ class _EnergyListWidgetState extends State<EnergyListWidget> {
                                   duration: Duration(milliseconds: 0),
                                   reverseDuration: Duration(milliseconds: 0),
                                   child: EnergiesWidget(
-                                    actionRef: newWater.reference,
+                                    actionRef: newWater!.reference,
                                   ),
                                 ),
                               );

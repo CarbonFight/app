@@ -18,25 +18,7 @@
         },
         {
           "fieldPath": "created_time",
-          "order": "DESCENDING"
-        }
-      ]
-    },
-    {
-      "collectionGroup": "foodActions",
-      "queryScope": "COLLECTION",
-      "fields": [
-        {
-          "fieldPath": "userId",
           "order": "ASCENDING"
-        },
-        {
-          "fieldPath": "isPeriodic",
-          "order": "ASCENDING"
-        },
-        {
-          "fieldPath": "created_time",
-          "order": "DESCENDING"
         }
       ]
     },
@@ -58,7 +40,7 @@
         },
         {
           "fieldPath": "created_time",
-          "order": "DESCENDING"
+          "order": "ASCENDING"
         }
       ]
     },
@@ -80,7 +62,7 @@
         },
         {
           "fieldPath": "created_time",
-          "order": "DESCENDING"
+          "order": "ASCENDING"
         }
       ]
     },
@@ -123,18 +105,6 @@
         {
           "fieldPath": "created_time",
           "order": "DESCENDING"
-        }
-      ]
-    }
-  ],
-  "fieldOverrides": [
-    {
-      "collectionGroup": "fcm_tokens",
-      "fieldPath": "fcm_token",
-      "indexes": [
-        {
-          "order": "ASCENDING",
-          "queryScope": "COLLECTION_GROUP"
         }
       ]
     }

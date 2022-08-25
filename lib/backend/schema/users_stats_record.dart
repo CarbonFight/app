@@ -11,51 +11,37 @@ abstract class UsersStatsRecord
   static Serializer<UsersStatsRecord> get serializer =>
       _$usersStatsRecordSerializer;
 
-  @nullable
-  String get uid;
+  String? get uid;
 
-  @nullable
-  int get periodics;
+  int? get periodics;
 
-  @nullable
-  BuiltList<int> get days;
+  BuiltList<int>? get days;
 
-  @nullable
-  BuiltList<int> get weeks;
+  BuiltList<int>? get weeks;
 
-  @nullable
-  BuiltList<int> get months;
+  BuiltList<int>? get months;
 
-  @nullable
-  BuiltList<int> get transports;
+  BuiltList<int>? get transports;
 
-  @nullable
-  BuiltList<int> get energies;
+  BuiltList<int>? get energies;
 
-  @nullable
-  BuiltList<int> get foods;
+  BuiltList<int>? get foods;
 
-  @nullable
-  int get energyPeriodics;
+  int? get energyPeriodics;
 
-  @nullable
-  int get foodPeriodics;
+  int? get foodPeriodics;
 
-  @nullable
-  int get transportPeriodics;
+  int? get transportPeriodics;
 
-  @nullable
-  BuiltList<double> get daysChart;
+  BuiltList<double>? get daysChart;
 
-  @nullable
-  BuiltList<double> get weeksChart;
+  BuiltList<double>? get weeksChart;
 
-  @nullable
-  BuiltList<double> get monthsChart;
+  BuiltList<double>? get monthsChart;
 
-  @nullable
   @BuiltValueField(wireName: kDocumentReferenceField)
-  DocumentReference get reference;
+  DocumentReference? get ffRef;
+  DocumentReference get reference => ffRef!;
 
   static void _initializeBuilder(UsersStatsRecordBuilder builder) => builder
     ..uid = ''
@@ -78,11 +64,11 @@ abstract class UsersStatsRecord
 
   static Stream<UsersStatsRecord> getDocument(DocumentReference ref) => ref
       .snapshots()
-      .map((s) => serializers.deserializeWith(serializer, serializedData(s)));
+      .map((s) => serializers.deserializeWith(serializer, serializedData(s))!);
 
   static Future<UsersStatsRecord> getDocumentOnce(DocumentReference ref) => ref
       .get()
-      .then((s) => serializers.deserializeWith(serializer, serializedData(s)));
+      .then((s) => serializers.deserializeWith(serializer, serializedData(s))!);
 
   UsersStatsRecord._();
   factory UsersStatsRecord([void Function(UsersStatsRecordBuilder) updates]) =
@@ -91,30 +77,36 @@ abstract class UsersStatsRecord
   static UsersStatsRecord getDocumentFromData(
           Map<String, dynamic> data, DocumentReference reference) =>
       serializers.deserializeWith(serializer,
-          {...mapFromFirestore(data), kDocumentReferenceField: reference});
+          {...mapFromFirestore(data), kDocumentReferenceField: reference})!;
 }
 
 Map<String, dynamic> createUsersStatsRecordData({
-  String uid,
-  int periodics,
-  int energyPeriodics,
-  int foodPeriodics,
-  int transportPeriodics,
-}) =>
-    serializers.toFirestore(
-        UsersStatsRecord.serializer,
-        UsersStatsRecord((u) => u
-          ..uid = uid
-          ..periodics = periodics
-          ..days = null
-          ..weeks = null
-          ..months = null
-          ..transports = null
-          ..energies = null
-          ..foods = null
-          ..energyPeriodics = energyPeriodics
-          ..foodPeriodics = foodPeriodics
-          ..transportPeriodics = transportPeriodics
-          ..daysChart = null
-          ..weeksChart = null
-          ..monthsChart = null));
+  String? uid,
+  int? periodics,
+  int? energyPeriodics,
+  int? foodPeriodics,
+  int? transportPeriodics,
+}) {
+  final firestoreData = serializers.toFirestore(
+    UsersStatsRecord.serializer,
+    UsersStatsRecord(
+      (u) => u
+        ..uid = uid
+        ..periodics = periodics
+        ..days = null
+        ..weeks = null
+        ..months = null
+        ..transports = null
+        ..energies = null
+        ..foods = null
+        ..energyPeriodics = energyPeriodics
+        ..foodPeriodics = foodPeriodics
+        ..transportPeriodics = transportPeriodics
+        ..daysChart = null
+        ..weeksChart = null
+        ..monthsChart = null,
+    ),
+  );
+
+  return firestoreData;
+}

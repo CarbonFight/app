@@ -4,26 +4,27 @@ import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../food/food_widget.dart';
+import '../flutter_flow/random_data_util.dart' as random_data;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class FoodListWidget extends StatefulWidget {
-  const FoodListWidget({Key key}) : super(key: key);
+  const FoodListWidget({Key? key}) : super(key: key);
 
   @override
   _FoodListWidgetState createState() => _FoodListWidgetState();
 }
 
 class _FoodListWidgetState extends State<FoodListWidget> {
-  FoodActionsRecord newBread;
-  FoodActionsRecord newCheese;
-  FoodActionsRecord newDesert;
-  FoodActionsRecord newDrinks;
-  FoodActionsRecord newMain;
-  FoodActionsRecord newStarter;
-  FoodActionsRecord newCoffee;
+  FoodActionsRecord? newBread;
+  FoodActionsRecord? newCheese;
+  FoodActionsRecord? newDesert;
+  FoodActionsRecord? newDrinks;
+  FoodActionsRecord? newMain;
+  FoodActionsRecord? newStarter;
+  FoodActionsRecord? newCoffee;
 
   @override
   Widget build(BuildContext context) {
@@ -125,7 +126,7 @@ class _FoodListWidgetState extends State<FoodListWidget> {
                                   duration: Duration(milliseconds: 0),
                                   reverseDuration: Duration(milliseconds: 0),
                                   child: FoodWidget(
-                                    actionRef: newStarter.reference,
+                                    actionRef: newStarter!.reference,
                                   ),
                                 ),
                               );
@@ -176,18 +177,23 @@ class _FoodListWidgetState extends State<FoodListWidget> {
                                   'FOOD_LIST_COMP_Container_q1yosrnh_ON_TAP');
                               logFirebaseEvent('Container_Backend-Call');
 
-                              final foodActionsCreateData =
-                                  createFoodActionsRecordData(
-                                userId: currentUserUid,
-                                co2e: 0,
-                                createdTime: getCurrentTimestamp,
-                                day: dateTimeFormat(
-                                    'd/M/y', getCurrentTimestamp),
-                                isPeriodic: false,
-                                isFavorite: false,
-                                food: 'main',
-                                portions: 1,
-                              );
+                              final foodActionsCreateData = {
+                                ...createFoodActionsRecordData(
+                                  userId: currentUserUid,
+                                  co2e: 0,
+                                  createdTime: getCurrentTimestamp,
+                                  day: dateTimeFormat(
+                                      'd/M/y', getCurrentTimestamp),
+                                  isPeriodic: false,
+                                  isFavorite: false,
+                                  food: 'main',
+                                  portions: 1,
+                                ),
+                                'sideComponent': List.generate(
+                                    random_data.randomInteger(1, 1),
+                                    (index) =>
+                                        random_data.randomName(true, false)),
+                              };
                               var foodActionsRecordReference =
                                   FoodActionsRecord.collection.doc();
                               await foodActionsRecordReference
@@ -207,7 +213,7 @@ class _FoodListWidgetState extends State<FoodListWidget> {
                                   duration: Duration(milliseconds: 0),
                                   reverseDuration: Duration(milliseconds: 0),
                                   child: FoodWidget(
-                                    actionRef: newMain.reference,
+                                    actionRef: newMain!.reference,
                                   ),
                                 ),
                               );
@@ -300,7 +306,7 @@ class _FoodListWidgetState extends State<FoodListWidget> {
                                   duration: Duration(milliseconds: 0),
                                   reverseDuration: Duration(milliseconds: 0),
                                   child: FoodWidget(
-                                    actionRef: newDesert.reference,
+                                    actionRef: newDesert!.reference,
                                   ),
                                 ),
                               );
@@ -384,7 +390,7 @@ class _FoodListWidgetState extends State<FoodListWidget> {
                                   duration: Duration(milliseconds: 0),
                                   reverseDuration: Duration(milliseconds: 0),
                                   child: FoodWidget(
-                                    actionRef: newDrinks.reference,
+                                    actionRef: newDrinks!.reference,
                                   ),
                                 ),
                               );
@@ -478,7 +484,7 @@ class _FoodListWidgetState extends State<FoodListWidget> {
                                   duration: Duration(milliseconds: 0),
                                   reverseDuration: Duration(milliseconds: 0),
                                   child: FoodWidget(
-                                    actionRef: newCheese.reference,
+                                    actionRef: newCheese!.reference,
                                   ),
                                 ),
                               );
@@ -563,7 +569,7 @@ class _FoodListWidgetState extends State<FoodListWidget> {
                                   duration: Duration(milliseconds: 0),
                                   reverseDuration: Duration(milliseconds: 0),
                                   child: FoodWidget(
-                                    actionRef: newBread.reference,
+                                    actionRef: newBread!.reference,
                                   ),
                                 ),
                               );
@@ -658,7 +664,7 @@ class _FoodListWidgetState extends State<FoodListWidget> {
                             duration: Duration(milliseconds: 0),
                             reverseDuration: Duration(milliseconds: 0),
                             child: FoodWidget(
-                              actionRef: newCoffee.reference,
+                              actionRef: newCoffee!.reference,
                             ),
                           ),
                         );

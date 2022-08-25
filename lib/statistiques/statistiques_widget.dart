@@ -12,7 +12,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class StatistiquesWidget extends StatefulWidget {
-  const StatistiquesWidget({Key key}) : super(key: key);
+  const StatistiquesWidget({Key? key}) : super(key: key);
 
   @override
   _StatistiquesWidgetState createState() => _StatistiquesWidgetState();
@@ -302,7 +302,7 @@ class _StatistiquesWidgetState extends State<StatistiquesWidget> {
                             );
                           }
                           List<UsersStatsRecord> containerUsersStatsRecordList =
-                              snapshot.data;
+                              snapshot.data!;
                           final containerUsersStatsRecord =
                               containerUsersStatsRecordList.isNotEmpty
                                   ? containerUsersStatsRecordList.first
@@ -383,8 +383,8 @@ class _StatistiquesWidgetState extends State<StatistiquesWidget> {
                                                       xData: FFAppState()
                                                           .XAxisDays,
                                                       yData:
-                                                          containerUsersStatsRecord
-                                                              .daysChart
+                                                          containerUsersStatsRecord!
+                                                              .daysChart!
                                                               .toList(),
                                                       settings:
                                                           LineChartBarData(
@@ -405,13 +405,18 @@ class _StatistiquesWidgetState extends State<StatistiquesWidget> {
                                                       ),
                                                     )
                                                   ],
-                                                  enableTooltip: true,
-                                                  tooltipBackgroundColor:
-                                                      Color(0xFFEE8B60),
-                                                  backgroundColor:
-                                                      Color(0x00FFFFFF),
+                                                  chartStylingInfo:
+                                                      ChartStylingInfo(
+                                                    enableTooltip: true,
+                                                    tooltipBackgroundColor:
+                                                        Color(0xFFEE8B60),
+                                                    backgroundColor:
+                                                        Color(0x00FFFFFF),
+                                                    showBorder: false,
+                                                  ),
                                                   axisBounds: AxisBounds(
                                                     minX: -6,
+                                                    minY: 0,
                                                     maxX: 0,
                                                   ),
                                                   xAxisLabelInfo: AxisLabelInfo(
@@ -510,8 +515,8 @@ class _StatistiquesWidgetState extends State<StatistiquesWidget> {
                                                       xData: FFAppState()
                                                           .XAxisWeeks,
                                                       yData:
-                                                          containerUsersStatsRecord
-                                                              .weeksChart
+                                                          containerUsersStatsRecord!
+                                                              .weeksChart!
                                                               .toList(),
                                                       settings:
                                                           LineChartBarData(
@@ -530,13 +535,148 @@ class _StatistiquesWidgetState extends State<StatistiquesWidget> {
                                                       ),
                                                     )
                                                   ],
-                                                  enableTooltip: true,
-                                                  tooltipBackgroundColor:
-                                                      Color(0xFFEE8B60),
-                                                  backgroundColor:
-                                                      Color(0x00FFFFFF),
+                                                  chartStylingInfo:
+                                                      ChartStylingInfo(
+                                                    enableTooltip: true,
+                                                    tooltipBackgroundColor:
+                                                        Color(0xFFEE8B60),
+                                                    backgroundColor:
+                                                        Color(0x00FFFFFF),
+                                                    showBorder: false,
+                                                  ),
                                                   axisBounds: AxisBounds(
                                                     minX: -3,
+                                                    minY: 0,
+                                                    maxX: 0,
+                                                  ),
+                                                  xAxisLabelInfo: AxisLabelInfo(
+                                                    showLabels: true,
+                                                    labelTextStyle:
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .bodyText2
+                                                            .override(
+                                                              fontFamily:
+                                                                  'Outfit',
+                                                              color: Color(
+                                                                  0xFF57636C),
+                                                              fontSize: 14,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .normal,
+                                                            ),
+                                                    labelInterval: 1,
+                                                  ),
+                                                  yAxisLabelInfo: AxisLabelInfo(
+                                                    showLabels: true,
+                                                    labelInterval: 10,
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        16, 10, 16, 16),
+                                    child: Container(
+                                      width: double.infinity,
+                                      decoration: BoxDecoration(
+                                        color: Color(0x67FFFFFF),
+                                        boxShadow: [
+                                          BoxShadow(
+                                            blurRadius: 5,
+                                            color: Color(0x2B202529),
+                                            offset: Offset(0, 2),
+                                          )
+                                        ],
+                                        borderRadius: BorderRadius.circular(12),
+                                      ),
+                                      child: Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            12, 12, 12, 12),
+                                        child: Column(
+                                          mainAxisSize: MainAxisSize.max,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              'Sur les 3 dernièrs mois',
+                                              style: FlutterFlowTheme.of(
+                                                      context)
+                                                  .title3
+                                                  .override(
+                                                    fontFamily: 'Outfit',
+                                                    color: Color(0xFF101213),
+                                                    fontSize: 20,
+                                                    fontWeight: FontWeight.w500,
+                                                  ),
+                                            ),
+                                            Padding(
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(0, 4, 0, 0),
+                                              child: Text(
+                                                'En KG de co2e par jour',
+                                                style:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyText2
+                                                        .override(
+                                                          fontFamily: 'Outfit',
+                                                          color:
+                                                              Color(0xFF57636C),
+                                                          fontSize: 14,
+                                                          fontWeight:
+                                                              FontWeight.normal,
+                                                        ),
+                                              ),
+                                            ),
+                                            Padding(
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(0, 16, 0, 0),
+                                              child: Container(
+                                                width: double.infinity,
+                                                height: 200,
+                                                child: FlutterFlowLineChart(
+                                                  data: [
+                                                    FFLineChartData(
+                                                      xData: FFAppState()
+                                                          .XAxisMonths,
+                                                      yData:
+                                                          containerUsersStatsRecord!
+                                                              .monthsChart!
+                                                              .toList(),
+                                                      settings:
+                                                          LineChartBarData(
+                                                        color:
+                                                            Color(0x8D0F9CFF),
+                                                        barWidth: 2,
+                                                        isCurved: true,
+                                                        preventCurveOverShooting:
+                                                            true,
+                                                        belowBarData:
+                                                            BarAreaData(
+                                                          show: true,
+                                                          color:
+                                                              Color(0x8D0F9CFF),
+                                                        ),
+                                                      ),
+                                                    )
+                                                  ],
+                                                  chartStylingInfo:
+                                                      ChartStylingInfo(
+                                                    enableTooltip: true,
+                                                    tooltipBackgroundColor:
+                                                        Color(0xFFEE8B60),
+                                                    backgroundColor:
+                                                        Color(0x00FFFFFF),
+                                                    showBorder: false,
+                                                  ),
+                                                  axisBounds: AxisBounds(
+                                                    minX: -3,
+                                                    minY: 0,
                                                     maxX: 0,
                                                   ),
                                                   xAxisLabelInfo: AxisLabelInfo(

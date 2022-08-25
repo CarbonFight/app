@@ -11,43 +11,32 @@ abstract class FoodActionsRecord
   static Serializer<FoodActionsRecord> get serializer =>
       _$foodActionsRecordSerializer;
 
-  @nullable
-  int get co2e;
+  int? get co2e;
 
-  @nullable
-  String get food;
+  String? get food;
 
-  @nullable
   @BuiltValueField(wireName: 'created_time')
-  DateTime get createdTime;
+  DateTime? get createdTime;
 
-  @nullable
-  String get userId;
+  String? get userId;
 
-  @nullable
-  String get day;
+  String? get day;
 
-  @nullable
-  int get portions;
+  int? get portions;
 
-  @nullable
-  BuiltList<String> get periodicity;
+  BuiltList<String>? get periodicity;
 
-  @nullable
-  bool get isPeriodic;
+  bool? get isPeriodic;
 
-  @nullable
-  bool get isFavorite;
+  bool? get isFavorite;
 
-  @nullable
-  BuiltList<String> get sideComponent;
+  BuiltList<String>? get sideComponent;
 
-  @nullable
-  String get mainComponent;
+  String? get mainComponent;
 
-  @nullable
   @BuiltValueField(wireName: kDocumentReferenceField)
-  DocumentReference get reference;
+  DocumentReference? get ffRef;
+  DocumentReference get reference => ffRef!;
 
   static void _initializeBuilder(FoodActionsRecordBuilder builder) => builder
     ..co2e = 0
@@ -66,11 +55,11 @@ abstract class FoodActionsRecord
 
   static Stream<FoodActionsRecord> getDocument(DocumentReference ref) => ref
       .snapshots()
-      .map((s) => serializers.deserializeWith(serializer, serializedData(s)));
+      .map((s) => serializers.deserializeWith(serializer, serializedData(s))!);
 
   static Future<FoodActionsRecord> getDocumentOnce(DocumentReference ref) => ref
       .get()
-      .then((s) => serializers.deserializeWith(serializer, serializedData(s)));
+      .then((s) => serializers.deserializeWith(serializer, serializedData(s))!);
 
   FoodActionsRecord._();
   factory FoodActionsRecord([void Function(FoodActionsRecordBuilder) updates]) =
@@ -79,31 +68,37 @@ abstract class FoodActionsRecord
   static FoodActionsRecord getDocumentFromData(
           Map<String, dynamic> data, DocumentReference reference) =>
       serializers.deserializeWith(serializer,
-          {...mapFromFirestore(data), kDocumentReferenceField: reference});
+          {...mapFromFirestore(data), kDocumentReferenceField: reference})!;
 }
 
 Map<String, dynamic> createFoodActionsRecordData({
-  int co2e,
-  String food,
-  DateTime createdTime,
-  String userId,
-  String day,
-  int portions,
-  bool isPeriodic,
-  bool isFavorite,
-  String mainComponent,
-}) =>
-    serializers.toFirestore(
-        FoodActionsRecord.serializer,
-        FoodActionsRecord((f) => f
-          ..co2e = co2e
-          ..food = food
-          ..createdTime = createdTime
-          ..userId = userId
-          ..day = day
-          ..portions = portions
-          ..periodicity = null
-          ..isPeriodic = isPeriodic
-          ..isFavorite = isFavorite
-          ..sideComponent = null
-          ..mainComponent = mainComponent));
+  int? co2e,
+  String? food,
+  DateTime? createdTime,
+  String? userId,
+  String? day,
+  int? portions,
+  bool? isPeriodic,
+  bool? isFavorite,
+  String? mainComponent,
+}) {
+  final firestoreData = serializers.toFirestore(
+    FoodActionsRecord.serializer,
+    FoodActionsRecord(
+      (f) => f
+        ..co2e = co2e
+        ..food = food
+        ..createdTime = createdTime
+        ..userId = userId
+        ..day = day
+        ..portions = portions
+        ..periodicity = null
+        ..isPeriodic = isPeriodic
+        ..isFavorite = isFavorite
+        ..sideComponent = null
+        ..mainComponent = mainComponent,
+    ),
+  );
+
+  return firestoreData;
+}

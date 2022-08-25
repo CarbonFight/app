@@ -20,15 +20,15 @@ Future<UserCredential> facebookSignIn() async {
 
   // Trigger the sign-in flow
   final LoginResult loginToken = await FacebookAuth.instance.login();
-  final AccessToken result = loginToken.accessToken;
+  final AccessToken? result = loginToken.accessToken;
 
   // Create a credential from the access token
-  final FacebookAuthCredential facebookAuthCredential =
-      FacebookAuthProvider.credential(result.token);
+  final OAuthCredential facebookAuthCredential =
+      FacebookAuthProvider.credential(result!.token);
 
   // Once signed in, return the UserCredential
   return FirebaseAuth.instance.signInWithCredential(facebookAuthCredential);
 }
 
-Future<User> signInWithFacebook(BuildContext context) =>
+Future<User?> signInWithFacebook(BuildContext context) =>
     signInOrCreateAccount(context, facebookSignIn);

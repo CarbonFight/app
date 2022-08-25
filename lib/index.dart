@@ -8,6 +8,4 @@ export 'food/food_widget.dart' show FoodWidget;
 export 'splash/splash_widget.dart' show SplashWidget;
 export 'login/login_widget.dart' show LoginWidget;
 export 'signup/signup_widget.dart' show SignupWidget;
-export 'faq/faq_widget.dart' show FaqWidget;
 export 'drawer/drawer_widget.dart' show DrawerWidget;
-export 'feedback/feedback_widget.dart' show FeedbackWidget;
