@@ -31,4 +31,4 @@ Future<UserCredential> facebookSignIn() async {
 }
 
 Future<User?> signInWithFacebook(BuildContext context) =>
-    signInOrCreateAccount(context, facebookSignIn);
+    signInOrCreateAccount(context, facebookSignIn, 'FACEBOOK');

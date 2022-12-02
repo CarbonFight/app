@@ -8,11 +8,13 @@ part of 'serializers.dart';
 
 Serializers _$serializers = (new Serializers().toBuilder()
       ..add(EnergyActionsRecord.serializer)
+      ..add(EnergyCalculationRecord.serializer)
       ..add(FoodActionsRecord.serializer)
+      ..add(FoodCalculationRecord.serializer)
       ..add(TransportActionsRecord.serializer)
+      ..add(TransportCalculationRecord.serializer)
       ..add(UsersRecord.serializer)
       ..add(UsersStatsRecord.serializer)
-      ..add(UsersTrophiesRecord.serializer)
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(String)]),
           () => new ListBuilder<String>())
@@ -32,6 +34,18 @@ Serializers _$serializers = (new Serializers().toBuilder()
           const FullType(BuiltList, const [const FullType(int)]),
           () => new ListBuilder<int>())
       ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(double)]),
+          () => new ListBuilder<double>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(double)]),
+          () => new ListBuilder<double>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(double)]),
+          () => new ListBuilder<double>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(int)]),
+          () => new ListBuilder<int>())
+      ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(int)]),
           () => new ListBuilder<int>())
       ..addBuilderFactory(
@@ -40,6 +54,39 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(int)]),
           () => new ListBuilder<int>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(int)]),
+          () => new ListBuilder<int>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(int)]),
+          () => new ListBuilder<int>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(int)]),
+          () => new ListBuilder<int>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(int)]),
+          () => new ListBuilder<int>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(int)]),
+          () => new ListBuilder<int>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(double)]),
+          () => new ListBuilder<double>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(double)]),
+          () => new ListBuilder<double>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(double)]),
+          () => new ListBuilder<double>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(double)]),
+          () => new ListBuilder<double>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(double)]),
+          () => new ListBuilder<double>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(double)]),
+          () => new ListBuilder<double>())
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(double)]),
           () => new ListBuilder<double>())

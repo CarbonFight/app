@@ -3,8 +3,6 @@ import '../backend/backend.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
-import '../food/food_widget.dart';
-import '../flutter_flow/random_data_util.dart' as random_data;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -25,6 +23,13 @@ class _FoodListWidgetState extends State<FoodListWidget> {
   FoodActionsRecord? newMain;
   FoodActionsRecord? newStarter;
   FoodActionsRecord? newCoffee;
+
+  @override
+  void initState() {
+    super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -69,7 +74,7 @@ class _FoodListWidgetState extends State<FoodListWidget> {
                     ),
                     onPressed: () async {
                       logFirebaseEvent('FOOD_LIST_COMP_close_ICN_ON_TAP');
-                      logFirebaseEvent('IconButton_Navigate-Back');
+                      logFirebaseEvent('IconButton_close_dialog,_drawer,_etc');
                       Navigator.pop(context);
                     },
                   ),
@@ -90,22 +95,23 @@ class _FoodListWidgetState extends State<FoodListWidget> {
                             onTap: () async {
                               logFirebaseEvent(
                                   'FOOD_LIST_COMP_Container_ny9yoj7o_ON_TAP');
-                              logFirebaseEvent('Container_Backend-Call');
+                              logFirebaseEvent('Container_backend_call');
 
-                              final foodActionsCreateData = {
-                                ...createFoodActionsRecordData(
-                                  userId: currentUserUid,
-                                  co2e: 0,
-                                  createdTime: getCurrentTimestamp,
-                                  day: dateTimeFormat(
-                                      'd/M/y', getCurrentTimestamp),
-                                  isPeriodic: false,
-                                  food: 'starter',
-                                  portions: 1,
-                                  mainComponent: 'Mixte',
+                              final foodActionsCreateData =
+                                  createFoodActionsRecordData(
+                                userId: currentUserUid,
+                                co2e: 0,
+                                createdTime: getCurrentTimestamp,
+                                day: dateTimeFormat(
+                                  'd/M/y',
+                                  getCurrentTimestamp,
+                                  locale:
+                                      FFLocalizations.of(context).languageCode,
                                 ),
-                                'sideComponent': ['null'],
-                              };
+                                isPeriodic: false,
+                                food: 'starter',
+                                portions: 1,
+                              );
                               var foodActionsRecordReference =
                                   FoodActionsRecord.collection.doc();
                               await foodActionsRecordReference
@@ -114,21 +120,20 @@ class _FoodListWidgetState extends State<FoodListWidget> {
                                   FoodActionsRecord.getDocumentFromData(
                                       foodActionsCreateData,
                                       foodActionsRecordReference);
-                              logFirebaseEvent('Container_Update-Local-State');
+                              logFirebaseEvent('Container_update_local_state');
                               setState(() => FFAppState().displayDates = false);
-                              logFirebaseEvent('Container_Update-Local-State');
+                              logFirebaseEvent('Container_update_local_state');
                               setState(() => FFAppState().displayDays = false);
-                              logFirebaseEvent('Container_Navigate-To');
-                              await Navigator.push(
-                                context,
-                                PageTransition(
-                                  type: PageTransitionType.fade,
-                                  duration: Duration(milliseconds: 0),
-                                  reverseDuration: Duration(milliseconds: 0),
-                                  child: FoodWidget(
-                                    actionRef: newStarter!.reference,
+                              logFirebaseEvent('Container_navigate_to');
+
+                              context.pushNamed(
+                                'Food',
+                                queryParams: {
+                                  'actionRef': serializeParam(
+                                    newStarter!.reference,
+                                    ParamType.DocumentReference,
                                   ),
-                                ),
+                                }.withoutNulls,
                               );
 
                               setState(() {});
@@ -175,25 +180,24 @@ class _FoodListWidgetState extends State<FoodListWidget> {
                             onTap: () async {
                               logFirebaseEvent(
                                   'FOOD_LIST_COMP_Container_q1yosrnh_ON_TAP');
-                              logFirebaseEvent('Container_Backend-Call');
+                              logFirebaseEvent('Container_backend_call');
 
-                              final foodActionsCreateData = {
-                                ...createFoodActionsRecordData(
-                                  userId: currentUserUid,
-                                  co2e: 0,
-                                  createdTime: getCurrentTimestamp,
-                                  day: dateTimeFormat(
-                                      'd/M/y', getCurrentTimestamp),
-                                  isPeriodic: false,
-                                  isFavorite: false,
-                                  food: 'main',
-                                  portions: 1,
+                              final foodActionsCreateData =
+                                  createFoodActionsRecordData(
+                                userId: currentUserUid,
+                                co2e: 0,
+                                createdTime: getCurrentTimestamp,
+                                day: dateTimeFormat(
+                                  'd/M/y',
+                                  getCurrentTimestamp,
+                                  locale:
+                                      FFLocalizations.of(context).languageCode,
                                 ),
-                                'sideComponent': List.generate(
-                                    random_data.randomInteger(1, 1),
-                                    (index) =>
-                                        random_data.randomName(true, false)),
-                              };
+                                isPeriodic: false,
+                                isFavorite: false,
+                                food: 'main',
+                                portions: 1,
+                              );
                               var foodActionsRecordReference =
                                   FoodActionsRecord.collection.doc();
                               await foodActionsRecordReference
@@ -201,21 +205,20 @@ class _FoodListWidgetState extends State<FoodListWidget> {
                               newMain = FoodActionsRecord.getDocumentFromData(
                                   foodActionsCreateData,
                                   foodActionsRecordReference);
-                              logFirebaseEvent('Container_Update-Local-State');
+                              logFirebaseEvent('Container_update_local_state');
                               setState(() => FFAppState().displayDates = false);
-                              logFirebaseEvent('Container_Update-Local-State');
+                              logFirebaseEvent('Container_update_local_state');
                               setState(() => FFAppState().displayDays = false);
-                              logFirebaseEvent('Container_Navigate-To');
-                              await Navigator.push(
-                                context,
-                                PageTransition(
-                                  type: PageTransitionType.fade,
-                                  duration: Duration(milliseconds: 0),
-                                  reverseDuration: Duration(milliseconds: 0),
-                                  child: FoodWidget(
-                                    actionRef: newMain!.reference,
+                              logFirebaseEvent('Container_navigate_to');
+
+                              context.pushNamed(
+                                'Food',
+                                queryParams: {
+                                  'actionRef': serializeParam(
+                                    newMain!.reference,
+                                    ParamType.DocumentReference,
                                   ),
-                                ),
+                                }.withoutNulls,
                               );
 
                               setState(() {});
@@ -271,22 +274,24 @@ class _FoodListWidgetState extends State<FoodListWidget> {
                             onTap: () async {
                               logFirebaseEvent(
                                   'FOOD_LIST_COMP_Container_r0c1o7ht_ON_TAP');
-                              logFirebaseEvent('Container_Backend-Call');
+                              logFirebaseEvent('Container_backend_call');
 
-                              final foodActionsCreateData = {
-                                ...createFoodActionsRecordData(
-                                  userId: currentUserUid,
-                                  co2e: 0,
-                                  createdTime: getCurrentTimestamp,
-                                  day: dateTimeFormat(
-                                      'd/M/y', getCurrentTimestamp),
-                                  isPeriodic: false,
-                                  isFavorite: false,
-                                  food: 'desert',
-                                  portions: 1,
+                              final foodActionsCreateData =
+                                  createFoodActionsRecordData(
+                                userId: currentUserUid,
+                                co2e: 0,
+                                createdTime: getCurrentTimestamp,
+                                day: dateTimeFormat(
+                                  'd/M/y',
+                                  getCurrentTimestamp,
+                                  locale:
+                                      FFLocalizations.of(context).languageCode,
                                 ),
-                                'sideComponent': ['null'],
-                              };
+                                isPeriodic: false,
+                                isFavorite: false,
+                                food: 'desert',
+                                portions: 1,
+                              );
                               var foodActionsRecordReference =
                                   FoodActionsRecord.collection.doc();
                               await foodActionsRecordReference
@@ -294,21 +299,20 @@ class _FoodListWidgetState extends State<FoodListWidget> {
                               newDesert = FoodActionsRecord.getDocumentFromData(
                                   foodActionsCreateData,
                                   foodActionsRecordReference);
-                              logFirebaseEvent('Container_Update-Local-State');
+                              logFirebaseEvent('Container_update_local_state');
                               setState(() => FFAppState().displayDates = false);
-                              logFirebaseEvent('Container_Update-Local-State');
+                              logFirebaseEvent('Container_update_local_state');
                               setState(() => FFAppState().displayDays = false);
-                              logFirebaseEvent('Container_Navigate-To');
-                              await Navigator.push(
-                                context,
-                                PageTransition(
-                                  type: PageTransitionType.fade,
-                                  duration: Duration(milliseconds: 0),
-                                  reverseDuration: Duration(milliseconds: 0),
-                                  child: FoodWidget(
-                                    actionRef: newDesert!.reference,
+                              logFirebaseEvent('Container_navigate_to');
+
+                              context.pushNamed(
+                                'Food',
+                                queryParams: {
+                                  'actionRef': serializeParam(
+                                    newDesert!.reference,
+                                    ParamType.DocumentReference,
                                   ),
-                                ),
+                                }.withoutNulls,
                               );
 
                               setState(() {});
@@ -355,22 +359,24 @@ class _FoodListWidgetState extends State<FoodListWidget> {
                             onTap: () async {
                               logFirebaseEvent(
                                   'FOOD_LIST_COMP_Container_31uzdmwx_ON_TAP');
-                              logFirebaseEvent('Container_Backend-Call');
+                              logFirebaseEvent('Container_backend_call');
 
-                              final foodActionsCreateData = {
-                                ...createFoodActionsRecordData(
-                                  userId: currentUserUid,
-                                  co2e: 0,
-                                  createdTime: getCurrentTimestamp,
-                                  day: dateTimeFormat(
-                                      'd/M/y', getCurrentTimestamp),
-                                  isPeriodic: false,
-                                  isFavorite: false,
-                                  food: 'drinks',
-                                  portions: 1,
+                              final foodActionsCreateData =
+                                  createFoodActionsRecordData(
+                                userId: currentUserUid,
+                                co2e: 0,
+                                createdTime: getCurrentTimestamp,
+                                day: dateTimeFormat(
+                                  'd/M/y',
+                                  getCurrentTimestamp,
+                                  locale:
+                                      FFLocalizations.of(context).languageCode,
                                 ),
-                                'sideComponent': ['null'],
-                              };
+                                isPeriodic: false,
+                                isFavorite: false,
+                                food: 'drinks',
+                                portions: 1,
+                              );
                               var foodActionsRecordReference =
                                   FoodActionsRecord.collection.doc();
                               await foodActionsRecordReference
@@ -378,21 +384,20 @@ class _FoodListWidgetState extends State<FoodListWidget> {
                               newDrinks = FoodActionsRecord.getDocumentFromData(
                                   foodActionsCreateData,
                                   foodActionsRecordReference);
-                              logFirebaseEvent('Container_Update-Local-State');
+                              logFirebaseEvent('Container_update_local_state');
                               setState(() => FFAppState().displayDates = false);
-                              logFirebaseEvent('Container_Update-Local-State');
+                              logFirebaseEvent('Container_update_local_state');
                               setState(() => FFAppState().displayDays = false);
-                              logFirebaseEvent('Container_Navigate-To');
-                              await Navigator.push(
-                                context,
-                                PageTransition(
-                                  type: PageTransitionType.fade,
-                                  duration: Duration(milliseconds: 0),
-                                  reverseDuration: Duration(milliseconds: 0),
-                                  child: FoodWidget(
-                                    actionRef: newDrinks!.reference,
+                              logFirebaseEvent('Container_navigate_to');
+
+                              context.pushNamed(
+                                'Food',
+                                queryParams: {
+                                  'actionRef': serializeParam(
+                                    newDrinks!.reference,
+                                    ParamType.DocumentReference,
                                   ),
-                                ),
+                                }.withoutNulls,
                               );
 
                               setState(() {});
@@ -448,23 +453,24 @@ class _FoodListWidgetState extends State<FoodListWidget> {
                             onTap: () async {
                               logFirebaseEvent(
                                   'FOOD_LIST_COMP_Container_4dtnptq5_ON_TAP');
-                              logFirebaseEvent('Container_Backend-Call');
+                              logFirebaseEvent('Container_backend_call');
 
-                              final foodActionsCreateData = {
-                                ...createFoodActionsRecordData(
-                                  userId: currentUserUid,
-                                  co2e: 0,
-                                  createdTime: getCurrentTimestamp,
-                                  day: dateTimeFormat(
-                                      'd/M/y', getCurrentTimestamp),
-                                  isPeriodic: false,
-                                  isFavorite: false,
-                                  food: 'cheese',
-                                  portions: 1,
-                                  mainComponent: 'null',
+                              final foodActionsCreateData =
+                                  createFoodActionsRecordData(
+                                userId: currentUserUid,
+                                co2e: 0,
+                                createdTime: getCurrentTimestamp,
+                                day: dateTimeFormat(
+                                  'd/M/y',
+                                  getCurrentTimestamp,
+                                  locale:
+                                      FFLocalizations.of(context).languageCode,
                                 ),
-                                'sideComponent': ['null'],
-                              };
+                                isPeriodic: false,
+                                isFavorite: false,
+                                food: 'cheese',
+                                portions: 1,
+                              );
                               var foodActionsRecordReference =
                                   FoodActionsRecord.collection.doc();
                               await foodActionsRecordReference
@@ -472,21 +478,20 @@ class _FoodListWidgetState extends State<FoodListWidget> {
                               newCheese = FoodActionsRecord.getDocumentFromData(
                                   foodActionsCreateData,
                                   foodActionsRecordReference);
-                              logFirebaseEvent('Container_Update-Local-State');
+                              logFirebaseEvent('Container_update_local_state');
                               setState(() => FFAppState().displayDates = false);
-                              logFirebaseEvent('Container_Update-Local-State');
+                              logFirebaseEvent('Container_update_local_state');
                               setState(() => FFAppState().displayDays = false);
-                              logFirebaseEvent('Container_Navigate-To');
-                              await Navigator.push(
-                                context,
-                                PageTransition(
-                                  type: PageTransitionType.fade,
-                                  duration: Duration(milliseconds: 0),
-                                  reverseDuration: Duration(milliseconds: 0),
-                                  child: FoodWidget(
-                                    actionRef: newCheese!.reference,
+                              logFirebaseEvent('Container_navigate_to');
+
+                              context.pushNamed(
+                                'Food',
+                                queryParams: {
+                                  'actionRef': serializeParam(
+                                    newCheese!.reference,
+                                    ParamType.DocumentReference,
                                   ),
-                                ),
+                                }.withoutNulls,
                               );
 
                               setState(() {});
@@ -533,23 +538,24 @@ class _FoodListWidgetState extends State<FoodListWidget> {
                             onTap: () async {
                               logFirebaseEvent(
                                   'FOOD_LIST_COMP_Container_rbnj7k2p_ON_TAP');
-                              logFirebaseEvent('Container_Backend-Call');
+                              logFirebaseEvent('Container_backend_call');
 
-                              final foodActionsCreateData = {
-                                ...createFoodActionsRecordData(
-                                  userId: currentUserUid,
-                                  co2e: 0,
-                                  createdTime: getCurrentTimestamp,
-                                  day: dateTimeFormat(
-                                      'd/M/y', getCurrentTimestamp),
-                                  isPeriodic: false,
-                                  isFavorite: false,
-                                  food: 'bread',
-                                  portions: 1,
-                                  mainComponent: 'null',
+                              final foodActionsCreateData =
+                                  createFoodActionsRecordData(
+                                userId: currentUserUid,
+                                co2e: 0,
+                                createdTime: getCurrentTimestamp,
+                                day: dateTimeFormat(
+                                  'd/M/y',
+                                  getCurrentTimestamp,
+                                  locale:
+                                      FFLocalizations.of(context).languageCode,
                                 ),
-                                'sideComponent': ['null'],
-                              };
+                                isPeriodic: false,
+                                isFavorite: false,
+                                food: 'bread',
+                                portions: 1,
+                              );
                               var foodActionsRecordReference =
                                   FoodActionsRecord.collection.doc();
                               await foodActionsRecordReference
@@ -557,21 +563,20 @@ class _FoodListWidgetState extends State<FoodListWidget> {
                               newBread = FoodActionsRecord.getDocumentFromData(
                                   foodActionsCreateData,
                                   foodActionsRecordReference);
-                              logFirebaseEvent('Container_Update-Local-State');
+                              logFirebaseEvent('Container_update_local_state');
                               setState(() => FFAppState().displayDates = false);
-                              logFirebaseEvent('Container_Update-Local-State');
+                              logFirebaseEvent('Container_update_local_state');
                               setState(() => FFAppState().displayDays = false);
-                              logFirebaseEvent('Container_Navigate-To');
-                              await Navigator.push(
-                                context,
-                                PageTransition(
-                                  type: PageTransitionType.fade,
-                                  duration: Duration(milliseconds: 0),
-                                  reverseDuration: Duration(milliseconds: 0),
-                                  child: FoodWidget(
-                                    actionRef: newBread!.reference,
+                              logFirebaseEvent('Container_navigate_to');
+
+                              context.pushNamed(
+                                'Food',
+                                queryParams: {
+                                  'actionRef': serializeParam(
+                                    newBread!.reference,
+                                    ParamType.DocumentReference,
                                   ),
-                                ),
+                                }.withoutNulls,
                               );
 
                               setState(() {});
@@ -630,43 +635,43 @@ class _FoodListWidgetState extends State<FoodListWidget> {
                       onTap: () async {
                         logFirebaseEvent(
                             'FOOD_LIST_COMP_Container_h1fkx9l7_ON_TAP');
-                        logFirebaseEvent('Container_Backend-Call');
+                        logFirebaseEvent('Container_backend_call');
 
-                        final foodActionsCreateData = {
-                          ...createFoodActionsRecordData(
-                            userId: currentUserUid,
-                            co2e: 0,
-                            createdTime: getCurrentTimestamp,
-                            day: dateTimeFormat('d/M/y', getCurrentTimestamp),
-                            isPeriodic: false,
-                            isFavorite: false,
-                            food: 'coffee',
-                            portions: 1,
-                            mainComponent: 'Expresso',
+                        final foodActionsCreateData =
+                            createFoodActionsRecordData(
+                          userId: currentUserUid,
+                          co2e: 0,
+                          createdTime: getCurrentTimestamp,
+                          day: dateTimeFormat(
+                            'd/M/y',
+                            getCurrentTimestamp,
+                            locale: FFLocalizations.of(context).languageCode,
                           ),
-                          'sideComponent': ['default'],
-                        };
+                          isPeriodic: false,
+                          isFavorite: false,
+                          food: 'coffee',
+                          portions: 1,
+                        );
                         var foodActionsRecordReference =
                             FoodActionsRecord.collection.doc();
                         await foodActionsRecordReference
                             .set(foodActionsCreateData);
                         newCoffee = FoodActionsRecord.getDocumentFromData(
                             foodActionsCreateData, foodActionsRecordReference);
-                        logFirebaseEvent('Container_Update-Local-State');
+                        logFirebaseEvent('Container_update_local_state');
                         setState(() => FFAppState().displayDates = false);
-                        logFirebaseEvent('Container_Update-Local-State');
+                        logFirebaseEvent('Container_update_local_state');
                         setState(() => FFAppState().displayDays = false);
-                        logFirebaseEvent('Container_Navigate-To');
-                        await Navigator.push(
-                          context,
-                          PageTransition(
-                            type: PageTransitionType.fade,
-                            duration: Duration(milliseconds: 0),
-                            reverseDuration: Duration(milliseconds: 0),
-                            child: FoodWidget(
-                              actionRef: newCoffee!.reference,
+                        logFirebaseEvent('Container_navigate_to');
+
+                        context.pushNamed(
+                          'Food',
+                          queryParams: {
+                            'actionRef': serializeParam(
+                              newCoffee!.reference,
+                              ParamType.DocumentReference,
                             ),
-                          ),
+                          }.withoutNulls,
                         );
 
                         setState(() {});

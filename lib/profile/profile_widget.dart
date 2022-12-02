@@ -1,18 +1,14 @@
 import '../auth/auth_util.dart';
 import '../backend/backend.dart';
-import '../drawer/drawer_widget.dart';
-import '../energies/energies_widget.dart';
 import '../flutter_flow/flutter_flow_animations.dart';
 import '../flutter_flow/flutter_flow_choice_chips.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
-import '../food/food_widget.dart';
-import '../home/home_widget.dart';
-import '../statistiques/statistiques_widget.dart';
-import '../transport/transport_widget.dart';
 import '../flutter_flow/custom_functions.dart' as functions;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -27,85 +23,99 @@ class ProfileWidget extends StatefulWidget {
 
 class _ProfileWidgetState extends State<ProfileWidget>
     with TickerProviderStateMixin {
-  String? activeProfilePartValue;
-  final scaffoldKey = GlobalKey<ScaffoldState>();
   final animationsMap = {
     'containerOnPageLoadAnimation1': AnimationInfo(
       trigger: AnimationTrigger.onPageLoad,
-      duration: 600,
-      hideBeforeAnimating: false,
-      fadeIn: true,
-      initialState: AnimationState(
-        offset: Offset(0, 90),
-        scale: 1,
-        opacity: 0,
-      ),
-      finalState: AnimationState(
-        offset: Offset(0, 0),
-        scale: 1,
-        opacity: 1,
-      ),
+      effects: [
+        FadeEffect(
+          curve: Curves.easeInOut,
+          delay: 0.ms,
+          duration: 600.ms,
+          begin: 0,
+          end: 1,
+        ),
+        MoveEffect(
+          curve: Curves.easeInOut,
+          delay: 0.ms,
+          duration: 600.ms,
+          begin: Offset(0, 90),
+          end: Offset(0, 0),
+        ),
+      ],
     ),
     'containerOnPageLoadAnimation2': AnimationInfo(
       trigger: AnimationTrigger.onPageLoad,
-      duration: 600,
-      hideBeforeAnimating: false,
-      fadeIn: true,
-      initialState: AnimationState(
-        offset: Offset(0, 90),
-        scale: 1,
-        opacity: 0,
-      ),
-      finalState: AnimationState(
-        offset: Offset(0, 0),
-        scale: 1,
-        opacity: 1,
-      ),
+      effects: [
+        FadeEffect(
+          curve: Curves.easeInOut,
+          delay: 0.ms,
+          duration: 600.ms,
+          begin: 0,
+          end: 1,
+        ),
+        MoveEffect(
+          curve: Curves.easeInOut,
+          delay: 0.ms,
+          duration: 600.ms,
+          begin: Offset(0, 90),
+          end: Offset(0, 0),
+        ),
+      ],
     ),
     'containerOnPageLoadAnimation3': AnimationInfo(
       trigger: AnimationTrigger.onPageLoad,
-      duration: 600,
-      hideBeforeAnimating: false,
-      fadeIn: true,
-      initialState: AnimationState(
-        offset: Offset(0, 90),
-        scale: 1,
-        opacity: 0,
-      ),
-      finalState: AnimationState(
-        offset: Offset(0, 0),
-        scale: 1,
-        opacity: 1,
-      ),
+      effects: [
+        FadeEffect(
+          curve: Curves.easeInOut,
+          delay: 0.ms,
+          duration: 600.ms,
+          begin: 0,
+          end: 1,
+        ),
+        MoveEffect(
+          curve: Curves.easeInOut,
+          delay: 0.ms,
+          duration: 600.ms,
+          begin: Offset(0, 90),
+          end: Offset(0, 0),
+        ),
+      ],
     ),
     'containerOnPageLoadAnimation4': AnimationInfo(
       trigger: AnimationTrigger.onPageLoad,
-      duration: 600,
-      hideBeforeAnimating: false,
-      fadeIn: true,
-      initialState: AnimationState(
-        offset: Offset(0, 30),
-        scale: 1,
-        opacity: 0,
-      ),
-      finalState: AnimationState(
-        offset: Offset(0, 0),
-        scale: 1,
-        opacity: 1,
-      ),
+      effects: [
+        FadeEffect(
+          curve: Curves.easeInOut,
+          delay: 0.ms,
+          duration: 600.ms,
+          begin: 0,
+          end: 1,
+        ),
+        MoveEffect(
+          curve: Curves.easeInOut,
+          delay: 0.ms,
+          duration: 600.ms,
+          begin: Offset(0, 30),
+          end: Offset(0, 0),
+        ),
+      ],
     ),
   };
+  String? activeProfilePartValue;
+  final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
     super.initState();
-    startPageLoadAnimations(
-      animationsMap.values
-          .where((anim) => anim.trigger == AnimationTrigger.onPageLoad),
+    setupAnimations(
+      animationsMap.values.where((anim) =>
+          anim.trigger == AnimationTrigger.onActionTrigger ||
+          !anim.applyInitialState),
       this,
     );
 
     logFirebaseEvent('screen_view', parameters: {'screen_name': 'Profile'});
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
@@ -189,18 +199,19 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                           logFirebaseEvent(
                                               'PROFILE_PAGE_Container_zi3bxkl5_ON_TAP');
                                           logFirebaseEvent(
-                                              'Container_Navigate-To');
-                                          await Navigator.push(
-                                            context,
-                                            PageTransition(
-                                              type: PageTransitionType
-                                                  .leftToRight,
-                                              duration:
-                                                  Duration(milliseconds: 300),
-                                              reverseDuration:
-                                                  Duration(milliseconds: 300),
-                                              child: DrawerWidget(),
-                                            ),
+                                              'Container_navigate_to');
+
+                                          context.pushNamed(
+                                            'Drawer',
+                                            extra: <String, dynamic>{
+                                              kTransitionInfoKey:
+                                                  TransitionInfo(
+                                                hasTransition: true,
+                                                transitionType:
+                                                    PageTransitionType
+                                                        .leftToRight,
+                                              ),
+                                            },
                                           );
                                         },
                                         child: Container(
@@ -235,18 +246,9 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                             logFirebaseEvent(
                                                 'PROFILE_PAGE_Actions_ON_TAP');
                                             logFirebaseEvent(
-                                                'Actions_Navigate-To');
-                                            await Navigator.push(
-                                              context,
-                                              PageTransition(
-                                                type: PageTransitionType.fade,
-                                                duration:
-                                                    Duration(milliseconds: 0),
-                                                reverseDuration:
-                                                    Duration(milliseconds: 0),
-                                                child: StatistiquesWidget(),
-                                              ),
-                                            );
+                                                'Actions_navigate_to');
+
+                                            context.pushNamed('Statistiques');
                                           },
                                           child: Container(
                                             width: 40,
@@ -273,19 +275,9 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                 logFirebaseEvent(
                                                     'PROFILE_PAGE_Icon_c33h4vn9_ON_TAP');
                                                 logFirebaseEvent(
-                                                    'Icon_Navigate-To');
-                                                await Navigator.push(
-                                                  context,
-                                                  PageTransition(
-                                                    type:
-                                                        PageTransitionType.fade,
-                                                    duration: Duration(
-                                                        milliseconds: 0),
-                                                    reverseDuration: Duration(
-                                                        milliseconds: 0),
-                                                    child: HomeWidget(),
-                                                  ),
-                                                );
+                                                    'Icon_navigate_to');
+
+                                                context.pushNamed('Home');
                                               },
                                               child: Icon(
                                                 Icons.add,
@@ -302,18 +294,9 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                             logFirebaseEvent(
                                                 'PROFILE_PAGE_Stats_ON_TAP');
                                             logFirebaseEvent(
-                                                'Stats_Navigate-To');
-                                            await Navigator.push(
-                                              context,
-                                              PageTransition(
-                                                type: PageTransitionType.fade,
-                                                duration:
-                                                    Duration(milliseconds: 0),
-                                                reverseDuration:
-                                                    Duration(milliseconds: 0),
-                                                child: StatistiquesWidget(),
-                                              ),
-                                            );
+                                                'Stats_navigate_to');
+
+                                            context.pushNamed('Statistiques');
                                           },
                                           child: Container(
                                             width: 40,
@@ -349,18 +332,9 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                             logFirebaseEvent(
                                                 'PROFILE_PAGE_Profil_ON_TAP');
                                             logFirebaseEvent(
-                                                'Profil_Navigate-To');
-                                            await Navigator.push(
-                                              context,
-                                              PageTransition(
-                                                type: PageTransitionType.fade,
-                                                duration:
-                                                    Duration(milliseconds: 0),
-                                                reverseDuration:
-                                                    Duration(milliseconds: 0),
-                                                child: ProfileWidget(),
-                                              ),
-                                            );
+                                                'Profil_navigate_to');
+
+                                            context.pushNamed('Profile');
                                           },
                                           child: Container(
                                             width: 40,
@@ -384,19 +358,18 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                 width: 1,
                                               ),
                                             ),
-                                            child: AuthUserStreamWidget(
-                                              child: ClipRRect(
-                                                borderRadius:
-                                                    BorderRadius.circular(100),
-                                                child: Image.network(
-                                                  valueOrDefault<String>(
-                                                    currentUserPhoto,
-                                                    'https://firebasestorage.googleapis.com/v0/b/carbonfight-89af6.appspot.com/o/18275220161537356156-128.png?alt=media&token=c9797a03-bba1-46b8-aaac-4c54cb99fcb6',
-                                                  ),
-                                                  width: 50,
-                                                  height: 50,
-                                                  fit: BoxFit.cover,
+                                            child: ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(100),
+                                              child: Image.network(
+                                                valueOrDefault<String>(
+                                                  containerUsersRecord!
+                                                      .photoUrl,
+                                                  'https://storage.googleapis.com/carbonfight-89af6.appspot.com/default_photo_url.png',
                                                 ),
+                                                width: 50,
+                                                height: 50,
+                                                fit: BoxFit.cover,
                                               ),
                                             ),
                                           ),
@@ -408,207 +381,242 @@ class _ProfileWidgetState extends State<ProfileWidget>
                               ),
                             ),
                           ),
-                          Container(
-                            decoration: BoxDecoration(),
-                            child: SingleChildScrollView(
-                              primary: false,
-                              child: Column(
-                                mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        20, 15, 20, 0),
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  20, 0, 10, 0),
-                                          child: Column(
-                                            mainAxisSize: MainAxisSize.max,
-                                            children: [
-                                              Container(
-                                                width: 75,
-                                                height: 75,
-                                                decoration: BoxDecoration(
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .tertiaryColor,
-                                                  boxShadow: [
-                                                    BoxShadow(
-                                                      blurRadius: 10,
-                                                      color: Color(0x2C000000),
-                                                      offset: Offset(0, 4),
-                                                    )
-                                                  ],
-                                                  shape: BoxShape.circle,
-                                                  border: Border.all(
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .grayLight,
-                                                    width: 1,
-                                                  ),
-                                                ),
-                                                child: AuthUserStreamWidget(
-                                                  child: ClipRRect(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            100),
-                                                    child: Image.network(
-                                                      valueOrDefault<String>(
-                                                        currentUserPhoto,
-                                                        'https://firebasestorage.googleapis.com/v0/b/carbonfight-89af6.appspot.com/o/18275220161537356156-128.png?alt=media&token=c9797a03-bba1-46b8-aaac-4c54cb99fcb6',
+                          StreamBuilder<List<UsersStatsRecord>>(
+                            stream: queryUsersStatsRecord(
+                              queryBuilder: (usersStatsRecord) =>
+                                  usersStatsRecord.where('uid',
+                                      isEqualTo: currentUserUid),
+                              singleRecord: true,
+                            ),
+                            builder: (context, snapshot) {
+                              // Customize what your widget looks like when it's loading.
+                              if (!snapshot.hasData) {
+                                return Center(
+                                  child: SizedBox(
+                                    width: 2,
+                                    height: 2,
+                                    child: SpinKitRing(
+                                      color: Colors.transparent,
+                                      size: 2,
+                                    ),
+                                  ),
+                                );
+                              }
+                              List<UsersStatsRecord> bodyUsersStatsRecordList =
+                                  snapshot.data!;
+                              // Return an empty Container when the document does not exist.
+                              if (snapshot.data!.isEmpty) {
+                                return Container();
+                              }
+                              final bodyUsersStatsRecord =
+                                  bodyUsersStatsRecordList.isNotEmpty
+                                      ? bodyUsersStatsRecordList.first
+                                      : null;
+                              return Container(
+                                decoration: BoxDecoration(),
+                                child: SingleChildScrollView(
+                                  primary: false,
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            20, 15, 20, 0),
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.max,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Padding(
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(20, 0, 10, 0),
+                                              child: Column(
+                                                mainAxisSize: MainAxisSize.max,
+                                                children: [
+                                                  Container(
+                                                    width: 75,
+                                                    height: 75,
+                                                    decoration: BoxDecoration(
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .tertiaryColor,
+                                                      boxShadow: [
+                                                        BoxShadow(
+                                                          blurRadius: 10,
+                                                          color:
+                                                              Color(0x2C000000),
+                                                          offset: Offset(0, 4),
+                                                        )
+                                                      ],
+                                                      shape: BoxShape.circle,
+                                                      border: Border.all(
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .grayLight,
+                                                        width: 1,
                                                       ),
-                                                      width: 100,
-                                                      height: 100,
-                                                      fit: BoxFit.cover,
+                                                    ),
+                                                    child: ClipRRect(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              100),
+                                                      child: Image.network(
+                                                        valueOrDefault<String>(
+                                                          containerUsersRecord!
+                                                              .photoUrl,
+                                                          'https://storage.googleapis.com/carbonfight-89af6.appspot.com/default_photo_url.png',
+                                                        ),
+                                                        width: 100,
+                                                        height: 100,
+                                                        fit: BoxFit.cover,
+                                                      ),
                                                     ),
                                                   ),
-                                                ),
+                                                ],
                                               ),
-                                            ],
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  10, 0, 20, 0),
-                                          child: Column(
-                                            mainAxisSize: MainAxisSize.max,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(0, 0, 0, 5),
-                                                child: AuthUserStreamWidget(
-                                                  child: Text(
-                                                    currentUserDisplayName,
+                                            ),
+                                            Padding(
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(10, 0, 20, 0),
+                                              child: Column(
+                                                mainAxisSize: MainAxisSize.max,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Padding(
+                                                    padding:
+                                                        EdgeInsetsDirectional
+                                                            .fromSTEB(
+                                                                0, 0, 0, 5),
+                                                    child: AuthUserStreamWidget(
+                                                      child: Text(
+                                                        currentUserDisplayName,
+                                                        textAlign:
+                                                            TextAlign.center,
+                                                        style:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .bodyText1
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Montserrat',
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .tertiaryColor,
+                                                                ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  Text(
+                                                    'Points trophés : ${bodyUsersStatsRecord!.trophiesPoints?.toString()}',
                                                     textAlign: TextAlign.center,
                                                     style: FlutterFlowTheme.of(
                                                             context)
-                                                        .bodyText1
+                                                        .bodyText2
                                                         .override(
                                                           fontFamily:
                                                               'Montserrat',
                                                           color: FlutterFlowTheme
                                                                   .of(context)
                                                               .tertiaryColor,
+                                                          fontSize: 11,
                                                         ),
                                                   ),
-                                                ),
-                                              ),
-                                              Text(
-                                                'Points trophés : ${containerUsersRecord!.totalPoints?.toString()}',
-                                                textAlign: TextAlign.center,
-                                                style: FlutterFlowTheme.of(
-                                                        context)
-                                                    .bodyText2
-                                                    .override(
-                                                      fontFamily: 'Montserrat',
-                                                      color:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
+                                                  Text(
+                                                    'Objectif journalier : ${functions.printScore(bodyUsersStatsRecord!.co2target)}',
+                                                    style: FlutterFlowTheme.of(
+                                                            context)
+                                                        .bodyText2
+                                                        .override(
+                                                          fontFamily:
+                                                              'Montserrat',
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
                                                               .tertiaryColor,
-                                                      fontSize: 11,
-                                                    ),
-                                              ),
-                                              Text(
-                                                'Objectif journalier : ${functions.printScore(containerUsersRecord!.co2target)}',
-                                                style: FlutterFlowTheme.of(
-                                                        context)
-                                                    .bodyText2
-                                                    .override(
-                                                      fontFamily: 'Montserrat',
-                                                      color:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
+                                                          fontSize: 11,
+                                                        ),
+                                                  ),
+                                                  Text(
+                                                    'CO2 total enregistré : ${functions.printScore(bodyUsersStatsRecord!.globalScore)}',
+                                                    textAlign: TextAlign.center,
+                                                    style: FlutterFlowTheme.of(
+                                                            context)
+                                                        .bodyText2
+                                                        .override(
+                                                          fontFamily:
+                                                              'Montserrat',
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
                                                               .tertiaryColor,
-                                                      fontSize: 11,
-                                                    ),
-                                              ),
-                                              Text(
-                                                'CO2 total enregistré : ${functions.printScore(containerUsersRecord!.globalScore)}',
-                                                textAlign: TextAlign.center,
-                                                style: FlutterFlowTheme.of(
-                                                        context)
-                                                    .bodyText2
-                                                    .override(
-                                                      fontFamily: 'Montserrat',
-                                                      color:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
+                                                          fontSize: 11,
+                                                        ),
+                                                  ),
+                                                  Text(
+                                                    'Projection annuelle : ${functions.printScore(bodyUsersStatsRecord!.globalProjection)}',
+                                                    style: FlutterFlowTheme.of(
+                                                            context)
+                                                        .bodyText2
+                                                        .override(
+                                                          fontFamily:
+                                                              'Montserrat',
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
                                                               .tertiaryColor,
-                                                      fontSize: 11,
-                                                    ),
+                                                          fontSize: 11,
+                                                        ),
+                                                  ),
+                                                ],
                                               ),
-                                              Text(
-                                                'Projection annuelle : ${functions.printScore(containerUsersRecord!.globalProjection)}',
-                                                style: FlutterFlowTheme.of(
-                                                        context)
-                                                    .bodyText2
-                                                    .override(
-                                                      fontFamily: 'Montserrat',
-                                                      color:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .tertiaryColor,
-                                                      fontSize: 11,
-                                                    ),
-                                              ),
-                                            ],
-                                          ),
+                                            ),
+                                          ],
                                         ),
-                                      ],
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        0, 10, 0, 0),
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Expanded(
-                                          child: Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    20, 5, 20, 0),
-                                            child: FlutterFlowChoiceChips(
-                                              initiallySelected:
-                                                  activeProfilePartValue != null
-                                                      ? [
-                                                          activeProfilePartValue!
-                                                        ]
-                                                      : ['Trophés'],
-                                              options: [
-                                                ChipData('Trophés',
-                                                    FontAwesomeIcons.trophy),
-                                                ChipData(
-                                                    'Classement',
-                                                    Icons
-                                                        .format_line_spacing_sharp),
-                                                ChipData(
-                                                    'Objectifs', Icons.stars),
-                                                ChipData(
-                                                    'Historique', Icons.update),
-                                                ChipData('Paramètres',
-                                                    FontAwesomeIcons.cog)
-                                              ],
-                                              onChanged: (val) => setState(() =>
-                                                  activeProfilePartValue =
-                                                      val?.first),
-                                              selectedChipStyle: ChipStyle(
-                                                backgroundColor:
-                                                    Color(0xFF323B45),
-                                                textStyle:
-                                                    FlutterFlowTheme.of(context)
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            0, 10, 0, 0),
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.max,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Expanded(
+                                              child: Padding(
+                                                padding: EdgeInsetsDirectional
+                                                    .fromSTEB(20, 5, 20, 0),
+                                                child: FlutterFlowChoiceChips(
+                                                  initiallySelected: [
+                                                    'Trophés'
+                                                  ],
+                                                  options: [
+                                                    ChipData(
+                                                        'Trophés',
+                                                        FontAwesomeIcons
+                                                            .trophy),
+                                                    ChipData(
+                                                        'Classement',
+                                                        Icons
+                                                            .format_line_spacing_sharp),
+                                                    ChipData('Objectifs',
+                                                        Icons.stars),
+                                                    ChipData('Historique',
+                                                        Icons.update),
+                                                    ChipData('Paramètres',
+                                                        FontAwesomeIcons.cog)
+                                                  ],
+                                                  onChanged: (val) => setState(
+                                                      () =>
+                                                          activeProfilePartValue =
+                                                              val?.first),
+                                                  selectedChipStyle: ChipStyle(
+                                                    backgroundColor:
+                                                        Color(0xFF323B45),
+                                                    textStyle: FlutterFlowTheme
+                                                            .of(context)
                                                         .bodyText1
                                                         .override(
                                                           fontFamily:
@@ -618,72 +626,44 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                           fontWeight:
                                                               FontWeight.normal,
                                                         ),
-                                                iconColor: Colors.white,
-                                                iconSize: 15,
-                                                elevation: 4,
+                                                    iconColor: Colors.white,
+                                                    iconSize: 15,
+                                                    elevation: 4,
+                                                  ),
+                                                  unselectedChipStyle:
+                                                      ChipStyle(
+                                                    backgroundColor:
+                                                        Colors.white,
+                                                    textStyle: FlutterFlowTheme
+                                                            .of(context)
+                                                        .bodyText2
+                                                        .override(
+                                                          fontFamily:
+                                                              'Montserrat',
+                                                          color:
+                                                              Color(0xFF323B45),
+                                                          fontSize: 10,
+                                                        ),
+                                                    iconColor:
+                                                        Color(0xFF323B45),
+                                                    iconSize: 15,
+                                                    elevation: 4,
+                                                  ),
+                                                  chipSpacing: 10,
+                                                  multiselect: false,
+                                                  initialized:
+                                                      activeProfilePartValue !=
+                                                          null,
+                                                  alignment:
+                                                      WrapAlignment.center,
+                                                ),
                                               ),
-                                              unselectedChipStyle: ChipStyle(
-                                                backgroundColor: Colors.white,
-                                                textStyle: FlutterFlowTheme.of(
-                                                        context)
-                                                    .bodyText2
-                                                    .override(
-                                                      fontFamily: 'Montserrat',
-                                                      color: Color(0xFF323B45),
-                                                      fontSize: 10,
-                                                    ),
-                                                iconColor: Color(0xFF323B45),
-                                                iconSize: 15,
-                                                elevation: 4,
-                                              ),
-                                              chipSpacing: 10,
-                                              multiselect: false,
-                                              initialized:
-                                                  activeProfilePartValue !=
-                                                      null,
-                                              alignment: WrapAlignment.center,
                                             ),
-                                          ),
+                                          ],
                                         ),
-                                      ],
-                                    ),
-                                  ),
-                                  if (activeProfilePartValue == 'Trophés')
-                                    StreamBuilder<List<UsersTrophiesRecord>>(
-                                      stream: queryUsersTrophiesRecord(
-                                        queryBuilder: (usersTrophiesRecord) =>
-                                            usersTrophiesRecord.where('uid',
-                                                isEqualTo: currentUserUid),
-                                        singleRecord: true,
                                       ),
-                                      builder: (context, snapshot) {
-                                        // Customize what your widget looks like when it's loading.
-                                        if (!snapshot.hasData) {
-                                          return Center(
-                                            child: SizedBox(
-                                              width: 2,
-                                              height: 2,
-                                              child: SpinKitRing(
-                                                color: Colors.transparent,
-                                                size: 2,
-                                              ),
-                                            ),
-                                          );
-                                        }
-                                        List<UsersTrophiesRecord>
-                                            trophiesUsersTrophiesRecordList =
-                                            snapshot.data!;
-                                        // Return an empty Container when the document does not exist.
-                                        if (snapshot.data!.isEmpty) {
-                                          return Container();
-                                        }
-                                        final trophiesUsersTrophiesRecord =
-                                            trophiesUsersTrophiesRecordList
-                                                    .isNotEmpty
-                                                ? trophiesUsersTrophiesRecordList
-                                                    .first
-                                                : null;
-                                        return Container(
+                                      if (activeProfilePartValue == 'Trophés')
+                                        Container(
                                           width:
                                               MediaQuery.of(context).size.width,
                                           height: 480,
@@ -799,9 +779,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                         children: [
                                                           Stack(
                                                             children: [
-                                                              if (trophiesUsersTrophiesRecord!
-                                                                      .hasParams ??
-                                                                  true)
+                                                              if (false)
                                                                 ClipRRect(
                                                                   borderRadius:
                                                                       BorderRadius
@@ -816,8 +794,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                                         .cover,
                                                                   ),
                                                                 ),
-                                                              if (!trophiesUsersTrophiesRecord!
-                                                                  .hasParams!)
+                                                              if (true)
                                                                 ClipRRect(
                                                                   borderRadius:
                                                                       BorderRadius
@@ -903,8 +880,8 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                         children: [
                                                           Stack(
                                                             children: [
-                                                              if (trophiesUsersTrophiesRecord!
-                                                                      .hasGoals ??
+                                                              if (bodyUsersStatsRecord!
+                                                                      .trophy50ActionsGoals ??
                                                                   true)
                                                                 ClipRRect(
                                                                   borderRadius:
@@ -920,8 +897,8 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                                         .cover,
                                                                   ),
                                                                 ),
-                                                              if (!trophiesUsersTrophiesRecord!
-                                                                  .hasGoals!)
+                                                              if (!bodyUsersStatsRecord!
+                                                                  .trophy50ActionsGoals!)
                                                                 ClipRRect(
                                                                   borderRadius:
                                                                       BorderRadius
@@ -1017,8 +994,8 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                         children: [
                                                           Stack(
                                                             children: [
-                                                              if (trophiesUsersTrophiesRecord!
-                                                                      .has50Actions ??
+                                                              if (bodyUsersStatsRecord!
+                                                                      .trophy50Actions ??
                                                                   true)
                                                                 ClipRRect(
                                                                   borderRadius:
@@ -1034,8 +1011,8 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                                         .cover,
                                                                   ),
                                                                 ),
-                                                              if (!trophiesUsersTrophiesRecord!
-                                                                  .has50Actions!)
+                                                              if (!bodyUsersStatsRecord!
+                                                                  .trophy50Actions!)
                                                                 ClipRRect(
                                                                   borderRadius:
                                                                       BorderRadius
@@ -1121,8 +1098,8 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                         children: [
                                                           Stack(
                                                             children: [
-                                                              if (trophiesUsersTrophiesRecord!
-                                                                      .has7DaysStreak ??
+                                                              if (bodyUsersStatsRecord!
+                                                                      .trophy50Actions7DaysStreak ??
                                                                   true)
                                                                 ClipRRect(
                                                                   borderRadius:
@@ -1138,8 +1115,8 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                                         .cover,
                                                                   ),
                                                                 ),
-                                                              if (!trophiesUsersTrophiesRecord!
-                                                                  .has7DaysStreak!)
+                                                              if (!bodyUsersStatsRecord!
+                                                                  .trophy50Actions7DaysStreak!)
                                                                 ClipRRect(
                                                                   borderRadius:
                                                                       BorderRadius
@@ -1225,8 +1202,8 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                         children: [
                                                           Stack(
                                                             children: [
-                                                              if (trophiesUsersTrophiesRecord!
-                                                                      .has3Periodics ??
+                                                              if (bodyUsersStatsRecord!
+                                                                      .trophy50Actions3Periodics ??
                                                                   true)
                                                                 ClipRRect(
                                                                   borderRadius:
@@ -1242,8 +1219,8 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                                         .cover,
                                                                   ),
                                                                 ),
-                                                              if (!trophiesUsersTrophiesRecord!
-                                                                  .has3Periodics!)
+                                                              if (!bodyUsersStatsRecord!
+                                                                  .trophy50Actions3Periodics!)
                                                                 ClipRRect(
                                                                   borderRadius:
                                                                       BorderRadius
@@ -1342,9 +1319,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                         children: [
                                                           Stack(
                                                             children: [
-                                                              if (trophiesUsersTrophiesRecord!
-                                                                      .has2Invites ??
-                                                                  true)
+                                                              if (false)
                                                                 ClipRRect(
                                                                   borderRadius:
                                                                       BorderRadius
@@ -1359,8 +1334,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                                         .cover,
                                                                   ),
                                                                 ),
-                                                              if (!trophiesUsersTrophiesRecord!
-                                                                  .has2Invites!)
+                                                              if (true)
                                                                 ClipRRect(
                                                                   borderRadius:
                                                                       BorderRadius
@@ -1446,9 +1420,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                         children: [
                                                           Stack(
                                                             children: [
-                                                              if (trophiesUsersTrophiesRecord!
-                                                                      .has5Likes ??
-                                                                  true)
+                                                              if (false)
                                                                 ClipRRect(
                                                                   borderRadius:
                                                                       BorderRadius
@@ -1463,8 +1435,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                                         .cover,
                                                                   ),
                                                                 ),
-                                                              if (!trophiesUsersTrophiesRecord!
-                                                                  .has5Likes!)
+                                                              if (true)
                                                                 ClipRRect(
                                                                   borderRadius:
                                                                       BorderRadius
@@ -1547,9 +1518,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                         children: [
                                                           Stack(
                                                             children: [
-                                                              if (trophiesUsersTrophiesRecord!
-                                                                      .hasReviewApp ??
-                                                                  true)
+                                                              if (false)
                                                                 ClipRRect(
                                                                   borderRadius:
                                                                       BorderRadius
@@ -1564,8 +1533,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                                         .cover,
                                                                   ),
                                                                 ),
-                                                              if (!trophiesUsersTrophiesRecord!
-                                                                  .hasReviewApp!)
+                                                              if (true)
                                                                 ClipRRect(
                                                                   borderRadius:
                                                                       BorderRadius
@@ -1639,45 +1607,9 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                               ),
                                             ],
                                           ),
-                                        );
-                                      },
-                                    ),
-                                  if (activeProfilePartValue == 'Objectifs')
-                                    StreamBuilder<List<UsersTrophiesRecord>>(
-                                      stream: queryUsersTrophiesRecord(
-                                        queryBuilder: (usersTrophiesRecord) =>
-                                            usersTrophiesRecord.where('uid',
-                                                isEqualTo: currentUserUid),
-                                        singleRecord: true,
-                                      ),
-                                      builder: (context, snapshot) {
-                                        // Customize what your widget looks like when it's loading.
-                                        if (!snapshot.hasData) {
-                                          return Center(
-                                            child: SizedBox(
-                                              width: 2,
-                                              height: 2,
-                                              child: SpinKitRing(
-                                                color: Colors.transparent,
-                                                size: 2,
-                                              ),
-                                            ),
-                                          );
-                                        }
-                                        List<UsersTrophiesRecord>
-                                            goalsUsersTrophiesRecordList =
-                                            snapshot.data!;
-                                        // Return an empty Container when the document does not exist.
-                                        if (snapshot.data!.isEmpty) {
-                                          return Container();
-                                        }
-                                        final goalsUsersTrophiesRecord =
-                                            goalsUsersTrophiesRecordList
-                                                    .isNotEmpty
-                                                ? goalsUsersTrophiesRecordList
-                                                    .first
-                                                : null;
-                                        return Container(
+                                        ),
+                                      if (activeProfilePartValue == 'Objectifs')
+                                        Container(
                                           width:
                                               MediaQuery.of(context).size.width,
                                           height: 700,
@@ -1758,16 +1690,16 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                           logFirebaseEvent(
                                                               'PROFILE_PAGE_userList_5_ON_TAP');
                                                           logFirebaseEvent(
-                                                              'userList_5_Backend-Call');
+                                                              'userList_5_backend_call');
 
-                                                          final usersUpdateData =
-                                                              createUsersRecordData(
+                                                          final usersStatsUpdateData =
+                                                              createUsersStatsRecordData(
                                                             co2target: 3000,
                                                           );
-                                                          await containerUsersRecord!
+                                                          await bodyUsersStatsRecord!
                                                               .reference
                                                               .update(
-                                                                  usersUpdateData);
+                                                                  usersStatsUpdateData);
                                                         },
                                                         child: Container(
                                                           width: MediaQuery.of(
@@ -1876,7 +1808,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                                 ),
                                                                 Stack(
                                                                   children: [
-                                                                    if (containerUsersRecord!
+                                                                    if (bodyUsersStatsRecord!
                                                                             .co2target ==
                                                                         3000)
                                                                       Icon(
@@ -1887,7 +1819,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                                         size:
                                                                             24,
                                                                       ),
-                                                                    if (containerUsersRecord!
+                                                                    if (bodyUsersStatsRecord!
                                                                             .co2target !=
                                                                         3000)
                                                                       Icon(
@@ -1910,16 +1842,16 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                           logFirebaseEvent(
                                                               'PROFILE_PAGE_userList_5_ON_TAP');
                                                           logFirebaseEvent(
-                                                              'userList_5_Backend-Call');
+                                                              'userList_5_backend_call');
 
-                                                          final usersUpdateData =
-                                                              createUsersRecordData(
+                                                          final usersStatsUpdateData =
+                                                              createUsersStatsRecordData(
                                                             co2target: 5000,
                                                           );
-                                                          await containerUsersRecord!
+                                                          await bodyUsersStatsRecord!
                                                               .reference
                                                               .update(
-                                                                  usersUpdateData);
+                                                                  usersStatsUpdateData);
                                                         },
                                                         child: Container(
                                                           width: MediaQuery.of(
@@ -2040,7 +1972,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                                 ),
                                                                 Stack(
                                                                   children: [
-                                                                    if (containerUsersRecord!
+                                                                    if (bodyUsersStatsRecord!
                                                                             .co2target ==
                                                                         5000)
                                                                       Icon(
@@ -2051,7 +1983,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                                         size:
                                                                             24,
                                                                       ),
-                                                                    if (containerUsersRecord!
+                                                                    if (bodyUsersStatsRecord!
                                                                             .co2target !=
                                                                         5000)
                                                                       Icon(
@@ -2087,16 +2019,16 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                           logFirebaseEvent(
                                                               'PROFILE_PAGE_userList_5_ON_TAP');
                                                           logFirebaseEvent(
-                                                              'userList_5_Backend-Call');
+                                                              'userList_5_backend_call');
 
-                                                          final usersUpdateData =
-                                                              createUsersRecordData(
+                                                          final usersStatsUpdateData =
+                                                              createUsersStatsRecordData(
                                                             co2target: 12000,
                                                           );
-                                                          await containerUsersRecord!
+                                                          await bodyUsersStatsRecord!
                                                               .reference
                                                               .update(
-                                                                  usersUpdateData);
+                                                                  usersStatsUpdateData);
                                                         },
                                                         child: Container(
                                                           width: MediaQuery.of(
@@ -2205,7 +2137,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                                 ),
                                                                 Stack(
                                                                   children: [
-                                                                    if (containerUsersRecord!
+                                                                    if (bodyUsersStatsRecord!
                                                                             .co2target ==
                                                                         12000)
                                                                       Icon(
@@ -2216,7 +2148,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                                         size:
                                                                             24,
                                                                       ),
-                                                                    if (containerUsersRecord!
+                                                                    if (bodyUsersStatsRecord!
                                                                             .co2target !=
                                                                         12000)
                                                                       Icon(
@@ -2239,16 +2171,16 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                           logFirebaseEvent(
                                                               'PROFILE_PAGE_userList_5_ON_TAP');
                                                           logFirebaseEvent(
-                                                              'userList_5_Backend-Call');
+                                                              'userList_5_backend_call');
 
-                                                          final usersUpdateData =
-                                                              createUsersRecordData(
+                                                          final usersStatsUpdateData =
+                                                              createUsersStatsRecordData(
                                                             co2target: 24000,
                                                           );
-                                                          await containerUsersRecord!
+                                                          await bodyUsersStatsRecord!
                                                               .reference
                                                               .update(
-                                                                  usersUpdateData);
+                                                                  usersStatsUpdateData);
                                                         },
                                                         child: Container(
                                                           width: MediaQuery.of(
@@ -2357,7 +2289,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                                 ),
                                                                 Stack(
                                                                   children: [
-                                                                    if (containerUsersRecord!
+                                                                    if (bodyUsersStatsRecord!
                                                                             .co2target ==
                                                                         24000)
                                                                       Icon(
@@ -2368,7 +2300,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                                         size:
                                                                             24,
                                                                       ),
-                                                                    if (containerUsersRecord!
+                                                                    if (bodyUsersStatsRecord!
                                                                             .co2target !=
                                                                         24000)
                                                                       Icon(
@@ -2404,16 +2336,16 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                           logFirebaseEvent(
                                                               'PROFILE_PAGE_userList_5_ON_TAP');
                                                           logFirebaseEvent(
-                                                              'userList_5_Backend-Call');
+                                                              'userList_5_backend_call');
 
-                                                          final usersUpdateData =
-                                                              createUsersRecordData(
+                                                          final usersStatsUpdateData =
+                                                              createUsersStatsRecordData(
                                                             co2target: 15000,
                                                           );
-                                                          await containerUsersRecord!
+                                                          await bodyUsersStatsRecord!
                                                               .reference
                                                               .update(
-                                                                  usersUpdateData);
+                                                                  usersStatsUpdateData);
                                                         },
                                                         child: Container(
                                                           width: MediaQuery.of(
@@ -2522,7 +2454,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                                 ),
                                                                 Stack(
                                                                   children: [
-                                                                    if (containerUsersRecord!
+                                                                    if (bodyUsersStatsRecord!
                                                                             .co2target ==
                                                                         15000)
                                                                       Icon(
@@ -2533,7 +2465,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                                         size:
                                                                             24,
                                                                       ),
-                                                                    if (containerUsersRecord!
+                                                                    if (bodyUsersStatsRecord!
                                                                             .co2target !=
                                                                         15000)
                                                                       Icon(
@@ -2556,16 +2488,16 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                           logFirebaseEvent(
                                                               'PROFILE_PAGE_userList_5_ON_TAP');
                                                           logFirebaseEvent(
-                                                              'userList_5_Backend-Call');
+                                                              'userList_5_backend_call');
 
-                                                          final usersUpdateData =
-                                                              createUsersRecordData(
+                                                          final usersStatsUpdateData =
+                                                              createUsersStatsRecordData(
                                                             co2target: 14000,
                                                           );
-                                                          await containerUsersRecord!
+                                                          await bodyUsersStatsRecord!
                                                               .reference
                                                               .update(
-                                                                  usersUpdateData);
+                                                                  usersStatsUpdateData);
                                                         },
                                                         child: Container(
                                                           width: MediaQuery.of(
@@ -2674,7 +2606,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                                 ),
                                                                 Stack(
                                                                   children: [
-                                                                    if (containerUsersRecord!
+                                                                    if (bodyUsersStatsRecord!
                                                                             .co2target ==
                                                                         14000)
                                                                       Icon(
@@ -2685,7 +2617,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                                         size:
                                                                             24,
                                                                       ),
-                                                                    if (containerUsersRecord!
+                                                                    if (bodyUsersStatsRecord!
                                                                             .co2target !=
                                                                         14000)
                                                                       Icon(
@@ -2721,16 +2653,16 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                           logFirebaseEvent(
                                                               'PROFILE_PAGE_userList_5_ON_TAP');
                                                           logFirebaseEvent(
-                                                              'userList_5_Backend-Call');
+                                                              'userList_5_backend_call');
 
-                                                          final usersUpdateData =
-                                                              createUsersRecordData(
+                                                          final usersStatsUpdateData =
+                                                              createUsersStatsRecordData(
                                                             co2target: 10000,
                                                           );
-                                                          await containerUsersRecord!
+                                                          await bodyUsersStatsRecord!
                                                               .reference
                                                               .update(
-                                                                  usersUpdateData);
+                                                                  usersStatsUpdateData);
                                                         },
                                                         child: Container(
                                                           width: MediaQuery.of(
@@ -2839,7 +2771,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                                 ),
                                                                 Stack(
                                                                   children: [
-                                                                    if (containerUsersRecord!
+                                                                    if (bodyUsersStatsRecord!
                                                                             .co2target ==
                                                                         11000)
                                                                       Icon(
@@ -2850,7 +2782,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                                         size:
                                                                             24,
                                                                       ),
-                                                                    if (containerUsersRecord!
+                                                                    if (bodyUsersStatsRecord!
                                                                             .co2target !=
                                                                         11000)
                                                                       Icon(
@@ -2873,16 +2805,16 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                           logFirebaseEvent(
                                                               'PROFILE_PAGE_userList_5_ON_TAP');
                                                           logFirebaseEvent(
-                                                              'userList_5_Backend-Call');
+                                                              'userList_5_backend_call');
 
-                                                          final usersUpdateData =
-                                                              createUsersRecordData(
+                                                          final usersStatsUpdateData =
+                                                              createUsersStatsRecordData(
                                                             co2target: 22000,
                                                           );
-                                                          await containerUsersRecord!
+                                                          await bodyUsersStatsRecord!
                                                               .reference
                                                               .update(
-                                                                  usersUpdateData);
+                                                                  usersStatsUpdateData);
                                                         },
                                                         child: Container(
                                                           width: MediaQuery.of(
@@ -2991,7 +2923,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                                 ),
                                                                 Stack(
                                                                   children: [
-                                                                    if (containerUsersRecord!
+                                                                    if (bodyUsersStatsRecord!
                                                                             .co2target ==
                                                                         22000)
                                                                       Icon(
@@ -3002,7 +2934,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                                         size:
                                                                             24,
                                                                       ),
-                                                                    if (containerUsersRecord!
+                                                                    if (bodyUsersStatsRecord!
                                                                             .co2target !=
                                                                         22000)
                                                                       Icon(
@@ -3038,16 +2970,16 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                           logFirebaseEvent(
                                                               'PROFILE_PAGE_userList_5_ON_TAP');
                                                           logFirebaseEvent(
-                                                              'userList_5_Backend-Call');
+                                                              'userList_5_backend_call');
 
-                                                          final usersUpdateData =
-                                                              createUsersRecordData(
+                                                          final usersStatsUpdateData =
+                                                              createUsersStatsRecordData(
                                                             co2target: 16000,
                                                           );
-                                                          await containerUsersRecord!
+                                                          await bodyUsersStatsRecord!
                                                               .reference
                                                               .update(
-                                                                  usersUpdateData);
+                                                                  usersStatsUpdateData);
                                                         },
                                                         child: Container(
                                                           width: MediaQuery.of(
@@ -3156,7 +3088,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                                 ),
                                                                 Stack(
                                                                   children: [
-                                                                    if (containerUsersRecord!
+                                                                    if (bodyUsersStatsRecord!
                                                                             .co2target ==
                                                                         16000)
                                                                       Icon(
@@ -3167,7 +3099,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                                         size:
                                                                             24,
                                                                       ),
-                                                                    if (containerUsersRecord!
+                                                                    if (bodyUsersStatsRecord!
                                                                             .co2target !=
                                                                         16000)
                                                                       Icon(
@@ -3190,16 +3122,16 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                           logFirebaseEvent(
                                                               'PROFILE_PAGE_userList_5_ON_TAP');
                                                           logFirebaseEvent(
-                                                              'userList_5_Backend-Call');
+                                                              'userList_5_backend_call');
 
-                                                          final usersUpdateData =
-                                                              createUsersRecordData(
+                                                          final usersStatsUpdateData =
+                                                              createUsersStatsRecordData(
                                                             co2target: 25000,
                                                           );
-                                                          await containerUsersRecord!
+                                                          await bodyUsersStatsRecord!
                                                               .reference
                                                               .update(
-                                                                  usersUpdateData);
+                                                                  usersStatsUpdateData);
                                                         },
                                                         child: Container(
                                                           width: MediaQuery.of(
@@ -3308,7 +3240,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                                 ),
                                                                 Stack(
                                                                   children: [
-                                                                    if (containerUsersRecord!
+                                                                    if (bodyUsersStatsRecord!
                                                                             .co2target ==
                                                                         25000)
                                                                       Icon(
@@ -3319,7 +3251,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                                         size:
                                                                             24,
                                                                       ),
-                                                                    if (containerUsersRecord!
+                                                                    if (bodyUsersStatsRecord!
                                                                             .co2target !=
                                                                         25000)
                                                                       Icon(
@@ -3355,16 +3287,16 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                           logFirebaseEvent(
                                                               'PROFILE_PAGE_userList_5_ON_TAP');
                                                           logFirebaseEvent(
-                                                              'userList_5_Backend-Call');
+                                                              'userList_5_backend_call');
 
-                                                          final usersUpdateData =
-                                                              createUsersRecordData(
+                                                          final usersStatsUpdateData =
+                                                              createUsersStatsRecordData(
                                                             co2target: 43000,
                                                           );
-                                                          await containerUsersRecord!
+                                                          await bodyUsersStatsRecord!
                                                               .reference
                                                               .update(
-                                                                  usersUpdateData);
+                                                                  usersStatsUpdateData);
                                                         },
                                                         child: Container(
                                                           width: MediaQuery.of(
@@ -3473,7 +3405,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                                 ),
                                                                 Stack(
                                                                   children: [
-                                                                    if (containerUsersRecord!
+                                                                    if (bodyUsersStatsRecord!
                                                                             .co2target ==
                                                                         43000)
                                                                       Icon(
@@ -3484,7 +3416,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                                         size:
                                                                             24,
                                                                       ),
-                                                                    if (containerUsersRecord!
+                                                                    if (bodyUsersStatsRecord!
                                                                             .co2target !=
                                                                         43000)
                                                                       Icon(
@@ -3507,16 +3439,16 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                           logFirebaseEvent(
                                                               'PROFILE_PAGE_userList_5_ON_TAP');
                                                           logFirebaseEvent(
-                                                              'userList_5_Backend-Call');
+                                                              'userList_5_backend_call');
 
-                                                          final usersUpdateData =
-                                                              createUsersRecordData(
+                                                          final usersStatsUpdateData =
+                                                              createUsersStatsRecordData(
                                                             co2target: 6000,
                                                           );
-                                                          await containerUsersRecord!
+                                                          await bodyUsersStatsRecord!
                                                               .reference
                                                               .update(
-                                                                  usersUpdateData);
+                                                                  usersStatsUpdateData);
                                                         },
                                                         child: Container(
                                                           width: MediaQuery.of(
@@ -3625,7 +3557,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                                 ),
                                                                 Stack(
                                                                   children: [
-                                                                    if (containerUsersRecord!
+                                                                    if (bodyUsersStatsRecord!
                                                                             .co2target ==
                                                                         6000)
                                                                       Icon(
@@ -3636,7 +3568,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                                         size:
                                                                             24,
                                                                       ),
-                                                                    if (containerUsersRecord!
+                                                                    if (bodyUsersStatsRecord!
                                                                             .co2target !=
                                                                         6000)
                                                                       Icon(
@@ -3672,16 +3604,16 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                           logFirebaseEvent(
                                                               'PROFILE_PAGE_userList_5_ON_TAP');
                                                           logFirebaseEvent(
-                                                              'userList_5_Backend-Call');
+                                                              'userList_5_backend_call');
 
-                                                          final usersUpdateData =
-                                                              createUsersRecordData(
+                                                          final usersStatsUpdateData =
+                                                              createUsersStatsRecordData(
                                                             co2target: 4000,
                                                           );
-                                                          await containerUsersRecord!
+                                                          await bodyUsersStatsRecord!
                                                               .reference
                                                               .update(
-                                                                  usersUpdateData);
+                                                                  usersStatsUpdateData);
                                                         },
                                                         child: Container(
                                                           width: MediaQuery.of(
@@ -3790,7 +3722,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                                 ),
                                                                 Stack(
                                                                   children: [
-                                                                    if (containerUsersRecord!
+                                                                    if (bodyUsersStatsRecord!
                                                                             .co2target ==
                                                                         4000)
                                                                       Icon(
@@ -3801,7 +3733,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                                         size:
                                                                             24,
                                                                       ),
-                                                                    if (containerUsersRecord!
+                                                                    if (bodyUsersStatsRecord!
                                                                             .co2target !=
                                                                         4000)
                                                                       Icon(
@@ -3824,16 +3756,16 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                           logFirebaseEvent(
                                                               'PROFILE_PAGE_userList_5_ON_TAP');
                                                           logFirebaseEvent(
-                                                              'userList_5_Backend-Call');
+                                                              'userList_5_backend_call');
 
-                                                          final usersUpdateData =
-                                                              createUsersRecordData(
+                                                          final usersStatsUpdateData =
+                                                              createUsersStatsRecordData(
                                                             co2target: 40000,
                                                           );
-                                                          await containerUsersRecord!
+                                                          await bodyUsersStatsRecord!
                                                               .reference
                                                               .update(
-                                                                  usersUpdateData);
+                                                                  usersStatsUpdateData);
                                                         },
                                                         child: Container(
                                                           width: MediaQuery.of(
@@ -3942,7 +3874,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                                 ),
                                                                 Stack(
                                                                   children: [
-                                                                    if (containerUsersRecord!
+                                                                    if (bodyUsersStatsRecord!
                                                                             .co2target ==
                                                                         40000)
                                                                       Icon(
@@ -3953,7 +3885,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                                         size:
                                                                             24,
                                                                       ),
-                                                                    if (containerUsersRecord!
+                                                                    if (bodyUsersStatsRecord!
                                                                             .co2target !=
                                                                         40000)
                                                                       Icon(
@@ -3989,16 +3921,16 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                           logFirebaseEvent(
                                                               'PROFILE_PAGE_userList_5_ON_TAP');
                                                           logFirebaseEvent(
-                                                              'userList_5_Backend-Call');
+                                                              'userList_5_backend_call');
 
-                                                          final usersUpdateData =
-                                                              createUsersRecordData(
+                                                          final usersStatsUpdateData =
+                                                              createUsersStatsRecordData(
                                                             co2target: 18000,
                                                           );
-                                                          await containerUsersRecord!
+                                                          await bodyUsersStatsRecord!
                                                               .reference
                                                               .update(
-                                                                  usersUpdateData);
+                                                                  usersStatsUpdateData);
                                                         },
                                                         child: Container(
                                                           width: MediaQuery.of(
@@ -4114,7 +4046,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                                 ),
                                                                 Stack(
                                                                   children: [
-                                                                    if (containerUsersRecord!
+                                                                    if (bodyUsersStatsRecord!
                                                                             .co2target ==
                                                                         18000)
                                                                       Icon(
@@ -4125,7 +4057,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                                         size:
                                                                             24,
                                                                       ),
-                                                                    if (containerUsersRecord!
+                                                                    if (bodyUsersStatsRecord!
                                                                             .co2target !=
                                                                         18000)
                                                                       Icon(
@@ -4148,16 +4080,16 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                           logFirebaseEvent(
                                                               'PROFILE_PAGE_userList_5_ON_TAP');
                                                           logFirebaseEvent(
-                                                              'userList_5_Backend-Call');
+                                                              'userList_5_backend_call');
 
-                                                          final usersUpdateData =
-                                                              createUsersRecordData(
+                                                          final usersStatsUpdateData =
+                                                              createUsersStatsRecordData(
                                                             co2target: 29000,
                                                           );
-                                                          await containerUsersRecord!
+                                                          await bodyUsersStatsRecord!
                                                               .reference
                                                               .update(
-                                                                  usersUpdateData);
+                                                                  usersStatsUpdateData);
                                                         },
                                                         child: Container(
                                                           width: MediaQuery.of(
@@ -4266,7 +4198,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                                 ),
                                                                 Stack(
                                                                   children: [
-                                                                    if (containerUsersRecord!
+                                                                    if (bodyUsersStatsRecord!
                                                                             .co2target ==
                                                                         29000)
                                                                       Icon(
@@ -4277,7 +4209,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                                         size:
                                                                             24,
                                                                       ),
-                                                                    if (containerUsersRecord!
+                                                                    if (bodyUsersStatsRecord!
                                                                             .co2target !=
                                                                         29000)
                                                                       Icon(
@@ -4313,16 +4245,16 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                           logFirebaseEvent(
                                                               'PROFILE_PAGE_userList_5_ON_TAP');
                                                           logFirebaseEvent(
-                                                              'userList_5_Backend-Call');
+                                                              'userList_5_backend_call');
 
-                                                          final usersUpdateData =
-                                                              createUsersRecordData(
+                                                          final usersStatsUpdateData =
+                                                              createUsersStatsRecordData(
                                                             co2target: 1000,
                                                           );
-                                                          await containerUsersRecord!
+                                                          await bodyUsersStatsRecord!
                                                               .reference
                                                               .update(
-                                                                  usersUpdateData);
+                                                                  usersStatsUpdateData);
                                                         },
                                                         child: Container(
                                                           width: MediaQuery.of(
@@ -4431,7 +4363,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                                 ),
                                                                 Stack(
                                                                   children: [
-                                                                    if (containerUsersRecord!
+                                                                    if (bodyUsersStatsRecord!
                                                                             .co2target ==
                                                                         1000)
                                                                       Icon(
@@ -4442,7 +4374,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                                         size:
                                                                             24,
                                                                       ),
-                                                                    if (containerUsersRecord!
+                                                                    if (bodyUsersStatsRecord!
                                                                             .co2target !=
                                                                         1000)
                                                                       Icon(
@@ -4465,16 +4397,16 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                           logFirebaseEvent(
                                                               'PROFILE_PAGE_userList_5_ON_TAP');
                                                           logFirebaseEvent(
-                                                              'userList_5_Backend-Call');
+                                                              'userList_5_backend_call');
 
-                                                          final usersUpdateData =
-                                                              createUsersRecordData(
+                                                          final usersStatsUpdateData =
+                                                              createUsersStatsRecordData(
                                                             co2target: 83000,
                                                           );
-                                                          await containerUsersRecord!
+                                                          await bodyUsersStatsRecord!
                                                               .reference
                                                               .update(
-                                                                  usersUpdateData);
+                                                                  usersStatsUpdateData);
                                                         },
                                                         child: Container(
                                                           width: MediaQuery.of(
@@ -4583,7 +4515,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                                 ),
                                                                 Stack(
                                                                   children: [
-                                                                    if (containerUsersRecord!
+                                                                    if (bodyUsersStatsRecord!
                                                                             .co2target ==
                                                                         83000)
                                                                       Icon(
@@ -4594,7 +4526,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                                         size:
                                                                             24,
                                                                       ),
-                                                                    if (containerUsersRecord!
+                                                                    if (bodyUsersStatsRecord!
                                                                             .co2target !=
                                                                         83000)
                                                                       Icon(
@@ -4618,295 +4550,234 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                               ],
                                             ),
                                           ),
-                                        );
-                                      },
-                                    ),
-                                  if (activeProfilePartValue == 'Classement')
-                                    Container(
-                                      width: MediaQuery.of(context).size.width,
-                                      decoration: BoxDecoration(
-                                        color: Color(0x00EEEEEE),
-                                      ),
-                                      child: Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            0, 20, 0, 0),
-                                        child: StreamBuilder<List<UsersRecord>>(
-                                          stream: queryUsersRecord(
-                                            queryBuilder: (usersRecord) =>
-                                                usersRecord.orderBy(
-                                                    'totalPoints',
-                                                    descending: true),
+                                        ),
+                                      if (activeProfilePartValue ==
+                                          'Classement')
+                                        Container(
+                                          width:
+                                              MediaQuery.of(context).size.width,
+                                          decoration: BoxDecoration(
+                                            color: Color(0x00EEEEEE),
                                           ),
-                                          builder: (context, snapshot) {
-                                            // Customize what your widget looks like when it's loading.
-                                            if (!snapshot.hasData) {
-                                              return Center(
-                                                child: SizedBox(
-                                                  width: 2,
-                                                  height: 2,
-                                                  child: SpinKitRing(
-                                                    color: Colors.transparent,
-                                                    size: 2,
-                                                  ),
-                                                ),
-                                              );
-                                            }
-                                            List<UsersRecord>
-                                                listViewUsersRecordList =
-                                                snapshot.data!;
-                                            return ListView.builder(
-                                              padding: EdgeInsets.zero,
-                                              primary: false,
-                                              shrinkWrap: true,
-                                              scrollDirection: Axis.vertical,
-                                              itemCount: listViewUsersRecordList
-                                                  .length,
-                                              itemBuilder:
-                                                  (context, listViewIndex) {
-                                                final listViewUsersRecord =
-                                                    listViewUsersRecordList[
-                                                        listViewIndex];
-                                                return Padding(
-                                                  padding: EdgeInsetsDirectional
-                                                      .fromSTEB(16, 4, 16, 8),
-                                                  child: Container(
-                                                    width: double.infinity,
-                                                    height: 50,
-                                                    decoration: BoxDecoration(
-                                                      color: Colors.white,
-                                                      boxShadow: [
-                                                        BoxShadow(
-                                                          blurRadius: 4,
-                                                          color:
-                                                              Color(0x32000000),
-                                                          offset: Offset(0, 2),
-                                                        )
-                                                      ],
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              8),
+                                          child: Padding(
+                                            padding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    0, 20, 0, 0),
+                                            child: StreamBuilder<
+                                                List<UsersRecord>>(
+                                              stream: queryUsersRecord(
+                                                queryBuilder: (usersRecord) =>
+                                                    usersRecord.orderBy(
+                                                        'created_time',
+                                                        descending: true),
+                                              ),
+                                              builder: (context, snapshot) {
+                                                // Customize what your widget looks like when it's loading.
+                                                if (!snapshot.hasData) {
+                                                  return Center(
+                                                    child: SizedBox(
+                                                      width: 2,
+                                                      height: 2,
+                                                      child: SpinKitRing(
+                                                        color:
+                                                            Colors.transparent,
+                                                        size: 2,
+                                                      ),
                                                     ),
-                                                    child: Padding(
+                                                  );
+                                                }
+                                                List<UsersRecord>
+                                                    listViewUsersRecordList =
+                                                    snapshot.data!;
+                                                return ListView.builder(
+                                                  padding: EdgeInsets.zero,
+                                                  primary: false,
+                                                  shrinkWrap: true,
+                                                  scrollDirection:
+                                                      Axis.vertical,
+                                                  itemCount:
+                                                      listViewUsersRecordList
+                                                          .length,
+                                                  itemBuilder:
+                                                      (context, listViewIndex) {
+                                                    final listViewUsersRecord =
+                                                        listViewUsersRecordList[
+                                                            listViewIndex];
+                                                    return Padding(
                                                       padding:
                                                           EdgeInsetsDirectional
                                                               .fromSTEB(
-                                                                  8, 0, 8, 0),
-                                                      child: Row(
-                                                        mainAxisSize:
-                                                            MainAxisSize.max,
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .spaceBetween,
-                                                        children: [
-                                                          Padding(
-                                                            padding:
-                                                                EdgeInsetsDirectional
-                                                                    .fromSTEB(
-                                                                        0,
-                                                                        0,
-                                                                        10,
-                                                                        0),
-                                                            child: Text(
-                                                              valueOrDefault<
-                                                                  String>(
-                                                                functions.printRank(
-                                                                    listViewIndex),
-                                                                '#1 ',
-                                                              ),
-                                                              style: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .bodyText1
-                                                                  .override(
-                                                                    fontFamily:
-                                                                        'Montserrat',
-                                                                    fontSize:
-                                                                        20,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w500,
+                                                                  16, 4, 16, 8),
+                                                      child: Container(
+                                                        width: double.infinity,
+                                                        height: 50,
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          color: Colors.white,
+                                                          boxShadow: [
+                                                            BoxShadow(
+                                                              blurRadius: 4,
+                                                              color: Color(
+                                                                  0x32000000),
+                                                              offset:
+                                                                  Offset(0, 2),
+                                                            )
+                                                          ],
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(8),
+                                                        ),
+                                                        child: Padding(
+                                                          padding:
+                                                              EdgeInsetsDirectional
+                                                                  .fromSTEB(8,
+                                                                      0, 8, 0),
+                                                          child: Row(
+                                                            mainAxisSize:
+                                                                MainAxisSize
+                                                                    .max,
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .spaceBetween,
+                                                            children: [
+                                                              Padding(
+                                                                padding:
+                                                                    EdgeInsetsDirectional
+                                                                        .fromSTEB(
+                                                                            0,
+                                                                            0,
+                                                                            10,
+                                                                            0),
+                                                                child: Text(
+                                                                  valueOrDefault<
+                                                                      String>(
+                                                                    functions
+                                                                        .printRank(
+                                                                            listViewIndex),
+                                                                    '#1 ',
                                                                   ),
-                                                            ),
-                                                          ),
-                                                          ClipRRect(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        26),
-                                                            child:
-                                                                Image.network(
-                                                              listViewUsersRecord
-                                                                  .photoUrl!,
-                                                              width: 36,
-                                                              height: 36,
-                                                              fit: BoxFit.cover,
-                                                            ),
-                                                          ),
-                                                          Expanded(
-                                                            child: Padding(
-                                                              padding:
-                                                                  EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          12,
-                                                                          0,
-                                                                          0,
-                                                                          0),
-                                                              child: Column(
-                                                                mainAxisSize:
-                                                                    MainAxisSize
-                                                                        .max,
-                                                                mainAxisAlignment:
-                                                                    MainAxisAlignment
-                                                                        .center,
-                                                                crossAxisAlignment:
-                                                                    CrossAxisAlignment
-                                                                        .start,
-                                                                children: [
-                                                                  Text(
+                                                                  style: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .bodyText1
+                                                                      .override(
+                                                                        fontFamily:
+                                                                            'Montserrat',
+                                                                        fontSize:
+                                                                            20,
+                                                                        fontWeight:
+                                                                            FontWeight.w500,
+                                                                      ),
+                                                                ),
+                                                              ),
+                                                              ClipRRect(
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            26),
+                                                                child: Image
+                                                                    .network(
+                                                                  valueOrDefault<
+                                                                      String>(
                                                                     listViewUsersRecord
-                                                                        .displayName!,
-                                                                    style: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .bodyText1
-                                                                        .override(
-                                                                          fontFamily:
-                                                                              'Outfit',
-                                                                          color:
-                                                                              Color(0xFF0F1113),
-                                                                          fontSize:
-                                                                              16,
-                                                                          fontWeight:
-                                                                              FontWeight.w600,
-                                                                        ),
+                                                                        .photoUrl,
+                                                                    'https://storage.googleapis.com/carbonfight-89af6.appspot.com/18275220161537356156-128.png',
                                                                   ),
-                                                                ],
+                                                                  width: 36,
+                                                                  height: 36,
+                                                                  fit: BoxFit
+                                                                      .cover,
+                                                                ),
                                                               ),
-                                                            ),
-                                                          ),
-                                                          Expanded(
-                                                            child: Padding(
-                                                              padding:
-                                                                  EdgeInsetsDirectional
+                                                              Expanded(
+                                                                child: Padding(
+                                                                  padding: EdgeInsetsDirectional
                                                                       .fromSTEB(
                                                                           12,
                                                                           0,
                                                                           0,
                                                                           0),
-                                                              child: Column(
-                                                                mainAxisSize:
-                                                                    MainAxisSize
-                                                                        .max,
-                                                                mainAxisAlignment:
-                                                                    MainAxisAlignment
-                                                                        .center,
-                                                                crossAxisAlignment:
-                                                                    CrossAxisAlignment
-                                                                        .start,
-                                                                children: [
-                                                                  Text(
-                                                                    'Trophés : ${listViewUsersRecord.totalPoints?.toString()} points',
-                                                                    style: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .bodyText2
-                                                                        .override(
-                                                                          fontFamily:
-                                                                              'Outfit',
-                                                                          color:
-                                                                              Color(0xFF57636C),
-                                                                          fontSize:
-                                                                              10,
-                                                                          fontWeight:
-                                                                              FontWeight.normal,
-                                                                        ),
+                                                                  child: Column(
+                                                                    mainAxisSize:
+                                                                        MainAxisSize
+                                                                            .max,
+                                                                    mainAxisAlignment:
+                                                                        MainAxisAlignment
+                                                                            .center,
+                                                                    crossAxisAlignment:
+                                                                        CrossAxisAlignment
+                                                                            .start,
+                                                                    children: [
+                                                                      Text(
+                                                                        listViewUsersRecord
+                                                                            .displayName!,
+                                                                        style: FlutterFlowTheme.of(context)
+                                                                            .bodyText1
+                                                                            .override(
+                                                                              fontFamily: 'Outfit',
+                                                                              color: Color(0xFF0F1113),
+                                                                              fontSize: 16,
+                                                                              fontWeight: FontWeight.w600,
+                                                                            ),
+                                                                      ),
+                                                                    ],
                                                                   ),
-                                                                  Text(
-                                                                    'Enregistré : ${functions.printScore(listViewUsersRecord.globalScore)}',
-                                                                    style: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .bodyText2
-                                                                        .override(
-                                                                          fontFamily:
-                                                                              'Outfit',
-                                                                          color:
-                                                                              Color(0xFF57636C),
-                                                                          fontSize:
-                                                                              10,
-                                                                          fontWeight:
-                                                                              FontWeight.normal,
-                                                                        ),
-                                                                  ),
-                                                                  Text(
-                                                                    'Projection : ${functions.printScore(listViewUsersRecord.globalProjection)}',
-                                                                    style: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .bodyText2
-                                                                        .override(
-                                                                          fontFamily:
-                                                                              'Outfit',
-                                                                          color:
-                                                                              Color(0xFF57636C),
-                                                                          fontSize:
-                                                                              10,
-                                                                          fontWeight:
-                                                                              FontWeight.normal,
-                                                                        ),
-                                                                  ),
-                                                                ],
+                                                                ),
                                                               ),
-                                                            ),
+                                                            ],
                                                           ),
-                                                        ],
+                                                        ),
                                                       ),
-                                                    ),
-                                                  ),
+                                                    );
+                                                  },
                                                 );
                                               },
-                                            );
-                                          },
-                                        ),
-                                      ),
-                                    ),
-                                  if (activeProfilePartValue == 'Historique')
-                                    Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          0, 10, 0, 0),
-                                      child: Column(
-                                        mainAxisSize: MainAxisSize.max,
-                                        children: [
-                                          Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    0, 5, 0, 0),
-                                            child: Text(
-                                              'Transports',
-                                              style: FlutterFlowTheme.of(
-                                                      context)
-                                                  .title3
-                                                  .override(
-                                                    fontFamily: 'Montserrat',
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .tertiaryColor,
-                                                  ),
                                             ),
                                           ),
-                                          Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    0, 10, 0, 0),
-                                            child: Container(
-                                              width: MediaQuery.of(context)
-                                                  .size
-                                                  .width,
-                                              height: 100,
-                                              decoration: BoxDecoration(
-                                                color: Color(0x00EEEEEE),
+                                        ),
+                                      if (activeProfilePartValue ==
+                                          'Historique')
+                                        Padding(
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  0, 10, 0, 0),
+                                          child: Column(
+                                            mainAxisSize: MainAxisSize.max,
+                                            children: [
+                                              Padding(
+                                                padding: EdgeInsetsDirectional
+                                                    .fromSTEB(0, 5, 0, 0),
+                                                child: Text(
+                                                  'Transports',
+                                                  style: FlutterFlowTheme.of(
+                                                          context)
+                                                      .title3
+                                                      .override(
+                                                        fontFamily:
+                                                            'Montserrat',
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .tertiaryColor,
+                                                      ),
+                                                ),
                                               ),
-                                              child: StreamBuilder<
-                                                  List<TransportActionsRecord>>(
-                                                stream:
-                                                    queryTransportActionsRecord(
-                                                  queryBuilder:
-                                                      (transportActionsRecord) =>
+                                              Padding(
+                                                padding: EdgeInsetsDirectional
+                                                    .fromSTEB(0, 10, 0, 0),
+                                                child: Container(
+                                                  width: MediaQuery.of(context)
+                                                      .size
+                                                      .width,
+                                                  height: 100,
+                                                  decoration: BoxDecoration(
+                                                    color: Color(0x00EEEEEE),
+                                                  ),
+                                                  child: StreamBuilder<
+                                                      List<
+                                                          TransportActionsRecord>>(
+                                                    stream:
+                                                        queryTransportActionsRecord(
+                                                      queryBuilder: (transportActionsRecord) =>
                                                           transportActionsRecord
                                                               .where('userId',
                                                                   isEqualTo:
@@ -4915,486 +4786,897 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                                   'created_time',
                                                                   descending:
                                                                       true),
-                                                ),
-                                                builder: (context, snapshot) {
-                                                  // Customize what your widget looks like when it's loading.
-                                                  if (!snapshot.hasData) {
-                                                    return Center(
-                                                      child: SizedBox(
-                                                        width: 2,
-                                                        height: 2,
-                                                        child: SpinKitRing(
-                                                          color: Colors
-                                                              .transparent,
-                                                          size: 2,
-                                                        ),
-                                                      ),
-                                                    );
-                                                  }
-                                                  List<TransportActionsRecord>
-                                                      listViewTransportActionsRecordList =
-                                                      snapshot.data!;
-                                                  return ListView.builder(
-                                                    padding: EdgeInsets.zero,
-                                                    scrollDirection:
-                                                        Axis.horizontal,
-                                                    itemCount:
-                                                        listViewTransportActionsRecordList
-                                                            .length,
-                                                    itemBuilder: (context,
-                                                        listViewIndex) {
-                                                      final listViewTransportActionsRecord =
-                                                          listViewTransportActionsRecordList[
-                                                              listViewIndex];
-                                                      return Padding(
-                                                        padding:
-                                                            EdgeInsetsDirectional
-                                                                .fromSTEB(
-                                                                    5, 0, 5, 0),
-                                                        child: Container(
-                                                          width: 100,
-                                                          height: 200,
-                                                          decoration:
-                                                              BoxDecoration(
-                                                            color: Color(
-                                                                0x99F1F4F8),
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        24),
+                                                    ),
+                                                    builder:
+                                                        (context, snapshot) {
+                                                      // Customize what your widget looks like when it's loading.
+                                                      if (!snapshot.hasData) {
+                                                        return Center(
+                                                          child: SizedBox(
+                                                            width: 2,
+                                                            height: 2,
+                                                            child: SpinKitRing(
+                                                              color: Colors
+                                                                  .transparent,
+                                                              size: 2,
+                                                            ),
                                                           ),
-                                                          child: Padding(
+                                                        );
+                                                      }
+                                                      List<TransportActionsRecord>
+                                                          listViewTransportActionsRecordList =
+                                                          snapshot.data!;
+                                                      return ListView.builder(
+                                                        padding:
+                                                            EdgeInsets.zero,
+                                                        scrollDirection:
+                                                            Axis.horizontal,
+                                                        itemCount:
+                                                            listViewTransportActionsRecordList
+                                                                .length,
+                                                        itemBuilder: (context,
+                                                            listViewIndex) {
+                                                          final listViewTransportActionsRecord =
+                                                              listViewTransportActionsRecordList[
+                                                                  listViewIndex];
+                                                          return Padding(
                                                             padding:
                                                                 EdgeInsetsDirectional
                                                                     .fromSTEB(
-                                                                        0,
                                                                         5,
                                                                         0,
-                                                                        5),
-                                                            child: Column(
-                                                              mainAxisSize:
-                                                                  MainAxisSize
-                                                                      .min,
-                                                              mainAxisAlignment:
-                                                                  MainAxisAlignment
-                                                                      .center,
-                                                              children: [
-                                                                Row(
+                                                                        5,
+                                                                        0),
+                                                            child: Container(
+                                                              width: 100,
+                                                              height: 200,
+                                                              decoration:
+                                                                  BoxDecoration(
+                                                                color: Color(
+                                                                    0x99F1F4F8),
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            24),
+                                                              ),
+                                                              child: Padding(
+                                                                padding:
+                                                                    EdgeInsetsDirectional
+                                                                        .fromSTEB(
+                                                                            0,
+                                                                            5,
+                                                                            0,
+                                                                            5),
+                                                                child: Column(
+                                                                  mainAxisSize:
+                                                                      MainAxisSize
+                                                                          .min,
+                                                                  mainAxisAlignment:
+                                                                      MainAxisAlignment
+                                                                          .center,
+                                                                  children: [
+                                                                    Row(
+                                                                      mainAxisSize:
+                                                                          MainAxisSize
+                                                                              .max,
+                                                                      mainAxisAlignment:
+                                                                          MainAxisAlignment
+                                                                              .spaceEvenly,
+                                                                      children: [
+                                                                        Container(
+                                                                          width:
+                                                                              40,
+                                                                          height:
+                                                                              40,
+                                                                          child:
+                                                                              Stack(
+                                                                            alignment:
+                                                                                AlignmentDirectional(0, 0),
+                                                                            children: [
+                                                                              if (listViewTransportActionsRecord.transport == 'car')
+                                                                                InkWell(
+                                                                                  onTap: () async {
+                                                                                    logFirebaseEvent('PROFILE_PAGE_carAction_ON_TAP');
+                                                                                    logFirebaseEvent('carAction_navigate_to');
+
+                                                                                    context.pushNamed(
+                                                                                      'Transport',
+                                                                                      queryParams: {
+                                                                                        'actionRef': serializeParam(
+                                                                                          listViewTransportActionsRecord.reference,
+                                                                                          ParamType.DocumentReference,
+                                                                                        ),
+                                                                                      }.withoutNulls,
+                                                                                    );
+                                                                                  },
+                                                                                  child: Container(
+                                                                                    width: 40,
+                                                                                    height: 40,
+                                                                                    clipBehavior: Clip.antiAlias,
+                                                                                    decoration: BoxDecoration(
+                                                                                      shape: BoxShape.circle,
+                                                                                    ),
+                                                                                    child: SvgPicture.asset(
+                                                                                      'assets/images/trans-car-01.svg',
+                                                                                      fit: BoxFit.cover,
+                                                                                    ),
+                                                                                  ),
+                                                                                ),
+                                                                              if (listViewTransportActionsRecord.transport == 'bus')
+                                                                                InkWell(
+                                                                                  onTap: () async {
+                                                                                    logFirebaseEvent('PROFILE_PAGE_busAction_ON_TAP');
+                                                                                    logFirebaseEvent('busAction_navigate_to');
+
+                                                                                    context.pushNamed(
+                                                                                      'Transport',
+                                                                                      queryParams: {
+                                                                                        'actionRef': serializeParam(
+                                                                                          listViewTransportActionsRecord.reference,
+                                                                                          ParamType.DocumentReference,
+                                                                                        ),
+                                                                                      }.withoutNulls,
+                                                                                    );
+                                                                                  },
+                                                                                  child: Container(
+                                                                                    width: 40,
+                                                                                    height: 40,
+                                                                                    clipBehavior: Clip.antiAlias,
+                                                                                    decoration: BoxDecoration(
+                                                                                      shape: BoxShape.circle,
+                                                                                    ),
+                                                                                    child: SvgPicture.asset(
+                                                                                      'assets/images/trans-bus-02.svg',
+                                                                                      fit: BoxFit.cover,
+                                                                                    ),
+                                                                                  ),
+                                                                                ),
+                                                                              if (listViewTransportActionsRecord.transport == 'scooter')
+                                                                                InkWell(
+                                                                                  onTap: () async {
+                                                                                    logFirebaseEvent('PROFILE_PAGE_scooterAction_ON_TAP');
+                                                                                    logFirebaseEvent('scooterAction_navigate_to');
+
+                                                                                    context.pushNamed(
+                                                                                      'Transport',
+                                                                                      queryParams: {
+                                                                                        'actionRef': serializeParam(
+                                                                                          listViewTransportActionsRecord.reference,
+                                                                                          ParamType.DocumentReference,
+                                                                                        ),
+                                                                                      }.withoutNulls,
+                                                                                    );
+                                                                                  },
+                                                                                  child: Container(
+                                                                                    width: 40,
+                                                                                    height: 40,
+                                                                                    clipBehavior: Clip.antiAlias,
+                                                                                    decoration: BoxDecoration(
+                                                                                      shape: BoxShape.circle,
+                                                                                    ),
+                                                                                    child: SvgPicture.asset(
+                                                                                      'assets/images/trans-motor-03.svg',
+                                                                                      fit: BoxFit.cover,
+                                                                                    ),
+                                                                                  ),
+                                                                                ),
+                                                                              if (listViewTransportActionsRecord.transport == 'moto')
+                                                                                InkWell(
+                                                                                  onTap: () async {
+                                                                                    logFirebaseEvent('PROFILE_PAGE_motoAction_ON_TAP');
+                                                                                    logFirebaseEvent('motoAction_navigate_to');
+
+                                                                                    context.pushNamed(
+                                                                                      'Transport',
+                                                                                      queryParams: {
+                                                                                        'actionRef': serializeParam(
+                                                                                          listViewTransportActionsRecord.reference,
+                                                                                          ParamType.DocumentReference,
+                                                                                        ),
+                                                                                      }.withoutNulls,
+                                                                                    );
+                                                                                  },
+                                                                                  child: Container(
+                                                                                    width: 40,
+                                                                                    height: 40,
+                                                                                    clipBehavior: Clip.antiAlias,
+                                                                                    decoration: BoxDecoration(
+                                                                                      shape: BoxShape.circle,
+                                                                                    ),
+                                                                                    child: Image.asset(
+                                                                                      'assets/images/motorcycle.png',
+                                                                                      fit: BoxFit.cover,
+                                                                                    ),
+                                                                                  ),
+                                                                                ),
+                                                                              if (listViewTransportActionsRecord.transport == 'train')
+                                                                                InkWell(
+                                                                                  onTap: () async {
+                                                                                    logFirebaseEvent('PROFILE_PAGE_trainAction_ON_TAP');
+                                                                                    logFirebaseEvent('trainAction_navigate_to');
+
+                                                                                    context.pushNamed(
+                                                                                      'Transport',
+                                                                                      queryParams: {
+                                                                                        'actionRef': serializeParam(
+                                                                                          listViewTransportActionsRecord.reference,
+                                                                                          ParamType.DocumentReference,
+                                                                                        ),
+                                                                                      }.withoutNulls,
+                                                                                    );
+                                                                                  },
+                                                                                  child: Container(
+                                                                                    width: 40,
+                                                                                    height: 40,
+                                                                                    clipBehavior: Clip.antiAlias,
+                                                                                    decoration: BoxDecoration(
+                                                                                      shape: BoxShape.circle,
+                                                                                    ),
+                                                                                    child: SvgPicture.asset(
+                                                                                      'assets/images/trans-train-04.svg',
+                                                                                      fit: BoxFit.cover,
+                                                                                    ),
+                                                                                  ),
+                                                                                ),
+                                                                              if (listViewTransportActionsRecord.transport == 'metro')
+                                                                                InkWell(
+                                                                                  onTap: () async {
+                                                                                    logFirebaseEvent('PROFILE_PAGE_metroAction_ON_TAP');
+                                                                                    logFirebaseEvent('metroAction_navigate_to');
+
+                                                                                    context.pushNamed(
+                                                                                      'Transport',
+                                                                                      queryParams: {
+                                                                                        'actionRef': serializeParam(
+                                                                                          listViewTransportActionsRecord.reference,
+                                                                                          ParamType.DocumentReference,
+                                                                                        ),
+                                                                                      }.withoutNulls,
+                                                                                    );
+                                                                                  },
+                                                                                  child: Container(
+                                                                                    width: 40,
+                                                                                    height: 40,
+                                                                                    clipBehavior: Clip.antiAlias,
+                                                                                    decoration: BoxDecoration(
+                                                                                      shape: BoxShape.circle,
+                                                                                    ),
+                                                                                    child: SvgPicture.asset(
+                                                                                      'assets/images/trans-metro-06.svg',
+                                                                                      fit: BoxFit.cover,
+                                                                                    ),
+                                                                                  ),
+                                                                                ),
+                                                                              if (listViewTransportActionsRecord.transport == 'flight')
+                                                                                InkWell(
+                                                                                  onTap: () async {
+                                                                                    logFirebaseEvent('PROFILE_PAGE_flightAction_ON_TAP');
+                                                                                    logFirebaseEvent('flightAction_navigate_to');
+
+                                                                                    context.pushNamed(
+                                                                                      'Transport',
+                                                                                      queryParams: {
+                                                                                        'actionRef': serializeParam(
+                                                                                          listViewTransportActionsRecord.reference,
+                                                                                          ParamType.DocumentReference,
+                                                                                        ),
+                                                                                      }.withoutNulls,
+                                                                                    );
+                                                                                  },
+                                                                                  child: Container(
+                                                                                    width: 40,
+                                                                                    height: 40,
+                                                                                    clipBehavior: Clip.antiAlias,
+                                                                                    decoration: BoxDecoration(
+                                                                                      shape: BoxShape.circle,
+                                                                                    ),
+                                                                                    child: Image.asset(
+                                                                                      'assets/images/aircraft.png',
+                                                                                      fit: BoxFit.cover,
+                                                                                    ),
+                                                                                  ),
+                                                                                ),
+                                                                              if (listViewTransportActionsRecord.transport == 'bike')
+                                                                                InkWell(
+                                                                                  onTap: () async {
+                                                                                    logFirebaseEvent('PROFILE_PAGE_bikeAction_ON_TAP');
+                                                                                    logFirebaseEvent('bikeAction_navigate_to');
+
+                                                                                    context.pushNamed(
+                                                                                      'Transport',
+                                                                                      queryParams: {
+                                                                                        'actionRef': serializeParam(
+                                                                                          listViewTransportActionsRecord.reference,
+                                                                                          ParamType.DocumentReference,
+                                                                                        ),
+                                                                                      }.withoutNulls,
+                                                                                    );
+                                                                                  },
+                                                                                  child: Container(
+                                                                                    width: 40,
+                                                                                    height: 40,
+                                                                                    clipBehavior: Clip.antiAlias,
+                                                                                    decoration: BoxDecoration(
+                                                                                      shape: BoxShape.circle,
+                                                                                    ),
+                                                                                    child: SvgPicture.asset(
+                                                                                      'assets/images/trans-cycle-08.svg',
+                                                                                      fit: BoxFit.cover,
+                                                                                    ),
+                                                                                  ),
+                                                                                ),
+                                                                            ],
+                                                                          ),
+                                                                        ),
+                                                                        Column(
+                                                                          mainAxisSize:
+                                                                              MainAxisSize.max,
+                                                                          children: [
+                                                                            InkWell(
+                                                                              onTap: () async {
+                                                                                logFirebaseEvent('PROFILE_PAGE_Icon_riogaptv_ON_TAP');
+                                                                                logFirebaseEvent('Icon_navigate_to');
+
+                                                                                context.pushNamed(
+                                                                                  'Transport',
+                                                                                  queryParams: {
+                                                                                    'actionRef': serializeParam(
+                                                                                      listViewTransportActionsRecord.reference,
+                                                                                      ParamType.DocumentReference,
+                                                                                    ),
+                                                                                  }.withoutNulls,
+                                                                                );
+                                                                              },
+                                                                              child: Icon(
+                                                                                Icons.edit_sharp,
+                                                                                color: FlutterFlowTheme.of(context).primaryColor,
+                                                                                size: 20,
+                                                                              ),
+                                                                            ),
+                                                                            Padding(
+                                                                              padding: EdgeInsetsDirectional.fromSTEB(0, 5, 0, 0),
+                                                                              child: InkWell(
+                                                                                onTap: () async {
+                                                                                  logFirebaseEvent('PROFILE_PAGE_Icon_l53r2dbf_ON_TAP');
+                                                                                  logFirebaseEvent('Icon_backend_call');
+                                                                                  await listViewTransportActionsRecord.reference.delete();
+                                                                                },
+                                                                                child: Icon(
+                                                                                  Icons.delete_forever,
+                                                                                  color: Color(0xA8FF0000),
+                                                                                  size: 24,
+                                                                                ),
+                                                                              ),
+                                                                            ),
+                                                                          ],
+                                                                        ),
+                                                                      ],
+                                                                    ),
+                                                                    Text(
+                                                                      listViewTransportActionsRecord
+                                                                          .day!,
+                                                                      textAlign:
+                                                                          TextAlign
+                                                                              .center,
+                                                                      style: FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .bodyText2
+                                                                          .override(
+                                                                            fontFamily:
+                                                                                'Outfit',
+                                                                            color:
+                                                                                Color(0xFF57636C),
+                                                                            fontSize:
+                                                                                10,
+                                                                            fontWeight:
+                                                                                FontWeight.normal,
+                                                                          ),
+                                                                    ),
+                                                                    Text(
+                                                                      functions.printScore(
+                                                                          listViewTransportActionsRecord
+                                                                              .co2e),
+                                                                      textAlign:
+                                                                          TextAlign
+                                                                              .center,
+                                                                      style: FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .title1
+                                                                          .override(
+                                                                            fontFamily:
+                                                                                'Outfit',
+                                                                            color:
+                                                                                Color(0xFF101213),
+                                                                            fontSize:
+                                                                                18,
+                                                                            fontWeight:
+                                                                                FontWeight.w600,
+                                                                          ),
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                              ),
+                                                            ).animateOnPageLoad(
+                                                                animationsMap[
+                                                                    'containerOnPageLoadAnimation1']!),
+                                                          );
+                                                        },
+                                                      );
+                                                    },
+                                                  ),
+                                                ),
+                                              ),
+                                              Padding(
+                                                padding: EdgeInsetsDirectional
+                                                    .fromSTEB(0, 10, 0, 0),
+                                                child: Text(
+                                                  'Repas',
+                                                  style: FlutterFlowTheme.of(
+                                                          context)
+                                                      .title3
+                                                      .override(
+                                                        fontFamily:
+                                                            'Montserrat',
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .tertiaryColor,
+                                                      ),
+                                                ),
+                                              ),
+                                              Padding(
+                                                padding: EdgeInsetsDirectional
+                                                    .fromSTEB(0, 10, 0, 0),
+                                                child: Container(
+                                                  width: MediaQuery.of(context)
+                                                      .size
+                                                      .width,
+                                                  height: 100,
+                                                  decoration: BoxDecoration(
+                                                    color: Color(0x00EEEEEE),
+                                                  ),
+                                                  child: StreamBuilder<
+                                                      List<FoodActionsRecord>>(
+                                                    stream:
+                                                        queryFoodActionsRecord(
+                                                      queryBuilder:
+                                                          (foodActionsRecord) =>
+                                                              foodActionsRecord
+                                                                  .where(
+                                                                      'userId',
+                                                                      isEqualTo:
+                                                                          currentUserUid)
+                                                                  .orderBy(
+                                                                      'created_time',
+                                                                      descending:
+                                                                          true),
+                                                    ),
+                                                    builder:
+                                                        (context, snapshot) {
+                                                      // Customize what your widget looks like when it's loading.
+                                                      if (!snapshot.hasData) {
+                                                        return Center(
+                                                          child: SizedBox(
+                                                            width: 2,
+                                                            height: 2,
+                                                            child: SpinKitRing(
+                                                              color: Colors
+                                                                  .transparent,
+                                                              size: 2,
+                                                            ),
+                                                          ),
+                                                        );
+                                                      }
+                                                      List<FoodActionsRecord>
+                                                          foodLisFoodActionsRecordList =
+                                                          snapshot.data!;
+                                                      return ListView.builder(
+                                                        padding:
+                                                            EdgeInsets.zero,
+                                                        scrollDirection:
+                                                            Axis.horizontal,
+                                                        itemCount:
+                                                            foodLisFoodActionsRecordList
+                                                                .length,
+                                                        itemBuilder: (context,
+                                                            foodLisIndex) {
+                                                          final foodLisFoodActionsRecord =
+                                                              foodLisFoodActionsRecordList[
+                                                                  foodLisIndex];
+                                                          return Padding(
+                                                            padding:
+                                                                EdgeInsetsDirectional
+                                                                    .fromSTEB(
+                                                                        5,
+                                                                        0,
+                                                                        5,
+                                                                        0),
+                                                            child: Container(
+                                                              width: 100,
+                                                              height: 200,
+                                                              decoration:
+                                                                  BoxDecoration(
+                                                                color: Color(
+                                                                    0x9CF1F4F8),
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            24),
+                                                              ),
+                                                              child: Padding(
+                                                                padding:
+                                                                    EdgeInsetsDirectional
+                                                                        .fromSTEB(
+                                                                            0,
+                                                                            5,
+                                                                            0,
+                                                                            5),
+                                                                child: Column(
                                                                   mainAxisSize:
                                                                       MainAxisSize
                                                                           .max,
                                                                   mainAxisAlignment:
                                                                       MainAxisAlignment
-                                                                          .spaceEvenly,
+                                                                          .center,
                                                                   children: [
-                                                                    Container(
-                                                                      width: 40,
-                                                                      height:
-                                                                          40,
-                                                                      child:
-                                                                          Stack(
-                                                                        alignment: AlignmentDirectional(
-                                                                            0,
-                                                                            0),
-                                                                        children: [
-                                                                          if (listViewTransportActionsRecord.transport ==
-                                                                              'car')
-                                                                            InkWell(
-                                                                              onTap: () async {
-                                                                                logFirebaseEvent('PROFILE_PAGE_carAction_ON_TAP');
-                                                                                logFirebaseEvent('carAction_Navigate-To');
-                                                                                await Navigator.push(
-                                                                                  context,
-                                                                                  PageTransition(
-                                                                                    type: PageTransitionType.fade,
-                                                                                    duration: Duration(milliseconds: 0),
-                                                                                    reverseDuration: Duration(milliseconds: 0),
-                                                                                    child: TransportWidget(
-                                                                                      actionRef: listViewTransportActionsRecord.reference,
-                                                                                    ),
-                                                                                  ),
-                                                                                );
-                                                                              },
-                                                                              child: Container(
-                                                                                width: 40,
-                                                                                height: 40,
-                                                                                clipBehavior: Clip.antiAlias,
-                                                                                decoration: BoxDecoration(
-                                                                                  shape: BoxShape.circle,
-                                                                                ),
-                                                                                child: SvgPicture.asset(
-                                                                                  'assets/images/trans-car-01.svg',
-                                                                                  fit: BoxFit.cover,
-                                                                                ),
-                                                                              ),
-                                                                            ),
-                                                                          if (listViewTransportActionsRecord.transport ==
-                                                                              'bus')
-                                                                            InkWell(
-                                                                              onTap: () async {
-                                                                                logFirebaseEvent('PROFILE_PAGE_busAction_ON_TAP');
-                                                                                logFirebaseEvent('busAction_Navigate-To');
-                                                                                await Navigator.push(
-                                                                                  context,
-                                                                                  PageTransition(
-                                                                                    type: PageTransitionType.fade,
-                                                                                    duration: Duration(milliseconds: 0),
-                                                                                    reverseDuration: Duration(milliseconds: 0),
-                                                                                    child: TransportWidget(
-                                                                                      actionRef: listViewTransportActionsRecord.reference,
-                                                                                    ),
-                                                                                  ),
-                                                                                );
-                                                                              },
-                                                                              child: Container(
-                                                                                width: 40,
-                                                                                height: 40,
-                                                                                clipBehavior: Clip.antiAlias,
-                                                                                decoration: BoxDecoration(
-                                                                                  shape: BoxShape.circle,
-                                                                                ),
-                                                                                child: SvgPicture.asset(
-                                                                                  'assets/images/trans-bus-02.svg',
-                                                                                  fit: BoxFit.cover,
-                                                                                ),
-                                                                              ),
-                                                                            ),
-                                                                          if (listViewTransportActionsRecord.transport ==
-                                                                              'scooter')
-                                                                            InkWell(
-                                                                              onTap: () async {
-                                                                                logFirebaseEvent('PROFILE_PAGE_scooterAction_ON_TAP');
-                                                                                logFirebaseEvent('scooterAction_Navigate-To');
-                                                                                await Navigator.push(
-                                                                                  context,
-                                                                                  PageTransition(
-                                                                                    type: PageTransitionType.fade,
-                                                                                    duration: Duration(milliseconds: 0),
-                                                                                    reverseDuration: Duration(milliseconds: 0),
-                                                                                    child: TransportWidget(
-                                                                                      actionRef: listViewTransportActionsRecord.reference,
-                                                                                    ),
-                                                                                  ),
-                                                                                );
-                                                                              },
-                                                                              child: Container(
-                                                                                width: 40,
-                                                                                height: 40,
-                                                                                clipBehavior: Clip.antiAlias,
-                                                                                decoration: BoxDecoration(
-                                                                                  shape: BoxShape.circle,
-                                                                                ),
-                                                                                child: SvgPicture.asset(
-                                                                                  'assets/images/trans-motor-03.svg',
-                                                                                  fit: BoxFit.cover,
-                                                                                ),
-                                                                              ),
-                                                                            ),
-                                                                          if (listViewTransportActionsRecord.transport ==
-                                                                              'moto')
-                                                                            InkWell(
-                                                                              onTap: () async {
-                                                                                logFirebaseEvent('PROFILE_PAGE_motoAction_ON_TAP');
-                                                                                logFirebaseEvent('motoAction_Navigate-To');
-                                                                                await Navigator.push(
-                                                                                  context,
-                                                                                  PageTransition(
-                                                                                    type: PageTransitionType.fade,
-                                                                                    duration: Duration(milliseconds: 0),
-                                                                                    reverseDuration: Duration(milliseconds: 0),
-                                                                                    child: TransportWidget(
-                                                                                      actionRef: listViewTransportActionsRecord.reference,
-                                                                                    ),
-                                                                                  ),
-                                                                                );
-                                                                              },
-                                                                              child: Container(
-                                                                                width: 40,
-                                                                                height: 40,
-                                                                                clipBehavior: Clip.antiAlias,
-                                                                                decoration: BoxDecoration(
-                                                                                  shape: BoxShape.circle,
-                                                                                ),
-                                                                                child: Image.asset(
-                                                                                  'assets/images/motorcycle.png',
-                                                                                  fit: BoxFit.cover,
-                                                                                ),
-                                                                              ),
-                                                                            ),
-                                                                          if (listViewTransportActionsRecord.transport ==
-                                                                              'train')
-                                                                            InkWell(
-                                                                              onTap: () async {
-                                                                                logFirebaseEvent('PROFILE_PAGE_trainAction_ON_TAP');
-                                                                                logFirebaseEvent('trainAction_Navigate-To');
-                                                                                await Navigator.push(
-                                                                                  context,
-                                                                                  PageTransition(
-                                                                                    type: PageTransitionType.fade,
-                                                                                    duration: Duration(milliseconds: 0),
-                                                                                    reverseDuration: Duration(milliseconds: 0),
-                                                                                    child: TransportWidget(
-                                                                                      actionRef: listViewTransportActionsRecord.reference,
-                                                                                    ),
-                                                                                  ),
-                                                                                );
-                                                                              },
-                                                                              child: Container(
-                                                                                width: 40,
-                                                                                height: 40,
-                                                                                clipBehavior: Clip.antiAlias,
-                                                                                decoration: BoxDecoration(
-                                                                                  shape: BoxShape.circle,
-                                                                                ),
-                                                                                child: SvgPicture.asset(
-                                                                                  'assets/images/trans-train-04.svg',
-                                                                                  fit: BoxFit.cover,
-                                                                                ),
-                                                                              ),
-                                                                            ),
-                                                                          if (listViewTransportActionsRecord.transport ==
-                                                                              'metro')
-                                                                            InkWell(
-                                                                              onTap: () async {
-                                                                                logFirebaseEvent('PROFILE_PAGE_metroAction_ON_TAP');
-                                                                                logFirebaseEvent('metroAction_Navigate-To');
-                                                                                await Navigator.push(
-                                                                                  context,
-                                                                                  PageTransition(
-                                                                                    type: PageTransitionType.fade,
-                                                                                    duration: Duration(milliseconds: 0),
-                                                                                    reverseDuration: Duration(milliseconds: 0),
-                                                                                    child: TransportWidget(
-                                                                                      actionRef: listViewTransportActionsRecord.reference,
-                                                                                    ),
-                                                                                  ),
-                                                                                );
-                                                                              },
-                                                                              child: Container(
-                                                                                width: 40,
-                                                                                height: 40,
-                                                                                clipBehavior: Clip.antiAlias,
-                                                                                decoration: BoxDecoration(
-                                                                                  shape: BoxShape.circle,
-                                                                                ),
-                                                                                child: SvgPicture.asset(
-                                                                                  'assets/images/trans-metro-06.svg',
-                                                                                  fit: BoxFit.cover,
-                                                                                ),
-                                                                              ),
-                                                                            ),
-                                                                          if (listViewTransportActionsRecord.transport ==
-                                                                              'flight')
-                                                                            InkWell(
-                                                                              onTap: () async {
-                                                                                logFirebaseEvent('PROFILE_PAGE_flightAction_ON_TAP');
-                                                                                logFirebaseEvent('flightAction_Navigate-To');
-                                                                                await Navigator.push(
-                                                                                  context,
-                                                                                  PageTransition(
-                                                                                    type: PageTransitionType.fade,
-                                                                                    duration: Duration(milliseconds: 0),
-                                                                                    reverseDuration: Duration(milliseconds: 0),
-                                                                                    child: TransportWidget(
-                                                                                      actionRef: listViewTransportActionsRecord.reference,
-                                                                                    ),
-                                                                                  ),
-                                                                                );
-                                                                              },
-                                                                              child: Container(
-                                                                                width: 40,
-                                                                                height: 40,
-                                                                                clipBehavior: Clip.antiAlias,
-                                                                                decoration: BoxDecoration(
-                                                                                  shape: BoxShape.circle,
-                                                                                ),
-                                                                                child: Image.asset(
-                                                                                  'assets/images/aircraft.png',
-                                                                                  fit: BoxFit.cover,
-                                                                                ),
-                                                                              ),
-                                                                            ),
-                                                                          if (listViewTransportActionsRecord.transport ==
-                                                                              'bike')
-                                                                            InkWell(
-                                                                              onTap: () async {
-                                                                                logFirebaseEvent('PROFILE_PAGE_bikeAction_ON_TAP');
-                                                                                logFirebaseEvent('bikeAction_Navigate-To');
-                                                                                await Navigator.push(
-                                                                                  context,
-                                                                                  PageTransition(
-                                                                                    type: PageTransitionType.fade,
-                                                                                    duration: Duration(milliseconds: 0),
-                                                                                    reverseDuration: Duration(milliseconds: 0),
-                                                                                    child: TransportWidget(
-                                                                                      actionRef: listViewTransportActionsRecord.reference,
-                                                                                    ),
-                                                                                  ),
-                                                                                );
-                                                                              },
-                                                                              child: Container(
-                                                                                width: 40,
-                                                                                height: 40,
-                                                                                clipBehavior: Clip.antiAlias,
-                                                                                decoration: BoxDecoration(
-                                                                                  shape: BoxShape.circle,
-                                                                                ),
-                                                                                child: SvgPicture.asset(
-                                                                                  'assets/images/trans-cycle-08.svg',
-                                                                                  fit: BoxFit.cover,
-                                                                                ),
-                                                                              ),
-                                                                            ),
-                                                                        ],
-                                                                      ),
-                                                                    ),
-                                                                    Column(
+                                                                    Row(
                                                                       mainAxisSize:
                                                                           MainAxisSize
                                                                               .max,
+                                                                      mainAxisAlignment:
+                                                                          MainAxisAlignment
+                                                                              .spaceEvenly,
                                                                       children: [
-                                                                        InkWell(
-                                                                          onTap:
-                                                                              () async {
-                                                                            logFirebaseEvent('PROFILE_PAGE_Icon_riogaptv_ON_TAP');
-                                                                            logFirebaseEvent('Icon_Navigate-To');
-                                                                            await Navigator.push(
-                                                                              context,
-                                                                              PageTransition(
-                                                                                type: PageTransitionType.fade,
-                                                                                duration: Duration(milliseconds: 0),
-                                                                                reverseDuration: Duration(milliseconds: 0),
-                                                                                child: TransportWidget(
-                                                                                  actionRef: listViewTransportActionsRecord.reference,
-                                                                                ),
-                                                                              ),
-                                                                            );
-                                                                          },
+                                                                        Container(
+                                                                          width:
+                                                                              40,
+                                                                          height:
+                                                                              40,
                                                                           child:
-                                                                              Icon(
-                                                                            Icons.edit_sharp,
-                                                                            color:
-                                                                                FlutterFlowTheme.of(context).primaryColor,
-                                                                            size:
-                                                                                20,
+                                                                              Stack(
+                                                                            alignment:
+                                                                                AlignmentDirectional(0, 0),
+                                                                            children: [
+                                                                              if (foodLisFoodActionsRecord.food == 'starter')
+                                                                                InkWell(
+                                                                                  onTap: () async {
+                                                                                    logFirebaseEvent('PROFILE_PAGE_starterAction_ON_TAP');
+                                                                                    logFirebaseEvent('starterAction_navigate_to');
+
+                                                                                    context.pushNamed(
+                                                                                      'Food',
+                                                                                      queryParams: {
+                                                                                        'actionRef': serializeParam(
+                                                                                          foodLisFoodActionsRecord.reference,
+                                                                                          ParamType.DocumentReference,
+                                                                                        ),
+                                                                                      }.withoutNulls,
+                                                                                    );
+                                                                                  },
+                                                                                  child: Container(
+                                                                                    width: 40,
+                                                                                    height: 40,
+                                                                                    clipBehavior: Clip.antiAlias,
+                                                                                    decoration: BoxDecoration(
+                                                                                      shape: BoxShape.circle,
+                                                                                    ),
+                                                                                    child: Image.asset(
+                                                                                      'assets/images/canape_(1).png',
+                                                                                      fit: BoxFit.cover,
+                                                                                    ),
+                                                                                  ),
+                                                                                ),
+                                                                              if (foodLisFoodActionsRecord.food == 'main')
+                                                                                InkWell(
+                                                                                  onTap: () async {
+                                                                                    logFirebaseEvent('PROFILE_PAGE_mainAction_ON_TAP');
+                                                                                    logFirebaseEvent('mainAction_navigate_to');
+
+                                                                                    context.pushNamed(
+                                                                                      'Food',
+                                                                                      queryParams: {
+                                                                                        'actionRef': serializeParam(
+                                                                                          foodLisFoodActionsRecord.reference,
+                                                                                          ParamType.DocumentReference,
+                                                                                        ),
+                                                                                      }.withoutNulls,
+                                                                                    );
+                                                                                  },
+                                                                                  child: Container(
+                                                                                    width: 40,
+                                                                                    height: 40,
+                                                                                    clipBehavior: Clip.antiAlias,
+                                                                                    decoration: BoxDecoration(
+                                                                                      shape: BoxShape.circle,
+                                                                                    ),
+                                                                                    child: Image.asset(
+                                                                                      'assets/images/hot-pot.png',
+                                                                                      fit: BoxFit.cover,
+                                                                                    ),
+                                                                                  ),
+                                                                                ),
+                                                                              if (foodLisFoodActionsRecord.food == 'desert')
+                                                                                InkWell(
+                                                                                  onTap: () async {
+                                                                                    logFirebaseEvent('PROFILE_PAGE_desertAction_ON_TAP');
+                                                                                    logFirebaseEvent('desertAction_navigate_to');
+
+                                                                                    context.pushNamed(
+                                                                                      'Food',
+                                                                                      queryParams: {
+                                                                                        'actionRef': serializeParam(
+                                                                                          foodLisFoodActionsRecord.reference,
+                                                                                          ParamType.DocumentReference,
+                                                                                        ),
+                                                                                      }.withoutNulls,
+                                                                                    );
+                                                                                  },
+                                                                                  child: Container(
+                                                                                    width: 40,
+                                                                                    height: 40,
+                                                                                    clipBehavior: Clip.antiAlias,
+                                                                                    decoration: BoxDecoration(
+                                                                                      shape: BoxShape.circle,
+                                                                                    ),
+                                                                                    child: Image.asset(
+                                                                                      'assets/images/ice-cream.png',
+                                                                                      fit: BoxFit.cover,
+                                                                                    ),
+                                                                                  ),
+                                                                                ),
+                                                                              if (foodLisFoodActionsRecord.food == 'drinks')
+                                                                                InkWell(
+                                                                                  onTap: () async {
+                                                                                    logFirebaseEvent('PROFILE_PAGE_drinksAction_ON_TAP');
+                                                                                    logFirebaseEvent('drinksAction_navigate_to');
+
+                                                                                    context.pushNamed(
+                                                                                      'Food',
+                                                                                      queryParams: {
+                                                                                        'actionRef': serializeParam(
+                                                                                          foodLisFoodActionsRecord.reference,
+                                                                                          ParamType.DocumentReference,
+                                                                                        ),
+                                                                                      }.withoutNulls,
+                                                                                    );
+                                                                                  },
+                                                                                  child: Container(
+                                                                                    width: 40,
+                                                                                    height: 40,
+                                                                                    clipBehavior: Clip.antiAlias,
+                                                                                    decoration: BoxDecoration(
+                                                                                      shape: BoxShape.circle,
+                                                                                    ),
+                                                                                    child: Image.asset(
+                                                                                      'assets/images/soft-drink.png',
+                                                                                      fit: BoxFit.cover,
+                                                                                    ),
+                                                                                  ),
+                                                                                ),
+                                                                              if (foodLisFoodActionsRecord.food == 'cheese')
+                                                                                InkWell(
+                                                                                  onTap: () async {
+                                                                                    logFirebaseEvent('PROFILE_PAGE_cheeseAction_ON_TAP');
+                                                                                    logFirebaseEvent('cheeseAction_navigate_to');
+
+                                                                                    context.pushNamed(
+                                                                                      'Food',
+                                                                                      queryParams: {
+                                                                                        'actionRef': serializeParam(
+                                                                                          foodLisFoodActionsRecord.reference,
+                                                                                          ParamType.DocumentReference,
+                                                                                        ),
+                                                                                      }.withoutNulls,
+                                                                                    );
+                                                                                  },
+                                                                                  child: Container(
+                                                                                    width: 40,
+                                                                                    height: 40,
+                                                                                    clipBehavior: Clip.antiAlias,
+                                                                                    decoration: BoxDecoration(
+                                                                                      shape: BoxShape.circle,
+                                                                                    ),
+                                                                                    child: Image.asset(
+                                                                                      'assets/images/cheeses.png',
+                                                                                      fit: BoxFit.cover,
+                                                                                    ),
+                                                                                  ),
+                                                                                ),
+                                                                              if (foodLisFoodActionsRecord.food == 'bread')
+                                                                                InkWell(
+                                                                                  onTap: () async {
+                                                                                    logFirebaseEvent('PROFILE_PAGE_breadAction_ON_TAP');
+                                                                                    logFirebaseEvent('breadAction_navigate_to');
+
+                                                                                    context.pushNamed(
+                                                                                      'Food',
+                                                                                      queryParams: {
+                                                                                        'actionRef': serializeParam(
+                                                                                          foodLisFoodActionsRecord.reference,
+                                                                                          ParamType.DocumentReference,
+                                                                                        ),
+                                                                                      }.withoutNulls,
+                                                                                    );
+                                                                                  },
+                                                                                  child: Container(
+                                                                                    width: 40,
+                                                                                    height: 40,
+                                                                                    clipBehavior: Clip.antiAlias,
+                                                                                    decoration: BoxDecoration(
+                                                                                      shape: BoxShape.circle,
+                                                                                    ),
+                                                                                    child: Image.asset(
+                                                                                      'assets/images/bread.png',
+                                                                                      fit: BoxFit.cover,
+                                                                                    ),
+                                                                                  ),
+                                                                                ),
+                                                                              if (foodLisFoodActionsRecord.food == 'coffee')
+                                                                                InkWell(
+                                                                                  onTap: () async {
+                                                                                    logFirebaseEvent('PROFILE_PAGE_coffeeAction_ON_TAP');
+                                                                                    logFirebaseEvent('coffeeAction_navigate_to');
+
+                                                                                    context.pushNamed(
+                                                                                      'Food',
+                                                                                      queryParams: {
+                                                                                        'actionRef': serializeParam(
+                                                                                          foodLisFoodActionsRecord.reference,
+                                                                                          ParamType.DocumentReference,
+                                                                                        ),
+                                                                                      }.withoutNulls,
+                                                                                    );
+                                                                                  },
+                                                                                  child: Container(
+                                                                                    width: 40,
+                                                                                    height: 40,
+                                                                                    clipBehavior: Clip.antiAlias,
+                                                                                    decoration: BoxDecoration(
+                                                                                      shape: BoxShape.circle,
+                                                                                    ),
+                                                                                    child: Image.asset(
+                                                                                      'assets/images/coffee.png',
+                                                                                      fit: BoxFit.cover,
+                                                                                    ),
+                                                                                  ),
+                                                                                ),
+                                                                            ],
                                                                           ),
                                                                         ),
-                                                                        Padding(
-                                                                          padding: EdgeInsetsDirectional.fromSTEB(
-                                                                              0,
-                                                                              5,
-                                                                              0,
-                                                                              0),
-                                                                          child:
-                                                                              InkWell(
-                                                                            onTap:
-                                                                                () async {
-                                                                              logFirebaseEvent('PROFILE_PAGE_Icon_l53r2dbf_ON_TAP');
-                                                                              logFirebaseEvent('Icon_Backend-Call');
-                                                                              await listViewTransportActionsRecord.reference.delete();
-                                                                            },
-                                                                            child:
-                                                                                Icon(
-                                                                              Icons.delete_forever,
-                                                                              color: Color(0xA8FF0000),
-                                                                              size: 24,
+                                                                        Column(
+                                                                          mainAxisSize:
+                                                                              MainAxisSize.max,
+                                                                          children: [
+                                                                            InkWell(
+                                                                              onTap: () async {
+                                                                                logFirebaseEvent('PROFILE_PAGE_Icon_poueefyl_ON_TAP');
+                                                                                logFirebaseEvent('Icon_navigate_to');
+
+                                                                                context.pushNamed(
+                                                                                  'Food',
+                                                                                  queryParams: {
+                                                                                    'actionRef': serializeParam(
+                                                                                      foodLisFoodActionsRecord.reference,
+                                                                                      ParamType.DocumentReference,
+                                                                                    ),
+                                                                                  }.withoutNulls,
+                                                                                );
+                                                                              },
+                                                                              child: Icon(
+                                                                                Icons.edit_sharp,
+                                                                                color: FlutterFlowTheme.of(context).primaryColor,
+                                                                                size: 20,
+                                                                              ),
                                                                             ),
-                                                                          ),
+                                                                            Padding(
+                                                                              padding: EdgeInsetsDirectional.fromSTEB(0, 5, 0, 0),
+                                                                              child: InkWell(
+                                                                                onTap: () async {
+                                                                                  logFirebaseEvent('PROFILE_PAGE_Icon_r9xea8de_ON_TAP');
+                                                                                  logFirebaseEvent('Icon_backend_call');
+                                                                                  await foodLisFoodActionsRecord.reference.delete();
+                                                                                },
+                                                                                child: Icon(
+                                                                                  Icons.delete_forever,
+                                                                                  color: Color(0xA8FF0000),
+                                                                                  size: 24,
+                                                                                ),
+                                                                              ),
+                                                                            ),
+                                                                          ],
                                                                         ),
                                                                       ],
                                                                     ),
+                                                                    Text(
+                                                                      foodLisFoodActionsRecord
+                                                                          .day!,
+                                                                      textAlign:
+                                                                          TextAlign
+                                                                              .center,
+                                                                      style: FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .bodyText2
+                                                                          .override(
+                                                                            fontFamily:
+                                                                                'Outfit',
+                                                                            color:
+                                                                                Color(0xFF57636C),
+                                                                            fontSize:
+                                                                                10,
+                                                                            fontWeight:
+                                                                                FontWeight.normal,
+                                                                          ),
+                                                                    ),
+                                                                    Text(
+                                                                      functions.printScore(
+                                                                          foodLisFoodActionsRecord
+                                                                              .co2e),
+                                                                      textAlign:
+                                                                          TextAlign
+                                                                              .center,
+                                                                      style: FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .title1
+                                                                          .override(
+                                                                            fontFamily:
+                                                                                'Outfit',
+                                                                            color:
+                                                                                Color(0xFF101213),
+                                                                            fontSize:
+                                                                                18,
+                                                                            fontWeight:
+                                                                                FontWeight.w600,
+                                                                          ),
+                                                                    ),
                                                                   ],
                                                                 ),
-                                                                Text(
-                                                                  listViewTransportActionsRecord
-                                                                      .day!,
-                                                                  textAlign:
-                                                                      TextAlign
-                                                                          .center,
-                                                                  style: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .bodyText2
-                                                                      .override(
-                                                                        fontFamily:
-                                                                            'Outfit',
-                                                                        color: Color(
-                                                                            0xFF57636C),
-                                                                        fontSize:
-                                                                            10,
-                                                                        fontWeight:
-                                                                            FontWeight.normal,
-                                                                      ),
-                                                                ),
-                                                                Text(
-                                                                  functions.printScore(
-                                                                      listViewTransportActionsRecord
-                                                                          .co2e),
-                                                                  textAlign:
-                                                                      TextAlign
-                                                                          .center,
-                                                                  style: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .title1
-                                                                      .override(
-                                                                        fontFamily:
-                                                                            'Outfit',
-                                                                        color: Color(
-                                                                            0xFF101213),
-                                                                        fontSize:
-                                                                            18,
-                                                                        fontWeight:
-                                                                            FontWeight.w600,
-                                                                      ),
-                                                                ),
-                                                              ],
-                                                            ),
-                                                          ),
-                                                        ).animated([
-                                                          animationsMap[
-                                                              'containerOnPageLoadAnimation1']!
-                                                        ]),
+                                                              ),
+                                                            ).animateOnPageLoad(
+                                                                animationsMap[
+                                                                    'containerOnPageLoadAnimation2']!),
+                                                          );
+                                                        },
                                                       );
                                                     },
-                                                  );
-                                                },
-                                              ),
-                                            ),
-                                          ),
-                                          Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    0, 10, 0, 0),
-                                            child: Text(
-                                              'Repas',
-                                              style: FlutterFlowTheme.of(
-                                                      context)
-                                                  .title3
-                                                  .override(
-                                                    fontFamily: 'Montserrat',
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .tertiaryColor,
                                                   ),
-                                            ),
-                                          ),
-                                          Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    0, 10, 0, 0),
-                                            child: Container(
-                                              width: MediaQuery.of(context)
-                                                  .size
-                                                  .width,
-                                              height: 100,
-                                              decoration: BoxDecoration(
-                                                color: Color(0x00EEEEEE),
+                                                ),
                                               ),
-                                              child: StreamBuilder<
-                                                  List<FoodActionsRecord>>(
-                                                stream: queryFoodActionsRecord(
-                                                  queryBuilder:
-                                                      (foodActionsRecord) =>
-                                                          foodActionsRecord
+                                              Padding(
+                                                padding: EdgeInsetsDirectional
+                                                    .fromSTEB(0, 10, 0, 0),
+                                                child: Text(
+                                                  'Energies',
+                                                  style: FlutterFlowTheme.of(
+                                                          context)
+                                                      .title3
+                                                      .override(
+                                                        fontFamily:
+                                                            'Montserrat',
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .tertiaryColor,
+                                                      ),
+                                                ),
+                                              ),
+                                              Padding(
+                                                padding: EdgeInsetsDirectional
+                                                    .fromSTEB(0, 10, 0, 0),
+                                                child: Container(
+                                                  width: MediaQuery.of(context)
+                                                      .size
+                                                      .width,
+                                                  height: 100,
+                                                  decoration: BoxDecoration(
+                                                    color: Color(0x00EEEEEE),
+                                                  ),
+                                                  child: StreamBuilder<
+                                                      List<
+                                                          EnergyActionsRecord>>(
+                                                    stream:
+                                                        queryEnergyActionsRecord(
+                                                      queryBuilder: (energyActionsRecord) =>
+                                                          energyActionsRecord
                                                               .where('userId',
                                                                   isEqualTo:
                                                                       currentUserUid)
@@ -5402,813 +5684,347 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                                   'created_time',
                                                                   descending:
                                                                       true),
-                                                ),
-                                                builder: (context, snapshot) {
-                                                  // Customize what your widget looks like when it's loading.
-                                                  if (!snapshot.hasData) {
-                                                    return Center(
-                                                      child: SizedBox(
-                                                        width: 2,
-                                                        height: 2,
-                                                        child: SpinKitRing(
-                                                          color: Colors
-                                                              .transparent,
-                                                          size: 2,
-                                                        ),
-                                                      ),
-                                                    );
-                                                  }
-                                                  List<FoodActionsRecord>
-                                                      foodLisFoodActionsRecordList =
-                                                      snapshot.data!;
-                                                  return ListView.builder(
-                                                    padding: EdgeInsets.zero,
-                                                    scrollDirection:
-                                                        Axis.horizontal,
-                                                    itemCount:
-                                                        foodLisFoodActionsRecordList
-                                                            .length,
-                                                    itemBuilder: (context,
-                                                        foodLisIndex) {
-                                                      final foodLisFoodActionsRecord =
-                                                          foodLisFoodActionsRecordList[
-                                                              foodLisIndex];
-                                                      return Padding(
-                                                        padding:
-                                                            EdgeInsetsDirectional
-                                                                .fromSTEB(
-                                                                    5, 0, 5, 0),
-                                                        child: Container(
-                                                          width: 100,
-                                                          height: 200,
-                                                          decoration:
-                                                              BoxDecoration(
-                                                            color: Color(
-                                                                0x9CF1F4F8),
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        24),
-                                                          ),
-                                                          child: Padding(
-                                                            padding:
-                                                                EdgeInsetsDirectional
-                                                                    .fromSTEB(
-                                                                        0,
-                                                                        5,
-                                                                        0,
-                                                                        5),
-                                                            child: Column(
-                                                              mainAxisSize:
-                                                                  MainAxisSize
-                                                                      .max,
-                                                              mainAxisAlignment:
-                                                                  MainAxisAlignment
-                                                                      .center,
-                                                              children: [
-                                                                Row(
-                                                                  mainAxisSize:
-                                                                      MainAxisSize
-                                                                          .max,
-                                                                  mainAxisAlignment:
-                                                                      MainAxisAlignment
-                                                                          .spaceEvenly,
-                                                                  children: [
-                                                                    Container(
-                                                                      width: 40,
-                                                                      height:
-                                                                          40,
-                                                                      child:
-                                                                          Stack(
-                                                                        alignment: AlignmentDirectional(
-                                                                            0,
-                                                                            0),
-                                                                        children: [
-                                                                          if (foodLisFoodActionsRecord.food ==
-                                                                              'starter')
-                                                                            InkWell(
-                                                                              onTap: () async {
-                                                                                logFirebaseEvent('PROFILE_PAGE_starterAction_ON_TAP');
-                                                                                logFirebaseEvent('starterAction_Navigate-To');
-                                                                                await Navigator.push(
-                                                                                  context,
-                                                                                  PageTransition(
-                                                                                    type: PageTransitionType.fade,
-                                                                                    duration: Duration(milliseconds: 0),
-                                                                                    reverseDuration: Duration(milliseconds: 0),
-                                                                                    child: FoodWidget(
-                                                                                      actionRef: foodLisFoodActionsRecord.reference,
-                                                                                    ),
-                                                                                  ),
-                                                                                );
-                                                                              },
-                                                                              child: Container(
-                                                                                width: 40,
-                                                                                height: 40,
-                                                                                clipBehavior: Clip.antiAlias,
-                                                                                decoration: BoxDecoration(
-                                                                                  shape: BoxShape.circle,
-                                                                                ),
-                                                                                child: Image.asset(
-                                                                                  'assets/images/canape_(1).png',
-                                                                                  fit: BoxFit.cover,
-                                                                                ),
-                                                                              ),
-                                                                            ),
-                                                                          if (foodLisFoodActionsRecord.food ==
-                                                                              'main')
-                                                                            InkWell(
-                                                                              onTap: () async {
-                                                                                logFirebaseEvent('PROFILE_PAGE_mainAction_ON_TAP');
-                                                                                logFirebaseEvent('mainAction_Navigate-To');
-                                                                                await Navigator.push(
-                                                                                  context,
-                                                                                  PageTransition(
-                                                                                    type: PageTransitionType.fade,
-                                                                                    duration: Duration(milliseconds: 0),
-                                                                                    reverseDuration: Duration(milliseconds: 0),
-                                                                                    child: FoodWidget(
-                                                                                      actionRef: foodLisFoodActionsRecord.reference,
-                                                                                    ),
-                                                                                  ),
-                                                                                );
-                                                                              },
-                                                                              child: Container(
-                                                                                width: 40,
-                                                                                height: 40,
-                                                                                clipBehavior: Clip.antiAlias,
-                                                                                decoration: BoxDecoration(
-                                                                                  shape: BoxShape.circle,
-                                                                                ),
-                                                                                child: Image.asset(
-                                                                                  'assets/images/hot-pot.png',
-                                                                                  fit: BoxFit.cover,
-                                                                                ),
-                                                                              ),
-                                                                            ),
-                                                                          if (foodLisFoodActionsRecord.food ==
-                                                                              'desert')
-                                                                            InkWell(
-                                                                              onTap: () async {
-                                                                                logFirebaseEvent('PROFILE_PAGE_desertAction_ON_TAP');
-                                                                                logFirebaseEvent('desertAction_Navigate-To');
-                                                                                await Navigator.push(
-                                                                                  context,
-                                                                                  PageTransition(
-                                                                                    type: PageTransitionType.fade,
-                                                                                    duration: Duration(milliseconds: 0),
-                                                                                    reverseDuration: Duration(milliseconds: 0),
-                                                                                    child: FoodWidget(
-                                                                                      actionRef: foodLisFoodActionsRecord.reference,
-                                                                                    ),
-                                                                                  ),
-                                                                                );
-                                                                              },
-                                                                              child: Container(
-                                                                                width: 40,
-                                                                                height: 40,
-                                                                                clipBehavior: Clip.antiAlias,
-                                                                                decoration: BoxDecoration(
-                                                                                  shape: BoxShape.circle,
-                                                                                ),
-                                                                                child: Image.asset(
-                                                                                  'assets/images/ice-cream.png',
-                                                                                  fit: BoxFit.cover,
-                                                                                ),
-                                                                              ),
-                                                                            ),
-                                                                          if (foodLisFoodActionsRecord.food ==
-                                                                              'drinks')
-                                                                            InkWell(
-                                                                              onTap: () async {
-                                                                                logFirebaseEvent('PROFILE_PAGE_drinksAction_ON_TAP');
-                                                                                logFirebaseEvent('drinksAction_Navigate-To');
-                                                                                await Navigator.push(
-                                                                                  context,
-                                                                                  PageTransition(
-                                                                                    type: PageTransitionType.fade,
-                                                                                    duration: Duration(milliseconds: 0),
-                                                                                    reverseDuration: Duration(milliseconds: 0),
-                                                                                    child: FoodWidget(
-                                                                                      actionRef: foodLisFoodActionsRecord.reference,
-                                                                                    ),
-                                                                                  ),
-                                                                                );
-                                                                              },
-                                                                              child: Container(
-                                                                                width: 40,
-                                                                                height: 40,
-                                                                                clipBehavior: Clip.antiAlias,
-                                                                                decoration: BoxDecoration(
-                                                                                  shape: BoxShape.circle,
-                                                                                ),
-                                                                                child: Image.asset(
-                                                                                  'assets/images/soft-drink.png',
-                                                                                  fit: BoxFit.cover,
-                                                                                ),
-                                                                              ),
-                                                                            ),
-                                                                          if (foodLisFoodActionsRecord.food ==
-                                                                              'cheese')
-                                                                            InkWell(
-                                                                              onTap: () async {
-                                                                                logFirebaseEvent('PROFILE_PAGE_cheeseAction_ON_TAP');
-                                                                                logFirebaseEvent('cheeseAction_Navigate-To');
-                                                                                await Navigator.push(
-                                                                                  context,
-                                                                                  PageTransition(
-                                                                                    type: PageTransitionType.fade,
-                                                                                    duration: Duration(milliseconds: 0),
-                                                                                    reverseDuration: Duration(milliseconds: 0),
-                                                                                    child: FoodWidget(
-                                                                                      actionRef: foodLisFoodActionsRecord.reference,
-                                                                                    ),
-                                                                                  ),
-                                                                                );
-                                                                              },
-                                                                              child: Container(
-                                                                                width: 40,
-                                                                                height: 40,
-                                                                                clipBehavior: Clip.antiAlias,
-                                                                                decoration: BoxDecoration(
-                                                                                  shape: BoxShape.circle,
-                                                                                ),
-                                                                                child: Image.asset(
-                                                                                  'assets/images/cheeses.png',
-                                                                                  fit: BoxFit.cover,
-                                                                                ),
-                                                                              ),
-                                                                            ),
-                                                                          if (foodLisFoodActionsRecord.food ==
-                                                                              'bread')
-                                                                            InkWell(
-                                                                              onTap: () async {
-                                                                                logFirebaseEvent('PROFILE_PAGE_breadAction_ON_TAP');
-                                                                                logFirebaseEvent('breadAction_Navigate-To');
-                                                                                await Navigator.push(
-                                                                                  context,
-                                                                                  PageTransition(
-                                                                                    type: PageTransitionType.fade,
-                                                                                    duration: Duration(milliseconds: 0),
-                                                                                    reverseDuration: Duration(milliseconds: 0),
-                                                                                    child: FoodWidget(
-                                                                                      actionRef: foodLisFoodActionsRecord.reference,
-                                                                                    ),
-                                                                                  ),
-                                                                                );
-                                                                              },
-                                                                              child: Container(
-                                                                                width: 40,
-                                                                                height: 40,
-                                                                                clipBehavior: Clip.antiAlias,
-                                                                                decoration: BoxDecoration(
-                                                                                  shape: BoxShape.circle,
-                                                                                ),
-                                                                                child: Image.asset(
-                                                                                  'assets/images/bread.png',
-                                                                                  fit: BoxFit.cover,
-                                                                                ),
-                                                                              ),
-                                                                            ),
-                                                                          if (foodLisFoodActionsRecord.food ==
-                                                                              'coffee')
-                                                                            InkWell(
-                                                                              onTap: () async {
-                                                                                logFirebaseEvent('PROFILE_PAGE_coffeeAction_ON_TAP');
-                                                                                logFirebaseEvent('coffeeAction_Navigate-To');
-                                                                                await Navigator.push(
-                                                                                  context,
-                                                                                  PageTransition(
-                                                                                    type: PageTransitionType.fade,
-                                                                                    duration: Duration(milliseconds: 0),
-                                                                                    reverseDuration: Duration(milliseconds: 0),
-                                                                                    child: FoodWidget(
-                                                                                      actionRef: foodLisFoodActionsRecord.reference,
-                                                                                    ),
-                                                                                  ),
-                                                                                );
-                                                                              },
-                                                                              child: Container(
-                                                                                width: 40,
-                                                                                height: 40,
-                                                                                clipBehavior: Clip.antiAlias,
-                                                                                decoration: BoxDecoration(
-                                                                                  shape: BoxShape.circle,
-                                                                                ),
-                                                                                child: Image.asset(
-                                                                                  'assets/images/coffee.png',
-                                                                                  fit: BoxFit.cover,
-                                                                                ),
-                                                                              ),
-                                                                            ),
-                                                                        ],
-                                                                      ),
-                                                                    ),
-                                                                    Column(
-                                                                      mainAxisSize:
-                                                                          MainAxisSize
-                                                                              .max,
-                                                                      children: [
-                                                                        InkWell(
-                                                                          onTap:
-                                                                              () async {
-                                                                            logFirebaseEvent('PROFILE_PAGE_Icon_poueefyl_ON_TAP');
-                                                                            logFirebaseEvent('Icon_Navigate-To');
-                                                                            await Navigator.push(
-                                                                              context,
-                                                                              PageTransition(
-                                                                                type: PageTransitionType.fade,
-                                                                                duration: Duration(milliseconds: 0),
-                                                                                reverseDuration: Duration(milliseconds: 0),
-                                                                                child: FoodWidget(
-                                                                                  actionRef: foodLisFoodActionsRecord.reference,
-                                                                                ),
-                                                                              ),
-                                                                            );
-                                                                          },
-                                                                          child:
-                                                                              Icon(
-                                                                            Icons.edit_sharp,
-                                                                            color:
-                                                                                FlutterFlowTheme.of(context).primaryColor,
-                                                                            size:
-                                                                                20,
-                                                                          ),
-                                                                        ),
-                                                                        Padding(
-                                                                          padding: EdgeInsetsDirectional.fromSTEB(
-                                                                              0,
-                                                                              5,
-                                                                              0,
-                                                                              0),
-                                                                          child:
-                                                                              InkWell(
-                                                                            onTap:
-                                                                                () async {
-                                                                              logFirebaseEvent('PROFILE_PAGE_Icon_r9xea8de_ON_TAP');
-                                                                              logFirebaseEvent('Icon_Backend-Call');
-                                                                              await foodLisFoodActionsRecord.reference.delete();
-                                                                            },
-                                                                            child:
-                                                                                Icon(
-                                                                              Icons.delete_forever,
-                                                                              color: Color(0xA8FF0000),
-                                                                              size: 24,
-                                                                            ),
-                                                                          ),
-                                                                        ),
-                                                                      ],
-                                                                    ),
-                                                                  ],
-                                                                ),
-                                                                Text(
-                                                                  foodLisFoodActionsRecord
-                                                                      .day!,
-                                                                  textAlign:
-                                                                      TextAlign
-                                                                          .center,
-                                                                  style: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .bodyText2
-                                                                      .override(
-                                                                        fontFamily:
-                                                                            'Outfit',
-                                                                        color: Color(
-                                                                            0xFF57636C),
-                                                                        fontSize:
-                                                                            10,
-                                                                        fontWeight:
-                                                                            FontWeight.normal,
-                                                                      ),
-                                                                ),
-                                                                Text(
-                                                                  functions.printScore(
-                                                                      foodLisFoodActionsRecord
-                                                                          .co2e),
-                                                                  textAlign:
-                                                                      TextAlign
-                                                                          .center,
-                                                                  style: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .title1
-                                                                      .override(
-                                                                        fontFamily:
-                                                                            'Outfit',
-                                                                        color: Color(
-                                                                            0xFF101213),
-                                                                        fontSize:
-                                                                            18,
-                                                                        fontWeight:
-                                                                            FontWeight.w600,
-                                                                      ),
-                                                                ),
-                                                              ],
+                                                    ),
+                                                    builder:
+                                                        (context, snapshot) {
+                                                      // Customize what your widget looks like when it's loading.
+                                                      if (!snapshot.hasData) {
+                                                        return Center(
+                                                          child: SizedBox(
+                                                            width: 2,
+                                                            height: 2,
+                                                            child: SpinKitRing(
+                                                              color: Colors
+                                                                  .transparent,
+                                                              size: 2,
                                                             ),
                                                           ),
-                                                        ).animated([
-                                                          animationsMap[
-                                                              'containerOnPageLoadAnimation2']!
-                                                        ]),
-                                                      );
-                                                    },
-                                                  );
-                                                },
-                                              ),
-                                            ),
-                                          ),
-                                          Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    0, 10, 0, 0),
-                                            child: Text(
-                                              'Energies',
-                                              style: FlutterFlowTheme.of(
-                                                      context)
-                                                  .title3
-                                                  .override(
-                                                    fontFamily: 'Montserrat',
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .tertiaryColor,
-                                                  ),
-                                            ),
-                                          ),
-                                          Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    0, 10, 0, 0),
-                                            child: Container(
-                                              width: MediaQuery.of(context)
-                                                  .size
-                                                  .width,
-                                              height: 100,
-                                              decoration: BoxDecoration(
-                                                color: Color(0x00EEEEEE),
-                                              ),
-                                              child: StreamBuilder<
-                                                  List<EnergyActionsRecord>>(
-                                                stream:
-                                                    queryEnergyActionsRecord(
-                                                  queryBuilder:
-                                                      (energyActionsRecord) =>
-                                                          energyActionsRecord
-                                                              .where(
-                                                                  'userId',
-                                                                  isEqualTo:
-                                                                      currentUserUid)
-                                                              .orderBy(
-                                                                  'created_time',
-                                                                  descending:
-                                                                      true),
-                                                ),
-                                                builder: (context, snapshot) {
-                                                  // Customize what your widget looks like when it's loading.
-                                                  if (!snapshot.hasData) {
-                                                    return Center(
-                                                      child: SizedBox(
-                                                        width: 2,
-                                                        height: 2,
-                                                        child: SpinKitRing(
-                                                          color: Colors
-                                                              .transparent,
-                                                          size: 2,
-                                                        ),
-                                                      ),
-                                                    );
-                                                  }
-                                                  List<EnergyActionsRecord>
-                                                      listViewEnergyActionsRecordList =
-                                                      snapshot.data!;
-                                                  return ListView.builder(
-                                                    padding: EdgeInsets.zero,
-                                                    scrollDirection:
-                                                        Axis.horizontal,
-                                                    itemCount:
-                                                        listViewEnergyActionsRecordList
-                                                            .length,
-                                                    itemBuilder: (context,
-                                                        listViewIndex) {
-                                                      final listViewEnergyActionsRecord =
-                                                          listViewEnergyActionsRecordList[
-                                                              listViewIndex];
-                                                      return Padding(
+                                                        );
+                                                      }
+                                                      List<EnergyActionsRecord>
+                                                          listViewEnergyActionsRecordList =
+                                                          snapshot.data!;
+                                                      return ListView.builder(
                                                         padding:
-                                                            EdgeInsetsDirectional
-                                                                .fromSTEB(
-                                                                    5, 0, 5, 0),
-                                                        child: Container(
-                                                          width: 100,
-                                                          height: 100,
-                                                          decoration:
-                                                              BoxDecoration(
-                                                            color: Color(
-                                                                0x9AF1F4F8),
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        24),
-                                                          ),
-                                                          child: Padding(
+                                                            EdgeInsets.zero,
+                                                        scrollDirection:
+                                                            Axis.horizontal,
+                                                        itemCount:
+                                                            listViewEnergyActionsRecordList
+                                                                .length,
+                                                        itemBuilder: (context,
+                                                            listViewIndex) {
+                                                          final listViewEnergyActionsRecord =
+                                                              listViewEnergyActionsRecordList[
+                                                                  listViewIndex];
+                                                          return Padding(
                                                             padding:
                                                                 EdgeInsetsDirectional
                                                                     .fromSTEB(
-                                                                        0,
                                                                         5,
                                                                         0,
-                                                                        5),
-                                                            child: Column(
-                                                              mainAxisSize:
-                                                                  MainAxisSize
-                                                                      .max,
-                                                              mainAxisAlignment:
-                                                                  MainAxisAlignment
-                                                                      .center,
-                                                              children: [
-                                                                Row(
+                                                                        5,
+                                                                        0),
+                                                            child: Container(
+                                                              width: 100,
+                                                              height: 100,
+                                                              decoration:
+                                                                  BoxDecoration(
+                                                                color: Color(
+                                                                    0x9AF1F4F8),
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            24),
+                                                              ),
+                                                              child: Padding(
+                                                                padding:
+                                                                    EdgeInsetsDirectional
+                                                                        .fromSTEB(
+                                                                            0,
+                                                                            5,
+                                                                            0,
+                                                                            5),
+                                                                child: Column(
                                                                   mainAxisSize:
                                                                       MainAxisSize
                                                                           .max,
                                                                   mainAxisAlignment:
                                                                       MainAxisAlignment
-                                                                          .spaceEvenly,
+                                                                          .center,
                                                                   children: [
-                                                                    Container(
-                                                                      width: 40,
-                                                                      height:
-                                                                          40,
-                                                                      child:
-                                                                          Stack(
-                                                                        alignment: AlignmentDirectional(
-                                                                            0,
-                                                                            0),
-                                                                        children: [
-                                                                          if (listViewEnergyActionsRecord.energy ==
-                                                                              'electricity')
-                                                                            InkWell(
-                                                                              onTap: () async {
-                                                                                logFirebaseEvent('PROFILE_PAGE_electricityAction_ON_TAP');
-                                                                                logFirebaseEvent('electricityAction_Navigate-To');
-                                                                                await Navigator.push(
-                                                                                  context,
-                                                                                  PageTransition(
-                                                                                    type: PageTransitionType.fade,
-                                                                                    duration: Duration(milliseconds: 0),
-                                                                                    reverseDuration: Duration(milliseconds: 0),
-                                                                                    child: EnergiesWidget(
-                                                                                      actionRef: listViewEnergyActionsRecord.reference,
-                                                                                    ),
-                                                                                  ),
-                                                                                );
-                                                                              },
-                                                                              child: Container(
-                                                                                width: 40,
-                                                                                height: 40,
-                                                                                clipBehavior: Clip.antiAlias,
-                                                                                decoration: BoxDecoration(
-                                                                                  shape: BoxShape.circle,
-                                                                                ),
-                                                                                child: Image.asset(
-                                                                                  'assets/images/energy.png',
-                                                                                  fit: BoxFit.cover,
-                                                                                ),
-                                                                              ),
-                                                                            ),
-                                                                          if (listViewEnergyActionsRecord.energy ==
-                                                                              'gas')
-                                                                            InkWell(
-                                                                              onTap: () async {
-                                                                                logFirebaseEvent('PROFILE_PAGE_gasAction_ON_TAP');
-                                                                                logFirebaseEvent('gasAction_Navigate-To');
-                                                                                await Navigator.push(
-                                                                                  context,
-                                                                                  PageTransition(
-                                                                                    type: PageTransitionType.fade,
-                                                                                    duration: Duration(milliseconds: 0),
-                                                                                    reverseDuration: Duration(milliseconds: 0),
-                                                                                    child: EnergiesWidget(
-                                                                                      actionRef: listViewEnergyActionsRecord.reference,
-                                                                                    ),
-                                                                                  ),
-                                                                                );
-                                                                              },
-                                                                              child: Container(
-                                                                                width: 40,
-                                                                                height: 40,
-                                                                                clipBehavior: Clip.antiAlias,
-                                                                                decoration: BoxDecoration(
-                                                                                  shape: BoxShape.circle,
-                                                                                ),
-                                                                                child: Image.asset(
-                                                                                  'assets/images/gas.png',
-                                                                                  fit: BoxFit.cover,
-                                                                                ),
-                                                                              ),
-                                                                            ),
-                                                                          if (listViewEnergyActionsRecord.energy ==
-                                                                              'water')
-                                                                            InkWell(
-                                                                              onTap: () async {
-                                                                                logFirebaseEvent('PROFILE_PAGE_waterAction_ON_TAP');
-                                                                                logFirebaseEvent('waterAction_Navigate-To');
-                                                                                await Navigator.push(
-                                                                                  context,
-                                                                                  PageTransition(
-                                                                                    type: PageTransitionType.fade,
-                                                                                    duration: Duration(milliseconds: 0),
-                                                                                    reverseDuration: Duration(milliseconds: 0),
-                                                                                    child: EnergiesWidget(
-                                                                                      actionRef: listViewEnergyActionsRecord.reference,
-                                                                                    ),
-                                                                                  ),
-                                                                                );
-                                                                              },
-                                                                              child: Container(
-                                                                                width: 40,
-                                                                                height: 40,
-                                                                                clipBehavior: Clip.antiAlias,
-                                                                                decoration: BoxDecoration(
-                                                                                  shape: BoxShape.circle,
-                                                                                ),
-                                                                                child: Image.asset(
-                                                                                  'assets/images/water-drop.png',
-                                                                                  fit: BoxFit.cover,
-                                                                                ),
-                                                                              ),
-                                                                            ),
-                                                                        ],
-                                                                      ),
-                                                                    ),
-                                                                    Column(
+                                                                    Row(
                                                                       mainAxisSize:
                                                                           MainAxisSize
                                                                               .max,
+                                                                      mainAxisAlignment:
+                                                                          MainAxisAlignment
+                                                                              .spaceEvenly,
                                                                       children: [
-                                                                        InkWell(
-                                                                          onTap:
-                                                                              () async {
-                                                                            logFirebaseEvent('PROFILE_PAGE_Icon_9grbdbql_ON_TAP');
-                                                                            logFirebaseEvent('Icon_Navigate-To');
-                                                                            await Navigator.push(
-                                                                              context,
-                                                                              PageTransition(
-                                                                                type: PageTransitionType.fade,
-                                                                                duration: Duration(milliseconds: 0),
-                                                                                reverseDuration: Duration(milliseconds: 0),
-                                                                                child: EnergiesWidget(
-                                                                                  actionRef: listViewEnergyActionsRecord.reference,
-                                                                                ),
-                                                                              ),
-                                                                            );
-                                                                          },
+                                                                        Container(
+                                                                          width:
+                                                                              40,
+                                                                          height:
+                                                                              40,
                                                                           child:
-                                                                              Icon(
-                                                                            Icons.edit_sharp,
-                                                                            color:
-                                                                                FlutterFlowTheme.of(context).primaryColor,
-                                                                            size:
-                                                                                20,
+                                                                              Stack(
+                                                                            alignment:
+                                                                                AlignmentDirectional(0, 0),
+                                                                            children: [
+                                                                              if (listViewEnergyActionsRecord.energy == 'electricity')
+                                                                                InkWell(
+                                                                                  onTap: () async {
+                                                                                    logFirebaseEvent('PROFILE_PAGE_electricityAction_ON_TAP');
+                                                                                    logFirebaseEvent('electricityAction_navigate_to');
+
+                                                                                    context.pushNamed(
+                                                                                      'Energies',
+                                                                                      queryParams: {
+                                                                                        'actionRef': serializeParam(
+                                                                                          listViewEnergyActionsRecord.reference,
+                                                                                          ParamType.DocumentReference,
+                                                                                        ),
+                                                                                      }.withoutNulls,
+                                                                                    );
+                                                                                  },
+                                                                                  child: Container(
+                                                                                    width: 40,
+                                                                                    height: 40,
+                                                                                    clipBehavior: Clip.antiAlias,
+                                                                                    decoration: BoxDecoration(
+                                                                                      shape: BoxShape.circle,
+                                                                                    ),
+                                                                                    child: Image.asset(
+                                                                                      'assets/images/energy.png',
+                                                                                      fit: BoxFit.cover,
+                                                                                    ),
+                                                                                  ),
+                                                                                ),
+                                                                              if (listViewEnergyActionsRecord.energy == 'gas')
+                                                                                InkWell(
+                                                                                  onTap: () async {
+                                                                                    logFirebaseEvent('PROFILE_PAGE_gasAction_ON_TAP');
+                                                                                    logFirebaseEvent('gasAction_navigate_to');
+
+                                                                                    context.pushNamed(
+                                                                                      'Energies',
+                                                                                      queryParams: {
+                                                                                        'actionRef': serializeParam(
+                                                                                          listViewEnergyActionsRecord.reference,
+                                                                                          ParamType.DocumentReference,
+                                                                                        ),
+                                                                                      }.withoutNulls,
+                                                                                    );
+                                                                                  },
+                                                                                  child: Container(
+                                                                                    width: 40,
+                                                                                    height: 40,
+                                                                                    clipBehavior: Clip.antiAlias,
+                                                                                    decoration: BoxDecoration(
+                                                                                      shape: BoxShape.circle,
+                                                                                    ),
+                                                                                    child: Image.asset(
+                                                                                      'assets/images/gas.png',
+                                                                                      fit: BoxFit.cover,
+                                                                                    ),
+                                                                                  ),
+                                                                                ),
+                                                                              if (listViewEnergyActionsRecord.energy == 'water')
+                                                                                InkWell(
+                                                                                  onTap: () async {
+                                                                                    logFirebaseEvent('PROFILE_PAGE_waterAction_ON_TAP');
+                                                                                    logFirebaseEvent('waterAction_navigate_to');
+
+                                                                                    context.pushNamed(
+                                                                                      'Energies',
+                                                                                      queryParams: {
+                                                                                        'actionRef': serializeParam(
+                                                                                          listViewEnergyActionsRecord.reference,
+                                                                                          ParamType.DocumentReference,
+                                                                                        ),
+                                                                                      }.withoutNulls,
+                                                                                    );
+                                                                                  },
+                                                                                  child: Container(
+                                                                                    width: 40,
+                                                                                    height: 40,
+                                                                                    clipBehavior: Clip.antiAlias,
+                                                                                    decoration: BoxDecoration(
+                                                                                      shape: BoxShape.circle,
+                                                                                    ),
+                                                                                    child: Image.asset(
+                                                                                      'assets/images/water-drop.png',
+                                                                                      fit: BoxFit.cover,
+                                                                                    ),
+                                                                                  ),
+                                                                                ),
+                                                                            ],
                                                                           ),
                                                                         ),
-                                                                        Padding(
-                                                                          padding: EdgeInsetsDirectional.fromSTEB(
-                                                                              0,
-                                                                              5,
-                                                                              0,
-                                                                              0),
-                                                                          child:
-                                                                              InkWell(
-                                                                            onTap:
-                                                                                () async {
-                                                                              logFirebaseEvent('PROFILE_PAGE_Icon_8ib4tnm6_ON_TAP');
-                                                                              logFirebaseEvent('Icon_Backend-Call');
-                                                                              await listViewEnergyActionsRecord.reference.delete();
-                                                                            },
-                                                                            child:
-                                                                                Icon(
-                                                                              Icons.delete_forever,
-                                                                              color: Color(0xA8FF0000),
-                                                                              size: 24,
+                                                                        Column(
+                                                                          mainAxisSize:
+                                                                              MainAxisSize.max,
+                                                                          children: [
+                                                                            InkWell(
+                                                                              onTap: () async {
+                                                                                logFirebaseEvent('PROFILE_PAGE_Icon_9grbdbql_ON_TAP');
+                                                                                logFirebaseEvent('Icon_navigate_to');
+
+                                                                                context.pushNamed(
+                                                                                  'Energies',
+                                                                                  queryParams: {
+                                                                                    'actionRef': serializeParam(
+                                                                                      listViewEnergyActionsRecord.reference,
+                                                                                      ParamType.DocumentReference,
+                                                                                    ),
+                                                                                  }.withoutNulls,
+                                                                                );
+                                                                              },
+                                                                              child: Icon(
+                                                                                Icons.edit_sharp,
+                                                                                color: FlutterFlowTheme.of(context).primaryColor,
+                                                                                size: 20,
+                                                                              ),
                                                                             ),
-                                                                          ),
+                                                                            Padding(
+                                                                              padding: EdgeInsetsDirectional.fromSTEB(0, 5, 0, 0),
+                                                                              child: InkWell(
+                                                                                onTap: () async {
+                                                                                  logFirebaseEvent('PROFILE_PAGE_Icon_8ib4tnm6_ON_TAP');
+                                                                                  logFirebaseEvent('Icon_backend_call');
+                                                                                  await listViewEnergyActionsRecord.reference.delete();
+                                                                                },
+                                                                                child: Icon(
+                                                                                  Icons.delete_forever,
+                                                                                  color: Color(0xA8FF0000),
+                                                                                  size: 24,
+                                                                                ),
+                                                                              ),
+                                                                            ),
+                                                                          ],
                                                                         ),
                                                                       ],
                                                                     ),
-                                                                  ],
-                                                                ),
-                                                                Text(
-                                                                  listViewEnergyActionsRecord
-                                                                      .day!,
-                                                                  textAlign:
-                                                                      TextAlign
-                                                                          .center,
-                                                                  style: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .bodyText2
-                                                                      .override(
-                                                                        fontFamily:
-                                                                            'Outfit',
-                                                                        color: Color(
-                                                                            0xFF57636C),
-                                                                        fontSize:
-                                                                            10,
-                                                                        fontWeight:
-                                                                            FontWeight.normal,
-                                                                      ),
-                                                                ),
-                                                                Text(
-                                                                  functions.printScore(
+                                                                    Text(
                                                                       listViewEnergyActionsRecord
-                                                                          .co2e),
-                                                                  textAlign:
-                                                                      TextAlign
-                                                                          .center,
-                                                                  style: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .title1
-                                                                      .override(
-                                                                        fontFamily:
-                                                                            'Outfit',
-                                                                        color: Color(
-                                                                            0xFF101213),
-                                                                        fontSize:
-                                                                            18,
-                                                                        fontWeight:
-                                                                            FontWeight.w600,
-                                                                      ),
+                                                                          .day!,
+                                                                      textAlign:
+                                                                          TextAlign
+                                                                              .center,
+                                                                      style: FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .bodyText2
+                                                                          .override(
+                                                                            fontFamily:
+                                                                                'Outfit',
+                                                                            color:
+                                                                                Color(0xFF57636C),
+                                                                            fontSize:
+                                                                                10,
+                                                                            fontWeight:
+                                                                                FontWeight.normal,
+                                                                          ),
+                                                                    ),
+                                                                    Text(
+                                                                      functions.printScore(
+                                                                          listViewEnergyActionsRecord
+                                                                              .co2e),
+                                                                      textAlign:
+                                                                          TextAlign
+                                                                              .center,
+                                                                      style: FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .title1
+                                                                          .override(
+                                                                            fontFamily:
+                                                                                'Outfit',
+                                                                            color:
+                                                                                Color(0xFF101213),
+                                                                            fontSize:
+                                                                                18,
+                                                                            fontWeight:
+                                                                                FontWeight.w600,
+                                                                          ),
+                                                                    ),
+                                                                  ],
                                                                 ),
-                                                              ],
-                                                            ),
-                                                          ),
-                                                        ).animated([
-                                                          animationsMap[
-                                                              'containerOnPageLoadAnimation3']!
-                                                        ]),
+                                                              ),
+                                                            ).animateOnPageLoad(
+                                                                animationsMap[
+                                                                    'containerOnPageLoadAnimation3']!),
+                                                          );
+                                                        },
                                                       );
                                                     },
-                                                  );
-                                                },
+                                                  ),
+                                                ),
                                               ),
-                                            ),
+                                            ],
                                           ),
-                                        ],
-                                      ),
-                                    ),
-                                  if (activeProfilePartValue == 'Paramètres')
-                                    Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          0, 20, 0, 0),
-                                      child: Container(
-                                        width:
-                                            MediaQuery.of(context).size.width,
-                                        decoration: BoxDecoration(),
-                                        child: Padding(
+                                        ),
+                                      if (activeProfilePartValue ==
+                                          'Paramètres')
+                                        Padding(
                                           padding:
                                               EdgeInsetsDirectional.fromSTEB(
-                                                  16, 0, 16, 12),
+                                                  0, 20, 0, 0),
                                           child: Container(
-                                            width: double.infinity,
-                                            decoration: BoxDecoration(
-                                              color: Colors.white,
-                                              borderRadius:
-                                                  BorderRadius.circular(8),
-                                              border: Border.all(
-                                                color: Color(0xFFE0E3E7),
-                                                width: 2,
-                                              ),
-                                            ),
+                                            width: MediaQuery.of(context)
+                                                .size
+                                                .width,
+                                            decoration: BoxDecoration(),
                                             child: Padding(
                                               padding: EdgeInsetsDirectional
-                                                  .fromSTEB(12, 12, 12, 12),
-                                              child: Column(
-                                                mainAxisSize: MainAxisSize.max,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.center,
-                                                children: [
-                                                  Text(
-                                                    'Paramètres',
-                                                    textAlign: TextAlign.center,
-                                                    style: FlutterFlowTheme.of(
-                                                            context)
-                                                        .title3
-                                                        .override(
-                                                          fontFamily: 'Outfit',
-                                                          color:
-                                                              Color(0xFF101213),
-                                                          fontSize: 20,
-                                                          fontWeight:
-                                                              FontWeight.w500,
-                                                        ),
+                                                  .fromSTEB(16, 0, 16, 12),
+                                              child: Container(
+                                                width: double.infinity,
+                                                decoration: BoxDecoration(
+                                                  color: Colors.white,
+                                                  borderRadius:
+                                                      BorderRadius.circular(8),
+                                                  border: Border.all(
+                                                    color: Color(0xFFE0E3E7),
+                                                    width: 2,
                                                   ),
-                                                  Padding(
-                                                    padding:
-                                                        EdgeInsetsDirectional
-                                                            .fromSTEB(
-                                                                0, 10, 0, 0),
-                                                    child: Text(
-                                                      'Dans la prochaine version, vous pourrez régler vos paramètres par défaut (type de véhicule, transports en commun, taille du foyer, etc).',
-                                                      style:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
+                                                ),
+                                                child: Padding(
+                                                  padding: EdgeInsetsDirectional
+                                                      .fromSTEB(12, 12, 12, 12),
+                                                  child: Column(
+                                                    mainAxisSize:
+                                                        MainAxisSize.max,
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      Text(
+                                                        'Paramètres',
+                                                        textAlign:
+                                                            TextAlign.center,
+                                                        style:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .title3
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Outfit',
+                                                                  color: Color(
+                                                                      0xFF101213),
+                                                                  fontSize: 20,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w500,
+                                                                ),
+                                                      ),
+                                                      Padding(
+                                                        padding:
+                                                            EdgeInsetsDirectional
+                                                                .fromSTEB(0, 10,
+                                                                    0, 0),
+                                                        child: Text(
+                                                          'Dans la prochaine version, vous pourrez régler vos paramètres par défaut (type de véhicule, transports en commun, taille du foyer, etc).',
+                                                          style: FlutterFlowTheme
+                                                                  .of(context)
                                                               .bodyText2
                                                               .override(
                                                                 fontFamily:
@@ -6220,21 +6036,21 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                                     FontWeight
                                                                         .normal,
                                                               ),
-                                                    ),
+                                                        ),
+                                                      ),
+                                                    ],
                                                   ),
-                                                ],
-                                              ),
+                                                ),
+                                              ).animateOnPageLoad(animationsMap[
+                                                  'containerOnPageLoadAnimation4']!),
                                             ),
-                                          ).animated([
-                                            animationsMap[
-                                                'containerOnPageLoadAnimation4']!
-                                          ]),
+                                          ),
                                         ),
-                                      ),
-                                    ),
-                                ],
-                              ),
-                            ),
+                                    ],
+                                  ),
+                                ),
+                              );
+                            },
                           ),
                         ],
                       ),

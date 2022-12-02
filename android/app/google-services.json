@@ -30,6 +30,14 @@
           }
         },
         {
+          "client_id": "11012056131-uu32ljojs99fdu2b6k2bbsvtui1si568.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "app.carbonfight",
+            "certificate_hash": "2ce791ff70311bd8e0fbcae0945511d142313ed2"
+          }
+        },
+        {
           "client_id": "11012056131-8d5vhts7n73m773c1hj4bibbcimndmgk.apps.googleusercontent.com",
           "client_type": 3
         }

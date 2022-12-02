@@ -9,7 +9,9 @@ import 'schema/energy_actions_record.dart';
 import 'schema/users_record.dart';
 import 'schema/food_actions_record.dart';
 import 'schema/users_stats_record.dart';
-import 'schema/users_trophies_record.dart';
+import 'schema/food_calculation_record.dart';
+import 'schema/transport_calculation_record.dart';
+import 'schema/energy_calculation_record.dart';
 import 'schema/serializers.dart';
 
 export 'dart:async' show StreamSubscription;
@@ -22,7 +24,9 @@ export 'schema/energy_actions_record.dart';
 export 'schema/users_record.dart';
 export 'schema/food_actions_record.dart';
 export 'schema/users_stats_record.dart';
-export 'schema/users_trophies_record.dart';
+export 'schema/food_calculation_record.dart';
+export 'schema/transport_calculation_record.dart';
+export 'schema/energy_calculation_record.dart';
 
 /// Functions to query TransportActionsRecords (as a Stream and as a Future).
 Stream<List<TransportActionsRecord>> queryTransportActionsRecord({
@@ -235,47 +239,133 @@ Future<FFFirestorePage<UsersStatsRecord>> queryUsersStatsRecordPage({
       isStream: isStream,
     );
 
-/// Functions to query UsersTrophiesRecords (as a Stream and as a Future).
-Stream<List<UsersTrophiesRecord>> queryUsersTrophiesRecord({
+/// Functions to query FoodCalculationRecords (as a Stream and as a Future).
+Stream<List<FoodCalculationRecord>> queryFoodCalculationRecord({
   Query Function(Query)? queryBuilder,
   int limit = -1,
   bool singleRecord = false,
 }) =>
     queryCollection(
-      UsersTrophiesRecord.collection,
-      UsersTrophiesRecord.serializer,
+      FoodCalculationRecord.collection,
+      FoodCalculationRecord.serializer,
       queryBuilder: queryBuilder,
       limit: limit,
       singleRecord: singleRecord,
     );
 
-Future<List<UsersTrophiesRecord>> queryUsersTrophiesRecordOnce({
+Future<List<FoodCalculationRecord>> queryFoodCalculationRecordOnce({
   Query Function(Query)? queryBuilder,
   int limit = -1,
   bool singleRecord = false,
 }) =>
     queryCollectionOnce(
-      UsersTrophiesRecord.collection,
-      UsersTrophiesRecord.serializer,
+      FoodCalculationRecord.collection,
+      FoodCalculationRecord.serializer,
       queryBuilder: queryBuilder,
       limit: limit,
       singleRecord: singleRecord,
     );
 
-Future<FFFirestorePage<UsersTrophiesRecord>> queryUsersTrophiesRecordPage({
+Future<FFFirestorePage<FoodCalculationRecord>> queryFoodCalculationRecordPage({
   Query Function(Query)? queryBuilder,
   DocumentSnapshot? nextPageMarker,
   required int pageSize,
   required bool isStream,
 }) =>
     queryCollectionPage(
-      UsersTrophiesRecord.collection,
-      UsersTrophiesRecord.serializer,
+      FoodCalculationRecord.collection,
+      FoodCalculationRecord.serializer,
       queryBuilder: queryBuilder,
       nextPageMarker: nextPageMarker,
       pageSize: pageSize,
       isStream: isStream,
     );
+
+/// Functions to query TransportCalculationRecords (as a Stream and as a Future).
+Stream<List<TransportCalculationRecord>> queryTransportCalculationRecord({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollection(
+      TransportCalculationRecord.collection,
+      TransportCalculationRecord.serializer,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+Future<List<TransportCalculationRecord>> queryTransportCalculationRecordOnce({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollectionOnce(
+      TransportCalculationRecord.collection,
+      TransportCalculationRecord.serializer,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+Future<FFFirestorePage<TransportCalculationRecord>>
+    queryTransportCalculationRecordPage({
+  Query Function(Query)? queryBuilder,
+  DocumentSnapshot? nextPageMarker,
+  required int pageSize,
+  required bool isStream,
+}) =>
+        queryCollectionPage(
+          TransportCalculationRecord.collection,
+          TransportCalculationRecord.serializer,
+          queryBuilder: queryBuilder,
+          nextPageMarker: nextPageMarker,
+          pageSize: pageSize,
+          isStream: isStream,
+        );
+
+/// Functions to query EnergyCalculationRecords (as a Stream and as a Future).
+Stream<List<EnergyCalculationRecord>> queryEnergyCalculationRecord({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollection(
+      EnergyCalculationRecord.collection,
+      EnergyCalculationRecord.serializer,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+Future<List<EnergyCalculationRecord>> queryEnergyCalculationRecordOnce({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollectionOnce(
+      EnergyCalculationRecord.collection,
+      EnergyCalculationRecord.serializer,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+Future<FFFirestorePage<EnergyCalculationRecord>>
+    queryEnergyCalculationRecordPage({
+  Query Function(Query)? queryBuilder,
+  DocumentSnapshot? nextPageMarker,
+  required int pageSize,
+  required bool isStream,
+}) =>
+        queryCollectionPage(
+          EnergyCalculationRecord.collection,
+          EnergyCalculationRecord.serializer,
+          queryBuilder: queryBuilder,
+          nextPageMarker: nextPageMarker,
+          pageSize: pageSize,
+          isStream: isStream,
+        );
 
 Stream<List<T>> queryCollection<T>(Query collection, Serializer<T> serializer,
     {Query Function(Query)? queryBuilder,
@@ -320,6 +410,21 @@ Future<List<T>> queryCollectionOnce<T>(
       .where((d) => d != null)
       .map((d) => d!)
       .toList());
+}
+
+extension QueryExtension on Query {
+  Query whereIn(String field, List? list) => (list?.isEmpty ?? true)
+      ? where(field, whereIn: null)
+      : where(field, whereIn: list);
+
+  Query whereNotIn(String field, List? list) => (list?.isEmpty ?? true)
+      ? where(field, whereNotIn: null)
+      : where(field, whereNotIn: list);
+
+  Query whereArrayContainsAny(String field, List? list) =>
+      (list?.isEmpty ?? true)
+          ? where(field, arrayContainsAny: null)
+          : where(field, arrayContainsAny: list);
 }
 
 class FFFirestorePage<T> {

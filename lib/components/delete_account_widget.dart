@@ -3,7 +3,6 @@ import '../components/icon_button_widget.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
-import '../login/login_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -22,6 +21,13 @@ class _DeleteAccountWidgetState extends State<DeleteAccountWidget> {
   void initState() {
     super.initState();
     emailController = TextEditingController();
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
+  }
+
+  @override
+  void dispose() {
+    emailController?.dispose();
+    super.dispose();
   }
 
   @override
@@ -72,8 +78,8 @@ class _DeleteAccountWidgetState extends State<DeleteAccountWidget> {
                     ),
                     onPressed: () async {
                       logFirebaseEvent('DELETE_ACCOUNT_COMP_close_ICN_ON_TAP');
-                      logFirebaseEvent('IconButton_Navigate-Back');
-                      Navigator.pop(context);
+                      logFirebaseEvent('IconButton_navigate_back');
+                      context.pop();
                     },
                   ),
                 ],
@@ -131,6 +137,20 @@ class _DeleteAccountWidgetState extends State<DeleteAccountWidget> {
                                   ),
                                   borderRadius: BorderRadius.circular(100),
                                 ),
+                                errorBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Color(0x00000000),
+                                    width: 1,
+                                  ),
+                                  borderRadius: BorderRadius.circular(100),
+                                ),
+                                focusedErrorBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Color(0x00000000),
+                                    width: 1,
+                                  ),
+                                  borderRadius: BorderRadius.circular(100),
+                                ),
                                 filled: true,
                                 fillColor: Color(0x40EEF1F0),
                               ),
@@ -158,9 +178,9 @@ class _DeleteAccountWidgetState extends State<DeleteAccountWidget> {
                                 logFirebaseEvent(
                                     'DELETE_ACCOUNT_Container_2n8nomcm_ON_TAP');
                                 if (emailController!.text == 'supprimer') {
-                                  logFirebaseEvent('iconButton_Auth');
+                                  logFirebaseEvent('iconButton_auth');
                                   await deleteUser(context);
-                                  logFirebaseEvent('iconButton_Alert-Dialog');
+                                  logFirebaseEvent('iconButton_alert_dialog');
                                   await showDialog(
                                     context: context,
                                     builder: (alertDialogContext) {
@@ -179,7 +199,7 @@ class _DeleteAccountWidgetState extends State<DeleteAccountWidget> {
                                     },
                                   );
                                 } else {
-                                  logFirebaseEvent('iconButton_Alert-Dialog');
+                                  logFirebaseEvent('iconButton_alert_dialog');
                                   await showDialog(
                                     context: context,
                                     builder: (alertDialogContext) {
@@ -200,16 +220,9 @@ class _DeleteAccountWidgetState extends State<DeleteAccountWidget> {
                                   return;
                                 }
 
-                                logFirebaseEvent('iconButton_Navigate-To');
-                                await Navigator.push(
-                                  context,
-                                  PageTransition(
-                                    type: PageTransitionType.fade,
-                                    duration: Duration(milliseconds: 0),
-                                    reverseDuration: Duration(milliseconds: 0),
-                                    child: LoginWidget(),
-                                  ),
-                                );
+                                logFirebaseEvent('iconButton_navigate_to');
+
+                                context.pushNamed('Login');
                               },
                               child: IconButtonWidget(
                                 fillColor: Color(0x98BC0909),

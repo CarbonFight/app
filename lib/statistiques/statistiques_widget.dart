@@ -1,11 +1,8 @@
 import '../auth/auth_util.dart';
 import '../backend/backend.dart';
-import '../drawer/drawer_widget.dart';
 import '../flutter_flow/flutter_flow_charts.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
-import '../home/home_widget.dart';
-import '../profile/profile_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -26,6 +23,7 @@ class _StatistiquesWidgetState extends State<StatistiquesWidget> {
     super.initState();
     logFirebaseEvent('screen_view',
         parameters: {'screen_name': 'Statistiques'});
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
@@ -59,227 +57,239 @@ class _StatistiquesWidgetState extends State<StatistiquesWidget> {
                   child: Column(
                     mainAxisSize: MainAxisSize.max,
                     children: [
-                      Container(
-                        width: MediaQuery.of(context).size.width,
-                        height: 100,
-                        decoration: BoxDecoration(),
-                        alignment: AlignmentDirectional(0, 1),
-                        child: Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(20, 0, 20, 0),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Row(
+                      StreamBuilder<List<UsersRecord>>(
+                        stream: queryUsersRecord(
+                          queryBuilder: (usersRecord) => usersRecord
+                              .where('uid', isEqualTo: currentUserUid),
+                          singleRecord: true,
+                        ),
+                        builder: (context, snapshot) {
+                          // Customize what your widget looks like when it's loading.
+                          if (!snapshot.hasData) {
+                            return Center(
+                              child: SizedBox(
+                                width: 2,
+                                height: 2,
+                                child: SpinKitRing(
+                                  color: Colors.transparent,
+                                  size: 2,
+                                ),
+                              ),
+                            );
+                          }
+                          List<UsersRecord> headerUsersRecordList =
+                              snapshot.data!;
+                          // Return an empty Container when the document does not exist.
+                          if (snapshot.data!.isEmpty) {
+                            return Container();
+                          }
+                          final headerUsersRecord =
+                              headerUsersRecordList.isNotEmpty
+                                  ? headerUsersRecordList.first
+                                  : null;
+                          return Container(
+                            width: MediaQuery.of(context).size.width,
+                            height: 100,
+                            decoration: BoxDecoration(),
+                            alignment: AlignmentDirectional(0, 1),
+                            child: Padding(
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(20, 0, 20, 0),
+                              child: Row(
                                 mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
-                                  InkWell(
-                                    onTap: () async {
-                                      logFirebaseEvent(
-                                          'STATISTIQUES_Container_4uwupvb1_ON_TAP');
-                                      logFirebaseEvent('Container_Navigate-To');
-                                      await Navigator.push(
-                                        context,
-                                        PageTransition(
-                                          type: PageTransitionType.leftToRight,
-                                          duration: Duration(milliseconds: 300),
-                                          reverseDuration:
-                                              Duration(milliseconds: 300),
-                                          child: DrawerWidget(),
+                                  Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      InkWell(
+                                        onTap: () async {
+                                          logFirebaseEvent(
+                                              'STATISTIQUES_Container_4uwupvb1_ON_TAP');
+                                          logFirebaseEvent(
+                                              'Container_navigate_to');
+
+                                          context.pushNamed(
+                                            'Drawer',
+                                            extra: <String, dynamic>{
+                                              kTransitionInfoKey:
+                                                  TransitionInfo(
+                                                hasTransition: true,
+                                                transitionType:
+                                                    PageTransitionType
+                                                        .leftToRight,
+                                              ),
+                                            },
+                                          );
+                                        },
+                                        child: Container(
+                                          width: 50,
+                                          height: 50,
+                                          decoration: BoxDecoration(),
+                                          alignment: AlignmentDirectional(0, 0),
+                                          child: SvgPicture.asset(
+                                            'assets/images/menu.svg',
+                                            width: 24,
+                                            height: 24,
+                                            fit: BoxFit.fitHeight,
+                                          ),
                                         ),
-                                      );
-                                    },
-                                    child: Container(
-                                      width: 50,
-                                      height: 50,
-                                      decoration: BoxDecoration(),
-                                      alignment: AlignmentDirectional(0, 0),
-                                      child: SvgPicture.asset(
-                                        'assets/images/menu.svg',
-                                        width: 24,
-                                        height: 24,
+                                      ),
+                                      Image.asset(
+                                        'assets/images/logo_light.png',
+                                        width: 100,
+                                        height: 40,
                                         fit: BoxFit.fitHeight,
                                       ),
-                                    ),
+                                    ],
                                   ),
-                                  Image.asset(
-                                    'assets/images/logo_light.png',
-                                    width: 100,
-                                    height: 40,
-                                    fit: BoxFit.fitHeight,
-                                  ),
-                                ],
-                              ),
-                              Expanded(
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    InkWell(
-                                      onTap: () async {
-                                        logFirebaseEvent(
-                                            'STATISTIQUES_PAGE_Actions_ON_TAP');
-                                        logFirebaseEvent('Actions_Navigate-To');
-                                        await Navigator.push(
-                                          context,
-                                          PageTransition(
-                                            type: PageTransitionType.fade,
-                                            duration: Duration(milliseconds: 0),
-                                            reverseDuration:
-                                                Duration(milliseconds: 0),
-                                            child: StatistiquesWidget(),
-                                          ),
-                                        );
-                                      },
-                                      child: Container(
-                                        width: 40,
-                                        height: 40,
-                                        decoration: BoxDecoration(
-                                          color: Color(0x4DFFFFFF),
-                                          boxShadow: [
-                                            BoxShadow(
-                                              blurRadius: 10,
-                                              color: Color(0x2C000000),
-                                              offset: Offset(0, 4),
-                                            )
-                                          ],
-                                          shape: BoxShape.circle,
-                                          border: Border.all(
-                                            color: FlutterFlowTheme.of(context)
-                                                .grayLight,
-                                            width: 1,
-                                          ),
-                                        ),
-                                        child: InkWell(
+                                  Expanded(
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
+                                      children: [
+                                        InkWell(
                                           onTap: () async {
                                             logFirebaseEvent(
-                                                'STATISTIQUES_PAGE_Icon_xodx627i_ON_TAP');
+                                                'STATISTIQUES_PAGE_Actions_ON_TAP');
                                             logFirebaseEvent(
-                                                'Icon_Navigate-To');
-                                            await Navigator.push(
-                                              context,
-                                              PageTransition(
-                                                type: PageTransitionType.fade,
-                                                duration:
-                                                    Duration(milliseconds: 0),
-                                                reverseDuration:
-                                                    Duration(milliseconds: 0),
-                                                child: HomeWidget(),
-                                              ),
-                                            );
+                                                'Actions_navigate_to');
+
+                                            context.pushNamed('Statistiques');
                                           },
-                                          child: Icon(
-                                            Icons.add,
-                                            color: FlutterFlowTheme.of(context)
-                                                .tertiaryColor,
-                                            size: 24,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    InkWell(
-                                      onTap: () async {
-                                        logFirebaseEvent(
-                                            'STATISTIQUES_PAGE_Stats_ON_TAP');
-                                        logFirebaseEvent('Stats_Navigate-To');
-                                        await Navigator.push(
-                                          context,
-                                          PageTransition(
-                                            type: PageTransitionType.fade,
-                                            duration: Duration(milliseconds: 0),
-                                            reverseDuration:
-                                                Duration(milliseconds: 0),
-                                            child: StatistiquesWidget(),
-                                          ),
-                                        );
-                                      },
-                                      child: Container(
-                                        width: 40,
-                                        height: 40,
-                                        decoration: BoxDecoration(
-                                          color: Color(0x4DFFFFFF),
-                                          boxShadow: [
-                                            BoxShadow(
-                                              blurRadius: 10,
-                                              color: Color(0x2C000000),
-                                              offset: Offset(0, 4),
-                                            )
-                                          ],
-                                          shape: BoxShape.circle,
-                                          border: Border.all(
-                                            color: FlutterFlowTheme.of(context)
-                                                .grayLight,
-                                            width: 1,
-                                          ),
-                                        ),
-                                        child: Icon(
-                                          Icons.stacked_bar_chart,
-                                          color: FlutterFlowTheme.of(context)
-                                              .tertiaryColor,
-                                          size: 24,
-                                        ),
-                                      ),
-                                    ),
-                                    InkWell(
-                                      onTap: () async {
-                                        logFirebaseEvent(
-                                            'STATISTIQUES_PAGE_Profil_ON_TAP');
-                                        logFirebaseEvent('Profil_Navigate-To');
-                                        await Navigator.push(
-                                          context,
-                                          PageTransition(
-                                            type: PageTransitionType.fade,
-                                            duration: Duration(milliseconds: 0),
-                                            reverseDuration:
-                                                Duration(milliseconds: 0),
-                                            child: ProfileWidget(),
-                                          ),
-                                        );
-                                      },
-                                      child: Container(
-                                        width: 40,
-                                        height: 40,
-                                        decoration: BoxDecoration(
-                                          color: FlutterFlowTheme.of(context)
-                                              .tertiaryColor,
-                                          boxShadow: [
-                                            BoxShadow(
-                                              blurRadius: 10,
-                                              color: Color(0x2C000000),
-                                              offset: Offset(0, 4),
-                                            )
-                                          ],
-                                          shape: BoxShape.circle,
-                                          border: Border.all(
-                                            color: FlutterFlowTheme.of(context)
-                                                .grayLight,
-                                            width: 1,
-                                          ),
-                                        ),
-                                        child: AuthUserStreamWidget(
-                                          child: ClipRRect(
-                                            borderRadius:
-                                                BorderRadius.circular(100),
-                                            child: Image.network(
-                                              valueOrDefault<String>(
-                                                currentUserPhoto,
-                                                'https://firebasestorage.googleapis.com/v0/b/carbonfight-89af6.appspot.com/o/18275220161537356156-128.png?alt=media&token=c9797a03-bba1-46b8-aaac-4c54cb99fcb6',
+                                          child: Container(
+                                            width: 40,
+                                            height: 40,
+                                            decoration: BoxDecoration(
+                                              color: Color(0x4DFFFFFF),
+                                              boxShadow: [
+                                                BoxShadow(
+                                                  blurRadius: 10,
+                                                  color: Color(0x2C000000),
+                                                  offset: Offset(0, 4),
+                                                )
+                                              ],
+                                              shape: BoxShape.circle,
+                                              border: Border.all(
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .grayLight,
+                                                width: 1,
                                               ),
-                                              width: 50,
-                                              height: 50,
-                                              fit: BoxFit.cover,
+                                            ),
+                                            child: InkWell(
+                                              onTap: () async {
+                                                logFirebaseEvent(
+                                                    'STATISTIQUES_PAGE_Icon_xodx627i_ON_TAP');
+                                                logFirebaseEvent(
+                                                    'Icon_navigate_to');
+
+                                                context.pushNamed('Home');
+                                              },
+                                              child: Icon(
+                                                Icons.add,
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .tertiaryColor,
+                                                size: 24,
+                                              ),
                                             ),
                                           ),
                                         ),
-                                      ),
+                                        InkWell(
+                                          onTap: () async {
+                                            logFirebaseEvent(
+                                                'STATISTIQUES_PAGE_Stats_ON_TAP');
+                                            logFirebaseEvent(
+                                                'Stats_navigate_to');
+
+                                            context.pushNamed('Statistiques');
+                                          },
+                                          child: Container(
+                                            width: 40,
+                                            height: 40,
+                                            decoration: BoxDecoration(
+                                              color: Color(0x4DFFFFFF),
+                                              boxShadow: [
+                                                BoxShadow(
+                                                  blurRadius: 10,
+                                                  color: Color(0x2C000000),
+                                                  offset: Offset(0, 4),
+                                                )
+                                              ],
+                                              shape: BoxShape.circle,
+                                              border: Border.all(
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .grayLight,
+                                                width: 1,
+                                              ),
+                                            ),
+                                            child: Icon(
+                                              Icons.stacked_bar_chart,
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .tertiaryColor,
+                                              size: 24,
+                                            ),
+                                          ),
+                                        ),
+                                        InkWell(
+                                          onTap: () async {
+                                            logFirebaseEvent(
+                                                'STATISTIQUES_PAGE_Profil_ON_TAP');
+                                            logFirebaseEvent(
+                                                'Profil_navigate_to');
+
+                                            context.pushNamed('Profile');
+                                          },
+                                          child: Container(
+                                            width: 40,
+                                            height: 40,
+                                            decoration: BoxDecoration(
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .tertiaryColor,
+                                              boxShadow: [
+                                                BoxShadow(
+                                                  blurRadius: 10,
+                                                  color: Color(0x2C000000),
+                                                  offset: Offset(0, 4),
+                                                )
+                                              ],
+                                              shape: BoxShape.circle,
+                                              border: Border.all(
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .grayLight,
+                                                width: 1,
+                                              ),
+                                            ),
+                                            child: ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(100),
+                                              child: Image.network(
+                                                valueOrDefault<String>(
+                                                  headerUsersRecord!.photoUrl,
+                                                  'https://storage.googleapis.com/carbonfight-89af6.appspot.com/default_photo_url.png',
+                                                ),
+                                                width: 50,
+                                                height: 50,
+                                                fit: BoxFit.cover,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
                                     ),
-                                  ],
-                                ),
+                                  ),
+                                ],
                               ),
-                            ],
-                          ),
-                        ),
+                            ),
+                          );
+                        },
                       ),
                       StreamBuilder<List<UsersStatsRecord>>(
                         stream: queryUsersStatsRecord(

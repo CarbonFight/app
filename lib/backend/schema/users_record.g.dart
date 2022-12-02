@@ -61,30 +61,6 @@ class _$UsersRecordSerializer implements StructuredSerializer<UsersRecord> {
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    value = object.co2target;
-    if (value != null) {
-      result
-        ..add('co2target')
-        ..add(serializers.serialize(value, specifiedType: const FullType(int)));
-    }
-    value = object.totalPoints;
-    if (value != null) {
-      result
-        ..add('totalPoints')
-        ..add(serializers.serialize(value, specifiedType: const FullType(int)));
-    }
-    value = object.globalScore;
-    if (value != null) {
-      result
-        ..add('globalScore')
-        ..add(serializers.serialize(value, specifiedType: const FullType(int)));
-    }
-    value = object.globalProjection;
-    if (value != null) {
-      result
-        ..add('globalProjection')
-        ..add(serializers.serialize(value, specifiedType: const FullType(int)));
-    }
     value = object.ffRef;
     if (value != null) {
       result
@@ -131,22 +107,6 @@ class _$UsersRecordSerializer implements StructuredSerializer<UsersRecord> {
           result.photoUrl = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String?;
           break;
-        case 'co2target':
-          result.co2target = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int?;
-          break;
-        case 'totalPoints':
-          result.totalPoints = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int?;
-          break;
-        case 'globalScore':
-          result.globalScore = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int?;
-          break;
-        case 'globalProjection':
-          result.globalProjection = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int?;
-          break;
         case 'Document__Reference__Field':
           result.ffRef = serializers.deserialize(value,
               specifiedType: const FullType(DocumentReference, const [
@@ -174,14 +134,6 @@ class _$UsersRecord extends UsersRecord {
   @override
   final String? photoUrl;
   @override
-  final int? co2target;
-  @override
-  final int? totalPoints;
-  @override
-  final int? globalScore;
-  @override
-  final int? globalProjection;
-  @override
   final DocumentReference<Object?>? ffRef;
 
   factory _$UsersRecord([void Function(UsersRecordBuilder)? updates]) =>
@@ -194,10 +146,6 @@ class _$UsersRecord extends UsersRecord {
       this.phoneNumber,
       this.uid,
       this.photoUrl,
-      this.co2target,
-      this.totalPoints,
-      this.globalScore,
-      this.globalProjection,
       this.ffRef})
       : super._();
 
@@ -218,10 +166,6 @@ class _$UsersRecord extends UsersRecord {
         phoneNumber == other.phoneNumber &&
         uid == other.uid &&
         photoUrl == other.photoUrl &&
-        co2target == other.co2target &&
-        totalPoints == other.totalPoints &&
-        globalScore == other.globalScore &&
-        globalProjection == other.globalProjection &&
         ffRef == other.ffRef;
   }
 
@@ -231,21 +175,11 @@ class _$UsersRecord extends UsersRecord {
         $jc(
             $jc(
                 $jc(
-                    $jc(
-                        $jc(
-                            $jc(
-                                $jc(
-                                    $jc(
-                                        $jc($jc(0, createdTime.hashCode),
-                                            displayName.hashCode),
-                                        email.hashCode),
-                                    phoneNumber.hashCode),
-                                uid.hashCode),
-                            photoUrl.hashCode),
-                        co2target.hashCode),
-                    totalPoints.hashCode),
-                globalScore.hashCode),
-            globalProjection.hashCode),
+                    $jc($jc($jc(0, createdTime.hashCode), displayName.hashCode),
+                        email.hashCode),
+                    phoneNumber.hashCode),
+                uid.hashCode),
+            photoUrl.hashCode),
         ffRef.hashCode));
   }
 
@@ -258,10 +192,6 @@ class _$UsersRecord extends UsersRecord {
           ..add('phoneNumber', phoneNumber)
           ..add('uid', uid)
           ..add('photoUrl', photoUrl)
-          ..add('co2target', co2target)
-          ..add('totalPoints', totalPoints)
-          ..add('globalScore', globalScore)
-          ..add('globalProjection', globalProjection)
           ..add('ffRef', ffRef))
         .toString();
   }
@@ -294,23 +224,6 @@ class UsersRecordBuilder implements Builder<UsersRecord, UsersRecordBuilder> {
   String? get photoUrl => _$this._photoUrl;
   set photoUrl(String? photoUrl) => _$this._photoUrl = photoUrl;
 
-  int? _co2target;
-  int? get co2target => _$this._co2target;
-  set co2target(int? co2target) => _$this._co2target = co2target;
-
-  int? _totalPoints;
-  int? get totalPoints => _$this._totalPoints;
-  set totalPoints(int? totalPoints) => _$this._totalPoints = totalPoints;
-
-  int? _globalScore;
-  int? get globalScore => _$this._globalScore;
-  set globalScore(int? globalScore) => _$this._globalScore = globalScore;
-
-  int? _globalProjection;
-  int? get globalProjection => _$this._globalProjection;
-  set globalProjection(int? globalProjection) =>
-      _$this._globalProjection = globalProjection;
-
   DocumentReference<Object?>? _ffRef;
   DocumentReference<Object?>? get ffRef => _$this._ffRef;
   set ffRef(DocumentReference<Object?>? ffRef) => _$this._ffRef = ffRef;
@@ -328,10 +241,6 @@ class UsersRecordBuilder implements Builder<UsersRecord, UsersRecordBuilder> {
       _phoneNumber = $v.phoneNumber;
       _uid = $v.uid;
       _photoUrl = $v.photoUrl;
-      _co2target = $v.co2target;
-      _totalPoints = $v.totalPoints;
-      _globalScore = $v.globalScore;
-      _globalProjection = $v.globalProjection;
       _ffRef = $v.ffRef;
       _$v = null;
     }
@@ -361,10 +270,6 @@ class UsersRecordBuilder implements Builder<UsersRecord, UsersRecordBuilder> {
             phoneNumber: phoneNumber,
             uid: uid,
             photoUrl: photoUrl,
-            co2target: co2target,
-            totalPoints: totalPoints,
-            globalScore: globalScore,
-            globalProjection: globalProjection,
             ffRef: ffRef);
     replace(_$result);
     return _$result;

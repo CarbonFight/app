@@ -9,6 +9,9 @@ import 'flutter_flow/flutter_flow_theme.dart';
 import 'flutter_flow/flutter_flow_util.dart';
 import 'flutter_flow/internationalization.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:flutter/foundation.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'flutter_flow/nav/nav.dart';
 import 'index.dart';
 
 void main() async {
@@ -16,6 +19,10 @@ void main() async {
   await Firebase.initializeApp();
 
   FFAppState(); // Initialize FFAppState
+
+  if (!kIsWeb) {
+    FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
+  }
 
   runApp(MyApp());
 }
@@ -34,19 +41,23 @@ class _MyAppState extends State<MyApp> {
   ThemeMode _themeMode = ThemeMode.system;
 
   late Stream<CarbonFightFirebaseUser> userStream;
-  CarbonFightFirebaseUser? initialUser;
-  bool displaySplashImage = true;
+
+  late AppStateNotifier _appStateNotifier;
+  late GoRouter _router;
 
   final authUserSub = authenticatedUserStream.listen((_) {});
 
   @override
   void initState() {
     super.initState();
+    _appStateNotifier = AppStateNotifier();
+    _router = createRouter(_appStateNotifier);
     userStream = carbonFightFirebaseUserStream()
-      ..listen((user) => initialUser ?? setState(() => initialUser = user));
+      ..listen((user) => _appStateNotifier.update(user));
+    jwtTokenStream.listen((_) {});
     Future.delayed(
       Duration(seconds: 1),
-      () => setState(() => displaySplashImage = false),
+      () => _appStateNotifier.stopShowingSplashImage(),
     );
   }
 
@@ -57,15 +68,17 @@ class _MyAppState extends State<MyApp> {
     super.dispose();
   }
 
-  void setLocale(String language) =>
-      setState(() => _locale = createLocale(language));
+  void setLocale(String language) {
+    setState(() => _locale = createLocale(language));
+  }
+
   void setThemeMode(ThemeMode mode) => setState(() {
         _themeMode = mode;
       });
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       title: 'CarbonFight',
       localizationsDelegates: [
         FFLocalizationsDelegate(),
@@ -79,19 +92,8 @@ class _MyAppState extends State<MyApp> {
       ],
       theme: ThemeData(brightness: Brightness.light),
       themeMode: _themeMode,
-      home: initialUser == null || displaySplashImage
-          ? Container(
-              color: Colors.transparent,
-              child: Builder(
-                builder: (context) => Image.asset(
-                  'assets/images/mobile_cover.jpg',
-                  fit: BoxFit.fill,
-                ),
-              ),
-            )
-          : currentUser!.loggedIn
-              ? HomeWidget()
-              : LoginWidget(),
+      routeInformationParser: _router.routeInformationParser,
+      routerDelegate: _router.routerDelegate,
     );
   }
 }

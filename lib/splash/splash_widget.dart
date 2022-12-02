@@ -1,7 +1,6 @@
 import '../components/icon_button_widget.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
-import '../home/home_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -21,6 +20,7 @@ class _SplashWidgetState extends State<SplashWidget> {
   void initState() {
     super.initState();
     logFirebaseEvent('screen_view', parameters: {'screen_name': 'Splash'});
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
@@ -184,7 +184,7 @@ class _SplashWidgetState extends State<SplashWidget> {
                                                         children: [
                                                           Expanded(
                                                             child: Text(
-                                                              'Merci d\'avoir téléchargé la toute première version de CarbonFight. \n\nCe projet est en version bêta. ',
+                                                              'Merci d\'avoir téléchargé la toute première version de CarbonFight. ',
                                                               textAlign:
                                                                   TextAlign
                                                                       .center,
@@ -223,7 +223,7 @@ class _SplashWidgetState extends State<SplashWidget> {
                                                       logFirebaseEvent(
                                                           'SPLASH_PAGE_Container_wq8nnca0_ON_TAP');
                                                       logFirebaseEvent(
-                                                          'iconButton_Page-View');
+                                                          'iconButton_page_view');
                                                       await pageViewController
                                                           ?.nextPage(
                                                         duration: Duration(
@@ -266,28 +266,15 @@ class _SplashWidgetState extends State<SplashWidget> {
                                                       logFirebaseEvent(
                                                           'SPLASH_PAGE_Text_x0x4hfws_ON_TAP');
                                                       logFirebaseEvent(
-                                                          'Text_Update-Local-State');
+                                                          'Text_update_local_state');
                                                       setState(() =>
                                                           FFAppState()
                                                                   .showSplash =
                                                               false);
                                                       logFirebaseEvent(
-                                                          'Text_Navigate-To');
-                                                      await Navigator.push(
-                                                        context,
-                                                        PageTransition(
-                                                          type:
-                                                              PageTransitionType
-                                                                  .fade,
-                                                          duration: Duration(
-                                                              milliseconds: 0),
-                                                          reverseDuration:
-                                                              Duration(
-                                                                  milliseconds:
-                                                                      0),
-                                                          child: HomeWidget(),
-                                                        ),
-                                                      );
+                                                          'Text_navigate_to');
+
+                                                      context.pushNamed('Home');
                                                     },
                                                     child: Text(
                                                       'Passer',
@@ -493,7 +480,7 @@ class _SplashWidgetState extends State<SplashWidget> {
                                                       logFirebaseEvent(
                                                           'SPLASH_PAGE_Container_cd5hy14j_ON_TAP');
                                                       logFirebaseEvent(
-                                                          'iconButton_Page-View');
+                                                          'iconButton_page_view');
                                                       await pageViewController
                                                           ?.nextPage(
                                                         duration: Duration(
@@ -536,28 +523,15 @@ class _SplashWidgetState extends State<SplashWidget> {
                                                       logFirebaseEvent(
                                                           'SPLASH_PAGE_Text_44tr5v7r_ON_TAP');
                                                       logFirebaseEvent(
-                                                          'Text_Update-Local-State');
+                                                          'Text_update_local_state');
                                                       setState(() =>
                                                           FFAppState()
                                                                   .showSplash =
                                                               false);
                                                       logFirebaseEvent(
-                                                          'Text_Navigate-To');
-                                                      await Navigator.push(
-                                                        context,
-                                                        PageTransition(
-                                                          type:
-                                                              PageTransitionType
-                                                                  .fade,
-                                                          duration: Duration(
-                                                              milliseconds: 0),
-                                                          reverseDuration:
-                                                              Duration(
-                                                                  milliseconds:
-                                                                      0),
-                                                          child: HomeWidget(),
-                                                        ),
-                                                      );
+                                                          'Text_navigate_to');
+
+                                                      context.pushNamed('Home');
                                                     },
                                                     child: Text(
                                                       'Passer',
@@ -763,7 +737,7 @@ class _SplashWidgetState extends State<SplashWidget> {
                                                       logFirebaseEvent(
                                                           'SPLASH_PAGE_Container_nd32h8uq_ON_TAP');
                                                       logFirebaseEvent(
-                                                          'iconButton_Page-View');
+                                                          'iconButton_page_view');
                                                       await pageViewController
                                                           ?.nextPage(
                                                         duration: Duration(
@@ -806,28 +780,15 @@ class _SplashWidgetState extends State<SplashWidget> {
                                                       logFirebaseEvent(
                                                           'SPLASH_PAGE_Text_flzwg6be_ON_TAP');
                                                       logFirebaseEvent(
-                                                          'Text_Update-Local-State');
+                                                          'Text_update_local_state');
                                                       setState(() =>
                                                           FFAppState()
                                                                   .showSplash =
                                                               false);
                                                       logFirebaseEvent(
-                                                          'Text_Navigate-To');
-                                                      await Navigator.push(
-                                                        context,
-                                                        PageTransition(
-                                                          type:
-                                                              PageTransitionType
-                                                                  .fade,
-                                                          duration: Duration(
-                                                              milliseconds: 0),
-                                                          reverseDuration:
-                                                              Duration(
-                                                                  milliseconds:
-                                                                      0),
-                                                          child: HomeWidget(),
-                                                        ),
-                                                      );
+                                                          'Text_navigate_to');
+
+                                                      context.pushNamed('Home');
                                                     },
                                                     child: Text(
                                                       'Passer',
@@ -898,194 +859,192 @@ class _SplashWidgetState extends State<SplashWidget> {
                                     Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
                                           40, 40, 40, 0),
-                                      child: Column(
-                                        mainAxisSize: MainAxisSize.max,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Column(
-                                            mainAxisSize: MainAxisSize.max,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(0, 30, 0, 0),
-                                                child: Image.asset(
-                                                  'assets/images/logo_light.png',
-                                                  height: 75,
-                                                  fit: BoxFit.fitWidth,
-                                                ),
-                                              ),
-                                              Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(0, 50, 0, 0),
-                                                child: Image.asset(
-                                                  'assets/images/trophy.png',
-                                                  width: 200,
-                                                  height: 200,
-                                                  fit: BoxFit.cover,
-                                                ),
-                                              ),
-                                              Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(0, 70, 0, 0),
-                                                child: Container(
-                                                  width: MediaQuery.of(context)
-                                                          .size
-                                                          .width *
-                                                      0.8,
-                                                  decoration: BoxDecoration(
-                                                    color: Color(0x99EEF1F0),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            10),
+                                      child: SingleChildScrollView(
+                                        child: Column(
+                                          mainAxisSize: MainAxisSize.max,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Column(
+                                              mainAxisSize: MainAxisSize.max,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Padding(
+                                                  padding: EdgeInsetsDirectional
+                                                      .fromSTEB(0, 30, 0, 0),
+                                                  child: Image.asset(
+                                                    'assets/images/logo_light.png',
+                                                    height: 75,
+                                                    fit: BoxFit.fitWidth,
                                                   ),
-                                                  child: Padding(
-                                                    padding:
-                                                        EdgeInsetsDirectional
-                                                            .fromSTEB(
-                                                                15, 5, 15, 5),
-                                                    child: Column(
-                                                      mainAxisSize:
-                                                          MainAxisSize.max,
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .center,
-                                                      children: [
-                                                        Row(
-                                                          mainAxisSize:
-                                                              MainAxisSize.max,
-                                                          children: [
-                                                            Expanded(
-                                                              child: Padding(
-                                                                padding:
-                                                                    EdgeInsetsDirectional
-                                                                        .fromSTEB(
-                                                                            0,
-                                                                            20,
-                                                                            0,
-                                                                            0),
-                                                                child: Text(
-                                                                  'Sauvez la planète',
-                                                                  textAlign:
-                                                                      TextAlign
-                                                                          .center,
-                                                                  style: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .title1
-                                                                      .override(
-                                                                        fontFamily:
-                                                                            'Montserrat',
-                                                                        color: FlutterFlowTheme.of(context)
-                                                                            .primaryColor,
-                                                                        fontSize:
-                                                                            25,
-                                                                        fontWeight:
-                                                                            FontWeight.w600,
-                                                                      ),
-                                                                ),
-                                                              ),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                        Padding(
-                                                          padding:
-                                                              EdgeInsetsDirectional
-                                                                  .fromSTEB(
-                                                                      0,
-                                                                      20,
-                                                                      0,
-                                                                      20),
-                                                          child: Row(
+                                                ),
+                                                Padding(
+                                                  padding: EdgeInsetsDirectional
+                                                      .fromSTEB(0, 50, 0, 0),
+                                                  child: Image.asset(
+                                                    'assets/images/trophy.png',
+                                                    width: 200,
+                                                    height: 200,
+                                                    fit: BoxFit.cover,
+                                                  ),
+                                                ),
+                                                Padding(
+                                                  padding: EdgeInsetsDirectional
+                                                      .fromSTEB(0, 70, 0, 0),
+                                                  child: Container(
+                                                    width:
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .width *
+                                                            0.8,
+                                                    decoration: BoxDecoration(
+                                                      color: Color(0x99EEF1F0),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10),
+                                                    ),
+                                                    child: Padding(
+                                                      padding:
+                                                          EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                                  15, 5, 15, 5),
+                                                      child: Column(
+                                                        mainAxisSize:
+                                                            MainAxisSize.max,
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .center,
+                                                        children: [
+                                                          Row(
                                                             mainAxisSize:
                                                                 MainAxisSize
                                                                     .max,
                                                             children: [
                                                               Expanded(
-                                                                child: Text(
-                                                                  'Passez sous la barre des 4 kg par jour de co2, et sauvez la planète. \nTout simplement.',
-                                                                  textAlign:
-                                                                      TextAlign
-                                                                          .center,
-                                                                  style: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .bodyText1,
+                                                                child: Padding(
+                                                                  padding: EdgeInsetsDirectional
+                                                                      .fromSTEB(
+                                                                          0,
+                                                                          20,
+                                                                          0,
+                                                                          0),
+                                                                  child: Text(
+                                                                    'Sauvez la planète',
+                                                                    textAlign:
+                                                                        TextAlign
+                                                                            .center,
+                                                                    style: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .title1
+                                                                        .override(
+                                                                          fontFamily:
+                                                                              'Montserrat',
+                                                                          color:
+                                                                              FlutterFlowTheme.of(context).primaryColor,
+                                                                          fontSize:
+                                                                              25,
+                                                                          fontWeight:
+                                                                              FontWeight.w600,
+                                                                        ),
+                                                                  ),
                                                                 ),
                                                               ),
                                                             ],
                                                           ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                          Row(
-                                            mainAxisSize: MainAxisSize.max,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              Align(
-                                                alignment: AlignmentDirectional(
-                                                    0, 0.85),
-                                                child: Padding(
-                                                  padding: EdgeInsetsDirectional
-                                                      .fromSTEB(40, 0, 40, 80),
-                                                  child: InkWell(
-                                                    onTap: () async {
-                                                      logFirebaseEvent(
-                                                          'SPLASH_PAGE_Container_cnkjjssa_ON_TAP');
-                                                      logFirebaseEvent(
-                                                          'iconButton_Update-Local-State');
-                                                      setState(() =>
-                                                          FFAppState()
-                                                                  .showSplash =
-                                                              false);
-                                                      logFirebaseEvent(
-                                                          'iconButton_Navigate-To');
-                                                      await Navigator.push(
-                                                        context,
-                                                        PageTransition(
-                                                          type:
-                                                              PageTransitionType
-                                                                  .fade,
-                                                          duration: Duration(
-                                                              milliseconds: 0),
-                                                          reverseDuration:
-                                                              Duration(
-                                                                  milliseconds:
-                                                                      0),
-                                                          child: HomeWidget(),
-                                                        ),
-                                                      );
-                                                    },
-                                                    child: IconButtonWidget(
-                                                      fillColor:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .tertiaryColor,
-                                                      fontColor:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .secondaryColor,
-                                                      icon: Icon(
-                                                        Icons.eco,
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .secondaryColor,
+                                                          Padding(
+                                                            padding:
+                                                                EdgeInsetsDirectional
+                                                                    .fromSTEB(
+                                                                        0,
+                                                                        20,
+                                                                        0,
+                                                                        20),
+                                                            child: Row(
+                                                              mainAxisSize:
+                                                                  MainAxisSize
+                                                                      .max,
+                                                              children: [
+                                                                Expanded(
+                                                                  child: Text(
+                                                                    'Passez sous la barre des 4 kg par jour de co2, et sauvez la planète. ',
+                                                                    textAlign:
+                                                                        TextAlign
+                                                                            .center,
+                                                                    style: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .bodyText1,
+                                                                  ),
+                                                                ),
+                                                              ],
+                                                            ),
+                                                          ),
+                                                        ],
                                                       ),
-                                                      text: 'C\'est parti !',
                                                     ),
                                                   ),
                                                 ),
+                                              ],
+                                            ),
+                                            Padding(
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(0, 5, 0, 0),
+                                              child: Row(
+                                                mainAxisSize: MainAxisSize.max,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
+                                                  Align(
+                                                    alignment:
+                                                        AlignmentDirectional(
+                                                            0, 0.85),
+                                                    child: Padding(
+                                                      padding:
+                                                          EdgeInsetsDirectional
+                                                              .fromSTEB(40, 0,
+                                                                  40, 80),
+                                                      child: InkWell(
+                                                        onTap: () async {
+                                                          logFirebaseEvent(
+                                                              'SPLASH_PAGE_Container_cnkjjssa_ON_TAP');
+                                                          logFirebaseEvent(
+                                                              'iconButton_update_local_state');
+                                                          setState(() =>
+                                                              FFAppState()
+                                                                      .showSplash =
+                                                                  false);
+                                                          logFirebaseEvent(
+                                                              'iconButton_navigate_to');
+
+                                                          context.pushNamed(
+                                                              'Home');
+                                                        },
+                                                        child: IconButtonWidget(
+                                                          fillColor:
+                                                              FlutterFlowTheme.of(
+                                                                      context)
+                                                                  .tertiaryColor,
+                                                          fontColor:
+                                                              FlutterFlowTheme.of(
+                                                                      context)
+                                                                  .secondaryColor,
+                                                          icon: Icon(
+                                                            Icons.eco,
+                                                            color: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .secondaryColor,
+                                                          ),
+                                                          text:
+                                                              'C\'est parti !',
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
                                               ),
-                                            ],
-                                          ),
-                                        ],
+                                            ),
+                                          ],
+                                        ),
                                       ),
                                     ),
                                   ],

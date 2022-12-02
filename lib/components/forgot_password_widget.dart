@@ -21,6 +21,13 @@ class _ForgotPasswordWidgetState extends State<ForgotPasswordWidget> {
   void initState() {
     super.initState();
     emailController = TextEditingController();
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
+  }
+
+  @override
+  void dispose() {
+    emailController?.dispose();
+    super.dispose();
   }
 
   @override
@@ -71,7 +78,7 @@ class _ForgotPasswordWidgetState extends State<ForgotPasswordWidget> {
                     ),
                     onPressed: () async {
                       logFirebaseEvent('FORGOT_PASSWORD_COMP_close_ICN_ON_TAP');
-                      logFirebaseEvent('IconButton_Navigate-Back');
+                      logFirebaseEvent('IconButton_close_dialog,_drawer,_etc');
                       Navigator.pop(context);
                     },
                   ),
@@ -129,6 +136,20 @@ class _ForgotPasswordWidgetState extends State<ForgotPasswordWidget> {
                                   ),
                                   borderRadius: BorderRadius.circular(100),
                                 ),
+                                errorBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Color(0x00000000),
+                                    width: 1,
+                                  ),
+                                  borderRadius: BorderRadius.circular(100),
+                                ),
+                                focusedErrorBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Color(0x00000000),
+                                    width: 1,
+                                  ),
+                                  borderRadius: BorderRadius.circular(100),
+                                ),
                                 filled: true,
                                 fillColor: Color(0x40EEF1F0),
                                 prefixIcon: Icon(
@@ -160,7 +181,7 @@ class _ForgotPasswordWidgetState extends State<ForgotPasswordWidget> {
                               onTap: () async {
                                 logFirebaseEvent(
                                     'FORGOT_PASSWORD_Container_c6apebad_ON_TA');
-                                logFirebaseEvent('iconButton_Auth');
+                                logFirebaseEvent('iconButton_auth');
                                 if (emailController!.text.isEmpty) {
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     SnackBar(
@@ -175,6 +196,9 @@ class _ForgotPasswordWidgetState extends State<ForgotPasswordWidget> {
                                   email: emailController!.text,
                                   context: context,
                                 );
+                                logFirebaseEvent(
+                                    'iconButton_close_dialog,_drawer,_etc');
+                                Navigator.pop(context);
                               },
                               child: IconButtonWidget(
                                 fillColor:
