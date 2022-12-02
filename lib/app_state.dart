@@ -32,8 +32,6 @@ class FFAppState {
     prefs.setBool('ff_showSplash', _value);
   }
 
-  int actionCO2 = 0;
-
   bool loading = false;
 
   String activeDate = '';

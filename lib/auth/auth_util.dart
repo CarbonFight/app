@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -6,21 +8,25 @@ import '../flutter_flow/flutter_flow_util.dart';
 import '../backend/backend.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:stream_transform/stream_transform.dart';
+export 'facebook_auth.dart';
 import 'firebase_user_provider.dart';
 
 export 'anonymous_auth.dart';
 export 'apple_auth.dart';
 export 'email_auth.dart';
-export 'facebook_auth.dart';
 export 'google_auth.dart';
 export 'jwt_token_auth.dart';
 
 /// Tries to sign in or create an account using Firebase Auth.
 /// Returns the User object if sign in was successful.
 Future<User?> signInOrCreateAccount(
-    BuildContext context, Future<UserCredential?> Function() signInFunc) async {
+  BuildContext context,
+  Future<UserCredential?> Function() signInFunc,
+  String authProvider,
+) async {
   try {
     final userCredential = await signInFunc();
+    logFirebaseAuthEvent(userCredential?.user, authProvider);
     if (userCredential?.user != null) {
       await maybeCreateUser(userCredential!.user!);
     }
@@ -35,7 +41,7 @@ Future<User?> signInOrCreateAccount(
 }
 
 Future signOut() {
-  _currentJwtToken = '';
+  logFirebaseEvent("SIGN_OUT");
   return FirebaseAuth.instance.signOut();
 }
 
@@ -45,6 +51,7 @@ Future deleteUser(BuildContext context) async {
       print('Error: delete user attempted with no logged in user!');
       return;
     }
+    logFirebaseEvent("DELETE_USER");
     await currentUser?.user?.delete();
   } on FirebaseAuthException catch (e) {
     if (e.code == 'requires-recent-login') {
@@ -77,8 +84,6 @@ Future resetPassword(
 Future sendEmailVerification() async =>
     currentUser?.user?.sendEmailVerification();
 
-String? _currentJwtToken = '';
-
 String get currentUserEmail =>
     currentUserDocument?.email ?? currentUser?.user?.email ?? '';
 
@@ -106,6 +111,14 @@ bool get currentUserEmailVerified {
   return currentUser?.user?.emailVerified ?? false;
 }
 
+/// Create a Stream that listens to the current user's JWT Token, since Firebase
+/// generates a new token every hour.
+String? _currentJwtToken;
+final jwtTokenStream = FirebaseAuth.instance
+    .idTokenChanges()
+    .map((user) async => _currentJwtToken = await user?.getIdToken())
+    .asBroadcastStream();
+
 // Set when using phone verification (after phone number is provided).
 String? _phoneAuthVerificationCode;
 // Set when using phone sign in in web mode (ignored otherwise).
@@ -122,6 +135,7 @@ Future beginPhoneAuth({
     onCodeSent();
     return;
   }
+  final completer = Completer<bool>();
   // If you'd like auto-verification, without the user having to enter the SMS
   // code manually. Follow these instructions:
   // * For Android: https://firebase.google.com/docs/auth/android/phone-auth?authuser=0#enable-app-verification (SafetyNet set up)
@@ -141,16 +155,20 @@ Future beginPhoneAuth({
       // );
     },
     verificationFailed: (e) {
+      completer.complete(false);
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text('Error: ${e.message!}'),
       ));
     },
     codeSent: (verificationId, _) {
       _phoneAuthVerificationCode = verificationId;
+      completer.complete(true);
       onCodeSent();
     },
     codeAutoRetrievalTimeout: (_) {},
   );
+
+  return completer.future;
 }
 
 Future verifySmsCode({
@@ -159,13 +177,17 @@ Future verifySmsCode({
 }) async {
   if (kIsWeb) {
     return signInOrCreateAccount(
-        context, () => _webPhoneAuthConfirmationResult!.confirm(smsCode));
+      context,
+      () => _webPhoneAuthConfirmationResult!.confirm(smsCode),
+      'PHONE',
+    );
   } else {
     final authCredential = PhoneAuthProvider.credential(
         verificationId: _phoneAuthVerificationCode!, smsCode: smsCode);
     return signInOrCreateAccount(
       context,
       () => FirebaseAuth.instance.signInWithCredential(authCredential),
+      'PHONE',
     );
   }
 }
@@ -177,13 +199,7 @@ DocumentReference? get currentUserReference => currentUser?.user != null
 UsersRecord? currentUserDocument;
 final authenticatedUserStream = FirebaseAuth.instance
     .authStateChanges()
-    .map<String>((user) {
-      // Store jwt token on user update.
-      () async {
-        _currentJwtToken = await user?.getIdToken();
-      }();
-      return user?.uid ?? '';
-    })
+    .map<String>((user) => user?.uid ?? '')
     .switchMap(
       (uid) => uid.isEmpty
           ? Stream.value(null)

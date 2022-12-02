@@ -3,9 +3,9 @@ import '../components/delete_account_widget.dart';
 import '../flutter_flow/flutter_flow_animations.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
-import '../login/login_widget.dart';
-import '../splash/splash_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -22,19 +22,22 @@ class _DrawerWidgetState extends State<DrawerWidget>
   final animationsMap = {
     'containerOnPageLoadAnimation': AnimationInfo(
       trigger: AnimationTrigger.onPageLoad,
-      duration: 400,
-      hideBeforeAnimating: false,
-      fadeIn: true,
-      initialState: AnimationState(
-        offset: Offset(-100, 0),
-        scale: 1,
-        opacity: 0,
-      ),
-      finalState: AnimationState(
-        offset: Offset(1, 0),
-        scale: 1,
-        opacity: 1,
-      ),
+      effects: [
+        FadeEffect(
+          curve: Curves.easeInOut,
+          delay: 0.ms,
+          duration: 400.ms,
+          begin: 0,
+          end: 1,
+        ),
+        MoveEffect(
+          curve: Curves.easeInOut,
+          delay: 0.ms,
+          duration: 400.ms,
+          begin: Offset(-100, 0),
+          end: Offset(1, 0),
+        ),
+      ],
     ),
   };
   final scaffoldKey = GlobalKey<ScaffoldState>();
@@ -42,13 +45,15 @@ class _DrawerWidgetState extends State<DrawerWidget>
   @override
   void initState() {
     super.initState();
-    startPageLoadAnimations(
-      animationsMap.values
-          .where((anim) => anim.trigger == AnimationTrigger.onPageLoad),
+    setupAnimations(
+      animationsMap.values.where((anim) =>
+          anim.trigger == AnimationTrigger.onActionTrigger ||
+          !anim.applyInitialState),
       this,
     );
 
     logFirebaseEvent('screen_view', parameters: {'screen_name': 'Drawer'});
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
@@ -61,8 +66,8 @@ class _DrawerWidgetState extends State<DrawerWidget>
           InkWell(
             onTap: () async {
               logFirebaseEvent('DRAWER_PAGE_Container_sn7zgd2k_ON_TAP');
-              logFirebaseEvent('Container_Navigate-Back');
-              Navigator.pop(context);
+              logFirebaseEvent('Container_navigate_back');
+              context.pop();
             },
             child: Container(
               width: MediaQuery.of(context).size.width,
@@ -108,8 +113,8 @@ class _DrawerWidgetState extends State<DrawerWidget>
                                 onTap: () async {
                                   logFirebaseEvent(
                                       'DRAWER_PAGE_Container_60vxfsrq_ON_TAP');
-                                  logFirebaseEvent('Container_Navigate-Back');
-                                  Navigator.pop(context);
+                                  logFirebaseEvent('Container_navigate_back');
+                                  context.pop();
                                 },
                                 child: Container(
                                   width: 40,
@@ -144,18 +149,11 @@ class _DrawerWidgetState extends State<DrawerWidget>
                               onTap: () async {
                                 logFirebaseEvent(
                                     'DRAWER_PAGE_Row_rsn1mcit_ON_TAP');
-                                logFirebaseEvent('Row_Navigate-Back');
-                                Navigator.pop(context);
-                                logFirebaseEvent('Row_Navigate-To');
-                                await Navigator.push(
-                                  context,
-                                  PageTransition(
-                                    type: PageTransitionType.fade,
-                                    duration: Duration(milliseconds: 0),
-                                    reverseDuration: Duration(milliseconds: 0),
-                                    child: SplashWidget(),
-                                  ),
-                                );
+                                logFirebaseEvent('Row_navigate_back');
+                                context.pop();
+                                logFirebaseEvent('Row_navigate_to');
+
+                                context.pushNamed('Splash');
                               },
                               child: Row(
                                 mainAxisSize: MainAxisSize.max,
@@ -173,19 +171,11 @@ class _DrawerWidgetState extends State<DrawerWidget>
                                       onTap: () async {
                                         logFirebaseEvent(
                                             'DRAWER_PAGE_Text_ii2hyxok_ON_TAP');
-                                        logFirebaseEvent('Text_Navigate-Back');
-                                        Navigator.pop(context);
-                                        logFirebaseEvent('Text_Navigate-To');
-                                        await Navigator.push(
-                                          context,
-                                          PageTransition(
-                                            type: PageTransitionType.fade,
-                                            duration: Duration(milliseconds: 0),
-                                            reverseDuration:
-                                                Duration(milliseconds: 0),
-                                            child: SplashWidget(),
-                                          ),
-                                        );
+                                        logFirebaseEvent('Text_navigate_back');
+                                        context.pop();
+                                        logFirebaseEvent('Text_navigate_to');
+
+                                        context.pushNamed('Splash');
                                       },
                                       child: Text(
                                         'Bienvenue !',
@@ -216,9 +206,9 @@ class _DrawerWidgetState extends State<DrawerWidget>
                               onTap: () async {
                                 logFirebaseEvent(
                                     'DRAWER_PAGE_Row_9fn8a7ip_ON_TAP');
-                                logFirebaseEvent('Row_Navigate-Back');
-                                Navigator.pop(context);
-                                logFirebaseEvent('Row_Launch-U-R-L');
+                                logFirebaseEvent('Row_navigate_back');
+                                context.pop();
+                                logFirebaseEvent('Row_launch_u_r_l');
                                 await launchURL(
                                     'https://idees.carbonfight.app/application');
                               },
@@ -238,9 +228,9 @@ class _DrawerWidgetState extends State<DrawerWidget>
                                       onTap: () async {
                                         logFirebaseEvent(
                                             'DRAWER_PAGE_Text_v6f841f2_ON_TAP');
-                                        logFirebaseEvent('Text_Navigate-Back');
-                                        Navigator.pop(context);
-                                        logFirebaseEvent('Text_Launch-U-R-L');
+                                        logFirebaseEvent('Text_navigate_back');
+                                        context.pop();
+                                        logFirebaseEvent('Text_launch_u_r_l');
                                         await launchURL(
                                             'https://idees.carbonfight.app/application');
                                       },
@@ -273,9 +263,9 @@ class _DrawerWidgetState extends State<DrawerWidget>
                               onTap: () async {
                                 logFirebaseEvent(
                                     'DRAWER_PAGE_Row_bp49j8dd_ON_TAP');
-                                logFirebaseEvent('Row_Navigate-Back');
-                                Navigator.pop(context);
-                                logFirebaseEvent('Row_Launch-U-R-L');
+                                logFirebaseEvent('Row_navigate_back');
+                                context.pop();
+                                logFirebaseEvent('Row_launch_u_r_l');
                                 await launchURL(
                                     'https://github.com/CarbonFight/app');
                               },
@@ -295,9 +285,9 @@ class _DrawerWidgetState extends State<DrawerWidget>
                                       onTap: () async {
                                         logFirebaseEvent(
                                             'DRAWER_PAGE_Text_hfgjhnx8_ON_TAP');
-                                        logFirebaseEvent('Text_Navigate-Back');
-                                        Navigator.pop(context);
-                                        logFirebaseEvent('Text_Launch-U-R-L');
+                                        logFirebaseEvent('Text_navigate_back');
+                                        context.pop();
+                                        logFirebaseEvent('Text_launch_u_r_l');
                                         await launchURL(
                                             'https://github.com/CarbonFight/app');
                                       },
@@ -330,9 +320,9 @@ class _DrawerWidgetState extends State<DrawerWidget>
                               onTap: () async {
                                 logFirebaseEvent(
                                     'DRAWER_PAGE_Row_vel7kftr_ON_TAP');
-                                logFirebaseEvent('Row_Navigate-Back');
-                                Navigator.pop(context);
-                                logFirebaseEvent('Row_Launch-U-R-L');
+                                logFirebaseEvent('Row_navigate_back');
+                                context.pop();
+                                logFirebaseEvent('Row_launch_u_r_l');
                                 await launchURL(
                                     'https://github.com/CarbonFight/app/wiki');
                               },
@@ -352,9 +342,9 @@ class _DrawerWidgetState extends State<DrawerWidget>
                                       onTap: () async {
                                         logFirebaseEvent(
                                             'DRAWER_PAGE_Text_hndtb0cn_ON_TAP');
-                                        logFirebaseEvent('Text_Navigate-Back');
-                                        Navigator.pop(context);
-                                        logFirebaseEvent('Text_Launch-U-R-L');
+                                        logFirebaseEvent('Text_navigate_back');
+                                        context.pop();
+                                        logFirebaseEvent('Text_launch_u_r_l');
                                         await launchURL(
                                             'https://github.com/CarbonFight/app/wiki');
                                       },
@@ -387,9 +377,9 @@ class _DrawerWidgetState extends State<DrawerWidget>
                               onTap: () async {
                                 logFirebaseEvent(
                                     'DRAWER_PAGE_Row_hn9nctz4_ON_TAP');
-                                logFirebaseEvent('Row_Navigate-Back');
-                                Navigator.pop(context);
-                                logFirebaseEvent('Row_Launch-U-R-L');
+                                logFirebaseEvent('Row_navigate_back');
+                                context.pop();
+                                logFirebaseEvent('Row_launch_u_r_l');
                                 await launchURL(
                                     'https://discord.com/invite/tXRBhTGzG5');
                               },
@@ -409,9 +399,9 @@ class _DrawerWidgetState extends State<DrawerWidget>
                                       onTap: () async {
                                         logFirebaseEvent(
                                             'DRAWER_PAGE_Text_l6soz93q_ON_TAP');
-                                        logFirebaseEvent('Text_Navigate-Back');
-                                        Navigator.pop(context);
-                                        logFirebaseEvent('Text_Launch-U-R-L');
+                                        logFirebaseEvent('Text_navigate_back');
+                                        context.pop();
+                                        logFirebaseEvent('Text_launch_u_r_l');
                                         await launchURL(
                                             'https://discord.com/invite/tXRBhTGzG5');
                                       },
@@ -459,18 +449,11 @@ class _DrawerWidgetState extends State<DrawerWidget>
                               onTap: () async {
                                 logFirebaseEvent(
                                     'DRAWER_PAGE_Icon_uuebze8d_ON_TAP');
-                                logFirebaseEvent('Icon_Auth');
+                                logFirebaseEvent('Icon_auth');
+                                GoRouter.of(context).prepareAuthEvent();
                                 await signOut();
-                                await Navigator.pushAndRemoveUntil(
-                                  context,
-                                  PageTransition(
-                                    type: PageTransitionType.fade,
-                                    duration: Duration(milliseconds: 0),
-                                    reverseDuration: Duration(milliseconds: 0),
-                                    child: LoginWidget(),
-                                  ),
-                                  (r) => false,
-                                );
+
+                                context.goNamedAuth('Login', mounted);
                               },
                               child: Icon(
                                 Icons.power_settings_new,
@@ -519,7 +502,7 @@ class _DrawerWidgetState extends State<DrawerWidget>
                                                 logFirebaseEvent(
                                                     'DRAWER_PAGE_Text_f4im2sln_ON_TAP');
                                                 logFirebaseEvent(
-                                                    'Text_Bottom-Sheet');
+                                                    'Text_bottom_sheet');
                                                 await showModalBottomSheet(
                                                   isScrollControlled: true,
                                                   backgroundColor:
@@ -537,7 +520,8 @@ class _DrawerWidgetState extends State<DrawerWidget>
                                                       ),
                                                     );
                                                   },
-                                                );
+                                                ).then(
+                                                    (value) => setState(() {}));
                                               },
                                               child: Text(
                                                 'Supprimer mon compte',
@@ -569,7 +553,7 @@ class _DrawerWidgetState extends State<DrawerWidget>
                   ],
                 ),
               ),
-            ).animated([animationsMap['containerOnPageLoadAnimation']!]),
+            ).animateOnPageLoad(animationsMap['containerOnPageLoadAnimation']!),
           ),
         ],
       ),

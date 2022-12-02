@@ -1,7 +1,6 @@
 import '../auth/auth_util.dart';
 import '../backend/backend.dart';
 import '../components/icon_button_widget.dart';
-import '../drawer/drawer_widget.dart';
 import '../flutter_flow/flutter_flow_animations.dart';
 import '../flutter_flow/flutter_flow_calendar.dart';
 import '../flutter_flow/flutter_flow_choice_chips.dart';
@@ -9,13 +8,12 @@ import '../flutter_flow/flutter_flow_drop_down.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_toggle_icon.dart';
 import '../flutter_flow/flutter_flow_util.dart';
-import '../home/home_widget.dart';
-import '../profile/profile_widget.dart';
-import '../statistiques/statistiques_widget.dart';
 import '../flutter_flow/custom_functions.dart' as functions;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -34,85 +32,98 @@ class TransportWidget extends StatefulWidget {
 
 class _TransportWidgetState extends State<TransportWidget>
     with TickerProviderStateMixin {
+  final animationsMap = {
+    'containerOnPageLoadAnimation1': AnimationInfo(
+      trigger: AnimationTrigger.onPageLoad,
+      effects: [
+        FadeEffect(
+          curve: Curves.easeInOut,
+          delay: 0.ms,
+          duration: 600.ms,
+          begin: 0,
+          end: 1,
+        ),
+        MoveEffect(
+          curve: Curves.easeInOut,
+          delay: 0.ms,
+          duration: 600.ms,
+          begin: Offset(0, 70),
+          end: Offset(0, 0),
+        ),
+      ],
+    ),
+    'containerOnPageLoadAnimation2': AnimationInfo(
+      trigger: AnimationTrigger.onPageLoad,
+      effects: [
+        FadeEffect(
+          curve: Curves.easeInOut,
+          delay: 0.ms,
+          duration: 600.ms,
+          begin: 0,
+          end: 1,
+        ),
+        MoveEffect(
+          curve: Curves.easeInOut,
+          delay: 0.ms,
+          duration: 600.ms,
+          begin: Offset(0, 70),
+          end: Offset(0, 0),
+        ),
+      ],
+    ),
+    'containerOnPageLoadAnimation3': AnimationInfo(
+      trigger: AnimationTrigger.onPageLoad,
+      effects: [
+        FadeEffect(
+          curve: Curves.easeInOut,
+          delay: 0.ms,
+          duration: 600.ms,
+          begin: 0,
+          end: 1,
+        ),
+        MoveEffect(
+          curve: Curves.easeInOut,
+          delay: 0.ms,
+          duration: 600.ms,
+          begin: Offset(0, 70),
+          end: Offset(0, 0),
+        ),
+      ],
+    ),
+    'containerOnPageLoadAnimation4': AnimationInfo(
+      trigger: AnimationTrigger.onPageLoad,
+      effects: [
+        FadeEffect(
+          curve: Curves.easeInOut,
+          delay: 0.ms,
+          duration: 600.ms,
+          begin: 0,
+          end: 1,
+        ),
+        MoveEffect(
+          curve: Curves.easeInOut,
+          delay: 0.ms,
+          duration: 600.ms,
+          begin: Offset(0, 70),
+          end: Offset(0, 0),
+        ),
+      ],
+    ),
+  };
   DateTimeRange? calendarSelectedDay;
   String? passengersValue;
   String? powertypeValue;
   TextEditingController? textController;
   List<String>? periodicityValues;
   final scaffoldKey = GlobalKey<ScaffoldState>();
-  final animationsMap = {
-    'containerOnPageLoadAnimation1': AnimationInfo(
-      trigger: AnimationTrigger.onPageLoad,
-      duration: 600,
-      hideBeforeAnimating: false,
-      fadeIn: true,
-      initialState: AnimationState(
-        offset: Offset(0, 70),
-        scale: 1,
-        opacity: 0,
-      ),
-      finalState: AnimationState(
-        offset: Offset(0, 0),
-        scale: 1,
-        opacity: 1,
-      ),
-    ),
-    'containerOnPageLoadAnimation2': AnimationInfo(
-      trigger: AnimationTrigger.onPageLoad,
-      duration: 600,
-      hideBeforeAnimating: false,
-      fadeIn: true,
-      initialState: AnimationState(
-        offset: Offset(0, 70),
-        scale: 1,
-        opacity: 0,
-      ),
-      finalState: AnimationState(
-        offset: Offset(0, 0),
-        scale: 1,
-        opacity: 1,
-      ),
-    ),
-    'containerOnPageLoadAnimation3': AnimationInfo(
-      trigger: AnimationTrigger.onPageLoad,
-      duration: 600,
-      hideBeforeAnimating: false,
-      fadeIn: true,
-      initialState: AnimationState(
-        offset: Offset(0, 70),
-        scale: 1,
-        opacity: 0,
-      ),
-      finalState: AnimationState(
-        offset: Offset(0, 0),
-        scale: 1,
-        opacity: 1,
-      ),
-    ),
-    'containerOnPageLoadAnimation4': AnimationInfo(
-      trigger: AnimationTrigger.onPageLoad,
-      duration: 600,
-      hideBeforeAnimating: false,
-      fadeIn: true,
-      initialState: AnimationState(
-        offset: Offset(0, 70),
-        scale: 1,
-        opacity: 0,
-      ),
-      finalState: AnimationState(
-        offset: Offset(0, 0),
-        scale: 1,
-        opacity: 1,
-      ),
-    ),
-  };
 
   @override
   void initState() {
     super.initState();
-    startPageLoadAnimations(
-      animationsMap.values
-          .where((anim) => anim.trigger == AnimationTrigger.onPageLoad),
+    setupAnimations(
+      animationsMap.values.where((anim) =>
+          anim.trigger == AnimationTrigger.onActionTrigger ||
+          !anim.applyInitialState),
       this,
     );
 
@@ -121,6 +132,13 @@ class _TransportWidgetState extends State<TransportWidget>
       end: DateTime.now().endOfDay,
     );
     logFirebaseEvent('screen_view', parameters: {'screen_name': 'Transport'});
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
+  }
+
+  @override
+  void dispose() {
+    textController?.dispose();
+    super.dispose();
   }
 
   @override
@@ -170,227 +188,239 @@ class _TransportWidgetState extends State<TransportWidget>
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Container(
-                        width: MediaQuery.of(context).size.width,
-                        height: 100,
-                        decoration: BoxDecoration(),
-                        alignment: AlignmentDirectional(0, 1),
-                        child: Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(20, 0, 20, 0),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Row(
+                      StreamBuilder<List<UsersRecord>>(
+                        stream: queryUsersRecord(
+                          queryBuilder: (usersRecord) => usersRecord
+                              .where('uid', isEqualTo: currentUserUid),
+                          singleRecord: true,
+                        ),
+                        builder: (context, snapshot) {
+                          // Customize what your widget looks like when it's loading.
+                          if (!snapshot.hasData) {
+                            return Center(
+                              child: SizedBox(
+                                width: 2,
+                                height: 2,
+                                child: SpinKitRing(
+                                  color: Colors.transparent,
+                                  size: 2,
+                                ),
+                              ),
+                            );
+                          }
+                          List<UsersRecord> headerUsersRecordList =
+                              snapshot.data!;
+                          // Return an empty Container when the document does not exist.
+                          if (snapshot.data!.isEmpty) {
+                            return Container();
+                          }
+                          final headerUsersRecord =
+                              headerUsersRecordList.isNotEmpty
+                                  ? headerUsersRecordList.first
+                                  : null;
+                          return Container(
+                            width: MediaQuery.of(context).size.width,
+                            height: 100,
+                            decoration: BoxDecoration(),
+                            alignment: AlignmentDirectional(0, 1),
+                            child: Padding(
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(20, 0, 20, 0),
+                              child: Row(
                                 mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
-                                  InkWell(
-                                    onTap: () async {
-                                      logFirebaseEvent(
-                                          'TRANSPORT_PAGE_Container_6axr6553_ON_TAP');
-                                      logFirebaseEvent('Container_Navigate-To');
-                                      await Navigator.push(
-                                        context,
-                                        PageTransition(
-                                          type: PageTransitionType.leftToRight,
-                                          duration: Duration(milliseconds: 300),
-                                          reverseDuration:
-                                              Duration(milliseconds: 300),
-                                          child: DrawerWidget(),
+                                  Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      InkWell(
+                                        onTap: () async {
+                                          logFirebaseEvent(
+                                              'TRANSPORT_PAGE_Container_6axr6553_ON_TAP');
+                                          logFirebaseEvent(
+                                              'Container_navigate_to');
+
+                                          context.pushNamed(
+                                            'Drawer',
+                                            extra: <String, dynamic>{
+                                              kTransitionInfoKey:
+                                                  TransitionInfo(
+                                                hasTransition: true,
+                                                transitionType:
+                                                    PageTransitionType
+                                                        .leftToRight,
+                                              ),
+                                            },
+                                          );
+                                        },
+                                        child: Container(
+                                          width: 50,
+                                          height: 50,
+                                          decoration: BoxDecoration(),
+                                          alignment: AlignmentDirectional(0, 0),
+                                          child: SvgPicture.asset(
+                                            'assets/images/menu.svg',
+                                            width: 24,
+                                            height: 24,
+                                            fit: BoxFit.fitHeight,
+                                          ),
                                         ),
-                                      );
-                                    },
-                                    child: Container(
-                                      width: 50,
-                                      height: 50,
-                                      decoration: BoxDecoration(),
-                                      alignment: AlignmentDirectional(0, 0),
-                                      child: SvgPicture.asset(
-                                        'assets/images/menu.svg',
-                                        width: 24,
-                                        height: 24,
+                                      ),
+                                      Image.asset(
+                                        'assets/images/logo_light.png',
+                                        width: 100,
+                                        height: 40,
                                         fit: BoxFit.fitHeight,
                                       ),
-                                    ),
+                                    ],
                                   ),
-                                  Image.asset(
-                                    'assets/images/logo_light.png',
-                                    width: 100,
-                                    height: 40,
-                                    fit: BoxFit.fitHeight,
-                                  ),
-                                ],
-                              ),
-                              Expanded(
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    InkWell(
-                                      onTap: () async {
-                                        logFirebaseEvent(
-                                            'TRANSPORT_PAGE_Actions_ON_TAP');
-                                        logFirebaseEvent('Actions_Navigate-To');
-                                        await Navigator.push(
-                                          context,
-                                          PageTransition(
-                                            type: PageTransitionType.fade,
-                                            duration: Duration(milliseconds: 0),
-                                            reverseDuration:
-                                                Duration(milliseconds: 0),
-                                            child: StatistiquesWidget(),
-                                          ),
-                                        );
-                                      },
-                                      child: Container(
-                                        width: 40,
-                                        height: 40,
-                                        decoration: BoxDecoration(
-                                          color: Color(0x4DFFFFFF),
-                                          boxShadow: [
-                                            BoxShadow(
-                                              blurRadius: 10,
-                                              color: Color(0x2C000000),
-                                              offset: Offset(0, 4),
-                                            )
-                                          ],
-                                          shape: BoxShape.circle,
-                                          border: Border.all(
-                                            color: FlutterFlowTheme.of(context)
-                                                .grayLight,
-                                            width: 1,
-                                          ),
-                                        ),
-                                        child: InkWell(
+                                  Expanded(
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
+                                      children: [
+                                        InkWell(
                                           onTap: () async {
                                             logFirebaseEvent(
-                                                'TRANSPORT_PAGE_Icon_zonjepev_ON_TAP');
+                                                'TRANSPORT_PAGE_Actions_ON_TAP');
                                             logFirebaseEvent(
-                                                'Icon_Navigate-To');
-                                            await Navigator.push(
-                                              context,
-                                              PageTransition(
-                                                type: PageTransitionType.fade,
-                                                duration:
-                                                    Duration(milliseconds: 0),
-                                                reverseDuration:
-                                                    Duration(milliseconds: 0),
-                                                child: HomeWidget(),
-                                              ),
-                                            );
+                                                'Actions_navigate_to');
+
+                                            context.pushNamed('Statistiques');
                                           },
-                                          child: Icon(
-                                            Icons.add,
-                                            color: FlutterFlowTheme.of(context)
-                                                .tertiaryColor,
-                                            size: 24,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    InkWell(
-                                      onTap: () async {
-                                        logFirebaseEvent(
-                                            'TRANSPORT_PAGE_Stats_ON_TAP');
-                                        logFirebaseEvent('Stats_Navigate-To');
-                                        await Navigator.push(
-                                          context,
-                                          PageTransition(
-                                            type: PageTransitionType.fade,
-                                            duration: Duration(milliseconds: 0),
-                                            reverseDuration:
-                                                Duration(milliseconds: 0),
-                                            child: StatistiquesWidget(),
-                                          ),
-                                        );
-                                      },
-                                      child: Container(
-                                        width: 40,
-                                        height: 40,
-                                        decoration: BoxDecoration(
-                                          color: Color(0x4DFFFFFF),
-                                          boxShadow: [
-                                            BoxShadow(
-                                              blurRadius: 10,
-                                              color: Color(0x2C000000),
-                                              offset: Offset(0, 4),
-                                            )
-                                          ],
-                                          shape: BoxShape.circle,
-                                          border: Border.all(
-                                            color: FlutterFlowTheme.of(context)
-                                                .grayLight,
-                                            width: 1,
-                                          ),
-                                        ),
-                                        child: Icon(
-                                          Icons.stacked_bar_chart,
-                                          color: FlutterFlowTheme.of(context)
-                                              .tertiaryColor,
-                                          size: 24,
-                                        ),
-                                      ),
-                                    ),
-                                    InkWell(
-                                      onTap: () async {
-                                        logFirebaseEvent(
-                                            'TRANSPORT_PAGE_Profil_ON_TAP');
-                                        logFirebaseEvent('Profil_Navigate-To');
-                                        await Navigator.push(
-                                          context,
-                                          PageTransition(
-                                            type: PageTransitionType.fade,
-                                            duration: Duration(milliseconds: 0),
-                                            reverseDuration:
-                                                Duration(milliseconds: 0),
-                                            child: ProfileWidget(),
-                                          ),
-                                        );
-                                      },
-                                      child: Container(
-                                        width: 40,
-                                        height: 40,
-                                        decoration: BoxDecoration(
-                                          color: FlutterFlowTheme.of(context)
-                                              .tertiaryColor,
-                                          boxShadow: [
-                                            BoxShadow(
-                                              blurRadius: 10,
-                                              color: Color(0x2C000000),
-                                              offset: Offset(0, 4),
-                                            )
-                                          ],
-                                          shape: BoxShape.circle,
-                                          border: Border.all(
-                                            color: FlutterFlowTheme.of(context)
-                                                .grayLight,
-                                            width: 1,
-                                          ),
-                                        ),
-                                        child: AuthUserStreamWidget(
-                                          child: ClipRRect(
-                                            borderRadius:
-                                                BorderRadius.circular(100),
-                                            child: Image.network(
-                                              valueOrDefault<String>(
-                                                currentUserPhoto,
-                                                'https://firebasestorage.googleapis.com/v0/b/carbonfight-89af6.appspot.com/o/18275220161537356156-128.png?alt=media&token=c9797a03-bba1-46b8-aaac-4c54cb99fcb6',
+                                          child: Container(
+                                            width: 40,
+                                            height: 40,
+                                            decoration: BoxDecoration(
+                                              color: Color(0x4DFFFFFF),
+                                              boxShadow: [
+                                                BoxShadow(
+                                                  blurRadius: 10,
+                                                  color: Color(0x2C000000),
+                                                  offset: Offset(0, 4),
+                                                )
+                                              ],
+                                              shape: BoxShape.circle,
+                                              border: Border.all(
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .grayLight,
+                                                width: 1,
                                               ),
-                                              width: 50,
-                                              height: 50,
-                                              fit: BoxFit.cover,
+                                            ),
+                                            child: InkWell(
+                                              onTap: () async {
+                                                logFirebaseEvent(
+                                                    'TRANSPORT_PAGE_Icon_zonjepev_ON_TAP');
+                                                logFirebaseEvent(
+                                                    'Icon_navigate_to');
+
+                                                context.pushNamed('Home');
+                                              },
+                                              child: Icon(
+                                                Icons.add,
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .tertiaryColor,
+                                                size: 24,
+                                              ),
                                             ),
                                           ),
                                         ),
-                                      ),
+                                        InkWell(
+                                          onTap: () async {
+                                            logFirebaseEvent(
+                                                'TRANSPORT_PAGE_Stats_ON_TAP');
+                                            logFirebaseEvent(
+                                                'Stats_navigate_to');
+
+                                            context.pushNamed('Statistiques');
+                                          },
+                                          child: Container(
+                                            width: 40,
+                                            height: 40,
+                                            decoration: BoxDecoration(
+                                              color: Color(0x4DFFFFFF),
+                                              boxShadow: [
+                                                BoxShadow(
+                                                  blurRadius: 10,
+                                                  color: Color(0x2C000000),
+                                                  offset: Offset(0, 4),
+                                                )
+                                              ],
+                                              shape: BoxShape.circle,
+                                              border: Border.all(
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .grayLight,
+                                                width: 1,
+                                              ),
+                                            ),
+                                            child: Icon(
+                                              Icons.stacked_bar_chart,
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .tertiaryColor,
+                                              size: 24,
+                                            ),
+                                          ),
+                                        ),
+                                        InkWell(
+                                          onTap: () async {
+                                            logFirebaseEvent(
+                                                'TRANSPORT_PAGE_Profil_ON_TAP');
+                                            logFirebaseEvent(
+                                                'Profil_navigate_to');
+
+                                            context.pushNamed('Profile');
+                                          },
+                                          child: Container(
+                                            width: 40,
+                                            height: 40,
+                                            decoration: BoxDecoration(
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .tertiaryColor,
+                                              boxShadow: [
+                                                BoxShadow(
+                                                  blurRadius: 10,
+                                                  color: Color(0x2C000000),
+                                                  offset: Offset(0, 4),
+                                                )
+                                              ],
+                                              shape: BoxShape.circle,
+                                              border: Border.all(
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .grayLight,
+                                                width: 1,
+                                              ),
+                                            ),
+                                            child: ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(100),
+                                              child: Image.network(
+                                                valueOrDefault<String>(
+                                                  headerUsersRecord!.photoUrl,
+                                                  'https://storage.googleapis.com/carbonfight-89af6.appspot.com/default_photo_url.png',
+                                                ),
+                                                width: 50,
+                                                height: 50,
+                                                fit: BoxFit.cover,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
                                     ),
-                                  ],
-                                ),
+                                  ),
+                                ],
                               ),
-                            ],
-                          ),
-                        ),
+                            ),
+                          );
+                        },
                       ),
                       Container(
                         decoration: BoxDecoration(
@@ -901,10 +931,26 @@ class _TransportWidgetState extends State<TransportWidget>
                                                         EasyDebounce.debounce(
                                                       'textController',
                                                       Duration(
-                                                          milliseconds: 200),
-                                                      () => setState(() {}),
+                                                          milliseconds: 2000),
+                                                      () async {
+                                                        logFirebaseEvent(
+                                                            'TRANSPORT_TextField_6hnfmxsj_ON_TEXTFIEL');
+                                                        logFirebaseEvent(
+                                                            'TextField_backend_call');
+
+                                                        final transportActionsUpdateData =
+                                                            createTransportActionsRecordData(
+                                                          distance:
+                                                              textController
+                                                                      ?.text ??
+                                                                  '',
+                                                        );
+                                                        await transportTransportActionsRecord
+                                                            .reference
+                                                            .update(
+                                                                transportActionsUpdateData);
+                                                      },
                                                     ),
-                                                    autofocus: true,
                                                     obscureText: false,
                                                     decoration: InputDecoration(
                                                       labelText: functions
@@ -935,6 +981,28 @@ class _TransportWidgetState extends State<TransportWidget>
                                                             BorderRadius
                                                                 .circular(100),
                                                       ),
+                                                      errorBorder:
+                                                          OutlineInputBorder(
+                                                        borderSide: BorderSide(
+                                                          color:
+                                                              Color(0x00000000),
+                                                          width: 1,
+                                                        ),
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(100),
+                                                      ),
+                                                      focusedErrorBorder:
+                                                          OutlineInputBorder(
+                                                        borderSide: BorderSide(
+                                                          color:
+                                                              Color(0x00000000),
+                                                          width: 1,
+                                                        ),
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(100),
+                                                      ),
                                                       filled: true,
                                                       fillColor:
                                                           Color(0xFFF1F4F8),
@@ -946,6 +1014,21 @@ class _TransportWidgetState extends State<TransportWidget>
                                                                       () async {
                                                                     textController
                                                                         ?.clear();
+                                                                    logFirebaseEvent(
+                                                                        'TRANSPORT_TextField_6hnfmxsj_ON_TEXTFIEL');
+                                                                    logFirebaseEvent(
+                                                                        'TextField_backend_call');
+
+                                                                    final transportActionsUpdateData =
+                                                                        createTransportActionsRecordData(
+                                                                      distance:
+                                                                          textController?.text ??
+                                                                              '',
+                                                                    );
+                                                                    await transportTransportActionsRecord
+                                                                        .reference
+                                                                        .update(
+                                                                            transportActionsUpdateData);
                                                                     setState(
                                                                         () {});
                                                                   },
@@ -976,147 +1059,225 @@ class _TransportWidgetState extends State<TransportWidget>
                                         ),
                                       ],
                                     ),
-                                  ).animated([
-                                    animationsMap[
-                                        'containerOnPageLoadAnimation1']!
-                                  ]),
+                                  ).animateOnPageLoad(animationsMap[
+                                      'containerOnPageLoadAnimation1']!),
                                 ),
                                 if (FFAppState().displayOptions)
                                   Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
                                         16, 8, 16, 0),
-                                    child: Container(
-                                      width: double.infinity,
-                                      decoration: BoxDecoration(
-                                        color: Color(0xB3FFFFFF),
-                                        boxShadow: [
-                                          BoxShadow(
-                                            blurRadius: 4,
-                                            color: Color(0x2B202529),
-                                            offset: Offset(0, 2),
-                                          )
-                                        ],
-                                        borderRadius: BorderRadius.circular(12),
+                                    child: StreamBuilder<
+                                        List<TransportCalculationRecord>>(
+                                      stream: queryTransportCalculationRecord(
+                                        queryBuilder: (transportCalculationRecord) =>
+                                            transportCalculationRecord.where(
+                                                'transport',
+                                                isEqualTo:
+                                                    transportTransportActionsRecord
+                                                        .transport),
                                       ),
-                                      child: Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            12, 8, 12, 8),
-                                        child: Row(
-                                          mainAxisSize: MainAxisSize.max,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceEvenly,
-                                          children: [
-                                            Expanded(
-                                              child: Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(0, 0, 10, 0),
-                                                child: FlutterFlowDropDown(
-                                                  initialOption: powertypeValue ??=
-                                                      transportTransportActionsRecord
-                                                          .powertype,
-                                                  options: functions
-                                                      .getTransportPowerType(
-                                                          transportTransportActionsRecord
-                                                              .transport)
-                                                      .toList(),
-                                                  onChanged: (val) => setState(
-                                                      () =>
-                                                          powertypeValue = val),
-                                                  width: MediaQuery.of(context)
-                                                      .size
-                                                      .width,
-                                                  height: 40,
-                                                  textStyle: FlutterFlowTheme
-                                                          .of(context)
-                                                      .bodyText2
-                                                      .override(
-                                                        fontFamily: 'Outfit',
-                                                        fontWeight:
-                                                            FontWeight.w500,
-                                                      ),
-                                                  hintText: 'Type de transport',
-                                                  icon: Icon(
-                                                    Icons
-                                                        .electrical_services_rounded,
-                                                    size: 15,
-                                                  ),
-                                                  fillColor: Color(0xFFFAFAFA),
-                                                  elevation: 2,
-                                                  borderColor:
-                                                      FlutterFlowTheme.of(
-                                                              context)
-                                                          .grayLight,
-                                                  borderWidth: 1,
-                                                  borderRadius: 100,
-                                                  margin: EdgeInsetsDirectional
-                                                      .fromSTEB(12, 4, 12, 4),
-                                                  hidesUnderline: true,
-                                                ),
+                                      builder: (context, snapshot) {
+                                        // Customize what your widget looks like when it's loading.
+                                        if (!snapshot.hasData) {
+                                          return Center(
+                                            child: SizedBox(
+                                              width: 2,
+                                              height: 2,
+                                              child: SpinKitRing(
+                                                color: Colors.transparent,
+                                                size: 2,
                                               ),
                                             ),
-                                            if (transportTransportActionsRecord
-                                                    .transport ==
-                                                'car')
-                                              Expanded(
-                                                child: Padding(
-                                                  padding: EdgeInsetsDirectional
-                                                      .fromSTEB(10, 0, 0, 0),
-                                                  child: FlutterFlowDropDown(
-                                                    initialOption:
-                                                        passengersValue ??=
-                                                            transportTransportActionsRecord
-                                                                .passengers,
-                                                    options: functions
-                                                        .getTransportPassengers(
-                                                            transportTransportActionsRecord
-                                                                .transport)
-                                                        .toList(),
-                                                    onChanged: (val) =>
-                                                        setState(() =>
-                                                            passengersValue =
-                                                                val),
-                                                    width:
-                                                        MediaQuery.of(context)
-                                                            .size
-                                                            .width,
-                                                    height: 40,
-                                                    textStyle: FlutterFlowTheme
-                                                            .of(context)
-                                                        .bodyText2
-                                                        .override(
-                                                          fontFamily: 'Outfit',
-                                                          fontWeight:
-                                                              FontWeight.w500,
-                                                        ),
-                                                    hintText: 'Passagers',
-                                                    icon: Icon(
-                                                      Icons.family_restroom,
-                                                      size: 15,
-                                                    ),
-                                                    fillColor:
-                                                        Color(0xFFFAFAFA),
-                                                    elevation: 2,
-                                                    borderColor:
-                                                        FlutterFlowTheme.of(
-                                                                context)
-                                                            .grayLight,
-                                                    borderWidth: 1,
-                                                    borderRadius: 100,
-                                                    margin:
+                                          );
+                                        }
+                                        List<TransportCalculationRecord>
+                                            transportParametersTransportCalculationRecordList =
+                                            snapshot.data!;
+                                        return Container(
+                                          width: double.infinity,
+                                          decoration: BoxDecoration(
+                                            color: Color(0xB3FFFFFF),
+                                            boxShadow: [
+                                              BoxShadow(
+                                                blurRadius: 4,
+                                                color: Color(0x2B202529),
+                                                offset: Offset(0, 2),
+                                              )
+                                            ],
+                                            borderRadius:
+                                                BorderRadius.circular(12),
+                                          ),
+                                          child: Padding(
+                                            padding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    12, 8, 12, 8),
+                                            child: Row(
+                                              mainAxisSize: MainAxisSize.max,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.spaceEvenly,
+                                              children: [
+                                                Expanded(
+                                                  child: Padding(
+                                                    padding:
                                                         EdgeInsetsDirectional
                                                             .fromSTEB(
-                                                                12, 4, 12, 4),
-                                                    hidesUnderline: true,
+                                                                0, 0, 10, 0),
+                                                    child: FlutterFlowDropDown<
+                                                        String>(
+                                                      initialOption:
+                                                          powertypeValue ??=
+                                                              transportTransportActionsRecord
+                                                                  .powertype,
+                                                      options:
+                                                          transportParametersTransportCalculationRecordList
+                                                              .map((e) =>
+                                                                  e.powertype!)
+                                                              .toList()
+                                                              .toList(),
+                                                      onChanged: (val) async {
+                                                        setState(() =>
+                                                            powertypeValue =
+                                                                val);
+                                                        logFirebaseEvent(
+                                                            'TRANSPORT_powertype_ON_FORM_WIDGET_SELEC');
+                                                        logFirebaseEvent(
+                                                            'powertype_backend_call');
+
+                                                        final transportActionsUpdateData =
+                                                            createTransportActionsRecordData(
+                                                          powertype:
+                                                              powertypeValue,
+                                                        );
+                                                        await transportTransportActionsRecord
+                                                            .reference
+                                                            .update(
+                                                                transportActionsUpdateData);
+                                                      },
+                                                      width:
+                                                          MediaQuery.of(context)
+                                                              .size
+                                                              .width,
+                                                      height: 40,
+                                                      textStyle:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .bodyText2
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Outfit',
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w500,
+                                                              ),
+                                                      hintText:
+                                                          'Type de transport',
+                                                      icon: Icon(
+                                                        Icons
+                                                            .electrical_services_rounded,
+                                                        size: 15,
+                                                      ),
+                                                      fillColor:
+                                                          Color(0xFFFAFAFA),
+                                                      elevation: 2,
+                                                      borderColor:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .grayLight,
+                                                      borderWidth: 1,
+                                                      borderRadius: 100,
+                                                      margin:
+                                                          EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                                  12, 4, 12, 4),
+                                                      hidesUnderline: true,
+                                                    ),
                                                   ),
                                                 ),
-                                              ),
-                                          ],
-                                        ),
-                                      ),
-                                    ).animated([
-                                      animationsMap[
-                                          'containerOnPageLoadAnimation2']!
-                                    ]),
+                                                if (transportTransportActionsRecord
+                                                        .transport ==
+                                                    'car')
+                                                  Expanded(
+                                                    child: Padding(
+                                                      padding:
+                                                          EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                                  10, 0, 0, 0),
+                                                      child:
+                                                          FlutterFlowDropDown<
+                                                              String>(
+                                                        initialOption:
+                                                            passengersValue ??=
+                                                                transportTransportActionsRecord
+                                                                    .passengers,
+                                                        options: functions
+                                                            .getTransportPassengers(
+                                                                transportTransportActionsRecord
+                                                                    .transport)
+                                                            .toList(),
+                                                        onChanged: (val) async {
+                                                          setState(() =>
+                                                              passengersValue =
+                                                                  val);
+                                                          logFirebaseEvent(
+                                                              'TRANSPORT_passengers_ON_FORM_WIDGET_SELE');
+                                                          logFirebaseEvent(
+                                                              'passengers_backend_call');
+
+                                                          final transportActionsUpdateData =
+                                                              createTransportActionsRecordData(
+                                                            passengers:
+                                                                passengersValue,
+                                                          );
+                                                          await transportTransportActionsRecord
+                                                              .reference
+                                                              .update(
+                                                                  transportActionsUpdateData);
+                                                        },
+                                                        width: MediaQuery.of(
+                                                                context)
+                                                            .size
+                                                            .width,
+                                                        height: 40,
+                                                        textStyle:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .bodyText2
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Outfit',
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w500,
+                                                                ),
+                                                        hintText: 'Passagers',
+                                                        icon: Icon(
+                                                          Icons.family_restroom,
+                                                          size: 15,
+                                                        ),
+                                                        fillColor:
+                                                            Color(0xFFFAFAFA),
+                                                        elevation: 2,
+                                                        borderColor:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .grayLight,
+                                                        borderWidth: 1,
+                                                        borderRadius: 100,
+                                                        margin:
+                                                            EdgeInsetsDirectional
+                                                                .fromSTEB(12, 4,
+                                                                    12, 4),
+                                                        hidesUnderline: true,
+                                                      ),
+                                                    ),
+                                                  ),
+                                              ],
+                                            ),
+                                          ),
+                                        ).animateOnPageLoad(animationsMap[
+                                            'containerOnPageLoadAnimation2']!);
+                                      },
+                                    ),
                                   ),
                                 if (FFAppState().displayDates)
                                   Padding(
@@ -1176,10 +1337,8 @@ class _TransportWidgetState extends State<TransportWidget>
                                         locale: FFLocalizations.of(context)
                                             .languageCode,
                                       ),
-                                    ).animated([
-                                      animationsMap[
-                                          'containerOnPageLoadAnimation3']!
-                                    ]),
+                                    ).animateOnPageLoad(animationsMap[
+                                        'containerOnPageLoadAnimation3']!),
                                   ),
                                 if (FFAppState().displayDays)
                                   Padding(
@@ -1202,10 +1361,8 @@ class _TransportWidgetState extends State<TransportWidget>
                                         padding: EdgeInsetsDirectional.fromSTEB(
                                             12, 8, 12, 8),
                                         child: FlutterFlowChoiceChips(
-                                          initiallySelected: periodicityValues !=
-                                                  null
-                                              ? periodicityValues
-                                              : transportTransportActionsRecord
+                                          initiallySelected:
+                                              transportTransportActionsRecord
                                                   .periodicity!
                                                   .toList(),
                                           options: [
@@ -1259,10 +1416,8 @@ class _TransportWidgetState extends State<TransportWidget>
                                           alignment: WrapAlignment.spaceEvenly,
                                         ),
                                       ),
-                                    ).animated([
-                                      animationsMap[
-                                          'containerOnPageLoadAnimation4']!
-                                    ]),
+                                    ).animateOnPageLoad(animationsMap[
+                                        'containerOnPageLoadAnimation4']!),
                                   ),
                               ],
                             ),
@@ -1276,109 +1431,6 @@ class _TransportWidgetState extends State<TransportWidget>
                         child: Column(
                           mainAxisSize: MainAxisSize.max,
                           children: [
-                            Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 15, 0, 15),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Expanded(
-                                    child: Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          10, 0, 10, 0),
-                                      child: InkWell(
-                                        onTap: () async {
-                                          logFirebaseEvent(
-                                              'TRANSPORT_PAGE_cancel_ON_TAP');
-                                          logFirebaseEvent(
-                                              'cancel_Update-Local-State');
-                                          setState(() =>
-                                              FFAppState().loading = false);
-                                          logFirebaseEvent(
-                                              'cancel_Navigate-To');
-                                          await Navigator.push(
-                                            context,
-                                            PageTransition(
-                                              type: PageTransitionType.fade,
-                                              duration:
-                                                  Duration(milliseconds: 0),
-                                              reverseDuration:
-                                                  Duration(milliseconds: 0),
-                                              child: HomeWidget(),
-                                            ),
-                                          );
-                                        },
-                                        child: IconButtonWidget(
-                                          fillColor: Color(0x65A5A5A5),
-                                          fontColor:
-                                              FlutterFlowTheme.of(context)
-                                                  .tertiaryColor,
-                                          icon: Icon(
-                                            Icons.cancel_outlined,
-                                            color: FlutterFlowTheme.of(context)
-                                                .tertiaryColor,
-                                            size: 20,
-                                          ),
-                                          text: 'Fermer',
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          10, 0, 10, 0),
-                                      child: InkWell(
-                                        onTap: () async {
-                                          logFirebaseEvent(
-                                              'TRANSPORT_PAGE_calculer_ON_TAP');
-                                          logFirebaseEvent(
-                                              'calculer_Update-Local-State');
-                                          setState(() => FFAppState()
-                                                  .actionCO2 =
-                                              functions.transportActionsCO2e(
-                                                  textController?.text ?? '',
-                                                  valueOrDefault<String>(
-                                                    passengersValue,
-                                                    '1',
-                                                  ),
-                                                  valueOrDefault<String>(
-                                                    powertypeValue,
-                                                    'thermic',
-                                                  ),
-                                                  transportTransportActionsRecord
-                                                      .transport,
-                                                  transportTransportActionsRecord
-                                                      .roundTrip));
-                                          logFirebaseEvent(
-                                              'calculer_Backend-Call');
-
-                                          final transportActionsUpdateData =
-                                              createTransportActionsRecordData(
-                                            co2e: FFAppState().actionCO2,
-                                          );
-                                          await widget.actionRef!.update(
-                                              transportActionsUpdateData);
-                                        },
-                                        child: IconButtonWidget(
-                                          fillColor: Color(0x5300A193),
-                                          fontColor:
-                                              FlutterFlowTheme.of(context)
-                                                  .tertiaryColor,
-                                          icon: Icon(
-                                            Icons.sync_rounded,
-                                            color: Color(0x6523D0C1),
-                                            size: 20,
-                                          ),
-                                          text: 'Calculer ',
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
                             Padding(
                               padding:
                                   EdgeInsetsDirectional.fromSTEB(0, 5, 0, 15),
@@ -1399,31 +1451,21 @@ class _TransportWidgetState extends State<TransportWidget>
                                                 logFirebaseEvent(
                                                     'TRANSPORT_PAGE_delete_ON_TAP');
                                                 logFirebaseEvent(
-                                                    'delete_Update-Local-State');
+                                                    'delete_update_local_state');
                                                 setState(() => FFAppState()
                                                     .loading = true);
                                                 logFirebaseEvent(
-                                                    'delete_Backend-Call');
+                                                    'delete_backend_call');
                                                 await widget.actionRef!
                                                     .delete();
                                                 logFirebaseEvent(
-                                                    'delete_Update-Local-State');
+                                                    'delete_update_local_state');
                                                 setState(() => FFAppState()
                                                     .loading = false);
                                                 logFirebaseEvent(
-                                                    'delete_Navigate-To');
-                                                await Navigator.push(
-                                                  context,
-                                                  PageTransition(
-                                                    type:
-                                                        PageTransitionType.fade,
-                                                    duration: Duration(
-                                                        milliseconds: 0),
-                                                    reverseDuration: Duration(
-                                                        milliseconds: 0),
-                                                    child: HomeWidget(),
-                                                  ),
-                                                );
+                                                    'delete_navigate_to');
+
+                                                context.pushNamed('Home');
                                               },
                                               child: IconButtonWidget(
                                                 fillColor: Color(0x98BC0909),
@@ -1478,36 +1520,13 @@ class _TransportWidgetState extends State<TransportWidget>
                                                 logFirebaseEvent(
                                                     'TRANSPORT_PAGE_modify_ON_TAP');
                                                 logFirebaseEvent(
-                                                    'modify_Update-Local-State');
+                                                    'modify_update_local_state');
                                                 setState(() => FFAppState()
                                                     .loading = true);
-                                                logFirebaseEvent(
-                                                    'modify_Update-Local-State');
-                                                setState(() => FFAppState()
-                                                        .actionCO2 =
-                                                    functions
-                                                        .transportActionsCO2e(
-                                                            textController
-                                                                    ?.text ??
-                                                                '',
-                                                            valueOrDefault<
-                                                                String>(
-                                                              passengersValue,
-                                                              '1',
-                                                            ),
-                                                            valueOrDefault<
-                                                                String>(
-                                                              powertypeValue,
-                                                              'thermic',
-                                                            ),
-                                                            transportTransportActionsRecord
-                                                                .transport,
-                                                            transportTransportActionsRecord
-                                                                .roundTrip));
                                                 if (transportTransportActionsRecord
                                                     .isPeriodic!) {
                                                   logFirebaseEvent(
-                                                      'modify_Backend-Call');
+                                                      'modify_backend_call');
 
                                                   final transportActionsUpdateData =
                                                       {
@@ -1516,8 +1535,6 @@ class _TransportWidgetState extends State<TransportWidget>
                                                               ?.text ??
                                                           '',
                                                       powertype: powertypeValue,
-                                                      co2e: FFAppState()
-                                                          .actionCO2,
                                                       passengers:
                                                           passengersValue,
                                                     ),
@@ -1530,7 +1547,7 @@ class _TransportWidgetState extends State<TransportWidget>
                                                   if (FFAppState()
                                                       .displayDays) {
                                                     logFirebaseEvent(
-                                                        'modify_Backend-Call');
+                                                        'modify_backend_call');
 
                                                     final transportActionsCreateData =
                                                         {
@@ -1543,8 +1560,7 @@ class _TransportWidgetState extends State<TransportWidget>
                                                         userId:
                                                             transportTransportActionsRecord
                                                                 .userId,
-                                                        co2e: FFAppState()
-                                                            .actionCO2,
+                                                        co2e: 0,
                                                         passengers:
                                                             passengersValue,
                                                         roundTrip:
@@ -1565,7 +1581,7 @@ class _TransportWidgetState extends State<TransportWidget>
                                                             transportActionsCreateData);
                                                   }
                                                   logFirebaseEvent(
-                                                      'modify_Backend-Call');
+                                                      'modify_backend_call');
 
                                                   final transportActionsUpdateData =
                                                       createTransportActionsRecordData(
@@ -1574,8 +1590,6 @@ class _TransportWidgetState extends State<TransportWidget>
                                                             '',
                                                     powertype: powertypeValue,
                                                     userId: currentUserUid,
-                                                    co2e:
-                                                        FFAppState().actionCO2,
                                                     passengers: passengersValue,
                                                     day: functions
                                                         .timestampToDay(
@@ -1591,23 +1605,13 @@ class _TransportWidgetState extends State<TransportWidget>
                                                 }
 
                                                 logFirebaseEvent(
-                                                    'modify_Update-Local-State');
+                                                    'modify_update_local_state');
                                                 setState(() => FFAppState()
                                                     .loading = false);
                                                 logFirebaseEvent(
-                                                    'modify_Navigate-To');
-                                                await Navigator.push(
-                                                  context,
-                                                  PageTransition(
-                                                    type:
-                                                        PageTransitionType.fade,
-                                                    duration: Duration(
-                                                        milliseconds: 0),
-                                                    reverseDuration: Duration(
-                                                        milliseconds: 0),
-                                                    child: HomeWidget(),
-                                                  ),
-                                                );
+                                                    'modify_navigate_to');
+
+                                                context.pushNamed('Home');
                                               },
                                               child: IconButtonWidget(
                                                 fillColor:

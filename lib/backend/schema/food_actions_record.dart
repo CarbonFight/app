@@ -22,8 +22,6 @@ abstract class FoodActionsRecord
 
   String? get day;
 
-  int? get portions;
-
   BuiltList<String>? get periodicity;
 
   bool? get isPeriodic;
@@ -34,6 +32,8 @@ abstract class FoodActionsRecord
 
   String? get mainComponent;
 
+  int? get portions;
+
   @BuiltValueField(wireName: kDocumentReferenceField)
   DocumentReference? get ffRef;
   DocumentReference get reference => ffRef!;
@@ -43,12 +43,12 @@ abstract class FoodActionsRecord
     ..food = ''
     ..userId = ''
     ..day = ''
-    ..portions = 0
     ..periodicity = ListBuilder()
     ..isPeriodic = false
     ..isFavorite = false
     ..sideComponent = ListBuilder()
-    ..mainComponent = '';
+    ..mainComponent = ''
+    ..portions = 0;
 
   static CollectionReference get collection =>
       FirebaseFirestore.instance.collection('foodActions');
@@ -77,10 +77,10 @@ Map<String, dynamic> createFoodActionsRecordData({
   DateTime? createdTime,
   String? userId,
   String? day,
-  int? portions,
   bool? isPeriodic,
   bool? isFavorite,
   String? mainComponent,
+  int? portions,
 }) {
   final firestoreData = serializers.toFirestore(
     FoodActionsRecord.serializer,
@@ -91,12 +91,12 @@ Map<String, dynamic> createFoodActionsRecordData({
         ..createdTime = createdTime
         ..userId = userId
         ..day = day
-        ..portions = portions
         ..periodicity = null
         ..isPeriodic = isPeriodic
         ..isFavorite = isFavorite
         ..sideComponent = null
-        ..mainComponent = mainComponent,
+        ..mainComponent = mainComponent
+        ..portions = portions,
     ),
   );
 

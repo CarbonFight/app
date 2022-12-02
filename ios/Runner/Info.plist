@@ -33,7 +33,19 @@
             </array>
         </dict>
 
+        <dict>
+        <key>CFBundleTypeRole</key>
+        <string>Editor</string>
+        <key>CFBundleURLName</key>
+        <string>carbonfight.com</string>
+        <key>CFBundleURLSchemes</key>
+        <array>
+        <string>carbonfight</string>
+        </array>
+        </dict>
     </array>
+    <key>FlutterDeepLinkingEnabled</key>
+    <true/>
 
     <key>FacebookAppID</key>
     <string>265347802383003</string>

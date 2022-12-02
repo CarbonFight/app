@@ -16,10 +16,10 @@ service cloud.firestore {
     }
 
     match /users/{document} {
-      allow create: if true;
-      allow read: if true;
-      allow write: if true;
-      allow delete: if request.auth.uid == resource.data.uid;
+      allow create: if request.auth.uid == document;
+      allow read: if request.auth.uid == document;
+      allow write: if request.auth.uid == document;
+      allow delete: if false;
     }
 
     match /foodActions/{document} {
@@ -30,13 +30,6 @@ service cloud.firestore {
     }
 
     match /usersStats/{document} {
-      allow create: if request.auth.uid == request.resource.data.uid;
-      allow read: if request.auth.uid == resource.data.uid;
-      allow write: if request.auth.uid == resource.data.uid;
-      allow delete: if request.auth.uid == resource.data.uid;
-    }
-
-    match /usersTrophies/{document} {
       allow create: if request.auth.uid == request.resource.data.uid;
       allow read: if request.auth.uid == resource.data.uid;
       allow write: if request.auth.uid == resource.data.uid;

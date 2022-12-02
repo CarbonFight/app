@@ -4,9 +4,6 @@ import '../components/icon_button_widget.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
-import '../home/home_widget.dart';
-import '../login/login_widget.dart';
-import '../splash/splash_widget.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -24,8 +21,10 @@ class _SignupWidgetState extends State<SignupWidget> {
   TextEditingController? emailAddressController;
   TextEditingController? nameController;
   TextEditingController? passwordController;
+
   late bool passwordVisibility;
   TextEditingController? retypepasswordController;
+
   late bool retypepasswordVisibility;
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -39,6 +38,16 @@ class _SignupWidgetState extends State<SignupWidget> {
     retypepasswordController = TextEditingController();
     retypepasswordVisibility = false;
     logFirebaseEvent('screen_view', parameters: {'screen_name': 'Signup'});
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
+  }
+
+  @override
+  void dispose() {
+    emailAddressController?.dispose();
+    nameController?.dispose();
+    passwordController?.dispose();
+    retypepasswordController?.dispose();
+    super.dispose();
   }
 
   @override
@@ -156,6 +165,29 @@ class _SignupWidgetState extends State<SignupWidget> {
                                                 topRight: Radius.circular(4.0),
                                               ),
                                             ),
+                                            errorBorder: UnderlineInputBorder(
+                                              borderSide: BorderSide(
+                                                color: Color(0x00000000),
+                                                width: 1,
+                                              ),
+                                              borderRadius:
+                                                  const BorderRadius.only(
+                                                topLeft: Radius.circular(4.0),
+                                                topRight: Radius.circular(4.0),
+                                              ),
+                                            ),
+                                            focusedErrorBorder:
+                                                UnderlineInputBorder(
+                                              borderSide: BorderSide(
+                                                color: Color(0x00000000),
+                                                width: 1,
+                                              ),
+                                              borderRadius:
+                                                  const BorderRadius.only(
+                                                topLeft: Radius.circular(4.0),
+                                                topRight: Radius.circular(4.0),
+                                              ),
+                                            ),
                                             contentPadding:
                                                 EdgeInsetsDirectional.fromSTEB(
                                                     0, 15, 0, 0),
@@ -235,6 +267,29 @@ class _SignupWidgetState extends State<SignupWidget> {
                                               ),
                                             ),
                                             focusedBorder: UnderlineInputBorder(
+                                              borderSide: BorderSide(
+                                                color: Color(0x00000000),
+                                                width: 1,
+                                              ),
+                                              borderRadius:
+                                                  const BorderRadius.only(
+                                                topLeft: Radius.circular(4.0),
+                                                topRight: Radius.circular(4.0),
+                                              ),
+                                            ),
+                                            errorBorder: UnderlineInputBorder(
+                                              borderSide: BorderSide(
+                                                color: Color(0x00000000),
+                                                width: 1,
+                                              ),
+                                              borderRadius:
+                                                  const BorderRadius.only(
+                                                topLeft: Radius.circular(4.0),
+                                                topRight: Radius.circular(4.0),
+                                              ),
+                                            ),
+                                            focusedErrorBorder:
+                                                UnderlineInputBorder(
                                               borderSide: BorderSide(
                                                 color: Color(0x00000000),
                                                 width: 1,
@@ -326,6 +381,29 @@ class _SignupWidgetState extends State<SignupWidget> {
                                               ),
                                             ),
                                             focusedBorder: UnderlineInputBorder(
+                                              borderSide: BorderSide(
+                                                color: Color(0x00000000),
+                                                width: 1,
+                                              ),
+                                              borderRadius:
+                                                  const BorderRadius.only(
+                                                topLeft: Radius.circular(4.0),
+                                                topRight: Radius.circular(4.0),
+                                              ),
+                                            ),
+                                            errorBorder: UnderlineInputBorder(
+                                              borderSide: BorderSide(
+                                                color: Color(0x00000000),
+                                                width: 1,
+                                              ),
+                                              borderRadius:
+                                                  const BorderRadius.only(
+                                                topLeft: Radius.circular(4.0),
+                                                topRight: Radius.circular(4.0),
+                                              ),
+                                            ),
+                                            focusedErrorBorder:
+                                                UnderlineInputBorder(
                                               borderSide: BorderSide(
                                                 color: Color(0x00000000),
                                                 width: 1,
@@ -444,6 +522,29 @@ class _SignupWidgetState extends State<SignupWidget> {
                                                 topRight: Radius.circular(4.0),
                                               ),
                                             ),
+                                            errorBorder: UnderlineInputBorder(
+                                              borderSide: BorderSide(
+                                                color: Color(0x00000000),
+                                                width: 1,
+                                              ),
+                                              borderRadius:
+                                                  const BorderRadius.only(
+                                                topLeft: Radius.circular(4.0),
+                                                topRight: Radius.circular(4.0),
+                                              ),
+                                            ),
+                                            focusedErrorBorder:
+                                                UnderlineInputBorder(
+                                              borderSide: BorderSide(
+                                                color: Color(0x00000000),
+                                                width: 1,
+                                              ),
+                                              borderRadius:
+                                                  const BorderRadius.only(
+                                                topLeft: Radius.circular(4.0),
+                                                topRight: Radius.circular(4.0),
+                                              ),
+                                            ),
                                             contentPadding:
                                                 EdgeInsetsDirectional.fromSTEB(
                                                     0, 15, 0, 0),
@@ -504,7 +605,9 @@ class _SignupWidgetState extends State<SignupWidget> {
                                             'SIGNUP_PAGE_Container_csgylktj_ON_TAP');
                                         if (passwordController!.text ==
                                             retypepasswordController!.text) {
-                                          logFirebaseEvent('iconButton_Auth');
+                                          logFirebaseEvent('iconButton_auth');
+                                          GoRouter.of(context)
+                                              .prepareAuthEvent();
                                           if (passwordController?.text !=
                                               retypepasswordController?.text) {
                                             ScaffoldMessenger.of(context)
@@ -531,7 +634,6 @@ class _SignupWidgetState extends State<SignupWidget> {
                                           final usersCreateData =
                                               createUsersRecordData(
                                             displayName: nameController!.text,
-                                            createdTime: getCurrentTimestamp,
                                           );
                                           await UsersRecord.collection
                                               .doc(user.uid)
@@ -539,36 +641,20 @@ class _SignupWidgetState extends State<SignupWidget> {
 
                                           if (FFAppState().showSplash) {
                                             logFirebaseEvent(
-                                                'iconButton_Navigate-To');
-                                            await Navigator.push(
-                                              context,
-                                              PageTransition(
-                                                type: PageTransitionType.fade,
-                                                duration:
-                                                    Duration(milliseconds: 0),
-                                                reverseDuration:
-                                                    Duration(milliseconds: 0),
-                                                child: SplashWidget(),
-                                              ),
-                                            );
+                                                'iconButton_navigate_to');
+
+                                            context.pushNamedAuth(
+                                                'Splash', mounted);
                                           } else {
                                             logFirebaseEvent(
-                                                'iconButton_Navigate-To');
-                                            await Navigator.push(
-                                              context,
-                                              PageTransition(
-                                                type: PageTransitionType.fade,
-                                                duration:
-                                                    Duration(milliseconds: 0),
-                                                reverseDuration:
-                                                    Duration(milliseconds: 0),
-                                                child: HomeWidget(),
-                                              ),
-                                            );
+                                                'iconButton_navigate_to');
+
+                                            context.pushNamedAuth(
+                                                'Home', mounted);
                                           }
                                         } else {
                                           logFirebaseEvent(
-                                              'iconButton_Alert-Dialog');
+                                              'iconButton_alert_dialog');
                                           await showDialog(
                                             context: context,
                                             builder: (alertDialogContext) {
@@ -694,7 +780,9 @@ class _SignupWidgetState extends State<SignupWidget> {
                                                       logFirebaseEvent(
                                                           'SIGNUP_PAGE_facebookF_ICN_ON_TAP');
                                                       logFirebaseEvent(
-                                                          'IconButton_Auth');
+                                                          'IconButton_auth');
+                                                      GoRouter.of(context)
+                                                          .prepareAuthEvent();
                                                       final user =
                                                           await signInWithFacebook(
                                                               context);
@@ -702,22 +790,10 @@ class _SignupWidgetState extends State<SignupWidget> {
                                                         return;
                                                       }
                                                       logFirebaseEvent(
-                                                          'IconButton_Navigate-To');
-                                                      await Navigator.push(
-                                                        context,
-                                                        PageTransition(
-                                                          type:
-                                                              PageTransitionType
-                                                                  .fade,
-                                                          duration: Duration(
-                                                              milliseconds: 0),
-                                                          reverseDuration:
-                                                              Duration(
-                                                                  milliseconds:
-                                                                      0),
-                                                          child: SplashWidget(),
-                                                        ),
-                                                      );
+                                                          'IconButton_navigate_to');
+
+                                                      context.pushNamedAuth(
+                                                          'Splash', mounted);
                                                     },
                                                   ),
                                                 ),
@@ -754,7 +830,9 @@ class _SignupWidgetState extends State<SignupWidget> {
                                                       logFirebaseEvent(
                                                           'SIGNUP_PAGE_google_ICN_ON_TAP');
                                                       logFirebaseEvent(
-                                                          'IconButton_Auth');
+                                                          'IconButton_auth');
+                                                      GoRouter.of(context)
+                                                          .prepareAuthEvent();
                                                       final user =
                                                           await signInWithGoogle(
                                                               context);
@@ -762,22 +840,10 @@ class _SignupWidgetState extends State<SignupWidget> {
                                                         return;
                                                       }
                                                       logFirebaseEvent(
-                                                          'IconButton_Navigate-To');
-                                                      await Navigator.push(
-                                                        context,
-                                                        PageTransition(
-                                                          type:
-                                                              PageTransitionType
-                                                                  .fade,
-                                                          duration: Duration(
-                                                              milliseconds: 0),
-                                                          reverseDuration:
-                                                              Duration(
-                                                                  milliseconds:
-                                                                      0),
-                                                          child: SplashWidget(),
-                                                        ),
-                                                      );
+                                                          'IconButton_navigate_to');
+
+                                                      context.pushNamedAuth(
+                                                          'Splash', mounted);
                                                     },
                                                   ),
                                                 ),
@@ -812,30 +878,18 @@ class _SignupWidgetState extends State<SignupWidget> {
                                                       logFirebaseEvent(
                                                           'SIGNUP_PAGE_apple_ICN_ON_TAP');
                                                       logFirebaseEvent(
-                                                          'IconButton_Auth');
+                                                          'IconButton_auth');
+                                                      GoRouter.of(context)
+                                                          .prepareAuthEvent();
                                                       final user =
                                                           await signInWithApple(
                                                               context);
                                                       if (user == null) {
                                                         return;
                                                       }
-                                                      await Navigator
-                                                          .pushAndRemoveUntil(
-                                                        context,
-                                                        PageTransition(
-                                                          type:
-                                                              PageTransitionType
-                                                                  .fade,
-                                                          duration: Duration(
-                                                              milliseconds: 0),
-                                                          reverseDuration:
-                                                              Duration(
-                                                                  milliseconds:
-                                                                      0),
-                                                          child: HomeWidget(),
-                                                        ),
-                                                        (r) => false,
-                                                      );
+
+                                                      context.goNamedAuth(
+                                                          'Home', mounted);
                                                     },
                                                   ),
                                                 ),
@@ -864,17 +918,9 @@ class _SignupWidgetState extends State<SignupWidget> {
                                       onTap: () async {
                                         logFirebaseEvent(
                                             'SIGNUP_PAGE_Text_xhdx4q9m_ON_TAP');
-                                        logFirebaseEvent('Text_Navigate-To');
-                                        await Navigator.push(
-                                          context,
-                                          PageTransition(
-                                            type: PageTransitionType.fade,
-                                            duration: Duration(milliseconds: 0),
-                                            reverseDuration:
-                                                Duration(milliseconds: 0),
-                                            child: LoginWidget(),
-                                          ),
-                                        );
+                                        logFirebaseEvent('Text_navigate_to');
+
+                                        context.pushNamed('Login');
                                       },
                                       child: Text(
                                         'S\'authentifier',

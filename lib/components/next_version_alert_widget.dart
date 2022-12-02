@@ -15,6 +15,13 @@ class NextVersionAlertWidget extends StatefulWidget {
 
 class _NextVersionAlertWidgetState extends State<NextVersionAlertWidget> {
   @override
+  void initState() {
+    super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsetsDirectional.fromSTEB(20, 20, 20, 20),
@@ -63,8 +70,8 @@ class _NextVersionAlertWidgetState extends State<NextVersionAlertWidget> {
                     onPressed: () async {
                       logFirebaseEvent(
                           'NEXT_VERSION_ALERT_COMP_close_ICN_ON_TAP');
-                      logFirebaseEvent('IconButton_Navigate-Back');
-                      Navigator.pop(context);
+                      logFirebaseEvent('IconButton_navigate_back');
+                      context.pop();
                     },
                   ),
                 ],
@@ -101,8 +108,8 @@ class _NextVersionAlertWidgetState extends State<NextVersionAlertWidget> {
                           onTap: () async {
                             logFirebaseEvent(
                                 'NEXT_VERSION_ALERT_Container_etc6i9og_ON');
-                            logFirebaseEvent('iconButton_Navigate-Back');
-                            Navigator.pop(context);
+                            logFirebaseEvent('iconButton_navigate_back');
+                            context.pop();
                           },
                           child: IconButtonWidget(
                             fillColor: Color(0xA10B1E1B),

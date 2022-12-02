@@ -24,6 +24,13 @@ class IconButtonWidget extends StatefulWidget {
 
 class _IconButtonWidgetState extends State<IconButtonWidget> {
   @override
+  void initState() {
+    super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Stack(
       alignment: AlignmentDirectional(0, 1),

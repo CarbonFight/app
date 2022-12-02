@@ -3,21 +3,16 @@ import '../backend/backend.dart';
 import '../components/energy_list_widget.dart';
 import '../components/food_list_widget.dart';
 import '../components/transport_list_widget.dart';
-import '../drawer/drawer_widget.dart';
-import '../energies/energies_widget.dart';
 import '../flutter_flow/flutter_flow_animations.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_toggle_icon.dart';
 import '../flutter_flow/flutter_flow_util.dart';
-import '../food/food_widget.dart';
-import '../profile/profile_widget.dart';
-import '../statistiques/statistiques_widget.dart';
-import '../transport/transport_widget.dart';
 import '../custom_code/actions/index.dart' as actions;
 import '../flutter_flow/custom_functions.dart' as functions;
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -34,51 +29,60 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
   final animationsMap = {
     'containerOnPageLoadAnimation1': AnimationInfo(
       trigger: AnimationTrigger.onPageLoad,
-      duration: 600,
-      hideBeforeAnimating: false,
-      fadeIn: true,
-      initialState: AnimationState(
-        offset: Offset(0, 70),
-        scale: 1,
-        opacity: 0,
-      ),
-      finalState: AnimationState(
-        offset: Offset(0, 0),
-        scale: 1,
-        opacity: 1,
-      ),
+      effects: [
+        FadeEffect(
+          curve: Curves.easeInOut,
+          delay: 0.ms,
+          duration: 600.ms,
+          begin: 0,
+          end: 1,
+        ),
+        MoveEffect(
+          curve: Curves.easeInOut,
+          delay: 0.ms,
+          duration: 600.ms,
+          begin: Offset(0, 70),
+          end: Offset(0, 0),
+        ),
+      ],
     ),
     'containerOnPageLoadAnimation2': AnimationInfo(
       trigger: AnimationTrigger.onPageLoad,
-      duration: 600,
-      hideBeforeAnimating: false,
-      fadeIn: true,
-      initialState: AnimationState(
-        offset: Offset(0, 70),
-        scale: 1,
-        opacity: 0,
-      ),
-      finalState: AnimationState(
-        offset: Offset(0, 0),
-        scale: 1,
-        opacity: 1,
-      ),
+      effects: [
+        FadeEffect(
+          curve: Curves.easeInOut,
+          delay: 0.ms,
+          duration: 600.ms,
+          begin: 0,
+          end: 1,
+        ),
+        MoveEffect(
+          curve: Curves.easeInOut,
+          delay: 0.ms,
+          duration: 600.ms,
+          begin: Offset(0, 70),
+          end: Offset(0, 0),
+        ),
+      ],
     ),
     'containerOnPageLoadAnimation3': AnimationInfo(
       trigger: AnimationTrigger.onPageLoad,
-      duration: 600,
-      hideBeforeAnimating: false,
-      fadeIn: true,
-      initialState: AnimationState(
-        offset: Offset(0, 70),
-        scale: 1,
-        opacity: 0,
-      ),
-      finalState: AnimationState(
-        offset: Offset(0, 0),
-        scale: 1,
-        opacity: 1,
-      ),
+      effects: [
+        FadeEffect(
+          curve: Curves.easeInOut,
+          delay: 0.ms,
+          duration: 600.ms,
+          begin: 0,
+          end: 1,
+        ),
+        MoveEffect(
+          curve: Curves.easeInOut,
+          delay: 0.ms,
+          duration: 600.ms,
+          begin: Offset(0, 70),
+          end: Offset(0, 0),
+        ),
+      ],
     ),
   };
   final scaffoldKey = GlobalKey<ScaffoldState>();
@@ -89,21 +93,27 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       logFirebaseEvent('HOME_PAGE_Home_ON_PAGE_LOAD');
-      logFirebaseEvent('Home_Custom-Action');
+      logFirebaseEvent('Home_custom_action');
       await actions.lockOrientation();
-      logFirebaseEvent('Home_Update-Local-State');
-      setState(() => FFAppState().activeDate =
-          dateTimeFormat('d/M/y', getCurrentTimestamp));
-      logFirebaseEvent('Home_Update-Local-State');
+      logFirebaseEvent('Home_update_local_state');
+      setState(() => FFAppState().activeDate = dateTimeFormat(
+            'd/M/y',
+            getCurrentTimestamp,
+            locale: FFLocalizations.of(context).languageCode,
+          ));
+      logFirebaseEvent('Home_update_local_state');
       setState(() => FFAppState().activeDateRelative = 0);
     });
 
     logFirebaseEvent('screen_view', parameters: {'screen_name': 'Home'});
-    startPageLoadAnimations(
-      animationsMap.values
-          .where((anim) => anim.trigger == AnimationTrigger.onPageLoad),
+    setupAnimations(
+      animationsMap.values.where((anim) =>
+          anim.trigger == AnimationTrigger.onActionTrigger ||
+          !anim.applyInitialState),
       this,
     );
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
@@ -199,18 +209,19 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                             logFirebaseEvent(
                                                 'HOME_PAGE_Container_605qgwvv_ON_TAP');
                                             logFirebaseEvent(
-                                                'Container_Navigate-To');
-                                            await Navigator.push(
-                                              context,
-                                              PageTransition(
-                                                type: PageTransitionType
-                                                    .leftToRight,
-                                                duration:
-                                                    Duration(milliseconds: 300),
-                                                reverseDuration:
-                                                    Duration(milliseconds: 300),
-                                                child: DrawerWidget(),
-                                              ),
+                                                'Container_navigate_to');
+
+                                            context.pushNamed(
+                                              'Drawer',
+                                              extra: <String, dynamic>{
+                                                kTransitionInfoKey:
+                                                    TransitionInfo(
+                                                  hasTransition: true,
+                                                  transitionType:
+                                                      PageTransitionType
+                                                          .leftToRight,
+                                                ),
+                                              },
                                             );
                                           },
                                           child: Container(
@@ -246,18 +257,9 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                               logFirebaseEvent(
                                                   'HOME_PAGE_Actions_ON_TAP');
                                               logFirebaseEvent(
-                                                  'Actions_Navigate-To');
-                                              await Navigator.push(
-                                                context,
-                                                PageTransition(
-                                                  type: PageTransitionType.fade,
-                                                  duration:
-                                                      Duration(milliseconds: 0),
-                                                  reverseDuration:
-                                                      Duration(milliseconds: 0),
-                                                  child: StatistiquesWidget(),
-                                                ),
-                                              );
+                                                  'Actions_navigate_to');
+
+                                              context.pushNamed('Statistiques');
                                             },
                                             child: Container(
                                               width: 40,
@@ -284,19 +286,9 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                   logFirebaseEvent(
                                                       'HOME_PAGE_Icon_20s4at3u_ON_TAP');
                                                   logFirebaseEvent(
-                                                      'Icon_Navigate-To');
-                                                  await Navigator.push(
-                                                    context,
-                                                    PageTransition(
-                                                      type: PageTransitionType
-                                                          .fade,
-                                                      duration: Duration(
-                                                          milliseconds: 0),
-                                                      reverseDuration: Duration(
-                                                          milliseconds: 0),
-                                                      child: HomeWidget(),
-                                                    ),
-                                                  );
+                                                      'Icon_navigate_to');
+
+                                                  context.pushNamed('Home');
                                                 },
                                                 child: Icon(
                                                   Icons.add,
@@ -313,18 +305,9 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                               logFirebaseEvent(
                                                   'HOME_PAGE_Stats_ON_TAP');
                                               logFirebaseEvent(
-                                                  'Stats_Navigate-To');
-                                              await Navigator.push(
-                                                context,
-                                                PageTransition(
-                                                  type: PageTransitionType.fade,
-                                                  duration:
-                                                      Duration(milliseconds: 0),
-                                                  reverseDuration:
-                                                      Duration(milliseconds: 0),
-                                                  child: StatistiquesWidget(),
-                                                ),
-                                              );
+                                                  'Stats_navigate_to');
+
+                                              context.pushNamed('Statistiques');
                                             },
                                             child: Container(
                                               width: 40,
@@ -360,18 +343,9 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                               logFirebaseEvent(
                                                   'HOME_PAGE_Profil_ON_TAP');
                                               logFirebaseEvent(
-                                                  'Profil_Navigate-To');
-                                              await Navigator.push(
-                                                context,
-                                                PageTransition(
-                                                  type: PageTransitionType.fade,
-                                                  duration:
-                                                      Duration(milliseconds: 0),
-                                                  reverseDuration:
-                                                      Duration(milliseconds: 0),
-                                                  child: ProfileWidget(),
-                                                ),
-                                              );
+                                                  'Profil_navigate_to');
+
+                                              context.pushNamed('Profile');
                                             },
                                             child: Container(
                                               width: 40,
@@ -395,20 +369,17 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                   width: 1,
                                                 ),
                                               ),
-                                              child: AuthUserStreamWidget(
-                                                child: ClipRRect(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          100),
-                                                  child: Image.network(
-                                                    valueOrDefault<String>(
-                                                      currentUserPhoto,
-                                                      'https://firebasestorage.googleapis.com/v0/b/carbonfight-89af6.appspot.com/o/18275220161537356156-128.png?alt=media&token=c9797a03-bba1-46b8-aaac-4c54cb99fcb6',
-                                                    ),
-                                                    width: 50,
-                                                    height: 50,
-                                                    fit: BoxFit.cover,
+                                              child: ClipRRect(
+                                                borderRadius:
+                                                    BorderRadius.circular(100),
+                                                child: Image.network(
+                                                  valueOrDefault<String>(
+                                                    homeUsersRecord.photoUrl,
+                                                    'https://storage.googleapis.com/carbonfight-89af6.appspot.com/default_photo_url.png',
                                                   ),
+                                                  width: 50,
+                                                  height: 50,
+                                                  fit: BoxFit.cover,
                                                 ),
                                               ),
                                             ),
@@ -459,11 +430,21 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                           .toList(),
                                                       FFAppState()
                                                           .activeDateRelative),
-                                                  homeUsersRecord.co2target),
+                                                  containerUsersStatsRecord!
+                                                      .co2target),
                                               radius: 85,
                                               lineWidth: 18,
                                               animation: true,
-                                              progressColor: Color(0xCD0B1E1B),
+                                              progressColor:
+                                                  functions.progressBarColor(
+                                                      functions.getActiveScore(
+                                                          containerUsersStatsRecord!
+                                                              .days!
+                                                              .toList(),
+                                                          FFAppState()
+                                                              .activeDateRelative),
+                                                      containerUsersStatsRecord!
+                                                          .co2target),
                                               backgroundColor:
                                                   Color(0x98FFFFFF),
                                               center: Text(
@@ -503,7 +484,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                       child: Text(
                                                         'Objectif : ${valueOrDefault<String>(
                                                           functions.printScore(
-                                                              homeUsersRecord
+                                                              containerUsersStatsRecord!
                                                                   .co2target),
                                                           '0',
                                                         )}',
@@ -576,14 +557,14 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                             logFirebaseEvent(
                                                                 'HOME_PAGE_previous_ON_TAP');
                                                             logFirebaseEvent(
-                                                                'previous_Update-Local-State');
+                                                                'previous_update_local_state');
                                                             setState(() => FFAppState()
                                                                     .activeDate =
                                                                 functions.setOneDayBefore(
                                                                     FFAppState()
                                                                         .activeDate));
                                                             logFirebaseEvent(
-                                                                'previous_Update-Local-State');
+                                                                'previous_update_local_state');
                                                             setState(() => FFAppState()
                                                                     .activeDateRelative =
                                                                 FFAppState()
@@ -628,14 +609,14 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                             logFirebaseEvent(
                                                                 'HOME_PAGE_next_ON_TAP');
                                                             logFirebaseEvent(
-                                                                'next_Update-Local-State');
+                                                                'next_update_local_state');
                                                             setState(() => FFAppState()
                                                                     .activeDate =
                                                                 functions.setOneDayAfter(
                                                                     FFAppState()
                                                                         .activeDate));
                                                             logFirebaseEvent(
-                                                                'next_Update-Local-State');
+                                                                'next_update_local_state');
                                                             setState(() => FFAppState()
                                                                     .activeDateRelative =
                                                                 FFAppState()
@@ -749,7 +730,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                   Text(
                                                                     functions.printScore(functions.getActiveScore(
                                                                         containerUsersStatsRecord!
-                                                                            .foods!
+                                                                            .foodActionsDayCO2e!
                                                                             .toList(),
                                                                         FFAppState()
                                                                             .activeDateRelative)),
@@ -768,7 +749,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                         ),
                                                                   ),
                                                                   Text(
-                                                                    '${functions.printRatioScoreTotal(functions.getActiveScore(containerUsersStatsRecord!.foods!.toList(), FFAppState().activeDateRelative), functions.getActiveScore(containerUsersStatsRecord!.days!.toList(), FFAppState().activeDateRelative))} de votre journée',
+                                                                    '${functions.printRatioScoreTotal(functions.getActiveScore(containerUsersStatsRecord!.foodActionsDayCO2e!.toList(), FFAppState().activeDateRelative), functions.getActiveScore(containerUsersStatsRecord!.days!.toList(), FFAppState().activeDateRelative))} de votre journée',
                                                                     style: FlutterFlowTheme.of(
                                                                             context)
                                                                         .bodyText2
@@ -834,7 +815,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                   Text(
                                                                     functions.printScore(
                                                                         containerUsersStatsRecord!
-                                                                            .foodPeriodics),
+                                                                            .foodPeriodicsCO2e),
                                                                     style: FlutterFlowTheme.of(
                                                                             context)
                                                                         .bodyText1
@@ -850,7 +831,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                         ),
                                                                   ),
                                                                   Text(
-                                                                    '${functions.printRatioScoreTotal(containerUsersStatsRecord!.foodPeriodics, containerUsersStatsRecord!.periodics)} de vos émissions récurrentes',
+                                                                    '${functions.printRatioScoreTotal(containerUsersStatsRecord!.foodPeriodicsCO2e, containerUsersStatsRecord!.allPeriodicsCO2e)} de vos émissions récurrentes',
                                                                     style: FlutterFlowTheme.of(
                                                                             context)
                                                                         .bodyText2
@@ -922,7 +903,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                             logFirebaseEvent(
                                                                 'HOME_PAGE_Card_pbhld83j_ON_TAP');
                                                             logFirebaseEvent(
-                                                                'Card_Bottom-Sheet');
+                                                                'Card_bottom_sheet');
                                                             await showModalBottomSheet(
                                                               isScrollControlled:
                                                                   true,
@@ -946,7 +927,9 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                   ),
                                                                 );
                                                               },
-                                                            );
+                                                            ).then((value) =>
+                                                                setState(
+                                                                    () {}));
                                                           },
                                                           child: Card(
                                                             clipBehavior: Clip
@@ -1058,17 +1041,16 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                                 InkWell(
                                                                                   onTap: () async {
                                                                                     logFirebaseEvent('HOME_PAGE_starterAction_ON_TAP');
-                                                                                    logFirebaseEvent('starterAction_Navigate-To');
-                                                                                    await Navigator.push(
-                                                                                      context,
-                                                                                      PageTransition(
-                                                                                        type: PageTransitionType.fade,
-                                                                                        duration: Duration(milliseconds: 0),
-                                                                                        reverseDuration: Duration(milliseconds: 0),
-                                                                                        child: FoodWidget(
-                                                                                          actionRef: foodsFoodActionsRecord.reference,
+                                                                                    logFirebaseEvent('starterAction_navigate_to');
+
+                                                                                    context.pushNamed(
+                                                                                      'Food',
+                                                                                      queryParams: {
+                                                                                        'actionRef': serializeParam(
+                                                                                          foodsFoodActionsRecord.reference,
+                                                                                          ParamType.DocumentReference,
                                                                                         ),
-                                                                                      ),
+                                                                                      }.withoutNulls,
                                                                                     );
                                                                                   },
                                                                                   child: Container(
@@ -1086,17 +1068,16 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                                 InkWell(
                                                                                   onTap: () async {
                                                                                     logFirebaseEvent('HOME_PAGE_mainAction_ON_TAP');
-                                                                                    logFirebaseEvent('mainAction_Navigate-To');
-                                                                                    await Navigator.push(
-                                                                                      context,
-                                                                                      PageTransition(
-                                                                                        type: PageTransitionType.fade,
-                                                                                        duration: Duration(milliseconds: 0),
-                                                                                        reverseDuration: Duration(milliseconds: 0),
-                                                                                        child: FoodWidget(
-                                                                                          actionRef: foodsFoodActionsRecord.reference,
+                                                                                    logFirebaseEvent('mainAction_navigate_to');
+
+                                                                                    context.pushNamed(
+                                                                                      'Food',
+                                                                                      queryParams: {
+                                                                                        'actionRef': serializeParam(
+                                                                                          foodsFoodActionsRecord.reference,
+                                                                                          ParamType.DocumentReference,
                                                                                         ),
-                                                                                      ),
+                                                                                      }.withoutNulls,
                                                                                     );
                                                                                   },
                                                                                   child: Container(
@@ -1114,17 +1095,16 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                                 InkWell(
                                                                                   onTap: () async {
                                                                                     logFirebaseEvent('HOME_PAGE_desertAction_ON_TAP');
-                                                                                    logFirebaseEvent('desertAction_Navigate-To');
-                                                                                    await Navigator.push(
-                                                                                      context,
-                                                                                      PageTransition(
-                                                                                        type: PageTransitionType.fade,
-                                                                                        duration: Duration(milliseconds: 0),
-                                                                                        reverseDuration: Duration(milliseconds: 0),
-                                                                                        child: FoodWidget(
-                                                                                          actionRef: foodsFoodActionsRecord.reference,
+                                                                                    logFirebaseEvent('desertAction_navigate_to');
+
+                                                                                    context.pushNamed(
+                                                                                      'Food',
+                                                                                      queryParams: {
+                                                                                        'actionRef': serializeParam(
+                                                                                          foodsFoodActionsRecord.reference,
+                                                                                          ParamType.DocumentReference,
                                                                                         ),
-                                                                                      ),
+                                                                                      }.withoutNulls,
                                                                                     );
                                                                                   },
                                                                                   child: Container(
@@ -1142,17 +1122,16 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                                 InkWell(
                                                                                   onTap: () async {
                                                                                     logFirebaseEvent('HOME_PAGE_drinksAction_ON_TAP');
-                                                                                    logFirebaseEvent('drinksAction_Navigate-To');
-                                                                                    await Navigator.push(
-                                                                                      context,
-                                                                                      PageTransition(
-                                                                                        type: PageTransitionType.fade,
-                                                                                        duration: Duration(milliseconds: 0),
-                                                                                        reverseDuration: Duration(milliseconds: 0),
-                                                                                        child: FoodWidget(
-                                                                                          actionRef: foodsFoodActionsRecord.reference,
+                                                                                    logFirebaseEvent('drinksAction_navigate_to');
+
+                                                                                    context.pushNamed(
+                                                                                      'Food',
+                                                                                      queryParams: {
+                                                                                        'actionRef': serializeParam(
+                                                                                          foodsFoodActionsRecord.reference,
+                                                                                          ParamType.DocumentReference,
                                                                                         ),
-                                                                                      ),
+                                                                                      }.withoutNulls,
                                                                                     );
                                                                                   },
                                                                                   child: Container(
@@ -1170,17 +1149,16 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                                 InkWell(
                                                                                   onTap: () async {
                                                                                     logFirebaseEvent('HOME_PAGE_cheeseAction_ON_TAP');
-                                                                                    logFirebaseEvent('cheeseAction_Navigate-To');
-                                                                                    await Navigator.push(
-                                                                                      context,
-                                                                                      PageTransition(
-                                                                                        type: PageTransitionType.fade,
-                                                                                        duration: Duration(milliseconds: 0),
-                                                                                        reverseDuration: Duration(milliseconds: 0),
-                                                                                        child: FoodWidget(
-                                                                                          actionRef: foodsFoodActionsRecord.reference,
+                                                                                    logFirebaseEvent('cheeseAction_navigate_to');
+
+                                                                                    context.pushNamed(
+                                                                                      'Food',
+                                                                                      queryParams: {
+                                                                                        'actionRef': serializeParam(
+                                                                                          foodsFoodActionsRecord.reference,
+                                                                                          ParamType.DocumentReference,
                                                                                         ),
-                                                                                      ),
+                                                                                      }.withoutNulls,
                                                                                     );
                                                                                   },
                                                                                   child: Container(
@@ -1198,17 +1176,16 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                                 InkWell(
                                                                                   onTap: () async {
                                                                                     logFirebaseEvent('HOME_PAGE_breadAction_ON_TAP');
-                                                                                    logFirebaseEvent('breadAction_Navigate-To');
-                                                                                    await Navigator.push(
-                                                                                      context,
-                                                                                      PageTransition(
-                                                                                        type: PageTransitionType.fade,
-                                                                                        duration: Duration(milliseconds: 0),
-                                                                                        reverseDuration: Duration(milliseconds: 0),
-                                                                                        child: FoodWidget(
-                                                                                          actionRef: foodsFoodActionsRecord.reference,
+                                                                                    logFirebaseEvent('breadAction_navigate_to');
+
+                                                                                    context.pushNamed(
+                                                                                      'Food',
+                                                                                      queryParams: {
+                                                                                        'actionRef': serializeParam(
+                                                                                          foodsFoodActionsRecord.reference,
+                                                                                          ParamType.DocumentReference,
                                                                                         ),
-                                                                                      ),
+                                                                                      }.withoutNulls,
                                                                                     );
                                                                                   },
                                                                                   child: Container(
@@ -1226,17 +1203,16 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                                 InkWell(
                                                                                   onTap: () async {
                                                                                     logFirebaseEvent('HOME_PAGE_coffeeAction_ON_TAP');
-                                                                                    logFirebaseEvent('coffeeAction_Navigate-To');
-                                                                                    await Navigator.push(
-                                                                                      context,
-                                                                                      PageTransition(
-                                                                                        type: PageTransitionType.fade,
-                                                                                        duration: Duration(milliseconds: 0),
-                                                                                        reverseDuration: Duration(milliseconds: 0),
-                                                                                        child: FoodWidget(
-                                                                                          actionRef: foodsFoodActionsRecord.reference,
+                                                                                    logFirebaseEvent('coffeeAction_navigate_to');
+
+                                                                                    context.pushNamed(
+                                                                                      'Food',
+                                                                                      queryParams: {
+                                                                                        'actionRef': serializeParam(
+                                                                                          foodsFoodActionsRecord.reference,
+                                                                                          ParamType.DocumentReference,
                                                                                         ),
-                                                                                      ),
+                                                                                      }.withoutNulls,
                                                                                     );
                                                                                   },
                                                                                   child: Container(
@@ -1332,17 +1308,16 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                                   InkWell(
                                                                                     onTap: () async {
                                                                                       logFirebaseEvent('HOME_PAGE_starterPeriodics_ON_TAP');
-                                                                                      logFirebaseEvent('starterPeriodics_Navigate-To');
-                                                                                      await Navigator.push(
-                                                                                        context,
-                                                                                        PageTransition(
-                                                                                          type: PageTransitionType.fade,
-                                                                                          duration: Duration(milliseconds: 0),
-                                                                                          reverseDuration: Duration(milliseconds: 0),
-                                                                                          child: FoodWidget(
-                                                                                            actionRef: foodPeriodicsFoodActionsRecord.reference,
+                                                                                      logFirebaseEvent('starterPeriodics_navigate_to');
+
+                                                                                      context.pushNamed(
+                                                                                        'Food',
+                                                                                        queryParams: {
+                                                                                          'actionRef': serializeParam(
+                                                                                            foodPeriodicsFoodActionsRecord.reference,
+                                                                                            ParamType.DocumentReference,
                                                                                           ),
-                                                                                        ),
+                                                                                        }.withoutNulls,
                                                                                       );
                                                                                     },
                                                                                     child: Container(
@@ -1360,17 +1335,16 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                                   InkWell(
                                                                                     onTap: () async {
                                                                                       logFirebaseEvent('HOME_PAGE_mainPeriodics_ON_TAP');
-                                                                                      logFirebaseEvent('mainPeriodics_Navigate-To');
-                                                                                      await Navigator.push(
-                                                                                        context,
-                                                                                        PageTransition(
-                                                                                          type: PageTransitionType.fade,
-                                                                                          duration: Duration(milliseconds: 0),
-                                                                                          reverseDuration: Duration(milliseconds: 0),
-                                                                                          child: FoodWidget(
-                                                                                            actionRef: foodPeriodicsFoodActionsRecord.reference,
+                                                                                      logFirebaseEvent('mainPeriodics_navigate_to');
+
+                                                                                      context.pushNamed(
+                                                                                        'Food',
+                                                                                        queryParams: {
+                                                                                          'actionRef': serializeParam(
+                                                                                            foodPeriodicsFoodActionsRecord.reference,
+                                                                                            ParamType.DocumentReference,
                                                                                           ),
-                                                                                        ),
+                                                                                        }.withoutNulls,
                                                                                       );
                                                                                     },
                                                                                     child: Container(
@@ -1388,17 +1362,16 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                                   InkWell(
                                                                                     onTap: () async {
                                                                                       logFirebaseEvent('HOME_PAGE_desertPeriodics_ON_TAP');
-                                                                                      logFirebaseEvent('desertPeriodics_Navigate-To');
-                                                                                      await Navigator.push(
-                                                                                        context,
-                                                                                        PageTransition(
-                                                                                          type: PageTransitionType.fade,
-                                                                                          duration: Duration(milliseconds: 0),
-                                                                                          reverseDuration: Duration(milliseconds: 0),
-                                                                                          child: FoodWidget(
-                                                                                            actionRef: foodPeriodicsFoodActionsRecord.reference,
+                                                                                      logFirebaseEvent('desertPeriodics_navigate_to');
+
+                                                                                      context.pushNamed(
+                                                                                        'Food',
+                                                                                        queryParams: {
+                                                                                          'actionRef': serializeParam(
+                                                                                            foodPeriodicsFoodActionsRecord.reference,
+                                                                                            ParamType.DocumentReference,
                                                                                           ),
-                                                                                        ),
+                                                                                        }.withoutNulls,
                                                                                       );
                                                                                     },
                                                                                     child: Container(
@@ -1416,17 +1389,16 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                                   InkWell(
                                                                                     onTap: () async {
                                                                                       logFirebaseEvent('HOME_PAGE_drinksPeriodics_ON_TAP');
-                                                                                      logFirebaseEvent('drinksPeriodics_Navigate-To');
-                                                                                      await Navigator.push(
-                                                                                        context,
-                                                                                        PageTransition(
-                                                                                          type: PageTransitionType.fade,
-                                                                                          duration: Duration(milliseconds: 0),
-                                                                                          reverseDuration: Duration(milliseconds: 0),
-                                                                                          child: FoodWidget(
-                                                                                            actionRef: foodPeriodicsFoodActionsRecord.reference,
+                                                                                      logFirebaseEvent('drinksPeriodics_navigate_to');
+
+                                                                                      context.pushNamed(
+                                                                                        'Food',
+                                                                                        queryParams: {
+                                                                                          'actionRef': serializeParam(
+                                                                                            foodPeriodicsFoodActionsRecord.reference,
+                                                                                            ParamType.DocumentReference,
                                                                                           ),
-                                                                                        ),
+                                                                                        }.withoutNulls,
                                                                                       );
                                                                                     },
                                                                                     child: Container(
@@ -1444,17 +1416,16 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                                   InkWell(
                                                                                     onTap: () async {
                                                                                       logFirebaseEvent('HOME_PAGE_cheesePeriodics_ON_TAP');
-                                                                                      logFirebaseEvent('cheesePeriodics_Navigate-To');
-                                                                                      await Navigator.push(
-                                                                                        context,
-                                                                                        PageTransition(
-                                                                                          type: PageTransitionType.fade,
-                                                                                          duration: Duration(milliseconds: 0),
-                                                                                          reverseDuration: Duration(milliseconds: 0),
-                                                                                          child: FoodWidget(
-                                                                                            actionRef: foodPeriodicsFoodActionsRecord.reference,
+                                                                                      logFirebaseEvent('cheesePeriodics_navigate_to');
+
+                                                                                      context.pushNamed(
+                                                                                        'Food',
+                                                                                        queryParams: {
+                                                                                          'actionRef': serializeParam(
+                                                                                            foodPeriodicsFoodActionsRecord.reference,
+                                                                                            ParamType.DocumentReference,
                                                                                           ),
-                                                                                        ),
+                                                                                        }.withoutNulls,
                                                                                       );
                                                                                     },
                                                                                     child: Container(
@@ -1472,17 +1443,16 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                                   InkWell(
                                                                                     onTap: () async {
                                                                                       logFirebaseEvent('HOME_PAGE_breadPeriodics_ON_TAP');
-                                                                                      logFirebaseEvent('breadPeriodics_Navigate-To');
-                                                                                      await Navigator.push(
-                                                                                        context,
-                                                                                        PageTransition(
-                                                                                          type: PageTransitionType.fade,
-                                                                                          duration: Duration(milliseconds: 0),
-                                                                                          reverseDuration: Duration(milliseconds: 0),
-                                                                                          child: FoodWidget(
-                                                                                            actionRef: foodPeriodicsFoodActionsRecord.reference,
+                                                                                      logFirebaseEvent('breadPeriodics_navigate_to');
+
+                                                                                      context.pushNamed(
+                                                                                        'Food',
+                                                                                        queryParams: {
+                                                                                          'actionRef': serializeParam(
+                                                                                            foodPeriodicsFoodActionsRecord.reference,
+                                                                                            ParamType.DocumentReference,
                                                                                           ),
-                                                                                        ),
+                                                                                        }.withoutNulls,
                                                                                       );
                                                                                     },
                                                                                     child: Container(
@@ -1500,17 +1470,16 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                                   InkWell(
                                                                                     onTap: () async {
                                                                                       logFirebaseEvent('HOME_PAGE_coffeePeriodics_ON_TAP');
-                                                                                      logFirebaseEvent('coffeePeriodics_Navigate-To');
-                                                                                      await Navigator.push(
-                                                                                        context,
-                                                                                        PageTransition(
-                                                                                          type: PageTransitionType.fade,
-                                                                                          duration: Duration(milliseconds: 0),
-                                                                                          reverseDuration: Duration(milliseconds: 0),
-                                                                                          child: FoodWidget(
-                                                                                            actionRef: foodPeriodicsFoodActionsRecord.reference,
+                                                                                      logFirebaseEvent('coffeePeriodics_navigate_to');
+
+                                                                                      context.pushNamed(
+                                                                                        'Food',
+                                                                                        queryParams: {
+                                                                                          'actionRef': serializeParam(
+                                                                                            foodPeriodicsFoodActionsRecord.reference,
+                                                                                            ParamType.DocumentReference,
                                                                                           ),
-                                                                                        ),
+                                                                                        }.withoutNulls,
                                                                                       );
                                                                                     },
                                                                                     child: Container(
@@ -1584,10 +1553,8 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                               ),
                                             ],
                                           ),
-                                        ).animated([
-                                          animationsMap[
-                                              'containerOnPageLoadAnimation1']!
-                                        ]),
+                                        ).animateOnPageLoad(animationsMap[
+                                            'containerOnPageLoadAnimation1']!),
                                       ),
                                       Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(
@@ -1667,7 +1634,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                   Text(
                                                                     functions.printScore(functions.getActiveScore(
                                                                         containerUsersStatsRecord!
-                                                                            .transports!
+                                                                            .transportActionsDayCO2e!
                                                                             .toList(),
                                                                         FFAppState()
                                                                             .activeDateRelative)),
@@ -1686,7 +1653,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                         ),
                                                                   ),
                                                                   Text(
-                                                                    '${functions.printRatioScoreTotal(functions.getActiveScore(containerUsersStatsRecord!.transports!.toList(), FFAppState().activeDateRelative), functions.getActiveScore(containerUsersStatsRecord!.days!.toList(), FFAppState().activeDateRelative))} de votre journée',
+                                                                    '${functions.printRatioScoreTotal(functions.getActiveScore(containerUsersStatsRecord!.transportActionsDayCO2e!.toList(), FFAppState().activeDateRelative), functions.getActiveScore(containerUsersStatsRecord!.days!.toList(), FFAppState().activeDateRelative))} de votre journée',
                                                                     style: FlutterFlowTheme.of(
                                                                             context)
                                                                         .bodyText2
@@ -1752,7 +1719,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                   Text(
                                                                     functions.printScore(
                                                                         containerUsersStatsRecord!
-                                                                            .transportPeriodics),
+                                                                            .transportPeriodicsCO2e),
                                                                     style: FlutterFlowTheme.of(
                                                                             context)
                                                                         .bodyText1
@@ -1768,7 +1735,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                         ),
                                                                   ),
                                                                   Text(
-                                                                    '${functions.printRatioScoreTotal(containerUsersStatsRecord!.transportPeriodics, containerUsersStatsRecord!.periodics)} de vos émissions récurrentes',
+                                                                    '${functions.printRatioScoreTotal(containerUsersStatsRecord!.transportPeriodicsCO2e, containerUsersStatsRecord!.allPeriodicsCO2e)} de vos émissions récurrentes',
                                                                     style: FlutterFlowTheme.of(
                                                                             context)
                                                                         .bodyText2
@@ -1840,7 +1807,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                             logFirebaseEvent(
                                                                 'HOME_PAGE_Card_sk6gbsww_ON_TAP');
                                                             logFirebaseEvent(
-                                                                'Card_Bottom-Sheet');
+                                                                'Card_bottom_sheet');
                                                             await showModalBottomSheet(
                                                               isScrollControlled:
                                                                   true,
@@ -1864,7 +1831,9 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                   ),
                                                                 );
                                                               },
-                                                            );
+                                                            ).then((value) =>
+                                                                setState(
+                                                                    () {}));
                                                           },
                                                           child: Card(
                                                             clipBehavior: Clip
@@ -1976,23 +1945,22 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                                 InkWell(
                                                                                   onTap: () async {
                                                                                     logFirebaseEvent('HOME_PAGE_carAction_ON_TAP');
-                                                                                    logFirebaseEvent('carAction_Update-Local-State');
+                                                                                    logFirebaseEvent('carAction_update_local_state');
                                                                                     setState(() => FFAppState().displayOptions = false);
-                                                                                    logFirebaseEvent('carAction_Update-Local-State');
+                                                                                    logFirebaseEvent('carAction_update_local_state');
                                                                                     setState(() => FFAppState().displayDates = false);
-                                                                                    logFirebaseEvent('carAction_Update-Local-State');
+                                                                                    logFirebaseEvent('carAction_update_local_state');
                                                                                     setState(() => FFAppState().displayDays = false);
-                                                                                    logFirebaseEvent('carAction_Navigate-To');
-                                                                                    await Navigator.push(
-                                                                                      context,
-                                                                                      PageTransition(
-                                                                                        type: PageTransitionType.fade,
-                                                                                        duration: Duration(milliseconds: 0),
-                                                                                        reverseDuration: Duration(milliseconds: 0),
-                                                                                        child: TransportWidget(
-                                                                                          actionRef: transportsTransportActionsRecord.reference,
+                                                                                    logFirebaseEvent('carAction_navigate_to');
+
+                                                                                    context.pushNamed(
+                                                                                      'Transport',
+                                                                                      queryParams: {
+                                                                                        'actionRef': serializeParam(
+                                                                                          transportsTransportActionsRecord.reference,
+                                                                                          ParamType.DocumentReference,
                                                                                         ),
-                                                                                      ),
+                                                                                      }.withoutNulls,
                                                                                     );
                                                                                   },
                                                                                   child: Container(
@@ -2010,23 +1978,22 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                                 InkWell(
                                                                                   onTap: () async {
                                                                                     logFirebaseEvent('HOME_PAGE_busAction_ON_TAP');
-                                                                                    logFirebaseEvent('busAction_Update-Local-State');
+                                                                                    logFirebaseEvent('busAction_update_local_state');
                                                                                     setState(() => FFAppState().displayOptions = false);
-                                                                                    logFirebaseEvent('busAction_Update-Local-State');
+                                                                                    logFirebaseEvent('busAction_update_local_state');
                                                                                     setState(() => FFAppState().displayDates = false);
-                                                                                    logFirebaseEvent('busAction_Update-Local-State');
+                                                                                    logFirebaseEvent('busAction_update_local_state');
                                                                                     setState(() => FFAppState().displayDays = false);
-                                                                                    logFirebaseEvent('busAction_Navigate-To');
-                                                                                    await Navigator.push(
-                                                                                      context,
-                                                                                      PageTransition(
-                                                                                        type: PageTransitionType.fade,
-                                                                                        duration: Duration(milliseconds: 0),
-                                                                                        reverseDuration: Duration(milliseconds: 0),
-                                                                                        child: TransportWidget(
-                                                                                          actionRef: transportsTransportActionsRecord.reference,
+                                                                                    logFirebaseEvent('busAction_navigate_to');
+
+                                                                                    context.pushNamed(
+                                                                                      'Transport',
+                                                                                      queryParams: {
+                                                                                        'actionRef': serializeParam(
+                                                                                          transportsTransportActionsRecord.reference,
+                                                                                          ParamType.DocumentReference,
                                                                                         ),
-                                                                                      ),
+                                                                                      }.withoutNulls,
                                                                                     );
                                                                                   },
                                                                                   child: Container(
@@ -2044,23 +2011,22 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                                 InkWell(
                                                                                   onTap: () async {
                                                                                     logFirebaseEvent('HOME_PAGE_scooterAction_ON_TAP');
-                                                                                    logFirebaseEvent('scooterAction_Update-Local-State');
+                                                                                    logFirebaseEvent('scooterAction_update_local_state');
                                                                                     setState(() => FFAppState().displayOptions = false);
-                                                                                    logFirebaseEvent('scooterAction_Update-Local-State');
+                                                                                    logFirebaseEvent('scooterAction_update_local_state');
                                                                                     setState(() => FFAppState().displayDates = false);
-                                                                                    logFirebaseEvent('scooterAction_Update-Local-State');
+                                                                                    logFirebaseEvent('scooterAction_update_local_state');
                                                                                     setState(() => FFAppState().displayDays = false);
-                                                                                    logFirebaseEvent('scooterAction_Navigate-To');
-                                                                                    await Navigator.push(
-                                                                                      context,
-                                                                                      PageTransition(
-                                                                                        type: PageTransitionType.fade,
-                                                                                        duration: Duration(milliseconds: 0),
-                                                                                        reverseDuration: Duration(milliseconds: 0),
-                                                                                        child: TransportWidget(
-                                                                                          actionRef: transportsTransportActionsRecord.reference,
+                                                                                    logFirebaseEvent('scooterAction_navigate_to');
+
+                                                                                    context.pushNamed(
+                                                                                      'Transport',
+                                                                                      queryParams: {
+                                                                                        'actionRef': serializeParam(
+                                                                                          transportsTransportActionsRecord.reference,
+                                                                                          ParamType.DocumentReference,
                                                                                         ),
-                                                                                      ),
+                                                                                      }.withoutNulls,
                                                                                     );
                                                                                   },
                                                                                   child: Container(
@@ -2078,23 +2044,22 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                                 InkWell(
                                                                                   onTap: () async {
                                                                                     logFirebaseEvent('HOME_PAGE_motoAction_ON_TAP');
-                                                                                    logFirebaseEvent('motoAction_Update-Local-State');
+                                                                                    logFirebaseEvent('motoAction_update_local_state');
                                                                                     setState(() => FFAppState().displayOptions = false);
-                                                                                    logFirebaseEvent('motoAction_Update-Local-State');
+                                                                                    logFirebaseEvent('motoAction_update_local_state');
                                                                                     setState(() => FFAppState().displayDates = false);
-                                                                                    logFirebaseEvent('motoAction_Update-Local-State');
+                                                                                    logFirebaseEvent('motoAction_update_local_state');
                                                                                     setState(() => FFAppState().displayDays = false);
-                                                                                    logFirebaseEvent('motoAction_Navigate-To');
-                                                                                    await Navigator.push(
-                                                                                      context,
-                                                                                      PageTransition(
-                                                                                        type: PageTransitionType.fade,
-                                                                                        duration: Duration(milliseconds: 0),
-                                                                                        reverseDuration: Duration(milliseconds: 0),
-                                                                                        child: TransportWidget(
-                                                                                          actionRef: transportsTransportActionsRecord.reference,
+                                                                                    logFirebaseEvent('motoAction_navigate_to');
+
+                                                                                    context.pushNamed(
+                                                                                      'Transport',
+                                                                                      queryParams: {
+                                                                                        'actionRef': serializeParam(
+                                                                                          transportsTransportActionsRecord.reference,
+                                                                                          ParamType.DocumentReference,
                                                                                         ),
-                                                                                      ),
+                                                                                      }.withoutNulls,
                                                                                     );
                                                                                   },
                                                                                   child: Container(
@@ -2112,23 +2077,22 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                                 InkWell(
                                                                                   onTap: () async {
                                                                                     logFirebaseEvent('HOME_PAGE_trainAction_ON_TAP');
-                                                                                    logFirebaseEvent('trainAction_Update-Local-State');
+                                                                                    logFirebaseEvent('trainAction_update_local_state');
                                                                                     setState(() => FFAppState().displayOptions = false);
-                                                                                    logFirebaseEvent('trainAction_Update-Local-State');
+                                                                                    logFirebaseEvent('trainAction_update_local_state');
                                                                                     setState(() => FFAppState().displayDates = false);
-                                                                                    logFirebaseEvent('trainAction_Update-Local-State');
+                                                                                    logFirebaseEvent('trainAction_update_local_state');
                                                                                     setState(() => FFAppState().displayDays = false);
-                                                                                    logFirebaseEvent('trainAction_Navigate-To');
-                                                                                    await Navigator.push(
-                                                                                      context,
-                                                                                      PageTransition(
-                                                                                        type: PageTransitionType.fade,
-                                                                                        duration: Duration(milliseconds: 0),
-                                                                                        reverseDuration: Duration(milliseconds: 0),
-                                                                                        child: TransportWidget(
-                                                                                          actionRef: transportsTransportActionsRecord.reference,
+                                                                                    logFirebaseEvent('trainAction_navigate_to');
+
+                                                                                    context.pushNamed(
+                                                                                      'Transport',
+                                                                                      queryParams: {
+                                                                                        'actionRef': serializeParam(
+                                                                                          transportsTransportActionsRecord.reference,
+                                                                                          ParamType.DocumentReference,
                                                                                         ),
-                                                                                      ),
+                                                                                      }.withoutNulls,
                                                                                     );
                                                                                   },
                                                                                   child: Container(
@@ -2146,23 +2110,22 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                                 InkWell(
                                                                                   onTap: () async {
                                                                                     logFirebaseEvent('HOME_PAGE_metroAction_ON_TAP');
-                                                                                    logFirebaseEvent('metroAction_Update-Local-State');
+                                                                                    logFirebaseEvent('metroAction_update_local_state');
                                                                                     setState(() => FFAppState().displayOptions = false);
-                                                                                    logFirebaseEvent('metroAction_Update-Local-State');
+                                                                                    logFirebaseEvent('metroAction_update_local_state');
                                                                                     setState(() => FFAppState().displayDates = false);
-                                                                                    logFirebaseEvent('metroAction_Update-Local-State');
+                                                                                    logFirebaseEvent('metroAction_update_local_state');
                                                                                     setState(() => FFAppState().displayDays = false);
-                                                                                    logFirebaseEvent('metroAction_Navigate-To');
-                                                                                    await Navigator.push(
-                                                                                      context,
-                                                                                      PageTransition(
-                                                                                        type: PageTransitionType.fade,
-                                                                                        duration: Duration(milliseconds: 0),
-                                                                                        reverseDuration: Duration(milliseconds: 0),
-                                                                                        child: TransportWidget(
-                                                                                          actionRef: transportsTransportActionsRecord.reference,
+                                                                                    logFirebaseEvent('metroAction_navigate_to');
+
+                                                                                    context.pushNamed(
+                                                                                      'Transport',
+                                                                                      queryParams: {
+                                                                                        'actionRef': serializeParam(
+                                                                                          transportsTransportActionsRecord.reference,
+                                                                                          ParamType.DocumentReference,
                                                                                         ),
-                                                                                      ),
+                                                                                      }.withoutNulls,
                                                                                     );
                                                                                   },
                                                                                   child: Container(
@@ -2180,23 +2143,22 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                                 InkWell(
                                                                                   onTap: () async {
                                                                                     logFirebaseEvent('HOME_PAGE_flightAction_ON_TAP');
-                                                                                    logFirebaseEvent('flightAction_Update-Local-State');
+                                                                                    logFirebaseEvent('flightAction_update_local_state');
                                                                                     setState(() => FFAppState().displayOptions = false);
-                                                                                    logFirebaseEvent('flightAction_Update-Local-State');
+                                                                                    logFirebaseEvent('flightAction_update_local_state');
                                                                                     setState(() => FFAppState().displayDates = false);
-                                                                                    logFirebaseEvent('flightAction_Update-Local-State');
+                                                                                    logFirebaseEvent('flightAction_update_local_state');
                                                                                     setState(() => FFAppState().displayDays = false);
-                                                                                    logFirebaseEvent('flightAction_Navigate-To');
-                                                                                    await Navigator.push(
-                                                                                      context,
-                                                                                      PageTransition(
-                                                                                        type: PageTransitionType.fade,
-                                                                                        duration: Duration(milliseconds: 0),
-                                                                                        reverseDuration: Duration(milliseconds: 0),
-                                                                                        child: TransportWidget(
-                                                                                          actionRef: transportsTransportActionsRecord.reference,
+                                                                                    logFirebaseEvent('flightAction_navigate_to');
+
+                                                                                    context.pushNamed(
+                                                                                      'Transport',
+                                                                                      queryParams: {
+                                                                                        'actionRef': serializeParam(
+                                                                                          transportsTransportActionsRecord.reference,
+                                                                                          ParamType.DocumentReference,
                                                                                         ),
-                                                                                      ),
+                                                                                      }.withoutNulls,
                                                                                     );
                                                                                   },
                                                                                   child: Container(
@@ -2214,23 +2176,22 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                                 InkWell(
                                                                                   onTap: () async {
                                                                                     logFirebaseEvent('HOME_PAGE_bikeAction_ON_TAP');
-                                                                                    logFirebaseEvent('bikeAction_Update-Local-State');
+                                                                                    logFirebaseEvent('bikeAction_update_local_state');
                                                                                     setState(() => FFAppState().displayOptions = false);
-                                                                                    logFirebaseEvent('bikeAction_Update-Local-State');
+                                                                                    logFirebaseEvent('bikeAction_update_local_state');
                                                                                     setState(() => FFAppState().displayDates = false);
-                                                                                    logFirebaseEvent('bikeAction_Update-Local-State');
+                                                                                    logFirebaseEvent('bikeAction_update_local_state');
                                                                                     setState(() => FFAppState().displayDays = false);
-                                                                                    logFirebaseEvent('bikeAction_Navigate-To');
-                                                                                    await Navigator.push(
-                                                                                      context,
-                                                                                      PageTransition(
-                                                                                        type: PageTransitionType.fade,
-                                                                                        duration: Duration(milliseconds: 0),
-                                                                                        reverseDuration: Duration(milliseconds: 0),
-                                                                                        child: TransportWidget(
-                                                                                          actionRef: transportsTransportActionsRecord.reference,
+                                                                                    logFirebaseEvent('bikeAction_navigate_to');
+
+                                                                                    context.pushNamed(
+                                                                                      'Transport',
+                                                                                      queryParams: {
+                                                                                        'actionRef': serializeParam(
+                                                                                          transportsTransportActionsRecord.reference,
+                                                                                          ParamType.DocumentReference,
                                                                                         ),
-                                                                                      ),
+                                                                                      }.withoutNulls,
                                                                                     );
                                                                                   },
                                                                                   child: Container(
@@ -2324,23 +2285,22 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                                 child: InkWell(
                                                                                   onTap: () async {
                                                                                     logFirebaseEvent('HOME_PAGE_carPeriodics_ON_TAP');
-                                                                                    logFirebaseEvent('carPeriodics_Update-Local-State');
+                                                                                    logFirebaseEvent('carPeriodics_update_local_state');
                                                                                     setState(() => FFAppState().displayOptions = false);
-                                                                                    logFirebaseEvent('carPeriodics_Update-Local-State');
+                                                                                    logFirebaseEvent('carPeriodics_update_local_state');
                                                                                     setState(() => FFAppState().displayDates = false);
-                                                                                    logFirebaseEvent('carPeriodics_Update-Local-State');
+                                                                                    logFirebaseEvent('carPeriodics_update_local_state');
                                                                                     setState(() => FFAppState().displayDays = true);
-                                                                                    logFirebaseEvent('carPeriodics_Navigate-To');
-                                                                                    await Navigator.push(
-                                                                                      context,
-                                                                                      PageTransition(
-                                                                                        type: PageTransitionType.fade,
-                                                                                        duration: Duration(milliseconds: 0),
-                                                                                        reverseDuration: Duration(milliseconds: 0),
-                                                                                        child: TransportWidget(
-                                                                                          actionRef: transportPeriodicsTransportActionsRecord.reference,
+                                                                                    logFirebaseEvent('carPeriodics_navigate_to');
+
+                                                                                    context.pushNamed(
+                                                                                      'Transport',
+                                                                                      queryParams: {
+                                                                                        'actionRef': serializeParam(
+                                                                                          transportPeriodicsTransportActionsRecord.reference,
+                                                                                          ParamType.DocumentReference,
                                                                                         ),
-                                                                                      ),
+                                                                                      }.withoutNulls,
                                                                                     );
                                                                                   },
                                                                                   child: Container(
@@ -2362,23 +2322,22 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                                 child: InkWell(
                                                                                   onTap: () async {
                                                                                     logFirebaseEvent('HOME_PAGE_busPeriodics_ON_TAP');
-                                                                                    logFirebaseEvent('busPeriodics_Update-Local-State');
+                                                                                    logFirebaseEvent('busPeriodics_update_local_state');
                                                                                     setState(() => FFAppState().displayOptions = false);
-                                                                                    logFirebaseEvent('busPeriodics_Update-Local-State');
+                                                                                    logFirebaseEvent('busPeriodics_update_local_state');
                                                                                     setState(() => FFAppState().displayDates = false);
-                                                                                    logFirebaseEvent('busPeriodics_Update-Local-State');
+                                                                                    logFirebaseEvent('busPeriodics_update_local_state');
                                                                                     setState(() => FFAppState().displayDays = true);
-                                                                                    logFirebaseEvent('busPeriodics_Navigate-To');
-                                                                                    await Navigator.push(
-                                                                                      context,
-                                                                                      PageTransition(
-                                                                                        type: PageTransitionType.fade,
-                                                                                        duration: Duration(milliseconds: 0),
-                                                                                        reverseDuration: Duration(milliseconds: 0),
-                                                                                        child: TransportWidget(
-                                                                                          actionRef: transportPeriodicsTransportActionsRecord.reference,
+                                                                                    logFirebaseEvent('busPeriodics_navigate_to');
+
+                                                                                    context.pushNamed(
+                                                                                      'Transport',
+                                                                                      queryParams: {
+                                                                                        'actionRef': serializeParam(
+                                                                                          transportPeriodicsTransportActionsRecord.reference,
+                                                                                          ParamType.DocumentReference,
                                                                                         ),
-                                                                                      ),
+                                                                                      }.withoutNulls,
                                                                                     );
                                                                                   },
                                                                                   child: Container(
@@ -2400,23 +2359,22 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                                 child: InkWell(
                                                                                   onTap: () async {
                                                                                     logFirebaseEvent('HOME_PAGE_scooterPeriodics_ON_TAP');
-                                                                                    logFirebaseEvent('scooterPeriodics_Update-Local-State');
+                                                                                    logFirebaseEvent('scooterPeriodics_update_local_state');
                                                                                     setState(() => FFAppState().displayOptions = false);
-                                                                                    logFirebaseEvent('scooterPeriodics_Update-Local-State');
+                                                                                    logFirebaseEvent('scooterPeriodics_update_local_state');
                                                                                     setState(() => FFAppState().displayDates = false);
-                                                                                    logFirebaseEvent('scooterPeriodics_Update-Local-State');
+                                                                                    logFirebaseEvent('scooterPeriodics_update_local_state');
                                                                                     setState(() => FFAppState().displayDays = true);
-                                                                                    logFirebaseEvent('scooterPeriodics_Navigate-To');
-                                                                                    await Navigator.push(
-                                                                                      context,
-                                                                                      PageTransition(
-                                                                                        type: PageTransitionType.fade,
-                                                                                        duration: Duration(milliseconds: 0),
-                                                                                        reverseDuration: Duration(milliseconds: 0),
-                                                                                        child: TransportWidget(
-                                                                                          actionRef: transportPeriodicsTransportActionsRecord.reference,
+                                                                                    logFirebaseEvent('scooterPeriodics_navigate_to');
+
+                                                                                    context.pushNamed(
+                                                                                      'Transport',
+                                                                                      queryParams: {
+                                                                                        'actionRef': serializeParam(
+                                                                                          transportPeriodicsTransportActionsRecord.reference,
+                                                                                          ParamType.DocumentReference,
                                                                                         ),
-                                                                                      ),
+                                                                                      }.withoutNulls,
                                                                                     );
                                                                                   },
                                                                                   child: Container(
@@ -2438,23 +2396,22 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                                 child: InkWell(
                                                                                   onTap: () async {
                                                                                     logFirebaseEvent('HOME_PAGE_motoPeriodics_ON_TAP');
-                                                                                    logFirebaseEvent('motoPeriodics_Update-Local-State');
+                                                                                    logFirebaseEvent('motoPeriodics_update_local_state');
                                                                                     setState(() => FFAppState().displayOptions = false);
-                                                                                    logFirebaseEvent('motoPeriodics_Update-Local-State');
+                                                                                    logFirebaseEvent('motoPeriodics_update_local_state');
                                                                                     setState(() => FFAppState().displayDates = false);
-                                                                                    logFirebaseEvent('motoPeriodics_Update-Local-State');
+                                                                                    logFirebaseEvent('motoPeriodics_update_local_state');
                                                                                     setState(() => FFAppState().displayDays = true);
-                                                                                    logFirebaseEvent('motoPeriodics_Navigate-To');
-                                                                                    await Navigator.push(
-                                                                                      context,
-                                                                                      PageTransition(
-                                                                                        type: PageTransitionType.fade,
-                                                                                        duration: Duration(milliseconds: 0),
-                                                                                        reverseDuration: Duration(milliseconds: 0),
-                                                                                        child: TransportWidget(
-                                                                                          actionRef: transportPeriodicsTransportActionsRecord.reference,
+                                                                                    logFirebaseEvent('motoPeriodics_navigate_to');
+
+                                                                                    context.pushNamed(
+                                                                                      'Transport',
+                                                                                      queryParams: {
+                                                                                        'actionRef': serializeParam(
+                                                                                          transportPeriodicsTransportActionsRecord.reference,
+                                                                                          ParamType.DocumentReference,
                                                                                         ),
-                                                                                      ),
+                                                                                      }.withoutNulls,
                                                                                     );
                                                                                   },
                                                                                   child: Container(
@@ -2476,23 +2433,22 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                                 child: InkWell(
                                                                                   onTap: () async {
                                                                                     logFirebaseEvent('HOME_PAGE_trainPeriodics_ON_TAP');
-                                                                                    logFirebaseEvent('trainPeriodics_Update-Local-State');
+                                                                                    logFirebaseEvent('trainPeriodics_update_local_state');
                                                                                     setState(() => FFAppState().displayOptions = false);
-                                                                                    logFirebaseEvent('trainPeriodics_Update-Local-State');
+                                                                                    logFirebaseEvent('trainPeriodics_update_local_state');
                                                                                     setState(() => FFAppState().displayDates = false);
-                                                                                    logFirebaseEvent('trainPeriodics_Update-Local-State');
+                                                                                    logFirebaseEvent('trainPeriodics_update_local_state');
                                                                                     setState(() => FFAppState().displayDays = true);
-                                                                                    logFirebaseEvent('trainPeriodics_Navigate-To');
-                                                                                    await Navigator.push(
-                                                                                      context,
-                                                                                      PageTransition(
-                                                                                        type: PageTransitionType.fade,
-                                                                                        duration: Duration(milliseconds: 0),
-                                                                                        reverseDuration: Duration(milliseconds: 0),
-                                                                                        child: TransportWidget(
-                                                                                          actionRef: transportPeriodicsTransportActionsRecord.reference,
+                                                                                    logFirebaseEvent('trainPeriodics_navigate_to');
+
+                                                                                    context.pushNamed(
+                                                                                      'Transport',
+                                                                                      queryParams: {
+                                                                                        'actionRef': serializeParam(
+                                                                                          transportPeriodicsTransportActionsRecord.reference,
+                                                                                          ParamType.DocumentReference,
                                                                                         ),
-                                                                                      ),
+                                                                                      }.withoutNulls,
                                                                                     );
                                                                                   },
                                                                                   child: Container(
@@ -2514,23 +2470,22 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                                 child: InkWell(
                                                                                   onTap: () async {
                                                                                     logFirebaseEvent('HOME_PAGE_metroPeriodics_ON_TAP');
-                                                                                    logFirebaseEvent('metroPeriodics_Update-Local-State');
+                                                                                    logFirebaseEvent('metroPeriodics_update_local_state');
                                                                                     setState(() => FFAppState().displayOptions = false);
-                                                                                    logFirebaseEvent('metroPeriodics_Update-Local-State');
+                                                                                    logFirebaseEvent('metroPeriodics_update_local_state');
                                                                                     setState(() => FFAppState().displayDates = false);
-                                                                                    logFirebaseEvent('metroPeriodics_Update-Local-State');
+                                                                                    logFirebaseEvent('metroPeriodics_update_local_state');
                                                                                     setState(() => FFAppState().displayDays = true);
-                                                                                    logFirebaseEvent('metroPeriodics_Navigate-To');
-                                                                                    await Navigator.push(
-                                                                                      context,
-                                                                                      PageTransition(
-                                                                                        type: PageTransitionType.fade,
-                                                                                        duration: Duration(milliseconds: 0),
-                                                                                        reverseDuration: Duration(milliseconds: 0),
-                                                                                        child: TransportWidget(
-                                                                                          actionRef: transportPeriodicsTransportActionsRecord.reference,
+                                                                                    logFirebaseEvent('metroPeriodics_navigate_to');
+
+                                                                                    context.pushNamed(
+                                                                                      'Transport',
+                                                                                      queryParams: {
+                                                                                        'actionRef': serializeParam(
+                                                                                          transportPeriodicsTransportActionsRecord.reference,
+                                                                                          ParamType.DocumentReference,
                                                                                         ),
-                                                                                      ),
+                                                                                      }.withoutNulls,
                                                                                     );
                                                                                   },
                                                                                   child: Container(
@@ -2552,23 +2507,22 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                                 child: InkWell(
                                                                                   onTap: () async {
                                                                                     logFirebaseEvent('HOME_PAGE_flightPeriodics_ON_TAP');
-                                                                                    logFirebaseEvent('flightPeriodics_Update-Local-State');
+                                                                                    logFirebaseEvent('flightPeriodics_update_local_state');
                                                                                     setState(() => FFAppState().displayOptions = false);
-                                                                                    logFirebaseEvent('flightPeriodics_Update-Local-State');
+                                                                                    logFirebaseEvent('flightPeriodics_update_local_state');
                                                                                     setState(() => FFAppState().displayDates = false);
-                                                                                    logFirebaseEvent('flightPeriodics_Update-Local-State');
+                                                                                    logFirebaseEvent('flightPeriodics_update_local_state');
                                                                                     setState(() => FFAppState().displayDays = true);
-                                                                                    logFirebaseEvent('flightPeriodics_Navigate-To');
-                                                                                    await Navigator.push(
-                                                                                      context,
-                                                                                      PageTransition(
-                                                                                        type: PageTransitionType.fade,
-                                                                                        duration: Duration(milliseconds: 0),
-                                                                                        reverseDuration: Duration(milliseconds: 0),
-                                                                                        child: TransportWidget(
-                                                                                          actionRef: transportPeriodicsTransportActionsRecord.reference,
+                                                                                    logFirebaseEvent('flightPeriodics_navigate_to');
+
+                                                                                    context.pushNamed(
+                                                                                      'Transport',
+                                                                                      queryParams: {
+                                                                                        'actionRef': serializeParam(
+                                                                                          transportPeriodicsTransportActionsRecord.reference,
+                                                                                          ParamType.DocumentReference,
                                                                                         ),
-                                                                                      ),
+                                                                                      }.withoutNulls,
                                                                                     );
                                                                                   },
                                                                                   child: Container(
@@ -2590,23 +2544,22 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                                 child: InkWell(
                                                                                   onTap: () async {
                                                                                     logFirebaseEvent('HOME_PAGE_bikePeriodics_ON_TAP');
-                                                                                    logFirebaseEvent('bikePeriodics_Update-Local-State');
+                                                                                    logFirebaseEvent('bikePeriodics_update_local_state');
                                                                                     setState(() => FFAppState().displayOptions = false);
-                                                                                    logFirebaseEvent('bikePeriodics_Update-Local-State');
+                                                                                    logFirebaseEvent('bikePeriodics_update_local_state');
                                                                                     setState(() => FFAppState().displayDates = false);
-                                                                                    logFirebaseEvent('bikePeriodics_Update-Local-State');
+                                                                                    logFirebaseEvent('bikePeriodics_update_local_state');
                                                                                     setState(() => FFAppState().displayDays = true);
-                                                                                    logFirebaseEvent('bikePeriodics_Navigate-To');
-                                                                                    await Navigator.push(
-                                                                                      context,
-                                                                                      PageTransition(
-                                                                                        type: PageTransitionType.fade,
-                                                                                        duration: Duration(milliseconds: 0),
-                                                                                        reverseDuration: Duration(milliseconds: 0),
-                                                                                        child: TransportWidget(
-                                                                                          actionRef: transportPeriodicsTransportActionsRecord.reference,
+                                                                                    logFirebaseEvent('bikePeriodics_navigate_to');
+
+                                                                                    context.pushNamed(
+                                                                                      'Transport',
+                                                                                      queryParams: {
+                                                                                        'actionRef': serializeParam(
+                                                                                          transportPeriodicsTransportActionsRecord.reference,
+                                                                                          ParamType.DocumentReference,
                                                                                         ),
-                                                                                      ),
+                                                                                      }.withoutNulls,
                                                                                     );
                                                                                   },
                                                                                   child: Container(
@@ -2679,10 +2632,8 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                               ),
                                             ],
                                           ),
-                                        ).animated([
-                                          animationsMap[
-                                              'containerOnPageLoadAnimation2']!
-                                        ]),
+                                        ).animateOnPageLoad(animationsMap[
+                                            'containerOnPageLoadAnimation2']!),
                                       ),
                                       Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(
@@ -2762,7 +2713,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                   Text(
                                                                     functions.printScore(functions.getActiveScore(
                                                                         containerUsersStatsRecord!
-                                                                            .energies!
+                                                                            .energyActionsDayCO2e!
                                                                             .toList(),
                                                                         FFAppState()
                                                                             .activeDateRelative)),
@@ -2781,7 +2732,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                         ),
                                                                   ),
                                                                   Text(
-                                                                    '${functions.printRatioScoreTotal(functions.getActiveScore(containerUsersStatsRecord!.energies!.toList(), FFAppState().activeDateRelative), functions.getActiveScore(containerUsersStatsRecord!.days!.toList(), FFAppState().activeDateRelative))} de votre journée',
+                                                                    '${functions.printRatioScoreTotal(functions.getActiveScore(containerUsersStatsRecord!.energyActionsDayCO2e!.toList(), FFAppState().activeDateRelative), functions.getActiveScore(containerUsersStatsRecord!.days!.toList(), FFAppState().activeDateRelative))} de votre journée',
                                                                     style: FlutterFlowTheme.of(
                                                                             context)
                                                                         .bodyText2
@@ -2847,7 +2798,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                   Text(
                                                                     functions.printScore(
                                                                         containerUsersStatsRecord!
-                                                                            .energyPeriodics),
+                                                                            .energyPeriodicsCO2e),
                                                                     style: FlutterFlowTheme.of(
                                                                             context)
                                                                         .bodyText1
@@ -2863,7 +2814,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                         ),
                                                                   ),
                                                                   Text(
-                                                                    '${functions.printRatioScoreTotal(containerUsersStatsRecord!.energyPeriodics, containerUsersStatsRecord!.periodics)} de vos émissions récurrentes',
+                                                                    '${functions.printRatioScoreTotal(containerUsersStatsRecord!.energyPeriodicsCO2e, containerUsersStatsRecord!.allPeriodicsCO2e)} de vos émissions récurrentes',
                                                                     style: FlutterFlowTheme.of(
                                                                             context)
                                                                         .bodyText2
@@ -2935,7 +2886,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                             logFirebaseEvent(
                                                                 'HOME_PAGE_Card_nhwa43an_ON_TAP');
                                                             logFirebaseEvent(
-                                                                'Card_Bottom-Sheet');
+                                                                'Card_bottom_sheet');
                                                             await showModalBottomSheet(
                                                               isScrollControlled:
                                                                   true,
@@ -2959,7 +2910,9 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                   ),
                                                                 );
                                                               },
-                                                            );
+                                                            ).then((value) =>
+                                                                setState(
+                                                                    () {}));
                                                           },
                                                           child: Card(
                                                             clipBehavior: Clip
@@ -3071,17 +3024,16 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                               InkWell(
                                                                                 onTap: () async {
                                                                                   logFirebaseEvent('HOME_PAGE_electricityAction_ON_TAP');
-                                                                                  logFirebaseEvent('electricityAction_Navigate-To');
-                                                                                  await Navigator.push(
-                                                                                    context,
-                                                                                    PageTransition(
-                                                                                      type: PageTransitionType.fade,
-                                                                                      duration: Duration(milliseconds: 0),
-                                                                                      reverseDuration: Duration(milliseconds: 0),
-                                                                                      child: EnergiesWidget(
-                                                                                        actionRef: energyEnergyActionsRecord.reference,
+                                                                                  logFirebaseEvent('electricityAction_navigate_to');
+
+                                                                                  context.pushNamed(
+                                                                                    'Energies',
+                                                                                    queryParams: {
+                                                                                      'actionRef': serializeParam(
+                                                                                        energyEnergyActionsRecord.reference,
+                                                                                        ParamType.DocumentReference,
                                                                                       ),
-                                                                                    ),
+                                                                                    }.withoutNulls,
                                                                                   );
                                                                                 },
                                                                                 child: Container(
@@ -3100,17 +3052,16 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                               InkWell(
                                                                                 onTap: () async {
                                                                                   logFirebaseEvent('HOME_PAGE_gasAction_ON_TAP');
-                                                                                  logFirebaseEvent('gasAction_Navigate-To');
-                                                                                  await Navigator.push(
-                                                                                    context,
-                                                                                    PageTransition(
-                                                                                      type: PageTransitionType.fade,
-                                                                                      duration: Duration(milliseconds: 0),
-                                                                                      reverseDuration: Duration(milliseconds: 0),
-                                                                                      child: EnergiesWidget(
-                                                                                        actionRef: energyEnergyActionsRecord.reference,
+                                                                                  logFirebaseEvent('gasAction_navigate_to');
+
+                                                                                  context.pushNamed(
+                                                                                    'Energies',
+                                                                                    queryParams: {
+                                                                                      'actionRef': serializeParam(
+                                                                                        energyEnergyActionsRecord.reference,
+                                                                                        ParamType.DocumentReference,
                                                                                       ),
-                                                                                    ),
+                                                                                    }.withoutNulls,
                                                                                   );
                                                                                 },
                                                                                 child: Container(
@@ -3129,17 +3080,16 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                               InkWell(
                                                                                 onTap: () async {
                                                                                   logFirebaseEvent('HOME_PAGE_waterAction_ON_TAP');
-                                                                                  logFirebaseEvent('waterAction_Navigate-To');
-                                                                                  await Navigator.push(
-                                                                                    context,
-                                                                                    PageTransition(
-                                                                                      type: PageTransitionType.fade,
-                                                                                      duration: Duration(milliseconds: 0),
-                                                                                      reverseDuration: Duration(milliseconds: 0),
-                                                                                      child: EnergiesWidget(
-                                                                                        actionRef: energyEnergyActionsRecord.reference,
+                                                                                  logFirebaseEvent('waterAction_navigate_to');
+
+                                                                                  context.pushNamed(
+                                                                                    'Energies',
+                                                                                    queryParams: {
+                                                                                      'actionRef': serializeParam(
+                                                                                        energyEnergyActionsRecord.reference,
+                                                                                        ParamType.DocumentReference,
                                                                                       ),
-                                                                                    ),
+                                                                                    }.withoutNulls,
                                                                                   );
                                                                                 },
                                                                                 child: Container(
@@ -3232,17 +3182,16 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                                 child: InkWell(
                                                                                   onTap: () async {
                                                                                     logFirebaseEvent('HOME_PAGE_electricityPeriodics_ON_TAP');
-                                                                                    logFirebaseEvent('electricityPeriodics_Navigate-To');
-                                                                                    await Navigator.push(
-                                                                                      context,
-                                                                                      PageTransition(
-                                                                                        type: PageTransitionType.fade,
-                                                                                        duration: Duration(milliseconds: 0),
-                                                                                        reverseDuration: Duration(milliseconds: 0),
-                                                                                        child: EnergiesWidget(
-                                                                                          actionRef: energyPeriodicsEnergyActionsRecord.reference,
+                                                                                    logFirebaseEvent('electricityPeriodics_navigate_to');
+
+                                                                                    context.pushNamed(
+                                                                                      'Energies',
+                                                                                      queryParams: {
+                                                                                        'actionRef': serializeParam(
+                                                                                          energyPeriodicsEnergyActionsRecord.reference,
+                                                                                          ParamType.DocumentReference,
                                                                                         ),
-                                                                                      ),
+                                                                                      }.withoutNulls,
                                                                                     );
                                                                                   },
                                                                                   child: Container(
@@ -3264,17 +3213,16 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                                 child: InkWell(
                                                                                   onTap: () async {
                                                                                     logFirebaseEvent('HOME_PAGE_gasPeriodics_ON_TAP');
-                                                                                    logFirebaseEvent('gasPeriodics_Navigate-To');
-                                                                                    await Navigator.push(
-                                                                                      context,
-                                                                                      PageTransition(
-                                                                                        type: PageTransitionType.fade,
-                                                                                        duration: Duration(milliseconds: 0),
-                                                                                        reverseDuration: Duration(milliseconds: 0),
-                                                                                        child: EnergiesWidget(
-                                                                                          actionRef: energyPeriodicsEnergyActionsRecord.reference,
+                                                                                    logFirebaseEvent('gasPeriodics_navigate_to');
+
+                                                                                    context.pushNamed(
+                                                                                      'Energies',
+                                                                                      queryParams: {
+                                                                                        'actionRef': serializeParam(
+                                                                                          energyPeriodicsEnergyActionsRecord.reference,
+                                                                                          ParamType.DocumentReference,
                                                                                         ),
-                                                                                      ),
+                                                                                      }.withoutNulls,
                                                                                     );
                                                                                   },
                                                                                   child: Container(
@@ -3296,17 +3244,16 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                                 child: InkWell(
                                                                                   onTap: () async {
                                                                                     logFirebaseEvent('HOME_PAGE_waterPeriodics_ON_TAP');
-                                                                                    logFirebaseEvent('waterPeriodics_Navigate-To');
-                                                                                    await Navigator.push(
-                                                                                      context,
-                                                                                      PageTransition(
-                                                                                        type: PageTransitionType.fade,
-                                                                                        duration: Duration(milliseconds: 0),
-                                                                                        reverseDuration: Duration(milliseconds: 0),
-                                                                                        child: EnergiesWidget(
-                                                                                          actionRef: energyPeriodicsEnergyActionsRecord.reference,
+                                                                                    logFirebaseEvent('waterPeriodics_navigate_to');
+
+                                                                                    context.pushNamed(
+                                                                                      'Energies',
+                                                                                      queryParams: {
+                                                                                        'actionRef': serializeParam(
+                                                                                          energyPeriodicsEnergyActionsRecord.reference,
+                                                                                          ParamType.DocumentReference,
                                                                                         ),
-                                                                                      ),
+                                                                                      }.withoutNulls,
                                                                                     );
                                                                                   },
                                                                                   child: Container(
@@ -3379,10 +3326,8 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                               ),
                                             ],
                                           ),
-                                        ).animated([
-                                          animationsMap[
-                                              'containerOnPageLoadAnimation3']!
-                                        ]),
+                                        ).animateOnPageLoad(animationsMap[
+                                            'containerOnPageLoadAnimation3']!),
                                       ),
                                     ],
                                   ),

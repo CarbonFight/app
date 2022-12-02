@@ -55,12 +55,6 @@ class _$FoodActionsRecordSerializer
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    value = object.portions;
-    if (value != null) {
-      result
-        ..add('portions')
-        ..add(serializers.serialize(value, specifiedType: const FullType(int)));
-    }
     value = object.periodicity;
     if (value != null) {
       result
@@ -97,6 +91,12 @@ class _$FoodActionsRecordSerializer
         ..add('mainComponent')
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
+    }
+    value = object.portions;
+    if (value != null) {
+      result
+        ..add('portions')
+        ..add(serializers.serialize(value, specifiedType: const FullType(int)));
     }
     value = object.ffRef;
     if (value != null) {
@@ -141,10 +141,6 @@ class _$FoodActionsRecordSerializer
           result.day = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String?;
           break;
-        case 'portions':
-          result.portions = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int?;
-          break;
         case 'periodicity':
           result.periodicity.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
@@ -168,6 +164,10 @@ class _$FoodActionsRecordSerializer
         case 'mainComponent':
           result.mainComponent = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String?;
+          break;
+        case 'portions':
+          result.portions = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int?;
           break;
         case 'Document__Reference__Field':
           result.ffRef = serializers.deserialize(value,
@@ -194,8 +194,6 @@ class _$FoodActionsRecord extends FoodActionsRecord {
   @override
   final String? day;
   @override
-  final int? portions;
-  @override
   final BuiltList<String>? periodicity;
   @override
   final bool? isPeriodic;
@@ -205,6 +203,8 @@ class _$FoodActionsRecord extends FoodActionsRecord {
   final BuiltList<String>? sideComponent;
   @override
   final String? mainComponent;
+  @override
+  final int? portions;
   @override
   final DocumentReference<Object?>? ffRef;
 
@@ -218,12 +218,12 @@ class _$FoodActionsRecord extends FoodActionsRecord {
       this.createdTime,
       this.userId,
       this.day,
-      this.portions,
       this.periodicity,
       this.isPeriodic,
       this.isFavorite,
       this.sideComponent,
       this.mainComponent,
+      this.portions,
       this.ffRef})
       : super._();
 
@@ -244,12 +244,12 @@ class _$FoodActionsRecord extends FoodActionsRecord {
         createdTime == other.createdTime &&
         userId == other.userId &&
         day == other.day &&
-        portions == other.portions &&
         periodicity == other.periodicity &&
         isPeriodic == other.isPeriodic &&
         isFavorite == other.isFavorite &&
         sideComponent == other.sideComponent &&
         mainComponent == other.mainComponent &&
+        portions == other.portions &&
         ffRef == other.ffRef;
   }
 
@@ -270,12 +270,12 @@ class _$FoodActionsRecord extends FoodActionsRecord {
                                             createdTime.hashCode),
                                         userId.hashCode),
                                     day.hashCode),
-                                portions.hashCode),
-                            periodicity.hashCode),
-                        isPeriodic.hashCode),
-                    isFavorite.hashCode),
-                sideComponent.hashCode),
-            mainComponent.hashCode),
+                                periodicity.hashCode),
+                            isPeriodic.hashCode),
+                        isFavorite.hashCode),
+                    sideComponent.hashCode),
+                mainComponent.hashCode),
+            portions.hashCode),
         ffRef.hashCode));
   }
 
@@ -287,12 +287,12 @@ class _$FoodActionsRecord extends FoodActionsRecord {
           ..add('createdTime', createdTime)
           ..add('userId', userId)
           ..add('day', day)
-          ..add('portions', portions)
           ..add('periodicity', periodicity)
           ..add('isPeriodic', isPeriodic)
           ..add('isFavorite', isFavorite)
           ..add('sideComponent', sideComponent)
           ..add('mainComponent', mainComponent)
+          ..add('portions', portions)
           ..add('ffRef', ffRef))
         .toString();
   }
@@ -322,10 +322,6 @@ class FoodActionsRecordBuilder
   String? get day => _$this._day;
   set day(String? day) => _$this._day = day;
 
-  int? _portions;
-  int? get portions => _$this._portions;
-  set portions(int? portions) => _$this._portions = portions;
-
   ListBuilder<String>? _periodicity;
   ListBuilder<String> get periodicity =>
       _$this._periodicity ??= new ListBuilder<String>();
@@ -351,6 +347,10 @@ class FoodActionsRecordBuilder
   set mainComponent(String? mainComponent) =>
       _$this._mainComponent = mainComponent;
 
+  int? _portions;
+  int? get portions => _$this._portions;
+  set portions(int? portions) => _$this._portions = portions;
+
   DocumentReference<Object?>? _ffRef;
   DocumentReference<Object?>? get ffRef => _$this._ffRef;
   set ffRef(DocumentReference<Object?>? ffRef) => _$this._ffRef = ffRef;
@@ -367,12 +367,12 @@ class FoodActionsRecordBuilder
       _createdTime = $v.createdTime;
       _userId = $v.userId;
       _day = $v.day;
-      _portions = $v.portions;
       _periodicity = $v.periodicity?.toBuilder();
       _isPeriodic = $v.isPeriodic;
       _isFavorite = $v.isFavorite;
       _sideComponent = $v.sideComponent?.toBuilder();
       _mainComponent = $v.mainComponent;
+      _portions = $v.portions;
       _ffRef = $v.ffRef;
       _$v = null;
     }
@@ -403,12 +403,12 @@ class FoodActionsRecordBuilder
               createdTime: createdTime,
               userId: userId,
               day: day,
-              portions: portions,
               periodicity: _periodicity?.build(),
               isPeriodic: isPeriodic,
               isFavorite: isFavorite,
               sideComponent: _sideComponent?.build(),
               mainComponent: mainComponent,
+              portions: portions,
               ffRef: ffRef);
     } catch (_) {
       late String _$failedField;

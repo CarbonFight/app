@@ -205,13 +205,13 @@ class FlutterFlowPieChart extends StatelessWidget {
     this.sectionLabelStyle,
   }) : super(key: key);
 
-  final List<FFPieChartData> data;
+  final FFPieChartData data;
   final double donutHoleRadius;
   final Color donutHoleColor;
   final PieChartSectionLabelType sectionLabelType;
   final TextStyle? sectionLabelStyle;
 
-  double get sumOfValues => data.map((d) => d.data).reduce((a, b) => a + b);
+  double get sumOfValues => data.data.reduce((a, b) => a + b);
 
   @override
   Widget build(BuildContext context) => PieChart(
@@ -219,27 +219,38 @@ class FlutterFlowPieChart extends StatelessWidget {
           centerSpaceRadius: donutHoleRadius,
           centerSpaceColor: donutHoleColor,
           sectionsSpace: 0,
-          sections: data.map(
+          sections: data.data.asMap().entries.map(
             (section) {
               String? title;
+              final index = section.key;
+              final sectionData = section.value;
+              final colorsLength = data.colors.length;
+              final otherPropsLength = data.radius.length;
               switch (sectionLabelType) {
                 case PieChartSectionLabelType.value:
-                  title = _format.format(section.data);
+                  title = _format.format(sectionData);
                   break;
                 case PieChartSectionLabelType.percent:
-                  title =
-                      '${_format.format((section.data) / sumOfValues * 100)}%';
+                  title = '${_format.format(sectionData / sumOfValues * 100)}%';
                   break;
                 default:
                   break;
               }
               return PieChartSectionData(
-                value: section.data,
-                color: section.color,
-                radius: section.radius,
+                value: sectionData,
+                color: data.colors[index % colorsLength],
+                radius: otherPropsLength == 1
+                    ? data.radius.first
+                    : data.radius[index],
                 borderSide: BorderSide(
-                  color: section.borderColor,
-                  width: section.borderWidth,
+                  color: (otherPropsLength == 1
+                          ? data.borderColor?.first
+                          : data.borderColor?.elementAt(index)) ??
+                      Colors.transparent,
+                  width: (otherPropsLength == 1
+                          ? data.borderWidth?.first
+                          : data.borderWidth?.elementAt(index)) ??
+                      0.0,
                 ),
                 showTitle: sectionLabelType != PieChartSectionLabelType.none,
                 titleStyle: sectionLabelStyle,
@@ -415,44 +426,31 @@ class FFBarChartData {
 
 class FFPieChartData {
   const FFPieChartData({
-    required this.value,
-    required this.color,
+    required this.values,
+    required this.colors,
     required this.radius,
-    this.borderWidth = 0,
-    this.borderColor = Colors.transparent,
+    this.borderWidth,
+    this.borderColor,
   });
 
-  final dynamic value;
-  final Color color;
-  final double radius;
-  final double borderWidth;
-  final Color borderColor;
+  final List<dynamic> values;
+  final List<Color> colors;
+  final List<double> radius;
+  final List<double>? borderWidth;
+  final List<Color>? borderColor;
 
-  double get data {
-    if (value is double) {
-      return value as double;
-    }
-    if (value is int) {
-      return (value as int).toDouble();
-    }
-    if (value is String) {
-      if (double.tryParse(value as String) != null) {
-        return double.tryParse(value as String)!;
-      }
-      if (int.tryParse(value as String) != null) {
-        return int.tryParse(value as String)!.toDouble();
-      }
-    }
-    return 0.0;
-  }
+  List<double> get data => _dataToDouble(values).map((e) => e ?? 0.0).toList();
 }
 
 List<double?> _dataToDouble(List<dynamic> data) {
   if (data.isEmpty) {
     return [];
   }
-  if (data.every((e) => (e is int) || (e is double))) {
-    return data.cast<double>();
+  if (data.first is double) {
+    return data.map((d) => d as double).toList();
+  }
+  if (data.first is int) {
+    return data.map((d) => (d as int).toDouble()).toList();
   }
   if (data.first is String) {
     // First try to parse as doubles

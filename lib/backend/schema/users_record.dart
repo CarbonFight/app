@@ -25,14 +25,6 @@ abstract class UsersRecord implements Built<UsersRecord, UsersRecordBuilder> {
   @BuiltValueField(wireName: 'photo_url')
   String? get photoUrl;
 
-  int? get co2target;
-
-  int? get totalPoints;
-
-  int? get globalScore;
-
-  int? get globalProjection;
-
   @BuiltValueField(wireName: kDocumentReferenceField)
   DocumentReference? get ffRef;
   DocumentReference get reference => ffRef!;
@@ -42,11 +34,7 @@ abstract class UsersRecord implements Built<UsersRecord, UsersRecordBuilder> {
     ..email = ''
     ..phoneNumber = ''
     ..uid = ''
-    ..photoUrl = ''
-    ..co2target = 0
-    ..totalPoints = 0
-    ..globalScore = 0
-    ..globalProjection = 0;
+    ..photoUrl = '';
 
   static CollectionReference get collection =>
       FirebaseFirestore.instance.collection('users');
@@ -76,10 +64,6 @@ Map<String, dynamic> createUsersRecordData({
   String? phoneNumber,
   String? uid,
   String? photoUrl,
-  int? co2target,
-  int? totalPoints,
-  int? globalScore,
-  int? globalProjection,
 }) {
   final firestoreData = serializers.toFirestore(
     UsersRecord.serializer,
@@ -90,11 +74,7 @@ Map<String, dynamic> createUsersRecordData({
         ..email = email
         ..phoneNumber = phoneNumber
         ..uid = uid
-        ..photoUrl = photoUrl
-        ..co2target = co2target
-        ..totalPoints = totalPoints
-        ..globalScore = globalScore
-        ..globalProjection = globalProjection,
+        ..photoUrl = photoUrl,
     ),
   );
 

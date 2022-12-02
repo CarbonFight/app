@@ -1,7 +1,6 @@
 import '../auth/auth_util.dart';
 import '../backend/backend.dart';
 import '../components/icon_button_widget.dart';
-import '../drawer/drawer_widget.dart';
 import '../flutter_flow/flutter_flow_animations.dart';
 import '../flutter_flow/flutter_flow_calendar.dart';
 import '../flutter_flow/flutter_flow_choice_chips.dart';
@@ -9,12 +8,11 @@ import '../flutter_flow/flutter_flow_count_controller.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_toggle_icon.dart';
 import '../flutter_flow/flutter_flow_util.dart';
-import '../home/home_widget.dart';
-import '../profile/profile_widget.dart';
-import '../statistiques/statistiques_widget.dart';
 import '../flutter_flow/custom_functions.dart' as functions;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -33,85 +31,136 @@ class FoodWidget extends StatefulWidget {
 }
 
 class _FoodWidgetState extends State<FoodWidget> with TickerProviderStateMixin {
+  final animationsMap = {
+    'containerOnPageLoadAnimation1': AnimationInfo(
+      trigger: AnimationTrigger.onPageLoad,
+      effects: [
+        FadeEffect(
+          curve: Curves.easeInOut,
+          delay: 0.ms,
+          duration: 600.ms,
+          begin: 0,
+          end: 1,
+        ),
+        MoveEffect(
+          curve: Curves.easeInOut,
+          delay: 0.ms,
+          duration: 600.ms,
+          begin: Offset(0, 70),
+          end: Offset(0, 0),
+        ),
+      ],
+    ),
+    'containerOnPageLoadAnimation2': AnimationInfo(
+      trigger: AnimationTrigger.onPageLoad,
+      effects: [
+        FadeEffect(
+          curve: Curves.easeInOut,
+          delay: 0.ms,
+          duration: 600.ms,
+          begin: 0,
+          end: 1,
+        ),
+        MoveEffect(
+          curve: Curves.easeInOut,
+          delay: 0.ms,
+          duration: 600.ms,
+          begin: Offset(0, 70),
+          end: Offset(0, 0),
+        ),
+      ],
+    ),
+    'containerOnPageLoadAnimation3': AnimationInfo(
+      trigger: AnimationTrigger.onPageLoad,
+      effects: [
+        FadeEffect(
+          curve: Curves.easeInOut,
+          delay: 0.ms,
+          duration: 600.ms,
+          begin: 0,
+          end: 1,
+        ),
+        MoveEffect(
+          curve: Curves.easeInOut,
+          delay: 0.ms,
+          duration: 600.ms,
+          begin: Offset(0, 70),
+          end: Offset(0, 0),
+        ),
+      ],
+    ),
+    'containerOnPageLoadAnimation4': AnimationInfo(
+      trigger: AnimationTrigger.onPageLoad,
+      effects: [
+        FadeEffect(
+          curve: Curves.easeInOut,
+          delay: 0.ms,
+          duration: 600.ms,
+          begin: 0,
+          end: 1,
+        ),
+        MoveEffect(
+          curve: Curves.easeInOut,
+          delay: 0.ms,
+          duration: 600.ms,
+          begin: Offset(0, 70),
+          end: Offset(0, 0),
+        ),
+      ],
+    ),
+    'containerOnPageLoadAnimation5': AnimationInfo(
+      trigger: AnimationTrigger.onPageLoad,
+      effects: [
+        FadeEffect(
+          curve: Curves.easeInOut,
+          delay: 0.ms,
+          duration: 600.ms,
+          begin: 0,
+          end: 1,
+        ),
+        MoveEffect(
+          curve: Curves.easeInOut,
+          delay: 0.ms,
+          duration: 600.ms,
+          begin: Offset(0, 70),
+          end: Offset(0, 0),
+        ),
+      ],
+    ),
+    'containerOnPageLoadAnimation6': AnimationInfo(
+      trigger: AnimationTrigger.onPageLoad,
+      effects: [
+        FadeEffect(
+          curve: Curves.easeInOut,
+          delay: 0.ms,
+          duration: 600.ms,
+          begin: 0,
+          end: 1,
+        ),
+        MoveEffect(
+          curve: Curves.easeInOut,
+          delay: 0.ms,
+          duration: 600.ms,
+          begin: Offset(0, 70),
+          end: Offset(0, 0),
+        ),
+      ],
+    ),
+  };
   DateTimeRange? calendarSelectedDay;
   List<String>? sideComponentValues;
   String? mainComponentValue;
   int? portionsValue;
   List<String>? periodicityValues;
   final scaffoldKey = GlobalKey<ScaffoldState>();
-  final animationsMap = {
-    'containerOnPageLoadAnimation1': AnimationInfo(
-      trigger: AnimationTrigger.onPageLoad,
-      duration: 600,
-      hideBeforeAnimating: false,
-      fadeIn: true,
-      initialState: AnimationState(
-        offset: Offset(0, 70),
-        scale: 1,
-        opacity: 0,
-      ),
-      finalState: AnimationState(
-        offset: Offset(0, 0),
-        scale: 1,
-        opacity: 1,
-      ),
-    ),
-    'containerOnPageLoadAnimation2': AnimationInfo(
-      trigger: AnimationTrigger.onPageLoad,
-      duration: 600,
-      hideBeforeAnimating: false,
-      fadeIn: true,
-      initialState: AnimationState(
-        offset: Offset(0, 70),
-        scale: 1,
-        opacity: 0,
-      ),
-      finalState: AnimationState(
-        offset: Offset(0, 0),
-        scale: 1,
-        opacity: 1,
-      ),
-    ),
-    'containerOnPageLoadAnimation3': AnimationInfo(
-      trigger: AnimationTrigger.onPageLoad,
-      duration: 600,
-      hideBeforeAnimating: false,
-      fadeIn: true,
-      initialState: AnimationState(
-        offset: Offset(0, 70),
-        scale: 1,
-        opacity: 0,
-      ),
-      finalState: AnimationState(
-        offset: Offset(0, 0),
-        scale: 1,
-        opacity: 1,
-      ),
-    ),
-    'containerOnPageLoadAnimation4': AnimationInfo(
-      trigger: AnimationTrigger.onPageLoad,
-      duration: 600,
-      hideBeforeAnimating: false,
-      fadeIn: true,
-      initialState: AnimationState(
-        offset: Offset(0, 70),
-        scale: 1,
-        opacity: 0,
-      ),
-      finalState: AnimationState(
-        offset: Offset(0, 0),
-        scale: 1,
-        opacity: 1,
-      ),
-    ),
-  };
 
   @override
   void initState() {
     super.initState();
-    startPageLoadAnimations(
-      animationsMap.values
-          .where((anim) => anim.trigger == AnimationTrigger.onPageLoad),
+    setupAnimations(
+      animationsMap.values.where((anim) =>
+          anim.trigger == AnimationTrigger.onActionTrigger ||
+          !anim.applyInitialState),
       this,
     );
 
@@ -120,6 +169,7 @@ class _FoodWidgetState extends State<FoodWidget> with TickerProviderStateMixin {
       end: DateTime.now().endOfDay,
     );
     logFirebaseEvent('screen_view', parameters: {'screen_name': 'Food'});
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
@@ -169,227 +219,239 @@ class _FoodWidgetState extends State<FoodWidget> with TickerProviderStateMixin {
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Container(
-                        width: MediaQuery.of(context).size.width,
-                        height: 100,
-                        decoration: BoxDecoration(),
-                        alignment: AlignmentDirectional(0, 1),
-                        child: Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(20, 0, 20, 0),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Row(
+                      StreamBuilder<List<UsersRecord>>(
+                        stream: queryUsersRecord(
+                          queryBuilder: (usersRecord) => usersRecord
+                              .where('uid', isEqualTo: currentUserUid),
+                          singleRecord: true,
+                        ),
+                        builder: (context, snapshot) {
+                          // Customize what your widget looks like when it's loading.
+                          if (!snapshot.hasData) {
+                            return Center(
+                              child: SizedBox(
+                                width: 2,
+                                height: 2,
+                                child: SpinKitRing(
+                                  color: Colors.transparent,
+                                  size: 2,
+                                ),
+                              ),
+                            );
+                          }
+                          List<UsersRecord> headerUsersRecordList =
+                              snapshot.data!;
+                          // Return an empty Container when the document does not exist.
+                          if (snapshot.data!.isEmpty) {
+                            return Container();
+                          }
+                          final headerUsersRecord =
+                              headerUsersRecordList.isNotEmpty
+                                  ? headerUsersRecordList.first
+                                  : null;
+                          return Container(
+                            width: MediaQuery.of(context).size.width,
+                            height: 100,
+                            decoration: BoxDecoration(),
+                            alignment: AlignmentDirectional(0, 1),
+                            child: Padding(
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(20, 0, 20, 0),
+                              child: Row(
                                 mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
-                                  InkWell(
-                                    onTap: () async {
-                                      logFirebaseEvent(
-                                          'FOOD_PAGE_Container_3lu83eh2_ON_TAP');
-                                      logFirebaseEvent('Container_Navigate-To');
-                                      await Navigator.push(
-                                        context,
-                                        PageTransition(
-                                          type: PageTransitionType.leftToRight,
-                                          duration: Duration(milliseconds: 300),
-                                          reverseDuration:
-                                              Duration(milliseconds: 300),
-                                          child: DrawerWidget(),
+                                  Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      InkWell(
+                                        onTap: () async {
+                                          logFirebaseEvent(
+                                              'FOOD_PAGE_Container_3lu83eh2_ON_TAP');
+                                          logFirebaseEvent(
+                                              'Container_navigate_to');
+
+                                          context.pushNamed(
+                                            'Drawer',
+                                            extra: <String, dynamic>{
+                                              kTransitionInfoKey:
+                                                  TransitionInfo(
+                                                hasTransition: true,
+                                                transitionType:
+                                                    PageTransitionType
+                                                        .leftToRight,
+                                              ),
+                                            },
+                                          );
+                                        },
+                                        child: Container(
+                                          width: 50,
+                                          height: 50,
+                                          decoration: BoxDecoration(),
+                                          alignment: AlignmentDirectional(0, 0),
+                                          child: SvgPicture.asset(
+                                            'assets/images/menu.svg',
+                                            width: 24,
+                                            height: 24,
+                                            fit: BoxFit.fitHeight,
+                                          ),
                                         ),
-                                      );
-                                    },
-                                    child: Container(
-                                      width: 50,
-                                      height: 50,
-                                      decoration: BoxDecoration(),
-                                      alignment: AlignmentDirectional(0, 0),
-                                      child: SvgPicture.asset(
-                                        'assets/images/menu.svg',
-                                        width: 24,
-                                        height: 24,
+                                      ),
+                                      Image.asset(
+                                        'assets/images/logo_light.png',
+                                        width: 100,
+                                        height: 40,
                                         fit: BoxFit.fitHeight,
                                       ),
-                                    ),
+                                    ],
                                   ),
-                                  Image.asset(
-                                    'assets/images/logo_light.png',
-                                    width: 100,
-                                    height: 40,
-                                    fit: BoxFit.fitHeight,
-                                  ),
-                                ],
-                              ),
-                              Expanded(
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    InkWell(
-                                      onTap: () async {
-                                        logFirebaseEvent(
-                                            'FOOD_PAGE_Actions_ON_TAP');
-                                        logFirebaseEvent('Actions_Navigate-To');
-                                        await Navigator.push(
-                                          context,
-                                          PageTransition(
-                                            type: PageTransitionType.fade,
-                                            duration: Duration(milliseconds: 0),
-                                            reverseDuration:
-                                                Duration(milliseconds: 0),
-                                            child: StatistiquesWidget(),
-                                          ),
-                                        );
-                                      },
-                                      child: Container(
-                                        width: 40,
-                                        height: 40,
-                                        decoration: BoxDecoration(
-                                          color: Color(0x4DFFFFFF),
-                                          boxShadow: [
-                                            BoxShadow(
-                                              blurRadius: 10,
-                                              color: Color(0x2C000000),
-                                              offset: Offset(0, 4),
-                                            )
-                                          ],
-                                          shape: BoxShape.circle,
-                                          border: Border.all(
-                                            color: FlutterFlowTheme.of(context)
-                                                .grayLight,
-                                            width: 1,
-                                          ),
-                                        ),
-                                        child: InkWell(
+                                  Expanded(
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
+                                      children: [
+                                        InkWell(
                                           onTap: () async {
                                             logFirebaseEvent(
-                                                'FOOD_PAGE_Icon_9p0wkq6o_ON_TAP');
+                                                'FOOD_PAGE_Actions_ON_TAP');
                                             logFirebaseEvent(
-                                                'Icon_Navigate-To');
-                                            await Navigator.push(
-                                              context,
-                                              PageTransition(
-                                                type: PageTransitionType.fade,
-                                                duration:
-                                                    Duration(milliseconds: 0),
-                                                reverseDuration:
-                                                    Duration(milliseconds: 0),
-                                                child: HomeWidget(),
-                                              ),
-                                            );
+                                                'Actions_navigate_to');
+
+                                            context.pushNamed('Statistiques');
                                           },
-                                          child: Icon(
-                                            Icons.add,
-                                            color: FlutterFlowTheme.of(context)
-                                                .tertiaryColor,
-                                            size: 24,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    InkWell(
-                                      onTap: () async {
-                                        logFirebaseEvent(
-                                            'FOOD_PAGE_Stats_ON_TAP');
-                                        logFirebaseEvent('Stats_Navigate-To');
-                                        await Navigator.push(
-                                          context,
-                                          PageTransition(
-                                            type: PageTransitionType.fade,
-                                            duration: Duration(milliseconds: 0),
-                                            reverseDuration:
-                                                Duration(milliseconds: 0),
-                                            child: StatistiquesWidget(),
-                                          ),
-                                        );
-                                      },
-                                      child: Container(
-                                        width: 40,
-                                        height: 40,
-                                        decoration: BoxDecoration(
-                                          color: Color(0x4DFFFFFF),
-                                          boxShadow: [
-                                            BoxShadow(
-                                              blurRadius: 10,
-                                              color: Color(0x2C000000),
-                                              offset: Offset(0, 4),
-                                            )
-                                          ],
-                                          shape: BoxShape.circle,
-                                          border: Border.all(
-                                            color: FlutterFlowTheme.of(context)
-                                                .grayLight,
-                                            width: 1,
-                                          ),
-                                        ),
-                                        child: Icon(
-                                          Icons.stacked_bar_chart,
-                                          color: FlutterFlowTheme.of(context)
-                                              .tertiaryColor,
-                                          size: 24,
-                                        ),
-                                      ),
-                                    ),
-                                    InkWell(
-                                      onTap: () async {
-                                        logFirebaseEvent(
-                                            'FOOD_PAGE_Profil_ON_TAP');
-                                        logFirebaseEvent('Profil_Navigate-To');
-                                        await Navigator.push(
-                                          context,
-                                          PageTransition(
-                                            type: PageTransitionType.fade,
-                                            duration: Duration(milliseconds: 0),
-                                            reverseDuration:
-                                                Duration(milliseconds: 0),
-                                            child: ProfileWidget(),
-                                          ),
-                                        );
-                                      },
-                                      child: Container(
-                                        width: 40,
-                                        height: 40,
-                                        decoration: BoxDecoration(
-                                          color: FlutterFlowTheme.of(context)
-                                              .tertiaryColor,
-                                          boxShadow: [
-                                            BoxShadow(
-                                              blurRadius: 10,
-                                              color: Color(0x2C000000),
-                                              offset: Offset(0, 4),
-                                            )
-                                          ],
-                                          shape: BoxShape.circle,
-                                          border: Border.all(
-                                            color: FlutterFlowTheme.of(context)
-                                                .grayLight,
-                                            width: 1,
-                                          ),
-                                        ),
-                                        child: AuthUserStreamWidget(
-                                          child: ClipRRect(
-                                            borderRadius:
-                                                BorderRadius.circular(100),
-                                            child: Image.network(
-                                              valueOrDefault<String>(
-                                                currentUserPhoto,
-                                                'https://firebasestorage.googleapis.com/v0/b/carbonfight-89af6.appspot.com/o/18275220161537356156-128.png?alt=media&token=c9797a03-bba1-46b8-aaac-4c54cb99fcb6',
+                                          child: Container(
+                                            width: 40,
+                                            height: 40,
+                                            decoration: BoxDecoration(
+                                              color: Color(0x4DFFFFFF),
+                                              boxShadow: [
+                                                BoxShadow(
+                                                  blurRadius: 10,
+                                                  color: Color(0x2C000000),
+                                                  offset: Offset(0, 4),
+                                                )
+                                              ],
+                                              shape: BoxShape.circle,
+                                              border: Border.all(
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .grayLight,
+                                                width: 1,
                                               ),
-                                              width: 50,
-                                              height: 50,
-                                              fit: BoxFit.cover,
+                                            ),
+                                            child: InkWell(
+                                              onTap: () async {
+                                                logFirebaseEvent(
+                                                    'FOOD_PAGE_Icon_9p0wkq6o_ON_TAP');
+                                                logFirebaseEvent(
+                                                    'Icon_navigate_to');
+
+                                                context.pushNamed('Home');
+                                              },
+                                              child: Icon(
+                                                Icons.add,
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .tertiaryColor,
+                                                size: 24,
+                                              ),
                                             ),
                                           ),
                                         ),
-                                      ),
+                                        InkWell(
+                                          onTap: () async {
+                                            logFirebaseEvent(
+                                                'FOOD_PAGE_Stats_ON_TAP');
+                                            logFirebaseEvent(
+                                                'Stats_navigate_to');
+
+                                            context.pushNamed('Statistiques');
+                                          },
+                                          child: Container(
+                                            width: 40,
+                                            height: 40,
+                                            decoration: BoxDecoration(
+                                              color: Color(0x4DFFFFFF),
+                                              boxShadow: [
+                                                BoxShadow(
+                                                  blurRadius: 10,
+                                                  color: Color(0x2C000000),
+                                                  offset: Offset(0, 4),
+                                                )
+                                              ],
+                                              shape: BoxShape.circle,
+                                              border: Border.all(
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .grayLight,
+                                                width: 1,
+                                              ),
+                                            ),
+                                            child: Icon(
+                                              Icons.stacked_bar_chart,
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .tertiaryColor,
+                                              size: 24,
+                                            ),
+                                          ),
+                                        ),
+                                        InkWell(
+                                          onTap: () async {
+                                            logFirebaseEvent(
+                                                'FOOD_PAGE_Profil_ON_TAP');
+                                            logFirebaseEvent(
+                                                'Profil_navigate_to');
+
+                                            context.pushNamed('Profile');
+                                          },
+                                          child: Container(
+                                            width: 40,
+                                            height: 40,
+                                            decoration: BoxDecoration(
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .tertiaryColor,
+                                              boxShadow: [
+                                                BoxShadow(
+                                                  blurRadius: 10,
+                                                  color: Color(0x2C000000),
+                                                  offset: Offset(0, 4),
+                                                )
+                                              ],
+                                              shape: BoxShape.circle,
+                                              border: Border.all(
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .grayLight,
+                                                width: 1,
+                                              ),
+                                            ),
+                                            child: ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(100),
+                                              child: Image.network(
+                                                valueOrDefault<String>(
+                                                  headerUsersRecord!.photoUrl,
+                                                  'https://storage.googleapis.com/carbonfight-89af6.appspot.com/default_photo_url.png',
+                                                ),
+                                                width: 50,
+                                                height: 50,
+                                                fit: BoxFit.cover,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
                                     ),
-                                  ],
-                                ),
+                                  ),
+                                ],
                               ),
-                            ],
-                          ),
-                        ),
+                            ),
+                          );
+                        },
                       ),
                       Container(
                         decoration: BoxDecoration(
@@ -651,15 +713,16 @@ class _FoodWidgetState extends State<FoodWidget> with TickerProviderStateMixin {
                                                 MainAxisAlignment.spaceBetween,
                                             children: [
                                               Container(
-                                                width: 110,
-                                                height: 45,
+                                                width: 120,
+                                                height: 50,
                                                 decoration: BoxDecoration(
-                                                  color: Color(0xFFF1F4F8),
+                                                  color: Colors.white,
                                                   borderRadius:
-                                                      BorderRadius.circular(40),
+                                                      BorderRadius.circular(25),
                                                   shape: BoxShape.rectangle,
                                                   border: Border.all(
-                                                    color: Color(0xFFF1F4F8),
+                                                    color: Color(0xFF9E9E9E),
+                                                    width: 1,
                                                   ),
                                                 ),
                                                 child:
@@ -668,37 +731,53 @@ class _FoodWidgetState extends State<FoodWidget> with TickerProviderStateMixin {
                                                       (enabled) => FaIcon(
                                                     FontAwesomeIcons.minus,
                                                     color: enabled
-                                                        ? Color(0xE6272D30)
-                                                        : Color(0xE6272D30),
-                                                    size: 15,
+                                                        ? Color(0xDD000000)
+                                                        : Color(0xFFEEEEEE),
+                                                    size: 20,
                                                   ),
                                                   incrementIconBuilder:
                                                       (enabled) => FaIcon(
                                                     FontAwesomeIcons.plus,
                                                     color: enabled
-                                                        ? Color(0xE6272D30)
-                                                        : Color(0xE6272D30),
-                                                    size: 15,
+                                                        ? FlutterFlowTheme.of(
+                                                                context)
+                                                            .green
+                                                        : Color(0xFFEEEEEE),
+                                                    size: 20,
                                                   ),
                                                   countBuilder: (count) => Text(
                                                     count.toString(),
                                                     style: GoogleFonts.getFont(
-                                                      'Outfit',
-                                                      color: Color(0xE6272D30),
+                                                      'Roboto',
+                                                      color: Colors.black,
                                                       fontWeight:
-                                                          FontWeight.normal,
+                                                          FontWeight.w600,
                                                       fontSize: 16,
                                                     ),
                                                   ),
                                                   count: portionsValue ??=
                                                       foodFoodActionsRecord
                                                           .portions!,
-                                                  updateCount: (count) =>
-                                                      setState(() =>
-                                                          portionsValue =
-                                                              count),
+                                                  updateCount: (count) async {
+                                                    setState(() =>
+                                                        portionsValue = count);
+                                                    logFirebaseEvent(
+                                                        'FOOD_Portions_ON_FORM_WIDGET_SELECTED');
+                                                    logFirebaseEvent(
+                                                        'Portions_backend_call');
+
+                                                    final foodActionsUpdateData =
+                                                        createFoodActionsRecordData(
+                                                      portions: portionsValue,
+                                                    );
+                                                    await foodFoodActionsRecord
+                                                        .reference
+                                                        .update(
+                                                            foodActionsUpdateData);
+                                                  },
                                                   stepSize: 1,
-                                                  minimum: 1,
+                                                  minimum: 0,
+                                                  maximum: 10,
                                                 ),
                                               ),
                                               Card(
@@ -788,10 +867,8 @@ class _FoodWidgetState extends State<FoodWidget> with TickerProviderStateMixin {
                                         ),
                                       ],
                                     ),
-                                  ).animated([
-                                    animationsMap[
-                                        'containerOnPageLoadAnimation1']!
-                                  ]),
+                                  ).animateOnPageLoad(animationsMap[
+                                      'containerOnPageLoadAnimation1']!),
                                 ),
                                 Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
@@ -812,137 +889,349 @@ class _FoodWidgetState extends State<FoodWidget> with TickerProviderStateMixin {
                                     child: Column(
                                       mainAxisSize: MainAxisSize.max,
                                       children: [
-                                        Container(
-                                          width:
-                                              MediaQuery.of(context).size.width,
-                                          decoration: BoxDecoration(),
-                                          child: Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    8, 12, 8, 12),
-                                            child: FlutterFlowChoiceChips(
-                                              initiallySelected:
-                                                  mainComponentValue != null
-                                                      ? [mainComponentValue!]
-                                                      : [
-                                                          foodFoodActionsRecord
-                                                              .mainComponent!
-                                                        ],
-                                              options: functions
-                                                  .getFoodMainComponents(
-                                                      foodFoodActionsRecord
-                                                          .food)
-                                                  .map((label) =>
-                                                      ChipData(label))
-                                                  .toList(),
-                                              onChanged: (val) => setState(() =>
-                                                  mainComponentValue =
-                                                      val?.first),
-                                              selectedChipStyle: ChipStyle(
-                                                backgroundColor:
-                                                    Color(0xFF323B45),
-                                                textStyle:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodyText1
-                                                        .override(
-                                                          fontFamily:
-                                                              'Montserrat',
-                                                          color: Colors.white,
-                                                        ),
-                                                iconColor: Colors.white,
-                                                iconSize: 18,
-                                                elevation: 4,
-                                              ),
-                                              unselectedChipStyle: ChipStyle(
-                                                backgroundColor: Colors.white,
-                                                textStyle: FlutterFlowTheme.of(
-                                                        context)
-                                                    .bodyText2
-                                                    .override(
-                                                      fontFamily: 'Montserrat',
-                                                      color: Color(0xFF323B45),
-                                                    ),
-                                                iconColor: Color(0xFF323B45),
-                                                iconSize: 18,
-                                                elevation: 4,
-                                              ),
-                                              chipSpacing: 20,
-                                              multiselect: false,
-                                              initialized:
-                                                  mainComponentValue != null,
-                                              alignment: WrapAlignment.start,
-                                            ),
+                                        StreamBuilder<
+                                            List<FoodCalculationRecord>>(
+                                          stream: queryFoodCalculationRecord(
+                                            queryBuilder:
+                                                (foodCalculationRecord) =>
+                                                    foodCalculationRecord.where(
+                                                        'foodtype',
+                                                        isEqualTo:
+                                                            foodFoodActionsRecord
+                                                                .mainComponent),
+                                            singleRecord: true,
                                           ),
-                                        ),
-                                        if (foodFoodActionsRecord.food ==
-                                            'main')
-                                          Divider(),
-                                        Container(
-                                          width:
-                                              MediaQuery.of(context).size.width,
-                                          decoration: BoxDecoration(),
-                                          child: Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    8, 0, 8, 12),
-                                            child: FlutterFlowChoiceChips(
-                                              initiallySelected:
-                                                  sideComponentValues != null
-                                                      ? sideComponentValues
-                                                      : foodFoodActionsRecord
-                                                          .sideComponent!
-                                                          .toList(),
-                                              options: functions
-                                                  .getFoodSideComponents(
-                                                      foodFoodActionsRecord
-                                                          .food)
-                                                  .map((label) =>
-                                                      ChipData(label))
-                                                  .toList(),
-                                              onChanged: (val) => setState(() =>
-                                                  sideComponentValues = val),
-                                              selectedChipStyle: ChipStyle(
-                                                backgroundColor:
-                                                    Color(0xFF323B45),
-                                                textStyle:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodyText1
-                                                        .override(
-                                                          fontFamily:
-                                                              'Montserrat',
-                                                          color: Colors.white,
-                                                        ),
-                                                iconColor: Colors.white,
-                                                iconSize: 18,
-                                                elevation: 4,
+                                          builder: (context, snapshot) {
+                                            // Customize what your widget looks like when it's loading.
+                                            if (!snapshot.hasData) {
+                                              return Center(
+                                                child: SizedBox(
+                                                  width: 2,
+                                                  height: 2,
+                                                  child: SpinKitRing(
+                                                    color: Colors.transparent,
+                                                    size: 2,
+                                                  ),
+                                                ),
+                                              );
+                                            }
+                                            List<FoodCalculationRecord>
+                                                containerFoodCalculationRecordList =
+                                                snapshot.data!;
+                                            // Return an empty Container when the document does not exist.
+                                            if (snapshot.data!.isEmpty) {
+                                              return Container();
+                                            }
+                                            final containerFoodCalculationRecord =
+                                                containerFoodCalculationRecordList
+                                                        .isNotEmpty
+                                                    ? containerFoodCalculationRecordList
+                                                        .first
+                                                    : null;
+                                            return Container(
+                                              width: MediaQuery.of(context)
+                                                  .size
+                                                  .width,
+                                              decoration: BoxDecoration(),
+                                              child: Padding(
+                                                padding: EdgeInsetsDirectional
+                                                    .fromSTEB(5, 10, 5, 10),
+                                                child: SelectionArea(
+                                                    child: Text(
+                                                  containerFoodCalculationRecord!
+                                                      .hint!,
+                                                  textAlign: TextAlign.center,
+                                                  style: FlutterFlowTheme.of(
+                                                          context)
+                                                      .bodyText1,
+                                                )),
                                               ),
-                                              unselectedChipStyle: ChipStyle(
-                                                backgroundColor: Colors.white,
-                                                textStyle: FlutterFlowTheme.of(
-                                                        context)
-                                                    .bodyText2
-                                                    .override(
-                                                      fontFamily: 'Montserrat',
-                                                      color: Color(0xFF323B45),
-                                                    ),
-                                                iconColor: Color(0xFF323B45),
-                                                iconSize: 18,
-                                                elevation: 4,
-                                              ),
-                                              chipSpacing: 20,
-                                              multiselect: true,
-                                              initialized:
-                                                  sideComponentValues != null,
-                                              alignment: WrapAlignment.start,
-                                            ),
-                                          ),
+                                            );
+                                          },
                                         ),
                                       ],
                                     ),
-                                  ).animated([
-                                    animationsMap[
-                                        'containerOnPageLoadAnimation2']!
-                                  ]),
+                                  ).animateOnPageLoad(animationsMap[
+                                      'containerOnPageLoadAnimation2']!),
+                                ),
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      16, 8, 16, 0),
+                                  child: Container(
+                                    width: double.infinity,
+                                    decoration: BoxDecoration(
+                                      color: Color(0xB3FFFFFF),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          blurRadius: 4,
+                                          color: Color(0x2B202529),
+                                          offset: Offset(0, 2),
+                                        )
+                                      ],
+                                      borderRadius: BorderRadius.circular(12),
+                                    ),
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.max,
+                                      children: [
+                                        StreamBuilder<
+                                            List<FoodCalculationRecord>>(
+                                          stream: queryFoodCalculationRecord(
+                                            queryBuilder:
+                                                (foodCalculationRecord) =>
+                                                    foodCalculationRecord.where(
+                                                        'food',
+                                                        isEqualTo:
+                                                            foodFoodActionsRecord
+                                                                .food),
+                                          ),
+                                          builder: (context, snapshot) {
+                                            // Customize what your widget looks like when it's loading.
+                                            if (!snapshot.hasData) {
+                                              return Center(
+                                                child: SizedBox(
+                                                  width: 2,
+                                                  height: 2,
+                                                  child: SpinKitRing(
+                                                    color: Colors.transparent,
+                                                    size: 2,
+                                                  ),
+                                                ),
+                                              );
+                                            }
+                                            List<FoodCalculationRecord>
+                                                containerFoodCalculationRecordList =
+                                                snapshot.data!;
+                                            return Container(
+                                              width: MediaQuery.of(context)
+                                                  .size
+                                                  .width,
+                                              decoration: BoxDecoration(),
+                                              child: Padding(
+                                                padding: EdgeInsetsDirectional
+                                                    .fromSTEB(8, 12, 8, 12),
+                                                child: FlutterFlowChoiceChips(
+                                                  initiallySelected: [
+                                                    foodFoodActionsRecord
+                                                        .mainComponent!
+                                                  ],
+                                                  options:
+                                                      containerFoodCalculationRecordList
+                                                          .map((e) =>
+                                                              e.foodtype!)
+                                                          .toList()
+                                                          .map((label) =>
+                                                              ChipData(label))
+                                                          .toList(),
+                                                  onChanged: (val) async {
+                                                    setState(() =>
+                                                        mainComponentValue =
+                                                            val?.first);
+                                                    logFirebaseEvent(
+                                                        'FOOD_mainComponent_ON_FORM_WIDGET_SELECT');
+                                                    logFirebaseEvent(
+                                                        'mainComponent_backend_call');
+
+                                                    final foodActionsUpdateData =
+                                                        createFoodActionsRecordData(
+                                                      mainComponent:
+                                                          mainComponentValue,
+                                                    );
+                                                    await foodFoodActionsRecord
+                                                        .reference
+                                                        .update(
+                                                            foodActionsUpdateData);
+                                                  },
+                                                  selectedChipStyle: ChipStyle(
+                                                    backgroundColor:
+                                                        Color(0xFF323B45),
+                                                    textStyle: FlutterFlowTheme
+                                                            .of(context)
+                                                        .bodyText1
+                                                        .override(
+                                                          fontFamily:
+                                                              'Montserrat',
+                                                          color: Colors.white,
+                                                        ),
+                                                    iconColor: Colors.white,
+                                                    iconSize: 18,
+                                                    elevation: 4,
+                                                  ),
+                                                  unselectedChipStyle:
+                                                      ChipStyle(
+                                                    backgroundColor:
+                                                        Colors.white,
+                                                    textStyle: FlutterFlowTheme
+                                                            .of(context)
+                                                        .bodyText2
+                                                        .override(
+                                                          fontFamily:
+                                                              'Montserrat',
+                                                          color:
+                                                              Color(0xFF323B45),
+                                                        ),
+                                                    iconColor:
+                                                        Color(0xFF323B45),
+                                                    iconSize: 18,
+                                                    elevation: 4,
+                                                  ),
+                                                  chipSpacing: 20,
+                                                  multiselect: false,
+                                                  initialized:
+                                                      mainComponentValue !=
+                                                          null,
+                                                  alignment:
+                                                      WrapAlignment.start,
+                                                ),
+                                              ),
+                                            );
+                                          },
+                                        ),
+                                      ],
+                                    ),
+                                  ).animateOnPageLoad(animationsMap[
+                                      'containerOnPageLoadAnimation3']!),
+                                ),
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      16, 8, 16, 0),
+                                  child: Container(
+                                    width: double.infinity,
+                                    decoration: BoxDecoration(
+                                      color: Color(0xB3FFFFFF),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          blurRadius: 4,
+                                          color: Color(0x2B202529),
+                                          offset: Offset(0, 2),
+                                        )
+                                      ],
+                                      borderRadius: BorderRadius.circular(12),
+                                    ),
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.max,
+                                      children: [
+                                        if (foodFoodActionsRecord.food ==
+                                            'main')
+                                          StreamBuilder<
+                                              List<FoodCalculationRecord>>(
+                                            stream: queryFoodCalculationRecord(
+                                              queryBuilder:
+                                                  (foodCalculationRecord) =>
+                                                      foodCalculationRecord
+                                                          .where('food',
+                                                              isEqualTo:
+                                                                  'side'),
+                                            ),
+                                            builder: (context, snapshot) {
+                                              // Customize what your widget looks like when it's loading.
+                                              if (!snapshot.hasData) {
+                                                return Center(
+                                                  child: SizedBox(
+                                                    width: 2,
+                                                    height: 2,
+                                                    child: SpinKitRing(
+                                                      color: Colors.transparent,
+                                                      size: 2,
+                                                    ),
+                                                  ),
+                                                );
+                                              }
+                                              List<FoodCalculationRecord>
+                                                  containerFoodCalculationRecordList =
+                                                  snapshot.data!;
+                                              return Container(
+                                                width: MediaQuery.of(context)
+                                                    .size
+                                                    .width,
+                                                decoration: BoxDecoration(),
+                                                child: Padding(
+                                                  padding: EdgeInsetsDirectional
+                                                      .fromSTEB(8, 0, 8, 12),
+                                                  child: FlutterFlowChoiceChips(
+                                                    initiallySelected:
+                                                        foodFoodActionsRecord
+                                                            .sideComponent!
+                                                            .toList(),
+                                                    options:
+                                                        containerFoodCalculationRecordList
+                                                            .map((e) =>
+                                                                e.foodtype!)
+                                                            .toList()
+                                                            .map((label) =>
+                                                                ChipData(label))
+                                                            .toList(),
+                                                    onChanged: (val) async {
+                                                      setState(() =>
+                                                          sideComponentValues =
+                                                              val);
+                                                      logFirebaseEvent(
+                                                          'FOOD_sideComponent_ON_FORM_WIDGET_SELECT');
+                                                      logFirebaseEvent(
+                                                          'sideComponent_backend_call');
+
+                                                      final foodActionsUpdateData =
+                                                          {
+                                                        'sideComponent':
+                                                            sideComponentValues,
+                                                      };
+                                                      await foodFoodActionsRecord
+                                                          .reference
+                                                          .update(
+                                                              foodActionsUpdateData);
+                                                    },
+                                                    selectedChipStyle:
+                                                        ChipStyle(
+                                                      backgroundColor:
+                                                          Color(0xFF323B45),
+                                                      textStyle:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .bodyText1
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Montserrat',
+                                                                color: Colors
+                                                                    .white,
+                                                              ),
+                                                      iconColor: Colors.white,
+                                                      iconSize: 18,
+                                                      elevation: 4,
+                                                    ),
+                                                    unselectedChipStyle:
+                                                        ChipStyle(
+                                                      backgroundColor:
+                                                          Colors.white,
+                                                      textStyle:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .bodyText2
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Montserrat',
+                                                                color: Color(
+                                                                    0xFF323B45),
+                                                              ),
+                                                      iconColor:
+                                                          Color(0xFF323B45),
+                                                      iconSize: 18,
+                                                      elevation: 4,
+                                                    ),
+                                                    chipSpacing: 20,
+                                                    multiselect: true,
+                                                    initialized:
+                                                        sideComponentValues !=
+                                                            null,
+                                                    alignment:
+                                                        WrapAlignment.start,
+                                                  ),
+                                                ),
+                                              );
+                                            },
+                                          ),
+                                      ],
+                                    ),
+                                  ).animateOnPageLoad(animationsMap[
+                                      'containerOnPageLoadAnimation4']!),
                                 ),
                                 if (FFAppState().displayDates)
                                   Padding(
@@ -1001,10 +1290,8 @@ class _FoodWidgetState extends State<FoodWidget> with TickerProviderStateMixin {
                                         locale: FFLocalizations.of(context)
                                             .languageCode,
                                       ),
-                                    ).animated([
-                                      animationsMap[
-                                          'containerOnPageLoadAnimation3']!
-                                    ]),
+                                    ).animateOnPageLoad(animationsMap[
+                                        'containerOnPageLoadAnimation5']!),
                                   ),
                                 if (FFAppState().displayDays)
                                   Padding(
@@ -1028,11 +1315,8 @@ class _FoodWidgetState extends State<FoodWidget> with TickerProviderStateMixin {
                                             12, 8, 12, 8),
                                         child: FlutterFlowChoiceChips(
                                           initiallySelected:
-                                              periodicityValues != null
-                                                  ? periodicityValues
-                                                  : foodFoodActionsRecord
-                                                      .periodicity!
-                                                      .toList(),
+                                              foodFoodActionsRecord.periodicity!
+                                                  .toList(),
                                           options: [
                                             ChipData('Lundi'),
                                             ChipData('Mardi'),
@@ -1084,10 +1368,8 @@ class _FoodWidgetState extends State<FoodWidget> with TickerProviderStateMixin {
                                           alignment: WrapAlignment.spaceEvenly,
                                         ),
                                       ),
-                                    ).animated([
-                                      animationsMap[
-                                          'containerOnPageLoadAnimation4']!
-                                    ]),
+                                    ).animateOnPageLoad(animationsMap[
+                                        'containerOnPageLoadAnimation6']!),
                                   ),
                               ],
                             ),
@@ -1101,103 +1383,6 @@ class _FoodWidgetState extends State<FoodWidget> with TickerProviderStateMixin {
                         child: Column(
                           mainAxisSize: MainAxisSize.max,
                           children: [
-                            Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 15, 0, 15),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Expanded(
-                                    child: Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          10, 0, 10, 0),
-                                      child: InkWell(
-                                        onTap: () async {
-                                          logFirebaseEvent(
-                                              'FOOD_PAGE_cancel_ON_TAP');
-                                          logFirebaseEvent(
-                                              'cancel_Update-Local-State');
-                                          setState(() =>
-                                              FFAppState().loading = false);
-                                          logFirebaseEvent(
-                                              'cancel_Navigate-To');
-                                          await Navigator.push(
-                                            context,
-                                            PageTransition(
-                                              type: PageTransitionType.fade,
-                                              duration:
-                                                  Duration(milliseconds: 0),
-                                              reverseDuration:
-                                                  Duration(milliseconds: 0),
-                                              child: HomeWidget(),
-                                            ),
-                                          );
-                                        },
-                                        child: IconButtonWidget(
-                                          fillColor: Color(0x65A5A5A5),
-                                          fontColor:
-                                              FlutterFlowTheme.of(context)
-                                                  .tertiaryColor,
-                                          icon: Icon(
-                                            Icons.cancel_outlined,
-                                            color: FlutterFlowTheme.of(context)
-                                                .tertiaryColor,
-                                            size: 20,
-                                          ),
-                                          text: 'Fermer',
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          10, 0, 10, 0),
-                                      child: InkWell(
-                                        onTap: () async {
-                                          logFirebaseEvent(
-                                              'FOOD_PAGE_calculer_ON_TAP');
-                                          logFirebaseEvent(
-                                              'calculer_Update-Local-State');
-                                          setState(() => FFAppState()
-                                                  .actionCO2 =
-                                              functions.foodActionsCO2e(
-                                                  foodFoodActionsRecord.food,
-                                                  valueOrDefault<String>(
-                                                    mainComponentValue,
-                                                    'default',
-                                                  ),
-                                                  sideComponentValues?.toList(),
-                                                  portionsValue));
-                                          logFirebaseEvent(
-                                              'calculer_Backend-Call');
-
-                                          final foodActionsUpdateData =
-                                              createFoodActionsRecordData(
-                                            co2e: FFAppState().actionCO2,
-                                          );
-                                          await foodFoodActionsRecord.reference
-                                              .update(foodActionsUpdateData);
-                                        },
-                                        child: IconButtonWidget(
-                                          fillColor: Color(0x5300A193),
-                                          fontColor:
-                                              FlutterFlowTheme.of(context)
-                                                  .tertiaryColor,
-                                          icon: Icon(
-                                            Icons.sync_rounded,
-                                            color: Color(0x6523D0C1),
-                                            size: 20,
-                                          ),
-                                          text: 'Calculer ',
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
                             Padding(
                               padding:
                                   EdgeInsetsDirectional.fromSTEB(0, 5, 0, 15),
@@ -1218,32 +1403,22 @@ class _FoodWidgetState extends State<FoodWidget> with TickerProviderStateMixin {
                                                 logFirebaseEvent(
                                                     'FOOD_PAGE_delete_ON_TAP');
                                                 logFirebaseEvent(
-                                                    'delete_Update-Local-State');
+                                                    'delete_update_local_state');
                                                 setState(() => FFAppState()
                                                     .loading = true);
                                                 logFirebaseEvent(
-                                                    'delete_Backend-Call');
+                                                    'delete_backend_call');
                                                 await foodFoodActionsRecord
                                                     .reference
                                                     .delete();
                                                 logFirebaseEvent(
-                                                    'delete_Update-Local-State');
+                                                    'delete_update_local_state');
                                                 setState(() => FFAppState()
                                                     .loading = false);
                                                 logFirebaseEvent(
-                                                    'delete_Navigate-To');
-                                                await Navigator.push(
-                                                  context,
-                                                  PageTransition(
-                                                    type:
-                                                        PageTransitionType.fade,
-                                                    duration: Duration(
-                                                        milliseconds: 0),
-                                                    reverseDuration: Duration(
-                                                        milliseconds: 0),
-                                                    child: HomeWidget(),
-                                                  ),
-                                                );
+                                                    'delete_navigate_to');
+
+                                                context.pushNamed('Home');
                                               },
                                               child: IconButtonWidget(
                                                 fillColor: Color(0x98BC0909),
@@ -1298,44 +1473,31 @@ class _FoodWidgetState extends State<FoodWidget> with TickerProviderStateMixin {
                                                 logFirebaseEvent(
                                                     'FOOD_PAGE_modify_ON_TAP');
                                                 logFirebaseEvent(
-                                                    'modify_Update-Local-State');
+                                                    'modify_update_local_state');
                                                 setState(() => FFAppState()
                                                     .loading = true);
-                                                logFirebaseEvent(
-                                                    'modify_Update-Local-State');
-                                                setState(() => FFAppState()
-                                                        .actionCO2 =
-                                                    functions.foodActionsCO2e(
-                                                        foodFoodActionsRecord
-                                                            .food,
-                                                        valueOrDefault<String>(
-                                                          mainComponentValue,
-                                                          'default',
-                                                        ),
-                                                        sideComponentValues
-                                                            ?.toList(),
-                                                        portionsValue));
                                                 if (foodFoodActionsRecord
                                                     .isPeriodic!) {
                                                   logFirebaseEvent(
-                                                      'modify_Backend-Call');
+                                                      'modify_backend_call');
 
                                                   final foodActionsUpdateData =
                                                       {
                                                     ...createFoodActionsRecordData(
-                                                      co2e: FFAppState()
-                                                          .actionCO2,
                                                       mainComponent:
                                                           valueOrDefault<
                                                               String>(
                                                         mainComponentValue,
                                                         'default',
                                                       ),
+                                                      portions: portionsValue,
                                                     ),
                                                     'periodicity':
                                                         periodicityValues,
                                                     'sideComponent':
-                                                        sideComponentValues,
+                                                        foodFoodActionsRecord
+                                                            .sideComponent!
+                                                            .toList(),
                                                   };
                                                   await foodFoodActionsRecord
                                                       .reference
@@ -1345,14 +1507,13 @@ class _FoodWidgetState extends State<FoodWidget> with TickerProviderStateMixin {
                                                   if (FFAppState()
                                                       .displayDays) {
                                                     logFirebaseEvent(
-                                                        'modify_Backend-Call');
+                                                        'modify_backend_call');
 
                                                     final foodActionsCreateData =
                                                         {
                                                       ...createFoodActionsRecordData(
                                                         userId: currentUserUid,
-                                                        co2e: FFAppState()
-                                                            .actionCO2,
+                                                        co2e: 0,
                                                         isPeriodic: true,
                                                         food:
                                                             foodFoodActionsRecord
@@ -1368,7 +1529,9 @@ class _FoodWidgetState extends State<FoodWidget> with TickerProviderStateMixin {
                                                       'periodicity':
                                                           periodicityValues,
                                                       'sideComponent':
-                                                          sideComponentValues,
+                                                          foodFoodActionsRecord
+                                                              .sideComponent!
+                                                              .toList(),
                                                     };
                                                     await FoodActionsRecord
                                                         .collection
@@ -1377,14 +1540,12 @@ class _FoodWidgetState extends State<FoodWidget> with TickerProviderStateMixin {
                                                             foodActionsCreateData);
                                                   }
                                                   logFirebaseEvent(
-                                                      'modify_Backend-Call');
+                                                      'modify_backend_call');
 
                                                   final foodActionsUpdateData =
                                                       {
                                                     ...createFoodActionsRecordData(
                                                       userId: currentUserUid,
-                                                      co2e: FFAppState()
-                                                          .actionCO2,
                                                       day: functions
                                                           .timestampToDay(
                                                               calendarSelectedDay
@@ -1393,16 +1554,18 @@ class _FoodWidgetState extends State<FoodWidget> with TickerProviderStateMixin {
                                                           calendarSelectedDay
                                                               ?.start,
                                                       isPeriodic: false,
-                                                      portions: portionsValue,
                                                       mainComponent:
                                                           valueOrDefault<
                                                               String>(
                                                         mainComponentValue,
                                                         'default',
                                                       ),
+                                                      portions: portionsValue,
                                                     ),
                                                     'sideComponent':
-                                                        sideComponentValues,
+                                                        foodFoodActionsRecord
+                                                            .sideComponent!
+                                                            .toList(),
                                                   };
                                                   await foodFoodActionsRecord
                                                       .reference
@@ -1411,23 +1574,13 @@ class _FoodWidgetState extends State<FoodWidget> with TickerProviderStateMixin {
                                                 }
 
                                                 logFirebaseEvent(
-                                                    'modify_Update-Local-State');
+                                                    'modify_update_local_state');
                                                 setState(() => FFAppState()
                                                     .loading = false);
                                                 logFirebaseEvent(
-                                                    'modify_Navigate-To');
-                                                await Navigator.push(
-                                                  context,
-                                                  PageTransition(
-                                                    type:
-                                                        PageTransitionType.fade,
-                                                    duration: Duration(
-                                                        milliseconds: 0),
-                                                    reverseDuration: Duration(
-                                                        milliseconds: 0),
-                                                    child: HomeWidget(),
-                                                  ),
-                                                );
+                                                    'modify_navigate_to');
+
+                                                context.pushNamed('Home');
                                               },
                                               child: IconButtonWidget(
                                                 fillColor:
