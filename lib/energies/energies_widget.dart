@@ -1,11 +1,14 @@
-import '../auth/auth_util.dart';
-import '../backend/backend.dart';
-import '../components/icon_button_widget.dart';
-import '../flutter_flow/flutter_flow_animations.dart';
-import '../flutter_flow/flutter_flow_drop_down.dart';
-import '../flutter_flow/flutter_flow_theme.dart';
-import '../flutter_flow/flutter_flow_util.dart';
-import '../flutter_flow/custom_functions.dart' as functions;
+import '/auth/firebase_auth/auth_util.dart';
+import '/backend/api_requests/api_calls.dart';
+import '/backend/backend.dart';
+import '/components/icon_button_widget.dart';
+import '/flutter_flow/flutter_flow_animations.dart';
+import '/flutter_flow/flutter_flow_drop_down.dart';
+import '/flutter_flow/flutter_flow_theme.dart';
+import '/flutter_flow/flutter_flow_util.dart';
+import '/flutter_flow/flutter_flow_widgets.dart';
+import '/flutter_flow/form_field_controller.dart';
+import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
@@ -15,14 +18,21 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+import 'energies_model.dart';
+export 'energies_model.dart';
 
 class EnergiesWidget extends StatefulWidget {
   const EnergiesWidget({
     Key? key,
     this.actionRef,
+    required this.category,
+    required this.action,
   }) : super(key: key);
 
   final DocumentReference? actionRef;
+  final String? category;
+  final String? action;
 
   @override
   _EnergiesWidgetState createState() => _EnergiesWidgetState();
@@ -30,6 +40,10 @@ class EnergiesWidget extends StatefulWidget {
 
 class _EnergiesWidgetState extends State<EnergiesWidget>
     with TickerProviderStateMixin {
+  late EnergiesModel _model;
+
+  final scaffoldKey = GlobalKey<ScaffoldState>();
+
   final animationsMap = {
     'containerOnPageLoadAnimation': AnimationInfo(
       trigger: AnimationTrigger.onPageLoad,
@@ -38,27 +52,61 @@ class _EnergiesWidgetState extends State<EnergiesWidget>
           curve: Curves.easeInOut,
           delay: 0.ms,
           duration: 600.ms,
-          begin: 0,
-          end: 1,
+          begin: 0.0,
+          end: 1.0,
         ),
         MoveEffect(
           curve: Curves.easeInOut,
           delay: 0.ms,
           duration: 600.ms,
-          begin: Offset(0, 70),
-          end: Offset(0, 0),
+          begin: Offset(0.0, 70.0),
+          end: Offset(0.0, 0.0),
         ),
       ],
     ),
   };
-  String? peopleSharingValue;
-  String? powertypeValue;
-  TextEditingController? volumeController;
-  final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
     super.initState();
+    _model = createModel(context, () => EnergiesModel());
+
+    logFirebaseEvent('screen_view', parameters: {'screen_name': 'Energies'});
+    // On page load action.
+    SchedulerBinding.instance.addPostFrameCallback((_) async {
+      logFirebaseEvent('ENERGIES_PAGE_Energies_ON_INIT_STATE');
+      logFirebaseEvent('Energies_backend_call');
+      _model.listOptions = await GetOptionsCall.call(
+        category: widget.category,
+        action: widget.action,
+      );
+      logFirebaseEvent('Energies_backend_call');
+      _model.emissionFactor = await GetEmissionFactorCall.call(
+        category: widget.category,
+        action: widget.action,
+      );
+      logFirebaseEvent('Energies_update_app_state');
+      setState(() {
+        FFAppState().actionEmissionFactor = GetEmissionFactorCall.co2e(
+          (_model.emissionFactor?.jsonBody ?? ''),
+        );
+      });
+      logFirebaseEvent('Energies_update_app_state');
+      setState(() {
+        FFAppState().actionCO2e = functions.calculateActionCO2e(
+            GetEmissionFactorCall.co2e(
+              (_model.emissionFactor?.jsonBody ?? ''),
+            ),
+            int.tryParse(_model.volumeController.text),
+            1,
+            365,
+            valueOrDefault<String>(
+              _model.peopleSharingValue,
+              '1',
+            ));
+      });
+    });
+
     setupAnimations(
       animationsMap.values.where((anim) =>
           anim.trigger == AnimationTrigger.onActionTrigger ||
@@ -66,49 +114,54 @@ class _EnergiesWidgetState extends State<EnergiesWidget>
       this,
     );
 
-    logFirebaseEvent('screen_view', parameters: {'screen_name': 'Energies'});
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
   void dispose() {
-    volumeController?.dispose();
+    _model.dispose();
+
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    context.watch<FFAppState>();
+
     return StreamBuilder<EnergyActionsRecord>(
       stream: EnergyActionsRecord.getDocument(widget.actionRef!),
       builder: (context, snapshot) {
         // Customize what your widget looks like when it's loading.
         if (!snapshot.hasData) {
-          return Center(
-            child: SizedBox(
-              width: 40,
-              height: 40,
-              child: SpinKitCircle(
-                color: FlutterFlowTheme.of(context).primaryColor,
-                size: 40,
+          return Scaffold(
+            backgroundColor: FlutterFlowTheme.of(context).primary,
+            body: Center(
+              child: SizedBox(
+                width: 40.0,
+                height: 40.0,
+                child: SpinKitCircle(
+                  color: FlutterFlowTheme.of(context).primary,
+                  size: 40.0,
+                ),
               ),
             ),
           );
         }
         final energiesEnergyActionsRecord = snapshot.data!;
-        return Scaffold(
-          key: scaffoldKey,
-          backgroundColor: FlutterFlowTheme.of(context).primaryColor,
-          body: GestureDetector(
-            onTap: () => FocusScope.of(context).unfocus(),
-            child: Column(
+        return GestureDetector(
+          onTap: () => FocusScope.of(context).requestFocus(_model.unfocusNode),
+          child: Scaffold(
+            key: scaffoldKey,
+            backgroundColor: FlutterFlowTheme.of(context).primary,
+            body: Column(
               mainAxisSize: MainAxisSize.max,
               children: [
                 Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height * 1,
+                  width: MediaQuery.sizeOf(context).width * 1.0,
+                  height: MediaQuery.sizeOf(context).height * 1.0,
                   constraints: BoxConstraints(
-                    maxWidth: MediaQuery.of(context).size.width,
-                    maxHeight: MediaQuery.of(context).size.height * 1,
+                    maxWidth: MediaQuery.sizeOf(context).width * 1.0,
+                    maxHeight: MediaQuery.sizeOf(context).height * 1.0,
                   ),
                   decoration: BoxDecoration(
                     color: Color(0xFFEEEEEE),
@@ -134,18 +187,18 @@ class _EnergiesWidgetState extends State<EnergiesWidget>
                           if (!snapshot.hasData) {
                             return Center(
                               child: SizedBox(
-                                width: 2,
-                                height: 2,
+                                width: 2.0,
+                                height: 2.0,
                                 child: SpinKitRing(
                                   color: Colors.transparent,
-                                  size: 2,
+                                  size: 2.0,
                                 ),
                               ),
                             );
                           }
                           List<UsersRecord> headerUsersRecordList =
                               snapshot.data!;
-                          // Return an empty Container when the document does not exist.
+                          // Return an empty Container when the item does not exist.
                           if (snapshot.data!.isEmpty) {
                             return Container();
                           }
@@ -154,13 +207,13 @@ class _EnergiesWidgetState extends State<EnergiesWidget>
                                   ? headerUsersRecordList.first
                                   : null;
                           return Container(
-                            width: MediaQuery.of(context).size.width,
-                            height: 100,
+                            width: MediaQuery.sizeOf(context).width * 1.0,
+                            height: 100.0,
                             decoration: BoxDecoration(),
-                            alignment: AlignmentDirectional(0, 1),
+                            alignment: AlignmentDirectional(0.00, 1.00),
                             child: Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(20, 0, 20, 0),
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  20.0, 0.0, 20.0, 0.0),
                               child: Row(
                                 mainAxisSize: MainAxisSize.max,
                                 mainAxisAlignment:
@@ -170,6 +223,10 @@ class _EnergiesWidgetState extends State<EnergiesWidget>
                                     mainAxisSize: MainAxisSize.max,
                                     children: [
                                       InkWell(
+                                        splashColor: Colors.transparent,
+                                        focusColor: Colors.transparent,
+                                        hoverColor: Colors.transparent,
+                                        highlightColor: Colors.transparent,
                                         onTap: () async {
                                           logFirebaseEvent(
                                               'ENERGIES_PAGE_Container_at2m3b55_ON_TAP');
@@ -190,22 +247,23 @@ class _EnergiesWidgetState extends State<EnergiesWidget>
                                           );
                                         },
                                         child: Container(
-                                          width: 50,
-                                          height: 50,
+                                          width: 50.0,
+                                          height: 50.0,
                                           decoration: BoxDecoration(),
-                                          alignment: AlignmentDirectional(0, 0),
+                                          alignment:
+                                              AlignmentDirectional(0.00, 0.00),
                                           child: SvgPicture.asset(
                                             'assets/images/menu.svg',
-                                            width: 24,
-                                            height: 24,
+                                            width: 24.0,
+                                            height: 24.0,
                                             fit: BoxFit.fitHeight,
                                           ),
                                         ),
                                       ),
                                       Image.asset(
                                         'assets/images/logo_light.png',
-                                        width: 100,
-                                        height: 40,
+                                        width: 100.0,
+                                        height: 40.0,
                                         fit: BoxFit.fitHeight,
                                       ),
                                     ],
@@ -217,6 +275,10 @@ class _EnergiesWidgetState extends State<EnergiesWidget>
                                           MainAxisAlignment.spaceEvenly,
                                       children: [
                                         InkWell(
+                                          splashColor: Colors.transparent,
+                                          focusColor: Colors.transparent,
+                                          hoverColor: Colors.transparent,
+                                          highlightColor: Colors.transparent,
                                           onTap: () async {
                                             logFirebaseEvent(
                                                 'ENERGIES_PAGE_Actions_ON_TAP');
@@ -226,15 +288,15 @@ class _EnergiesWidgetState extends State<EnergiesWidget>
                                             context.pushNamed('Statistiques');
                                           },
                                           child: Container(
-                                            width: 40,
-                                            height: 40,
+                                            width: 40.0,
+                                            height: 40.0,
                                             decoration: BoxDecoration(
                                               color: Color(0x4DFFFFFF),
                                               boxShadow: [
                                                 BoxShadow(
-                                                  blurRadius: 10,
+                                                  blurRadius: 10.0,
                                                   color: Color(0x2C000000),
-                                                  offset: Offset(0, 4),
+                                                  offset: Offset(0.0, 4.0),
                                                 )
                                               ],
                                               shape: BoxShape.circle,
@@ -242,10 +304,15 @@ class _EnergiesWidgetState extends State<EnergiesWidget>
                                                 color:
                                                     FlutterFlowTheme.of(context)
                                                         .grayLight,
-                                                width: 1,
+                                                width: 1.0,
                                               ),
                                             ),
                                             child: InkWell(
+                                              splashColor: Colors.transparent,
+                                              focusColor: Colors.transparent,
+                                              hoverColor: Colors.transparent,
+                                              highlightColor:
+                                                  Colors.transparent,
                                               onTap: () async {
                                                 logFirebaseEvent(
                                                     'ENERGIES_PAGE_Icon_noq30xx1_ON_TAP');
@@ -258,13 +325,17 @@ class _EnergiesWidgetState extends State<EnergiesWidget>
                                                 Icons.add,
                                                 color:
                                                     FlutterFlowTheme.of(context)
-                                                        .tertiaryColor,
-                                                size: 24,
+                                                        .tertiary,
+                                                size: 24.0,
                                               ),
                                             ),
                                           ),
                                         ),
                                         InkWell(
+                                          splashColor: Colors.transparent,
+                                          focusColor: Colors.transparent,
+                                          hoverColor: Colors.transparent,
+                                          highlightColor: Colors.transparent,
                                           onTap: () async {
                                             logFirebaseEvent(
                                                 'ENERGIES_PAGE_Stats_ON_TAP');
@@ -274,15 +345,15 @@ class _EnergiesWidgetState extends State<EnergiesWidget>
                                             context.pushNamed('Statistiques');
                                           },
                                           child: Container(
-                                            width: 40,
-                                            height: 40,
+                                            width: 40.0,
+                                            height: 40.0,
                                             decoration: BoxDecoration(
                                               color: Color(0x4DFFFFFF),
                                               boxShadow: [
                                                 BoxShadow(
-                                                  blurRadius: 10,
+                                                  blurRadius: 10.0,
                                                   color: Color(0x2C000000),
-                                                  offset: Offset(0, 4),
+                                                  offset: Offset(0.0, 4.0),
                                                 )
                                               ],
                                               shape: BoxShape.circle,
@@ -290,19 +361,23 @@ class _EnergiesWidgetState extends State<EnergiesWidget>
                                                 color:
                                                     FlutterFlowTheme.of(context)
                                                         .grayLight,
-                                                width: 1,
+                                                width: 1.0,
                                               ),
                                             ),
                                             child: Icon(
                                               Icons.stacked_bar_chart,
                                               color:
                                                   FlutterFlowTheme.of(context)
-                                                      .tertiaryColor,
-                                              size: 24,
+                                                      .tertiary,
+                                              size: 24.0,
                                             ),
                                           ),
                                         ),
                                         InkWell(
+                                          splashColor: Colors.transparent,
+                                          focusColor: Colors.transparent,
+                                          hoverColor: Colors.transparent,
+                                          highlightColor: Colors.transparent,
                                           onTap: () async {
                                             logFirebaseEvent(
                                                 'ENERGIES_PAGE_Profil_ON_TAP');
@@ -312,17 +387,17 @@ class _EnergiesWidgetState extends State<EnergiesWidget>
                                             context.pushNamed('Profile');
                                           },
                                           child: Container(
-                                            width: 40,
-                                            height: 40,
+                                            width: 40.0,
+                                            height: 40.0,
                                             decoration: BoxDecoration(
                                               color:
                                                   FlutterFlowTheme.of(context)
-                                                      .tertiaryColor,
+                                                      .tertiary,
                                               boxShadow: [
                                                 BoxShadow(
-                                                  blurRadius: 10,
+                                                  blurRadius: 10.0,
                                                   color: Color(0x2C000000),
-                                                  offset: Offset(0, 4),
+                                                  offset: Offset(0.0, 4.0),
                                                 )
                                               ],
                                               shape: BoxShape.circle,
@@ -330,19 +405,19 @@ class _EnergiesWidgetState extends State<EnergiesWidget>
                                                 color:
                                                     FlutterFlowTheme.of(context)
                                                         .grayLight,
-                                                width: 1,
+                                                width: 1.0,
                                               ),
                                             ),
                                             child: ClipRRect(
                                               borderRadius:
-                                                  BorderRadius.circular(100),
+                                                  BorderRadius.circular(100.0),
                                               child: Image.network(
                                                 valueOrDefault<String>(
-                                                  headerUsersRecord!.photoUrl,
+                                                  headerUsersRecord?.photoUrl,
                                                   'https://storage.googleapis.com/carbonfight-89af6.appspot.com/default_photo_url.png',
                                                 ),
-                                                width: 50,
-                                                height: 50,
+                                                width: 50.0,
+                                                height: 50.0,
                                                 fit: BoxFit.cover,
                                               ),
                                             ),
@@ -359,10 +434,11 @@ class _EnergiesWidgetState extends State<EnergiesWidget>
                       ),
                       Container(
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15),
+                          borderRadius: BorderRadius.circular(15.0),
                         ),
                         child: Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(1, 0, 0, 0),
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              1.0, 0.0, 0.0, 0.0),
                           child: SingleChildScrollView(
                             child: Column(
                               mainAxisSize: MainAxisSize.max,
@@ -370,533 +446,594 @@ class _EnergiesWidgetState extends State<EnergiesWidget>
                               children: [
                                 Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
-                                      16, 8, 16, 0),
-                                  child: StreamBuilder<
-                                      List<EnergyCalculationRecord>>(
-                                    stream: queryEnergyCalculationRecord(
-                                      queryBuilder: (energyCalculationRecord) =>
-                                          energyCalculationRecord.where(
-                                              'energy',
-                                              isEqualTo:
-                                                  energiesEnergyActionsRecord
-                                                      .energy),
+                                      16.0, 8.0, 16.0, 0.0),
+                                  child: Container(
+                                    width: double.infinity,
+                                    decoration: BoxDecoration(
+                                      color: Color(0xB3FFFFFF),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          blurRadius: 4.0,
+                                          color: Color(0x2B202529),
+                                          offset: Offset(0.0, 2.0),
+                                        )
+                                      ],
+                                      borderRadius: BorderRadius.circular(12.0),
                                     ),
-                                    builder: (context, snapshot) {
-                                      // Customize what your widget looks like when it's loading.
-                                      if (!snapshot.hasData) {
-                                        return Center(
-                                          child: SizedBox(
-                                            width: 2,
-                                            height: 2,
-                                            child: SpinKitRing(
-                                              color: Colors.transparent,
-                                              size: 2,
-                                            ),
-                                          ),
-                                        );
-                                      }
-                                      List<EnergyCalculationRecord>
-                                          energiesDetailsEnergyCalculationRecordList =
-                                          snapshot.data!;
-                                      return Container(
-                                        width: double.infinity,
-                                        decoration: BoxDecoration(
-                                          color: Color(0xB3FFFFFF),
-                                          boxShadow: [
-                                            BoxShadow(
-                                              blurRadius: 4,
-                                              color: Color(0x2B202529),
-                                              offset: Offset(0, 2),
-                                            )
-                                          ],
-                                          borderRadius:
-                                              BorderRadius.circular(12),
-                                        ),
-                                        child: Column(
-                                          mainAxisSize: MainAxisSize.max,
-                                          children: [
-                                            Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(8, 0, 0, 0),
-                                              child: Row(
-                                                mainAxisSize: MainAxisSize.max,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                children: [
-                                                  Padding(
-                                                    padding:
-                                                        EdgeInsetsDirectional
-                                                            .fromSTEB(
-                                                                8, 4, 0, 4),
-                                                    child: Column(
-                                                      mainAxisSize:
-                                                          MainAxisSize.max,
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .center,
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
-                                                      children: [
-                                                        Padding(
-                                                          padding:
-                                                              EdgeInsetsDirectional
-                                                                  .fromSTEB(0,
-                                                                      4, 0, 0),
-                                                          child: Text(
-                                                            'Énergies',
-                                                            style: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .subtitle1
-                                                                .override(
-                                                                  fontFamily:
-                                                                      'Outfit',
-                                                                  color: Color(
-                                                                      0xFF101213),
-                                                                  fontSize: 18,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w500,
-                                                                ),
-                                                          ),
-                                                        ),
-                                                        Padding(
-                                                          padding:
-                                                              EdgeInsetsDirectional
-                                                                  .fromSTEB(0,
-                                                                      4, 0, 0),
-                                                          child: Text(
-                                                            'Consommation annuelle',
-                                                            style: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .subtitle1
-                                                                .override(
-                                                                  fontFamily:
-                                                                      'Outfit',
-                                                                  color: Color(
-                                                                      0xFF101213),
-                                                                  fontSize: 14,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .normal,
-                                                                ),
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                  Stack(
-                                                    children: [
-                                                      if (energiesEnergyActionsRecord
-                                                              .energy ==
-                                                          'electricity')
-                                                        Padding(
-                                                          padding:
-                                                              EdgeInsetsDirectional
-                                                                  .fromSTEB(0,
-                                                                      0, 10, 0),
-                                                          child: Image.asset(
-                                                            'assets/images/energy.png',
-                                                            width: 100,
-                                                            height: 100,
-                                                            fit: BoxFit.cover,
-                                                          ),
-                                                        ),
-                                                      if (energiesEnergyActionsRecord
-                                                              .energy ==
-                                                          'gas')
-                                                        Padding(
-                                                          padding:
-                                                              EdgeInsetsDirectional
-                                                                  .fromSTEB(0,
-                                                                      0, 10, 0),
-                                                          child: Image.asset(
-                                                            'assets/images/gas.png',
-                                                            width: 100,
-                                                            height: 100,
-                                                            fit: BoxFit.cover,
-                                                          ),
-                                                        ),
-                                                      if (energiesEnergyActionsRecord
-                                                              .energy ==
-                                                          'water')
-                                                        Padding(
-                                                          padding:
-                                                              EdgeInsetsDirectional
-                                                                  .fromSTEB(0,
-                                                                      0, 10, 0),
-                                                          child: Image.asset(
-                                                            'assets/images/water-drop.png',
-                                                            width: 100,
-                                                            height: 100,
-                                                            fit: BoxFit.cover,
-                                                          ),
-                                                        ),
-                                                    ],
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                            Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(12, 8, 12, 0),
-                                              child: Row(
-                                                mainAxisSize: MainAxisSize.max,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                children: [
-                                                  Expanded(
-                                                    child: TextFormField(
-                                                      controller:
-                                                          volumeController ??=
-                                                              TextEditingController(
-                                                        text:
-                                                            energiesEnergyActionsRecord
-                                                                .volume,
-                                                      ),
-                                                      onChanged: (_) =>
-                                                          EasyDebounce.debounce(
-                                                        'volumeController',
-                                                        Duration(
-                                                            milliseconds: 2000),
-                                                        () async {
-                                                          logFirebaseEvent(
-                                                              'ENERGIES_PAGE_volume_ON_TEXTFIELD_CHANGE');
-                                                          logFirebaseEvent(
-                                                              'volume_backend_call');
-
-                                                          final energyActionsUpdateData =
-                                                              createEnergyActionsRecordData(
-                                                            volume:
-                                                                volumeController
-                                                                        ?.text ??
-                                                                    '',
-                                                          );
-                                                          await energiesEnergyActionsRecord
-                                                              .reference
-                                                              .update(
-                                                                  energyActionsUpdateData);
-                                                        },
-                                                      ),
-                                                      obscureText: false,
-                                                      decoration:
-                                                          InputDecoration(
-                                                        labelText: functions
-                                                            .getEnergyVolumeLabel(
-                                                                energiesEnergyActionsRecord
-                                                                    .energy),
-                                                        enabledBorder:
-                                                            OutlineInputBorder(
-                                                          borderSide:
-                                                              BorderSide(
-                                                            color: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .grayLight,
-                                                            width: 1,
-                                                          ),
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                      100),
-                                                        ),
-                                                        focusedBorder:
-                                                            OutlineInputBorder(
-                                                          borderSide:
-                                                              BorderSide(
-                                                            color: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .grayLight,
-                                                            width: 1,
-                                                          ),
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                      100),
-                                                        ),
-                                                        errorBorder:
-                                                            OutlineInputBorder(
-                                                          borderSide:
-                                                              BorderSide(
-                                                            color: Color(
-                                                                0x00000000),
-                                                            width: 1,
-                                                          ),
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                      100),
-                                                        ),
-                                                        focusedErrorBorder:
-                                                            OutlineInputBorder(
-                                                          borderSide:
-                                                              BorderSide(
-                                                            color: Color(
-                                                                0x00000000),
-                                                            width: 1,
-                                                          ),
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                      100),
-                                                        ),
-                                                        filled: true,
-                                                        fillColor:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .tertiaryColor,
-                                                        suffixIcon:
-                                                            volumeController!
-                                                                    .text
-                                                                    .isNotEmpty
-                                                                ? InkWell(
-                                                                    onTap:
-                                                                        () async {
-                                                                      volumeController
-                                                                          ?.clear();
-                                                                      logFirebaseEvent(
-                                                                          'ENERGIES_PAGE_volume_ON_TEXTFIELD_CHANGE');
-                                                                      logFirebaseEvent(
-                                                                          'volume_backend_call');
-
-                                                                      final energyActionsUpdateData =
-                                                                          createEnergyActionsRecordData(
-                                                                        volume:
-                                                                            volumeController?.text ??
-                                                                                '',
-                                                                      );
-                                                                      await energiesEnergyActionsRecord
-                                                                          .reference
-                                                                          .update(
-                                                                              energyActionsUpdateData);
-                                                                      setState(
-                                                                          () {});
-                                                                    },
-                                                                    child: Icon(
-                                                                      Icons
-                                                                          .clear,
-                                                                      color: Color(
-                                                                          0xFF757575),
-                                                                      size: 22,
-                                                                    ),
-                                                                  )
-                                                                : null,
-                                                      ),
-                                                      style: FlutterFlowTheme
-                                                              .of(context)
-                                                          .bodyText2
-                                                          .override(
-                                                            fontFamily:
-                                                                'Outfit',
-                                                            fontWeight:
-                                                                FontWeight.w500,
-                                                          ),
-                                                      keyboardType:
-                                                          TextInputType.number,
-                                                    ),
-                                                  ),
-                                                  Container(
-                                                    width: 100,
-                                                    height: 30,
-                                                    decoration: BoxDecoration(),
-                                                    child: Text(
-                                                      valueOrDefault<String>(
-                                                        '+ ${valueOrDefault<String>(
-                                                          functions.printScore(
-                                                              energiesEnergyActionsRecord
-                                                                  .co2e),
-                                                          '0',
-                                                        )}',
-                                                        '+ 0 g',
-                                                      ),
-                                                      textAlign:
-                                                          TextAlign.center,
-                                                      style:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .title2
-                                                              .override(
-                                                                fontFamily:
-                                                                    'Outfit',
-                                                                fontSize: 20,
-                                                              ),
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                            Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(12, 8, 12, 8),
-                                              child: Row(
-                                                mainAxisSize: MainAxisSize.max,
-                                                children: [
-                                                  Expanded(
-                                                    child: Padding(
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.max,
+                                      children: [
+                                        Padding(
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  8.0, 0.0, 0.0, 0.0),
+                                          child: Row(
+                                            mainAxisSize: MainAxisSize.max,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Padding(
+                                                padding: EdgeInsetsDirectional
+                                                    .fromSTEB(
+                                                        8.0, 4.0, 0.0, 4.0),
+                                                child: Column(
+                                                  mainAxisSize:
+                                                      MainAxisSize.max,
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Padding(
                                                       padding:
                                                           EdgeInsetsDirectional
                                                               .fromSTEB(
-                                                                  0, 0, 10, 0),
-                                                      child:
-                                                          FlutterFlowDropDown<
-                                                              String>(
-                                                        initialOption:
-                                                            peopleSharingValue ??=
-                                                                energiesEnergyActionsRecord
-                                                                    .peopleSharing,
-                                                        options: [
-                                                          '1',
-                                                          '2',
-                                                          '3',
-                                                          '4',
-                                                          '5',
-                                                          '6',
-                                                          '7',
-                                                          '8'
-                                                        ],
-                                                        onChanged: (val) async {
-                                                          setState(() =>
-                                                              peopleSharingValue =
-                                                                  val);
-                                                          logFirebaseEvent(
-                                                              'ENERGIES_peopleSharing_ON_FORM_WIDGET_SE');
-                                                          logFirebaseEvent(
-                                                              'peopleSharing_backend_call');
-
-                                                          final energyActionsUpdateData =
-                                                              createEnergyActionsRecordData(
-                                                            peopleSharing:
-                                                                peopleSharingValue,
-                                                          );
-                                                          await energiesEnergyActionsRecord
-                                                              .reference
-                                                              .update(
-                                                                  energyActionsUpdateData);
-                                                        },
-                                                        width: 100,
-                                                        height: 40,
-                                                        textStyle:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .bodyText2
-                                                                .override(
-                                                                  fontFamily:
-                                                                      'Outfit',
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w500,
-                                                                ),
-                                                        hintText:
-                                                            'Taille du foyer',
-                                                        icon: Icon(
-                                                          Icons.family_restroom,
-                                                          size: 15,
-                                                        ),
-                                                        fillColor:
-                                                            Color(0xFFFAFAFA),
-                                                        elevation: 2,
-                                                        borderColor:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .grayLight,
-                                                        borderWidth: 1,
-                                                        borderRadius: 100,
-                                                        margin:
-                                                            EdgeInsetsDirectional
-                                                                .fromSTEB(12, 4,
-                                                                    12, 4),
-                                                        hidesUnderline: true,
+                                                                  0.0,
+                                                                  4.0,
+                                                                  0.0,
+                                                                  0.0),
+                                                      child: Text(
+                                                        'Énergies',
+                                                        style: FlutterFlowTheme
+                                                                .of(context)
+                                                            .titleMedium
+                                                            .override(
+                                                              fontFamily:
+                                                                  'Outfit',
+                                                              color: Color(
+                                                                  0xFF101213),
+                                                              fontSize: 18.0,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500,
+                                                            ),
                                                       ),
                                                     ),
-                                                  ),
+                                                    Padding(
+                                                      padding:
+                                                          EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                                  0.0,
+                                                                  4.0,
+                                                                  0.0,
+                                                                  0.0),
+                                                      child: Text(
+                                                        'Consommation annuelle',
+                                                        style: FlutterFlowTheme
+                                                                .of(context)
+                                                            .titleMedium
+                                                            .override(
+                                                              fontFamily:
+                                                                  'Outfit',
+                                                              color: Color(
+                                                                  0xFF101213),
+                                                              fontSize: 14.0,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .normal,
+                                                            ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                              Stack(
+                                                children: [
                                                   if (energiesEnergyActionsRecord
-                                                          .energy !=
+                                                          .energy ==
+                                                      'electricity')
+                                                    Padding(
+                                                      padding:
+                                                          EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                                  0.0,
+                                                                  0.0,
+                                                                  10.0,
+                                                                  0.0),
+                                                      child: Image.asset(
+                                                        'assets/images/energy.png',
+                                                        width: 100.0,
+                                                        height: 100.0,
+                                                        fit: BoxFit.cover,
+                                                      ),
+                                                    ),
+                                                  if (energiesEnergyActionsRecord
+                                                          .energy ==
+                                                      'gas')
+                                                    Padding(
+                                                      padding:
+                                                          EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                                  0.0,
+                                                                  0.0,
+                                                                  10.0,
+                                                                  0.0),
+                                                      child: Image.asset(
+                                                        'assets/images/gas.png',
+                                                        width: 100.0,
+                                                        height: 100.0,
+                                                        fit: BoxFit.cover,
+                                                      ),
+                                                    ),
+                                                  if (energiesEnergyActionsRecord
+                                                          .energy ==
                                                       'water')
-                                                    Expanded(
-                                                      child: Padding(
-                                                        padding:
-                                                            EdgeInsetsDirectional
-                                                                .fromSTEB(10, 0,
-                                                                    0, 0),
-                                                        child:
-                                                            FlutterFlowDropDown<
-                                                                String>(
-                                                          initialOption:
-                                                              powertypeValue ??=
-                                                                  energiesEnergyActionsRecord
-                                                                      .powertype,
-                                                          options:
-                                                              energiesDetailsEnergyCalculationRecordList
-                                                                  .map((e) => e
-                                                                      .powertype!)
-                                                                  .toList()
-                                                                  .toList(),
-                                                          onChanged:
-                                                              (val) async {
-                                                            setState(() =>
-                                                                powertypeValue =
-                                                                    val);
-                                                            logFirebaseEvent(
-                                                                'ENERGIES_powertype_ON_FORM_WIDGET_SELECT');
-                                                            logFirebaseEvent(
-                                                                'powertype_backend_call');
-
-                                                            final energyActionsUpdateData =
-                                                                createEnergyActionsRecordData(
-                                                              powertype:
-                                                                  powertypeValue,
-                                                            );
-                                                            await energiesEnergyActionsRecord
-                                                                .reference
-                                                                .update(
-                                                                    energyActionsUpdateData);
-                                                          },
-                                                          width: 100,
-                                                          height: 40,
-                                                          textStyle:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .bodyText2
-                                                                  .override(
-                                                                    fontFamily:
-                                                                        'Outfit',
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w500,
-                                                                  ),
-                                                          hintText:
-                                                              'Type d\'énergie',
-                                                          icon: FaIcon(
-                                                            FontAwesomeIcons
-                                                                .fire,
-                                                          ),
-                                                          fillColor:
-                                                              Color(0xFFFAFAFA),
-                                                          elevation: 2,
-                                                          borderColor:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .grayLight,
-                                                          borderWidth: 1,
-                                                          borderRadius: 100,
-                                                          margin:
-                                                              EdgeInsetsDirectional
-                                                                  .fromSTEB(12,
-                                                                      4, 12, 4),
-                                                          hidesUnderline: true,
-                                                        ),
+                                                    Padding(
+                                                      padding:
+                                                          EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                                  0.0,
+                                                                  0.0,
+                                                                  10.0,
+                                                                  0.0),
+                                                      child: Image.asset(
+                                                        'assets/images/water-drop.png',
+                                                        width: 100.0,
+                                                        height: 100.0,
+                                                        fit: BoxFit.cover,
                                                       ),
                                                     ),
                                                 ],
                                               ),
-                                            ),
-                                          ],
+                                            ],
+                                          ),
                                         ),
-                                      ).animateOnPageLoad(animationsMap[
-                                          'containerOnPageLoadAnimation']!);
-                                    },
-                                  ),
+                                        Padding(
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  12.0, 8.0, 12.0, 0.0),
+                                          child: Row(
+                                            mainAxisSize: MainAxisSize.max,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Expanded(
+                                                child: TextFormField(
+                                                  controller: _model
+                                                          .volumeController ??=
+                                                      TextEditingController(
+                                                    text:
+                                                        energiesEnergyActionsRecord
+                                                            .volume,
+                                                  ),
+                                                  onChanged: (_) =>
+                                                      EasyDebounce.debounce(
+                                                    '_model.volumeController',
+                                                    Duration(milliseconds: 0),
+                                                    () async {
+                                                      logFirebaseEvent(
+                                                          'ENERGIES_PAGE_volume_ON_TEXTFIELD_CHANGE');
+                                                      logFirebaseEvent(
+                                                          'volume_backend_call');
+
+                                                      await energiesEnergyActionsRecord
+                                                          .reference
+                                                          .update(
+                                                              createEnergyActionsRecordData(
+                                                        volume: _model
+                                                            .volumeController
+                                                            .text,
+                                                      ));
+                                                      logFirebaseEvent(
+                                                          'volume_update_app_state');
+                                                      setState(() {
+                                                        FFAppState().actionCO2e = functions
+                                                            .calculateActionCO2e(
+                                                                FFAppState()
+                                                                    .actionEmissionFactor,
+                                                                int.tryParse(_model
+                                                                    .volumeController
+                                                                    .text),
+                                                                1,
+                                                                365,
+                                                                valueOrDefault<
+                                                                    String>(
+                                                                  _model
+                                                                      .peopleSharingValue,
+                                                                  '1',
+                                                                ));
+                                                      });
+                                                    },
+                                                  ),
+                                                  obscureText: false,
+                                                  decoration: InputDecoration(
+                                                    labelText: functions
+                                                        .getEnergyVolumeLabel(
+                                                            energiesEnergyActionsRecord
+                                                                .energy),
+                                                    enabledBorder:
+                                                        OutlineInputBorder(
+                                                      borderSide: BorderSide(
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .grayLight,
+                                                        width: 1.0,
+                                                      ),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              100.0),
+                                                    ),
+                                                    focusedBorder:
+                                                        OutlineInputBorder(
+                                                      borderSide: BorderSide(
+                                                        color:
+                                                            Color(0x00000000),
+                                                        width: 1.0,
+                                                      ),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              100.0),
+                                                    ),
+                                                    errorBorder:
+                                                        OutlineInputBorder(
+                                                      borderSide: BorderSide(
+                                                        color:
+                                                            Color(0x00000000),
+                                                        width: 1.0,
+                                                      ),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              100.0),
+                                                    ),
+                                                    focusedErrorBorder:
+                                                        OutlineInputBorder(
+                                                      borderSide: BorderSide(
+                                                        color:
+                                                            Color(0x00000000),
+                                                        width: 1.0,
+                                                      ),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              100.0),
+                                                    ),
+                                                    filled: true,
+                                                    fillColor:
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .tertiary,
+                                                    suffixIcon:
+                                                        _model.volumeController!
+                                                                .text.isNotEmpty
+                                                            ? InkWell(
+                                                                onTap:
+                                                                    () async {
+                                                                  _model
+                                                                      .volumeController
+                                                                      ?.clear();
+                                                                  logFirebaseEvent(
+                                                                      'ENERGIES_PAGE_volume_ON_TEXTFIELD_CHANGE');
+                                                                  logFirebaseEvent(
+                                                                      'volume_backend_call');
+
+                                                                  await energiesEnergyActionsRecord
+                                                                      .reference
+                                                                      .update(
+                                                                          createEnergyActionsRecordData(
+                                                                    volume: _model
+                                                                        .volumeController
+                                                                        .text,
+                                                                  ));
+                                                                  logFirebaseEvent(
+                                                                      'volume_update_app_state');
+                                                                  setState(() {
+                                                                    FFAppState()
+                                                                            .actionCO2e =
+                                                                        functions.calculateActionCO2e(
+                                                                            FFAppState().actionEmissionFactor,
+                                                                            int.tryParse(_model.volumeController.text),
+                                                                            1,
+                                                                            365,
+                                                                            valueOrDefault<String>(
+                                                                              _model.peopleSharingValue,
+                                                                              '1',
+                                                                            ));
+                                                                  });
+                                                                  setState(
+                                                                      () {});
+                                                                },
+                                                                child: Icon(
+                                                                  Icons.clear,
+                                                                  color: Color(
+                                                                      0xFF757575),
+                                                                  size: 22.0,
+                                                                ),
+                                                              )
+                                                            : null,
+                                                  ),
+                                                  style: FlutterFlowTheme.of(
+                                                          context)
+                                                      .bodySmall
+                                                      .override(
+                                                        fontFamily: 'Outfit',
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                      ),
+                                                  keyboardType:
+                                                      TextInputType.number,
+                                                  validator: _model
+                                                      .volumeControllerValidator
+                                                      .asValidator(context),
+                                                ),
+                                              ),
+                                              Container(
+                                                width: 100.0,
+                                                height: 30.0,
+                                                decoration: BoxDecoration(),
+                                                child: Text(
+                                                  functions.printScore(
+                                                      FFAppState().actionCO2e),
+                                                  textAlign: TextAlign.center,
+                                                  style: FlutterFlowTheme.of(
+                                                          context)
+                                                      .headlineMedium
+                                                      .override(
+                                                        fontFamily: 'Outfit',
+                                                        fontSize: 20.0,
+                                                      ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  12.0, 8.0, 12.0, 8.0),
+                                          child: Row(
+                                            mainAxisSize: MainAxisSize.max,
+                                            children: [
+                                              Expanded(
+                                                child: Padding(
+                                                  padding: EdgeInsetsDirectional
+                                                      .fromSTEB(
+                                                          0.0, 0.0, 10.0, 0.0),
+                                                  child: FlutterFlowDropDown<
+                                                      String>(
+                                                    controller: _model
+                                                            .peopleSharingValueController ??=
+                                                        FormFieldController<
+                                                            String>(
+                                                      _model.peopleSharingValue ??=
+                                                          energiesEnergyActionsRecord
+                                                              .peopleSharing,
+                                                    ),
+                                                    options: [
+                                                      '1',
+                                                      '2',
+                                                      '3',
+                                                      '4',
+                                                      '5',
+                                                      '6',
+                                                      '7',
+                                                      '8'
+                                                    ],
+                                                    onChanged: (val) async {
+                                                      setState(() => _model
+                                                              .peopleSharingValue =
+                                                          val);
+                                                      logFirebaseEvent(
+                                                          'ENERGIES_peopleSharing_ON_FORM_WIDGET_SE');
+                                                      logFirebaseEvent(
+                                                          'peopleSharing_backend_call');
+
+                                                      await energiesEnergyActionsRecord
+                                                          .reference
+                                                          .update(
+                                                              createEnergyActionsRecordData(
+                                                        peopleSharing: _model
+                                                            .peopleSharingValue,
+                                                      ));
+                                                      logFirebaseEvent(
+                                                          'peopleSharing_update_app_state');
+                                                      setState(() {
+                                                        FFAppState().actionCO2e = functions
+                                                            .calculateActionCO2e(
+                                                                FFAppState()
+                                                                    .actionEmissionFactor,
+                                                                int.tryParse(_model
+                                                                    .volumeController
+                                                                    .text),
+                                                                1,
+                                                                365,
+                                                                valueOrDefault<
+                                                                    String>(
+                                                                  _model
+                                                                      .peopleSharingValue,
+                                                                  '1',
+                                                                ));
+                                                      });
+                                                    },
+                                                    width: 100.0,
+                                                    height: 40.0,
+                                                    textStyle: FlutterFlowTheme
+                                                            .of(context)
+                                                        .bodySmall
+                                                        .override(
+                                                          fontFamily: 'Outfit',
+                                                          fontWeight:
+                                                              FontWeight.w500,
+                                                        ),
+                                                    hintText: 'Taille du foyer',
+                                                    icon: Icon(
+                                                      Icons.family_restroom,
+                                                      size: 15.0,
+                                                    ),
+                                                    fillColor:
+                                                        Color(0xFFFAFAFA),
+                                                    elevation: 2.0,
+                                                    borderColor:
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .grayLight,
+                                                    borderWidth: 1.0,
+                                                    borderRadius: 100.0,
+                                                    margin:
+                                                        EdgeInsetsDirectional
+                                                            .fromSTEB(12.0, 4.0,
+                                                                12.0, 4.0),
+                                                    hidesUnderline: true,
+                                                    isSearchable: false,
+                                                    isMultiSelect: false,
+                                                  ),
+                                                ),
+                                              ),
+                                              if (energiesEnergyActionsRecord
+                                                      .energy !=
+                                                  'water')
+                                                Expanded(
+                                                  child: Padding(
+                                                    padding:
+                                                        EdgeInsetsDirectional
+                                                            .fromSTEB(10.0, 0.0,
+                                                                0.0, 0.0),
+                                                    child: FlutterFlowDropDown<
+                                                        String>(
+                                                      controller: _model
+                                                              .powertypeValueController ??=
+                                                          FormFieldController<
+                                                              String>(
+                                                        _model.powertypeValue ??=
+                                                            energiesEnergyActionsRecord
+                                                                .powertype,
+                                                      ),
+                                                      options: (GetOptionsCall
+                                                              .options(
+                                                        (_model.listOptions
+                                                                ?.jsonBody ??
+                                                            ''),
+                                                      ) as List)
+                                                          .map<String>((s) =>
+                                                              s.toString())
+                                                          .toList()!,
+                                                      onChanged: (val) async {
+                                                        setState(() => _model
+                                                                .powertypeValue =
+                                                            val);
+                                                        logFirebaseEvent(
+                                                            'ENERGIES_powertype_ON_FORM_WIDGET_SELECT');
+                                                        logFirebaseEvent(
+                                                            'powertype_backend_call');
+
+                                                        await energiesEnergyActionsRecord
+                                                            .reference
+                                                            .update(
+                                                                createEnergyActionsRecordData(
+                                                          powertype: _model
+                                                              .powertypeValue,
+                                                        ));
+                                                        logFirebaseEvent(
+                                                            'powertype_backend_call');
+                                                        _model.calculationEnergyOption =
+                                                            await GetEmissionFactorCall
+                                                                .call(
+                                                          category:
+                                                              widget.category,
+                                                          action: widget.action,
+                                                          option: _model
+                                                              .powertypeValue,
+                                                        );
+                                                        logFirebaseEvent(
+                                                            'powertype_update_app_state');
+                                                        setState(() {
+                                                          FFAppState()
+                                                                  .actionEmissionFactor =
+                                                              GetEmissionFactorCall
+                                                                  .co2e(
+                                                            (_model.calculationEnergyOption
+                                                                    ?.jsonBody ??
+                                                                ''),
+                                                          );
+                                                        });
+                                                        logFirebaseEvent(
+                                                            'powertype_update_app_state');
+                                                        setState(() {
+                                                          FFAppState().actionCO2e = functions
+                                                              .calculateActionCO2e(
+                                                                  FFAppState()
+                                                                      .actionEmissionFactor,
+                                                                  int.tryParse(_model
+                                                                      .volumeController
+                                                                      .text),
+                                                                  1,
+                                                                  365,
+                                                                  valueOrDefault<
+                                                                      String>(
+                                                                    _model
+                                                                        .peopleSharingValue,
+                                                                    '1',
+                                                                  ));
+                                                        });
+
+                                                        setState(() {});
+                                                      },
+                                                      width: 100.0,
+                                                      height: 40.0,
+                                                      textStyle:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .bodySmall
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Outfit',
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w500,
+                                                              ),
+                                                      hintText:
+                                                          'Type d\'énergie',
+                                                      icon: FaIcon(
+                                                        FontAwesomeIcons.fire,
+                                                      ),
+                                                      fillColor:
+                                                          Color(0xFFFAFAFA),
+                                                      elevation: 2.0,
+                                                      borderColor:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .grayLight,
+                                                      borderWidth: 1.0,
+                                                      borderRadius: 100.0,
+                                                      margin:
+                                                          EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                                  12.0,
+                                                                  4.0,
+                                                                  12.0,
+                                                                  4.0),
+                                                      hidesUnderline: true,
+                                                      isSearchable: false,
+                                                      isMultiSelect: false,
+                                                    ),
+                                                  ),
+                                                ),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ).animateOnPageLoad(animationsMap[
+                                      'containerOnPageLoadAnimation']!),
                                 ),
                               ],
                             ),
@@ -904,15 +1041,15 @@ class _EnergiesWidgetState extends State<EnergiesWidget>
                         ),
                       ),
                       Container(
-                        width: MediaQuery.of(context).size.width,
+                        width: MediaQuery.sizeOf(context).width * 1.0,
                         decoration: BoxDecoration(),
-                        alignment: AlignmentDirectional(0, 1),
+                        alignment: AlignmentDirectional(0.00, 1.00),
                         child: Column(
                           mainAxisSize: MainAxisSize.max,
                           children: [
                             Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 5, 0, 15),
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 5.0, 0.0, 15.0),
                               child: Row(
                                 mainAxisSize: MainAxisSize.max,
                                 mainAxisAlignment: MainAxisAlignment.center,
@@ -924,42 +1061,55 @@ class _EnergiesWidgetState extends State<EnergiesWidget>
                                           Padding(
                                             padding:
                                                 EdgeInsetsDirectional.fromSTEB(
-                                                    10, 0, 10, 0),
+                                                    10.0, 0.0, 10.0, 0.0),
                                             child: InkWell(
+                                              splashColor: Colors.transparent,
+                                              focusColor: Colors.transparent,
+                                              hoverColor: Colors.transparent,
+                                              highlightColor:
+                                                  Colors.transparent,
                                               onTap: () async {
                                                 logFirebaseEvent(
                                                     'ENERGIES_PAGE_delete_ON_TAP');
                                                 logFirebaseEvent(
-                                                    'delete_update_local_state');
-                                                setState(() => FFAppState()
-                                                    .loading = true);
+                                                    'delete_update_app_state');
+                                                FFAppState().update(() {
+                                                  FFAppState().loading = true;
+                                                });
                                                 logFirebaseEvent(
                                                     'delete_backend_call');
                                                 await energiesEnergyActionsRecord
                                                     .reference
                                                     .delete();
                                                 logFirebaseEvent(
-                                                    'delete_update_local_state');
-                                                setState(() => FFAppState()
-                                                    .loading = false);
+                                                    'delete_update_app_state');
+                                                FFAppState().update(() {
+                                                  FFAppState().loading = false;
+                                                });
                                                 logFirebaseEvent(
                                                     'delete_navigate_to');
 
                                                 context.pushNamed('Home');
                                               },
-                                              child: IconButtonWidget(
-                                                fillColor: Color(0x98BC0909),
-                                                fontColor:
-                                                    FlutterFlowTheme.of(context)
-                                                        .tertiaryColor,
-                                                icon: Icon(
-                                                  Icons.delete_forever,
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .tertiaryColor,
-                                                  size: 20,
+                                              child: wrapWithModel(
+                                                model: _model.deleteModel,
+                                                updateCallback: () =>
+                                                    setState(() {}),
+                                                child: IconButtonWidget(
+                                                  fillColor: Color(0x98BC0909),
+                                                  fontColor:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .tertiary,
+                                                  icon: Icon(
+                                                    Icons.delete_forever,
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
+                                                        .tertiary,
+                                                    size: 20.0,
+                                                  ),
+                                                  text: 'Supprimer ',
                                                 ),
-                                                text: 'Supprimer ',
                                               ),
                                             ),
                                           ),
@@ -967,22 +1117,27 @@ class _EnergiesWidgetState extends State<EnergiesWidget>
                                           Padding(
                                             padding:
                                                 EdgeInsetsDirectional.fromSTEB(
-                                                    10, 0, 10, 0),
-                                            child: IconButtonWidget(
-                                              fillColor:
-                                                  FlutterFlowTheme.of(context)
-                                                      .gray,
-                                              fontColor:
-                                                  FlutterFlowTheme.of(context)
-                                                      .tertiaryColor,
-                                              icon: Icon(
-                                                Icons.delete_forever,
-                                                color:
+                                                    10.0, 0.0, 10.0, 0.0),
+                                            child: wrapWithModel(
+                                              model: _model.deleteWaitModel,
+                                              updateCallback: () =>
+                                                  setState(() {}),
+                                              child: IconButtonWidget(
+                                                fillColor:
                                                     FlutterFlowTheme.of(context)
-                                                        .tertiaryColor,
-                                                size: 20,
+                                                        .gray,
+                                                fontColor:
+                                                    FlutterFlowTheme.of(context)
+                                                        .tertiary,
+                                                icon: Icon(
+                                                  Icons.delete_forever,
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .tertiary,
+                                                  size: 20.0,
+                                                ),
+                                                text: 'Supprimer ',
                                               ),
-                                              text: 'Supprimer ',
                                             ),
                                           ),
                                       ],
@@ -991,128 +1146,147 @@ class _EnergiesWidgetState extends State<EnergiesWidget>
                                   Expanded(
                                     child: Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
-                                          10, 0, 10, 0),
+                                          10.0, 0.0, 10.0, 0.0),
                                       child: Stack(
                                         children: [
                                           if (!FFAppState().loading)
                                             InkWell(
+                                              splashColor: Colors.transparent,
+                                              focusColor: Colors.transparent,
+                                              hoverColor: Colors.transparent,
+                                              highlightColor:
+                                                  Colors.transparent,
                                               onTap: () async {
                                                 logFirebaseEvent(
                                                     'ENERGIES_PAGE_modify_ON_TAP');
                                                 logFirebaseEvent(
-                                                    'modify_update_local_state');
-                                                setState(() => FFAppState()
-                                                    .loading = true);
+                                                    'modify_update_app_state');
+                                                FFAppState().update(() {
+                                                  FFAppState().loading = true;
+                                                });
                                                 if (energiesEnergyActionsRecord
                                                         .isPeriodic ==
                                                     true) {
                                                   logFirebaseEvent(
                                                       'modify_backend_call');
 
-                                                  final energyActionsUpdateData =
-                                                      createEnergyActionsRecordData(
-                                                    powertype: powertypeValue,
-                                                    peopleSharing:
-                                                        peopleSharingValue,
-                                                    volume: volumeController
-                                                            ?.text ??
-                                                        '',
-                                                    isNew: false,
-                                                  );
                                                   await energiesEnergyActionsRecord
                                                       .reference
                                                       .update(
-                                                          energyActionsUpdateData);
+                                                          createEnergyActionsRecordData(
+                                                    powertype:
+                                                        _model.powertypeValue,
+                                                    peopleSharing: _model
+                                                        .peopleSharingValue,
+                                                    volume: _model
+                                                        .volumeController.text,
+                                                    isNew: false,
+                                                    co2e:
+                                                        FFAppState().actionCO2e,
+                                                  ));
                                                 } else {
                                                   if (energiesEnergyActionsRecord
-                                                      .isNew!) {
+                                                      .isNew) {
                                                     logFirebaseEvent(
                                                         'modify_backend_call');
 
-                                                    final energyActionsCreateData =
-                                                        createEnergyActionsRecordData(
-                                                      powertype: powertypeValue,
-                                                      userId:
-                                                          energiesEnergyActionsRecord
-                                                              .userId,
-                                                      co2e: 0,
-                                                      isPeriodic: true,
-                                                      energy:
-                                                          energiesEnergyActionsRecord
-                                                              .energy,
-                                                      peopleSharing:
-                                                          peopleSharingValue,
-                                                      volume: volumeController
-                                                              ?.text ??
-                                                          '',
-                                                    );
                                                     await EnergyActionsRecord
                                                         .collection
                                                         .doc()
                                                         .set(
-                                                            energyActionsCreateData);
+                                                            createEnergyActionsRecordData(
+                                                          powertype: _model
+                                                              .powertypeValue,
+                                                          userId:
+                                                              energiesEnergyActionsRecord
+                                                                  .userId,
+                                                          co2e: FFAppState()
+                                                              .actionCO2e,
+                                                          isPeriodic: true,
+                                                          energy:
+                                                              energiesEnergyActionsRecord
+                                                                  .energy,
+                                                          peopleSharing: _model
+                                                              .peopleSharingValue,
+                                                          volume: _model
+                                                              .volumeController
+                                                              .text,
+                                                        ));
                                                   }
                                                   logFirebaseEvent(
                                                       'modify_backend_call');
 
-                                                  final energyActionsUpdateData =
-                                                      createEnergyActionsRecordData(
-                                                    powertype: powertypeValue,
-                                                    peopleSharing:
-                                                        peopleSharingValue,
-                                                    volume: volumeController
-                                                            ?.text ??
-                                                        '',
-                                                    isNew: false,
-                                                  );
                                                   await energiesEnergyActionsRecord
                                                       .reference
                                                       .update(
-                                                          energyActionsUpdateData);
+                                                          createEnergyActionsRecordData(
+                                                    powertype:
+                                                        _model.powertypeValue,
+                                                    peopleSharing: _model
+                                                        .peopleSharingValue,
+                                                    volume: _model
+                                                        .volumeController.text,
+                                                    isNew: false,
+                                                    co2e:
+                                                        FFAppState().actionCO2e,
+                                                  ));
                                                 }
 
                                                 logFirebaseEvent(
-                                                    'modify_update_local_state');
-                                                setState(() => FFAppState()
-                                                    .loading = false);
+                                                    'modify_update_app_state');
+                                                FFAppState().update(() {
+                                                  FFAppState().loading = false;
+                                                });
                                                 logFirebaseEvent(
                                                     'modify_navigate_to');
 
                                                 context.pushNamed('Home');
                                               },
+                                              child: wrapWithModel(
+                                                model: _model.modifyModel,
+                                                updateCallback: () =>
+                                                    setState(() {}),
+                                                child: IconButtonWidget(
+                                                  fillColor:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .secondary,
+                                                  fontColor:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .tertiary,
+                                                  icon: Icon(
+                                                    Icons.add_circle_outline,
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
+                                                        .tertiary,
+                                                    size: 20.0,
+                                                  ),
+                                                  text: 'Valider ',
+                                                ),
+                                              ),
+                                            ),
+                                          if (FFAppState().loading)
+                                            wrapWithModel(
+                                              model: _model.modifyWaitModel,
+                                              updateCallback: () =>
+                                                  setState(() {}),
                                               child: IconButtonWidget(
                                                 fillColor:
                                                     FlutterFlowTheme.of(context)
-                                                        .secondaryColor,
+                                                        .gray,
                                                 fontColor:
                                                     FlutterFlowTheme.of(context)
-                                                        .tertiaryColor,
+                                                        .tertiary,
                                                 icon: Icon(
                                                   Icons.add_circle_outline,
                                                   color: FlutterFlowTheme.of(
                                                           context)
-                                                      .tertiaryColor,
-                                                  size: 20,
+                                                      .tertiary,
+                                                  size: 20.0,
                                                 ),
                                                 text: 'Valider ',
                                               ),
-                                            ),
-                                          if (FFAppState().loading)
-                                            IconButtonWidget(
-                                              fillColor:
-                                                  FlutterFlowTheme.of(context)
-                                                      .gray,
-                                              fontColor:
-                                                  FlutterFlowTheme.of(context)
-                                                      .tertiaryColor,
-                                              icon: Icon(
-                                                Icons.add_circle_outline,
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .tertiaryColor,
-                                                size: 20,
-                                              ),
-                                              text: 'Valider ',
                                             ),
                                         ],
                                       ),

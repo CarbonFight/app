@@ -1,12 +1,15 @@
-import '../auth/auth_util.dart';
-import '../backend/backend.dart';
-import '../flutter_flow/flutter_flow_icon_button.dart';
-import '../flutter_flow/flutter_flow_theme.dart';
-import '../flutter_flow/flutter_flow_util.dart';
+import '/auth/firebase_auth/auth_util.dart';
+import '/backend/backend.dart';
+import '/flutter_flow/flutter_flow_icon_button.dart';
+import '/flutter_flow/flutter_flow_theme.dart';
+import '/flutter_flow/flutter_flow_util.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+import 'food_list_model.dart';
+export 'food_list_model.dart';
 
 class FoodListWidget extends StatefulWidget {
   const FoodListWidget({Key? key}) : super(key: key);
@@ -16,41 +19,51 @@ class FoodListWidget extends StatefulWidget {
 }
 
 class _FoodListWidgetState extends State<FoodListWidget> {
-  FoodActionsRecord? newBread;
-  FoodActionsRecord? newCheese;
-  FoodActionsRecord? newDesert;
-  FoodActionsRecord? newDrinks;
-  FoodActionsRecord? newMain;
-  FoodActionsRecord? newStarter;
-  FoodActionsRecord? newCoffee;
+  late FoodListModel _model;
+
+  @override
+  void setState(VoidCallback callback) {
+    super.setState(callback);
+    _model.onUpdate();
+  }
 
   @override
   void initState() {
     super.initState();
+    _model = createModel(context, () => FoodListModel());
 
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
+  void dispose() {
+    _model.maybeDispose();
+
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    context.watch<FFAppState>();
+
     return Padding(
-      padding: EdgeInsetsDirectional.fromSTEB(20, 20, 20, 20),
+      padding: EdgeInsetsDirectional.fromSTEB(20.0, 20.0, 20.0, 20.0),
       child: Container(
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height * 1,
+        width: MediaQuery.sizeOf(context).width * 1.0,
+        height: MediaQuery.sizeOf(context).height * 1.0,
         decoration: BoxDecoration(
-          color: FlutterFlowTheme.of(context).tertiaryColor,
+          color: FlutterFlowTheme.of(context).tertiary,
           boxShadow: [
             BoxShadow(
-              blurRadius: 10,
+              blurRadius: 10.0,
               color: Color(0x25000000),
-              offset: Offset(0, 0),
+              offset: Offset(0.0, 0.0),
             )
           ],
-          borderRadius: BorderRadius.circular(15),
+          borderRadius: BorderRadius.circular(15.0),
         ),
         child: Padding(
-          padding: EdgeInsetsDirectional.fromSTEB(20, 10, 20, 10),
+          padding: EdgeInsetsDirectional.fromSTEB(20.0, 10.0, 20.0, 10.0),
           child: Column(
             mainAxisSize: MainAxisSize.max,
             children: [
@@ -60,17 +73,17 @@ class _FoodListWidgetState extends State<FoodListWidget> {
                 children: [
                   Text(
                     'Nourriture',
-                    style: FlutterFlowTheme.of(context).subtitle1,
+                    style: FlutterFlowTheme.of(context).titleMedium,
                   ),
                   FlutterFlowIconButton(
                     borderColor: Colors.transparent,
-                    borderRadius: 30,
-                    borderWidth: 1,
-                    buttonSize: 46,
+                    borderRadius: 30.0,
+                    borderWidth: 1.0,
+                    buttonSize: 46.0,
                     icon: Icon(
                       Icons.close,
                       color: Colors.black,
-                      size: 24,
+                      size: 24.0,
                     ),
                     onPressed: () async {
                       logFirebaseEvent('FOOD_LIST_COMP_close_ICN_ON_TAP');
@@ -86,52 +99,57 @@ class _FoodListWidgetState extends State<FoodListWidget> {
                   mainAxisSize: MainAxisSize.max,
                   children: [
                     Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 10),
+                      padding:
+                          EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 10.0),
                       child: Row(
                         mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           InkWell(
+                            splashColor: Colors.transparent,
+                            focusColor: Colors.transparent,
+                            hoverColor: Colors.transparent,
+                            highlightColor: Colors.transparent,
                             onTap: () async {
                               logFirebaseEvent(
                                   'FOOD_LIST_COMP_Container_ny9yoj7o_ON_TAP');
                               logFirebaseEvent('Container_backend_call');
 
-                              final foodActionsCreateData =
-                                  createFoodActionsRecordData(
-                                userId: currentUserUid,
-                                co2e: 0,
-                                createdTime: getCurrentTimestamp,
-                                day: dateTimeFormat(
-                                  'd/M/y',
-                                  getCurrentTimestamp,
-                                  locale:
-                                      FFLocalizations.of(context).languageCode,
-                                ),
-                                isPeriodic: false,
-                                food: 'starter',
-                                portions: 1,
-                              );
                               var foodActionsRecordReference =
                                   FoodActionsRecord.collection.doc();
                               await foodActionsRecordReference
-                                  .set(foodActionsCreateData);
-                              newStarter =
+                                  .set(createFoodActionsRecordData(
+                                userId: currentUserUid,
+                                food: 'starter',
+                              ));
+                              _model.newStarter =
                                   FoodActionsRecord.getDocumentFromData(
-                                      foodActionsCreateData,
+                                      createFoodActionsRecordData(
+                                        userId: currentUserUid,
+                                        food: 'starter',
+                                      ),
                                       foodActionsRecordReference);
-                              logFirebaseEvent('Container_update_local_state');
-                              setState(() => FFAppState().displayDates = false);
-                              logFirebaseEvent('Container_update_local_state');
-                              setState(() => FFAppState().displayDays = false);
+                              logFirebaseEvent('Container_update_app_state');
+                              FFAppState().update(() {
+                                FFAppState().displayDates = false;
+                                FFAppState().displayDays = false;
+                              });
                               logFirebaseEvent('Container_navigate_to');
 
                               context.pushNamed(
                                 'Food',
-                                queryParams: {
+                                queryParameters: {
                                   'actionRef': serializeParam(
-                                    newStarter!.reference,
+                                    _model.newStarter?.reference,
                                     ParamType.DocumentReference,
+                                  ),
+                                  'category': serializeParam(
+                                    'food',
+                                    ParamType.String,
+                                  ),
+                                  'action': serializeParam(
+                                    'starter',
+                                    ParamType.String,
                                   ),
                                 }.withoutNulls,
                               );
@@ -139,35 +157,35 @@ class _FoodListWidgetState extends State<FoodListWidget> {
                               setState(() {});
                             },
                             child: Container(
-                              width: 135,
-                              height: 110,
+                              width: 135.0,
+                              height: 110.0,
                               decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(15),
+                                borderRadius: BorderRadius.circular(15.0),
                                 border: Border.all(
                                   color: FlutterFlowTheme.of(context).grayLight,
                                 ),
                               ),
                               child: Padding(
                                 padding: EdgeInsetsDirectional.fromSTEB(
-                                    5, 10, 5, 10),
+                                    5.0, 10.0, 5.0, 10.0),
                                 child: Column(
                                   mainAxisSize: MainAxisSize.max,
                                   children: [
                                     Image.asset(
                                       'assets/images/canape_(1).png',
-                                      width: 50,
-                                      height: 50,
+                                      width: 50.0,
+                                      height: 50.0,
                                       fit: BoxFit.cover,
                                     ),
                                     Expanded(
                                       child: Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(
-                                            0, 5, 0, 0),
+                                            0.0, 5.0, 0.0, 0.0),
                                         child: Text(
                                           'Entrées',
                                           textAlign: TextAlign.center,
                                           style: FlutterFlowTheme.of(context)
-                                              .bodyText1,
+                                              .bodyMedium,
                                         ),
                                       ),
                                     ),
@@ -177,46 +195,50 @@ class _FoodListWidgetState extends State<FoodListWidget> {
                             ),
                           ),
                           InkWell(
+                            splashColor: Colors.transparent,
+                            focusColor: Colors.transparent,
+                            hoverColor: Colors.transparent,
+                            highlightColor: Colors.transparent,
                             onTap: () async {
                               logFirebaseEvent(
                                   'FOOD_LIST_COMP_Container_q1yosrnh_ON_TAP');
                               logFirebaseEvent('Container_backend_call');
 
-                              final foodActionsCreateData =
-                                  createFoodActionsRecordData(
-                                userId: currentUserUid,
-                                co2e: 0,
-                                createdTime: getCurrentTimestamp,
-                                day: dateTimeFormat(
-                                  'd/M/y',
-                                  getCurrentTimestamp,
-                                  locale:
-                                      FFLocalizations.of(context).languageCode,
-                                ),
-                                isPeriodic: false,
-                                isFavorite: false,
-                                food: 'main',
-                                portions: 1,
-                              );
                               var foodActionsRecordReference =
                                   FoodActionsRecord.collection.doc();
                               await foodActionsRecordReference
-                                  .set(foodActionsCreateData);
-                              newMain = FoodActionsRecord.getDocumentFromData(
-                                  foodActionsCreateData,
-                                  foodActionsRecordReference);
-                              logFirebaseEvent('Container_update_local_state');
-                              setState(() => FFAppState().displayDates = false);
-                              logFirebaseEvent('Container_update_local_state');
-                              setState(() => FFAppState().displayDays = false);
+                                  .set(createFoodActionsRecordData(
+                                userId: currentUserUid,
+                                food: 'main',
+                              ));
+                              _model.newMain =
+                                  FoodActionsRecord.getDocumentFromData(
+                                      createFoodActionsRecordData(
+                                        userId: currentUserUid,
+                                        food: 'main',
+                                      ),
+                                      foodActionsRecordReference);
+                              logFirebaseEvent('Container_update_app_state');
+                              FFAppState().update(() {
+                                FFAppState().displayDates = false;
+                                FFAppState().displayDays = false;
+                              });
                               logFirebaseEvent('Container_navigate_to');
 
                               context.pushNamed(
                                 'Food',
-                                queryParams: {
+                                queryParameters: {
                                   'actionRef': serializeParam(
-                                    newMain!.reference,
+                                    _model.newMain?.reference,
                                     ParamType.DocumentReference,
+                                  ),
+                                  'category': serializeParam(
+                                    'food',
+                                    ParamType.String,
+                                  ),
+                                  'action': serializeParam(
+                                    'main',
+                                    ParamType.String,
                                   ),
                                 }.withoutNulls,
                               );
@@ -224,35 +246,35 @@ class _FoodListWidgetState extends State<FoodListWidget> {
                               setState(() {});
                             },
                             child: Container(
-                              width: 135,
-                              height: 110,
+                              width: 135.0,
+                              height: 110.0,
                               decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(15),
+                                borderRadius: BorderRadius.circular(15.0),
                                 border: Border.all(
                                   color: FlutterFlowTheme.of(context).grayLight,
                                 ),
                               ),
                               child: Padding(
                                 padding: EdgeInsetsDirectional.fromSTEB(
-                                    5, 10, 5, 10),
+                                    5.0, 10.0, 5.0, 10.0),
                                 child: Column(
                                   mainAxisSize: MainAxisSize.max,
                                   children: [
                                     Image.asset(
                                       'assets/images/hot-pot.png',
-                                      width: 50,
-                                      height: 50,
+                                      width: 50.0,
+                                      height: 50.0,
                                       fit: BoxFit.cover,
                                     ),
                                     Expanded(
                                       child: Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(
-                                            0, 5, 0, 0),
+                                            0.0, 5.0, 0.0, 0.0),
                                         child: Text(
                                           'Plat',
                                           textAlign: TextAlign.center,
                                           style: FlutterFlowTheme.of(context)
-                                              .bodyText1,
+                                              .bodyMedium,
                                         ),
                                       ),
                                     ),
@@ -265,52 +287,57 @@ class _FoodListWidgetState extends State<FoodListWidget> {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 10),
+                      padding:
+                          EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 10.0),
                       child: Row(
                         mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           InkWell(
+                            splashColor: Colors.transparent,
+                            focusColor: Colors.transparent,
+                            hoverColor: Colors.transparent,
+                            highlightColor: Colors.transparent,
                             onTap: () async {
                               logFirebaseEvent(
                                   'FOOD_LIST_COMP_Container_r0c1o7ht_ON_TAP');
                               logFirebaseEvent('Container_backend_call');
 
-                              final foodActionsCreateData =
-                                  createFoodActionsRecordData(
-                                userId: currentUserUid,
-                                co2e: 0,
-                                createdTime: getCurrentTimestamp,
-                                day: dateTimeFormat(
-                                  'd/M/y',
-                                  getCurrentTimestamp,
-                                  locale:
-                                      FFLocalizations.of(context).languageCode,
-                                ),
-                                isPeriodic: false,
-                                isFavorite: false,
-                                food: 'desert',
-                                portions: 1,
-                              );
                               var foodActionsRecordReference =
                                   FoodActionsRecord.collection.doc();
                               await foodActionsRecordReference
-                                  .set(foodActionsCreateData);
-                              newDesert = FoodActionsRecord.getDocumentFromData(
-                                  foodActionsCreateData,
-                                  foodActionsRecordReference);
-                              logFirebaseEvent('Container_update_local_state');
-                              setState(() => FFAppState().displayDates = false);
-                              logFirebaseEvent('Container_update_local_state');
-                              setState(() => FFAppState().displayDays = false);
+                                  .set(createFoodActionsRecordData(
+                                userId: currentUserUid,
+                                food: 'desert',
+                              ));
+                              _model.newDesert =
+                                  FoodActionsRecord.getDocumentFromData(
+                                      createFoodActionsRecordData(
+                                        userId: currentUserUid,
+                                        food: 'desert',
+                                      ),
+                                      foodActionsRecordReference);
+                              logFirebaseEvent('Container_update_app_state');
+                              FFAppState().update(() {
+                                FFAppState().displayDates = false;
+                                FFAppState().displayDays = false;
+                              });
                               logFirebaseEvent('Container_navigate_to');
 
                               context.pushNamed(
                                 'Food',
-                                queryParams: {
+                                queryParameters: {
                                   'actionRef': serializeParam(
-                                    newDesert!.reference,
+                                    _model.newDesert?.reference,
                                     ParamType.DocumentReference,
+                                  ),
+                                  'category': serializeParam(
+                                    'food',
+                                    ParamType.String,
+                                  ),
+                                  'action': serializeParam(
+                                    'desert',
+                                    ParamType.String,
                                   ),
                                 }.withoutNulls,
                               );
@@ -318,35 +345,35 @@ class _FoodListWidgetState extends State<FoodListWidget> {
                               setState(() {});
                             },
                             child: Container(
-                              width: 135,
-                              height: 110,
+                              width: 135.0,
+                              height: 110.0,
                               decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(15),
+                                borderRadius: BorderRadius.circular(15.0),
                                 border: Border.all(
                                   color: FlutterFlowTheme.of(context).grayLight,
                                 ),
                               ),
                               child: Padding(
                                 padding: EdgeInsetsDirectional.fromSTEB(
-                                    5, 10, 5, 10),
+                                    5.0, 10.0, 5.0, 10.0),
                                 child: Column(
                                   mainAxisSize: MainAxisSize.max,
                                   children: [
                                     Image.asset(
                                       'assets/images/ice-cream.png',
-                                      width: 50,
-                                      height: 50,
+                                      width: 50.0,
+                                      height: 50.0,
                                       fit: BoxFit.cover,
                                     ),
                                     Expanded(
                                       child: Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(
-                                            0, 5, 0, 0),
+                                            0.0, 5.0, 0.0, 0.0),
                                         child: Text(
                                           'Dessert',
                                           textAlign: TextAlign.center,
                                           style: FlutterFlowTheme.of(context)
-                                              .bodyText1,
+                                              .bodyMedium,
                                         ),
                                       ),
                                     ),
@@ -356,46 +383,50 @@ class _FoodListWidgetState extends State<FoodListWidget> {
                             ),
                           ),
                           InkWell(
+                            splashColor: Colors.transparent,
+                            focusColor: Colors.transparent,
+                            hoverColor: Colors.transparent,
+                            highlightColor: Colors.transparent,
                             onTap: () async {
                               logFirebaseEvent(
                                   'FOOD_LIST_COMP_Container_31uzdmwx_ON_TAP');
                               logFirebaseEvent('Container_backend_call');
 
-                              final foodActionsCreateData =
-                                  createFoodActionsRecordData(
-                                userId: currentUserUid,
-                                co2e: 0,
-                                createdTime: getCurrentTimestamp,
-                                day: dateTimeFormat(
-                                  'd/M/y',
-                                  getCurrentTimestamp,
-                                  locale:
-                                      FFLocalizations.of(context).languageCode,
-                                ),
-                                isPeriodic: false,
-                                isFavorite: false,
-                                food: 'drinks',
-                                portions: 1,
-                              );
                               var foodActionsRecordReference =
                                   FoodActionsRecord.collection.doc();
                               await foodActionsRecordReference
-                                  .set(foodActionsCreateData);
-                              newDrinks = FoodActionsRecord.getDocumentFromData(
-                                  foodActionsCreateData,
-                                  foodActionsRecordReference);
-                              logFirebaseEvent('Container_update_local_state');
-                              setState(() => FFAppState().displayDates = false);
-                              logFirebaseEvent('Container_update_local_state');
-                              setState(() => FFAppState().displayDays = false);
+                                  .set(createFoodActionsRecordData(
+                                userId: currentUserUid,
+                                food: 'drinks',
+                              ));
+                              _model.newDrinks =
+                                  FoodActionsRecord.getDocumentFromData(
+                                      createFoodActionsRecordData(
+                                        userId: currentUserUid,
+                                        food: 'drinks',
+                                      ),
+                                      foodActionsRecordReference);
+                              logFirebaseEvent('Container_update_app_state');
+                              FFAppState().update(() {
+                                FFAppState().displayDates = false;
+                                FFAppState().displayDays = false;
+                              });
                               logFirebaseEvent('Container_navigate_to');
 
                               context.pushNamed(
                                 'Food',
-                                queryParams: {
+                                queryParameters: {
                                   'actionRef': serializeParam(
-                                    newDrinks!.reference,
+                                    _model.newDrinks?.reference,
                                     ParamType.DocumentReference,
+                                  ),
+                                  'category': serializeParam(
+                                    'food',
+                                    ParamType.String,
+                                  ),
+                                  'action': serializeParam(
+                                    'drinks',
+                                    ParamType.String,
                                   ),
                                 }.withoutNulls,
                               );
@@ -403,35 +434,35 @@ class _FoodListWidgetState extends State<FoodListWidget> {
                               setState(() {});
                             },
                             child: Container(
-                              width: 135,
-                              height: 110,
+                              width: 135.0,
+                              height: 110.0,
                               decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(15),
+                                borderRadius: BorderRadius.circular(15.0),
                                 border: Border.all(
                                   color: FlutterFlowTheme.of(context).grayLight,
                                 ),
                               ),
                               child: Padding(
                                 padding: EdgeInsetsDirectional.fromSTEB(
-                                    5, 10, 5, 10),
+                                    5.0, 10.0, 5.0, 10.0),
                                 child: Column(
                                   mainAxisSize: MainAxisSize.max,
                                   children: [
                                     Image.asset(
                                       'assets/images/soft-drink.png',
-                                      width: 50,
-                                      height: 50,
+                                      width: 50.0,
+                                      height: 50.0,
                                       fit: BoxFit.cover,
                                     ),
                                     Expanded(
                                       child: Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(
-                                            0, 5, 0, 0),
+                                            0.0, 5.0, 0.0, 0.0),
                                         child: Text(
                                           'Boissons',
                                           textAlign: TextAlign.center,
                                           style: FlutterFlowTheme.of(context)
-                                              .bodyText1,
+                                              .bodyMedium,
                                         ),
                                       ),
                                     ),
@@ -444,52 +475,57 @@ class _FoodListWidgetState extends State<FoodListWidget> {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 10),
+                      padding:
+                          EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 10.0),
                       child: Row(
                         mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           InkWell(
+                            splashColor: Colors.transparent,
+                            focusColor: Colors.transparent,
+                            hoverColor: Colors.transparent,
+                            highlightColor: Colors.transparent,
                             onTap: () async {
                               logFirebaseEvent(
                                   'FOOD_LIST_COMP_Container_4dtnptq5_ON_TAP');
                               logFirebaseEvent('Container_backend_call');
 
-                              final foodActionsCreateData =
-                                  createFoodActionsRecordData(
-                                userId: currentUserUid,
-                                co2e: 0,
-                                createdTime: getCurrentTimestamp,
-                                day: dateTimeFormat(
-                                  'd/M/y',
-                                  getCurrentTimestamp,
-                                  locale:
-                                      FFLocalizations.of(context).languageCode,
-                                ),
-                                isPeriodic: false,
-                                isFavorite: false,
-                                food: 'cheese',
-                                portions: 1,
-                              );
                               var foodActionsRecordReference =
                                   FoodActionsRecord.collection.doc();
                               await foodActionsRecordReference
-                                  .set(foodActionsCreateData);
-                              newCheese = FoodActionsRecord.getDocumentFromData(
-                                  foodActionsCreateData,
-                                  foodActionsRecordReference);
-                              logFirebaseEvent('Container_update_local_state');
-                              setState(() => FFAppState().displayDates = false);
-                              logFirebaseEvent('Container_update_local_state');
-                              setState(() => FFAppState().displayDays = false);
+                                  .set(createFoodActionsRecordData(
+                                userId: currentUserUid,
+                                food: 'cheese',
+                              ));
+                              _model.newCheese =
+                                  FoodActionsRecord.getDocumentFromData(
+                                      createFoodActionsRecordData(
+                                        userId: currentUserUid,
+                                        food: 'cheese',
+                                      ),
+                                      foodActionsRecordReference);
+                              logFirebaseEvent('Container_update_app_state');
+                              FFAppState().update(() {
+                                FFAppState().displayDates = false;
+                                FFAppState().displayDays = false;
+                              });
                               logFirebaseEvent('Container_navigate_to');
 
                               context.pushNamed(
                                 'Food',
-                                queryParams: {
+                                queryParameters: {
                                   'actionRef': serializeParam(
-                                    newCheese!.reference,
+                                    _model.newCheese?.reference,
                                     ParamType.DocumentReference,
+                                  ),
+                                  'category': serializeParam(
+                                    'food',
+                                    ParamType.String,
+                                  ),
+                                  'action': serializeParam(
+                                    'cheese',
+                                    ParamType.String,
                                   ),
                                 }.withoutNulls,
                               );
@@ -497,35 +533,35 @@ class _FoodListWidgetState extends State<FoodListWidget> {
                               setState(() {});
                             },
                             child: Container(
-                              width: 135,
-                              height: 110,
+                              width: 135.0,
+                              height: 110.0,
                               decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(15),
+                                borderRadius: BorderRadius.circular(15.0),
                                 border: Border.all(
                                   color: FlutterFlowTheme.of(context).grayLight,
                                 ),
                               ),
                               child: Padding(
                                 padding: EdgeInsetsDirectional.fromSTEB(
-                                    5, 10, 5, 10),
+                                    5.0, 10.0, 5.0, 10.0),
                                 child: Column(
                                   mainAxisSize: MainAxisSize.max,
                                   children: [
                                     Image.asset(
                                       'assets/images/cheeses.png',
-                                      width: 50,
-                                      height: 50,
+                                      width: 50.0,
+                                      height: 50.0,
                                       fit: BoxFit.cover,
                                     ),
                                     Expanded(
                                       child: Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(
-                                            0, 5, 0, 0),
+                                            0.0, 5.0, 0.0, 0.0),
                                         child: Text(
                                           'Fromage',
                                           textAlign: TextAlign.center,
                                           style: FlutterFlowTheme.of(context)
-                                              .bodyText1,
+                                              .bodyMedium,
                                         ),
                                       ),
                                     ),
@@ -535,46 +571,50 @@ class _FoodListWidgetState extends State<FoodListWidget> {
                             ),
                           ),
                           InkWell(
+                            splashColor: Colors.transparent,
+                            focusColor: Colors.transparent,
+                            hoverColor: Colors.transparent,
+                            highlightColor: Colors.transparent,
                             onTap: () async {
                               logFirebaseEvent(
                                   'FOOD_LIST_COMP_Container_rbnj7k2p_ON_TAP');
                               logFirebaseEvent('Container_backend_call');
 
-                              final foodActionsCreateData =
-                                  createFoodActionsRecordData(
-                                userId: currentUserUid,
-                                co2e: 0,
-                                createdTime: getCurrentTimestamp,
-                                day: dateTimeFormat(
-                                  'd/M/y',
-                                  getCurrentTimestamp,
-                                  locale:
-                                      FFLocalizations.of(context).languageCode,
-                                ),
-                                isPeriodic: false,
-                                isFavorite: false,
-                                food: 'bread',
-                                portions: 1,
-                              );
                               var foodActionsRecordReference =
                                   FoodActionsRecord.collection.doc();
                               await foodActionsRecordReference
-                                  .set(foodActionsCreateData);
-                              newBread = FoodActionsRecord.getDocumentFromData(
-                                  foodActionsCreateData,
-                                  foodActionsRecordReference);
-                              logFirebaseEvent('Container_update_local_state');
-                              setState(() => FFAppState().displayDates = false);
-                              logFirebaseEvent('Container_update_local_state');
-                              setState(() => FFAppState().displayDays = false);
+                                  .set(createFoodActionsRecordData(
+                                userId: currentUserUid,
+                                food: 'bread',
+                              ));
+                              _model.newBread =
+                                  FoodActionsRecord.getDocumentFromData(
+                                      createFoodActionsRecordData(
+                                        userId: currentUserUid,
+                                        food: 'bread',
+                                      ),
+                                      foodActionsRecordReference);
+                              logFirebaseEvent('Container_update_app_state');
+                              FFAppState().update(() {
+                                FFAppState().displayDates = false;
+                                FFAppState().displayDays = false;
+                              });
                               logFirebaseEvent('Container_navigate_to');
 
                               context.pushNamed(
                                 'Food',
-                                queryParams: {
+                                queryParameters: {
                                   'actionRef': serializeParam(
-                                    newBread!.reference,
+                                    _model.newBread?.reference,
                                     ParamType.DocumentReference,
+                                  ),
+                                  'category': serializeParam(
+                                    'food',
+                                    ParamType.String,
+                                  ),
+                                  'action': serializeParam(
+                                    'bread',
+                                    ParamType.String,
                                   ),
                                 }.withoutNulls,
                               );
@@ -582,35 +622,35 @@ class _FoodListWidgetState extends State<FoodListWidget> {
                               setState(() {});
                             },
                             child: Container(
-                              width: 135,
-                              height: 110,
+                              width: 135.0,
+                              height: 110.0,
                               decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(15),
+                                borderRadius: BorderRadius.circular(15.0),
                                 border: Border.all(
                                   color: FlutterFlowTheme.of(context).grayLight,
                                 ),
                               ),
                               child: Padding(
                                 padding: EdgeInsetsDirectional.fromSTEB(
-                                    5, 10, 5, 10),
+                                    5.0, 10.0, 5.0, 10.0),
                                 child: Column(
                                   mainAxisSize: MainAxisSize.max,
                                   children: [
                                     Image.asset(
                                       'assets/images/bread.png',
-                                      width: 50,
-                                      height: 50,
+                                      width: 50.0,
+                                      height: 50.0,
                                       fit: BoxFit.cover,
                                     ),
                                     Expanded(
                                       child: Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(
-                                            0, 5, 0, 0),
+                                            0.0, 5.0, 0.0, 0.0),
                                         child: Text(
                                           'Pain',
                                           textAlign: TextAlign.center,
                                           style: FlutterFlowTheme.of(context)
-                                              .bodyText1,
+                                              .bodyMedium,
                                         ),
                                       ),
                                     ),
@@ -626,50 +666,56 @@ class _FoodListWidgetState extends State<FoodListWidget> {
                 ),
               ),
               Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 10),
+                padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 10.0),
                 child: Row(
                   mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     InkWell(
+                      splashColor: Colors.transparent,
+                      focusColor: Colors.transparent,
+                      hoverColor: Colors.transparent,
+                      highlightColor: Colors.transparent,
                       onTap: () async {
                         logFirebaseEvent(
                             'FOOD_LIST_COMP_Container_h1fkx9l7_ON_TAP');
                         logFirebaseEvent('Container_backend_call');
 
-                        final foodActionsCreateData =
-                            createFoodActionsRecordData(
-                          userId: currentUserUid,
-                          co2e: 0,
-                          createdTime: getCurrentTimestamp,
-                          day: dateTimeFormat(
-                            'd/M/y',
-                            getCurrentTimestamp,
-                            locale: FFLocalizations.of(context).languageCode,
-                          ),
-                          isPeriodic: false,
-                          isFavorite: false,
-                          food: 'coffee',
-                          portions: 1,
-                        );
                         var foodActionsRecordReference =
                             FoodActionsRecord.collection.doc();
                         await foodActionsRecordReference
-                            .set(foodActionsCreateData);
-                        newCoffee = FoodActionsRecord.getDocumentFromData(
-                            foodActionsCreateData, foodActionsRecordReference);
-                        logFirebaseEvent('Container_update_local_state');
-                        setState(() => FFAppState().displayDates = false);
-                        logFirebaseEvent('Container_update_local_state');
-                        setState(() => FFAppState().displayDays = false);
+                            .set(createFoodActionsRecordData(
+                          userId: currentUserUid,
+                          food: 'coffee',
+                        ));
+                        _model.newCoffee =
+                            FoodActionsRecord.getDocumentFromData(
+                                createFoodActionsRecordData(
+                                  userId: currentUserUid,
+                                  food: 'coffee',
+                                ),
+                                foodActionsRecordReference);
+                        logFirebaseEvent('Container_update_app_state');
+                        FFAppState().update(() {
+                          FFAppState().displayDates = false;
+                          FFAppState().displayDays = false;
+                        });
                         logFirebaseEvent('Container_navigate_to');
 
                         context.pushNamed(
                           'Food',
-                          queryParams: {
+                          queryParameters: {
                             'actionRef': serializeParam(
-                              newCoffee!.reference,
+                              _model.newCoffee?.reference,
                               ParamType.DocumentReference,
+                            ),
+                            'category': serializeParam(
+                              'food',
+                              ParamType.String,
+                            ),
+                            'action': serializeParam(
+                              'coffee',
+                              ParamType.String,
                             ),
                           }.withoutNulls,
                         );
@@ -677,34 +723,35 @@ class _FoodListWidgetState extends State<FoodListWidget> {
                         setState(() {});
                       },
                       child: Container(
-                        width: 135,
-                        height: 110,
+                        width: 135.0,
+                        height: 110.0,
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15),
+                          borderRadius: BorderRadius.circular(15.0),
                           border: Border.all(
                             color: FlutterFlowTheme.of(context).grayLight,
                           ),
                         ),
                         child: Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(5, 10, 5, 10),
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              5.0, 10.0, 5.0, 10.0),
                           child: Column(
                             mainAxisSize: MainAxisSize.max,
                             children: [
                               Image.asset(
                                 'assets/images/coffee.png',
-                                width: 50,
-                                height: 50,
+                                width: 50.0,
+                                height: 50.0,
                                 fit: BoxFit.cover,
                               ),
                               Expanded(
                                 child: Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
-                                      0, 5, 0, 0),
+                                      0.0, 5.0, 0.0, 0.0),
                                   child: Text(
                                     'Café',
                                     textAlign: TextAlign.center,
                                     style:
-                                        FlutterFlowTheme.of(context).bodyText1,
+                                        FlutterFlowTheme.of(context).bodyMedium,
                                   ),
                                 ),
                               ),

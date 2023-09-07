@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
@@ -6,9 +7,10 @@ import 'package:intl/intl.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import 'lat_lng.dart';
 import 'place.dart';
-import '../backend/backend.dart';
+import 'uploaded_file.dart';
+import '/backend/backend.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import '../../auth/auth_util.dart';
+import '/auth/firebase_auth/auth_util.dart';
 
 String printScore(int? score) {
   String co2 = "0";
@@ -97,6 +99,26 @@ String printRatioScoreTotal(
   var val = ratio.toStringAsFixed(0);
   var unit = '%';
   return val + " " + unit;
+}
+
+int calculateActionCO2e(
+  int? emissionFactor,
+  int? count,
+  int? multiplicator,
+  int? divider,
+  String? shared,
+) {
+  // Default values
+  count = count ?? 0;
+  multiplicator = multiplicator ?? 1;
+  divider = divider ?? 1;
+  emissionFactor = emissionFactor ?? 0;
+  shared = shared ?? "1";
+
+  double co2e =
+      ((emissionFactor * count) * multiplicator) / divider / int.parse(shared);
+
+  return co2e.round();
 }
 
 List<String> getTransportPassengers(String? transport) {

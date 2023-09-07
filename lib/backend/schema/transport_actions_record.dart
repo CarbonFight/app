@@ -1,80 +1,129 @@
 import 'dart:async';
 
+import 'package:collection/collection.dart';
+
+import '/backend/schema/util/firestore_util.dart';
+import '/backend/schema/util/schema_util.dart';
+
 import 'index.dart';
-import 'serializers.dart';
-import 'package:built_value/built_value.dart';
+import '/flutter_flow/flutter_flow_util.dart';
 
-part 'transport_actions_record.g.dart';
+class TransportActionsRecord extends FirestoreRecord {
+  TransportActionsRecord._(
+    DocumentReference reference,
+    Map<String, dynamic> data,
+  ) : super(reference, data) {
+    _initializeFields();
+  }
 
-abstract class TransportActionsRecord
-    implements Built<TransportActionsRecord, TransportActionsRecordBuilder> {
-  static Serializer<TransportActionsRecord> get serializer =>
-      _$transportActionsRecordSerializer;
+  // "transport" field.
+  String? _transport;
+  String get transport => _transport ?? '';
+  bool hasTransport() => _transport != null;
 
-  String? get transport;
+  // "powertype" field.
+  String? _powertype;
+  String get powertype => _powertype ?? '';
+  bool hasPowertype() => _powertype != null;
 
-  String? get powertype;
+  // "userId" field.
+  String? _userId;
+  String get userId => _userId ?? '';
+  bool hasUserId() => _userId != null;
 
-  String? get userId;
+  // "co2e" field.
+  int? _co2e;
+  int get co2e => _co2e ?? 0;
+  bool hasCo2e() => _co2e != null;
 
-  int? get co2e;
+  // "created_time" field.
+  DateTime? _createdTime;
+  DateTime? get createdTime => _createdTime;
+  bool hasCreatedTime() => _createdTime != null;
 
-  @BuiltValueField(wireName: 'created_time')
-  DateTime? get createdTime;
+  // "passengers" field.
+  String? _passengers;
+  String get passengers => _passengers ?? '';
+  bool hasPassengers() => _passengers != null;
 
-  String? get passengers;
+  // "day" field.
+  String? _day;
+  String get day => _day ?? '';
+  bool hasDay() => _day != null;
 
-  String? get day;
+  // "periodicity" field.
+  List<String>? _periodicity;
+  List<String> get periodicity => _periodicity ?? const [];
+  bool hasPeriodicity() => _periodicity != null;
 
-  BuiltList<String>? get periodicity;
+  // "roundTrip" field.
+  bool? _roundTrip;
+  bool get roundTrip => _roundTrip ?? false;
+  bool hasRoundTrip() => _roundTrip != null;
 
-  bool? get roundTrip;
+  // "isPeriodic" field.
+  bool? _isPeriodic;
+  bool get isPeriodic => _isPeriodic ?? false;
+  bool hasIsPeriodic() => _isPeriodic != null;
 
-  bool? get isPeriodic;
+  // "isFavorite" field.
+  bool? _isFavorite;
+  bool get isFavorite => _isFavorite ?? false;
+  bool hasIsFavorite() => _isFavorite != null;
 
-  bool? get isFavorite;
+  // "distance" field.
+  String? _distance;
+  String get distance => _distance ?? '';
+  bool hasDistance() => _distance != null;
 
-  String? get distance;
-
-  @BuiltValueField(wireName: kDocumentReferenceField)
-  DocumentReference? get ffRef;
-  DocumentReference get reference => ffRef!;
-
-  static void _initializeBuilder(TransportActionsRecordBuilder builder) =>
-      builder
-        ..transport = ''
-        ..powertype = ''
-        ..userId = ''
-        ..co2e = 0
-        ..passengers = ''
-        ..day = ''
-        ..periodicity = ListBuilder()
-        ..roundTrip = false
-        ..isPeriodic = false
-        ..isFavorite = false
-        ..distance = '';
+  void _initializeFields() {
+    _transport = snapshotData['transport'] as String?;
+    _powertype = snapshotData['powertype'] as String?;
+    _userId = snapshotData['userId'] as String?;
+    _co2e = castToType<int>(snapshotData['co2e']);
+    _createdTime = snapshotData['created_time'] as DateTime?;
+    _passengers = snapshotData['passengers'] as String?;
+    _day = snapshotData['day'] as String?;
+    _periodicity = getDataList(snapshotData['periodicity']);
+    _roundTrip = snapshotData['roundTrip'] as bool?;
+    _isPeriodic = snapshotData['isPeriodic'] as bool?;
+    _isFavorite = snapshotData['isFavorite'] as bool?;
+    _distance = snapshotData['distance'] as String?;
+  }
 
   static CollectionReference get collection =>
       FirebaseFirestore.instance.collection('transportActions');
 
   static Stream<TransportActionsRecord> getDocument(DocumentReference ref) =>
-      ref.snapshots().map(
-          (s) => serializers.deserializeWith(serializer, serializedData(s))!);
+      ref.snapshots().map((s) => TransportActionsRecord.fromSnapshot(s));
 
   static Future<TransportActionsRecord> getDocumentOnce(
           DocumentReference ref) =>
-      ref.get().then(
-          (s) => serializers.deserializeWith(serializer, serializedData(s))!);
+      ref.get().then((s) => TransportActionsRecord.fromSnapshot(s));
 
-  TransportActionsRecord._();
-  factory TransportActionsRecord(
-          [void Function(TransportActionsRecordBuilder) updates]) =
-      _$TransportActionsRecord;
+  static TransportActionsRecord fromSnapshot(DocumentSnapshot snapshot) =>
+      TransportActionsRecord._(
+        snapshot.reference,
+        mapFromFirestore(snapshot.data() as Map<String, dynamic>),
+      );
 
   static TransportActionsRecord getDocumentFromData(
-          Map<String, dynamic> data, DocumentReference reference) =>
-      serializers.deserializeWith(serializer,
-          {...mapFromFirestore(data), kDocumentReferenceField: reference})!;
+    Map<String, dynamic> data,
+    DocumentReference reference,
+  ) =>
+      TransportActionsRecord._(reference, mapFromFirestore(data));
+
+  @override
+  String toString() =>
+      'TransportActionsRecord(reference: ${reference.path}, data: $snapshotData)';
+
+  @override
+  int get hashCode => reference.path.hashCode;
+
+  @override
+  bool operator ==(other) =>
+      other is TransportActionsRecord &&
+      reference.path.hashCode == other.reference.path.hashCode;
 }
 
 Map<String, dynamic> createTransportActionsRecordData({
@@ -90,24 +139,62 @@ Map<String, dynamic> createTransportActionsRecordData({
   bool? isFavorite,
   String? distance,
 }) {
-  final firestoreData = serializers.toFirestore(
-    TransportActionsRecord.serializer,
-    TransportActionsRecord(
-      (t) => t
-        ..transport = transport
-        ..powertype = powertype
-        ..userId = userId
-        ..co2e = co2e
-        ..createdTime = createdTime
-        ..passengers = passengers
-        ..day = day
-        ..periodicity = null
-        ..roundTrip = roundTrip
-        ..isPeriodic = isPeriodic
-        ..isFavorite = isFavorite
-        ..distance = distance,
-    ),
+  final firestoreData = mapToFirestore(
+    <String, dynamic>{
+      'transport': transport,
+      'powertype': powertype,
+      'userId': userId,
+      'co2e': co2e,
+      'created_time': createdTime,
+      'passengers': passengers,
+      'day': day,
+      'roundTrip': roundTrip,
+      'isPeriodic': isPeriodic,
+      'isFavorite': isFavorite,
+      'distance': distance,
+    }.withoutNulls,
   );
 
   return firestoreData;
+}
+
+class TransportActionsRecordDocumentEquality
+    implements Equality<TransportActionsRecord> {
+  const TransportActionsRecordDocumentEquality();
+
+  @override
+  bool equals(TransportActionsRecord? e1, TransportActionsRecord? e2) {
+    const listEquality = ListEquality();
+    return e1?.transport == e2?.transport &&
+        e1?.powertype == e2?.powertype &&
+        e1?.userId == e2?.userId &&
+        e1?.co2e == e2?.co2e &&
+        e1?.createdTime == e2?.createdTime &&
+        e1?.passengers == e2?.passengers &&
+        e1?.day == e2?.day &&
+        listEquality.equals(e1?.periodicity, e2?.periodicity) &&
+        e1?.roundTrip == e2?.roundTrip &&
+        e1?.isPeriodic == e2?.isPeriodic &&
+        e1?.isFavorite == e2?.isFavorite &&
+        e1?.distance == e2?.distance;
+  }
+
+  @override
+  int hash(TransportActionsRecord? e) => const ListEquality().hash([
+        e?.transport,
+        e?.powertype,
+        e?.userId,
+        e?.co2e,
+        e?.createdTime,
+        e?.passengers,
+        e?.day,
+        e?.periodicity,
+        e?.roundTrip,
+        e?.isPeriodic,
+        e?.isFavorite,
+        e?.distance
+      ]);
+
+  @override
+  bool isValidKey(Object? o) => o is TransportActionsRecord;
 }

@@ -1,11 +1,14 @@
-import '../auth/auth_util.dart';
-import '../components/icon_button_widget.dart';
-import '../flutter_flow/flutter_flow_icon_button.dart';
-import '../flutter_flow/flutter_flow_theme.dart';
-import '../flutter_flow/flutter_flow_util.dart';
+import '/auth/firebase_auth/auth_util.dart';
+import '/components/icon_button_widget.dart';
+import '/flutter_flow/flutter_flow_icon_button.dart';
+import '/flutter_flow/flutter_flow_theme.dart';
+import '/flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+import 'forgot_password_model.dart';
+export 'forgot_password_model.dart';
 
 class ForgotPasswordWidget extends StatefulWidget {
   const ForgotPasswordWidget({Key? key}) : super(key: key);
@@ -15,41 +18,52 @@ class ForgotPasswordWidget extends StatefulWidget {
 }
 
 class _ForgotPasswordWidgetState extends State<ForgotPasswordWidget> {
-  TextEditingController? emailController;
+  late ForgotPasswordModel _model;
+
+  @override
+  void setState(VoidCallback callback) {
+    super.setState(callback);
+    _model.onUpdate();
+  }
 
   @override
   void initState() {
     super.initState();
-    emailController = TextEditingController();
+    _model = createModel(context, () => ForgotPasswordModel());
+
+    _model.emailController ??= TextEditingController();
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
   void dispose() {
-    emailController?.dispose();
+    _model.maybeDispose();
+
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    context.watch<FFAppState>();
+
     return Padding(
-      padding: EdgeInsetsDirectional.fromSTEB(20, 20, 20, 20),
+      padding: EdgeInsetsDirectional.fromSTEB(20.0, 20.0, 20.0, 20.0),
       child: Container(
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height * 1,
+        width: MediaQuery.sizeOf(context).width * 1.0,
+        height: MediaQuery.sizeOf(context).height * 1.0,
         decoration: BoxDecoration(
-          color: FlutterFlowTheme.of(context).tertiaryColor,
+          color: FlutterFlowTheme.of(context).tertiary,
           boxShadow: [
             BoxShadow(
-              blurRadius: 10,
+              blurRadius: 10.0,
               color: Color(0x25000000),
-              offset: Offset(0, 0),
+              offset: Offset(0.0, 0.0),
             )
           ],
-          borderRadius: BorderRadius.circular(15),
+          borderRadius: BorderRadius.circular(15.0),
         ),
         child: Padding(
-          padding: EdgeInsetsDirectional.fromSTEB(20, 10, 20, 10),
+          padding: EdgeInsetsDirectional.fromSTEB(20.0, 10.0, 20.0, 10.0),
           child: Column(
             mainAxisSize: MainAxisSize.max,
             children: [
@@ -62,19 +76,19 @@ class _ForgotPasswordWidgetState extends State<ForgotPasswordWidget> {
                     children: [
                       Text(
                         'Changer le mot de passe',
-                        style: FlutterFlowTheme.of(context).subtitle1,
+                        style: FlutterFlowTheme.of(context).titleMedium,
                       ),
                     ],
                   ),
                   FlutterFlowIconButton(
                     borderColor: Colors.transparent,
-                    borderRadius: 30,
-                    borderWidth: 1,
-                    buttonSize: 46,
+                    borderRadius: 30.0,
+                    borderWidth: 1.0,
+                    buttonSize: 46.0,
                     icon: Icon(
                       Icons.close,
                       color: Colors.black,
-                      size: 24,
+                      size: 24.0,
                     ),
                     onPressed: () async {
                       logFirebaseEvent('FORGOT_PASSWORD_COMP_close_ICN_ON_TAP');
@@ -90,7 +104,8 @@ class _ForgotPasswordWidgetState extends State<ForgotPasswordWidget> {
                   mainAxisSize: MainAxisSize.max,
                   children: [
                     Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 20),
+                      padding:
+                          EdgeInsetsDirectional.fromSTEB(0.0, 20.0, 0.0, 20.0),
                       child: Row(
                         mainAxisSize: MainAxisSize.max,
                         children: [
@@ -98,7 +113,7 @@ class _ForgotPasswordWidgetState extends State<ForgotPasswordWidget> {
                             child: Text(
                               'Veuillez entrer votre adresse email. Un message vous sera envoyé avec un lien permettant de ré-initialiser votre mot de passe.',
                               style: FlutterFlowTheme.of(context)
-                                  .bodyText1
+                                  .bodyMedium
                                   .override(
                                     fontFamily: 'Montserrat',
                                     color: FlutterFlowTheme.of(context).gray,
@@ -109,13 +124,14 @@ class _ForgotPasswordWidgetState extends State<ForgotPasswordWidget> {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 20),
+                      padding:
+                          EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 20.0),
                       child: Row(
                         mainAxisSize: MainAxisSize.max,
                         children: [
                           Expanded(
                             child: TextFormField(
-                              controller: emailController,
+                              controller: _model.emailController,
                               obscureText: false,
                               decoration: InputDecoration(
                                 labelText: 'Adresse email',
@@ -124,65 +140,70 @@ class _ForgotPasswordWidgetState extends State<ForgotPasswordWidget> {
                                   borderSide: BorderSide(
                                     color:
                                         FlutterFlowTheme.of(context).grayLight,
-                                    width: 1,
+                                    width: 1.0,
                                   ),
-                                  borderRadius: BorderRadius.circular(100),
+                                  borderRadius: BorderRadius.circular(100.0),
                                 ),
                                 focusedBorder: OutlineInputBorder(
                                   borderSide: BorderSide(
-                                    color:
-                                        FlutterFlowTheme.of(context).grayLight,
-                                    width: 1,
+                                    color: Color(0x00000000),
+                                    width: 1.0,
                                   ),
-                                  borderRadius: BorderRadius.circular(100),
+                                  borderRadius: BorderRadius.circular(100.0),
                                 ),
                                 errorBorder: OutlineInputBorder(
                                   borderSide: BorderSide(
                                     color: Color(0x00000000),
-                                    width: 1,
+                                    width: 1.0,
                                   ),
-                                  borderRadius: BorderRadius.circular(100),
+                                  borderRadius: BorderRadius.circular(100.0),
                                 ),
                                 focusedErrorBorder: OutlineInputBorder(
                                   borderSide: BorderSide(
                                     color: Color(0x00000000),
-                                    width: 1,
+                                    width: 1.0,
                                   ),
-                                  borderRadius: BorderRadius.circular(100),
+                                  borderRadius: BorderRadius.circular(100.0),
                                 ),
                                 filled: true,
                                 fillColor: Color(0x40EEF1F0),
                                 prefixIcon: Icon(
                                   Icons.email_outlined,
-                                  color: FlutterFlowTheme.of(context)
-                                      .secondaryColor,
-                                  size: 16,
+                                  color: FlutterFlowTheme.of(context).secondary,
+                                  size: 16.0,
                                 ),
                               ),
                               style: FlutterFlowTheme.of(context)
-                                  .bodyText2
+                                  .bodySmall
                                   .override(
                                     fontFamily: 'Montserrat',
                                     fontWeight: FontWeight.w500,
                                   ),
                               keyboardType: TextInputType.emailAddress,
+                              validator: _model.emailControllerValidator
+                                  .asValidator(context),
                             ),
                           ),
                         ],
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 10),
+                      padding:
+                          EdgeInsetsDirectional.fromSTEB(0.0, 10.0, 0.0, 10.0),
                       child: Row(
                         mainAxisSize: MainAxisSize.max,
                         children: [
                           Expanded(
                             child: InkWell(
+                              splashColor: Colors.transparent,
+                              focusColor: Colors.transparent,
+                              hoverColor: Colors.transparent,
+                              highlightColor: Colors.transparent,
                               onTap: () async {
                                 logFirebaseEvent(
                                     'FORGOT_PASSWORD_Container_c6apebad_ON_TA');
                                 logFirebaseEvent('iconButton_auth');
-                                if (emailController!.text.isEmpty) {
+                                if (_model.emailController.text.isEmpty) {
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     SnackBar(
                                       content: Text(
@@ -192,26 +213,30 @@ class _ForgotPasswordWidgetState extends State<ForgotPasswordWidget> {
                                   );
                                   return;
                                 }
-                                await resetPassword(
-                                  email: emailController!.text,
+                                await authManager.resetPassword(
+                                  email: _model.emailController.text,
                                   context: context,
                                 );
                                 logFirebaseEvent(
                                     'iconButton_close_dialog,_drawer,_etc');
                                 Navigator.pop(context);
                               },
-                              child: IconButtonWidget(
-                                fillColor:
-                                    FlutterFlowTheme.of(context).secondaryColor,
-                                fontColor:
-                                    FlutterFlowTheme.of(context).tertiaryColor,
-                                icon: Icon(
-                                  Icons.send_outlined,
-                                  color: FlutterFlowTheme.of(context)
-                                      .tertiaryColor,
-                                  size: 18,
+                              child: wrapWithModel(
+                                model: _model.iconButtonModel,
+                                updateCallback: () => setState(() {}),
+                                child: IconButtonWidget(
+                                  fillColor:
+                                      FlutterFlowTheme.of(context).secondary,
+                                  fontColor:
+                                      FlutterFlowTheme.of(context).tertiary,
+                                  icon: Icon(
+                                    Icons.send_outlined,
+                                    color:
+                                        FlutterFlowTheme.of(context).tertiary,
+                                    size: 18.0,
+                                  ),
+                                  text: 'Envoyer le lien',
                                 ),
-                                text: 'Envoyer le lien',
                               ),
                             ),
                           ),

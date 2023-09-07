@@ -1,17 +1,19 @@
-import '../auth/auth_util.dart';
-import '../components/forgot_password_widget.dart';
-import '../components/icon_button_widget.dart';
-import '../components/next_version_alert_widget.dart';
-import '../flutter_flow/flutter_flow_icon_button.dart';
-import '../flutter_flow/flutter_flow_theme.dart';
-import '../flutter_flow/flutter_flow_util.dart';
-import '../custom_code/actions/index.dart' as actions;
+import '/auth/firebase_auth/auth_util.dart';
+import '/components/forgot_password_widget.dart';
+import '/components/icon_button_widget.dart';
+import '/components/next_version_alert_widget.dart';
+import '/flutter_flow/flutter_flow_icon_button.dart';
+import '/flutter_flow/flutter_flow_theme.dart';
+import '/flutter_flow/flutter_flow_util.dart';
+import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+import 'login_model.dart';
+export 'login_model.dart';
 
 class LoginWidget extends StatefulWidget {
   const LoginWidget({Key? key}) : super(key: key);
@@ -21,50 +23,44 @@ class LoginWidget extends StatefulWidget {
 }
 
 class _LoginWidgetState extends State<LoginWidget> {
-  TextEditingController? emailAddressController;
-  TextEditingController? passwordController;
+  late LoginModel _model;
 
-  late bool passwordVisibility;
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
     super.initState();
-    // On page load action.
-    SchedulerBinding.instance.addPostFrameCallback((_) async {
-      logFirebaseEvent('LOGIN_PAGE_Login_ON_PAGE_LOAD');
-      logFirebaseEvent('Login_custom_action');
-      await actions.lockOrientation();
-    });
+    _model = createModel(context, () => LoginModel());
 
     logFirebaseEvent('screen_view', parameters: {'screen_name': 'Login'});
-    emailAddressController = TextEditingController();
-    passwordController = TextEditingController();
-    passwordVisibility = false;
+    _model.emailAddressController ??= TextEditingController();
+    _model.passwordController ??= TextEditingController();
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
   void dispose() {
-    emailAddressController?.dispose();
-    passwordController?.dispose();
+    _model.dispose();
+
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      key: scaffoldKey,
-      backgroundColor: FlutterFlowTheme.of(context).secondaryColor,
-      body: GestureDetector(
-        onTap: () => FocusScope.of(context).unfocus(),
-        child: SingleChildScrollView(
+    context.watch<FFAppState>();
+
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).requestFocus(_model.unfocusNode),
+      child: Scaffold(
+        key: scaffoldKey,
+        backgroundColor: FlutterFlowTheme.of(context).secondary,
+        body: SingleChildScrollView(
           child: Column(
             mainAxisSize: MainAxisSize.max,
             children: [
               Container(
-                width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height * 1,
+                width: MediaQuery.sizeOf(context).width * 1.0,
+                height: MediaQuery.sizeOf(context).height * 1.0,
                 decoration: BoxDecoration(
                   image: DecorationImage(
                     fit: BoxFit.fill,
@@ -76,19 +72,20 @@ class _LoginWidgetState extends State<LoginWidget> {
                 child: Stack(
                   children: [
                     Container(
-                      width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.height * 0.75,
+                      width: MediaQuery.sizeOf(context).width * 1.0,
+                      height: MediaQuery.sizeOf(context).height * 0.75,
                       decoration: BoxDecoration(
                         gradient: LinearGradient(
                           colors: [Color(0xBE23D0C1), Color(0x0023D0C1)],
-                          stops: [0, 1],
-                          begin: AlignmentDirectional(0, -1),
-                          end: AlignmentDirectional(0, 1),
+                          stops: [0.0, 1.0],
+                          begin: AlignmentDirectional(0.0, -1.0),
+                          end: AlignmentDirectional(0, 1.0),
                         ),
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(40, 0, 40, 0),
+                      padding:
+                          EdgeInsetsDirectional.fromSTEB(40.0, 0.0, 40.0, 0.0),
                       child: SingleChildScrollView(
                         child: Column(
                           mainAxisSize: MainAxisSize.max,
@@ -97,46 +94,46 @@ class _LoginWidgetState extends State<LoginWidget> {
                           children: [
                             Padding(
                               padding: EdgeInsetsDirectional.fromSTEB(
-                                  60, 80, 60, 80),
+                                  60.0, 80.0, 60.0, 80.0),
                               child: Image.asset(
                                 'assets/images/logo_light.png',
-                                width: 100,
+                                width: 100.0,
                                 fit: BoxFit.fitWidth,
                               ),
                             ),
                             Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 15),
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 0.0, 0.0, 15.0),
                               child: Container(
-                                width: MediaQuery.of(context).size.width,
-                                height: 50,
+                                width: MediaQuery.sizeOf(context).width * 1.0,
+                                height: 50.0,
                                 decoration: BoxDecoration(
-                                  color: FlutterFlowTheme.of(context)
-                                      .tertiaryColor,
+                                  color: FlutterFlowTheme.of(context).tertiary,
                                   boxShadow: [
                                     BoxShadow(
-                                      blurRadius: 4,
+                                      blurRadius: 4.0,
                                       color: Color(0x27000000),
-                                      offset: Offset(0, 0),
+                                      offset: Offset(0.0, 0.0),
                                     )
                                   ],
-                                  borderRadius: BorderRadius.circular(100),
+                                  borderRadius: BorderRadius.circular(100.0),
                                 ),
                                 child: Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
-                                      10, 0, 10, 0),
+                                      10.0, 0.0, 10.0, 0.0),
                                   child: Row(
                                     mainAxisSize: MainAxisSize.max,
                                     children: [
                                       Expanded(
                                         child: TextFormField(
-                                          controller: emailAddressController,
+                                          controller:
+                                              _model.emailAddressController,
                                           obscureText: false,
                                           decoration: InputDecoration(
                                             hintText: 'Adresse e-mail',
                                             hintStyle:
                                                 FlutterFlowTheme.of(context)
-                                                    .bodyText1
+                                                    .bodyMedium
                                                     .override(
                                                       fontFamily: 'Montserrat',
                                                       color:
@@ -147,7 +144,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                                             enabledBorder: UnderlineInputBorder(
                                               borderSide: BorderSide(
                                                 color: Color(0x00000000),
-                                                width: 1,
+                                                width: 1.0,
                                               ),
                                               borderRadius:
                                                   const BorderRadius.only(
@@ -158,7 +155,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                                             focusedBorder: UnderlineInputBorder(
                                               borderSide: BorderSide(
                                                 color: Color(0x00000000),
-                                                width: 1,
+                                                width: 1.0,
                                               ),
                                               borderRadius:
                                                   const BorderRadius.only(
@@ -169,7 +166,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                                             errorBorder: UnderlineInputBorder(
                                               borderSide: BorderSide(
                                                 color: Color(0x00000000),
-                                                width: 1,
+                                                width: 1.0,
                                               ),
                                               borderRadius:
                                                   const BorderRadius.only(
@@ -181,7 +178,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                                                 UnderlineInputBorder(
                                               borderSide: BorderSide(
                                                 color: Color(0x00000000),
-                                                width: 1,
+                                                width: 1.0,
                                               ),
                                               borderRadius:
                                                   const BorderRadius.only(
@@ -191,26 +188,29 @@ class _LoginWidgetState extends State<LoginWidget> {
                                             ),
                                             contentPadding:
                                                 EdgeInsetsDirectional.fromSTEB(
-                                                    0, 15, 0, 0),
+                                                    0.0, 15.0, 0.0, 0.0),
                                             prefixIcon: Icon(
                                               Icons.email_outlined,
                                               color:
                                                   FlutterFlowTheme.of(context)
                                                       .gronyLight,
-                                              size: 18,
+                                              size: 18.0,
                                             ),
                                           ),
                                           style: FlutterFlowTheme.of(context)
-                                              .bodyText1
+                                              .bodyMedium
                                               .override(
                                                 fontFamily: 'Montserrat',
                                                 color:
                                                     FlutterFlowTheme.of(context)
-                                                        .primaryColor,
+                                                        .primary,
                                               ),
                                           textAlign: TextAlign.start,
                                           keyboardType:
                                               TextInputType.emailAddress,
+                                          validator: _model
+                                              .emailAddressControllerValidator
+                                              .asValidator(context),
                                         ),
                                       ),
                                     ],
@@ -219,38 +219,38 @@ class _LoginWidgetState extends State<LoginWidget> {
                               ),
                             ),
                             Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 15),
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 0.0, 0.0, 15.0),
                               child: Container(
-                                width: MediaQuery.of(context).size.width,
-                                height: 50,
+                                width: MediaQuery.sizeOf(context).width * 1.0,
+                                height: 50.0,
                                 decoration: BoxDecoration(
-                                  color: FlutterFlowTheme.of(context)
-                                      .tertiaryColor,
+                                  color: FlutterFlowTheme.of(context).tertiary,
                                   boxShadow: [
                                     BoxShadow(
-                                      blurRadius: 4,
+                                      blurRadius: 4.0,
                                       color: Color(0x27000000),
-                                      offset: Offset(0, 0),
+                                      offset: Offset(0.0, 0.0),
                                     )
                                   ],
-                                  borderRadius: BorderRadius.circular(100),
+                                  borderRadius: BorderRadius.circular(100.0),
                                 ),
                                 child: Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
-                                      10, 0, 10, 0),
+                                      10.0, 0.0, 10.0, 0.0),
                                   child: Row(
                                     mainAxisSize: MainAxisSize.max,
                                     children: [
                                       Expanded(
                                         child: TextFormField(
-                                          controller: passwordController,
-                                          obscureText: !passwordVisibility,
+                                          controller: _model.passwordController,
+                                          obscureText:
+                                              !_model.passwordVisibility,
                                           decoration: InputDecoration(
                                             hintText: 'Password',
                                             hintStyle:
                                                 FlutterFlowTheme.of(context)
-                                                    .bodyText1
+                                                    .bodyMedium
                                                     .override(
                                                       fontFamily: 'Montserrat',
                                                       color:
@@ -261,7 +261,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                                             enabledBorder: UnderlineInputBorder(
                                               borderSide: BorderSide(
                                                 color: Color(0x00000000),
-                                                width: 1,
+                                                width: 1.0,
                                               ),
                                               borderRadius:
                                                   const BorderRadius.only(
@@ -272,7 +272,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                                             focusedBorder: UnderlineInputBorder(
                                               borderSide: BorderSide(
                                                 color: Color(0x00000000),
-                                                width: 1,
+                                                width: 1.0,
                                               ),
                                               borderRadius:
                                                   const BorderRadius.only(
@@ -283,7 +283,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                                             errorBorder: UnderlineInputBorder(
                                               borderSide: BorderSide(
                                                 color: Color(0x00000000),
-                                                width: 1,
+                                                width: 1.0,
                                               ),
                                               borderRadius:
                                                   const BorderRadius.only(
@@ -295,7 +295,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                                                 UnderlineInputBorder(
                                               borderSide: BorderSide(
                                                 color: Color(0x00000000),
-                                                width: 1,
+                                                width: 1.0,
                                               ),
                                               borderRadius:
                                                   const BorderRadius.only(
@@ -305,42 +305,46 @@ class _LoginWidgetState extends State<LoginWidget> {
                                             ),
                                             contentPadding:
                                                 EdgeInsetsDirectional.fromSTEB(
-                                                    0, 15, 0, 0),
+                                                    0.0, 15.0, 0.0, 0.0),
                                             prefixIcon: Icon(
                                               Icons.vpn_key_outlined,
                                               color:
                                                   FlutterFlowTheme.of(context)
                                                       .gronyLight,
-                                              size: 18,
+                                              size: 18.0,
                                             ),
                                             suffixIcon: InkWell(
                                               onTap: () => setState(
-                                                () => passwordVisibility =
-                                                    !passwordVisibility,
+                                                () => _model
+                                                        .passwordVisibility =
+                                                    !_model.passwordVisibility,
                                               ),
                                               focusNode: FocusNode(
                                                   skipTraversal: true),
                                               child: Icon(
-                                                passwordVisibility
+                                                _model.passwordVisibility
                                                     ? Icons.visibility_outlined
                                                     : Icons
                                                         .visibility_off_outlined,
                                                 color:
                                                     FlutterFlowTheme.of(context)
                                                         .gronyLighter,
-                                                size: 22,
+                                                size: 22.0,
                                               ),
                                             ),
                                           ),
                                           style: FlutterFlowTheme.of(context)
-                                              .bodyText1
+                                              .bodyMedium
                                               .override(
                                                 fontFamily: 'Montserrat',
                                                 color:
                                                     FlutterFlowTheme.of(context)
-                                                        .primaryColor,
+                                                        .primary,
                                               ),
                                           textAlign: TextAlign.start,
+                                          validator: _model
+                                              .passwordControllerValidator
+                                              .asValidator(context),
                                         ),
                                       ),
                                     ],
@@ -353,6 +357,10 @@ class _LoginWidgetState extends State<LoginWidget> {
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: [
                                 InkWell(
+                                  splashColor: Colors.transparent,
+                                  focusColor: Colors.transparent,
+                                  hoverColor: Colors.transparent,
+                                  highlightColor: Colors.transparent,
                                   onTap: () async {
                                     logFirebaseEvent(
                                         'LOGIN_PAGE_Container_waim5wfw_ON_TAP');
@@ -363,33 +371,37 @@ class _LoginWidgetState extends State<LoginWidget> {
                                       barrierColor: Color(0xBF000000),
                                       context: context,
                                       builder: (context) {
-                                        return Padding(
-                                          padding:
-                                              MediaQuery.of(context).viewInsets,
-                                          child: Container(
-                                            height: 375,
-                                            child: ForgotPasswordWidget(),
+                                        return GestureDetector(
+                                          onTap: () => FocusScope.of(context)
+                                              .requestFocus(_model.unfocusNode),
+                                          child: Padding(
+                                            padding: MediaQuery.viewInsetsOf(
+                                                context),
+                                            child: Container(
+                                              height: 375.0,
+                                              child: ForgotPasswordWidget(),
+                                            ),
                                           ),
                                         );
                                       },
                                     ).then((value) => setState(() {}));
                                   },
                                   child: Container(
-                                    height: 45,
+                                    height: 45.0,
                                     decoration: BoxDecoration(),
-                                    alignment: AlignmentDirectional(0, 0),
+                                    alignment: AlignmentDirectional(0.00, 0.00),
                                     child: Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
-                                          10, 0, 10, 0),
+                                          10.0, 0.0, 10.0, 0.0),
                                       child: Text(
                                         'Mot de passe oublié ?',
                                         style: FlutterFlowTheme.of(context)
-                                            .bodyText1
+                                            .bodyMedium
                                             .override(
                                               fontFamily: 'Montserrat',
                                               color:
                                                   FlutterFlowTheme.of(context)
-                                                      .primaryColor,
+                                                      .primary,
                                             ),
                                       ),
                                     ),
@@ -398,8 +410,8 @@ class _LoginWidgetState extends State<LoginWidget> {
                               ],
                             ),
                             Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 24, 0, 0),
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 24.0, 0.0, 0.0),
                               child: Row(
                                 mainAxisSize: MainAxisSize.max,
                                 mainAxisAlignment:
@@ -407,16 +419,21 @@ class _LoginWidgetState extends State<LoginWidget> {
                                 children: [
                                   Expanded(
                                     child: InkWell(
+                                      splashColor: Colors.transparent,
+                                      focusColor: Colors.transparent,
+                                      hoverColor: Colors.transparent,
+                                      highlightColor: Colors.transparent,
                                       onTap: () async {
                                         logFirebaseEvent(
                                             'LOGIN_PAGE_Container_sb7d0wr0_ON_TAP');
                                         logFirebaseEvent('iconButton_auth');
                                         GoRouter.of(context).prepareAuthEvent();
 
-                                        final user = await signInWithEmail(
+                                        final user =
+                                            await authManager.signInWithEmail(
                                           context,
-                                          emailAddressController!.text,
-                                          passwordController!.text,
+                                          _model.emailAddressController.text,
+                                          _model.passwordController.text,
                                         );
                                         if (user == null) {
                                           return;
@@ -427,27 +444,33 @@ class _LoginWidgetState extends State<LoginWidget> {
                                               'iconButton_navigate_to');
 
                                           context.pushNamedAuth(
-                                              'Splash', mounted);
+                                              'Splash', context.mounted);
                                         } else {
                                           logFirebaseEvent(
                                               'iconButton_navigate_to');
 
                                           context.pushNamedAuth(
-                                              'Home', mounted);
+                                              'Home', context.mounted);
                                         }
                                       },
-                                      child: IconButtonWidget(
-                                        fillColor: FlutterFlowTheme.of(context)
-                                            .secondaryColor,
-                                        fontColor: FlutterFlowTheme.of(context)
-                                            .tertiaryColor,
-                                        icon: Icon(
-                                          Icons.login_outlined,
-                                          color: FlutterFlowTheme.of(context)
-                                              .tertiaryColor,
-                                          size: 26,
+                                      child: wrapWithModel(
+                                        model: _model.iconButtonModel,
+                                        updateCallback: () => setState(() {}),
+                                        child: IconButtonWidget(
+                                          fillColor:
+                                              FlutterFlowTheme.of(context)
+                                                  .secondary,
+                                          fontColor:
+                                              FlutterFlowTheme.of(context)
+                                                  .tertiary,
+                                          icon: Icon(
+                                            Icons.login_outlined,
+                                            color: FlutterFlowTheme.of(context)
+                                                .tertiary,
+                                            size: 26.0,
+                                          ),
+                                          text: 'Connexion',
                                         ),
-                                        text: 'Connexion',
                                       ),
                                     ),
                                   ),
@@ -455,14 +478,14 @@ class _LoginWidgetState extends State<LoginWidget> {
                               ),
                             ),
                             Align(
-                              alignment: AlignmentDirectional(0, 1),
+                              alignment: AlignmentDirectional(0.00, 1.00),
                               child: Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                    0.0, 20.0, 0.0, 0.0),
                                 child: Container(
-                                  width: MediaQuery.of(context).size.width,
+                                  width: MediaQuery.sizeOf(context).width * 1.0,
                                   decoration: BoxDecoration(),
-                                  alignment: AlignmentDirectional(0, 0),
+                                  alignment: AlignmentDirectional(0.00, 0.00),
                                   child: Column(
                                     mainAxisSize: MainAxisSize.max,
                                     mainAxisAlignment: MainAxisAlignment.start,
@@ -473,12 +496,12 @@ class _LoginWidgetState extends State<LoginWidget> {
                                         'Via les réseaux sociaux',
                                         textAlign: TextAlign.center,
                                         style: FlutterFlowTheme.of(context)
-                                            .subtitle2
+                                            .titleSmall
                                             .override(
                                               fontFamily: 'Montserrat',
                                               color:
                                                   FlutterFlowTheme.of(context)
-                                                      .tertiaryColor,
+                                                      .tertiary,
                                               fontWeight: FontWeight.bold,
                                             ),
                                       ),
@@ -490,29 +513,29 @@ class _LoginWidgetState extends State<LoginWidget> {
                                           Padding(
                                             padding:
                                                 EdgeInsetsDirectional.fromSTEB(
-                                                    0, 0, 8, 0),
+                                                    0.0, 0.0, 8.0, 0.0),
                                             child: Card(
                                               clipBehavior:
                                                   Clip.antiAliasWithSaveLayer,
                                               color:
                                                   FlutterFlowTheme.of(context)
                                                       .blue,
-                                              elevation: 3,
+                                              elevation: 3.0,
                                               shape: RoundedRectangleBorder(
                                                 borderRadius:
-                                                    BorderRadius.circular(50),
+                                                    BorderRadius.circular(50.0),
                                               ),
                                               child: FlutterFlowIconButton(
                                                 borderColor: Colors.transparent,
-                                                borderRadius: 30,
-                                                borderWidth: 1,
-                                                buttonSize: 60,
+                                                borderRadius: 30.0,
+                                                borderWidth: 1.0,
+                                                buttonSize: 60.0,
                                                 icon: FaIcon(
                                                   FontAwesomeIcons.facebookF,
                                                   color: FlutterFlowTheme.of(
                                                           context)
-                                                      .tertiaryColor,
-                                                  size: 30,
+                                                      .tertiary,
+                                                  size: 30.0,
                                                 ),
                                                 onPressed: () async {
                                                   logFirebaseEvent(
@@ -521,8 +544,8 @@ class _LoginWidgetState extends State<LoginWidget> {
                                                       'IconButton_auth');
                                                   GoRouter.of(context)
                                                       .prepareAuthEvent();
-                                                  final user =
-                                                      await signInWithFacebook(
+                                                  final user = await authManager
+                                                      .signInWithFacebook(
                                                           context);
                                                   if (user == null) {
                                                     return;
@@ -532,13 +555,15 @@ class _LoginWidgetState extends State<LoginWidget> {
                                                         'IconButton_navigate_to');
 
                                                     context.pushNamedAuth(
-                                                        'Splash', mounted);
+                                                        'Splash',
+                                                        context.mounted);
                                                   } else {
                                                     logFirebaseEvent(
                                                         'IconButton_navigate_to');
 
                                                     context.pushNamedAuth(
-                                                        'Home', mounted);
+                                                        'Home',
+                                                        context.mounted);
                                                   }
                                                 },
                                               ),
@@ -547,17 +572,21 @@ class _LoginWidgetState extends State<LoginWidget> {
                                           Padding(
                                             padding:
                                                 EdgeInsetsDirectional.fromSTEB(
-                                                    0, 0, 8, 0),
+                                                    0.0, 0.0, 8.0, 0.0),
                                             child: InkWell(
+                                              splashColor: Colors.transparent,
+                                              focusColor: Colors.transparent,
+                                              hoverColor: Colors.transparent,
+                                              highlightColor:
+                                                  Colors.transparent,
                                               onTap: () async {
                                                 logFirebaseEvent(
                                                     'LOGIN_PAGE_Card_o107iyfu_ON_TAP');
                                                 logFirebaseEvent('Card_auth');
                                                 GoRouter.of(context)
                                                     .prepareAuthEvent();
-                                                final user =
-                                                    await signInWithGoogle(
-                                                        context);
+                                                final user = await authManager
+                                                    .signInWithGoogle(context);
                                                 if (user == null) {
                                                   return;
                                                 }
@@ -566,13 +595,14 @@ class _LoginWidgetState extends State<LoginWidget> {
                                                       'Card_navigate_to');
 
                                                   context.pushNamedAuth(
-                                                      'Splash', mounted);
+                                                      'Splash',
+                                                      context.mounted);
                                                 } else {
                                                   logFirebaseEvent(
                                                       'Card_navigate_to');
 
                                                   context.pushNamedAuth(
-                                                      'Home', mounted);
+                                                      'Home', context.mounted);
                                                 }
                                               },
                                               child: Card(
@@ -583,20 +613,21 @@ class _LoginWidgetState extends State<LoginWidget> {
                                                         .orange,
                                                 shape: RoundedRectangleBorder(
                                                   borderRadius:
-                                                      BorderRadius.circular(50),
+                                                      BorderRadius.circular(
+                                                          50.0),
                                                 ),
                                                 child: FlutterFlowIconButton(
                                                   borderColor:
                                                       Colors.transparent,
-                                                  borderRadius: 30,
-                                                  borderWidth: 1,
-                                                  buttonSize: 60,
+                                                  borderRadius: 30.0,
+                                                  borderWidth: 1.0,
+                                                  buttonSize: 60.0,
                                                   icon: FaIcon(
                                                     FontAwesomeIcons.google,
                                                     color: FlutterFlowTheme.of(
                                                             context)
-                                                        .tertiaryColor,
-                                                    size: 30,
+                                                        .tertiary,
+                                                    size: 30.0,
                                                   ),
                                                   onPressed: () async {
                                                     logFirebaseEvent(
@@ -606,8 +637,9 @@ class _LoginWidgetState extends State<LoginWidget> {
                                                     GoRouter.of(context)
                                                         .prepareAuthEvent();
                                                     final user =
-                                                        await signInWithGoogle(
-                                                            context);
+                                                        await authManager
+                                                            .signInWithGoogle(
+                                                                context);
                                                     if (user == null) {
                                                       return;
                                                     }
@@ -617,13 +649,15 @@ class _LoginWidgetState extends State<LoginWidget> {
                                                           'IconButton_navigate_to');
 
                                                       context.pushNamedAuth(
-                                                          'Splash', mounted);
+                                                          'Splash',
+                                                          context.mounted);
                                                     } else {
                                                       logFirebaseEvent(
                                                           'IconButton_navigate_to');
 
                                                       context.pushNamedAuth(
-                                                          'Home', mounted);
+                                                          'Home',
+                                                          context.mounted);
                                                     }
                                                   },
                                                 ),
@@ -633,8 +667,13 @@ class _LoginWidgetState extends State<LoginWidget> {
                                           Padding(
                                             padding:
                                                 EdgeInsetsDirectional.fromSTEB(
-                                                    0, 0, 8, 0),
+                                                    0.0, 0.0, 8.0, 0.0),
                                             child: InkWell(
+                                              splashColor: Colors.transparent,
+                                              focusColor: Colors.transparent,
+                                              hoverColor: Colors.transparent,
+                                              highlightColor:
+                                                  Colors.transparent,
                                               onTap: () async {
                                                 logFirebaseEvent(
                                                     'LOGIN_PAGE_Card_63ufryjt_ON_TAP');
@@ -644,16 +683,24 @@ class _LoginWidgetState extends State<LoginWidget> {
                                                   isScrollControlled: true,
                                                   backgroundColor:
                                                       Colors.transparent,
+                                                  barrierColor:
+                                                      Color(0x00000000),
                                                   context: context,
                                                   builder: (context) {
-                                                    return Padding(
-                                                      padding:
-                                                          MediaQuery.of(context)
-                                                              .viewInsets,
-                                                      child: Container(
-                                                        height: 310,
-                                                        child:
-                                                            NextVersionAlertWidget(),
+                                                    return GestureDetector(
+                                                      onTap: () => FocusScope
+                                                              .of(context)
+                                                          .requestFocus(_model
+                                                              .unfocusNode),
+                                                      child: Padding(
+                                                        padding: MediaQuery
+                                                            .viewInsetsOf(
+                                                                context),
+                                                        child: Container(
+                                                          height: 310.0,
+                                                          child:
+                                                              NextVersionAlertWidget(),
+                                                        ),
                                                       ),
                                                     );
                                                   },
@@ -666,20 +713,21 @@ class _LoginWidgetState extends State<LoginWidget> {
                                                 color: Colors.black,
                                                 shape: RoundedRectangleBorder(
                                                   borderRadius:
-                                                      BorderRadius.circular(50),
+                                                      BorderRadius.circular(
+                                                          50.0),
                                                 ),
                                                 child: FlutterFlowIconButton(
                                                   borderColor:
                                                       Colors.transparent,
-                                                  borderRadius: 30,
-                                                  borderWidth: 1,
-                                                  buttonSize: 60,
+                                                  borderRadius: 30.0,
+                                                  borderWidth: 1.0,
+                                                  buttonSize: 60.0,
                                                   icon: FaIcon(
                                                     FontAwesomeIcons.apple,
                                                     color: FlutterFlowTheme.of(
                                                             context)
-                                                        .tertiaryColor,
-                                                    size: 30,
+                                                        .tertiary,
+                                                    size: 30.0,
                                                   ),
                                                   onPressed: () async {
                                                     logFirebaseEvent(
@@ -689,14 +737,15 @@ class _LoginWidgetState extends State<LoginWidget> {
                                                     GoRouter.of(context)
                                                         .prepareAuthEvent();
                                                     final user =
-                                                        await signInWithApple(
-                                                            context);
+                                                        await authManager
+                                                            .signInWithApple(
+                                                                context);
                                                     if (user == null) {
                                                       return;
                                                     }
 
-                                                    context.goNamedAuth(
-                                                        'Home', mounted);
+                                                    context.goNamedAuth('Home',
+                                                        context.mounted);
                                                   },
                                                 ),
                                               ),
@@ -706,21 +755,25 @@ class _LoginWidgetState extends State<LoginWidget> {
                                       ),
                                       Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(
-                                            0, 20, 0, 0),
+                                            0.0, 20.0, 0.0, 0.0),
                                         child: Text(
                                           'Pas encore de compte ?',
                                           textAlign: TextAlign.center,
                                           style: FlutterFlowTheme.of(context)
-                                              .subtitle2
+                                              .titleSmall
                                               .override(
                                                 fontFamily: 'Montserrat',
                                                 color:
                                                     FlutterFlowTheme.of(context)
-                                                        .tertiaryColor,
+                                                        .tertiary,
                                               ),
                                         ),
                                       ),
                                       InkWell(
+                                        splashColor: Colors.transparent,
+                                        focusColor: Colors.transparent,
+                                        hoverColor: Colors.transparent,
+                                        highlightColor: Colors.transparent,
                                         onTap: () async {
                                           logFirebaseEvent(
                                               'LOGIN_PAGE_Text_u0bcam3w_ON_TAP');
@@ -732,12 +785,12 @@ class _LoginWidgetState extends State<LoginWidget> {
                                           'S\'enregistrer',
                                           textAlign: TextAlign.center,
                                           style: FlutterFlowTheme.of(context)
-                                              .subtitle2
+                                              .titleSmall
                                               .override(
                                                 fontFamily: 'Montserrat',
                                                 color:
                                                     FlutterFlowTheme.of(context)
-                                                        .secondaryColor,
+                                                        .secondary,
                                               ),
                                         ),
                                       ),

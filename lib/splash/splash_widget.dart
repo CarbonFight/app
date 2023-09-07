@@ -1,9 +1,13 @@
-import '../components/icon_button_widget.dart';
-import '../flutter_flow/flutter_flow_theme.dart';
-import '../flutter_flow/flutter_flow_util.dart';
+import '/components/icon_button_widget.dart';
+import '/flutter_flow/flutter_flow_theme.dart';
+import '/flutter_flow/flutter_flow_util.dart';
+import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+import 'splash_model.dart';
+export 'splash_model.dart';
 
 class SplashWidget extends StatefulWidget {
   const SplashWidget({Key? key}) : super(key: key);
@@ -13,75 +17,88 @@ class SplashWidget extends StatefulWidget {
 }
 
 class _SplashWidgetState extends State<SplashWidget> {
-  PageController? pageViewController;
+  late SplashModel _model;
+
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
     super.initState();
+    _model = createModel(context, () => SplashModel());
+
     logFirebaseEvent('screen_view', parameters: {'screen_name': 'Splash'});
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
+  void dispose() {
+    _model.dispose();
+
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      key: scaffoldKey,
-      body: GestureDetector(
-        onTap: () => FocusScope.of(context).unfocus(),
-        child: SingleChildScrollView(
+    context.watch<FFAppState>();
+
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).requestFocus(_model.unfocusNode),
+      child: Scaffold(
+        key: scaffoldKey,
+        body: SingleChildScrollView(
           child: Column(
             mainAxisSize: MainAxisSize.max,
             children: [
               Container(
-                width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height * 1,
+                width: MediaQuery.sizeOf(context).width * 1.0,
+                height: MediaQuery.sizeOf(context).height * 1.0,
                 decoration: BoxDecoration(),
                 child: Stack(
                   children: [
                     Container(
                       width: double.infinity,
-                      height: MediaQuery.of(context).size.height * 1,
+                      height: MediaQuery.sizeOf(context).height * 1.0,
                       child: PageView(
-                        controller: pageViewController ??=
+                        controller: _model.pageViewController ??=
                             PageController(initialPage: 0),
                         scrollDirection: Axis.horizontal,
                         children: [
                           Container(
-                            width: MediaQuery.of(context).size.width,
-                            height: MediaQuery.of(context).size.height * 1,
+                            width: MediaQuery.sizeOf(context).width * 1.0,
+                            height: MediaQuery.sizeOf(context).height * 1.0,
                             child: Stack(
-                              alignment: AlignmentDirectional(0, 0),
+                              alignment: AlignmentDirectional(0.0, 0.0),
                               children: [
                                 Image.asset(
                                   'assets/images/mobile_cover.jpg',
-                                  width: MediaQuery.of(context).size.width,
+                                  width: MediaQuery.sizeOf(context).width * 1.0,
                                   height:
-                                      MediaQuery.of(context).size.height * 1,
+                                      MediaQuery.sizeOf(context).height * 1.0,
                                   fit: BoxFit.fill,
                                 ),
                                 Align(
-                                  alignment: AlignmentDirectional(0, -1),
+                                  alignment: AlignmentDirectional(0.00, -1.00),
                                   child: Container(
-                                    width: MediaQuery.of(context).size.width,
-                                    height: MediaQuery.of(context).size.height *
-                                        0.7,
+                                    width:
+                                        MediaQuery.sizeOf(context).width * 1.0,
+                                    height:
+                                        MediaQuery.sizeOf(context).height * 0.7,
                                     decoration: BoxDecoration(
                                       gradient: LinearGradient(
                                         colors: [
                                           Color(0x660B1E1B),
                                           Color(0x0000A193)
                                         ],
-                                        stops: [0, 1],
-                                        begin: AlignmentDirectional(0, -1),
-                                        end: AlignmentDirectional(0, 1),
+                                        stops: [0.0, 1.0],
+                                        begin: AlignmentDirectional(0.0, -1.0),
+                                        end: AlignmentDirectional(0, 1.0),
                                       ),
                                     ),
                                   ),
                                 ),
                                 Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
-                                      40, 40, 40, 0),
+                                      40.0, 40.0, 40.0, 0.0),
                                   child: Column(
                                     mainAxisSize: MainAxisSize.max,
                                     mainAxisAlignment: MainAxisAlignment.start,
@@ -94,41 +111,41 @@ class _SplashWidgetState extends State<SplashWidget> {
                                           Padding(
                                             padding:
                                                 EdgeInsetsDirectional.fromSTEB(
-                                                    0, 30, 0, 0),
+                                                    0.0, 30.0, 0.0, 0.0),
                                             child: Image.asset(
                                               'assets/images/logo_light.png',
-                                              height: 75,
+                                              height: 75.0,
                                               fit: BoxFit.fitWidth,
                                             ),
                                           ),
                                           Padding(
                                             padding:
                                                 EdgeInsetsDirectional.fromSTEB(
-                                                    0, 50, 0, 0),
+                                                    0.0, 50.0, 0.0, 0.0),
                                             child: Image.asset(
                                               'assets/images/clapping.png',
-                                              width: 200,
-                                              height: 200,
+                                              width: 200.0,
+                                              height: 200.0,
                                               fit: BoxFit.cover,
                                             ),
                                           ),
                                           Padding(
                                             padding:
                                                 EdgeInsetsDirectional.fromSTEB(
-                                                    0, 70, 0, 0),
+                                                    0.0, 70.0, 0.0, 0.0),
                                             child: Container(
-                                              width: MediaQuery.of(context)
-                                                      .size
+                                              width: MediaQuery.sizeOf(context)
                                                       .width *
                                                   0.8,
                                               decoration: BoxDecoration(
                                                 color: Color(0x99EEF1F0),
                                                 borderRadius:
-                                                    BorderRadius.circular(10),
+                                                    BorderRadius.circular(10.0),
                                               ),
                                               child: Padding(
                                                 padding: EdgeInsetsDirectional
-                                                    .fromSTEB(15, 5, 15, 5),
+                                                    .fromSTEB(
+                                                        15.0, 5.0, 15.0, 5.0),
                                                 child: Column(
                                                   mainAxisSize:
                                                       MainAxisSize.max,
@@ -144,10 +161,10 @@ class _SplashWidgetState extends State<SplashWidget> {
                                                             padding:
                                                                 EdgeInsetsDirectional
                                                                     .fromSTEB(
-                                                                        0,
-                                                                        20,
-                                                                        0,
-                                                                        0),
+                                                                        0.0,
+                                                                        20.0,
+                                                                        0.0,
+                                                                        0.0),
                                                             child: Text(
                                                               'Merci !',
                                                               textAlign:
@@ -155,15 +172,15 @@ class _SplashWidgetState extends State<SplashWidget> {
                                                                       .center,
                                                               style: FlutterFlowTheme
                                                                       .of(context)
-                                                                  .title1
+                                                                  .displaySmall
                                                                   .override(
                                                                     fontFamily:
                                                                         'Montserrat',
                                                                     color: FlutterFlowTheme.of(
                                                                             context)
-                                                                        .primaryColor,
+                                                                        .primary,
                                                                     fontSize:
-                                                                        35,
+                                                                        35.0,
                                                                     fontWeight:
                                                                         FontWeight
                                                                             .w600,
@@ -177,7 +194,10 @@ class _SplashWidgetState extends State<SplashWidget> {
                                                       padding:
                                                           EdgeInsetsDirectional
                                                               .fromSTEB(
-                                                                  0, 20, 0, 20),
+                                                                  0.0,
+                                                                  20.0,
+                                                                  0.0,
+                                                                  20.0),
                                                       child: Row(
                                                         mainAxisSize:
                                                             MainAxisSize.max,
@@ -190,7 +210,7 @@ class _SplashWidgetState extends State<SplashWidget> {
                                                                       .center,
                                                               style: FlutterFlowTheme
                                                                       .of(context)
-                                                                  .bodyText1,
+                                                                  .bodyMedium,
                                                             ),
                                                           ),
                                                         ],
@@ -205,7 +225,7 @@ class _SplashWidgetState extends State<SplashWidget> {
                                       ),
                                       Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(
-                                            0, 10, 0, 0),
+                                            0.0, 10.0, 0.0, 0.0),
                                         child: Column(
                                           mainAxisSize: MainAxisSize.max,
                                           children: [
@@ -217,37 +237,51 @@ class _SplashWidgetState extends State<SplashWidget> {
                                                 Align(
                                                   alignment:
                                                       AlignmentDirectional(
-                                                          0, 0.85),
+                                                          0.00, 0.85),
                                                   child: InkWell(
+                                                    splashColor:
+                                                        Colors.transparent,
+                                                    focusColor:
+                                                        Colors.transparent,
+                                                    hoverColor:
+                                                        Colors.transparent,
+                                                    highlightColor:
+                                                        Colors.transparent,
                                                     onTap: () async {
                                                       logFirebaseEvent(
                                                           'SPLASH_PAGE_Container_wq8nnca0_ON_TAP');
                                                       logFirebaseEvent(
                                                           'iconButton_page_view');
-                                                      await pageViewController
+                                                      await _model
+                                                          .pageViewController
                                                           ?.nextPage(
                                                         duration: Duration(
                                                             milliseconds: 300),
                                                         curve: Curves.ease,
                                                       );
                                                     },
-                                                    child: IconButtonWidget(
-                                                      fillColor:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .tertiaryColor,
-                                                      fontColor:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .secondaryColor,
-                                                      icon: Icon(
-                                                        Icons.arrow_right_alt,
-                                                        color:
+                                                    child: wrapWithModel(
+                                                      model: _model
+                                                          .iconButtonModel1,
+                                                      updateCallback: () =>
+                                                          setState(() {}),
+                                                      child: IconButtonWidget(
+                                                        fillColor:
                                                             FlutterFlowTheme.of(
                                                                     context)
-                                                                .secondaryColor,
+                                                                .tertiary,
+                                                        fontColor:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .secondary,
+                                                        icon: Icon(
+                                                          Icons.arrow_right_alt,
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .secondary,
+                                                        ),
+                                                        text: 'Suivant ',
                                                       ),
-                                                      text: 'Suivant ',
                                                     ),
                                                   ),
                                                 ),
@@ -260,17 +294,26 @@ class _SplashWidgetState extends State<SplashWidget> {
                                               children: [
                                                 Padding(
                                                   padding: EdgeInsetsDirectional
-                                                      .fromSTEB(0, 10, 0, 0),
+                                                      .fromSTEB(
+                                                          0.0, 10.0, 0.0, 0.0),
                                                   child: InkWell(
+                                                    splashColor:
+                                                        Colors.transparent,
+                                                    focusColor:
+                                                        Colors.transparent,
+                                                    hoverColor:
+                                                        Colors.transparent,
+                                                    highlightColor:
+                                                        Colors.transparent,
                                                     onTap: () async {
                                                       logFirebaseEvent(
                                                           'SPLASH_PAGE_Text_x0x4hfws_ON_TAP');
                                                       logFirebaseEvent(
-                                                          'Text_update_local_state');
-                                                      setState(() =>
-                                                          FFAppState()
-                                                                  .showSplash =
-                                                              false);
+                                                          'Text_update_app_state');
+                                                      FFAppState().update(() {
+                                                        FFAppState()
+                                                            .showSplash = false;
+                                                      });
                                                       logFirebaseEvent(
                                                           'Text_navigate_to');
 
@@ -281,14 +324,14 @@ class _SplashWidgetState extends State<SplashWidget> {
                                                       style:
                                                           FlutterFlowTheme.of(
                                                                   context)
-                                                              .bodyText1
+                                                              .bodyMedium
                                                               .override(
                                                                 fontFamily:
                                                                     'Montserrat',
                                                                 color: FlutterFlowTheme.of(
                                                                         context)
-                                                                    .secondaryColor,
-                                                                fontSize: 12,
+                                                                    .secondary,
+                                                                fontSize: 12.0,
                                                               ),
                                                     ),
                                                   ),
@@ -305,40 +348,41 @@ class _SplashWidgetState extends State<SplashWidget> {
                             ),
                           ),
                           Container(
-                            width: MediaQuery.of(context).size.width,
-                            height: MediaQuery.of(context).size.height * 1,
+                            width: MediaQuery.sizeOf(context).width * 1.0,
+                            height: MediaQuery.sizeOf(context).height * 1.0,
                             child: Stack(
-                              alignment: AlignmentDirectional(0, 0),
+                              alignment: AlignmentDirectional(0.0, 0.0),
                               children: [
                                 Image.asset(
                                   'assets/images/mobile_cover.jpg',
-                                  width: MediaQuery.of(context).size.width,
+                                  width: MediaQuery.sizeOf(context).width * 1.0,
                                   height:
-                                      MediaQuery.of(context).size.height * 1,
+                                      MediaQuery.sizeOf(context).height * 1.0,
                                   fit: BoxFit.fill,
                                 ),
                                 Align(
-                                  alignment: AlignmentDirectional(0, -1),
+                                  alignment: AlignmentDirectional(0.00, -1.00),
                                   child: Container(
-                                    width: MediaQuery.of(context).size.width,
-                                    height: MediaQuery.of(context).size.height *
-                                        0.7,
+                                    width:
+                                        MediaQuery.sizeOf(context).width * 1.0,
+                                    height:
+                                        MediaQuery.sizeOf(context).height * 0.7,
                                     decoration: BoxDecoration(
                                       gradient: LinearGradient(
                                         colors: [
                                           Color(0x660B1E1B),
                                           Color(0x0000A193)
                                         ],
-                                        stops: [0, 1],
-                                        begin: AlignmentDirectional(0, -1),
-                                        end: AlignmentDirectional(0, 1),
+                                        stops: [0.0, 1.0],
+                                        begin: AlignmentDirectional(0.0, -1.0),
+                                        end: AlignmentDirectional(0, 1.0),
                                       ),
                                     ),
                                   ),
                                 ),
                                 Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
-                                      40, 40, 40, 0),
+                                      40.0, 40.0, 40.0, 0.0),
                                   child: Column(
                                     mainAxisSize: MainAxisSize.max,
                                     mainAxisAlignment: MainAxisAlignment.start,
@@ -351,41 +395,41 @@ class _SplashWidgetState extends State<SplashWidget> {
                                           Padding(
                                             padding:
                                                 EdgeInsetsDirectional.fromSTEB(
-                                                    0, 30, 0, 0),
+                                                    0.0, 30.0, 0.0, 0.0),
                                             child: Image.asset(
                                               'assets/images/logo_light.png',
-                                              height: 75,
+                                              height: 75.0,
                                               fit: BoxFit.fitWidth,
                                             ),
                                           ),
                                           Padding(
                                             padding:
                                                 EdgeInsetsDirectional.fromSTEB(
-                                                    0, 50, 0, 0),
+                                                    0.0, 50.0, 0.0, 0.0),
                                             child: Image.asset(
                                               'assets/images/booking.png',
-                                              width: 200,
-                                              height: 200,
+                                              width: 200.0,
+                                              height: 200.0,
                                               fit: BoxFit.cover,
                                             ),
                                           ),
                                           Padding(
                                             padding:
                                                 EdgeInsetsDirectional.fromSTEB(
-                                                    0, 70, 0, 0),
+                                                    0.0, 70.0, 0.0, 0.0),
                                             child: Container(
-                                              width: MediaQuery.of(context)
-                                                      .size
+                                              width: MediaQuery.sizeOf(context)
                                                       .width *
                                                   0.8,
                                               decoration: BoxDecoration(
                                                 color: Color(0x99EEF1F0),
                                                 borderRadius:
-                                                    BorderRadius.circular(10),
+                                                    BorderRadius.circular(10.0),
                                               ),
                                               child: Padding(
                                                 padding: EdgeInsetsDirectional
-                                                    .fromSTEB(15, 5, 15, 5),
+                                                    .fromSTEB(
+                                                        15.0, 5.0, 15.0, 5.0),
                                                 child: Column(
                                                   mainAxisSize:
                                                       MainAxisSize.max,
@@ -401,10 +445,10 @@ class _SplashWidgetState extends State<SplashWidget> {
                                                             padding:
                                                                 EdgeInsetsDirectional
                                                                     .fromSTEB(
-                                                                        0,
-                                                                        20,
-                                                                        0,
-                                                                        0),
+                                                                        0.0,
+                                                                        20.0,
+                                                                        0.0,
+                                                                        0.0),
                                                             child: Text(
                                                               'Action !',
                                                               textAlign:
@@ -412,15 +456,15 @@ class _SplashWidgetState extends State<SplashWidget> {
                                                                       .center,
                                                               style: FlutterFlowTheme
                                                                       .of(context)
-                                                                  .title1
+                                                                  .displaySmall
                                                                   .override(
                                                                     fontFamily:
                                                                         'Montserrat',
                                                                     color: FlutterFlowTheme.of(
                                                                             context)
-                                                                        .primaryColor,
+                                                                        .primary,
                                                                     fontSize:
-                                                                        35,
+                                                                        35.0,
                                                                     fontWeight:
                                                                         FontWeight
                                                                             .w600,
@@ -434,7 +478,10 @@ class _SplashWidgetState extends State<SplashWidget> {
                                                       padding:
                                                           EdgeInsetsDirectional
                                                               .fromSTEB(
-                                                                  0, 20, 0, 20),
+                                                                  0.0,
+                                                                  20.0,
+                                                                  0.0,
+                                                                  20.0),
                                                       child: Row(
                                                         mainAxisSize:
                                                             MainAxisSize.max,
@@ -447,7 +494,7 @@ class _SplashWidgetState extends State<SplashWidget> {
                                                                       .center,
                                                               style: FlutterFlowTheme
                                                                       .of(context)
-                                                                  .bodyText1,
+                                                                  .bodyMedium,
                                                             ),
                                                           ),
                                                         ],
@@ -462,7 +509,7 @@ class _SplashWidgetState extends State<SplashWidget> {
                                       ),
                                       Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(
-                                            0, 10, 0, 0),
+                                            0.0, 10.0, 0.0, 0.0),
                                         child: Column(
                                           mainAxisSize: MainAxisSize.max,
                                           children: [
@@ -474,37 +521,51 @@ class _SplashWidgetState extends State<SplashWidget> {
                                                 Align(
                                                   alignment:
                                                       AlignmentDirectional(
-                                                          0, 0.85),
+                                                          0.00, 0.85),
                                                   child: InkWell(
+                                                    splashColor:
+                                                        Colors.transparent,
+                                                    focusColor:
+                                                        Colors.transparent,
+                                                    hoverColor:
+                                                        Colors.transparent,
+                                                    highlightColor:
+                                                        Colors.transparent,
                                                     onTap: () async {
                                                       logFirebaseEvent(
                                                           'SPLASH_PAGE_Container_cd5hy14j_ON_TAP');
                                                       logFirebaseEvent(
                                                           'iconButton_page_view');
-                                                      await pageViewController
+                                                      await _model
+                                                          .pageViewController
                                                           ?.nextPage(
                                                         duration: Duration(
                                                             milliseconds: 300),
                                                         curve: Curves.ease,
                                                       );
                                                     },
-                                                    child: IconButtonWidget(
-                                                      fillColor:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .tertiaryColor,
-                                                      fontColor:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .secondaryColor,
-                                                      icon: Icon(
-                                                        Icons.arrow_right_alt,
-                                                        color:
+                                                    child: wrapWithModel(
+                                                      model: _model
+                                                          .iconButtonModel2,
+                                                      updateCallback: () =>
+                                                          setState(() {}),
+                                                      child: IconButtonWidget(
+                                                        fillColor:
                                                             FlutterFlowTheme.of(
                                                                     context)
-                                                                .secondaryColor,
+                                                                .tertiary,
+                                                        fontColor:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .secondary,
+                                                        icon: Icon(
+                                                          Icons.arrow_right_alt,
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .secondary,
+                                                        ),
+                                                        text: 'Suivant ',
                                                       ),
-                                                      text: 'Suivant ',
                                                     ),
                                                   ),
                                                 ),
@@ -517,17 +578,26 @@ class _SplashWidgetState extends State<SplashWidget> {
                                               children: [
                                                 Padding(
                                                   padding: EdgeInsetsDirectional
-                                                      .fromSTEB(0, 10, 0, 0),
+                                                      .fromSTEB(
+                                                          0.0, 10.0, 0.0, 0.0),
                                                   child: InkWell(
+                                                    splashColor:
+                                                        Colors.transparent,
+                                                    focusColor:
+                                                        Colors.transparent,
+                                                    hoverColor:
+                                                        Colors.transparent,
+                                                    highlightColor:
+                                                        Colors.transparent,
                                                     onTap: () async {
                                                       logFirebaseEvent(
                                                           'SPLASH_PAGE_Text_44tr5v7r_ON_TAP');
                                                       logFirebaseEvent(
-                                                          'Text_update_local_state');
-                                                      setState(() =>
-                                                          FFAppState()
-                                                                  .showSplash =
-                                                              false);
+                                                          'Text_update_app_state');
+                                                      FFAppState().update(() {
+                                                        FFAppState()
+                                                            .showSplash = false;
+                                                      });
                                                       logFirebaseEvent(
                                                           'Text_navigate_to');
 
@@ -538,14 +608,14 @@ class _SplashWidgetState extends State<SplashWidget> {
                                                       style:
                                                           FlutterFlowTheme.of(
                                                                   context)
-                                                              .bodyText1
+                                                              .bodyMedium
                                                               .override(
                                                                 fontFamily:
                                                                     'Montserrat',
                                                                 color: FlutterFlowTheme.of(
                                                                         context)
-                                                                    .secondaryColor,
-                                                                fontSize: 12,
+                                                                    .secondary,
+                                                                fontSize: 12.0,
                                                               ),
                                                     ),
                                                   ),
@@ -562,40 +632,41 @@ class _SplashWidgetState extends State<SplashWidget> {
                             ),
                           ),
                           Container(
-                            width: MediaQuery.of(context).size.width,
-                            height: MediaQuery.of(context).size.height * 1,
+                            width: MediaQuery.sizeOf(context).width * 1.0,
+                            height: MediaQuery.sizeOf(context).height * 1.0,
                             child: Stack(
-                              alignment: AlignmentDirectional(0, 0),
+                              alignment: AlignmentDirectional(0.0, 0.0),
                               children: [
                                 Image.asset(
                                   'assets/images/mobile_cover.jpg',
-                                  width: MediaQuery.of(context).size.width,
+                                  width: MediaQuery.sizeOf(context).width * 1.0,
                                   height:
-                                      MediaQuery.of(context).size.height * 1,
+                                      MediaQuery.sizeOf(context).height * 1.0,
                                   fit: BoxFit.fill,
                                 ),
                                 Align(
-                                  alignment: AlignmentDirectional(0, -1),
+                                  alignment: AlignmentDirectional(0.00, -1.00),
                                   child: Container(
-                                    width: MediaQuery.of(context).size.width,
-                                    height: MediaQuery.of(context).size.height *
-                                        0.7,
+                                    width:
+                                        MediaQuery.sizeOf(context).width * 1.0,
+                                    height:
+                                        MediaQuery.sizeOf(context).height * 0.7,
                                     decoration: BoxDecoration(
                                       gradient: LinearGradient(
                                         colors: [
                                           Color(0x660B1E1B),
                                           Color(0x0000A193)
                                         ],
-                                        stops: [0, 1],
-                                        begin: AlignmentDirectional(0, -1),
-                                        end: AlignmentDirectional(0, 1),
+                                        stops: [0.0, 1.0],
+                                        begin: AlignmentDirectional(0.0, -1.0),
+                                        end: AlignmentDirectional(0, 1.0),
                                       ),
                                     ),
                                   ),
                                 ),
                                 Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
-                                      40, 40, 40, 0),
+                                      40.0, 40.0, 40.0, 0.0),
                                   child: Column(
                                     mainAxisSize: MainAxisSize.max,
                                     mainAxisAlignment: MainAxisAlignment.start,
@@ -608,41 +679,41 @@ class _SplashWidgetState extends State<SplashWidget> {
                                           Padding(
                                             padding:
                                                 EdgeInsetsDirectional.fromSTEB(
-                                                    0, 30, 0, 0),
+                                                    0.0, 30.0, 0.0, 0.0),
                                             child: Image.asset(
                                               'assets/images/logo_light.png',
-                                              height: 75,
+                                              height: 75.0,
                                               fit: BoxFit.fitWidth,
                                             ),
                                           ),
                                           Padding(
                                             padding:
                                                 EdgeInsetsDirectional.fromSTEB(
-                                                    0, 50, 0, 0),
+                                                    0.0, 50.0, 0.0, 0.0),
                                             child: Image.asset(
                                               'assets/images/growth.png',
-                                              width: 200,
-                                              height: 200,
+                                              width: 200.0,
+                                              height: 200.0,
                                               fit: BoxFit.cover,
                                             ),
                                           ),
                                           Padding(
                                             padding:
                                                 EdgeInsetsDirectional.fromSTEB(
-                                                    0, 70, 0, 0),
+                                                    0.0, 70.0, 0.0, 0.0),
                                             child: Container(
-                                              width: MediaQuery.of(context)
-                                                      .size
+                                              width: MediaQuery.sizeOf(context)
                                                       .width *
                                                   0.8,
                                               decoration: BoxDecoration(
                                                 color: Color(0x99EEF1F0),
                                                 borderRadius:
-                                                    BorderRadius.circular(10),
+                                                    BorderRadius.circular(10.0),
                                               ),
                                               child: Padding(
                                                 padding: EdgeInsetsDirectional
-                                                    .fromSTEB(15, 5, 15, 5),
+                                                    .fromSTEB(
+                                                        15.0, 5.0, 15.0, 5.0),
                                                 child: Column(
                                                   mainAxisSize:
                                                       MainAxisSize.max,
@@ -658,10 +729,10 @@ class _SplashWidgetState extends State<SplashWidget> {
                                                             padding:
                                                                 EdgeInsetsDirectional
                                                                     .fromSTEB(
-                                                                        0,
-                                                                        20,
-                                                                        0,
-                                                                        0),
+                                                                        0.0,
+                                                                        20.0,
+                                                                        0.0,
+                                                                        0.0),
                                                             child: Text(
                                                               'Identifiez',
                                                               textAlign:
@@ -669,15 +740,15 @@ class _SplashWidgetState extends State<SplashWidget> {
                                                                       .center,
                                                               style: FlutterFlowTheme
                                                                       .of(context)
-                                                                  .title1
+                                                                  .displaySmall
                                                                   .override(
                                                                     fontFamily:
                                                                         'Montserrat',
                                                                     color: FlutterFlowTheme.of(
                                                                             context)
-                                                                        .primaryColor,
+                                                                        .primary,
                                                                     fontSize:
-                                                                        35,
+                                                                        35.0,
                                                                     fontWeight:
                                                                         FontWeight
                                                                             .w600,
@@ -691,7 +762,10 @@ class _SplashWidgetState extends State<SplashWidget> {
                                                       padding:
                                                           EdgeInsetsDirectional
                                                               .fromSTEB(
-                                                                  0, 20, 0, 20),
+                                                                  0.0,
+                                                                  20.0,
+                                                                  0.0,
+                                                                  20.0),
                                                       child: Row(
                                                         mainAxisSize:
                                                             MainAxisSize.max,
@@ -704,7 +778,7 @@ class _SplashWidgetState extends State<SplashWidget> {
                                                                       .center,
                                                               style: FlutterFlowTheme
                                                                       .of(context)
-                                                                  .bodyText1,
+                                                                  .bodyMedium,
                                                             ),
                                                           ),
                                                         ],
@@ -719,7 +793,7 @@ class _SplashWidgetState extends State<SplashWidget> {
                                       ),
                                       Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(
-                                            0, 10, 0, 0),
+                                            0.0, 10.0, 0.0, 0.0),
                                         child: Column(
                                           mainAxisSize: MainAxisSize.max,
                                           children: [
@@ -731,37 +805,51 @@ class _SplashWidgetState extends State<SplashWidget> {
                                                 Align(
                                                   alignment:
                                                       AlignmentDirectional(
-                                                          0, 0.85),
+                                                          0.00, 0.85),
                                                   child: InkWell(
+                                                    splashColor:
+                                                        Colors.transparent,
+                                                    focusColor:
+                                                        Colors.transparent,
+                                                    hoverColor:
+                                                        Colors.transparent,
+                                                    highlightColor:
+                                                        Colors.transparent,
                                                     onTap: () async {
                                                       logFirebaseEvent(
                                                           'SPLASH_PAGE_Container_nd32h8uq_ON_TAP');
                                                       logFirebaseEvent(
                                                           'iconButton_page_view');
-                                                      await pageViewController
+                                                      await _model
+                                                          .pageViewController
                                                           ?.nextPage(
                                                         duration: Duration(
                                                             milliseconds: 300),
                                                         curve: Curves.ease,
                                                       );
                                                     },
-                                                    child: IconButtonWidget(
-                                                      fillColor:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .tertiaryColor,
-                                                      fontColor:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .secondaryColor,
-                                                      icon: Icon(
-                                                        Icons.arrow_right_alt,
-                                                        color:
+                                                    child: wrapWithModel(
+                                                      model: _model
+                                                          .iconButtonModel3,
+                                                      updateCallback: () =>
+                                                          setState(() {}),
+                                                      child: IconButtonWidget(
+                                                        fillColor:
                                                             FlutterFlowTheme.of(
                                                                     context)
-                                                                .secondaryColor,
+                                                                .tertiary,
+                                                        fontColor:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .secondary,
+                                                        icon: Icon(
+                                                          Icons.arrow_right_alt,
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .secondary,
+                                                        ),
+                                                        text: 'Suivant ',
                                                       ),
-                                                      text: 'Suivant ',
                                                     ),
                                                   ),
                                                 ),
@@ -774,17 +862,26 @@ class _SplashWidgetState extends State<SplashWidget> {
                                               children: [
                                                 Padding(
                                                   padding: EdgeInsetsDirectional
-                                                      .fromSTEB(0, 10, 0, 0),
+                                                      .fromSTEB(
+                                                          0.0, 10.0, 0.0, 0.0),
                                                   child: InkWell(
+                                                    splashColor:
+                                                        Colors.transparent,
+                                                    focusColor:
+                                                        Colors.transparent,
+                                                    hoverColor:
+                                                        Colors.transparent,
+                                                    highlightColor:
+                                                        Colors.transparent,
                                                     onTap: () async {
                                                       logFirebaseEvent(
                                                           'SPLASH_PAGE_Text_flzwg6be_ON_TAP');
                                                       logFirebaseEvent(
-                                                          'Text_update_local_state');
-                                                      setState(() =>
-                                                          FFAppState()
-                                                                  .showSplash =
-                                                              false);
+                                                          'Text_update_app_state');
+                                                      FFAppState().update(() {
+                                                        FFAppState()
+                                                            .showSplash = false;
+                                                      });
                                                       logFirebaseEvent(
                                                           'Text_navigate_to');
 
@@ -795,14 +892,14 @@ class _SplashWidgetState extends State<SplashWidget> {
                                                       style:
                                                           FlutterFlowTheme.of(
                                                                   context)
-                                                              .bodyText1
+                                                              .bodyMedium
                                                               .override(
                                                                 fontFamily:
                                                                     'Montserrat',
                                                                 color: FlutterFlowTheme.of(
                                                                         context)
-                                                                    .secondaryColor,
-                                                                fontSize: 12,
+                                                                    .secondary,
+                                                                fontSize: 12.0,
                                                               ),
                                                     ),
                                                   ),
@@ -822,26 +919,29 @@ class _SplashWidgetState extends State<SplashWidget> {
                             mainAxisSize: MainAxisSize.max,
                             children: [
                               Container(
-                                width: MediaQuery.of(context).size.width,
-                                height: MediaQuery.of(context).size.height * 1,
+                                width: MediaQuery.sizeOf(context).width * 1.0,
+                                height: MediaQuery.sizeOf(context).height * 1.0,
                                 child: Stack(
-                                  alignment: AlignmentDirectional(0, 0),
+                                  alignment: AlignmentDirectional(0.0, 0.0),
                                   children: [
                                     Image.asset(
                                       'assets/images/mobile_cover.jpg',
-                                      width: MediaQuery.of(context).size.width,
+                                      width: MediaQuery.sizeOf(context).width *
+                                          1.0,
                                       height:
-                                          MediaQuery.of(context).size.height *
-                                              1,
+                                          MediaQuery.sizeOf(context).height *
+                                              1.0,
                                       fit: BoxFit.fill,
                                     ),
                                     Align(
-                                      alignment: AlignmentDirectional(0, -1),
+                                      alignment:
+                                          AlignmentDirectional(0.00, -1.00),
                                       child: Container(
                                         width:
-                                            MediaQuery.of(context).size.width,
+                                            MediaQuery.sizeOf(context).width *
+                                                1.0,
                                         height:
-                                            MediaQuery.of(context).size.height *
+                                            MediaQuery.sizeOf(context).height *
                                                 0.7,
                                         decoration: BoxDecoration(
                                           gradient: LinearGradient(
@@ -849,16 +949,17 @@ class _SplashWidgetState extends State<SplashWidget> {
                                               Color(0x660B1E1B),
                                               Color(0x0000A193)
                                             ],
-                                            stops: [0, 1],
-                                            begin: AlignmentDirectional(0, -1),
-                                            end: AlignmentDirectional(0, 1),
+                                            stops: [0.0, 1.0],
+                                            begin:
+                                                AlignmentDirectional(0.0, -1.0),
+                                            end: AlignmentDirectional(0, 1.0),
                                           ),
                                         ),
                                       ),
                                     ),
                                     Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
-                                          40, 40, 40, 0),
+                                          40.0, 40.0, 40.0, 0.0),
                                       child: SingleChildScrollView(
                                         child: Column(
                                           mainAxisSize: MainAxisSize.max,
@@ -872,43 +973,48 @@ class _SplashWidgetState extends State<SplashWidget> {
                                               children: [
                                                 Padding(
                                                   padding: EdgeInsetsDirectional
-                                                      .fromSTEB(0, 30, 0, 0),
+                                                      .fromSTEB(
+                                                          0.0, 30.0, 0.0, 0.0),
                                                   child: Image.asset(
                                                     'assets/images/logo_light.png',
-                                                    height: 75,
+                                                    height: 75.0,
                                                     fit: BoxFit.fitWidth,
                                                   ),
                                                 ),
                                                 Padding(
                                                   padding: EdgeInsetsDirectional
-                                                      .fromSTEB(0, 50, 0, 0),
+                                                      .fromSTEB(
+                                                          0.0, 50.0, 0.0, 0.0),
                                                   child: Image.asset(
                                                     'assets/images/trophy.png',
-                                                    width: 200,
-                                                    height: 200,
+                                                    width: 200.0,
+                                                    height: 200.0,
                                                     fit: BoxFit.cover,
                                                   ),
                                                 ),
                                                 Padding(
                                                   padding: EdgeInsetsDirectional
-                                                      .fromSTEB(0, 70, 0, 0),
+                                                      .fromSTEB(
+                                                          0.0, 70.0, 0.0, 0.0),
                                                   child: Container(
-                                                    width:
-                                                        MediaQuery.of(context)
-                                                                .size
-                                                                .width *
-                                                            0.8,
+                                                    width: MediaQuery.sizeOf(
+                                                                context)
+                                                            .width *
+                                                        0.8,
                                                     decoration: BoxDecoration(
                                                       color: Color(0x99EEF1F0),
                                                       borderRadius:
                                                           BorderRadius.circular(
-                                                              10),
+                                                              10.0),
                                                     ),
                                                     child: Padding(
                                                       padding:
                                                           EdgeInsetsDirectional
                                                               .fromSTEB(
-                                                                  15, 5, 15, 5),
+                                                                  15.0,
+                                                                  5.0,
+                                                                  15.0,
+                                                                  5.0),
                                                       child: Column(
                                                         mainAxisSize:
                                                             MainAxisSize.max,
@@ -925,10 +1031,10 @@ class _SplashWidgetState extends State<SplashWidget> {
                                                                 child: Padding(
                                                                   padding: EdgeInsetsDirectional
                                                                       .fromSTEB(
-                                                                          0,
-                                                                          20,
-                                                                          0,
-                                                                          0),
+                                                                          0.0,
+                                                                          20.0,
+                                                                          0.0,
+                                                                          0.0),
                                                                   child: Text(
                                                                     'Sauvez la planète',
                                                                     textAlign:
@@ -936,14 +1042,14 @@ class _SplashWidgetState extends State<SplashWidget> {
                                                                             .center,
                                                                     style: FlutterFlowTheme.of(
                                                                             context)
-                                                                        .title1
+                                                                        .displaySmall
                                                                         .override(
                                                                           fontFamily:
                                                                               'Montserrat',
                                                                           color:
-                                                                              FlutterFlowTheme.of(context).primaryColor,
+                                                                              FlutterFlowTheme.of(context).primary,
                                                                           fontSize:
-                                                                              25,
+                                                                              25.0,
                                                                           fontWeight:
                                                                               FontWeight.w600,
                                                                         ),
@@ -956,10 +1062,10 @@ class _SplashWidgetState extends State<SplashWidget> {
                                                             padding:
                                                                 EdgeInsetsDirectional
                                                                     .fromSTEB(
-                                                                        0,
-                                                                        20,
-                                                                        0,
-                                                                        20),
+                                                                        0.0,
+                                                                        20.0,
+                                                                        0.0,
+                                                                        20.0),
                                                             child: Row(
                                                               mainAxisSize:
                                                                   MainAxisSize
@@ -973,7 +1079,7 @@ class _SplashWidgetState extends State<SplashWidget> {
                                                                             .center,
                                                                     style: FlutterFlowTheme.of(
                                                                             context)
-                                                                        .bodyText1,
+                                                                        .bodyMedium,
                                                                   ),
                                                                 ),
                                                               ],
@@ -988,7 +1094,7 @@ class _SplashWidgetState extends State<SplashWidget> {
                                             ),
                                             Padding(
                                               padding: EdgeInsetsDirectional
-                                                  .fromSTEB(0, 5, 0, 0),
+                                                  .fromSTEB(0.0, 5.0, 0.0, 0.0),
                                               child: Row(
                                                 mainAxisSize: MainAxisSize.max,
                                                 mainAxisAlignment:
@@ -997,45 +1103,65 @@ class _SplashWidgetState extends State<SplashWidget> {
                                                   Align(
                                                     alignment:
                                                         AlignmentDirectional(
-                                                            0, 0.85),
+                                                            0.00, 0.85),
                                                     child: Padding(
                                                       padding:
                                                           EdgeInsetsDirectional
-                                                              .fromSTEB(40, 0,
-                                                                  40, 80),
+                                                              .fromSTEB(
+                                                                  40.0,
+                                                                  0.0,
+                                                                  40.0,
+                                                                  80.0),
                                                       child: InkWell(
+                                                        splashColor:
+                                                            Colors.transparent,
+                                                        focusColor:
+                                                            Colors.transparent,
+                                                        hoverColor:
+                                                            Colors.transparent,
+                                                        highlightColor:
+                                                            Colors.transparent,
                                                         onTap: () async {
                                                           logFirebaseEvent(
                                                               'SPLASH_PAGE_Container_cnkjjssa_ON_TAP');
                                                           logFirebaseEvent(
-                                                              'iconButton_update_local_state');
-                                                          setState(() =>
-                                                              FFAppState()
-                                                                      .showSplash =
-                                                                  false);
+                                                              'iconButton_update_app_state');
+                                                          FFAppState()
+                                                              .update(() {
+                                                            FFAppState()
+                                                                    .showSplash =
+                                                                false;
+                                                          });
                                                           logFirebaseEvent(
                                                               'iconButton_navigate_to');
 
                                                           context.pushNamed(
                                                               'Home');
                                                         },
-                                                        child: IconButtonWidget(
-                                                          fillColor:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .tertiaryColor,
-                                                          fontColor:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .secondaryColor,
-                                                          icon: Icon(
-                                                            Icons.eco,
-                                                            color: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .secondaryColor,
+                                                        child: wrapWithModel(
+                                                          model: _model
+                                                              .iconButtonModel4,
+                                                          updateCallback: () =>
+                                                              setState(() {}),
+                                                          child:
+                                                              IconButtonWidget(
+                                                            fillColor:
+                                                                FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .tertiary,
+                                                            fontColor:
+                                                                FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .secondary,
+                                                            icon: Icon(
+                                                              Icons.eco,
+                                                              color: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .secondary,
+                                                            ),
+                                                            text:
+                                                                'C\'est parti !',
                                                           ),
-                                                          text:
-                                                              'C\'est parti !',
                                                         ),
                                                       ),
                                                     ),

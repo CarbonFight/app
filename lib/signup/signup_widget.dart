@@ -1,14 +1,18 @@
-import '../auth/auth_util.dart';
-import '../backend/backend.dart';
-import '../components/icon_button_widget.dart';
-import '../flutter_flow/flutter_flow_icon_button.dart';
-import '../flutter_flow/flutter_flow_theme.dart';
-import '../flutter_flow/flutter_flow_util.dart';
+import '/auth/firebase_auth/auth_util.dart';
+import '/backend/backend.dart';
+import '/components/icon_button_widget.dart';
+import '/flutter_flow/flutter_flow_icon_button.dart';
+import '/flutter_flow/flutter_flow_theme.dart';
+import '/flutter_flow/flutter_flow_util.dart';
+import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+import 'signup_model.dart';
+export 'signup_model.dart';
 
 class SignupWidget extends StatefulWidget {
   const SignupWidget({Key? key}) : super(key: key);
@@ -18,52 +22,46 @@ class SignupWidget extends StatefulWidget {
 }
 
 class _SignupWidgetState extends State<SignupWidget> {
-  TextEditingController? emailAddressController;
-  TextEditingController? nameController;
-  TextEditingController? passwordController;
+  late SignupModel _model;
 
-  late bool passwordVisibility;
-  TextEditingController? retypepasswordController;
-
-  late bool retypepasswordVisibility;
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
     super.initState();
-    emailAddressController = TextEditingController();
-    nameController = TextEditingController();
-    passwordController = TextEditingController();
-    passwordVisibility = false;
-    retypepasswordController = TextEditingController();
-    retypepasswordVisibility = false;
+    _model = createModel(context, () => SignupModel());
+
     logFirebaseEvent('screen_view', parameters: {'screen_name': 'Signup'});
+    _model.nameController ??= TextEditingController();
+    _model.emailAddressController ??= TextEditingController();
+    _model.passwordController ??= TextEditingController();
+    _model.retypepasswordController ??= TextEditingController();
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
   void dispose() {
-    emailAddressController?.dispose();
-    nameController?.dispose();
-    passwordController?.dispose();
-    retypepasswordController?.dispose();
+    _model.dispose();
+
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      key: scaffoldKey,
-      backgroundColor: FlutterFlowTheme.of(context).secondaryColor,
-      body: GestureDetector(
-        onTap: () => FocusScope.of(context).unfocus(),
-        child: SingleChildScrollView(
+    context.watch<FFAppState>();
+
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).requestFocus(_model.unfocusNode),
+      child: Scaffold(
+        key: scaffoldKey,
+        backgroundColor: FlutterFlowTheme.of(context).secondary,
+        body: SingleChildScrollView(
           child: Column(
             mainAxisSize: MainAxisSize.max,
             children: [
               Container(
-                width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height * 1,
+                width: MediaQuery.sizeOf(context).width * 1.0,
+                height: MediaQuery.sizeOf(context).height * 1.0,
                 decoration: BoxDecoration(
                   image: DecorationImage(
                     fit: BoxFit.fill,
@@ -75,19 +73,20 @@ class _SignupWidgetState extends State<SignupWidget> {
                 child: Stack(
                   children: [
                     Container(
-                      width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.height * 0.75,
+                      width: MediaQuery.sizeOf(context).width * 1.0,
+                      height: MediaQuery.sizeOf(context).height * 0.75,
                       decoration: BoxDecoration(
                         gradient: LinearGradient(
                           colors: [Color(0xBE23D0C1), Color(0x0023D0C1)],
-                          stops: [0, 1],
-                          begin: AlignmentDirectional(0, -1),
-                          end: AlignmentDirectional(0, 1),
+                          stops: [0.0, 1.0],
+                          begin: AlignmentDirectional(0.0, -1.0),
+                          end: AlignmentDirectional(0, 1.0),
                         ),
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(40, 0, 40, 0),
+                      padding:
+                          EdgeInsetsDirectional.fromSTEB(40.0, 0.0, 40.0, 0.0),
                       child: SingleChildScrollView(
                         child: Column(
                           mainAxisSize: MainAxisSize.max,
@@ -96,46 +95,45 @@ class _SignupWidgetState extends State<SignupWidget> {
                           children: [
                             Padding(
                               padding: EdgeInsetsDirectional.fromSTEB(
-                                  50, 40, 50, 40),
+                                  50.0, 40.0, 50.0, 40.0),
                               child: Image.asset(
                                 'assets/images/logo_light.png',
-                                height: 100,
+                                height: 100.0,
                                 fit: BoxFit.fitWidth,
                               ),
                             ),
                             Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 15),
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 0.0, 0.0, 15.0),
                               child: Container(
-                                width: MediaQuery.of(context).size.width,
-                                height: 50,
+                                width: MediaQuery.sizeOf(context).width * 1.0,
+                                height: 50.0,
                                 decoration: BoxDecoration(
-                                  color: FlutterFlowTheme.of(context)
-                                      .tertiaryColor,
+                                  color: FlutterFlowTheme.of(context).tertiary,
                                   boxShadow: [
                                     BoxShadow(
-                                      blurRadius: 4,
+                                      blurRadius: 4.0,
                                       color: Color(0x27000000),
-                                      offset: Offset(0, 0),
+                                      offset: Offset(0.0, 0.0),
                                     )
                                   ],
-                                  borderRadius: BorderRadius.circular(100),
+                                  borderRadius: BorderRadius.circular(100.0),
                                 ),
                                 child: Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
-                                      10, 0, 10, 0),
+                                      10.0, 0.0, 10.0, 0.0),
                                   child: Row(
                                     mainAxisSize: MainAxisSize.max,
                                     children: [
                                       Expanded(
                                         child: TextFormField(
-                                          controller: nameController,
+                                          controller: _model.nameController,
                                           obscureText: false,
                                           decoration: InputDecoration(
                                             hintText: 'Pseudo',
                                             hintStyle:
                                                 FlutterFlowTheme.of(context)
-                                                    .bodyText1
+                                                    .bodyMedium
                                                     .override(
                                                       fontFamily: 'Montserrat',
                                                       color:
@@ -146,7 +144,7 @@ class _SignupWidgetState extends State<SignupWidget> {
                                             enabledBorder: UnderlineInputBorder(
                                               borderSide: BorderSide(
                                                 color: Color(0x00000000),
-                                                width: 1,
+                                                width: 1.0,
                                               ),
                                               borderRadius:
                                                   const BorderRadius.only(
@@ -157,7 +155,7 @@ class _SignupWidgetState extends State<SignupWidget> {
                                             focusedBorder: UnderlineInputBorder(
                                               borderSide: BorderSide(
                                                 color: Color(0x00000000),
-                                                width: 1,
+                                                width: 1.0,
                                               ),
                                               borderRadius:
                                                   const BorderRadius.only(
@@ -168,7 +166,7 @@ class _SignupWidgetState extends State<SignupWidget> {
                                             errorBorder: UnderlineInputBorder(
                                               borderSide: BorderSide(
                                                 color: Color(0x00000000),
-                                                width: 1,
+                                                width: 1.0,
                                               ),
                                               borderRadius:
                                                   const BorderRadius.only(
@@ -180,7 +178,7 @@ class _SignupWidgetState extends State<SignupWidget> {
                                                 UnderlineInputBorder(
                                               borderSide: BorderSide(
                                                 color: Color(0x00000000),
-                                                width: 1,
+                                                width: 1.0,
                                               ),
                                               borderRadius:
                                                   const BorderRadius.only(
@@ -190,24 +188,27 @@ class _SignupWidgetState extends State<SignupWidget> {
                                             ),
                                             contentPadding:
                                                 EdgeInsetsDirectional.fromSTEB(
-                                                    0, 15, 0, 0),
+                                                    0.0, 15.0, 0.0, 0.0),
                                             prefixIcon: Icon(
                                               Icons.person,
                                               color:
                                                   FlutterFlowTheme.of(context)
                                                       .gronyLight,
-                                              size: 18,
+                                              size: 18.0,
                                             ),
                                           ),
                                           style: FlutterFlowTheme.of(context)
-                                              .bodyText1
+                                              .bodyMedium
                                               .override(
                                                 fontFamily: 'Montserrat',
                                                 color:
                                                     FlutterFlowTheme.of(context)
-                                                        .primaryColor,
+                                                        .primary,
                                               ),
                                           textAlign: TextAlign.start,
+                                          validator: _model
+                                              .nameControllerValidator
+                                              .asValidator(context),
                                         ),
                                       ),
                                     ],
@@ -216,38 +217,38 @@ class _SignupWidgetState extends State<SignupWidget> {
                               ),
                             ),
                             Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 15),
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 0.0, 0.0, 15.0),
                               child: Container(
-                                width: MediaQuery.of(context).size.width,
-                                height: 50,
+                                width: MediaQuery.sizeOf(context).width * 1.0,
+                                height: 50.0,
                                 decoration: BoxDecoration(
-                                  color: FlutterFlowTheme.of(context)
-                                      .tertiaryColor,
+                                  color: FlutterFlowTheme.of(context).tertiary,
                                   boxShadow: [
                                     BoxShadow(
-                                      blurRadius: 4,
+                                      blurRadius: 4.0,
                                       color: Color(0x27000000),
-                                      offset: Offset(0, 0),
+                                      offset: Offset(0.0, 0.0),
                                     )
                                   ],
-                                  borderRadius: BorderRadius.circular(100),
+                                  borderRadius: BorderRadius.circular(100.0),
                                 ),
                                 child: Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
-                                      10, 0, 10, 0),
+                                      10.0, 0.0, 10.0, 0.0),
                                   child: Row(
                                     mainAxisSize: MainAxisSize.max,
                                     children: [
                                       Expanded(
                                         child: TextFormField(
-                                          controller: emailAddressController,
+                                          controller:
+                                              _model.emailAddressController,
                                           obscureText: false,
                                           decoration: InputDecoration(
                                             hintText: 'Adresse e-mail',
                                             hintStyle:
                                                 FlutterFlowTheme.of(context)
-                                                    .bodyText1
+                                                    .bodyMedium
                                                     .override(
                                                       fontFamily: 'Montserrat',
                                                       color:
@@ -258,7 +259,7 @@ class _SignupWidgetState extends State<SignupWidget> {
                                             enabledBorder: UnderlineInputBorder(
                                               borderSide: BorderSide(
                                                 color: Color(0x00000000),
-                                                width: 1,
+                                                width: 1.0,
                                               ),
                                               borderRadius:
                                                   const BorderRadius.only(
@@ -269,7 +270,7 @@ class _SignupWidgetState extends State<SignupWidget> {
                                             focusedBorder: UnderlineInputBorder(
                                               borderSide: BorderSide(
                                                 color: Color(0x00000000),
-                                                width: 1,
+                                                width: 1.0,
                                               ),
                                               borderRadius:
                                                   const BorderRadius.only(
@@ -280,7 +281,7 @@ class _SignupWidgetState extends State<SignupWidget> {
                                             errorBorder: UnderlineInputBorder(
                                               borderSide: BorderSide(
                                                 color: Color(0x00000000),
-                                                width: 1,
+                                                width: 1.0,
                                               ),
                                               borderRadius:
                                                   const BorderRadius.only(
@@ -292,7 +293,7 @@ class _SignupWidgetState extends State<SignupWidget> {
                                                 UnderlineInputBorder(
                                               borderSide: BorderSide(
                                                 color: Color(0x00000000),
-                                                width: 1,
+                                                width: 1.0,
                                               ),
                                               borderRadius:
                                                   const BorderRadius.only(
@@ -302,26 +303,29 @@ class _SignupWidgetState extends State<SignupWidget> {
                                             ),
                                             contentPadding:
                                                 EdgeInsetsDirectional.fromSTEB(
-                                                    0, 15, 0, 0),
+                                                    0.0, 15.0, 0.0, 0.0),
                                             prefixIcon: Icon(
                                               Icons.email_outlined,
                                               color:
                                                   FlutterFlowTheme.of(context)
                                                       .gronyLight,
-                                              size: 18,
+                                              size: 18.0,
                                             ),
                                           ),
                                           style: FlutterFlowTheme.of(context)
-                                              .bodyText1
+                                              .bodyMedium
                                               .override(
                                                 fontFamily: 'Montserrat',
                                                 color:
                                                     FlutterFlowTheme.of(context)
-                                                        .primaryColor,
+                                                        .primary,
                                               ),
                                           textAlign: TextAlign.start,
                                           keyboardType:
                                               TextInputType.emailAddress,
+                                          validator: _model
+                                              .emailAddressControllerValidator
+                                              .asValidator(context),
                                         ),
                                       ),
                                     ],
@@ -330,38 +334,38 @@ class _SignupWidgetState extends State<SignupWidget> {
                               ),
                             ),
                             Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 15),
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 0.0, 0.0, 15.0),
                               child: Container(
-                                width: MediaQuery.of(context).size.width,
-                                height: 50,
+                                width: MediaQuery.sizeOf(context).width * 1.0,
+                                height: 50.0,
                                 decoration: BoxDecoration(
-                                  color: FlutterFlowTheme.of(context)
-                                      .tertiaryColor,
+                                  color: FlutterFlowTheme.of(context).tertiary,
                                   boxShadow: [
                                     BoxShadow(
-                                      blurRadius: 4,
+                                      blurRadius: 4.0,
                                       color: Color(0x27000000),
-                                      offset: Offset(0, 0),
+                                      offset: Offset(0.0, 0.0),
                                     )
                                   ],
-                                  borderRadius: BorderRadius.circular(100),
+                                  borderRadius: BorderRadius.circular(100.0),
                                 ),
                                 child: Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
-                                      10, 0, 10, 0),
+                                      10.0, 0.0, 10.0, 0.0),
                                   child: Row(
                                     mainAxisSize: MainAxisSize.max,
                                     children: [
                                       Expanded(
                                         child: TextFormField(
-                                          controller: passwordController,
-                                          obscureText: !passwordVisibility,
+                                          controller: _model.passwordController,
+                                          obscureText:
+                                              !_model.passwordVisibility,
                                           decoration: InputDecoration(
                                             hintText: 'Password',
                                             hintStyle:
                                                 FlutterFlowTheme.of(context)
-                                                    .bodyText1
+                                                    .bodyMedium
                                                     .override(
                                                       fontFamily: 'Montserrat',
                                                       color:
@@ -372,7 +376,7 @@ class _SignupWidgetState extends State<SignupWidget> {
                                             enabledBorder: UnderlineInputBorder(
                                               borderSide: BorderSide(
                                                 color: Color(0x00000000),
-                                                width: 1,
+                                                width: 1.0,
                                               ),
                                               borderRadius:
                                                   const BorderRadius.only(
@@ -383,7 +387,7 @@ class _SignupWidgetState extends State<SignupWidget> {
                                             focusedBorder: UnderlineInputBorder(
                                               borderSide: BorderSide(
                                                 color: Color(0x00000000),
-                                                width: 1,
+                                                width: 1.0,
                                               ),
                                               borderRadius:
                                                   const BorderRadius.only(
@@ -394,7 +398,7 @@ class _SignupWidgetState extends State<SignupWidget> {
                                             errorBorder: UnderlineInputBorder(
                                               borderSide: BorderSide(
                                                 color: Color(0x00000000),
-                                                width: 1,
+                                                width: 1.0,
                                               ),
                                               borderRadius:
                                                   const BorderRadius.only(
@@ -406,7 +410,7 @@ class _SignupWidgetState extends State<SignupWidget> {
                                                 UnderlineInputBorder(
                                               borderSide: BorderSide(
                                                 color: Color(0x00000000),
-                                                width: 1,
+                                                width: 1.0,
                                               ),
                                               borderRadius:
                                                   const BorderRadius.only(
@@ -416,42 +420,46 @@ class _SignupWidgetState extends State<SignupWidget> {
                                             ),
                                             contentPadding:
                                                 EdgeInsetsDirectional.fromSTEB(
-                                                    0, 15, 0, 0),
+                                                    0.0, 15.0, 0.0, 0.0),
                                             prefixIcon: Icon(
                                               Icons.vpn_key_outlined,
                                               color:
                                                   FlutterFlowTheme.of(context)
                                                       .gronyLight,
-                                              size: 18,
+                                              size: 18.0,
                                             ),
                                             suffixIcon: InkWell(
                                               onTap: () => setState(
-                                                () => passwordVisibility =
-                                                    !passwordVisibility,
+                                                () => _model
+                                                        .passwordVisibility =
+                                                    !_model.passwordVisibility,
                                               ),
                                               focusNode: FocusNode(
                                                   skipTraversal: true),
                                               child: Icon(
-                                                passwordVisibility
+                                                _model.passwordVisibility
                                                     ? Icons.visibility_outlined
                                                     : Icons
                                                         .visibility_off_outlined,
                                                 color:
                                                     FlutterFlowTheme.of(context)
                                                         .gronyLighter,
-                                                size: 22,
+                                                size: 22.0,
                                               ),
                                             ),
                                           ),
                                           style: FlutterFlowTheme.of(context)
-                                              .bodyText1
+                                              .bodyMedium
                                               .override(
                                                 fontFamily: 'Montserrat',
                                                 color:
                                                     FlutterFlowTheme.of(context)
-                                                        .primaryColor,
+                                                        .primary,
                                               ),
                                           textAlign: TextAlign.start,
+                                          validator: _model
+                                              .passwordControllerValidator
+                                              .asValidator(context),
                                         ),
                                       ),
                                     ],
@@ -460,39 +468,39 @@ class _SignupWidgetState extends State<SignupWidget> {
                               ),
                             ),
                             Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 15),
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 0.0, 0.0, 15.0),
                               child: Container(
-                                width: MediaQuery.of(context).size.width,
-                                height: 50,
+                                width: MediaQuery.sizeOf(context).width * 1.0,
+                                height: 50.0,
                                 decoration: BoxDecoration(
-                                  color: FlutterFlowTheme.of(context)
-                                      .tertiaryColor,
+                                  color: FlutterFlowTheme.of(context).tertiary,
                                   boxShadow: [
                                     BoxShadow(
-                                      blurRadius: 4,
+                                      blurRadius: 4.0,
                                       color: Color(0x27000000),
-                                      offset: Offset(0, 0),
+                                      offset: Offset(0.0, 0.0),
                                     )
                                   ],
-                                  borderRadius: BorderRadius.circular(100),
+                                  borderRadius: BorderRadius.circular(100.0),
                                 ),
                                 child: Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
-                                      10, 0, 10, 0),
+                                      10.0, 0.0, 10.0, 0.0),
                                   child: Row(
                                     mainAxisSize: MainAxisSize.max,
                                     children: [
                                       Expanded(
                                         child: TextFormField(
-                                          controller: retypepasswordController,
+                                          controller:
+                                              _model.retypepasswordController,
                                           obscureText:
-                                              !retypepasswordVisibility,
+                                              !_model.retypepasswordVisibility,
                                           decoration: InputDecoration(
                                             hintText: 'Password (vérification)',
                                             hintStyle:
                                                 FlutterFlowTheme.of(context)
-                                                    .bodyText1
+                                                    .bodyMedium
                                                     .override(
                                                       fontFamily: 'Montserrat',
                                                       color:
@@ -503,7 +511,7 @@ class _SignupWidgetState extends State<SignupWidget> {
                                             enabledBorder: UnderlineInputBorder(
                                               borderSide: BorderSide(
                                                 color: Color(0x00000000),
-                                                width: 1,
+                                                width: 1.0,
                                               ),
                                               borderRadius:
                                                   const BorderRadius.only(
@@ -514,7 +522,7 @@ class _SignupWidgetState extends State<SignupWidget> {
                                             focusedBorder: UnderlineInputBorder(
                                               borderSide: BorderSide(
                                                 color: Color(0x00000000),
-                                                width: 1,
+                                                width: 1.0,
                                               ),
                                               borderRadius:
                                                   const BorderRadius.only(
@@ -525,7 +533,7 @@ class _SignupWidgetState extends State<SignupWidget> {
                                             errorBorder: UnderlineInputBorder(
                                               borderSide: BorderSide(
                                                 color: Color(0x00000000),
-                                                width: 1,
+                                                width: 1.0,
                                               ),
                                               borderRadius:
                                                   const BorderRadius.only(
@@ -537,7 +545,7 @@ class _SignupWidgetState extends State<SignupWidget> {
                                                 UnderlineInputBorder(
                                               borderSide: BorderSide(
                                                 color: Color(0x00000000),
-                                                width: 1,
+                                                width: 1.0,
                                               ),
                                               borderRadius:
                                                   const BorderRadius.only(
@@ -547,42 +555,47 @@ class _SignupWidgetState extends State<SignupWidget> {
                                             ),
                                             contentPadding:
                                                 EdgeInsetsDirectional.fromSTEB(
-                                                    0, 15, 0, 0),
+                                                    0.0, 15.0, 0.0, 0.0),
                                             prefixIcon: Icon(
                                               Icons.vpn_key_outlined,
                                               color:
                                                   FlutterFlowTheme.of(context)
                                                       .gronyLight,
-                                              size: 18,
+                                              size: 18.0,
                                             ),
                                             suffixIcon: InkWell(
                                               onTap: () => setState(
-                                                () => retypepasswordVisibility =
-                                                    !retypepasswordVisibility,
+                                                () => _model
+                                                        .retypepasswordVisibility =
+                                                    !_model
+                                                        .retypepasswordVisibility,
                                               ),
                                               focusNode: FocusNode(
                                                   skipTraversal: true),
                                               child: Icon(
-                                                retypepasswordVisibility
+                                                _model.retypepasswordVisibility
                                                     ? Icons.visibility_outlined
                                                     : Icons
                                                         .visibility_off_outlined,
                                                 color:
                                                     FlutterFlowTheme.of(context)
                                                         .gronyLighter,
-                                                size: 22,
+                                                size: 22.0,
                                               ),
                                             ),
                                           ),
                                           style: FlutterFlowTheme.of(context)
-                                              .bodyText1
+                                              .bodyMedium
                                               .override(
                                                 fontFamily: 'Montserrat',
                                                 color:
                                                     FlutterFlowTheme.of(context)
-                                                        .primaryColor,
+                                                        .primary,
                                               ),
                                           textAlign: TextAlign.start,
+                                          validator: _model
+                                              .retypepasswordControllerValidator
+                                              .asValidator(context),
                                         ),
                                       ),
                                     ],
@@ -591,8 +604,8 @@ class _SignupWidgetState extends State<SignupWidget> {
                               ),
                             ),
                             Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 24, 0, 0),
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 24.0, 0.0, 0.0),
                               child: Row(
                                 mainAxisSize: MainAxisSize.max,
                                 mainAxisAlignment:
@@ -600,16 +613,22 @@ class _SignupWidgetState extends State<SignupWidget> {
                                 children: [
                                   Expanded(
                                     child: InkWell(
+                                      splashColor: Colors.transparent,
+                                      focusColor: Colors.transparent,
+                                      hoverColor: Colors.transparent,
+                                      highlightColor: Colors.transparent,
                                       onTap: () async {
                                         logFirebaseEvent(
                                             'SIGNUP_PAGE_Container_csgylktj_ON_TAP');
-                                        if (passwordController!.text ==
-                                            retypepasswordController!.text) {
+                                        if (_model.passwordController.text ==
+                                            _model.retypepasswordController
+                                                .text) {
                                           logFirebaseEvent('iconButton_auth');
                                           GoRouter.of(context)
                                               .prepareAuthEvent();
-                                          if (passwordController?.text !=
-                                              retypepasswordController?.text) {
+                                          if (_model.passwordController.text !=
+                                              _model.retypepasswordController
+                                                  .text) {
                                             ScaffoldMessenger.of(context)
                                                 .showSnackBar(
                                               SnackBar(
@@ -621,36 +640,35 @@ class _SignupWidgetState extends State<SignupWidget> {
                                             return;
                                           }
 
-                                          final user =
-                                              await createAccountWithEmail(
+                                          final user = await authManager
+                                              .createAccountWithEmail(
                                             context,
-                                            emailAddressController!.text,
-                                            passwordController!.text,
+                                            _model.emailAddressController.text,
+                                            _model.passwordController.text,
                                           );
                                           if (user == null) {
                                             return;
                                           }
 
-                                          final usersCreateData =
-                                              createUsersRecordData(
-                                            displayName: nameController!.text,
-                                          );
                                           await UsersRecord.collection
                                               .doc(user.uid)
-                                              .update(usersCreateData);
+                                              .update(createUsersRecordData(
+                                                displayName:
+                                                    _model.nameController.text,
+                                              ));
 
                                           if (FFAppState().showSplash) {
                                             logFirebaseEvent(
                                                 'iconButton_navigate_to');
 
                                             context.pushNamedAuth(
-                                                'Splash', mounted);
+                                                'Splash', context.mounted);
                                           } else {
                                             logFirebaseEvent(
                                                 'iconButton_navigate_to');
 
                                             context.pushNamedAuth(
-                                                'Home', mounted);
+                                                'Home', context.mounted);
                                           }
                                         } else {
                                           logFirebaseEvent(
@@ -676,18 +694,24 @@ class _SignupWidgetState extends State<SignupWidget> {
                                           return;
                                         }
                                       },
-                                      child: IconButtonWidget(
-                                        fillColor: FlutterFlowTheme.of(context)
-                                            .secondaryColor,
-                                        fontColor: FlutterFlowTheme.of(context)
-                                            .tertiaryColor,
-                                        icon: Icon(
-                                          Icons.login_outlined,
-                                          color: FlutterFlowTheme.of(context)
-                                              .tertiaryColor,
-                                          size: 26,
+                                      child: wrapWithModel(
+                                        model: _model.iconButtonModel,
+                                        updateCallback: () => setState(() {}),
+                                        child: IconButtonWidget(
+                                          fillColor:
+                                              FlutterFlowTheme.of(context)
+                                                  .secondary,
+                                          fontColor:
+                                              FlutterFlowTheme.of(context)
+                                                  .tertiary,
+                                          icon: Icon(
+                                            Icons.login_outlined,
+                                            color: FlutterFlowTheme.of(context)
+                                                .tertiary,
+                                            size: 26.0,
+                                          ),
+                                          text: 'S\'enregistrer',
                                         ),
-                                        text: 'S\'enregistrer',
                                       ),
                                     ),
                                   ),
@@ -695,12 +719,12 @@ class _SignupWidgetState extends State<SignupWidget> {
                               ),
                             ),
                             Align(
-                              alignment: AlignmentDirectional(0, 1),
+                              alignment: AlignmentDirectional(0.00, 1.00),
                               child: Container(
-                                width: MediaQuery.of(context).size.width,
-                                height: 250,
+                                width: MediaQuery.sizeOf(context).width * 1.0,
+                                height: 250.0,
                                 decoration: BoxDecoration(),
-                                alignment: AlignmentDirectional(0, 0),
+                                alignment: AlignmentDirectional(0.00, 0.00),
                                 child: Column(
                                   mainAxisSize: MainAxisSize.max,
                                   mainAxisAlignment: MainAxisAlignment.start,
@@ -708,14 +732,14 @@ class _SignupWidgetState extends State<SignupWidget> {
                                   children: [
                                     Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
-                                          0, 20, 0, 0),
+                                          0.0, 20.0, 0.0, 0.0),
                                       child: Column(
                                         mainAxisSize: MainAxisSize.max,
                                         children: [
                                           Padding(
                                             padding:
                                                 EdgeInsetsDirectional.fromSTEB(
-                                                    0, 0, 0, 10),
+                                                    0.0, 0.0, 0.0, 10.0),
                                             child: Row(
                                               mainAxisSize: MainAxisSize.max,
                                               mainAxisAlignment:
@@ -726,14 +750,14 @@ class _SignupWidgetState extends State<SignupWidget> {
                                                   textAlign: TextAlign.center,
                                                   style: FlutterFlowTheme.of(
                                                           context)
-                                                      .subtitle2
+                                                      .titleSmall
                                                       .override(
                                                         fontFamily:
                                                             'Montserrat',
                                                         color:
                                                             FlutterFlowTheme.of(
                                                                     context)
-                                                                .tertiaryColor,
+                                                                .tertiary,
                                                         fontWeight:
                                                             FontWeight.bold,
                                                       ),
@@ -748,33 +772,34 @@ class _SignupWidgetState extends State<SignupWidget> {
                                             children: [
                                               Padding(
                                                 padding: EdgeInsetsDirectional
-                                                    .fromSTEB(0, 0, 8, 0),
+                                                    .fromSTEB(
+                                                        0.0, 0.0, 8.0, 0.0),
                                                 child: Card(
                                                   clipBehavior: Clip
                                                       .antiAliasWithSaveLayer,
                                                   color: FlutterFlowTheme.of(
                                                           context)
                                                       .blue,
-                                                  elevation: 3,
+                                                  elevation: 3.0,
                                                   shape: RoundedRectangleBorder(
                                                     borderRadius:
                                                         BorderRadius.circular(
-                                                            50),
+                                                            50.0),
                                                   ),
                                                   child: FlutterFlowIconButton(
                                                     borderColor:
                                                         Colors.transparent,
-                                                    borderRadius: 30,
-                                                    borderWidth: 1,
-                                                    buttonSize: 60,
+                                                    borderRadius: 30.0,
+                                                    borderWidth: 1.0,
+                                                    buttonSize: 60.0,
                                                     icon: FaIcon(
                                                       FontAwesomeIcons
                                                           .facebookF,
                                                       color:
                                                           FlutterFlowTheme.of(
                                                                   context)
-                                                              .tertiaryColor,
-                                                      size: 30,
+                                                              .tertiary,
+                                                      size: 30.0,
                                                     ),
                                                     onPressed: () async {
                                                       logFirebaseEvent(
@@ -784,8 +809,9 @@ class _SignupWidgetState extends State<SignupWidget> {
                                                       GoRouter.of(context)
                                                           .prepareAuthEvent();
                                                       final user =
-                                                          await signInWithFacebook(
-                                                              context);
+                                                          await authManager
+                                                              .signInWithFacebook(
+                                                                  context);
                                                       if (user == null) {
                                                         return;
                                                       }
@@ -793,14 +819,16 @@ class _SignupWidgetState extends State<SignupWidget> {
                                                           'IconButton_navigate_to');
 
                                                       context.pushNamedAuth(
-                                                          'Splash', mounted);
+                                                          'Splash',
+                                                          context.mounted);
                                                     },
                                                   ),
                                                 ),
                                               ),
                                               Padding(
                                                 padding: EdgeInsetsDirectional
-                                                    .fromSTEB(0, 0, 8, 0),
+                                                    .fromSTEB(
+                                                        0.0, 0.0, 8.0, 0.0),
                                                 child: Card(
                                                   clipBehavior: Clip
                                                       .antiAliasWithSaveLayer,
@@ -810,21 +838,21 @@ class _SignupWidgetState extends State<SignupWidget> {
                                                   shape: RoundedRectangleBorder(
                                                     borderRadius:
                                                         BorderRadius.circular(
-                                                            50),
+                                                            50.0),
                                                   ),
                                                   child: FlutterFlowIconButton(
                                                     borderColor:
                                                         Colors.transparent,
-                                                    borderRadius: 30,
-                                                    borderWidth: 1,
-                                                    buttonSize: 60,
+                                                    borderRadius: 30.0,
+                                                    borderWidth: 1.0,
+                                                    buttonSize: 60.0,
                                                     icon: FaIcon(
                                                       FontAwesomeIcons.google,
                                                       color:
                                                           FlutterFlowTheme.of(
                                                                   context)
-                                                              .tertiaryColor,
-                                                      size: 30,
+                                                              .tertiary,
+                                                      size: 30.0,
                                                     ),
                                                     onPressed: () async {
                                                       logFirebaseEvent(
@@ -834,8 +862,9 @@ class _SignupWidgetState extends State<SignupWidget> {
                                                       GoRouter.of(context)
                                                           .prepareAuthEvent();
                                                       final user =
-                                                          await signInWithGoogle(
-                                                              context);
+                                                          await authManager
+                                                              .signInWithGoogle(
+                                                                  context);
                                                       if (user == null) {
                                                         return;
                                                       }
@@ -843,14 +872,16 @@ class _SignupWidgetState extends State<SignupWidget> {
                                                           'IconButton_navigate_to');
 
                                                       context.pushNamedAuth(
-                                                          'Splash', mounted);
+                                                          'Splash',
+                                                          context.mounted);
                                                     },
                                                   ),
                                                 ),
                                               ),
                                               Padding(
                                                 padding: EdgeInsetsDirectional
-                                                    .fromSTEB(0, 0, 8, 0),
+                                                    .fromSTEB(
+                                                        0.0, 0.0, 8.0, 0.0),
                                                 child: Card(
                                                   clipBehavior: Clip
                                                       .antiAliasWithSaveLayer,
@@ -858,21 +889,21 @@ class _SignupWidgetState extends State<SignupWidget> {
                                                   shape: RoundedRectangleBorder(
                                                     borderRadius:
                                                         BorderRadius.circular(
-                                                            50),
+                                                            50.0),
                                                   ),
                                                   child: FlutterFlowIconButton(
                                                     borderColor:
                                                         Colors.transparent,
-                                                    borderRadius: 30,
-                                                    borderWidth: 1,
-                                                    buttonSize: 60,
+                                                    borderRadius: 30.0,
+                                                    borderWidth: 1.0,
+                                                    buttonSize: 60.0,
                                                     icon: FaIcon(
                                                       FontAwesomeIcons.apple,
                                                       color:
                                                           FlutterFlowTheme.of(
                                                                   context)
-                                                              .tertiaryColor,
-                                                      size: 30,
+                                                              .tertiary,
+                                                      size: 30.0,
                                                     ),
                                                     onPressed: () async {
                                                       logFirebaseEvent(
@@ -882,14 +913,16 @@ class _SignupWidgetState extends State<SignupWidget> {
                                                       GoRouter.of(context)
                                                           .prepareAuthEvent();
                                                       final user =
-                                                          await signInWithApple(
-                                                              context);
+                                                          await authManager
+                                                              .signInWithApple(
+                                                                  context);
                                                       if (user == null) {
                                                         return;
                                                       }
 
                                                       context.goNamedAuth(
-                                                          'Home', mounted);
+                                                          'Home',
+                                                          context.mounted);
                                                     },
                                                   ),
                                                 ),
@@ -901,20 +934,24 @@ class _SignupWidgetState extends State<SignupWidget> {
                                     ),
                                     Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
-                                          0, 20, 0, 0),
+                                          0.0, 20.0, 0.0, 0.0),
                                       child: Text(
                                         'Vous avez un compte ?',
                                         style: FlutterFlowTheme.of(context)
-                                            .subtitle2
+                                            .titleSmall
                                             .override(
                                               fontFamily: 'Montserrat',
                                               color:
                                                   FlutterFlowTheme.of(context)
-                                                      .tertiaryColor,
+                                                      .tertiary,
                                             ),
                                       ),
                                     ),
                                     InkWell(
+                                      splashColor: Colors.transparent,
+                                      focusColor: Colors.transparent,
+                                      hoverColor: Colors.transparent,
+                                      highlightColor: Colors.transparent,
                                       onTap: () async {
                                         logFirebaseEvent(
                                             'SIGNUP_PAGE_Text_xhdx4q9m_ON_TAP');
@@ -925,12 +962,12 @@ class _SignupWidgetState extends State<SignupWidget> {
                                       child: Text(
                                         'S\'authentifier',
                                         style: FlutterFlowTheme.of(context)
-                                            .subtitle2
+                                            .titleSmall
                                             .override(
                                               fontFamily: 'Montserrat',
                                               color:
                                                   FlutterFlowTheme.of(context)
-                                                      .secondaryColor,
+                                                      .secondary,
                                             ),
                                       ),
                                     ),
