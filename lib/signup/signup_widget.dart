@@ -919,9 +919,11 @@ class _SignupWidgetState extends State<SignupWidget> {
                                                       if (user == null) {
                                                         return;
                                                       }
+                                                      logFirebaseEvent(
+                                                          'IconButton_navigate_to');
 
-                                                      context.goNamedAuth(
-                                                          'Home',
+                                                      context.pushNamedAuth(
+                                                          'Splash',
                                                           context.mounted);
                                                     },
                                                   ),

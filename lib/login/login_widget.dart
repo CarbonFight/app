@@ -743,9 +743,22 @@ class _LoginWidgetState extends State<LoginWidget> {
                                                     if (user == null) {
                                                       return;
                                                     }
+                                                    if (FFAppState()
+                                                        .showSplash) {
+                                                      logFirebaseEvent(
+                                                          'IconButton_navigate_to');
 
-                                                    context.goNamedAuth('Home',
-                                                        context.mounted);
+                                                      context.pushNamedAuth(
+                                                          'Splash',
+                                                          context.mounted);
+                                                    } else {
+                                                      logFirebaseEvent(
+                                                          'IconButton_navigate_to');
+
+                                                      context.goNamedAuth(
+                                                          'Home',
+                                                          context.mounted);
+                                                    }
                                                   },
                                                 ),
                                               ),
