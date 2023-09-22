@@ -601,8 +601,8 @@ class _DrawerWidgetState extends State<DrawerWidget>
                                                       ),
                                                     );
                                                   },
-                                                ).then(
-                                                    (value) => setState(() {}));
+                                                ).then((value) =>
+                                                    safeSetState(() {}));
                                               },
                                               child: Text(
                                                 'Supprimer mon compte',

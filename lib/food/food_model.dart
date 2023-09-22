@@ -28,10 +28,10 @@ class FoodModel extends FlutterFlowModel {
   final unfocusNode = FocusNode();
   // Stores action output result for [Backend Call - API (GetOptions)] action in Food widget.
   ApiCallResponse? options;
-  // Stores action output result for [Backend Call - API (GetEmissionFactor)] action in Food widget.
-  ApiCallResponse? emissionFactor;
   // Stores action output result for [Backend Call - API (GetOptions)] action in Food widget.
   ApiCallResponse? listOptionsSide;
+  // Stores action output result for [Backend Call - API (GetEmissionFactor)] action in Food widget.
+  ApiCallResponse? emissionFactor;
   // State field(s) for Portions widget.
   int? portionsValue;
   // State field(s) for mainComponent widget.

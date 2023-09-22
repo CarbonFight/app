@@ -1,7 +1,6 @@
 import '/auth/firebase_auth/auth_util.dart';
 import '/components/forgot_password_widget.dart';
 import '/components/icon_button_widget.dart';
-import '/components/next_version_alert_widget.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';

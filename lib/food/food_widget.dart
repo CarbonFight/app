@@ -176,6 +176,13 @@ class _FoodWidgetState extends State<FoodWidget> with TickerProviderStateMixin {
         category: widget.category,
         action: widget.action,
       );
+      if (widget.action == 'main') {
+        logFirebaseEvent('Food_backend_call');
+        _model.listOptionsSide = await GetOptionsCall.call(
+          category: widget.category,
+          action: 'side',
+        );
+      }
       logFirebaseEvent('Food_backend_call');
       _model.emissionFactor = await GetEmissionFactorCall.call(
         category: widget.category,
@@ -187,13 +194,6 @@ class _FoodWidgetState extends State<FoodWidget> with TickerProviderStateMixin {
           (_model.emissionFactor?.jsonBody ?? ''),
         );
       });
-      if (widget.action == 'main') {
-        logFirebaseEvent('Food_backend_call');
-        _model.listOptionsSide = await GetOptionsCall.call(
-          category: widget.category,
-          action: 'side',
-        );
-      }
     });
 
     setupAnimations(

@@ -1,7 +1,6 @@
 import '/auth/firebase_auth/auth_util.dart';
 import '/components/forgot_password_widget.dart';
 import '/components/icon_button_widget.dart';
-import '/components/next_version_alert_widget.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -384,7 +383,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                                           ),
                                         );
                                       },
-                                    ).then((value) => setState(() {}));
+                                    ).then((value) => safeSetState(() {}));
                                   },
                                   child: Container(
                                     height: 45.0,
@@ -677,35 +676,28 @@ class _LoginWidgetState extends State<LoginWidget> {
                                               onTap: () async {
                                                 logFirebaseEvent(
                                                     'LOGIN_PAGE_Card_63ufryjt_ON_TAP');
-                                                logFirebaseEvent(
-                                                    'Card_bottom_sheet');
-                                                await showModalBottomSheet(
-                                                  isScrollControlled: true,
-                                                  backgroundColor:
-                                                      Colors.transparent,
-                                                  barrierColor:
-                                                      Color(0x00000000),
-                                                  context: context,
-                                                  builder: (context) {
-                                                    return GestureDetector(
-                                                      onTap: () => FocusScope
-                                                              .of(context)
-                                                          .requestFocus(_model
-                                                              .unfocusNode),
-                                                      child: Padding(
-                                                        padding: MediaQuery
-                                                            .viewInsetsOf(
-                                                                context),
-                                                        child: Container(
-                                                          height: 310.0,
-                                                          child:
-                                                              NextVersionAlertWidget(),
-                                                        ),
-                                                      ),
-                                                    );
-                                                  },
-                                                ).then(
-                                                    (value) => setState(() {}));
+                                                logFirebaseEvent('Card_auth');
+                                                GoRouter.of(context)
+                                                    .prepareAuthEvent();
+                                                final user = await authManager
+                                                    .signInWithApple(context);
+                                                if (user == null) {
+                                                  return;
+                                                }
+                                                if (FFAppState().showSplash) {
+                                                  logFirebaseEvent(
+                                                      'Card_navigate_to');
+
+                                                  context.pushNamedAuth(
+                                                      'Splash',
+                                                      context.mounted);
+                                                } else {
+                                                  logFirebaseEvent(
+                                                      'Card_navigate_to');
+
+                                                  context.goNamedAuth(
+                                                      'Home', context.mounted);
+                                                }
                                               },
                                               child: Card(
                                                 clipBehavior:
