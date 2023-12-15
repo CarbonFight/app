@@ -55,11 +55,6 @@ class ActionsRecord extends FirestoreRecord {
   int get count => _count ?? 0;
   bool hasCount() => _count != null;
 
-  // "emission_factor" field.
-  double? _emissionFactor;
-  double get emissionFactor => _emissionFactor ?? 0.0;
-  bool hasEmissionFactor() => _emissionFactor != null;
-
   // "peopleSharing" field.
   int? _peopleSharing;
   int get peopleSharing => _peopleSharing ?? 0;
@@ -105,6 +100,11 @@ class ActionsRecord extends FirestoreRecord {
   String get yearEndPurchase => _yearEndPurchase ?? '';
   bool hasYearEndPurchase() => _yearEndPurchase != null;
 
+  // "emission_factor" field.
+  int? _emissionFactor;
+  int get emissionFactor => _emissionFactor ?? 0;
+  bool hasEmissionFactor() => _emissionFactor != null;
+
   void _initializeFields() {
     _uid = snapshotData['uid'] as String?;
     _createdTime = snapshotData['created_time'] as DateTime?;
@@ -114,7 +114,6 @@ class ActionsRecord extends FirestoreRecord {
     _option = snapshotData['option'] as String?;
     _co2e = castToType<int>(snapshotData['co2e']);
     _count = castToType<int>(snapshotData['count']);
-    _emissionFactor = castToType<double>(snapshotData['emission_factor']);
     _peopleSharing = castToType<int>(snapshotData['peopleSharing']);
     _roundtrip = snapshotData['roundtrip'] as bool?;
     _isPeriodic = snapshotData['isPeriodic'] as bool?;
@@ -124,6 +123,7 @@ class ActionsRecord extends FirestoreRecord {
     _yearPurchase = snapshotData['yearPurchase'] as String?;
     _yearPreviousPurchase = snapshotData['yearPreviousPurchase'] as String?;
     _yearEndPurchase = snapshotData['yearEndPurchase'] as String?;
+    _emissionFactor = castToType<int>(snapshotData['emission_factor']);
   }
 
   static CollectionReference get collection =>
@@ -169,7 +169,6 @@ Map<String, dynamic> createActionsRecordData({
   String? option,
   int? co2e,
   int? count,
-  double? emissionFactor,
   int? peopleSharing,
   bool? roundtrip,
   bool? isPeriodic,
@@ -177,6 +176,7 @@ Map<String, dynamic> createActionsRecordData({
   String? yearPurchase,
   String? yearPreviousPurchase,
   String? yearEndPurchase,
+  int? emissionFactor,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -188,7 +188,6 @@ Map<String, dynamic> createActionsRecordData({
       'option': option,
       'co2e': co2e,
       'count': count,
-      'emission_factor': emissionFactor,
       'peopleSharing': peopleSharing,
       'roundtrip': roundtrip,
       'isPeriodic': isPeriodic,
@@ -196,6 +195,7 @@ Map<String, dynamic> createActionsRecordData({
       'yearPurchase': yearPurchase,
       'yearPreviousPurchase': yearPreviousPurchase,
       'yearEndPurchase': yearEndPurchase,
+      'emission_factor': emissionFactor,
     }.withoutNulls,
   );
 
@@ -216,7 +216,6 @@ class ActionsRecordDocumentEquality implements Equality<ActionsRecord> {
         e1?.option == e2?.option &&
         e1?.co2e == e2?.co2e &&
         e1?.count == e2?.count &&
-        e1?.emissionFactor == e2?.emissionFactor &&
         e1?.peopleSharing == e2?.peopleSharing &&
         e1?.roundtrip == e2?.roundtrip &&
         e1?.isPeriodic == e2?.isPeriodic &&
@@ -225,7 +224,8 @@ class ActionsRecordDocumentEquality implements Equality<ActionsRecord> {
         e1?.newPurchase == e2?.newPurchase &&
         e1?.yearPurchase == e2?.yearPurchase &&
         e1?.yearPreviousPurchase == e2?.yearPreviousPurchase &&
-        e1?.yearEndPurchase == e2?.yearEndPurchase;
+        e1?.yearEndPurchase == e2?.yearEndPurchase &&
+        e1?.emissionFactor == e2?.emissionFactor;
   }
 
   @override
@@ -238,7 +238,6 @@ class ActionsRecordDocumentEquality implements Equality<ActionsRecord> {
         e?.option,
         e?.co2e,
         e?.count,
-        e?.emissionFactor,
         e?.peopleSharing,
         e?.roundtrip,
         e?.isPeriodic,
@@ -247,7 +246,8 @@ class ActionsRecordDocumentEquality implements Equality<ActionsRecord> {
         e?.newPurchase,
         e?.yearPurchase,
         e?.yearPreviousPurchase,
-        e?.yearEndPurchase
+        e?.yearEndPurchase,
+        e?.emissionFactor
       ]);
 
   @override

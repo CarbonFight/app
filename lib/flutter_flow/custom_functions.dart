@@ -67,7 +67,7 @@ int calculateActionCO2e(
   int? multiplicator,
   int? divider,
   String? shared,
-  double? emissionFactor,
+  int? emissionFactor,
 ) {
   // Default values
   count = count ?? 0;

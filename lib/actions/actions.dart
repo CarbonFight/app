@@ -22,9 +22,6 @@ Future updateFEandCOE(
   );
   if ((getEmissionFactor.succeeded ?? true)) {
     FFAppState().update(() {
-      FFAppState().actionFE = GetEmissionFactorCall.co2e(
-        (getEmissionFactor?.jsonBody ?? ''),
-      );
       FFAppState().actionCo2e = functions.calculateActionCO2e(
           count,
           multiplicator,
@@ -33,6 +30,9 @@ Future updateFEandCOE(
           GetEmissionFactorCall.co2e(
             (getEmissionFactor?.jsonBody ?? ''),
           ));
+      FFAppState().actionFE = GetEmissionFactorCall.co2e(
+        (getEmissionFactor?.jsonBody ?? ''),
+      );
     });
   } else {
     await showDialog(

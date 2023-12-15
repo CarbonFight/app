@@ -19,13 +19,21 @@ class FFAppState extends ChangeNotifier {
   Future initializePersistedState() async {
     prefs = await SharedPreferences.getInstance();
     _safeInit(() {
+      _actionCo2e = prefs.getInt('ff_actionCo2e') ?? _actionCo2e;
+    });
+    _safeInit(() {
+      _chartXdays =
+          prefs.getStringList('ff_chartXdays')?.map(int.parse).toList() ??
+              _chartXdays;
+    });
+    _safeInit(() {
       _lastConnectionDay = prefs.containsKey('ff_lastConnectionDay')
           ? DateTime.fromMillisecondsSinceEpoch(
               prefs.getInt('ff_lastConnectionDay')!)
           : _lastConnectionDay;
     });
     _safeInit(() {
-      _successCount = prefs.getInt('ff_successCount') ?? _successCount;
+      _actionFE = prefs.getInt('ff_actionFE') ?? _actionFE;
     });
   }
 
@@ -40,12 +48,7 @@ class FFAppState extends ChangeNotifier {
   int get actionCo2e => _actionCo2e;
   set actionCo2e(int value) {
     _actionCo2e = value;
-  }
-
-  double _actionFE = 0.0;
-  double get actionFE => _actionFE;
-  set actionFE(double value) {
-    _actionFE = value;
+    prefs.setInt('ff_actionCo2e', value);
   }
 
   List<int> _chartXdays = [
@@ -84,18 +87,26 @@ class FFAppState extends ChangeNotifier {
   List<int> get chartXdays => _chartXdays;
   set chartXdays(List<int> value) {
     _chartXdays = value;
+    prefs.setStringList(
+        'ff_chartXdays', value.map((x) => x.toString()).toList());
   }
 
   void addToChartXdays(int value) {
     _chartXdays.add(value);
+    prefs.setStringList(
+        'ff_chartXdays', _chartXdays.map((x) => x.toString()).toList());
   }
 
   void removeFromChartXdays(int value) {
     _chartXdays.remove(value);
+    prefs.setStringList(
+        'ff_chartXdays', _chartXdays.map((x) => x.toString()).toList());
   }
 
   void removeAtIndexFromChartXdays(int index) {
     _chartXdays.removeAt(index);
+    prefs.setStringList(
+        'ff_chartXdays', _chartXdays.map((x) => x.toString()).toList());
   }
 
   void updateChartXdaysAtIndex(
@@ -103,10 +114,14 @@ class FFAppState extends ChangeNotifier {
     int Function(int) updateFn,
   ) {
     _chartXdays[index] = updateFn(_chartXdays[index]);
+    prefs.setStringList(
+        'ff_chartXdays', _chartXdays.map((x) => x.toString()).toList());
   }
 
   void insertAtIndexInChartXdays(int index, int value) {
     _chartXdays.insert(index, value);
+    prefs.setStringList(
+        'ff_chartXdays', _chartXdays.map((x) => x.toString()).toList());
   }
 
   DateTime? _lastConnectionDay =
@@ -119,11 +134,11 @@ class FFAppState extends ChangeNotifier {
         : prefs.remove('ff_lastConnectionDay');
   }
 
-  int _successCount = 0;
-  int get successCount => _successCount;
-  set successCount(int value) {
-    _successCount = value;
-    prefs.setInt('ff_successCount', value);
+  int _actionFE = 0;
+  int get actionFE => _actionFE;
+  set actionFE(int value) {
+    _actionFE = value;
+    prefs.setInt('ff_actionFE', value);
   }
 }
 

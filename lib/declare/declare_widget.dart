@@ -127,7 +127,7 @@ class _DeclareWidgetState extends State<DeclareWidget> {
         // Reset CO2e & FE
         setState(() {
           FFAppState().actionCo2e = 0;
-          FFAppState().actionFE = 0.0;
+          FFAppState().actionFE = 0;
         });
       }
     });
@@ -1243,7 +1243,8 @@ class _DeclareWidgetState extends State<DeclareWidget> {
                                       ),
                                       TextSpan(
                                         text: valueOrDefault<String>(
-                                          functions.pSFE(FFAppState().actionFE),
+                                          functions.pSFE(
+                                              FFAppState().actionFE.toDouble()),
                                           '0',
                                         ),
                                         style: FlutterFlowTheme.of(context)
