@@ -91,9 +91,7 @@ class _BadgesWidgetState extends State<BadgesWidget> {
                       padding:
                           const EdgeInsetsDirectional.fromSTEB(0.0, 20.0, 0.0, 0.0),
                       child: Text(
-                        FFLocalizations.of(context).getText(
-                          'jqwvyl6f' /* Badge actif */,
-                        ),
+                        'Badge actif',
                         style: FlutterFlowTheme.of(context).titleMedium,
                       ),
                     ),
@@ -131,9 +129,7 @@ class _BadgesWidgetState extends State<BadgesWidget> {
                                 size: 40.0,
                               ),
                               Text(
-                                FFLocalizations.of(context).getText(
-                                  'rx6kcbv9' /* Paré ! */,
-                                ),
+                                'Paré !',
                                 style: FlutterFlowTheme.of(context).labelSmall,
                               ),
                             ].divide(const SizedBox(height: 1.0)),
@@ -145,9 +141,7 @@ class _BadgesWidgetState extends State<BadgesWidget> {
                       padding:
                           const EdgeInsetsDirectional.fromSTEB(0.0, 20.0, 0.0, 0.0),
                       child: Text(
-                        FFLocalizations.of(context).getText(
-                          'a9r2qfuo' /* Badges de score */,
-                        ),
+                        'Badges de score',
                         style: FlutterFlowTheme.of(context).titleMedium,
                       ),
                     ),
@@ -217,9 +211,7 @@ class _BadgesWidgetState extends State<BadgesWidget> {
                                           MainAxisAlignment.center,
                                       children: [
                                         Text(
-                                          FFLocalizations.of(context).getText(
-                                            'b1i2qi3w' /* Niveau 2 */,
-                                          ),
+                                          'Niveau 2',
                                           style: FlutterFlowTheme.of(context)
                                               .labelSmall,
                                         ),
@@ -235,9 +227,7 @@ class _BadgesWidgetState extends State<BadgesWidget> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                FFLocalizations.of(context).getText(
-                                  'eb3ak82i' /* Points */,
-                                ),
+                                'Points',
                                 style: FlutterFlowTheme.of(context).labelSmall,
                               ),
                               Padding(
@@ -254,9 +244,7 @@ class _BadgesWidgetState extends State<BadgesWidget> {
                                   backgroundColor:
                                       FlutterFlowTheme.of(context).accent4,
                                   center: Text(
-                                    FFLocalizations.of(context).getText(
-                                      'a954d1c9' /* 1225 / 2500 */,
-                                    ),
+                                    '1225 / 2500',
                                     style:
                                         FlutterFlowTheme.of(context).bodySmall,
                                   ),
@@ -325,9 +313,7 @@ class _BadgesWidgetState extends State<BadgesWidget> {
                                           MainAxisAlignment.center,
                                       children: [
                                         Text(
-                                          FFLocalizations.of(context).getText(
-                                            '8k0qnkae' /* Niveau 3 */,
-                                          ),
+                                          'Niveau 3',
                                           style: FlutterFlowTheme.of(context)
                                               .labelSmall,
                                         ),
@@ -345,9 +331,7 @@ class _BadgesWidgetState extends State<BadgesWidget> {
                       padding:
                           const EdgeInsetsDirectional.fromSTEB(0.0, 20.0, 0.0, 0.0),
                       child: Text(
-                        FFLocalizations.of(context).getText(
-                          '8b7p6xzw' /* Badges défis */,
-                        ),
+                        'Badges défis',
                         style: FlutterFlowTheme.of(context).titleMedium,
                       ),
                     ),
@@ -424,10 +408,7 @@ class _BadgesWidgetState extends State<BadgesWidget> {
                                               MainAxisAlignment.center,
                                           children: [
                                             Text(
-                                              FFLocalizations.of(context)
-                                                  .getText(
-                                                'fxz6cq76' /* Prêt ? */,
-                                              ),
+                                              'Prêt ?',
                                               style:
                                                   FlutterFlowTheme.of(context)
                                                       .labelSmall,
@@ -471,9 +452,7 @@ class _BadgesWidgetState extends State<BadgesWidget> {
                                         size: 40.0,
                                       ),
                                       Text(
-                                        FFLocalizations.of(context).getText(
-                                          's45nv8t0' /* Paré ! */,
-                                        ),
+                                        'Paré !',
                                         style: FlutterFlowTheme.of(context)
                                             .labelSmall,
                                       ),

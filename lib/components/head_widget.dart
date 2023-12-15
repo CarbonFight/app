@@ -90,9 +90,7 @@ class _HeadWidgetState extends State<HeadWidget> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        FFLocalizations.of(context).getText(
-                          'en1kkzn7' /* Recrue */,
-                        ),
+                        'Recrue',
                         style: FlutterFlowTheme.of(context).bodySmall.override(
                               fontFamily: 'Montserrat',
                               color: FlutterFlowTheme.of(context).primaryText,

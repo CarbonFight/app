@@ -207,13 +207,7 @@ class _ChallengesWidgetState extends State<ChallengesWidget> {
                                           text: TextSpan(
                                             children: [
                                               TextSpan(
-                                                text:
-                                                    FFLocalizations.of(context)
-                                                        .getText(
-                                                  '4jru0nxj' /* Score 
- */
-                                                  ,
-                                                ),
+                                                text: 'Score \n',
                                                 style: FlutterFlowTheme.of(
                                                         context)
                                                     .titleLarge
@@ -242,11 +236,7 @@ class _ChallengesWidgetState extends State<ChallengesWidget> {
                                                     ),
                                               ),
                                               TextSpan(
-                                                text:
-                                                    FFLocalizations.of(context)
-                                                        .getText(
-                                                  'ud4x7r30' /*  /  */,
-                                                ),
+                                                text: ' / ',
                                                 style: FlutterFlowTheme.of(
                                                         context)
                                                     .titleLarge
@@ -307,22 +297,12 @@ class _ChallengesWidgetState extends State<ChallengesWidget> {
                                 padding: const EdgeInsetsDirectional.fromSTEB(
                                     0.0, 5.0, 0.0, 5.0),
                                 child: FlutterFlowChoiceChips(
-                                  options: [
+                                  options: const [
+                                    ChipData('Validés', Icons.shield_sharp),
                                     ChipData(
-                                        FFLocalizations.of(context).getText(
-                                          'kb73nmdc' /* Validés */,
-                                        ),
-                                        Icons.shield_sharp),
+                                        'Tous', FontAwesomeIcons.shieldAlt),
                                     ChipData(
-                                        FFLocalizations.of(context).getText(
-                                          'ftocvnf8' /* Tous */,
-                                        ),
-                                        FontAwesomeIcons.shieldAlt),
-                                    ChipData(
-                                        FFLocalizations.of(context).getText(
-                                          'rhnew14v' /* Non validés */,
-                                        ),
-                                        Icons.shield_outlined)
+                                        'Non validés', Icons.shield_outlined)
                                   ],
                                   onChanged: (val) => setState(() =>
                                       _model.choiceChipsValue = val?.first),
@@ -357,11 +337,7 @@ class _ChallengesWidgetState extends State<ChallengesWidget> {
                                   controller:
                                       _model.choiceChipsValueController ??=
                                           FormFieldController<List<String>>(
-                                    [
-                                      FFLocalizations.of(context).getText(
-                                        'n6bbpw7n' /* Tous */,
-                                      )
-                                    ],
+                                    ['Tous'],
                                   ),
                                   wrapped: true,
                                 ),
@@ -413,11 +389,8 @@ class _ChallengesWidgetState extends State<ChallengesWidget> {
                                                     text: TextSpan(
                                                       children: [
                                                         TextSpan(
-                                                          text: FFLocalizations
-                                                                  .of(context)
-                                                              .getText(
-                                                            'o75pt1cq' /* Prise en main  */,
-                                                          ),
+                                                          text:
+                                                              'Prise en main ',
                                                           style: FlutterFlowTheme
                                                                   .of(context)
                                                               .bodyMedium,
@@ -432,11 +405,7 @@ class _ChallengesWidgetState extends State<ChallengesWidget> {
                                                               .bodyMedium,
                                                         ),
                                                         TextSpan(
-                                                          text: FFLocalizations
-                                                                  .of(context)
-                                                              .getText(
-                                                            'f2vzsfr2' /*  /  */,
-                                                          ),
+                                                          text: ' / ',
                                                           style: FlutterFlowTheme
                                                                   .of(context)
                                                               .bodyMedium,
@@ -533,11 +502,8 @@ class _ChallengesWidgetState extends State<ChallengesWidget> {
                                                                 text: TextSpan(
                                                                   children: [
                                                                     TextSpan(
-                                                                      text: FFLocalizations.of(
-                                                                              context)
-                                                                          .getText(
-                                                                        'ggmbgj8r' /* Tut tut !  */,
-                                                                      ),
+                                                                      text:
+                                                                          'Tut tut ! ',
                                                                       style: FlutterFlowTheme.of(
                                                                               context)
                                                                           .bodyMedium
@@ -549,13 +515,8 @@ class _ChallengesWidgetState extends State<ChallengesWidget> {
                                                                           ),
                                                                     ),
                                                                     TextSpan(
-                                                                      text: FFLocalizations.of(
-                                                                              context)
-                                                                          .getText(
-                                                                        'kfriy1o1' /* 
-Ajouter votre première action... */
-                                                                        ,
-                                                                      ),
+                                                                      text:
+                                                                          '\nAjouter votre première action dans la catégorie trajets.',
                                                                       style: FlutterFlowTheme.of(
                                                                               context)
                                                                           .labelSmall,
@@ -686,13 +647,8 @@ Ajouter votre première action... */
                                                                 text: TextSpan(
                                                                   children: [
                                                                     TextSpan(
-                                                                      text: FFLocalizations.of(
-                                                                              context)
-                                                                          .getText(
-                                                                        'tyf5bf8g' /* Et mes chausettes...
- */
-                                                                        ,
-                                                                      ),
+                                                                      text:
+                                                                          'Et mes chausettes...\n',
                                                                       style: FlutterFlowTheme.of(
                                                                               context)
                                                                           .bodyMedium
@@ -704,11 +660,8 @@ Ajouter votre première action... */
                                                                           ),
                                                                     ),
                                                                     TextSpan(
-                                                                      text: FFLocalizations.of(
-                                                                              context)
-                                                                          .getText(
-                                                                        'olcmrjx9' /* Ajouter votre première action ... */,
-                                                                      ),
+                                                                      text:
+                                                                          'Ajouter votre première action dans la catégorie habits.',
                                                                       style: FlutterFlowTheme.of(
                                                                               context)
                                                                           .labelSmall,
@@ -839,13 +792,8 @@ Ajouter votre première action... */
                                                                 text: TextSpan(
                                                                   children: [
                                                                     TextSpan(
-                                                                      text: FFLocalizations.of(
-                                                                              context)
-                                                                          .getText(
-                                                                        'f69642yh' /* 0100110101010111 !
- */
-                                                                        ,
-                                                                      ),
+                                                                      text:
+                                                                          '0100110101010111 !\n',
                                                                       style: FlutterFlowTheme.of(
                                                                               context)
                                                                           .bodyMedium
@@ -857,11 +805,8 @@ Ajouter votre première action... */
                                                                           ),
                                                                     ),
                                                                     TextSpan(
-                                                                      text: FFLocalizations.of(
-                                                                              context)
-                                                                          .getText(
-                                                                        'dnocnwvb' /* Ajouter votre première action ... */,
-                                                                      ),
+                                                                      text:
+                                                                          'Ajouter votre première action dans la catégorie numérique.',
                                                                       style: FlutterFlowTheme.of(
                                                                               context)
                                                                           .labelSmall,
@@ -991,13 +936,8 @@ Ajouter votre première action... */
                                                                 text: TextSpan(
                                                                   children: [
                                                                     TextSpan(
-                                                                      text: FFLocalizations.of(
-                                                                              context)
-                                                                          .getText(
-                                                                        'd8g7rris' /* Le "four" tout
- */
-                                                                        ,
-                                                                      ),
+                                                                      text:
+                                                                          'Le "four" tout\n',
                                                                       style: FlutterFlowTheme.of(
                                                                               context)
                                                                           .bodyMedium
@@ -1009,11 +949,8 @@ Ajouter votre première action... */
                                                                           ),
                                                                     ),
                                                                     TextSpan(
-                                                                      text: FFLocalizations.of(
-                                                                              context)
-                                                                          .getText(
-                                                                        'h0i9x50s' /* Ajouter votre première action ... */,
-                                                                      ),
+                                                                      text:
+                                                                          'Ajouter votre première action dans la catégorie éectroménager.',
                                                                       style: FlutterFlowTheme.of(
                                                                               context)
                                                                           .labelSmall,
@@ -1144,13 +1081,8 @@ Ajouter votre première action... */
                                                                 text: TextSpan(
                                                                   children: [
                                                                     TextSpan(
-                                                                      text: FFLocalizations.of(
-                                                                              context)
-                                                                          .getText(
-                                                                        '8w82szb3' /* Fond de canap
- */
-                                                                        ,
-                                                                      ),
+                                                                      text:
+                                                                          'Fond de canap\n',
                                                                       style: FlutterFlowTheme.of(
                                                                               context)
                                                                           .bodyMedium
@@ -1162,11 +1094,8 @@ Ajouter votre première action... */
                                                                           ),
                                                                     ),
                                                                     TextSpan(
-                                                                      text: FFLocalizations.of(
-                                                                              context)
-                                                                          .getText(
-                                                                        '1jyocymq' /* Ajouter votre première action ... */,
-                                                                      ),
+                                                                      text:
+                                                                          'Ajouter votre première action dans la catégorie mobilier.',
                                                                       style: FlutterFlowTheme.of(
                                                                               context)
                                                                           .labelSmall,
@@ -1297,13 +1226,8 @@ Ajouter votre première action... */
                                                                 text: TextSpan(
                                                                   children: [
                                                                     TextSpan(
-                                                                      text: FFLocalizations.of(
-                                                                              context)
-                                                                          .getText(
-                                                                        '1kr6jt0o' /* Je possède des trucs
- */
-                                                                        ,
-                                                                      ),
+                                                                      text:
+                                                                          'Je possède des trucs\n',
                                                                       style: FlutterFlowTheme.of(
                                                                               context)
                                                                           .bodyMedium
@@ -1315,11 +1239,8 @@ Ajouter votre première action... */
                                                                           ),
                                                                     ),
                                                                     TextSpan(
-                                                                      text: FFLocalizations.of(
-                                                                              context)
-                                                                          .getText(
-                                                                        'gucmastk' /* Ajouter votre première action ... */,
-                                                                      ),
+                                                                      text:
+                                                                          'Ajouter votre première action dans la catégorie objets.',
                                                                       style: FlutterFlowTheme.of(
                                                                               context)
                                                                           .labelSmall,
@@ -1450,13 +1371,8 @@ Ajouter votre première action... */
                                                                 text: TextSpan(
                                                                   children: [
                                                                     TextSpan(
-                                                                      text: FFLocalizations.of(
-                                                                              context)
-                                                                          .getText(
-                                                                        'ipw1lv26' /* Home sweet home
- */
-                                                                        ,
-                                                                      ),
+                                                                      text:
+                                                                          'Home sweet home\n',
                                                                       style: FlutterFlowTheme.of(
                                                                               context)
                                                                           .bodyMedium
@@ -1468,11 +1384,8 @@ Ajouter votre première action... */
                                                                           ),
                                                                     ),
                                                                     TextSpan(
-                                                                      text: FFLocalizations.of(
-                                                                              context)
-                                                                          .getText(
-                                                                        '257yhjra' /* Ajouter votre première action ... */,
-                                                                      ),
+                                                                      text:
+                                                                          'Ajouter votre première action dans la catégorie logement.',
                                                                       style: FlutterFlowTheme.of(
                                                                               context)
                                                                           .labelSmall,
@@ -1603,13 +1516,8 @@ Ajouter votre première action... */
                                                                 text: TextSpan(
                                                                   children: [
                                                                     TextSpan(
-                                                                      text: FFLocalizations.of(
-                                                                              context)
-                                                                          .getText(
-                                                                        'lnh6lvom' /* La crèpe au sucre
- */
-                                                                        ,
-                                                                      ),
+                                                                      text:
+                                                                          'La crèpe au sucre\n',
                                                                       style: FlutterFlowTheme.of(
                                                                               context)
                                                                           .bodyMedium
@@ -1621,11 +1529,8 @@ Ajouter votre première action... */
                                                                           ),
                                                                     ),
                                                                     TextSpan(
-                                                                      text: FFLocalizations.of(
-                                                                              context)
-                                                                          .getText(
-                                                                        'ebetsoj3' /* Ajouter votre première action ... */,
-                                                                      ),
+                                                                      text:
+                                                                          'Ajouter votre première action dans la catégorie repas.',
                                                                       style: FlutterFlowTheme.of(
                                                                               context)
                                                                           .labelSmall,
@@ -1751,11 +1656,7 @@ Ajouter votre première action... */
                                                     text: TextSpan(
                                                       children: [
                                                         TextSpan(
-                                                          text: FFLocalizations
-                                                                  .of(context)
-                                                              .getText(
-                                                            '5ulxwrhf' /* Fidélisation  */,
-                                                          ),
+                                                          text: 'Fidélisation ',
                                                           style: FlutterFlowTheme
                                                                   .of(context)
                                                               .bodyMedium,
@@ -1770,11 +1671,7 @@ Ajouter votre première action... */
                                                               .bodyMedium,
                                                         ),
                                                         TextSpan(
-                                                          text: FFLocalizations
-                                                                  .of(context)
-                                                              .getText(
-                                                            'mtxzwn2j' /*  /  */,
-                                                          ),
+                                                          text: ' / ',
                                                           style: FlutterFlowTheme
                                                                   .of(context)
                                                               .bodyMedium,
@@ -1858,13 +1755,8 @@ Ajouter votre première action... */
                                                               text: TextSpan(
                                                                 children: [
                                                                   TextSpan(
-                                                                    text: FFLocalizations.of(
-                                                                            context)
-                                                                        .getText(
-                                                                      '6sc3zdis' /* Travaux en cours
- */
-                                                                      ,
-                                                                    ),
+                                                                    text:
+                                                                        'Travaux en cours\n',
                                                                     style: FlutterFlowTheme.of(
                                                                             context)
                                                                         .bodyMedium
@@ -1876,11 +1768,8 @@ Ajouter votre première action... */
                                                                         ),
                                                                   ),
                                                                   TextSpan(
-                                                                    text: FFLocalizations.of(
-                                                                            context)
-                                                                        .getText(
-                                                                      '1ivcmeux' /* Les succes seront bientôt impl... */,
-                                                                    ),
+                                                                    text:
+                                                                        'Les succes seront bientôt implémentés',
                                                                     style: FlutterFlowTheme.of(
                                                                             context)
                                                                         .labelSmall,
@@ -1976,11 +1865,7 @@ Ajouter votre première action... */
                                                     text: TextSpan(
                                                       children: [
                                                         TextSpan(
-                                                          text: FFLocalizations
-                                                                  .of(context)
-                                                              .getText(
-                                                            'g9pj9rrb' /* Trajets  */,
-                                                          ),
+                                                          text: 'Trajets ',
                                                           style: FlutterFlowTheme
                                                                   .of(context)
                                                               .bodyMedium,
@@ -1995,11 +1880,7 @@ Ajouter votre première action... */
                                                               .bodyMedium,
                                                         ),
                                                         TextSpan(
-                                                          text: FFLocalizations
-                                                                  .of(context)
-                                                              .getText(
-                                                            'nc0yehjw' /*  /  */,
-                                                          ),
+                                                          text: ' / ',
                                                           style: FlutterFlowTheme
                                                                   .of(context)
                                                               .bodyMedium,
@@ -2083,13 +1964,8 @@ Ajouter votre première action... */
                                                               text: TextSpan(
                                                                 children: [
                                                                   TextSpan(
-                                                                    text: FFLocalizations.of(
-                                                                            context)
-                                                                        .getText(
-                                                                      'd7i2n8lq' /* Travaux en cours
- */
-                                                                      ,
-                                                                    ),
+                                                                    text:
+                                                                        'Travaux en cours\n',
                                                                     style: FlutterFlowTheme.of(
                                                                             context)
                                                                         .bodyMedium
@@ -2101,11 +1977,8 @@ Ajouter votre première action... */
                                                                         ),
                                                                   ),
                                                                   TextSpan(
-                                                                    text: FFLocalizations.of(
-                                                                            context)
-                                                                        .getText(
-                                                                      '8ff4os7p' /* Les succes seront bientôt impl... */,
-                                                                    ),
+                                                                    text:
+                                                                        'Les succes seront bientôt implémentés',
                                                                     style: FlutterFlowTheme.of(
                                                                             context)
                                                                         .labelSmall,
@@ -2201,11 +2074,7 @@ Ajouter votre première action... */
                                                     text: TextSpan(
                                                       children: [
                                                         TextSpan(
-                                                          text: FFLocalizations
-                                                                  .of(context)
-                                                              .getText(
-                                                            'u95m8j09' /* Repas  */,
-                                                          ),
+                                                          text: 'Repas ',
                                                           style: FlutterFlowTheme
                                                                   .of(context)
                                                               .bodyMedium,
@@ -2220,11 +2089,7 @@ Ajouter votre première action... */
                                                               .bodyMedium,
                                                         ),
                                                         TextSpan(
-                                                          text: FFLocalizations
-                                                                  .of(context)
-                                                              .getText(
-                                                            'b95ic137' /*  /  */,
-                                                          ),
+                                                          text: ' / ',
                                                           style: FlutterFlowTheme
                                                                   .of(context)
                                                               .bodyMedium,
@@ -2308,13 +2173,8 @@ Ajouter votre première action... */
                                                               text: TextSpan(
                                                                 children: [
                                                                   TextSpan(
-                                                                    text: FFLocalizations.of(
-                                                                            context)
-                                                                        .getText(
-                                                                      'pcg0vh04' /* Travaux en cours
- */
-                                                                      ,
-                                                                    ),
+                                                                    text:
+                                                                        'Travaux en cours\n',
                                                                     style: FlutterFlowTheme.of(
                                                                             context)
                                                                         .bodyMedium
@@ -2326,11 +2186,8 @@ Ajouter votre première action... */
                                                                         ),
                                                                   ),
                                                                   TextSpan(
-                                                                    text: FFLocalizations.of(
-                                                                            context)
-                                                                        .getText(
-                                                                      '4d1ok44r' /* Les succes seront bientôt impl... */,
-                                                                    ),
+                                                                    text:
+                                                                        'Les succes seront bientôt implémentés',
                                                                     style: FlutterFlowTheme.of(
                                                                             context)
                                                                         .labelSmall,
@@ -2426,11 +2283,7 @@ Ajouter votre première action... */
                                                     text: TextSpan(
                                                       children: [
                                                         TextSpan(
-                                                          text: FFLocalizations
-                                                                  .of(context)
-                                                              .getText(
-                                                            'u6azu41v' /* Communauté  */,
-                                                          ),
+                                                          text: 'Communauté ',
                                                           style: FlutterFlowTheme
                                                                   .of(context)
                                                               .bodyMedium,
@@ -2445,11 +2298,7 @@ Ajouter votre première action... */
                                                               .bodyMedium,
                                                         ),
                                                         TextSpan(
-                                                          text: FFLocalizations
-                                                                  .of(context)
-                                                              .getText(
-                                                            'nk9vd2sg' /*  /  */,
-                                                          ),
+                                                          text: ' / ',
                                                           style: FlutterFlowTheme
                                                                   .of(context)
                                                               .bodyMedium,
@@ -2533,13 +2382,8 @@ Ajouter votre première action... */
                                                               text: TextSpan(
                                                                 children: [
                                                                   TextSpan(
-                                                                    text: FFLocalizations.of(
-                                                                            context)
-                                                                        .getText(
-                                                                      'cckfy06h' /* Travaux en cours
- */
-                                                                      ,
-                                                                    ),
+                                                                    text:
+                                                                        'Travaux en cours\n',
                                                                     style: FlutterFlowTheme.of(
                                                                             context)
                                                                         .bodyMedium
@@ -2551,11 +2395,8 @@ Ajouter votre première action... */
                                                                         ),
                                                                   ),
                                                                   TextSpan(
-                                                                    text: FFLocalizations.of(
-                                                                            context)
-                                                                        .getText(
-                                                                      'etb5acw6' /* Les succes seront bientôt impl... */,
-                                                                    ),
+                                                                    text:
+                                                                        'Les succes seront bientôt implémentés',
                                                                     style: FlutterFlowTheme.of(
                                                                             context)
                                                                         .labelSmall,

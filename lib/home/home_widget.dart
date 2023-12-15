@@ -154,16 +154,10 @@ class _HomeWidgetState extends State<HomeWidget> {
                       mainAxisSize: MainAxisSize.max,
                       children: [
                         FlutterFlowChoiceChips(
-                          options: [
-                            ChipData(FFLocalizations.of(context).getText(
-                              'fn0v3p5y' /* Journée */,
-                            )),
-                            ChipData(FFLocalizations.of(context).getText(
-                              'rxuh8t51' /* Semaine */,
-                            )),
-                            ChipData(FFLocalizations.of(context).getText(
-                              '5w9uwt6p' /* Mois */,
-                            ))
+                          options: const [
+                            ChipData('Journée'),
+                            ChipData('Semaine'),
+                            ChipData('Mois')
                           ],
                           onChanged: (val) => setState(
                               () => _model.choiceChipsValue = val?.first),
@@ -205,11 +199,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                           alignment: WrapAlignment.start,
                           controller: _model.choiceChipsValueController ??=
                               FormFieldController<List<String>>(
-                            [
-                              FFLocalizations.of(context).getText(
-                                'm7r6h8h7' /* Journée */,
-                              )
-                            ],
+                            ['Journée'],
                           ),
                           wrapped: true,
                         ),
@@ -261,9 +251,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                       mainAxisSize: MainAxisSize.max,
                                       children: [
                                         Text(
-                                          FFLocalizations.of(context).getText(
-                                            'fb5tanar' /* co2e  */,
-                                          ),
+                                          'co2e ',
                                           style: FlutterFlowTheme.of(context)
                                               .labelSmall,
                                         ),
@@ -334,10 +322,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                     text: TextSpan(
                                       children: [
                                         TextSpan(
-                                          text: FFLocalizations.of(context)
-                                              .getText(
-                                            '9dw9wfe9' /* Objectif :  */,
-                                          ),
+                                          text: 'Objectif : ',
                                           style: FlutterFlowTheme.of(context)
                                               .bodySmall
                                               .override(
@@ -358,12 +343,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                               .bodySmall,
                                         ),
                                         TextSpan(
-                                          text: FFLocalizations.of(context)
-                                              .getText(
-                                            '5q1t5ybu' /* 
-Actions :  */
-                                            ,
-                                          ),
+                                          text: '\nActions : ',
                                           style: FlutterFlowTheme.of(context)
                                               .bodySmall
                                               .override(
@@ -374,20 +354,12 @@ Actions :  */
                                               ),
                                         ),
                                         TextSpan(
-                                          text: FFLocalizations.of(context)
-                                              .getText(
-                                            '2q5mvw1p' /* 8 */,
-                                          ),
+                                          text: '8',
                                           style: FlutterFlowTheme.of(context)
                                               .bodySmall,
                                         ),
                                         TextSpan(
-                                          text: FFLocalizations.of(context)
-                                              .getText(
-                                            'egwarsii' /* 
-Restant :  */
-                                            ,
-                                          ),
+                                          text: '\nRestant : ',
                                           style: FlutterFlowTheme.of(context)
                                               .bodySmall
                                               .override(
@@ -398,10 +370,7 @@ Restant :  */
                                               ),
                                         ),
                                         TextSpan(
-                                          text: FFLocalizations.of(context)
-                                              .getText(
-                                            'eb60dfzq' /* 4.2 kg */,
-                                          ),
+                                          text: '4.2 kg',
                                           style: FlutterFlowTheme.of(context)
                                               .bodySmall,
                                         )
@@ -579,9 +548,7 @@ Restant :  */
                                   onPressed: () async {
                                     context.pushNamed('categories');
                                   },
-                                  text: FFLocalizations.of(context).getText(
-                                    'psa1l9a5' /* Ajouter */,
-                                  ),
+                                  text: 'Ajouter',
                                   icon: const Icon(
                                     Icons.add_circle_outline,
                                     size: 25.0,

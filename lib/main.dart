@@ -101,7 +101,6 @@ class _MyAppState extends State<MyApp> {
       locale: _locale,
       supportedLocales: const [
         Locale('fr'),
-        Locale('en'),
       ],
       theme: ThemeData(
         brightness: Brightness.light,
@@ -188,9 +187,7 @@ class _NavBarPageState extends State<NavBarPage> {
                   size: 24.0,
                 ),
                 Text(
-                  FFLocalizations.of(context).getText(
-                    'pzswimp1' /* Acceuil */,
-                  ),
+                  'Acceuil',
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                     color: currentIndex == 0
@@ -214,9 +211,7 @@ class _NavBarPageState extends State<NavBarPage> {
                   size: 24.0,
                 ),
                 Text(
-                  FFLocalizations.of(context).getText(
-                    'w0v2ko2z' /* Défis */,
-                  ),
+                  'Défis',
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                     color: currentIndex == 1
@@ -240,9 +235,7 @@ class _NavBarPageState extends State<NavBarPage> {
                   size: 24.0,
                 ),
                 Text(
-                  FFLocalizations.of(context).getText(
-                    'ha0ole06' /* Ajouter */,
-                  ),
+                  'Ajouter',
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                     color: currentIndex == 2
@@ -266,9 +259,7 @@ class _NavBarPageState extends State<NavBarPage> {
                   size: 24.0,
                 ),
                 Text(
-                  FFLocalizations.of(context).getText(
-                    'kggy1uov' /* Succès */,
-                  ),
+                  'Succès',
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                     color: currentIndex == 3
@@ -292,9 +283,7 @@ class _NavBarPageState extends State<NavBarPage> {
                   size: 24.0,
                 ),
                 Text(
-                  FFLocalizations.of(context).getText(
-                    '9mhj5ig3' /* Profil */,
-                  ),
+                  'Profil',
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                     color: currentIndex == 4

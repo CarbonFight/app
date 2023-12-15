@@ -151,9 +151,7 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
                                       ),
                                     ),
                                     Text(
-                                      FFLocalizations.of(context).getText(
-                                        'xt1y5qyx' /* Trajets */,
-                                      ),
+                                      'Trajets',
                                       style: FlutterFlowTheme.of(context)
                                           .bodyLarge,
                                     ),
@@ -240,9 +238,7 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
                                       ),
                                     ),
                                     Text(
-                                      FFLocalizations.of(context).getText(
-                                        '1wqq8ncp' /* Logement */,
-                                      ),
+                                      'Logement',
                                       style: FlutterFlowTheme.of(context)
                                           .bodyLarge,
                                     ),
@@ -331,9 +327,7 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
                                       ),
                                     ),
                                     Text(
-                                      FFLocalizations.of(context).getText(
-                                        '87thqolb' /* Repas */,
-                                      ),
+                                      'Repas',
                                       style: FlutterFlowTheme.of(context)
                                           .bodyLarge,
                                     ),
@@ -422,9 +416,7 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
                                       ),
                                     ),
                                     Text(
-                                      FFLocalizations.of(context).getText(
-                                        '2wmj66wh' /* Numérique */,
-                                      ),
+                                      'Numérique',
                                       style: FlutterFlowTheme.of(context)
                                           .bodyLarge,
                                     ),
@@ -513,9 +505,7 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
                                       ),
                                     ),
                                     Text(
-                                      FFLocalizations.of(context).getText(
-                                        'gz68zuzc' /* Mobilier */,
-                                      ),
+                                      'Mobilier',
                                       style: FlutterFlowTheme.of(context)
                                           .bodyLarge,
                                     ),
@@ -604,9 +594,7 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
                                       ),
                                     ),
                                     Text(
-                                      FFLocalizations.of(context).getText(
-                                        '420txis1' /* Habits */,
-                                      ),
+                                      'Habits',
                                       style: FlutterFlowTheme.of(context)
                                           .bodyLarge,
                                     ),
@@ -695,9 +683,7 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
                                       ),
                                     ),
                                     Text(
-                                      FFLocalizations.of(context).getText(
-                                        'qel90sfm' /* Electroménager */,
-                                      ),
+                                      'Electroménager',
                                       style: FlutterFlowTheme.of(context)
                                           .bodyLarge,
                                     ),
@@ -786,9 +772,7 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
                                       ),
                                     ),
                                     Text(
-                                      FFLocalizations.of(context).getText(
-                                        'nti13tuj' /* Objets */,
-                                      ),
+                                      'Objets',
                                       style: FlutterFlowTheme.of(context)
                                           .bodyLarge,
                                     ),
@@ -877,9 +861,7 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
                                       ),
                                     ),
                                     Text(
-                                      FFLocalizations.of(context).getText(
-                                        'onvzvy0x' /* Services */,
-                                      ),
+                                      'Services',
                                       style: FlutterFlowTheme.of(context)
                                           .bodyLarge,
                                     ),

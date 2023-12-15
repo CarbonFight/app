@@ -118,9 +118,7 @@ class _ProfilWidgetState extends State<ProfilWidget> {
                                 padding: const EdgeInsetsDirectional.fromSTEB(
                                     20.0, 0.0, 0.0, 0.0),
                                 child: Text(
-                                  FFLocalizations.of(context).getText(
-                                    'k88at6dd' /* Mon objectif */,
-                                  ),
+                                  'Mon objectif',
                                   style: FlutterFlowTheme.of(context).bodyLarge,
                                 ),
                               ),
@@ -188,9 +186,7 @@ class _ProfilWidgetState extends State<ProfilWidget> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                FFLocalizations.of(context).getText(
-                                  'gtkuqi5o' /* Mes badges */,
-                                ),
+                                'Mes badges',
                                 style: FlutterFlowTheme.of(context).bodyLarge,
                               ),
                               Align(
@@ -258,9 +254,7 @@ class _ProfilWidgetState extends State<ProfilWidget> {
                               padding: const EdgeInsetsDirectional.fromSTEB(
                                   20.0, 0.0, 0.0, 0.0),
                               child: Text(
-                                FFLocalizations.of(context).getText(
-                                  'yj45uxpz' /* Mes informations */,
-                                ),
+                                'Mes informations',
                                 style: FlutterFlowTheme.of(context).bodyLarge,
                               ),
                             ),
@@ -319,9 +313,7 @@ class _ProfilWidgetState extends State<ProfilWidget> {
                               padding: const EdgeInsetsDirectional.fromSTEB(
                                   20.0, 0.0, 0.0, 0.0),
                               child: Text(
-                                FFLocalizations.of(context).getText(
-                                  'j1lhla3n' /* Mon journal */,
-                                ),
+                                'Mon journal',
                                 style: FlutterFlowTheme.of(context).bodyLarge,
                               ),
                             ),
@@ -380,9 +372,7 @@ class _ProfilWidgetState extends State<ProfilWidget> {
                               padding: const EdgeInsetsDirectional.fromSTEB(
                                   20.0, 0.0, 0.0, 0.0),
                               child: Text(
-                                FFLocalizations.of(context).getText(
-                                  'musobdbz' /* L'association CarbonFight */,
-                                ),
+                                'L\'association CarbonFight',
                                 style: FlutterFlowTheme.of(context).bodyLarge,
                               ),
                             ),
@@ -457,16 +447,12 @@ class _ProfilWidgetState extends State<ProfilWidget> {
                             context.pushNamedAuth('signin', context.mounted);
                           },
                           child: Text(
-                            FFLocalizations.of(context).getText(
-                              'n0nwij6r' /* Se déconnecter */,
-                            ),
+                            'Se déconnecter',
                             style: FlutterFlowTheme.of(context).labelSmall,
                           ),
                         ),
                         Text(
-                          FFLocalizations.of(context).getText(
-                            'u7lri6tm' /*  -  */,
-                          ),
+                          ' - ',
                           style: FlutterFlowTheme.of(context).bodyMedium,
                         ),
                         InkWell(
@@ -505,9 +491,7 @@ class _ProfilWidgetState extends State<ProfilWidget> {
                             }
                           },
                           child: Text(
-                            FFLocalizations.of(context).getText(
-                              '3c3oyb8t' /* Supprimer mon compte */,
-                            ),
+                            'Supprimer mon compte',
                             style: FlutterFlowTheme.of(context).labelSmall,
                           ),
                         ),

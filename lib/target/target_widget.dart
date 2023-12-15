@@ -92,9 +92,7 @@ class _TargetWidgetState extends State<TargetWidget> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          FFLocalizations.of(context).getText(
-                            'qahhilg1' /* En Tonnes par an */,
-                          ),
+                          'En Tonnes par an',
                           style: FlutterFlowTheme.of(context).bodyMedium,
                         ),
                       ],
@@ -110,9 +108,7 @@ class _TargetWidgetState extends State<TargetWidget> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            FFLocalizations.of(context).getText(
-                              'hvomtwpc' /* 0 */,
-                            ),
+                            '0',
                             textAlign: TextAlign.center,
                             style: FlutterFlowTheme.of(context).bodyMedium,
                           ),
@@ -144,9 +140,7 @@ class _TargetWidgetState extends State<TargetWidget> {
                             ),
                           ),
                           Text(
-                            FFLocalizations.of(context).getText(
-                              'y2qbs45m' /* 10 */,
-                            ),
+                            '10',
                             style: FlutterFlowTheme.of(context).bodyMedium,
                           ),
                         ],
@@ -179,9 +173,7 @@ class _TargetWidgetState extends State<TargetWidget> {
                                 mainAxisSize: MainAxisSize.max,
                                 children: [
                                   Text(
-                                    FFLocalizations.of(context).getText(
-                                      'mh98qxc1' /* Objectif 0 Tonnes */,
-                                    ),
+                                    'Objectif 0 Tonnes',
                                     style:
                                         FlutterFlowTheme.of(context).bodyLarge,
                                   ),
@@ -191,9 +183,7 @@ class _TargetWidgetState extends State<TargetWidget> {
                                 mainAxisSize: MainAxisSize.max,
                                 children: [
                                   Text(
-                                    FFLocalizations.of(context).getText(
-                                      'mqhpyuia' /* 0 Kg de CO2e par jour */,
-                                    ),
+                                    '0 Kg de CO2e par jour',
                                     style:
                                         FlutterFlowTheme.of(context).labelSmall,
                                   ),
@@ -205,16 +195,13 @@ class _TargetWidgetState extends State<TargetWidget> {
                                 text: TextSpan(
                                   children: [
                                     TextSpan(
-                                      text: FFLocalizations.of(context).getText(
-                                        'l9nyr46d' /* Félicitations ! Vous voulez pa... */,
-                                      ),
+                                      text:
+                                          'Félicitations ! Vous voulez passer en dessous des 2 Tonnes ?',
                                       style: FlutterFlowTheme.of(context)
                                           .bodySmall,
                                     ),
                                     TextSpan(
-                                      text: FFLocalizations.of(context).getText(
-                                        'g0l2v1ov' /*  C'est beau. */,
-                                      ),
+                                      text: ' C\'est beau.',
                                       style: FlutterFlowTheme.of(context)
                                           .bodySmall
                                           .override(
@@ -259,9 +246,7 @@ class _TargetWidgetState extends State<TargetWidget> {
                                 mainAxisSize: MainAxisSize.max,
                                 children: [
                                   Text(
-                                    FFLocalizations.of(context).getText(
-                                      'mtfc9p6d' /* Objectif 2 Tonnes */,
-                                    ),
+                                    'Objectif 2 Tonnes',
                                     style:
                                         FlutterFlowTheme.of(context).bodyLarge,
                                   ),
@@ -271,9 +256,7 @@ class _TargetWidgetState extends State<TargetWidget> {
                                 mainAxisSize: MainAxisSize.max,
                                 children: [
                                   Text(
-                                    FFLocalizations.of(context).getText(
-                                      '9sjoo82w' /* 5,5 Kg de CO2e par jour */,
-                                    ),
+                                    '5,5 Kg de CO2e par jour',
                                     style:
                                         FlutterFlowTheme.of(context).labelSmall,
                                   ),
@@ -285,16 +268,14 @@ class _TargetWidgetState extends State<TargetWidget> {
                                 text: TextSpan(
                                   children: [
                                     TextSpan(
-                                      text: FFLocalizations.of(context).getText(
-                                        'y8du7bmu' /* Afin de limiter les effets du ... */,
-                                      ),
+                                      text:
+                                          'Afin de limiter les effets du changement climatique, l’Accord de Paris (2015) a fixé un objectif : limiter la hausse de la température ',
                                       style: FlutterFlowTheme.of(context)
                                           .bodySmall,
                                     ),
                                     TextSpan(
-                                      text: FFLocalizations.of(context).getText(
-                                        'orfqo4ci' /* en-dessous de 2 degrés d’ici l... */,
-                                      ),
+                                      text:
+                                          'en-dessous de 2 degrés d’ici la fin du siècle.\n\n',
                                       style: FlutterFlowTheme.of(context)
                                           .bodySmall
                                           .override(
@@ -304,16 +285,14 @@ class _TargetWidgetState extends State<TargetWidget> {
                                           ),
                                     ),
                                     TextSpan(
-                                      text: FFLocalizations.of(context).getText(
-                                        'k4teag56' /* Pour y arriver, nous devons ré... */,
-                                      ),
+                                      text:
+                                          'Pour y arriver, nous devons réduire nos émissions de gaz à effet de serre, et notamment passer à ',
                                       style: FlutterFlowTheme.of(context)
                                           .bodySmall,
                                     ),
                                     TextSpan(
-                                      text: FFLocalizations.of(context).getText(
-                                        'hssfv10p' /* 2 tonnes équivalent CO2 par an... */,
-                                      ),
+                                      text:
+                                          '2 tonnes équivalent CO2 par an et par habitant d’ici 2050.',
                                       style: FlutterFlowTheme.of(context)
                                           .bodySmall
                                           .override(
@@ -358,9 +337,7 @@ class _TargetWidgetState extends State<TargetWidget> {
                                 mainAxisSize: MainAxisSize.max,
                                 children: [
                                   Text(
-                                    FFLocalizations.of(context).getText(
-                                      '69awk3xn' /* Objectif 4 Tonnes */,
-                                    ),
+                                    'Objectif 4 Tonnes',
                                     style:
                                         FlutterFlowTheme.of(context).bodyLarge,
                                   ),
@@ -370,9 +347,7 @@ class _TargetWidgetState extends State<TargetWidget> {
                                 mainAxisSize: MainAxisSize.max,
                                 children: [
                                   Text(
-                                    FFLocalizations.of(context).getText(
-                                      'tmslm9wk' /* 11 Kg de CO2e par jour */,
-                                    ),
+                                    '11 Kg de CO2e par jour',
                                     style:
                                         FlutterFlowTheme.of(context).labelSmall,
                                   ),
@@ -384,19 +359,13 @@ class _TargetWidgetState extends State<TargetWidget> {
                                 text: TextSpan(
                                   children: [
                                     TextSpan(
-                                      text: FFLocalizations.of(context).getText(
-                                        'cllnbmxy' /* Un objectif de 4 Tonnes de  CO... */,
-                                      ),
+                                      text:
+                                          'Un objectif de 4 Tonnes de  CO2e/an, c\'est l’équivalent d’un citoyen d’Arménie, de République Dominicaine, de Guinée, du Liberia, du Pérou ou encore de la Tanzanie.',
                                       style: FlutterFlowTheme.of(context)
                                           .bodySmall,
                                     ),
                                     TextSpan(
-                                      text: FFLocalizations.of(context).getText(
-                                        '9pa56q8p' /* 
-C'est déjà pas mal ! 
- */
-                                        ,
-                                      ),
+                                      text: '\nC\'est déjà pas mal ! \n',
                                       style: FlutterFlowTheme.of(context)
                                           .bodySmall
                                           .override(
@@ -406,18 +375,14 @@ C'est déjà pas mal !
                                           ),
                                     ),
                                     TextSpan(
-                                      text: FFLocalizations.of(context).getText(
-                                        'xkmhp3u3' /* 
-Encore 600 kg CO2e, et vous ê... */
-                                        ,
-                                      ),
+                                      text:
+                                          '\nEncore 600 kg CO2e, et vous êtes à la moyenne Africaine. Bel effort, cependant, ',
                                       style: FlutterFlowTheme.of(context)
                                           .bodySmall,
                                     ),
                                     TextSpan(
-                                      text: FFLocalizations.of(context).getText(
-                                        '7pjbsdxp' /* le monde va se réchauffer entr... */,
-                                      ),
+                                      text:
+                                          'le monde va se réchauffer entre 2 et 2,8°C.',
                                       style: FlutterFlowTheme.of(context)
                                           .bodySmall
                                           .override(
@@ -462,9 +427,7 @@ Encore 600 kg CO2e, et vous ê... */
                                 mainAxisSize: MainAxisSize.max,
                                 children: [
                                   Text(
-                                    FFLocalizations.of(context).getText(
-                                      '9vcffv6m' /* Objectif 6 Tonnes */,
-                                    ),
+                                    'Objectif 6 Tonnes',
                                     style:
                                         FlutterFlowTheme.of(context).bodyLarge,
                                   ),
@@ -474,9 +437,7 @@ Encore 600 kg CO2e, et vous ê... */
                                 mainAxisSize: MainAxisSize.max,
                                 children: [
                                   Text(
-                                    FFLocalizations.of(context).getText(
-                                      'lzgjd6ml' /* 16.5 Kg de CO2e par jour */,
-                                    ),
+                                    '16.5 Kg de CO2e par jour',
                                     style:
                                         FlutterFlowTheme.of(context).labelSmall,
                                   ),
@@ -488,18 +449,13 @@ Encore 600 kg CO2e, et vous ê... */
                                 text: TextSpan(
                                   children: [
                                     TextSpan(
-                                      text: FFLocalizations.of(context).getText(
-                                        'r3d63624' /* A 6 Tonnes de CO2e/an, vous ém... */,
-                                      ),
+                                      text:
+                                          'A 6 Tonnes de CO2e/an, vous émettez autant qu’un citoyen d’Angola, des Îles Vierges Brittaniques,  de la République Démocratique du Congo, du Liban, du Nicaragua,  du Panama, ou encore du Vietnam.\n\nC\'est un objectif juste en dessous de la moyenne mondiale de 7 Tonnes de CO2e/an et vous êtes aux environs de la moyenne asiatique. \n',
                                       style: FlutterFlowTheme.of(context)
                                           .bodySmall,
                                     ),
                                     TextSpan(
-                                      text: FFLocalizations.of(context).getText(
-                                        'dzd61ikf' /* Vous êtes sur la bonne voie !
- */
-                                        ,
-                                      ),
+                                      text: 'Vous êtes sur la bonne voie !\n',
                                       style: FlutterFlowTheme.of(context)
                                           .bodySmall
                                           .override(
@@ -509,18 +465,14 @@ Encore 600 kg CO2e, et vous ê... */
                                           ),
                                     ),
                                     TextSpan(
-                                      text: FFLocalizations.of(context).getText(
-                                        '8ua9tbuj' /* 
-Mais cela ne suffit toujours ... */
-                                        ,
-                                      ),
+                                      text:
+                                          '\nMais cela ne suffit toujours pas : avec une telle empreinte carbone et si tout le monde faisait comme vous, vous contribueriez à ',
                                       style: FlutterFlowTheme.of(context)
                                           .bodySmall,
                                     ),
                                     TextSpan(
-                                      text: FFLocalizations.of(context).getText(
-                                        '08anyco7' /* un monde qui se réchaufferait ... */,
-                                      ),
+                                      text:
+                                          'un monde qui se réchaufferait entre 2,8°C et 3,2°C.',
                                       style: FlutterFlowTheme.of(context)
                                           .bodySmall
                                           .override(
@@ -565,9 +517,7 @@ Mais cela ne suffit toujours ... */
                                 mainAxisSize: MainAxisSize.max,
                                 children: [
                                   Text(
-                                    FFLocalizations.of(context).getText(
-                                      'mehah468' /* Objectif 8 Tonnes */,
-                                    ),
+                                    'Objectif 8 Tonnes',
                                     style:
                                         FlutterFlowTheme.of(context).bodyLarge,
                                   ),
@@ -577,9 +527,7 @@ Mais cela ne suffit toujours ... */
                                 mainAxisSize: MainAxisSize.max,
                                 children: [
                                   Text(
-                                    FFLocalizations.of(context).getText(
-                                      'fiu167qz' /* 22 Kg de CO2e par jour */,
-                                    ),
+                                    '22 Kg de CO2e par jour',
                                     style: FlutterFlowTheme.of(context)
                                         .labelMedium,
                                   ),
@@ -591,19 +539,13 @@ Mais cela ne suffit toujours ... */
                                 text: TextSpan(
                                   children: [
                                     TextSpan(
-                                      text: FFLocalizations.of(context).getText(
-                                        'ov8zigjr' /* A 8 Tonnes de CO2e/an, vous mé... */,
-                                      ),
+                                      text:
+                                          'A 8 Tonnes de CO2e/an, vous méttez autant qu\'un citoyen  du Botswana, d’Israel, d’Indonésie ou de Lettonie.\n\nRéduisez encore d’ 1 Tonne de CO2e/an et vous êtes à la moyenne mondiale actuelle.\n',
                                       style: FlutterFlowTheme.of(context)
                                           .bodySmall,
                                     ),
                                     TextSpan(
-                                      text: FFLocalizations.of(context).getText(
-                                        'lmw491sy' /* Mais ça ne suffira pas !
-
- */
-                                        ,
-                                      ),
+                                      text: 'Mais ça ne suffira pas !\n\n',
                                       style: FlutterFlowTheme.of(context)
                                           .bodySmall
                                           .override(
@@ -613,16 +555,14 @@ Mais cela ne suffit toujours ... */
                                           ),
                                     ),
                                     TextSpan(
-                                      text: FFLocalizations.of(context).getText(
-                                        'pwrhzzrx' /* Avec une telle empreinte carbo... */,
-                                      ),
+                                      text:
+                                          'Avec une telle empreinte carbone et si tout le monde faisait comme vous, vous contribueriez à',
                                       style: FlutterFlowTheme.of(context)
                                           .bodySmall,
                                     ),
                                     TextSpan(
-                                      text: FFLocalizations.of(context).getText(
-                                        'il5u00hj' /*  un monde qui se réchaufferait... */,
-                                      ),
+                                      text:
+                                          ' un monde qui se réchaufferait entre 3,2°C et 3,6°C.',
                                       style: FlutterFlowTheme.of(context)
                                           .bodySmall
                                           .override(
@@ -667,9 +607,7 @@ Mais cela ne suffit toujours ... */
                                 mainAxisSize: MainAxisSize.max,
                                 children: [
                                   Text(
-                                    FFLocalizations.of(context).getText(
-                                      'a08g9fvn' /* Objectif 10 Tonnes */,
-                                    ),
+                                    'Objectif 10 Tonnes',
                                     style:
                                         FlutterFlowTheme.of(context).bodyLarge,
                                   ),
@@ -679,9 +617,7 @@ Mais cela ne suffit toujours ... */
                                 mainAxisSize: MainAxisSize.max,
                                 children: [
                                   Text(
-                                    FFLocalizations.of(context).getText(
-                                      'rvyfexgq' /* 27.5 Kg de CO2e par jour */,
-                                    ),
+                                    '27.5 Kg de CO2e par jour',
                                     style: FlutterFlowTheme.of(context)
                                         .labelMedium,
                                   ),
@@ -693,16 +629,14 @@ Mais cela ne suffit toujours ... */
                                 text: TextSpan(
                                   children: [
                                     TextSpan(
-                                      text: FFLocalizations.of(context).getText(
-                                        'oact0k6j' /* Avec 10 Tonnes de CO2e/an, vou... */,
-                                      ),
+                                      text:
+                                          'Avec 10 Tonnes de CO2e/an, vous émettez autant qu\'un citoyen de Biélorussie, de Bolivie, du Brésil, d’Estonie, d’Iran, de Libye ou de Pologne.\n',
                                       style: FlutterFlowTheme.of(context)
                                           .bodySmall,
                                     ),
                                     TextSpan(
-                                      text: FFLocalizations.of(context).getText(
-                                        'b0u8i0k9' /* Là, c'est franchement pas poss... */,
-                                      ),
+                                      text:
+                                          'Là, c\'est franchement pas possible. Vous pouvez faire mieux.\n',
                                       style: FlutterFlowTheme.of(context)
                                           .bodySmall
                                           .override(
@@ -712,18 +646,14 @@ Mais cela ne suffit toujours ... */
                                           ),
                                     ),
                                     TextSpan(
-                                      text: FFLocalizations.of(context).getText(
-                                        'xqrs1w7h' /* 
-Si tout le monde était comme ... */
-                                        ,
-                                      ),
+                                      text:
+                                          '\nSi tout le monde était comme vous, ',
                                       style: FlutterFlowTheme.of(context)
                                           .bodySmall,
                                     ),
                                     TextSpan(
-                                      text: FFLocalizations.of(context).getText(
-                                        '81ey4dsx' /* le monde se réchaufferait selo... */,
-                                      ),
+                                      text:
+                                          'le monde se réchaufferait selon les pires prévisions du GIEC entre 3,6°C et 4,4°C.',
                                       style: FlutterFlowTheme.of(context)
                                           .bodySmall
                                           .override(
@@ -753,9 +683,7 @@ Si tout le monde était comme ... */
 
                           context.pushNamed('profil');
                         },
-                        text: FFLocalizations.of(context).getText(
-                          'fte7orbo' /* Valider */,
-                        ),
+                        text: 'Valider',
                         options: FFButtonOptions(
                           width: 290.0,
                           height: 40.0,

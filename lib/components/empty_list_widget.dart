@@ -56,9 +56,7 @@ class _EmptyListWidgetState extends State<EmptyListWidget> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                FFLocalizations.of(context).getText(
-                  'tbss86b8' /* C'est tout vide ! */,
-                ),
+                'C\'est tout vide !',
                 textAlign: TextAlign.center,
                 style: FlutterFlowTheme.of(context).headlineSmall.override(
                       fontFamily: 'Poppins',
@@ -76,9 +74,7 @@ class _EmptyListWidgetState extends State<EmptyListWidget> {
             children: [
               Expanded(
                 child: Text(
-                  FFLocalizations.of(context).getText(
-                    'pms16trg' /* Ajoutez votre première action ... */,
-                  ),
+                  'Ajoutez votre première action de la journée !',
                   textAlign: TextAlign.center,
                   style: FlutterFlowTheme.of(context).bodySmall,
                 ),

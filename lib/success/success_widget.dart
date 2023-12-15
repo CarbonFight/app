@@ -170,12 +170,7 @@ class _SuccessWidgetState extends State<SuccessWidget> {
                                         text: TextSpan(
                                           children: [
                                             TextSpan(
-                                              text: FFLocalizations.of(context)
-                                                  .getText(
-                                                '6pql7wtd' /* Score 
- */
-                                                ,
-                                              ),
+                                              text: 'Score \n',
                                               style: FlutterFlowTheme.of(
                                                       context)
                                                   .titleLarge
@@ -205,10 +200,7 @@ class _SuccessWidgetState extends State<SuccessWidget> {
                                                   ),
                                             ),
                                             TextSpan(
-                                              text: FFLocalizations.of(context)
-                                                  .getText(
-                                                'kgei9jen' /*  /  */,
-                                              ),
+                                              text: ' / ',
                                               style: FlutterFlowTheme.of(
                                                       context)
                                                   .titleLarge
@@ -286,9 +278,7 @@ class _SuccessWidgetState extends State<SuccessWidget> {
                                   size: 18.0,
                                 ),
                                 Text(
-                                  FFLocalizations.of(context).getText(
-                                    '54jjnnlo' /* Validé */,
-                                  ),
+                                  'Validé',
                                   style:
                                       FlutterFlowTheme.of(context).labelSmall,
                                 ),
@@ -298,9 +288,7 @@ class _SuccessWidgetState extends State<SuccessWidget> {
                                   size: 24.0,
                                 ),
                                 Text(
-                                  FFLocalizations.of(context).getText(
-                                    'ks8w1o9m' /* Pas encore */,
-                                  ),
+                                  'Pas encore',
                                   style:
                                       FlutterFlowTheme.of(context).labelSmall,
                                 ),
@@ -310,9 +298,7 @@ class _SuccessWidgetState extends State<SuccessWidget> {
                                   size: 24.0,
                                 ),
                                 Text(
-                                  FFLocalizations.of(context).getText(
-                                    's4ikgs7s' /* Non applicable */,
-                                  ),
+                                  'Non applicable',
                                   style:
                                       FlutterFlowTheme.of(context).labelSmall,
                                 ),
@@ -360,11 +346,7 @@ class _SuccessWidgetState extends State<SuccessWidget> {
                                                 text: TextSpan(
                                                   children: [
                                                     TextSpan(
-                                                      text: FFLocalizations.of(
-                                                              context)
-                                                          .getText(
-                                                        '3qcb0plf' /* Logement  */,
-                                                      ),
+                                                      text: 'Logement ',
                                                       style:
                                                           FlutterFlowTheme.of(
                                                                   context)
@@ -385,11 +367,7 @@ class _SuccessWidgetState extends State<SuccessWidget> {
                                                               .bodyMedium,
                                                     ),
                                                     TextSpan(
-                                                      text: FFLocalizations.of(
-                                                              context)
-                                                          .getText(
-                                                        'l6gs89ed' /*  /  */,
-                                                      ),
+                                                      text: ' / ',
                                                       style:
                                                           FlutterFlowTheme.of(
                                                                   context)
@@ -481,13 +459,8 @@ class _SuccessWidgetState extends State<SuccessWidget> {
                                                               text: TextSpan(
                                                                 children: [
                                                                   TextSpan(
-                                                                    text: FFLocalizations.of(
-                                                                            context)
-                                                                        .getText(
-                                                                      'kqus3mem' /* Led the sunshine
- */
-                                                                      ,
-                                                                    ),
+                                                                    text:
+                                                                        'Led the sunshine\n',
                                                                     style: FlutterFlowTheme.of(
                                                                             context)
                                                                         .bodyMedium
@@ -499,11 +472,8 @@ class _SuccessWidgetState extends State<SuccessWidget> {
                                                                         ),
                                                                   ),
                                                                   TextSpan(
-                                                                    text: FFLocalizations.of(
-                                                                            context)
-                                                                        .getText(
-                                                                      'y7fkbvpp' /* J’utilise uniquement des lampe... */,
-                                                                    ),
+                                                                    text:
+                                                                        'J’utilise uniquement des lampes LED dans mon logement.',
                                                                     style: FlutterFlowTheme.of(
                                                                             context)
                                                                         .labelSmall,
@@ -741,13 +711,8 @@ class _SuccessWidgetState extends State<SuccessWidget> {
                                                           text: TextSpan(
                                                             children: [
                                                               TextSpan(
-                                                                text: FFLocalizations.of(
-                                                                        context)
-                                                                    .getText(
-                                                                  'idif43kc' /* Non merci !
- */
-                                                                  ,
-                                                                ),
+                                                                text:
+                                                                    'Non merci !\n',
                                                                 style: FlutterFlowTheme.of(
                                                                         context)
                                                                     .bodyMedium
@@ -760,11 +725,8 @@ class _SuccessWidgetState extends State<SuccessWidget> {
                                                                     ),
                                                               ),
                                                               TextSpan(
-                                                                text: FFLocalizations.of(
-                                                                        context)
-                                                                    .getText(
-                                                                  'o4uj1wmj' /* J’ai indiqué sur ma boîte au l... */,
-                                                                ),
+                                                                text:
+                                                                    'J’ai indiqué sur ma boîte au lettre refuser la publicité par courrier.',
                                                                 style: FlutterFlowTheme.of(
                                                                         context)
                                                                     .labelSmall,
@@ -974,11 +936,8 @@ class _SuccessWidgetState extends State<SuccessWidget> {
                                                           text: TextSpan(
                                                             children: [
                                                               TextSpan(
-                                                                text: FFLocalizations.of(
-                                                                        context)
-                                                                    .getText(
-                                                                  '8tyijt6a' /* Je choisis la solution offensi... */,
-                                                                ),
+                                                                text:
+                                                                    'Je choisis la solution offensive\n',
                                                                 style: FlutterFlowTheme.of(
                                                                         context)
                                                                     .bodyMedium
@@ -991,11 +950,8 @@ class _SuccessWidgetState extends State<SuccessWidget> {
                                                                     ),
                                                               ),
                                                               TextSpan(
-                                                                text: FFLocalizations.of(
-                                                                        context)
-                                                                    .getText(
-                                                                  '31x51lvh' /* J’ai choisi ca y est. J’activé... */,
-                                                                ),
+                                                                text:
+                                                                    'J’ai choisi ca y est. J’activé l’option verte sur mes contrats d’énergie.',
                                                                 style: FlutterFlowTheme.of(
                                                                         context)
                                                                     .labelSmall,
@@ -1205,13 +1161,8 @@ class _SuccessWidgetState extends State<SuccessWidget> {
                                                           text: TextSpan(
                                                             children: [
                                                               TextSpan(
-                                                                text: FFLocalizations.of(
-                                                                        context)
-                                                                    .getText(
-                                                                  'v0p6pl0i' /* Bain voyons
- */
-                                                                  ,
-                                                                ),
+                                                                text:
+                                                                    'Bain voyons\n',
                                                                 style: FlutterFlowTheme.of(
                                                                         context)
                                                                     .bodyMedium
@@ -1224,11 +1175,8 @@ class _SuccessWidgetState extends State<SuccessWidget> {
                                                                     ),
                                                               ),
                                                               TextSpan(
-                                                                text: FFLocalizations.of(
-                                                                        context)
-                                                                    .getText(
-                                                                  'ipf6tpnd' /* Je ne prends plus de bain, du ... */,
-                                                                ),
+                                                                text:
+                                                                    'Je ne prends plus de bain, du tout. Uniquement des douches.',
                                                                 style: FlutterFlowTheme.of(
                                                                         context)
                                                                     .labelSmall,
@@ -1438,13 +1386,8 @@ class _SuccessWidgetState extends State<SuccessWidget> {
                                                           text: TextSpan(
                                                             children: [
                                                               TextSpan(
-                                                                text: FFLocalizations.of(
-                                                                        context)
-                                                                    .getText(
-                                                                  'b90i6mp1' /* L’été sera chaud
- */
-                                                                  ,
-                                                                ),
+                                                                text:
+                                                                    'L’été sera chaud\n',
                                                                 style: FlutterFlowTheme.of(
                                                                         context)
                                                                     .bodyMedium
@@ -1457,11 +1400,8 @@ class _SuccessWidgetState extends State<SuccessWidget> {
                                                                     ),
                                                               ),
                                                               TextSpan(
-                                                                text: FFLocalizations.of(
-                                                                        context)
-                                                                    .getText(
-                                                                  '6xg11k2i' /* Mon logement est équipe d'un t... */,
-                                                                ),
+                                                                text:
+                                                                    'Mon logement est équipe d\'un thermostat.',
                                                                 style: FlutterFlowTheme.of(
                                                                         context)
                                                                     .labelSmall,
@@ -1671,13 +1611,8 @@ class _SuccessWidgetState extends State<SuccessWidget> {
                                                           text: TextSpan(
                                                             children: [
                                                               TextSpan(
-                                                                text: FFLocalizations.of(
-                                                                        context)
-                                                                    .getText(
-                                                                  'fewzltem' /* 20h plus 7h… hhumm
- */
-                                                                  ,
-                                                                ),
+                                                                text:
+                                                                    '20h plus 7h… hhumm\n',
                                                                 style: FlutterFlowTheme.of(
                                                                         context)
                                                                     .bodyMedium
@@ -1690,11 +1625,8 @@ class _SuccessWidgetState extends State<SuccessWidget> {
                                                                     ),
                                                               ),
                                                               TextSpan(
-                                                                text: FFLocalizations.of(
-                                                                        context)
-                                                                    .getText(
-                                                                  'br3eale2' /* Je démarre mes équipements pil... */,
-                                                                ),
+                                                                text:
+                                                                    'Je démarre mes équipements pilotables en heures creuses.',
                                                                 style: FlutterFlowTheme.of(
                                                                         context)
                                                                     .labelSmall,
@@ -1904,13 +1836,8 @@ class _SuccessWidgetState extends State<SuccessWidget> {
                                                           text: TextSpan(
                                                             children: [
                                                               TextSpan(
-                                                                text: FFLocalizations.of(
-                                                                        context)
-                                                                    .getText(
-                                                                  'v7nug5il' /* C’est pas Versailles ici !
- */
-                                                                  ,
-                                                                ),
+                                                                text:
+                                                                    'C’est pas Versailles ici !\n',
                                                                 style: FlutterFlowTheme.of(
                                                                         context)
                                                                     .bodyMedium
@@ -1923,11 +1850,8 @@ class _SuccessWidgetState extends State<SuccessWidget> {
                                                                     ),
                                                               ),
                                                               TextSpan(
-                                                                text: FFLocalizations.of(
-                                                                        context)
-                                                                    .getText(
-                                                                  '2bv6eish' /* Je veille à bien éteindre tout... */,
-                                                                ),
+                                                                text:
+                                                                    'Je veille à bien éteindre toutes les lampes inutilement allumées.',
                                                                 style: FlutterFlowTheme.of(
                                                                         context)
                                                                     .labelSmall,
@@ -2141,11 +2065,7 @@ class _SuccessWidgetState extends State<SuccessWidget> {
                                                 text: TextSpan(
                                                   children: [
                                                     TextSpan(
-                                                      text: FFLocalizations.of(
-                                                              context)
-                                                          .getText(
-                                                        'xhn5t0q9' /* Habits  */,
-                                                      ),
+                                                      text: 'Habits ',
                                                       style:
                                                           FlutterFlowTheme.of(
                                                                   context)
@@ -2166,11 +2086,7 @@ class _SuccessWidgetState extends State<SuccessWidget> {
                                                               .bodyMedium,
                                                     ),
                                                     TextSpan(
-                                                      text: FFLocalizations.of(
-                                                              context)
-                                                          .getText(
-                                                        '0j9k9sr6' /*  /  */,
-                                                      ),
+                                                      text: ' / ',
                                                       style:
                                                           FlutterFlowTheme.of(
                                                                   context)
@@ -2255,13 +2171,8 @@ class _SuccessWidgetState extends State<SuccessWidget> {
                                                           text: TextSpan(
                                                             children: [
                                                               TextSpan(
-                                                                text: FFLocalizations.of(
-                                                                        context)
-                                                                    .getText(
-                                                                  'mtkfixhz' /* Elle est belle ta déco
- */
-                                                                  ,
-                                                                ),
+                                                                text:
+                                                                    'Elle est belle ta déco\n',
                                                                 style: FlutterFlowTheme.of(
                                                                         context)
                                                                     .bodyMedium
@@ -2274,11 +2185,8 @@ class _SuccessWidgetState extends State<SuccessWidget> {
                                                                     ),
                                                               ),
                                                               TextSpan(
-                                                                text: FFLocalizations.of(
-                                                                        context)
-                                                                    .getText(
-                                                                  'sbw2ve56' /* Je sèche en majorité mes vêtem... */,
-                                                                ),
+                                                                text:
+                                                                    'Je sèche en majorité mes vêtements sur un étendoir, sans utiliser de sèche linge.',
                                                                 style: FlutterFlowTheme.of(
                                                                         context)
                                                                     .labelSmall,
@@ -2491,13 +2399,8 @@ class _SuccessWidgetState extends State<SuccessWidget> {
                                                             text: TextSpan(
                                                               children: [
                                                                 TextSpan(
-                                                                  text: FFLocalizations.of(
-                                                                          context)
-                                                                      .getText(
-                                                                    'zcjbhgzc' /* C’est une tâche de propre
- */
-                                                                    ,
-                                                                  ),
+                                                                  text:
+                                                                      'C’est une tâche de propre\n',
                                                                   style: FlutterFlowTheme.of(
                                                                           context)
                                                                       .bodyMedium
@@ -2509,11 +2412,8 @@ class _SuccessWidgetState extends State<SuccessWidget> {
                                                                       ),
                                                                 ),
                                                                 TextSpan(
-                                                                  text: FFLocalizations.of(
-                                                                          context)
-                                                                      .getText(
-                                                                    'ixevomm9' /* Je lave uniquement mes vêtemen... */,
-                                                                  ),
+                                                                  text:
+                                                                      'Je lave uniquement mes vêtements à froid (30°).',
                                                                   style: FlutterFlowTheme.of(
                                                                           context)
                                                                       .labelSmall,
@@ -2730,13 +2630,8 @@ class _SuccessWidgetState extends State<SuccessWidget> {
                                                             text: TextSpan(
                                                               children: [
                                                                 TextSpan(
-                                                                  text: FFLocalizations.of(
-                                                                          context)
-                                                                      .getText(
-                                                                    't470aret' /* “Etat presque quasiment neuf”
- */
-                                                                    ,
-                                                                  ),
+                                                                  text:
+                                                                      '“Etat presque quasiment neuf”\n',
                                                                   style: FlutterFlowTheme.of(
                                                                           context)
                                                                       .bodyMedium
@@ -2748,11 +2643,8 @@ class _SuccessWidgetState extends State<SuccessWidget> {
                                                                       ),
                                                                 ),
                                                                 TextSpan(
-                                                                  text: FFLocalizations.of(
-                                                                          context)
-                                                                      .getText(
-                                                                    'z3e6qkbi' /* J’achète majoritairement des v... */,
-                                                                  ),
+                                                                  text:
+                                                                      'J’achète majoritairement des vêtements de seconde main.',
                                                                   style: FlutterFlowTheme.of(
                                                                           context)
                                                                       .labelSmall,
@@ -2968,13 +2860,8 @@ class _SuccessWidgetState extends State<SuccessWidget> {
                                                             text: TextSpan(
                                                               children: [
                                                                 TextSpan(
-                                                                  text: FFLocalizations.of(
-                                                                          context)
-                                                                      .getText(
-                                                                    't3yr2ili' /* Neuf d'occasion
- */
-                                                                    ,
-                                                                  ),
+                                                                  text:
+                                                                      'Neuf d\'occasion\n',
                                                                   style: FlutterFlowTheme.of(
                                                                           context)
                                                                       .bodyMedium
@@ -2986,11 +2873,8 @@ class _SuccessWidgetState extends State<SuccessWidget> {
                                                                       ),
                                                                 ),
                                                                 TextSpan(
-                                                                  text: FFLocalizations.of(
-                                                                          context)
-                                                                      .getText(
-                                                                    'mogtoxc5' /* Je dépose mes vêtements inutil... */,
-                                                                  ),
+                                                                  text:
+                                                                      'Je dépose mes vêtements inutilisés dans des bacs de don, ou les revends en seconde main.',
                                                                   style: FlutterFlowTheme.of(
                                                                           context)
                                                                       .labelSmall,
@@ -3207,11 +3091,7 @@ class _SuccessWidgetState extends State<SuccessWidget> {
                                                 text: TextSpan(
                                                   children: [
                                                     TextSpan(
-                                                      text: FFLocalizations.of(
-                                                              context)
-                                                          .getText(
-                                                        'teiwpcq7' /* Electroménager  */,
-                                                      ),
+                                                      text: 'Electroménager ',
                                                       style:
                                                           FlutterFlowTheme.of(
                                                                   context)
@@ -3232,11 +3112,7 @@ class _SuccessWidgetState extends State<SuccessWidget> {
                                                               .bodyMedium,
                                                     ),
                                                     TextSpan(
-                                                      text: FFLocalizations.of(
-                                                              context)
-                                                          .getText(
-                                                        'bo36e2uo' /*  /  */,
-                                                      ),
+                                                      text: ' / ',
                                                       style:
                                                           FlutterFlowTheme.of(
                                                                   context)
@@ -3322,13 +3198,8 @@ class _SuccessWidgetState extends State<SuccessWidget> {
                                                           text: TextSpan(
                                                             children: [
                                                               TextSpan(
-                                                                text: FFLocalizations.of(
-                                                                        context)
-                                                                    .getText(
-                                                                  'arlu92wq' /* Travaux en cours
- */
-                                                                  ,
-                                                                ),
+                                                                text:
+                                                                    'Travaux en cours\n',
                                                                 style: FlutterFlowTheme.of(
                                                                         context)
                                                                     .bodyMedium
@@ -3341,11 +3212,8 @@ class _SuccessWidgetState extends State<SuccessWidget> {
                                                                     ),
                                                               ),
                                                               TextSpan(
-                                                                text: FFLocalizations.of(
-                                                                        context)
-                                                                    .getText(
-                                                                  'iuyrbklh' /* Les succes seront bientôt impl... */,
-                                                                ),
+                                                                text:
+                                                                    'Les succes seront bientôt implémentés',
                                                                 style: FlutterFlowTheme.of(
                                                                         context)
                                                                     .labelSmall,
@@ -3435,11 +3303,7 @@ class _SuccessWidgetState extends State<SuccessWidget> {
                                                 text: TextSpan(
                                                   children: [
                                                     TextSpan(
-                                                      text: FFLocalizations.of(
-                                                              context)
-                                                          .getText(
-                                                        '3h0ygbh1' /* Mobilier  */,
-                                                      ),
+                                                      text: 'Mobilier ',
                                                       style:
                                                           FlutterFlowTheme.of(
                                                                   context)
@@ -3460,11 +3324,7 @@ class _SuccessWidgetState extends State<SuccessWidget> {
                                                               .bodyMedium,
                                                     ),
                                                     TextSpan(
-                                                      text: FFLocalizations.of(
-                                                              context)
-                                                          .getText(
-                                                        'zdqgp09w' /*  /  */,
-                                                      ),
+                                                      text: ' / ',
                                                       style:
                                                           FlutterFlowTheme.of(
                                                                   context)
@@ -3550,13 +3410,8 @@ class _SuccessWidgetState extends State<SuccessWidget> {
                                                           text: TextSpan(
                                                             children: [
                                                               TextSpan(
-                                                                text: FFLocalizations.of(
-                                                                        context)
-                                                                    .getText(
-                                                                  '5re7cxe5' /* Travaux en cours
- */
-                                                                  ,
-                                                                ),
+                                                                text:
+                                                                    'Travaux en cours\n',
                                                                 style: FlutterFlowTheme.of(
                                                                         context)
                                                                     .bodyMedium
@@ -3569,11 +3424,8 @@ class _SuccessWidgetState extends State<SuccessWidget> {
                                                                     ),
                                                               ),
                                                               TextSpan(
-                                                                text: FFLocalizations.of(
-                                                                        context)
-                                                                    .getText(
-                                                                  '0nskongh' /* Les succes seront bientôt impl... */,
-                                                                ),
+                                                                text:
+                                                                    'Les succes seront bientôt implémentés',
                                                                 style: FlutterFlowTheme.of(
                                                                         context)
                                                                     .labelSmall,
@@ -3663,11 +3515,7 @@ class _SuccessWidgetState extends State<SuccessWidget> {
                                                 text: TextSpan(
                                                   children: [
                                                     TextSpan(
-                                                      text: FFLocalizations.of(
-                                                              context)
-                                                          .getText(
-                                                        'klzvcvym' /* Numérique  */,
-                                                      ),
+                                                      text: 'Numérique ',
                                                       style:
                                                           FlutterFlowTheme.of(
                                                                   context)
@@ -3688,11 +3536,7 @@ class _SuccessWidgetState extends State<SuccessWidget> {
                                                               .bodyMedium,
                                                     ),
                                                     TextSpan(
-                                                      text: FFLocalizations.of(
-                                                              context)
-                                                          .getText(
-                                                        '152boczw' /*  /  */,
-                                                      ),
+                                                      text: ' / ',
                                                       style:
                                                           FlutterFlowTheme.of(
                                                                   context)
@@ -3778,13 +3622,8 @@ class _SuccessWidgetState extends State<SuccessWidget> {
                                                           text: TextSpan(
                                                             children: [
                                                               TextSpan(
-                                                                text: FFLocalizations.of(
-                                                                        context)
-                                                                    .getText(
-                                                                  'ty1hcxvx' /* Travaux en cours
- */
-                                                                  ,
-                                                                ),
+                                                                text:
+                                                                    'Travaux en cours\n',
                                                                 style: FlutterFlowTheme.of(
                                                                         context)
                                                                     .bodyMedium
@@ -3797,11 +3636,8 @@ class _SuccessWidgetState extends State<SuccessWidget> {
                                                                     ),
                                                               ),
                                                               TextSpan(
-                                                                text: FFLocalizations.of(
-                                                                        context)
-                                                                    .getText(
-                                                                  '3ghhlf77' /* Les succes seront bientôt impl... */,
-                                                                ),
+                                                                text:
+                                                                    'Les succes seront bientôt implémentés',
                                                                 style: FlutterFlowTheme.of(
                                                                         context)
                                                                     .labelSmall,
@@ -3891,11 +3727,7 @@ class _SuccessWidgetState extends State<SuccessWidget> {
                                                 text: TextSpan(
                                                   children: [
                                                     TextSpan(
-                                                      text: FFLocalizations.of(
-                                                              context)
-                                                          .getText(
-                                                        '1p6kory6' /* Objets  */,
-                                                      ),
+                                                      text: 'Objets ',
                                                       style:
                                                           FlutterFlowTheme.of(
                                                                   context)
@@ -3916,11 +3748,7 @@ class _SuccessWidgetState extends State<SuccessWidget> {
                                                               .bodyMedium,
                                                     ),
                                                     TextSpan(
-                                                      text: FFLocalizations.of(
-                                                              context)
-                                                          .getText(
-                                                        'cfhqpfe9' /*  /  */,
-                                                      ),
+                                                      text: ' / ',
                                                       style:
                                                           FlutterFlowTheme.of(
                                                                   context)
@@ -4006,13 +3834,8 @@ class _SuccessWidgetState extends State<SuccessWidget> {
                                                           text: TextSpan(
                                                             children: [
                                                               TextSpan(
-                                                                text: FFLocalizations.of(
-                                                                        context)
-                                                                    .getText(
-                                                                  '75gdby7w' /* Travaux en cours
- */
-                                                                  ,
-                                                                ),
+                                                                text:
+                                                                    'Travaux en cours\n',
                                                                 style: FlutterFlowTheme.of(
                                                                         context)
                                                                     .bodyMedium
@@ -4025,11 +3848,8 @@ class _SuccessWidgetState extends State<SuccessWidget> {
                                                                     ),
                                                               ),
                                                               TextSpan(
-                                                                text: FFLocalizations.of(
-                                                                        context)
-                                                                    .getText(
-                                                                  'y1dbmsy8' /* Les succes seront bientôt impl... */,
-                                                                ),
+                                                                text:
+                                                                    'Les succes seront bientôt implémentés',
                                                                 style: FlutterFlowTheme.of(
                                                                         context)
                                                                     .labelSmall,

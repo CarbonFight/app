@@ -127,9 +127,7 @@ class _AssociationWidgetState extends State<AssociationWidget> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
-                                  FFLocalizations.of(context).getText(
-                                    'n1vk39dj' /* Rejoignez l’équipe ! */,
-                                  ),
+                                  'Rejoignez l’équipe !',
                                   style: FlutterFlowTheme.of(context).bodyLarge,
                                 ),
                               ],
@@ -140,9 +138,8 @@ class _AssociationWidgetState extends State<AssociationWidget> {
                               text: TextSpan(
                                 children: [
                                   TextSpan(
-                                    text: FFLocalizations.of(context).getText(
-                                      '9f2e8ads' /* Designers, développeurs, exper... */,
-                                    ),
+                                    text:
+                                        'Designers, développeurs, experts carbone, ou tout simplement plein de bonne volonté,',
                                     style: FlutterFlowTheme.of(context)
                                         .bodyMedium
                                         .override(
@@ -153,9 +150,7 @@ class _AssociationWidgetState extends State<AssociationWidget> {
                                         ),
                                   ),
                                   TextSpan(
-                                    text: FFLocalizations.of(context).getText(
-                                      '9g3fhkfx' /*  rejoignez l’équipe ! */,
-                                    ),
+                                    text: ' rejoignez l’équipe !',
                                     style: FlutterFlowTheme.of(context)
                                         .bodyMedium
                                         .override(
@@ -177,9 +172,7 @@ class _AssociationWidgetState extends State<AssociationWidget> {
                                   await launchURL(
                                       'https://carbonfight.app/equipe');
                                 },
-                                text: FFLocalizations.of(context).getText(
-                                  '0p7h3eg4' /* Rejoindre l'équipe */,
-                                ),
+                                text: 'Rejoindre l\'équipe',
                                 icon: const FaIcon(
                                   FontAwesomeIcons.externalLinkAlt,
                                   size: 15.0,
@@ -245,9 +238,7 @@ class _AssociationWidgetState extends State<AssociationWidget> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
-                                  FFLocalizations.of(context).getText(
-                                    'v8ydxc87' /* Faites un don ! */,
-                                  ),
+                                  'Faites un don !',
                                   style: FlutterFlowTheme.of(context).bodyLarge,
                                 ),
                               ],
@@ -258,9 +249,7 @@ class _AssociationWidgetState extends State<AssociationWidget> {
                               text: TextSpan(
                                 children: [
                                   TextSpan(
-                                    text: FFLocalizations.of(context).getText(
-                                      'a1h9p607' /* L’association  */,
-                                    ),
+                                    text: 'L’association ',
                                     style: FlutterFlowTheme.of(context)
                                         .bodyMedium
                                         .override(
@@ -271,9 +260,7 @@ class _AssociationWidgetState extends State<AssociationWidget> {
                                         ),
                                   ),
                                   TextSpan(
-                                    text: FFLocalizations.of(context).getText(
-                                      'a8mbcj1s' /* a besoin de vos dons  */,
-                                    ),
+                                    text: 'a besoin de vos dons ',
                                     style: FlutterFlowTheme.of(context)
                                         .bodyMedium
                                         .override(
@@ -283,16 +270,13 @@ class _AssociationWidgetState extends State<AssociationWidget> {
                                           fontWeight: FontWeight.w500,
                                         ),
                                   ),
-                                  TextSpan(
-                                    text: FFLocalizations.of(context).getText(
-                                      'cgpzi7rm' /*  pour couvrir ses dépenses de ... */,
-                                    ),
-                                    style: const TextStyle(),
+                                  const TextSpan(
+                                    text:
+                                        ' pour couvrir ses dépenses de fonctionnement. L’association étant d’intérêt général, vos dons donnent droit à',
+                                    style: TextStyle(),
                                   ),
                                   TextSpan(
-                                    text: FFLocalizations.of(context).getText(
-                                      '6kkcqfq3' /*  réduction fiscale. */,
-                                    ),
+                                    text: ' réduction fiscale.',
                                     style: TextStyle(
                                       color: FlutterFlowTheme.of(context)
                                           .secondary,
@@ -311,9 +295,7 @@ class _AssociationWidgetState extends State<AssociationWidget> {
                                   await launchURL(
                                       'https://carbonfight.app/dons');
                                 },
-                                text: FFLocalizations.of(context).getText(
-                                  'ovu0gv6e' /* Faire un don */,
-                                ),
+                                text: 'Faire un don',
                                 icon: const FaIcon(
                                   FontAwesomeIcons.externalLinkAlt,
                                   size: 15.0,
@@ -379,9 +361,7 @@ class _AssociationWidgetState extends State<AssociationWidget> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
-                                  FFLocalizations.of(context).getText(
-                                    'sbnkrp35' /* Qui sommes-nous ? */,
-                                  ),
+                                  'Qui sommes-nous ?',
                                   style: FlutterFlowTheme.of(context).bodyLarge,
                                 ),
                               ],
@@ -392,9 +372,8 @@ class _AssociationWidgetState extends State<AssociationWidget> {
                               text: TextSpan(
                                 children: [
                                   TextSpan(
-                                    text: FFLocalizations.of(context).getText(
-                                      'mayc3zfq' /* CarbonFight est une associatio... */,
-                                    ),
+                                    text:
+                                        'CarbonFight est une association loi 1901, reconnue d’intérêt général. \n',
                                     style: FlutterFlowTheme.of(context)
                                         .bodyMedium
                                         .override(
@@ -405,9 +384,8 @@ class _AssociationWidgetState extends State<AssociationWidget> {
                                         ),
                                   ),
                                   TextSpan(
-                                    text: FFLocalizations.of(context).getText(
-                                      'jallox8m' /* L’application est développée p... */,
-                                    ),
+                                    text:
+                                        'L’application est développée par des bénévoles et intervenants en mécénat de compétence.',
                                     style: FlutterFlowTheme.of(context)
                                         .bodyMedium
                                         .override(
@@ -428,9 +406,7 @@ class _AssociationWidgetState extends State<AssociationWidget> {
                                   await launchURL(
                                       'https://carbonfight.app/adhesion');
                                 },
-                                text: FFLocalizations.of(context).getText(
-                                  'wdeznv3t' /* Adhérer */,
-                                ),
+                                text: 'Adhérer',
                                 icon: const FaIcon(
                                   FontAwesomeIcons.externalLinkAlt,
                                   size: 15.0,

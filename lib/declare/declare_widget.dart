@@ -296,9 +296,7 @@ class _DeclareWidgetState extends State<DeclareWidget> {
                       width: 300.0,
                       height: 50.0,
                       textStyle: FlutterFlowTheme.of(context).bodyMedium,
-                      hintText: FFLocalizations.of(context).getText(
-                        'ezm982kx' /* Sélectionnez une action */,
-                      ),
+                      hintText: 'Sélectionnez une action',
                       icon: Icon(
                         Icons.keyboard_arrow_down_rounded,
                         color: FlutterFlowTheme.of(context).secondaryText,
@@ -332,9 +330,7 @@ class _DeclareWidgetState extends State<DeclareWidget> {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Text(
-                                  FFLocalizations.of(context).getText(
-                                    '6byteb6m' /* Distance parcourue */,
-                                  ),
+                                  'Distance parcourue',
                                   style:
                                       FlutterFlowTheme.of(context).labelSmall,
                                 ),
@@ -368,11 +364,8 @@ class _DeclareWidgetState extends State<DeclareWidget> {
                                       ),
                                       autofocus: true,
                                       obscureText: false,
-                                      decoration: InputDecoration(
-                                        hintText:
-                                            FFLocalizations.of(context).getText(
-                                          '75gi91h0' /* Ajouter  */,
-                                        ),
+                                      decoration: const InputDecoration(
+                                        hintText: 'Ajouter ',
                                         enabledBorder: InputBorder.none,
                                         focusedBorder: InputBorder.none,
                                         errorBorder: InputBorder.none,
@@ -394,9 +387,7 @@ class _DeclareWidgetState extends State<DeclareWidget> {
                                   padding: const EdgeInsetsDirectional.fromSTEB(
                                       3.0, 0.0, 3.0, 0.0),
                                   child: Text(
-                                    FFLocalizations.of(context).getText(
-                                      'i0kcs37q' /* km */,
-                                    ),
+                                    'km',
                                     style:
                                         FlutterFlowTheme.of(context).labelSmall,
                                   ),
@@ -432,9 +423,7 @@ class _DeclareWidgetState extends State<DeclareWidget> {
                                   Align(
                                     alignment: const AlignmentDirectional(0.0, 0.0),
                                     child: Text(
-                                      FFLocalizations.of(context).getText(
-                                        'j0d3nrxy' /* Options */,
-                                      ),
+                                      'Options',
                                       style: FlutterFlowTheme.of(context)
                                           .bodyMedium
                                           .override(
@@ -471,9 +460,7 @@ class _DeclareWidgetState extends State<DeclareWidget> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  FFLocalizations.of(context).getText(
-                                    're2wij26' /* Type d'énergie */,
-                                  ),
+                                  'Type d\'énergie',
                                   style:
                                       FlutterFlowTheme.of(context).labelSmall,
                                 ),
@@ -514,10 +501,7 @@ class _DeclareWidgetState extends State<DeclareWidget> {
                                     height: 40.0,
                                     textStyle:
                                         FlutterFlowTheme.of(context).bodySmall,
-                                    hintText:
-                                        FFLocalizations.of(context).getText(
-                                      't5v24chj' /* Sélectionnez */,
-                                    ),
+                                    hintText: 'Sélectionnez',
                                     icon: Icon(
                                       Icons.keyboard_arrow_down_rounded,
                                       color: FlutterFlowTheme.of(context)
@@ -545,9 +529,7 @@ class _DeclareWidgetState extends State<DeclareWidget> {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Text(
-                                  FFLocalizations.of(context).getText(
-                                    'ncgoamt7' /* Passagers */,
-                                  ),
+                                  'Passagers',
                                   style:
                                       FlutterFlowTheme.of(context).labelSmall,
                                 ),
@@ -615,9 +597,7 @@ class _DeclareWidgetState extends State<DeclareWidget> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  FFLocalizations.of(context).getText(
-                                    'm9ist8ld' /* Aller-retour */,
-                                  ),
+                                  'Aller-retour',
                                   style:
                                       FlutterFlowTheme.of(context).labelSmall,
                                 ),
@@ -670,9 +650,7 @@ class _DeclareWidgetState extends State<DeclareWidget> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  FFLocalizations.of(context).getText(
-                                    'ser08hli' /* Répétition */,
-                                  ),
+                                  'Répétition',
                                   style:
                                       FlutterFlowTheme.of(context).labelSmall,
                                 ),
@@ -704,35 +682,14 @@ class _DeclareWidgetState extends State<DeclareWidget> {
                                     padding: const EdgeInsetsDirectional.fromSTEB(
                                         0.0, 10.0, 0.0, 0.0),
                                     child: FlutterFlowChoiceChips(
-                                      options: [
-                                        ChipData(
-                                            FFLocalizations.of(context).getText(
-                                          'lc5autez' /* L */,
-                                        )),
-                                        ChipData(
-                                            FFLocalizations.of(context).getText(
-                                          'iawtdj0h' /* Ma */,
-                                        )),
-                                        ChipData(
-                                            FFLocalizations.of(context).getText(
-                                          'uu95kg1b' /* Me */,
-                                        )),
-                                        ChipData(
-                                            FFLocalizations.of(context).getText(
-                                          'b0yrz9tx' /* J */,
-                                        )),
-                                        ChipData(
-                                            FFLocalizations.of(context).getText(
-                                          'ycjgbt2f' /* V */,
-                                        )),
-                                        ChipData(
-                                            FFLocalizations.of(context).getText(
-                                          'af7hyn0k' /* S */,
-                                        )),
-                                        ChipData(
-                                            FFLocalizations.of(context).getText(
-                                          'arrxv5hc' /* D */,
-                                        ))
+                                      options: const [
+                                        ChipData('L'),
+                                        ChipData('Ma'),
+                                        ChipData('Me'),
+                                        ChipData('J'),
+                                        ChipData('V'),
+                                        ChipData('S'),
+                                        ChipData('D')
                                       ],
                                       onChanged: (val) => setState(
                                           () => _model.periodicityValues = val),
@@ -929,9 +886,7 @@ class _DeclareWidgetState extends State<DeclareWidget> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  FFLocalizations.of(context).getText(
-                                    '7q5vatf8' /* Type */,
-                                  ),
+                                  'Type',
                                   style:
                                       FlutterFlowTheme.of(context).labelSmall,
                                 ),
@@ -977,10 +932,7 @@ class _DeclareWidgetState extends State<DeclareWidget> {
                                     height: 40.0,
                                     textStyle:
                                         FlutterFlowTheme.of(context).bodySmall,
-                                    hintText:
-                                        FFLocalizations.of(context).getText(
-                                      '4qnitu8l' /* Sélectionnez */,
-                                    ),
+                                    hintText: 'Sélectionnez',
                                     icon: Icon(
                                       Icons.keyboard_arrow_down_rounded,
                                       color: FlutterFlowTheme.of(context)
@@ -1008,9 +960,7 @@ class _DeclareWidgetState extends State<DeclareWidget> {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Text(
-                                  FFLocalizations.of(context).getText(
-                                    'xk78vqlb' /* Quantité */,
-                                  ),
+                                  'Quantité',
                                   style:
                                       FlutterFlowTheme.of(context).labelSmall,
                                 ),
@@ -1088,9 +1038,7 @@ class _DeclareWidgetState extends State<DeclareWidget> {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Text(
-                                  FFLocalizations.of(context).getText(
-                                    'vxejlurr' /* Année d'achat */,
-                                  ),
+                                  'Année d\'achat',
                                   style:
                                       FlutterFlowTheme.of(context).labelSmall,
                                 ),
@@ -1098,48 +1046,21 @@ class _DeclareWidgetState extends State<DeclareWidget> {
                                   controller:
                                       _model.yearPurchaseValueController ??=
                                           FormFieldController<String>(
-                                    _model.yearPurchaseValue ??=
-                                        FFLocalizations.of(context).getText(
-                                      'qbxmonfj' /* 2023 */,
-                                    ),
+                                    _model.yearPurchaseValue ??= '2023',
                                   ),
-                                  options: [
-                                    FFLocalizations.of(context).getText(
-                                      '6p8djvpd' /* 2024 */,
-                                    ),
-                                    FFLocalizations.of(context).getText(
-                                      'gdz3mw7n' /* 2023 */,
-                                    ),
-                                    FFLocalizations.of(context).getText(
-                                      'pgziao4p' /* 2022 */,
-                                    ),
-                                    FFLocalizations.of(context).getText(
-                                      '38mgbquq' /* 2021 */,
-                                    ),
-                                    FFLocalizations.of(context).getText(
-                                      'n3fjb0os' /* 2020 */,
-                                    ),
-                                    FFLocalizations.of(context).getText(
-                                      'wxrwx697' /* 2019 */,
-                                    ),
-                                    FFLocalizations.of(context).getText(
-                                      'ikdx9qon' /* 2018 */,
-                                    ),
-                                    FFLocalizations.of(context).getText(
-                                      'dt4egfak' /* 2017 */,
-                                    ),
-                                    FFLocalizations.of(context).getText(
-                                      'nwkr2n5d' /* 2016 */,
-                                    ),
-                                    FFLocalizations.of(context).getText(
-                                      'vse2o31x' /* 2015 */,
-                                    ),
-                                    FFLocalizations.of(context).getText(
-                                      '52ukpbon' /* 2014 */,
-                                    ),
-                                    FFLocalizations.of(context).getText(
-                                      '66txgs91' /* 2013 */,
-                                    )
+                                  options: const [
+                                    '2024',
+                                    '2023',
+                                    '2022',
+                                    '2021',
+                                    '2020',
+                                    '2019',
+                                    '2018',
+                                    '2017',
+                                    '2016',
+                                    '2015',
+                                    '2014',
+                                    '2013'
                                   ],
                                   onChanged: (val) async {
                                     setState(
@@ -1162,9 +1083,7 @@ class _DeclareWidgetState extends State<DeclareWidget> {
                                   height: 40.0,
                                   textStyle:
                                       FlutterFlowTheme.of(context).bodySmall,
-                                  hintText: FFLocalizations.of(context).getText(
-                                    '2dhp7sk3' /* Please select... */,
-                                  ),
+                                  hintText: 'Please select...',
                                   icon: Icon(
                                     Icons.keyboard_arrow_down_rounded,
                                     color: FlutterFlowTheme.of(context)
@@ -1192,9 +1111,7 @@ class _DeclareWidgetState extends State<DeclareWidget> {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Text(
-                                  FFLocalizations.of(context).getText(
-                                    '1hwkra8l' /* Achat neuf */,
-                                  ),
+                                  'Achat neuf',
                                   style:
                                       FlutterFlowTheme.of(context).labelSmall,
                                 ),
@@ -1224,9 +1141,7 @@ class _DeclareWidgetState extends State<DeclareWidget> {
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   Text(
-                                    FFLocalizations.of(context).getText(
-                                      'ohw0nf13' /* Année de fabrication */,
-                                    ),
+                                    'Année de fabrication',
                                     style:
                                         FlutterFlowTheme.of(context).labelSmall,
                                   ),
@@ -1235,47 +1150,21 @@ class _DeclareWidgetState extends State<DeclareWidget> {
                                             .yearPreviousPurchaseValueController ??=
                                         FormFieldController<String>(
                                       _model.yearPreviousPurchaseValue ??=
-                                          FFLocalizations.of(context).getText(
-                                        '15rf1l8y' /* 2023 */,
-                                      ),
+                                          '2023',
                                     ),
-                                    options: [
-                                      FFLocalizations.of(context).getText(
-                                        '9ft96uwq' /* 2024 */,
-                                      ),
-                                      FFLocalizations.of(context).getText(
-                                        'titumonx' /* 2023 */,
-                                      ),
-                                      FFLocalizations.of(context).getText(
-                                        'gpl9vlel' /* 2022 */,
-                                      ),
-                                      FFLocalizations.of(context).getText(
-                                        'vh8joni1' /* 2021 */,
-                                      ),
-                                      FFLocalizations.of(context).getText(
-                                        '9yso4xf5' /* 2020 */,
-                                      ),
-                                      FFLocalizations.of(context).getText(
-                                        'lt6gitjl' /* 2019 */,
-                                      ),
-                                      FFLocalizations.of(context).getText(
-                                        'yo7mwwsu' /* 2018 */,
-                                      ),
-                                      FFLocalizations.of(context).getText(
-                                        'btxn1zgw' /* 2017 */,
-                                      ),
-                                      FFLocalizations.of(context).getText(
-                                        'gwswjlm4' /* 2016 */,
-                                      ),
-                                      FFLocalizations.of(context).getText(
-                                        'n99qq044' /* 2015 */,
-                                      ),
-                                      FFLocalizations.of(context).getText(
-                                        '27t7q7jp' /* 2014 */,
-                                      ),
-                                      FFLocalizations.of(context).getText(
-                                        'w34zxxuc' /* 2013 */,
-                                      )
+                                    options: const [
+                                      '2024',
+                                      '2023',
+                                      '2022',
+                                      '2021',
+                                      '2020',
+                                      '2019',
+                                      '2018',
+                                      '2017',
+                                      '2016',
+                                      '2015',
+                                      '2014',
+                                      '2013'
                                     ],
                                     onChanged: (val) async {
                                       setState(() => _model
@@ -1300,10 +1189,7 @@ class _DeclareWidgetState extends State<DeclareWidget> {
                                     height: 40.0,
                                     textStyle:
                                         FlutterFlowTheme.of(context).bodySmall,
-                                    hintText:
-                                        FFLocalizations.of(context).getText(
-                                      '2yfefqpp' /* Please select... */,
-                                    ),
+                                    hintText: 'Please select...',
                                     icon: Icon(
                                       Icons.keyboard_arrow_down_rounded,
                                       color: FlutterFlowTheme.of(context)
@@ -1351,9 +1237,7 @@ class _DeclareWidgetState extends State<DeclareWidget> {
                                     children: [
                                       TextSpan(
                                         text:
-                                            FFLocalizations.of(context).getText(
-                                          'qmifyg1m' /* Ce type d'object émet un total... */,
-                                        ),
+                                            'Ce type d\'object émet un total de ',
                                         style: FlutterFlowTheme.of(context)
                                             .bodySmall,
                                       ),
@@ -1373,17 +1257,12 @@ class _DeclareWidgetState extends State<DeclareWidget> {
                                       ),
                                       TextSpan(
                                         text:
-                                            FFLocalizations.of(context).getText(
-                                          'iaidmvz3' /*  de co2e, amorti sur une durée... */,
-                                        ),
+                                            ' de co2e, amorti sur une durée de ',
                                         style: FlutterFlowTheme.of(context)
                                             .bodySmall,
                                       ),
                                       TextSpan(
-                                        text:
-                                            FFLocalizations.of(context).getText(
-                                          'ehajmgsv' /* 5 ans. */,
-                                        ),
+                                        text: '5 ans.',
                                         style: FlutterFlowTheme.of(context)
                                             .bodySmall
                                             .override(
@@ -1395,12 +1274,7 @@ class _DeclareWidgetState extends State<DeclareWidget> {
                                       ),
                                       TextSpan(
                                         text:
-                                            FFLocalizations.of(context).getText(
-                                          '9lme7jzz' /* 
-
-Vous allez ajouter une émiss... */
-                                          ,
-                                        ),
+                                            '\n\nVous allez ajouter une émission hebodmadaire de ',
                                         style: FlutterFlowTheme.of(context)
                                             .bodySmall,
                                       ),
@@ -1419,10 +1293,7 @@ Vous allez ajouter une émiss... */
                                             ),
                                       ),
                                       TextSpan(
-                                        text:
-                                            FFLocalizations.of(context).getText(
-                                          'pe0o4akd' /*  de co2e par jour pendant  */,
-                                        ),
+                                        text: ' de co2e par jour pendant ',
                                         style: FlutterFlowTheme.of(context)
                                             .bodySmall
                                             .override(
@@ -1450,10 +1321,7 @@ Vous allez ajouter une émiss... */
                                             ),
                                       ),
                                       TextSpan(
-                                        text:
-                                            FFLocalizations.of(context).getText(
-                                          '9quk3a68' /*  ans. */,
-                                        ),
+                                        text: ' ans.',
                                         style: FlutterFlowTheme.of(context)
                                             .bodySmall
                                             .override(

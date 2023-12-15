@@ -110,9 +110,7 @@ class _SigninWidgetState extends State<SigninWidget> {
                       padding:
                           const EdgeInsetsDirectional.fromSTEB(0.0, 20.0, 0.0, 20.0),
                       child: Text(
-                        FFLocalizations.of(context).getText(
-                          '6uqcb4p5' /* Bienvenue ! */,
-                        ),
+                        'Bienvenue !',
                         style: FlutterFlowTheme.of(context).titleLarge,
                       ),
                     ),
@@ -150,9 +148,7 @@ class _SigninWidgetState extends State<SigninWidget> {
 
                           context.goNamedAuth('home', context.mounted);
                         },
-                        text: FFLocalizations.of(context).getText(
-                          'ehk7h084' /* Continuer avec Google */,
-                        ),
+                        text: 'Continuer avec Google',
                         icon: FaIcon(
                           FontAwesomeIcons.google,
                           color: FlutterFlowTheme.of(context).primaryText,
@@ -203,9 +199,7 @@ class _SigninWidgetState extends State<SigninWidget> {
 
                           context.goNamedAuth('home', context.mounted);
                         },
-                        text: FFLocalizations.of(context).getText(
-                          'rbkd2dwn' /* Continuer avec Facebook */,
-                        ),
+                        text: 'Continuer avec Facebook',
                         icon: FaIcon(
                           FontAwesomeIcons.facebook,
                           color: FlutterFlowTheme.of(context).primaryText,
@@ -233,9 +227,7 @@ class _SigninWidgetState extends State<SigninWidget> {
                       onPressed: () {
                         print('Button pressed ...');
                       },
-                      text: FFLocalizations.of(context).getText(
-                        'j2i2e8sw' /* Continuer avec Apple */,
-                      ),
+                      text: 'Continuer avec Apple',
                       icon: const FaIcon(
                         FontAwesomeIcons.apple,
                         size: 20.0,
@@ -285,9 +277,7 @@ class _SigninWidgetState extends State<SigninWidget> {
                           Align(
                             alignment: const AlignmentDirectional(0.0, 0.0),
                             child: Text(
-                              FFLocalizations.of(context).getText(
-                                'eo1evjqd' /* OU */,
-                              ),
+                              'OU',
                               style: FlutterFlowTheme.of(context)
                                   .bodyMedium
                                   .override(
@@ -337,17 +327,11 @@ class _SigninWidgetState extends State<SigninWidget> {
                                   textInputAction: TextInputAction.next,
                                   obscureText: false,
                                   decoration: InputDecoration(
-                                    labelText:
-                                        FFLocalizations.of(context).getText(
-                                      'rqtmbglk' /* Email */,
-                                    ),
+                                    labelText: 'Email',
                                     labelStyle:
                                         FlutterFlowTheme.of(context).bodySmall,
                                     alignLabelWithHint: false,
-                                    hintText:
-                                        FFLocalizations.of(context).getText(
-                                      'wpifx5qj' /* Saisissez votre E-mail */,
-                                    ),
+                                    hintText: 'Saisissez votre E-mail',
                                     hintStyle: FlutterFlowTheme.of(context)
                                         .labelMedium,
                                     enabledBorder: UnderlineInputBorder(
@@ -412,17 +396,11 @@ class _SigninWidgetState extends State<SigninWidget> {
                                   textInputAction: TextInputAction.done,
                                   obscureText: !_model.passwordVisibility,
                                   decoration: InputDecoration(
-                                    labelText:
-                                        FFLocalizations.of(context).getText(
-                                      'exnbjce7' /* Mot de passe */,
-                                    ),
+                                    labelText: 'Mot de passe',
                                     labelStyle:
                                         FlutterFlowTheme.of(context).bodyMedium,
                                     alignLabelWithHint: true,
-                                    hintText:
-                                        FFLocalizations.of(context).getText(
-                                      'pxkzid22' /* Entrez votre mot de passe */,
-                                    ),
+                                    hintText: 'Entrez votre mot de passe',
                                     hintStyle: FlutterFlowTheme.of(context)
                                         .labelMedium,
                                     enabledBorder: UnderlineInputBorder(
@@ -502,9 +480,7 @@ class _SigninWidgetState extends State<SigninWidget> {
 
                           context.pushNamedAuth('home', context.mounted);
                         },
-                        text: FFLocalizations.of(context).getText(
-                          '6pc0e09e' /* Suivant */,
-                        ),
+                        text: 'Suivant',
                         options: FFButtonOptions(
                           width: 300.0,
                           height: 40.0,
@@ -524,9 +500,7 @@ class _SigninWidgetState extends State<SigninWidget> {
                       ),
                     ),
                     Text(
-                      FFLocalizations.of(context).getText(
-                        't7u0tm3i' /* Mot de passe oublié */,
-                      ),
+                      'Mot de passe oublié',
                       style: FlutterFlowTheme.of(context).bodyMedium.override(
                             fontFamily: 'Montserrat',
                             decoration: TextDecoration.underline,
@@ -555,9 +529,7 @@ class _SigninWidgetState extends State<SigninWidget> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          FFLocalizations.of(context).getText(
-                            '3gfbhqb5' /* Pas encore de compte ?  */,
-                          ),
+                          'Pas encore de compte ? ',
                           style: FlutterFlowTheme.of(context).bodyMedium,
                         ),
                         InkWell(
@@ -578,9 +550,7 @@ class _SigninWidgetState extends State<SigninWidget> {
                             );
                           },
                           child: Text(
-                            FFLocalizations.of(context).getText(
-                              '2lv2akw8' /* Ouvrez un compte */,
-                            ),
+                            'Ouvrez un compte',
                             style: FlutterFlowTheme.of(context)
                                 .bodyMedium
                                 .override(

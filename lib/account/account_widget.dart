@@ -124,17 +124,11 @@ class _AccountWidgetState extends State<AccountWidget> {
                                     focusNode: _model.displayNameFocusNode,
                                     obscureText: false,
                                     decoration: InputDecoration(
-                                      labelText:
-                                          FFLocalizations.of(context).getText(
-                                        'tb6v7mfz' /* Pseudo */,
-                                      ),
+                                      labelText: 'Pseudo',
                                       labelStyle: FlutterFlowTheme.of(context)
                                           .bodyMedium,
                                       alignLabelWithHint: true,
-                                      hintText:
-                                          FFLocalizations.of(context).getText(
-                                        'vza6ubrf' /* Saisissez votre pseudo */,
-                                      ),
+                                      hintText: 'Saisissez votre pseudo',
                                       hintStyle: FlutterFlowTheme.of(context)
                                           .labelMedium,
                                       enabledBorder: UnderlineInputBorder(
@@ -205,17 +199,11 @@ class _AccountWidgetState extends State<AccountWidget> {
                                     focusNode: _model.lastnameFocusNode,
                                     obscureText: false,
                                     decoration: InputDecoration(
-                                      labelText:
-                                          FFLocalizations.of(context).getText(
-                                        'rsyz8oqf' /* Nom */,
-                                      ),
+                                      labelText: 'Nom',
                                       labelStyle: FlutterFlowTheme.of(context)
                                           .bodyMedium,
                                       alignLabelWithHint: true,
-                                      hintText:
-                                          FFLocalizations.of(context).getText(
-                                        'ccdjgmav' /* Saisissez votre nom */,
-                                      ),
+                                      hintText: 'Saisissez votre nom',
                                       hintStyle: FlutterFlowTheme.of(context)
                                           .labelMedium,
                                       enabledBorder: UnderlineInputBorder(
@@ -286,17 +274,11 @@ class _AccountWidgetState extends State<AccountWidget> {
                                     focusNode: _model.firstnameFocusNode,
                                     obscureText: false,
                                     decoration: InputDecoration(
-                                      labelText:
-                                          FFLocalizations.of(context).getText(
-                                        'q6q692kf' /* Prénom */,
-                                      ),
+                                      labelText: 'Prénom',
                                       labelStyle: FlutterFlowTheme.of(context)
                                           .bodyMedium,
                                       alignLabelWithHint: true,
-                                      hintText:
-                                          FFLocalizations.of(context).getText(
-                                        'nqplpl3r' /* Saisissez votre prénom */,
-                                      ),
+                                      hintText: 'Saisissez votre prénom',
                                       hintStyle: FlutterFlowTheme.of(context)
                                           .labelMedium,
                                       enabledBorder: UnderlineInputBorder(
@@ -366,17 +348,11 @@ class _AccountWidgetState extends State<AccountWidget> {
                                   focusNode: _model.emailFocusNode,
                                   obscureText: false,
                                   decoration: InputDecoration(
-                                    labelText:
-                                        FFLocalizations.of(context).getText(
-                                      'tt14atwt' /* Email */,
-                                    ),
+                                    labelText: 'Email',
                                     labelStyle:
                                         FlutterFlowTheme.of(context).bodyMedium,
                                     alignLabelWithHint: true,
-                                    hintText:
-                                        FFLocalizations.of(context).getText(
-                                      'gacncs4r' /* Saisissez votre email */,
-                                    ),
+                                    hintText: 'Saisissez votre email',
                                     hintStyle: FlutterFlowTheme.of(context)
                                         .labelMedium,
                                     enabledBorder: UnderlineInputBorder(
@@ -442,17 +418,12 @@ class _AccountWidgetState extends State<AccountWidget> {
                                     focusNode: _model.sponsorFocusNode,
                                     obscureText: false,
                                     decoration: InputDecoration(
-                                      labelText:
-                                          FFLocalizations.of(context).getText(
-                                        '92seybgy' /* Code parrain */,
-                                      ),
+                                      labelText: 'Code parrain',
                                       labelStyle: FlutterFlowTheme.of(context)
                                           .bodyMedium,
                                       alignLabelWithHint: true,
                                       hintText:
-                                          FFLocalizations.of(context).getText(
-                                        'q154mc15' /* Saisissez le code de votre par... */,
-                                      ),
+                                          'Saisissez le code de votre parrain',
                                       hintStyle: FlutterFlowTheme.of(context)
                                           .labelMedium,
                                       enabledBorder: UnderlineInputBorder(
@@ -535,9 +506,7 @@ class _AccountWidgetState extends State<AccountWidget> {
                                 children: [
                                   SelectionArea(
                                       child: Text(
-                                    FFLocalizations.of(context).getText(
-                                      'm04o2cmx' /* Parrainez vos amis avec le cod... */,
-                                    ),
+                                    'Parrainez vos amis avec le code ',
                                     style:
                                         FlutterFlowTheme.of(context).bodyMedium,
                                   )),
@@ -587,9 +556,7 @@ class _AccountWidgetState extends State<AccountWidget> {
 
                                 context.pushNamed('profil');
                               },
-                              text: FFLocalizations.of(context).getText(
-                                'b1bvr30t' /* Enregistrer */,
-                              ),
+                              text: 'Enregistrer',
                               options: FFButtonOptions(
                                 width: 290.0,
                                 height: 40.0,

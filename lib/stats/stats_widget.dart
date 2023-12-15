@@ -127,9 +127,7 @@ class _StatsWidgetState extends State<StatsWidget> {
                           padding: const EdgeInsetsDirectional.fromSTEB(
                               0.0, 20.0, 0.0, 0.0),
                           child: Text(
-                            FFLocalizations.of(context).getText(
-                              'zml0k9s1' /* Statistiques */,
-                            ),
+                            'Statistiques',
                             style: FlutterFlowTheme.of(context).titleLarge,
                           ),
                         ),
@@ -151,9 +149,7 @@ class _StatsWidgetState extends State<StatsWidget> {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Text(
-                                      FFLocalizations.of(context).getText(
-                                        '0ru50o8x' /* Période :  */,
-                                      ),
+                                      'Période : ',
                                       style: FlutterFlowTheme.of(context)
                                           .labelMedium,
                                     ),
@@ -161,21 +157,12 @@ class _StatsWidgetState extends State<StatsWidget> {
                                       controller:
                                           _model.dropDownValueController ??=
                                               FormFieldController<String>(
-                                        _model.dropDownValue ??=
-                                            FFLocalizations.of(context).getText(
-                                          '2q8tnc6r' /* 1 semaine */,
-                                        ),
+                                        _model.dropDownValue ??= '1 semaine',
                                       ),
-                                      options: [
-                                        FFLocalizations.of(context).getText(
-                                          'uc07utw6' /* Aujourd'hui */,
-                                        ),
-                                        FFLocalizations.of(context).getText(
-                                          '99t9lu5k' /* 1 semaine */,
-                                        ),
-                                        FFLocalizations.of(context).getText(
-                                          '5ep0rmp9' /* 1 mois */,
-                                        )
+                                      options: const [
+                                        'Aujourd\'hui',
+                                        '1 semaine',
+                                        '1 mois'
                                       ],
                                       onChanged: (val) => setState(
                                           () => _model.dropDownValue = val),
@@ -183,10 +170,7 @@ class _StatsWidgetState extends State<StatsWidget> {
                                       height: 40.0,
                                       textStyle: FlutterFlowTheme.of(context)
                                           .bodyMedium,
-                                      hintText:
-                                          FFLocalizations.of(context).getText(
-                                        '7i3igmai' /* Please select... */,
-                                      ),
+                                      hintText: 'Please select...',
                                       icon: Icon(
                                         Icons.keyboard_arrow_down_rounded,
                                         color: FlutterFlowTheme.of(context)
@@ -277,9 +261,7 @@ class _StatsWidgetState extends State<StatsWidget> {
                                 axisBounds: const AxisBounds(),
                                 xAxisLabelInfo: const AxisLabelInfo(),
                                 yAxisLabelInfo: AxisLabelInfo(
-                                  title: FFLocalizations.of(context).getText(
-                                    '22fgei0g' /* CO2e */,
-                                  ),
+                                  title: 'CO2e',
                                   titleTextStyle:
                                       FlutterFlowTheme.of(context).labelSmall,
                                 ),
@@ -295,9 +277,7 @@ class _StatsWidgetState extends State<StatsWidget> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                FFLocalizations.of(context).getText(
-                                  'f86dijiz' /* Emissions par catégories */,
-                                ),
+                                'Emissions par catégories',
                                 style: FlutterFlowTheme.of(context).titleLarge,
                               ),
                             ],
@@ -379,10 +359,7 @@ class _StatsWidgetState extends State<StatsWidget> {
                                                     MainAxisAlignment.center,
                                                 children: [
                                                   Text(
-                                                    FFLocalizations.of(context)
-                                                        .getText(
-                                                      '63o0r9e6' /* Trajets */,
-                                                    ),
+                                                    'Trajets',
                                                     style: FlutterFlowTheme.of(
                                                             context)
                                                         .labelSmall,
@@ -477,10 +454,7 @@ class _StatsWidgetState extends State<StatsWidget> {
                                                   MainAxisAlignment.center,
                                               children: [
                                                 Text(
-                                                  FFLocalizations.of(context)
-                                                      .getText(
-                                                    'gm72b53c' /* Numérique */,
-                                                  ),
+                                                  'Numérique',
                                                   style: FlutterFlowTheme.of(
                                                           context)
                                                       .labelSmall,
@@ -574,10 +548,7 @@ class _StatsWidgetState extends State<StatsWidget> {
                                                   MainAxisAlignment.center,
                                               children: [
                                                 Text(
-                                                  FFLocalizations.of(context)
-                                                      .getText(
-                                                    'sdnioeag' /* Electro */,
-                                                  ),
+                                                  'Electro',
                                                   style: FlutterFlowTheme.of(
                                                           context)
                                                       .labelSmall,
@@ -677,10 +648,7 @@ class _StatsWidgetState extends State<StatsWidget> {
                                                   MainAxisAlignment.center,
                                               children: [
                                                 Text(
-                                                  FFLocalizations.of(context)
-                                                      .getText(
-                                                    '4gzkhqa1' /* Logement */,
-                                                  ),
+                                                  'Logement',
                                                   style: FlutterFlowTheme.of(
                                                           context)
                                                       .labelSmall,
@@ -774,10 +742,7 @@ class _StatsWidgetState extends State<StatsWidget> {
                                                   MainAxisAlignment.center,
                                               children: [
                                                 Text(
-                                                  FFLocalizations.of(context)
-                                                      .getText(
-                                                    '9y33zkv8' /* Mobilier */,
-                                                  ),
+                                                  'Mobilier',
                                                   style: FlutterFlowTheme.of(
                                                           context)
                                                       .labelSmall,
@@ -871,10 +836,7 @@ class _StatsWidgetState extends State<StatsWidget> {
                                                   MainAxisAlignment.center,
                                               children: [
                                                 Text(
-                                                  FFLocalizations.of(context)
-                                                      .getText(
-                                                    'vat4daoa' /* Objets */,
-                                                  ),
+                                                  'Objets',
                                                   style: FlutterFlowTheme.of(
                                                           context)
                                                       .labelSmall,
@@ -974,10 +936,7 @@ class _StatsWidgetState extends State<StatsWidget> {
                                                   MainAxisAlignment.center,
                                               children: [
                                                 Text(
-                                                  FFLocalizations.of(context)
-                                                      .getText(
-                                                    'pth1wsep' /* Repas */,
-                                                  ),
+                                                  'Repas',
                                                   style: FlutterFlowTheme.of(
                                                           context)
                                                       .labelSmall,
@@ -1071,10 +1030,7 @@ class _StatsWidgetState extends State<StatsWidget> {
                                                   MainAxisAlignment.center,
                                               children: [
                                                 Text(
-                                                  FFLocalizations.of(context)
-                                                      .getText(
-                                                    'tmiy5sq3' /* Habits */,
-                                                  ),
+                                                  'Habits',
                                                   style: FlutterFlowTheme.of(
                                                           context)
                                                       .labelSmall,
@@ -1151,10 +1107,7 @@ class _StatsWidgetState extends State<StatsWidget> {
                                                   MainAxisAlignment.center,
                                               children: [
                                                 Text(
-                                                  FFLocalizations.of(context)
-                                                      .getText(
-                                                    'nj0est65' /* Services */,
-                                                  ),
+                                                  'Services',
                                                   style: FlutterFlowTheme.of(
                                                           context)
                                                       .labelSmall,
@@ -1240,10 +1193,7 @@ class _StatsWidgetState extends State<StatsWidget> {
                                     text: TextSpan(
                                       children: [
                                         TextSpan(
-                                          text: FFLocalizations.of(context)
-                                              .getText(
-                                            'o8lpi1in' /* Nombre de parrainages :  */,
-                                          ),
+                                          text: 'Nombre de parrainages : ',
                                           style: FlutterFlowTheme.of(context)
                                               .bodySmall,
                                         ),

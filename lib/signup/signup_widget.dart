@@ -140,17 +140,11 @@ class _SignupWidgetState extends State<SignupWidget> {
                                     focusNode: _model.lastnameFocusNode,
                                     obscureText: false,
                                     decoration: InputDecoration(
-                                      labelText:
-                                          FFLocalizations.of(context).getText(
-                                        'w69qzzr0' /* Nom */,
-                                      ),
+                                      labelText: 'Nom',
                                       labelStyle: FlutterFlowTheme.of(context)
                                           .bodyMedium,
                                       alignLabelWithHint: true,
-                                      hintText:
-                                          FFLocalizations.of(context).getText(
-                                        '2tnijjhj' /* Saisissez votre nom */,
-                                      ),
+                                      hintText: 'Saisissez votre nom',
                                       hintStyle: FlutterFlowTheme.of(context)
                                           .labelMedium,
                                       enabledBorder: UnderlineInputBorder(
@@ -220,17 +214,11 @@ class _SignupWidgetState extends State<SignupWidget> {
                                   focusNode: _model.firstnameFocusNode,
                                   obscureText: false,
                                   decoration: InputDecoration(
-                                    labelText:
-                                        FFLocalizations.of(context).getText(
-                                      'i13bdk0x' /* Prénom */,
-                                    ),
+                                    labelText: 'Prénom',
                                     labelStyle:
                                         FlutterFlowTheme.of(context).bodyMedium,
                                     alignLabelWithHint: true,
-                                    hintText:
-                                        FFLocalizations.of(context).getText(
-                                      'lirexkpa' /* Saisissez votre prénom */,
-                                    ),
+                                    hintText: 'Saisissez votre prénom',
                                     hintStyle: FlutterFlowTheme.of(context)
                                         .labelMedium,
                                     enabledBorder: UnderlineInputBorder(
@@ -294,17 +282,11 @@ class _SignupWidgetState extends State<SignupWidget> {
                                   focusNode: _model.emailFocusNode,
                                   obscureText: false,
                                   decoration: InputDecoration(
-                                    labelText:
-                                        FFLocalizations.of(context).getText(
-                                      'a7fi3kai' /* Email */,
-                                    ),
+                                    labelText: 'Email',
                                     labelStyle:
                                         FlutterFlowTheme.of(context).bodyMedium,
                                     alignLabelWithHint: true,
-                                    hintText:
-                                        FFLocalizations.of(context).getText(
-                                      'ez2uhgoo' /* Saisissez votre email */,
-                                    ),
+                                    hintText: 'Saisissez votre email',
                                     hintStyle: FlutterFlowTheme.of(context)
                                         .labelMedium,
                                     enabledBorder: UnderlineInputBorder(
@@ -368,17 +350,11 @@ class _SignupWidgetState extends State<SignupWidget> {
                                   focusNode: _model.passwordFocusNode,
                                   obscureText: !_model.passwordVisibility,
                                   decoration: InputDecoration(
-                                    labelText:
-                                        FFLocalizations.of(context).getText(
-                                      'v285r1zu' /* Mot de passe */,
-                                    ),
+                                    labelText: 'Mot de passe',
                                     labelStyle:
                                         FlutterFlowTheme.of(context).bodyMedium,
                                     alignLabelWithHint: true,
-                                    hintText:
-                                        FFLocalizations.of(context).getText(
-                                      'i15ww280' /* Entrez votre mot de passe */,
-                                    ),
+                                    hintText: 'Entrez votre mot de passe',
                                     hintStyle: FlutterFlowTheme.of(context)
                                         .labelMedium,
                                     enabledBorder: UnderlineInputBorder(
@@ -480,16 +456,12 @@ class _SignupWidgetState extends State<SignupWidget> {
                               text: TextSpan(
                                 children: [
                                   TextSpan(
-                                    text: FFLocalizations.of(context).getText(
-                                      '9vrucev4' /* J'accepte les  */,
-                                    ),
+                                    text: 'J\'accepte les ',
                                     style:
                                         FlutterFlowTheme.of(context).bodySmall,
                                   ),
                                   TextSpan(
-                                    text: FFLocalizations.of(context).getText(
-                                      '1uavm6jw' /* CGU */,
-                                    ),
+                                    text: 'CGU',
                                     style: TextStyle(
                                       color: FlutterFlowTheme.of(context)
                                           .secondary,
@@ -499,18 +471,12 @@ class _SignupWidgetState extends State<SignupWidget> {
                                     ),
                                   ),
                                   TextSpan(
-                                    text: FFLocalizations.of(context).getText(
-                                      'pgv9lfau' /*  et la  */,
-                                    ),
+                                    text: ' et la ',
                                     style:
                                         FlutterFlowTheme.of(context).bodySmall,
                                   ),
                                   TextSpan(
-                                    text: FFLocalizations.of(context).getText(
-                                      'v9k4pwp9' /* politique de 
-confidentialité */
-                                      ,
-                                    ),
+                                    text: 'politique de \nconfidentialité',
                                     style: TextStyle(
                                       color: FlutterFlowTheme.of(context)
                                           .secondary,
@@ -520,16 +486,12 @@ confidentialité */
                                     ),
                                   ),
                                   TextSpan(
-                                    text: FFLocalizations.of(context).getText(
-                                      '6xfxz6vk' /*  ainsi que  */,
-                                    ),
+                                    text: ' ainsi que ',
                                     style:
                                         FlutterFlowTheme.of(context).bodySmall,
                                   ),
                                   TextSpan(
-                                    text: FFLocalizations.of(context).getText(
-                                      '44jggosg' /* les cookies */,
-                                    ),
+                                    text: 'les cookies',
                                     style: TextStyle(
                                       color: FlutterFlowTheme.of(context)
                                           .secondary,
@@ -538,9 +500,7 @@ confidentialité */
                                     ),
                                   ),
                                   TextSpan(
-                                    text: FFLocalizations.of(context).getText(
-                                      '3zjg6mdw' /*  à des fins statistiques. */,
-                                    ),
+                                    text: ' à des fins statistiques.',
                                     style:
                                         FlutterFlowTheme.of(context).bodySmall,
                                   )
@@ -628,9 +588,7 @@ confidentialité */
                                   );
                                 }
                               },
-                              text: FFLocalizations.of(context).getText(
-                                '2fk0kgou' /* Créer mon compte */,
-                              ),
+                              text: 'Créer mon compte',
                               options: FFButtonOptions(
                                 width: 290.0,
                                 height: 40.0,

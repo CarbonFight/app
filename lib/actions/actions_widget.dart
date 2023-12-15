@@ -220,9 +220,7 @@ class _ActionsWidgetState extends State<ActionsWidget>
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
-                                  FFLocalizations.of(context).getText(
-                                    'zzwr8zjm' /* Total de la journée:  */,
-                                  ),
+                                  'Total de la journée: ',
                                   style:
                                       FlutterFlowTheme.of(context).bodyMedium,
                                 ),
@@ -642,9 +640,7 @@ class _ActionsWidgetState extends State<ActionsWidget>
                                     }.withoutNulls,
                                   );
                                 },
-                                text: FFLocalizations.of(context).getText(
-                                  'ei7wuxeu' /* Ajouter */,
-                                ),
+                                text: 'Ajouter',
                                 icon: const Icon(
                                   Icons.add_circle_outline,
                                   size: 25.0,
