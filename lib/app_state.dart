@@ -109,7 +109,8 @@ class FFAppState extends ChangeNotifier {
     _chartXdays.insert(index, value);
   }
 
-  DateTime? _lastConnectionDay;
+  DateTime? _lastConnectionDay =
+      DateTime.fromMillisecondsSinceEpoch(1702651140000);
   DateTime? get lastConnectionDay => _lastConnectionDay;
   set lastConnectionDay(DateTime? value) {
     _lastConnectionDay = value;

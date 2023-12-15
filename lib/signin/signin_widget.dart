@@ -127,19 +127,26 @@ class _SigninWidgetState extends State<SigninWidget> {
                             return;
                           }
 
-                          await currentUserReference!
-                              .update(createUsersRecordData(
-                            target: 2.0,
-                            skipHowto: false,
-                            sponsorshipCode: random_data.randomString(
-                              6,
-                              6,
-                              false,
-                              true,
-                              true,
+                          await currentUserReference!.update({
+                            ...createUsersRecordData(
+                              target: 2.0,
+                              skipHowto: false,
+                              sponsorshipCode: random_data.randomString(
+                                6,
+                                6,
+                                false,
+                                true,
+                                true,
+                              ),
+                              email: currentUserEmail,
                             ),
-                            email: currentUserEmail,
-                          ));
+                            ...mapToFirestore(
+                              {
+                                'connection_history': FieldValue.arrayUnion(
+                                    [getCurrentTimestamp]),
+                              },
+                            ),
+                          });
 
                           context.goNamedAuth('home', context.mounted);
                         },
