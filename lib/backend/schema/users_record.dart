@@ -6,53 +6,100 @@ import '/backend/schema/util/firestore_util.dart';
 import '/backend/schema/util/schema_util.dart';
 
 import 'index.dart';
-import '/flutter_flow/flutter_flow_util.dart';
 
 class UsersRecord extends FirestoreRecord {
   UsersRecord._(
-    DocumentReference reference,
-    Map<String, dynamic> data,
-  ) : super(reference, data) {
+    super.reference,
+    super.data,
+  ) {
     _initializeFields();
   }
-
-  // "created_time" field.
-  DateTime? _createdTime;
-  DateTime? get createdTime => _createdTime;
-  bool hasCreatedTime() => _createdTime != null;
-
-  // "display_name" field.
-  String? _displayName;
-  String get displayName => _displayName ?? '';
-  bool hasDisplayName() => _displayName != null;
 
   // "email" field.
   String? _email;
   String get email => _email ?? '';
   bool hasEmail() => _email != null;
 
-  // "phone_number" field.
-  String? _phoneNumber;
-  String get phoneNumber => _phoneNumber ?? '';
-  bool hasPhoneNumber() => _phoneNumber != null;
-
-  // "uid" field.
-  String? _uid;
-  String get uid => _uid ?? '';
-  bool hasUid() => _uid != null;
+  // "display_name" field.
+  String? _displayName;
+  String get displayName => _displayName ?? '';
+  bool hasDisplayName() => _displayName != null;
 
   // "photo_url" field.
   String? _photoUrl;
   String get photoUrl => _photoUrl ?? '';
   bool hasPhotoUrl() => _photoUrl != null;
 
+  // "uid" field.
+  String? _uid;
+  String get uid => _uid ?? '';
+  bool hasUid() => _uid != null;
+
+  // "created_time" field.
+  DateTime? _createdTime;
+  DateTime? get createdTime => _createdTime;
+  bool hasCreatedTime() => _createdTime != null;
+
+  // "phone_number" field.
+  String? _phoneNumber;
+  String get phoneNumber => _phoneNumber ?? '';
+  bool hasPhoneNumber() => _phoneNumber != null;
+
+  // "last_Name" field.
+  String? _lastName;
+  String get lastName => _lastName ?? '';
+  bool hasLastName() => _lastName != null;
+
+  // "first_Name" field.
+  String? _firstName;
+  String get firstName => _firstName ?? '';
+  bool hasFirstName() => _firstName != null;
+
+  // "sponsorship_code" field.
+  String? _sponsorshipCode;
+  String get sponsorshipCode => _sponsorshipCode ?? '';
+  bool hasSponsorshipCode() => _sponsorshipCode != null;
+
+  // "sponsor" field.
+  String? _sponsor;
+  String get sponsor => _sponsor ?? '';
+  bool hasSponsor() => _sponsor != null;
+
+  // "team" field.
+  String? _team;
+  String get team => _team ?? '';
+  bool hasTeam() => _team != null;
+
+  // "skipHowto" field.
+  bool? _skipHowto;
+  bool get skipHowto => _skipHowto ?? false;
+  bool hasSkipHowto() => _skipHowto != null;
+
+  // "connection_history" field.
+  List<DateTime>? _connectionHistory;
+  List<DateTime> get connectionHistory => _connectionHistory ?? const [];
+  bool hasConnectionHistory() => _connectionHistory != null;
+
+  // "target" field.
+  double? _target;
+  double get target => _target ?? 0.0;
+  bool hasTarget() => _target != null;
+
   void _initializeFields() {
-    _createdTime = snapshotData['created_time'] as DateTime?;
-    _displayName = snapshotData['display_name'] as String?;
     _email = snapshotData['email'] as String?;
-    _phoneNumber = snapshotData['phone_number'] as String?;
-    _uid = snapshotData['uid'] as String?;
+    _displayName = snapshotData['display_name'] as String?;
     _photoUrl = snapshotData['photo_url'] as String?;
+    _uid = snapshotData['uid'] as String?;
+    _createdTime = snapshotData['created_time'] as DateTime?;
+    _phoneNumber = snapshotData['phone_number'] as String?;
+    _lastName = snapshotData['last_Name'] as String?;
+    _firstName = snapshotData['first_Name'] as String?;
+    _sponsorshipCode = snapshotData['sponsorship_code'] as String?;
+    _sponsor = snapshotData['sponsor'] as String?;
+    _team = snapshotData['team'] as String?;
+    _skipHowto = snapshotData['skipHowto'] as bool?;
+    _connectionHistory = getDataList(snapshotData['connection_history']);
+    _target = castToType<double>(snapshotData['target']);
   }
 
   static CollectionReference get collection =>
@@ -89,21 +136,35 @@ class UsersRecord extends FirestoreRecord {
 }
 
 Map<String, dynamic> createUsersRecordData({
-  DateTime? createdTime,
-  String? displayName,
   String? email,
-  String? phoneNumber,
-  String? uid,
+  String? displayName,
   String? photoUrl,
+  String? uid,
+  DateTime? createdTime,
+  String? phoneNumber,
+  String? lastName,
+  String? firstName,
+  String? sponsorshipCode,
+  String? sponsor,
+  String? team,
+  bool? skipHowto,
+  double? target,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
-      'created_time': createdTime,
-      'display_name': displayName,
       'email': email,
-      'phone_number': phoneNumber,
-      'uid': uid,
+      'display_name': displayName,
       'photo_url': photoUrl,
+      'uid': uid,
+      'created_time': createdTime,
+      'phone_number': phoneNumber,
+      'last_Name': lastName,
+      'first_Name': firstName,
+      'sponsorship_code': sponsorshipCode,
+      'sponsor': sponsor,
+      'team': team,
+      'skipHowto': skipHowto,
+      'target': target,
     }.withoutNulls,
   );
 
@@ -115,22 +176,39 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
 
   @override
   bool equals(UsersRecord? e1, UsersRecord? e2) {
-    return e1?.createdTime == e2?.createdTime &&
+    const listEquality = ListEquality();
+    return e1?.email == e2?.email &&
         e1?.displayName == e2?.displayName &&
-        e1?.email == e2?.email &&
-        e1?.phoneNumber == e2?.phoneNumber &&
+        e1?.photoUrl == e2?.photoUrl &&
         e1?.uid == e2?.uid &&
-        e1?.photoUrl == e2?.photoUrl;
+        e1?.createdTime == e2?.createdTime &&
+        e1?.phoneNumber == e2?.phoneNumber &&
+        e1?.lastName == e2?.lastName &&
+        e1?.firstName == e2?.firstName &&
+        e1?.sponsorshipCode == e2?.sponsorshipCode &&
+        e1?.sponsor == e2?.sponsor &&
+        e1?.team == e2?.team &&
+        e1?.skipHowto == e2?.skipHowto &&
+        listEquality.equals(e1?.connectionHistory, e2?.connectionHistory) &&
+        e1?.target == e2?.target;
   }
 
   @override
   int hash(UsersRecord? e) => const ListEquality().hash([
-        e?.createdTime,
-        e?.displayName,
         e?.email,
-        e?.phoneNumber,
+        e?.displayName,
+        e?.photoUrl,
         e?.uid,
-        e?.photoUrl
+        e?.createdTime,
+        e?.phoneNumber,
+        e?.lastName,
+        e?.firstName,
+        e?.sponsorshipCode,
+        e?.sponsor,
+        e?.team,
+        e?.skipHowto,
+        e?.connectionHistory,
+        e?.target
       ]);
 
   @override

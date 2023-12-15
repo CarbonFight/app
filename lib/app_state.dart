@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import '/backend/backend.dart';
-import 'backend/api_requests/api_manager.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'flutter_flow/flutter_flow_util.dart';
 
@@ -20,19 +19,13 @@ class FFAppState extends ChangeNotifier {
   Future initializePersistedState() async {
     prefs = await SharedPreferences.getInstance();
     _safeInit(() {
-      _showSplash = prefs.getBool('ff_showSplash') ?? _showSplash;
+      _lastConnectionDay = prefs.containsKey('ff_lastConnectionDay')
+          ? DateTime.fromMillisecondsSinceEpoch(
+              prefs.getInt('ff_lastConnectionDay')!)
+          : _lastConnectionDay;
     });
     _safeInit(() {
-      _displayFoodActions =
-          prefs.getBool('ff_displayFoodActions') ?? _displayFoodActions;
-    });
-    _safeInit(() {
-      _displayEnergyActions =
-          prefs.getBool('ff_displayEnergyActions') ?? _displayEnergyActions;
-    });
-    _safeInit(() {
-      _displayTransportActions = prefs.getBool('ff_displayTransportActions') ??
-          _displayTransportActions;
+      _successCount = prefs.getInt('ff_successCount') ?? _successCount;
     });
   }
 
@@ -43,173 +36,93 @@ class FFAppState extends ChangeNotifier {
 
   late SharedPreferences prefs;
 
-  bool _showSplash = true;
-  bool get showSplash => _showSplash;
-  set showSplash(bool _value) {
-    _showSplash = _value;
-    prefs.setBool('ff_showSplash', _value);
+  int _actionCo2e = 0;
+  int get actionCo2e => _actionCo2e;
+  set actionCo2e(int value) {
+    _actionCo2e = value;
   }
 
-  bool _loading = false;
-  bool get loading => _loading;
-  set loading(bool _value) {
-    _loading = _value;
+  double _actionFE = 0.0;
+  double get actionFE => _actionFE;
+  set actionFE(double value) {
+    _actionFE = value;
   }
 
-  String _activeDate = '';
-  String get activeDate => _activeDate;
-  set activeDate(String _value) {
-    _activeDate = _value;
+  List<int> _chartXdays = [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30
+  ];
+  List<int> get chartXdays => _chartXdays;
+  set chartXdays(List<int> value) {
+    _chartXdays = value;
   }
 
-  int _activeDateRelative = 0;
-  int get activeDateRelative => _activeDateRelative;
-  set activeDateRelative(int _value) {
-    _activeDateRelative = _value;
+  void addToChartXdays(int value) {
+    _chartXdays.add(value);
   }
 
-  bool _displayFoodActions = true;
-  bool get displayFoodActions => _displayFoodActions;
-  set displayFoodActions(bool _value) {
-    _displayFoodActions = _value;
-    prefs.setBool('ff_displayFoodActions', _value);
+  void removeFromChartXdays(int value) {
+    _chartXdays.remove(value);
   }
 
-  bool _displayEnergyActions = true;
-  bool get displayEnergyActions => _displayEnergyActions;
-  set displayEnergyActions(bool _value) {
-    _displayEnergyActions = _value;
-    prefs.setBool('ff_displayEnergyActions', _value);
+  void removeAtIndexFromChartXdays(int index) {
+    _chartXdays.removeAt(index);
   }
 
-  bool _displayTransportActions = true;
-  bool get displayTransportActions => _displayTransportActions;
-  set displayTransportActions(bool _value) {
-    _displayTransportActions = _value;
-    prefs.setBool('ff_displayTransportActions', _value);
-  }
-
-  bool _displayOptions = false;
-  bool get displayOptions => _displayOptions;
-  set displayOptions(bool _value) {
-    _displayOptions = _value;
-  }
-
-  bool _displayDates = false;
-  bool get displayDates => _displayDates;
-  set displayDates(bool _value) {
-    _displayDates = _value;
-  }
-
-  bool _displayDays = false;
-  bool get displayDays => _displayDays;
-  set displayDays(bool _value) {
-    _displayDays = _value;
-  }
-
-  List<double> _XAxisDays = [-6, -5, -4, -3, -2, -1, 0];
-  List<double> get XAxisDays => _XAxisDays;
-  set XAxisDays(List<double> _value) {
-    _XAxisDays = _value;
-  }
-
-  void addToXAxisDays(double _value) {
-    _XAxisDays.add(_value);
-  }
-
-  void removeFromXAxisDays(double _value) {
-    _XAxisDays.remove(_value);
-  }
-
-  void removeAtIndexFromXAxisDays(int _index) {
-    _XAxisDays.removeAt(_index);
-  }
-
-  void updateXAxisDaysAtIndex(
-    int _index,
-    double Function(double) updateFn,
+  void updateChartXdaysAtIndex(
+    int index,
+    int Function(int) updateFn,
   ) {
-    _XAxisDays[_index] = updateFn(_XAxisDays[_index]);
+    _chartXdays[index] = updateFn(_chartXdays[index]);
   }
 
-  void insertAtIndexInXAxisDays(int _index, double _value) {
-    _XAxisDays.insert(_index, _value);
+  void insertAtIndexInChartXdays(int index, int value) {
+    _chartXdays.insert(index, value);
   }
 
-  List<double> _XAxisWeeks = [-3, -2, -1, 0];
-  List<double> get XAxisWeeks => _XAxisWeeks;
-  set XAxisWeeks(List<double> _value) {
-    _XAxisWeeks = _value;
+  DateTime? _lastConnectionDay;
+  DateTime? get lastConnectionDay => _lastConnectionDay;
+  set lastConnectionDay(DateTime? value) {
+    _lastConnectionDay = value;
+    value != null
+        ? prefs.setInt('ff_lastConnectionDay', value.millisecondsSinceEpoch)
+        : prefs.remove('ff_lastConnectionDay');
   }
 
-  void addToXAxisWeeks(double _value) {
-    _XAxisWeeks.add(_value);
-  }
-
-  void removeFromXAxisWeeks(double _value) {
-    _XAxisWeeks.remove(_value);
-  }
-
-  void removeAtIndexFromXAxisWeeks(int _index) {
-    _XAxisWeeks.removeAt(_index);
-  }
-
-  void updateXAxisWeeksAtIndex(
-    int _index,
-    double Function(double) updateFn,
-  ) {
-    _XAxisWeeks[_index] = updateFn(_XAxisWeeks[_index]);
-  }
-
-  void insertAtIndexInXAxisWeeks(int _index, double _value) {
-    _XAxisWeeks.insert(_index, _value);
-  }
-
-  List<double> _XAxisMonths = [-3, -2, -1, 0];
-  List<double> get XAxisMonths => _XAxisMonths;
-  set XAxisMonths(List<double> _value) {
-    _XAxisMonths = _value;
-  }
-
-  void addToXAxisMonths(double _value) {
-    _XAxisMonths.add(_value);
-  }
-
-  void removeFromXAxisMonths(double _value) {
-    _XAxisMonths.remove(_value);
-  }
-
-  void removeAtIndexFromXAxisMonths(int _index) {
-    _XAxisMonths.removeAt(_index);
-  }
-
-  void updateXAxisMonthsAtIndex(
-    int _index,
-    double Function(double) updateFn,
-  ) {
-    _XAxisMonths[_index] = updateFn(_XAxisMonths[_index]);
-  }
-
-  void insertAtIndexInXAxisMonths(int _index, double _value) {
-    _XAxisMonths.insert(_index, _value);
-  }
-
-  int _actionCO2e = 0;
-  int get actionCO2e => _actionCO2e;
-  set actionCO2e(int _value) {
-    _actionCO2e = _value;
-  }
-
-  int _actionEmissionFactor = 0;
-  int get actionEmissionFactor => _actionEmissionFactor;
-  set actionEmissionFactor(int _value) {
-    _actionEmissionFactor = _value;
-  }
-
-  String _actionHint = '';
-  String get actionHint => _actionHint;
-  set actionHint(String _value) {
-    _actionHint = _value;
+  int _successCount = 0;
+  int get successCount => _successCount;
+  set successCount(int value) {
+    _successCount = value;
+    prefs.setInt('ff_successCount', value);
   }
 }
 

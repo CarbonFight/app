@@ -1,13 +1,44 @@
 import 'dart:convert';
-import 'dart:typed_data';
 
-import '../../flutter_flow/flutter_flow_util.dart';
-
+import '/flutter_flow/flutter_flow_util.dart';
 import 'api_manager.dart';
 
 export 'api_manager.dart' show ApiCallResponse;
 
 const _kPrivateApiFunctionName = 'ffPrivateApiCall';
+
+class GetOptionsCall {
+  static Future<ApiCallResponse> call({
+    String? category = '',
+    String? action = '',
+  }) async {
+    return ApiManager.instance.makeApiCall(
+      callName: 'GetOptions',
+      apiUrl: 'https://api.carbonfight.app/v1/options',
+      callType: ApiCallType.GET,
+      headers: {
+        'Accept': 'application/json',
+      },
+      params: {
+        'category': category,
+        'action': action,
+      },
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      alwaysAllowBody: false,
+    );
+  }
+
+  static List<String>? options(dynamic response) => (getJsonField(
+        response,
+        r'''$''',
+        true,
+      ) as List?)
+          ?.withoutNulls
+          .cast<String>();
+}
 
 class GetEmissionFactorCall {
   static Future<ApiCallResponse> call({
@@ -16,7 +47,7 @@ class GetEmissionFactorCall {
     String? option = '',
     List<String>? sideList,
     String? hint = '',
-  }) {
+  }) async {
     final side = _serializeList(sideList);
 
     return ApiManager.instance.makeApiCall(
@@ -34,6 +65,7 @@ class GetEmissionFactorCall {
       encodeBodyUtf8: false,
       decodeUtf8: false,
       cache: false,
+      alwaysAllowBody: false,
     );
   }
 
@@ -47,34 +79,33 @@ class GetEmissionFactorCall {
       );
 }
 
-class GetOptionsCall {
+class GetActionsCall {
   static Future<ApiCallResponse> call({
     String? category = '',
-    String? action = '',
-  }) {
+  }) async {
     return ApiManager.instance.makeApiCall(
-      callName: 'GetOptions',
-      apiUrl: 'https://api.carbonfight.app/v1/options',
+      callName: 'GetActions',
+      apiUrl: 'https://api.carbonfight.app/v1/actions',
       callType: ApiCallType.GET,
       headers: {
         'Accept': 'application/json',
       },
       params: {
         'category': category,
-        'action': action,
       },
       returnBody: true,
       encodeBodyUtf8: false,
       decodeUtf8: false,
       cache: false,
+      alwaysAllowBody: false,
     );
   }
 
-  static dynamic options(dynamic response) => getJsonField(
+  static List? actions(dynamic response) => getJsonField(
         response,
         r'''$''',
         true,
-      );
+      ) as List?;
 }
 
 class ApiPagingParams {

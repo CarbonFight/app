@@ -12,101 +12,62 @@ import '/backend/backend.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '/auth/firebase_auth/auth_util.dart';
 
-String printScore(int? score) {
-  String co2 = "0";
+String? pS(int? co2e) {
+  String quantity = "0";
   String unit = "g";
 
-  if (score! < 1000) {
-    co2 = score.toString();
-    unit = "g";
-  } else if (score >= 1000 && score < 10000) {
-    co2 = (score / 1000).toStringAsFixed(2);
-    unit = "kg";
-  } else if (score >= 10000 && score < 20000) {
-    co2 = (score / 1000).toStringAsFixed(1);
-    unit = "kg";
-  } else if (score >= 20000 && score < 1000000) {
-    co2 = (score / 1000).toStringAsFixed(0);
-    unit = "kg";
-  } else if (score >= 1000000) {
-    co2 = (score / 1000000).toStringAsFixed(2);
-    unit = "T";
+  if (co2e! == 0) {
+    quantity = "-";
+    unit = "";
+  } else if (co2e! < 1000) {
+    quantity = co2e.toStringAsFixed(0);
+    unit = " g";
+  } else if (co2e >= 1000 && co2e < 10000) {
+    quantity = (co2e / 1000).toStringAsFixed(2);
+    unit = " kg";
+  } else if (co2e >= 10000 && co2e < 20000) {
+    quantity = (co2e / 1000).toStringAsFixed(1);
+    unit = " kg";
+  } else if (co2e >= 20000 && co2e < 1000000) {
+    quantity = (co2e / 1000).toStringAsFixed(0);
+    unit = " kg";
+  } else if (co2e >= 1000000) {
+    quantity = (co2e / 1000000).toStringAsFixed(2);
+    unit = " T";
   }
-  return co2 + " " + unit;
+  return quantity + unit;
 }
 
-String timestampToDay(DateTime? timestamp) {
-  // Add your function code here!
-  var formatter = DateFormat('d/M/y');
-  String formattedDate = formatter.format(timestamp!);
-  //return DateTime.parse(formattedDate); // change to 25/7/2022
-  return formattedDate;
-}
-
-String setOneDayBefore(String? activeDate) {
-  var parsedDate = DateFormat('d/M/y').parse(activeDate!);
-  DateTime oneDayAgo = parsedDate.subtract(new Duration(days: 1));
-  String formattedDate = DateFormat('d/M/y').format(oneDayAgo);
-
-  return formattedDate;
-}
-
-String setOneDayAfter(String? activeDate) {
-  var parsedDate = DateFormat('d/M/y').parse(activeDate!);
-  DateTime oneDayAfter = parsedDate.add(new Duration(days: 1));
-  String formattedDate = DateFormat('d/M/y').format(oneDayAfter);
-
-  return formattedDate;
-}
-
-double ratioScoreTotal(
-  int? score,
-  int? total,
+double? pRatio(
+  int co2e,
+  double target,
 ) {
-  // Add your function code here!
-  var ratio = (score! / total!);
-  if (ratio > 1) {
-    ratio = 1;
-  }
-  var output = ratio.toStringAsFixed(2);
-  return double.parse(output);
-}
+  // Convert Year target from Tonnes to Grammes and to Day target
+  double targetDay = target * 1000000 / 365;
+  String result;
 
-Color progressBarColor(
-  int? score,
-  int? total,
-) {
-  var ratio = (score! / total!);
-  if (ratio > 0.9) {
-    return Colors.red.shade900;
-  } else if (ratio > 0.8) {
-    return Colors.deepOrange.shade900;
+  // avoiding division by 0
+  if (targetDay == 0 && co2e > 0) {
+    result = 1.toStringAsFixed(2);
+  } else if (targetDay == 0 && co2e == 0) {
+    result = 0.toStringAsFixed(2);
   } else {
-    return Colors.teal.shade600;
-  }
-}
-
-String printRatioScoreTotal(
-  int? score,
-  int? total,
-) {
-  if (total == 0) {
-    total = 1; // No divide by zero
+    // Calculate ratio
+    result = (co2e / targetDay).toStringAsFixed(2);
+    if ((co2e / targetDay) > 1) {
+      result = 1.toStringAsFixed(2);
+    }
   }
 
-  // Add your function code here!
-  var ratio = 100 * (score! / total!);
-  var val = ratio.toStringAsFixed(0);
-  var unit = '%';
-  return val + " " + unit;
+  return double.parse(result);
 }
 
 int calculateActionCO2e(
-  int? emissionFactor,
   int? count,
   int? multiplicator,
   int? divider,
   String? shared,
+  double? emissionFactor,
 ) {
   // Default values
   count = count ?? 0;
@@ -121,110 +82,257 @@ int calculateActionCO2e(
   return co2e.round();
 }
 
-List<String> getTransportPassengers(String? transport) {
-  List<String> params = [];
-
-  switch (transport) {
-    case "car":
-      params.add('1');
-      params.add('2');
-      params.add('3');
-      params.add('4');
-      params.add('5');
-      params.add('6');
-      params.add('7');
-      params.add('8');
-      break;
-    case "bus":
-      params.add('Non applicable');
-      break;
-    case "scooter":
-      params.add('1');
-      params.add('2');
-      break;
-    case "train":
-      params.add('Non applicable');
-      break;
-    case "bike":
-      params.add('1');
-      params.add('2');
-      break;
-    case "flight":
-      params.add('Non applicable');
-      break;
-    case "metro":
-      params.add('Non applicable');
-      break;
-    case "moto":
-      params.add('1');
-      params.add('2');
-      break;
-  }
-
-  return params;
-}
-
-String getTransportDistanceLabel(String? transport) {
-  String label = "";
-
-  switch (transport) {
-    case "car":
-      label = "Distance parcourue (en KMs)";
-      break;
-    case "bus":
-      label = "Nombre de stations";
-      break;
-    case "scooter":
-      label = "Distance parcourue (en KMs)";
-      break;
-    case "train":
-      label = "Distance parcourue (en KMs)";
-      break;
-    case "bike":
-      label = "Distance parcourue (en KMs)";
-      break;
-    case "flight":
-      label = "Distance parcourue (en KMs)";
-      break;
-    case "metro":
-      label = "Nombre de stations";
-      break;
-    case "moto":
-      label = "Distance parcourue (en KMs)";
-      break;
-  }
-
-  return label;
-}
-
-String getEnergyVolumeLabel(String? energy) {
-  String label = "";
-
-  switch (energy) {
-    case "electricity":
-      label = "Consommation annuelle en KWH";
-      break;
-    case "gas":
-      label = "Consommation annuelle en KWH";
-      break;
-    case "water":
-      label = "Consommation annuelle en M3";
-      break;
-  }
-
-  return label;
-}
-
-int getActiveScore(
-  List<int>? scores,
-  int? dayRelative,
+double? pRatioChallenges(
+  int? score,
+  int? target,
 ) {
-  return scores![dayRelative!];
+  // Calculate ratio
+  var ratio = (score! / target!);
+  if (ratio > 1) {
+    ratio = 1;
+  }
+  var output = ratio.toStringAsFixed(2);
+  return double.parse(output);
 }
 
-String printRank(int? rank) {
-  // Rank starts at 0
-  var newRank = rank! + 1;
-  var newRankString = "#" + newRank.toString();
-  return newRankString;
+String? pTargetDay(double? target) {
+  double targetDay = target! * 1000 / 365;
+  return targetDay.toStringAsFixed(1) + " Kg";
+}
+
+DateTime? lastMidnight() {
+  var now = DateTime.now();
+  var lastMidnight = DateTime(now.year, now.month, now.day);
+  return lastMidnight;
+}
+
+List<int> successStats(SuccessRecord success) {
+  // Score
+  int successScoreTotal = 350;
+  int successScore = 0;
+
+  // Lodging
+  int successCountLodgingTotal = 7;
+  int successCountLodging = 0;
+
+  // Lodging Count
+  if (success.led != 0) {
+    successCountLodging += 1;
+  }
+  if (success.pub != 0) {
+    successCountLodging += 1;
+  }
+  if (success.greenEnergy != 0) {
+    successCountLodging += 1;
+  }
+  if (success.lights != 0) {
+    successCountLodging += 1;
+  }
+  if (success.night != 0) {
+    successCountLodging += 1;
+  }
+  if (success.thermostat != 0) {
+    successCountLodging += 1;
+  }
+  if (success.bath != 0) {
+    successCountLodging += 1;
+  }
+
+  // Lodging points
+  if (success.led == 1 || success.led == 3) {
+    successScore += 30;
+  }
+  if (success.pub == 1 || success.pub == 3) {
+    successScore += 30;
+  }
+  if (success.greenEnergy == 1 || success.greenEnergy == 3) {
+    successScore += 50;
+  }
+  if (success.lights == 1 || success.lights == 3) {
+    successScore += 30;
+  }
+  if (success.night == 1 || success.night == 3) {
+    successScore += 30;
+  }
+  if (success.thermostat == 1 || success.thermostat == 3) {
+    successScore += 30;
+  }
+  if (success.bath == 1 || success.bath == 3) {
+    successScore += 30;
+  }
+
+  // Clothes
+  int successCountClothesTotal = 4;
+  int successCountClothes = 0;
+
+  // Lodging Count
+  if (success.dry != 0) {
+    successCountClothes += 1;
+  }
+  if (success.cold != 0) {
+    successCountClothes += 1;
+  }
+  if (success.sell != 0) {
+    successCountClothes += 1;
+  }
+  if (success.second != 0) {
+    successCountClothes += 1;
+  }
+
+  // Lodging points
+  if (success.dry == 1 || success.dry == 3) {
+    successScore += 30;
+  }
+  if (success.cold == 1 || success.cold == 3) {
+    successScore += 30;
+  }
+  if (success.sell == 1 || success.sell == 3) {
+    successScore += 30;
+  }
+  if (success.second == 1 || success.second == 3) {
+    successScore += 30;
+  }
+
+  return [
+    successScore,
+    successScoreTotal,
+    successCountLodging,
+    successCountLodgingTotal,
+    successCountClothes,
+    successCountClothesTotal,
+    0,
+    4,
+    0,
+    3,
+    0,
+    7,
+    0,
+    11
+  ];
+}
+
+List<int> challengesStats(ChallengesRecord challenges) {
+  int challengesScore = 0;
+  int challengesScoreTotal = 90;
+
+  // Transport
+  int challengesCountTransportTotal = 7;
+  int challengesCountTransport = 0;
+
+  if (challenges.onboardingTransport) {
+    challengesCountTransport += 1;
+    challengesScore += 10;
+  }
+  if (challenges.onboardingServices) {
+    challengesCountTransport += 1;
+    challengesScore += 10;
+  }
+  if (challenges.onboardingObjects) {
+    challengesCountTransport += 1;
+    challengesScore += 10;
+  }
+  if (challenges.onboardingLodging) {
+    challengesCountTransport += 1;
+    challengesScore += 10;
+  }
+  if (challenges.onboardingFurniture) {
+    challengesCountTransport += 1;
+    challengesScore += 10;
+  }
+  if (challenges.onboardingFood) {
+    challengesCountTransport += 1;
+    challengesScore += 10;
+  }
+  if (challenges.onboardingDigital) {
+    challengesCountTransport += 1;
+    challengesScore += 10;
+  }
+  if (challenges.onboardingClothes) {
+    challengesCountTransport += 1;
+    challengesScore += 10;
+  }
+  if (challenges.onboardingAppliance) {
+    challengesCountTransport += 1;
+    challengesScore += 10;
+  }
+
+  return [
+    challengesScore,
+    challengesScoreTotal,
+    challengesCountTransport,
+    challengesCountTransportTotal,
+    0,
+    13,
+    0,
+    5,
+    0,
+    5,
+    0,
+    5
+  ];
+}
+
+String? pSFE(double? co2e) {
+  String quantity = "0";
+  String unit = "g";
+
+  if (co2e! == 0) {
+    quantity = "-";
+    unit = "";
+  } else if (co2e! < 1000) {
+    quantity = co2e.toStringAsFixed(0);
+    unit = " g";
+  } else if (co2e >= 1000 && co2e < 10000) {
+    quantity = (co2e / 1000).toStringAsFixed(2);
+    unit = " kg";
+  } else if (co2e >= 10000 && co2e < 20000) {
+    quantity = (co2e / 1000).toStringAsFixed(1);
+    unit = " kg";
+  } else if (co2e >= 20000 && co2e < 1000000) {
+    quantity = (co2e / 1000).toStringAsFixed(0);
+    unit = " kg";
+  } else if (co2e >= 1000000) {
+    quantity = (co2e / 1000000).toStringAsFixed(2);
+    unit = " T";
+  }
+  return quantity + unit;
+}
+
+List<int> depreciationDaysCalculator(
+  String yearBuy,
+  String? yearCreation,
+  int? yearsDecay,
+) {
+  // return number of days for objects
+
+  // This year
+  String yearNow = DateFormat('y').format(new DateTime.now());
+  // If yearCreation not set (buy new thing), set yearCreation=yearBuy
+  yearCreation = yearCreation ?? yearBuy;
+  // Default decay is 5 years
+  yearsDecay = yearsDecay ?? 5;
+
+  // Difference betweenn year of buy and year of creation
+  int yearDiffNewOld = int.parse(yearBuy) - int.parse(yearCreation);
+  // Difference between year of buy and this year
+  int yearDiffBuy = int.parse(yearNow) - int.parse(yearBuy);
+
+  int yearsLeft = yearsDecay - yearDiffNewOld - yearDiffBuy;
+
+  // if user set buy date before year of creation
+  if (yearsLeft < 0) {
+    yearsLeft = 0;
+  }
+
+  int daysDecay = (yearsDecay * 365);
+
+  return [daysDecay, yearsLeft];
+}
+
+String depreciationEndDate(
+  String startYear,
+  int yearsLeft,
+) {
+  String endYear = (int.parse(startYear) + yearsLeft).toString();
+  return endYear;
 }

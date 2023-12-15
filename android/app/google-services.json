@@ -1,61 +1,53 @@
 {
   "project_info": {
-    "project_number": "11012056131",
-    "project_id": "carbonfight-89af6",
-    "storage_bucket": "carbonfight-89af6.appspot.com"
+    "project_number": "141330271572",
+    "project_id": "actions-dd2b5",
+    "storage_bucket": "actions-dd2b5.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:11012056131:android:9004a2373406cf0dda60f6",
+        "mobilesdk_app_id": "1:141330271572:android:aa881aa58ddd9253aaccc1",
         "android_client_info": {
           "package_name": "app.carbonfight"
         }
       },
       "oauth_client": [
         {
-          "client_id": "11012056131-elaa3gijiabd3n2rgema7uv3dqa18sjl.apps.googleusercontent.com",
+          "client_id": "141330271572-inm04bncmq5bpfjspnp2669o4q6pr22u.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "app.carbonfight",
-            "certificate_hash": "bdeb10517ac372ea4d7ec00510c1a9ef474c9463"
+            "certificate_hash": "eddf5c8ea09e9e66d73800e30f9ea3d0116bd3a9"
           }
         },
         {
-          "client_id": "11012056131-g5p1q0sk8c7kt4hpbr7gp7bgvl9rbsc5.apps.googleusercontent.com",
+          "client_id": "141330271572-qs6ibmbv6hrjgm32hfudcbhu3rt2qq5q.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "app.carbonfight",
-            "certificate_hash": "9bbb3186b2189ef16d8f272bdab59362c395cbb4"
+            "certificate_hash": "0f56cd821b5dca29a32a6dacd1149ac62dd61580"
           }
         },
         {
-          "client_id": "11012056131-uu32ljojs99fdu2b6k2bbsvtui1si568.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "app.carbonfight",
-            "certificate_hash": "2ce791ff70311bd8e0fbcae0945511d142313ed2"
-          }
-        },
-        {
-          "client_id": "11012056131-8d5vhts7n73m773c1hj4bibbcimndmgk.apps.googleusercontent.com",
+          "client_id": "141330271572-7itrq25r4ntigvv1l6vdnkik21quhd4e.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAaHqQOPkRnkmq17hA-eorRmAj5iETLS8k"
+          "current_key": "AIzaSyByMaOxakSvUiTjq2fZ0wwFzo8Dv-CRhBM"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "11012056131-8d5vhts7n73m773c1hj4bibbcimndmgk.apps.googleusercontent.com",
+              "client_id": "141330271572-7itrq25r4ntigvv1l6vdnkik21quhd4e.apps.googleusercontent.com",
               "client_type": 3
             },
             {
-              "client_id": "11012056131-ciq3vki8qino45qc2ku5ml00e6domjab.apps.googleusercontent.com",
+              "client_id": "141330271572-v6tokdrqokjhkdq46gtie1pfn515c8o5.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
                 "bundle_id": "app.carbonfight"

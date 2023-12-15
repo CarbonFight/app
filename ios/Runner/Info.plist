@@ -16,6 +16,11 @@
 	<string>CarbonFight</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
+	<key>CFBundleLocalizations</key>
+	<array>
+		<string>fr</string>
+		<string>en</string>
+	</array>
 
 	<key>CFBundleShortVersionString</key>
 	<string>$(FLUTTER_BUILD_NAME)</string>
@@ -28,8 +33,8 @@
             <string>Editor</string>
             <key>CFBundleURLSchemes</key>
             <array>
-                <string>com.googleusercontent.apps.11012056131-ciq3vki8qino45qc2ku5ml00e6domjab</string>
-                <string>fb265347802383003</string>
+                <string>com.googleusercontent.apps.141330271572-v6tokdrqokjhkdq46gtie1pfn515c8o5</string>
+                <string>fb1491387988311937</string>
             </array>
         </dict>
 
@@ -48,7 +53,7 @@
     <true/>
 
     <key>FacebookAppID</key>
-    <string>265347802383003</string>
+    <string>1491387988311937</string>
     <key>FacebookDisplayName</key>
     <string>CarbonFight</string>
 
@@ -59,11 +64,6 @@
 
 
 
-    <key>UIBackgroundModes</key>
-    <array>
-        <string>fetch</string>
-        <string>remote-notification</string>
-    </array>
 
     <key>LSApplicationQueriesSchemes</key>
     <array>

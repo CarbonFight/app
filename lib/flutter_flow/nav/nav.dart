@@ -1,21 +1,14 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:go_router/go_router.dart';
-import 'package:page_transition/page_transition.dart';
-import '/backend/backend.dart';
+import 'package:provider/provider.dart';
 
-import '../../auth/base_auth_user_provider.dart';
-import '../../backend/push_notifications/push_notifications_handler.dart'
-    show PushNotificationsHandler;
+import '/auth/base_auth_user_provider.dart';
+
 import '/index.dart';
 import '/main.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
-import '/flutter_flow/lat_lng.dart';
-import '/flutter_flow/place.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import 'serialization_util.dart';
 
 export 'package:go_router/go_router.dart';
 export 'serialization_util.dart';
@@ -80,81 +73,132 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
       debugLogDiagnostics: true,
       refreshListenable: appStateNotifier,
       errorBuilder: (context, state) =>
-          appStateNotifier.loggedIn ? HomeWidget() : LoginWidget(),
+          appStateNotifier.loggedIn ? const NavBarPage() : const SigninWidget(),
       routes: [
         FFRoute(
           name: '_initialize',
           path: '/',
           builder: (context, _) =>
-              appStateNotifier.loggedIn ? HomeWidget() : LoginWidget(),
-          routes: [
-            FFRoute(
-              name: 'Home',
-              path: 'home',
-              builder: (context, params) => HomeWidget(),
-            ),
-            FFRoute(
-              name: 'Profile',
-              path: 'profile',
-              builder: (context, params) => ProfileWidget(),
-            ),
-            FFRoute(
-              name: 'Food',
-              path: 'food',
-              builder: (context, params) => FoodWidget(
-                actionRef: params.getParam('actionRef',
-                    ParamType.DocumentReference, false, ['foodActions']),
-                category: params.getParam('category', ParamType.String),
-                action: params.getParam('action', ParamType.String),
-              ),
-            ),
-            FFRoute(
-              name: 'Statistiques',
-              path: 'statistiques',
-              builder: (context, params) => StatistiquesWidget(),
-            ),
-            FFRoute(
-              name: 'Transport',
-              path: 'transport',
-              builder: (context, params) => TransportWidget(
-                actionRef: params.getParam('actionRef',
-                    ParamType.DocumentReference, false, ['transportActions']),
-                category: params.getParam('category', ParamType.String),
-                action: params.getParam('action', ParamType.String),
-              ),
-            ),
-            FFRoute(
-              name: 'Splash',
-              path: 'splash',
-              builder: (context, params) => SplashWidget(),
-            ),
-            FFRoute(
-              name: 'Energies',
-              path: 'energies',
-              builder: (context, params) => EnergiesWidget(
-                actionRef: params.getParam('actionRef',
-                    ParamType.DocumentReference, false, ['energyActions']),
-                category: params.getParam('category', ParamType.String),
-                action: params.getParam('action', ParamType.String),
-              ),
-            ),
-            FFRoute(
-              name: 'Signup',
-              path: 'signup',
-              builder: (context, params) => SignupWidget(),
-            ),
-            FFRoute(
-              name: 'Drawer',
-              path: 'drawer',
-              builder: (context, params) => DrawerWidget(),
-            ),
-            FFRoute(
-              name: 'Login',
-              path: 'login',
-              builder: (context, params) => LoginWidget(),
-            )
-          ].map((r) => r.toRoute(appStateNotifier)).toList(),
+              appStateNotifier.loggedIn ? const NavBarPage() : const SigninWidget(),
         ),
+        FFRoute(
+          name: 'signin',
+          path: '/signin',
+          builder: (context, params) => const SigninWidget(),
+        ),
+        FFRoute(
+          name: 'home',
+          path: '/home',
+          builder: (context, params) => params.isEmpty
+              ? const NavBarPage(initialPage: 'home')
+              : const NavBarPage(
+                  initialPage: 'home',
+                  page: HomeWidget(),
+                ),
+        ),
+        FFRoute(
+          name: 'challenges',
+          path: '/challenges',
+          builder: (context, params) => params.isEmpty
+              ? const NavBarPage(initialPage: 'challenges')
+              : const ChallengesWidget(),
+        ),
+        FFRoute(
+          name: 'actions',
+          path: '/actions',
+          builder: (context, params) => NavBarPage(
+            initialPage: '',
+            page: ActionsWidget(
+              category: params.getParam('category', ParamType.String),
+            ),
+          ),
+        ),
+        FFRoute(
+          name: 'stats',
+          path: '/stats',
+          builder: (context, params) => const StatsWidget(),
+        ),
+        FFRoute(
+          name: 'profil',
+          path: '/profil',
+          builder: (context, params) => params.isEmpty
+              ? const NavBarPage(initialPage: 'profil')
+              : const ProfilWidget(),
+        ),
+        FFRoute(
+          name: 'categories',
+          path: '/categories',
+          builder: (context, params) => params.isEmpty
+              ? const NavBarPage(initialPage: 'categories')
+              : const CategoriesWidget(),
+        ),
+        FFRoute(
+          name: 'declare',
+          path: '/declare',
+          builder: (context, params) => NavBarPage(
+            initialPage: '',
+            page: DeclareWidget(
+              category: params.getParam('category', ParamType.String),
+              actionRef: params.getParam(
+                  'actionRef', ParamType.DocumentReference, false, ['actions']),
+            ),
+          ),
+        ),
+        FFRoute(
+          name: 'target',
+          path: '/target',
+          builder: (context, params) => const NavBarPage(
+            initialPage: '',
+            page: TargetWidget(),
+          ),
+        ),
+        FFRoute(
+          name: 'association',
+          path: '/association',
+          builder: (context, params) => const NavBarPage(
+            initialPage: '',
+            page: AssociationWidget(),
+          ),
+        ),
+        FFRoute(
+          name: 'signup',
+          path: '/signup',
+          builder: (context, params) => const SignupWidget(),
+        ),
+        FFRoute(
+          name: 'account',
+          path: '/account',
+          builder: (context, params) => const NavBarPage(
+            initialPage: '',
+            page: AccountWidget(),
+          ),
+        ),
+        FFRoute(
+          name: 'journal',
+          path: '/journal',
+          builder: (context, params) => const NavBarPage(
+            initialPage: '',
+            page: JournalWidget(),
+          ),
+        ),
+        FFRoute(
+          name: 'success',
+          path: '/success',
+          builder: (context, params) => params.isEmpty
+              ? const NavBarPage(initialPage: 'success')
+              : const NavBarPage(
+                  initialPage: 'success',
+                  page: SuccessWidget(),
+                ),
+        ),
+        FFRoute(
+          name: 'badges',
+          path: '/badges',
+          builder: (context, params) => const NavBarPage(
+            initialPage: '',
+            page: BadgesWidget(),
+          ),
+        )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );
 
@@ -320,7 +364,7 @@ class FFRoute {
 
           if (requireAuth && !appStateNotifier.loggedIn) {
             appStateNotifier.setRedirectLocationIfUnset(state.location);
-            return '/login';
+            return '/signin';
           }
           return null;
         },
@@ -333,14 +377,19 @@ class FFRoute {
                 )
               : builder(context, ffParams);
           final child = appStateNotifier.loading
-              ? Container(
-                  color: Colors.transparent,
-                  child: Image.asset(
-                    'assets/images/mobile_cover.jpg',
-                    fit: BoxFit.fill,
-                  ),
-                )
-              : PushNotificationsHandler(child: page);
+              ? isWeb
+                  ? Container()
+                  : Container(
+                      color: FlutterFlowTheme.of(context).primaryBackground,
+                      child: Center(
+                        child: Image.asset(
+                          'assets/images/logoCF.png',
+                          width: 100.0,
+                          fit: BoxFit.contain,
+                        ),
+                      ),
+                    )
+              : page;
 
           final transitionInfo = state.transitionInfo;
           return transitionInfo.hasTransition
@@ -348,13 +397,20 @@ class FFRoute {
                   key: state.pageKey,
                   child: child,
                   transitionDuration: transitionInfo.duration,
-                  transitionsBuilder: PageTransition(
+                  transitionsBuilder:
+                      (context, animation, secondaryAnimation, child) =>
+                          PageTransition(
                     type: transitionInfo.transitionType,
                     duration: transitionInfo.duration,
                     reverseDuration: transitionInfo.duration,
                     alignment: transitionInfo.alignment,
                     child: child,
-                  ).transitionsBuilder,
+                  ).buildTransitions(
+                    context,
+                    animation,
+                    secondaryAnimation,
+                    child,
+                  ),
                 )
               : MaterialPage(key: state.pageKey, child: child);
         },
@@ -375,9 +431,29 @@ class TransitionInfo {
   final Duration duration;
   final Alignment? alignment;
 
-  static TransitionInfo appDefault() => TransitionInfo(
+  static TransitionInfo appDefault() => const TransitionInfo(
         hasTransition: true,
         transitionType: PageTransitionType.fade,
         duration: Duration(milliseconds: 0),
+      );
+}
+
+class RootPageContext {
+  const RootPageContext(this.isRootPage, [this.errorRoute]);
+  final bool isRootPage;
+  final String? errorRoute;
+
+  static bool isInactiveRootPage(BuildContext context) {
+    final rootPageContext = context.read<RootPageContext?>();
+    final isRootPage = rootPageContext?.isRootPage ?? false;
+    final location = GoRouter.of(context).location;
+    return isRootPage &&
+        location != '/' &&
+        location != rootPageContext?.errorRoute;
+  }
+
+  static Widget wrap(Widget child, {String? errorRoute}) => Provider.value(
+        value: RootPageContext(true, errorRoute),
+        child: child,
       );
 }

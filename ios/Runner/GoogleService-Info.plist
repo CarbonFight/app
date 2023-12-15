@@ -3,23 +3,23 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>11012056131-ciq3vki8qino45qc2ku5ml00e6domjab.apps.googleusercontent.com</string>
+	<string>141330271572-v6tokdrqokjhkdq46gtie1pfn515c8o5.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.11012056131-ciq3vki8qino45qc2ku5ml00e6domjab</string>
+	<string>com.googleusercontent.apps.141330271572-v6tokdrqokjhkdq46gtie1pfn515c8o5</string>
 	<key>ANDROID_CLIENT_ID</key>
-	<string>11012056131-elaa3gijiabd3n2rgema7uv3dqa18sjl.apps.googleusercontent.com</string>
+	<string>141330271572-inm04bncmq5bpfjspnp2669o4q6pr22u.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
-	<string>AIzaSyBNYNwpbWySrTY14IpKaK1FGivkPan2icc</string>
+	<string>AIzaSyBaTvdC8cj4nQGRObogTnMOLz-LIkcSYaU</string>
 	<key>GCM_SENDER_ID</key>
-	<string>11012056131</string>
+	<string>141330271572</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
 	<string>app.carbonfight</string>
 	<key>PROJECT_ID</key>
-	<string>carbonfight-89af6</string>
+	<string>actions-dd2b5</string>
 	<key>STORAGE_BUCKET</key>
-	<string>carbonfight-89af6.appspot.com</string>
+	<string>actions-dd2b5.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -31,6 +31,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:11012056131:ios:804cbfa35bda6a9bda60f6</string>
+	<string>1:141330271572:ios:0a0d14e605c564d9aaccc1</string>
 </dict>
 </plist>

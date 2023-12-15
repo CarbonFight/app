@@ -1,124 +1,66 @@
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
-import '/components/energy_list_widget.dart';
-import '/components/food_list_widget.dart';
-import '/components/transport_list_widget.dart';
-import '/flutter_flow/flutter_flow_animations.dart';
-import '/flutter_flow/flutter_flow_icon_button.dart';
+import '/components/head_widget.dart';
+import '/components/home_category_widget.dart';
+import '/components/title_widget.dart';
+import '/flutter_flow/flutter_flow_choice_chips.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
-import '/flutter_flow/flutter_flow_toggle_icon.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import '/flutter_flow/form_field_controller.dart';
 import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:flutter_animate/flutter_animate.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter/services.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:provider/provider.dart';
 import 'home_model.dart';
 export 'home_model.dart';
 
 class HomeWidget extends StatefulWidget {
-  const HomeWidget({Key? key}) : super(key: key);
+  const HomeWidget({super.key});
 
   @override
   _HomeWidgetState createState() => _HomeWidgetState();
 }
 
-class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
+class _HomeWidgetState extends State<HomeWidget> {
   late HomeModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
-
-  final animationsMap = {
-    'containerOnPageLoadAnimation1': AnimationInfo(
-      trigger: AnimationTrigger.onPageLoad,
-      effects: [
-        FadeEffect(
-          curve: Curves.easeInOut,
-          delay: 0.ms,
-          duration: 600.ms,
-          begin: 0.0,
-          end: 1.0,
-        ),
-        MoveEffect(
-          curve: Curves.easeInOut,
-          delay: 0.ms,
-          duration: 600.ms,
-          begin: Offset(0.0, 70.0),
-          end: Offset(0.0, 0.0),
-        ),
-      ],
-    ),
-    'containerOnPageLoadAnimation2': AnimationInfo(
-      trigger: AnimationTrigger.onPageLoad,
-      effects: [
-        FadeEffect(
-          curve: Curves.easeInOut,
-          delay: 0.ms,
-          duration: 600.ms,
-          begin: 0.0,
-          end: 1.0,
-        ),
-        MoveEffect(
-          curve: Curves.easeInOut,
-          delay: 0.ms,
-          duration: 600.ms,
-          begin: Offset(0.0, 70.0),
-          end: Offset(0.0, 0.0),
-        ),
-      ],
-    ),
-    'containerOnPageLoadAnimation3': AnimationInfo(
-      trigger: AnimationTrigger.onPageLoad,
-      effects: [
-        FadeEffect(
-          curve: Curves.easeInOut,
-          delay: 0.ms,
-          duration: 600.ms,
-          begin: 0.0,
-          end: 1.0,
-        ),
-        MoveEffect(
-          curve: Curves.easeInOut,
-          delay: 0.ms,
-          duration: 600.ms,
-          begin: Offset(0.0, 70.0),
-          end: Offset(0.0, 0.0),
-        ),
-      ],
-    ),
-  };
 
   @override
   void initState() {
     super.initState();
     _model = createModel(context, () => HomeModel());
 
-    logFirebaseEvent('screen_view', parameters: {'screen_name': 'Home'});
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      logFirebaseEvent('HOME_PAGE_Home_ON_INIT_STATE');
-      logFirebaseEvent('Home_update_app_state');
-      FFAppState().update(() {
-        FFAppState().activeDate = dateTimeFormat(
-          'd/M/y',
-          getCurrentTimestamp,
-          locale: FFLocalizations.of(context).languageCode,
-        );
-        FFAppState().activeDateRelative = 0;
+      setState(() {
+        FFAppState().lastConnectionDay =
+            (currentUserDocument?.connectionHistory.toList() ?? []).last;
       });
+      if (dateTimeFormat(
+            'd/M/y',
+            FFAppState().lastConnectionDay,
+            locale: FFLocalizations.of(context).languageCode,
+          ) !=
+          dateTimeFormat(
+            'd/M/y',
+            getCurrentTimestamp,
+            locale: FFLocalizations.of(context).languageCode,
+          )) {
+        await currentUserReference!.update({
+          ...mapToFirestore(
+            {
+              'connection_history':
+                  FieldValue.arrayUnion([getCurrentTimestamp]),
+            },
+          ),
+        });
+      }
     });
-
-    setupAnimations(
-      animationsMap.values.where((anim) =>
-          anim.trigger == AnimationTrigger.onActionTrigger ||
-          !anim.applyInitialState),
-      this,
-    );
 
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
@@ -132,3784 +74,550 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    if (isiOS) {
+      SystemChrome.setSystemUIOverlayStyle(
+        SystemUiOverlayStyle(
+          statusBarBrightness: Theme.of(context).brightness,
+          systemStatusBarContrastEnforced: true,
+        ),
+      );
+    }
+
     context.watch<FFAppState>();
 
-    return StreamBuilder<UsersRecord>(
-      stream: UsersRecord.getDocument(currentUserReference!),
+    return StreamBuilder<List<StatsRecord>>(
+      stream: queryStatsRecord(
+        queryBuilder: (statsRecord) => statsRecord.where(
+          'uid',
+          isEqualTo: currentUserUid,
+        ),
+        singleRecord: true,
+      ),
       builder: (context, snapshot) {
         // Customize what your widget looks like when it's loading.
         if (!snapshot.hasData) {
           return Scaffold(
-            backgroundColor: FlutterFlowTheme.of(context).primary,
+            backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
             body: Center(
               child: SizedBox(
-                width: 2.0,
-                height: 2.0,
-                child: SpinKitRing(
-                  color: Colors.transparent,
-                  size: 2.0,
+                width: 50.0,
+                height: 50.0,
+                child: CircularProgressIndicator(
+                  valueColor: AlwaysStoppedAnimation<Color>(
+                    FlutterFlowTheme.of(context).secondary,
+                  ),
                 ),
               ),
             ),
           );
         }
-        final homeUsersRecord = snapshot.data!;
-        return Scaffold(
-          key: scaffoldKey,
-          backgroundColor: FlutterFlowTheme.of(context).primary,
-          body: SingleChildScrollView(
-            child: Column(
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                StreamBuilder<List<UsersStatsRecord>>(
-                  stream: queryUsersStatsRecord(
-                    queryBuilder: (usersStatsRecord) => usersStatsRecord
-                        .where('uid', isEqualTo: currentUserUid),
-                    singleRecord: true,
+        List<StatsRecord> homeStatsRecordList = snapshot.data!;
+        // Return an empty Container when the item does not exist.
+        if (snapshot.data!.isEmpty) {
+          return Container();
+        }
+        final homeStatsRecord =
+            homeStatsRecordList.isNotEmpty ? homeStatsRecordList.first : null;
+        return GestureDetector(
+          onTap: () => _model.unfocusNode.canRequestFocus
+              ? FocusScope.of(context).requestFocus(_model.unfocusNode)
+              : FocusScope.of(context).unfocus(),
+          child: Scaffold(
+            key: scaffoldKey,
+            backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+            body: SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  AuthUserStreamWidget(
+                    builder: (context) => wrapWithModel(
+                      model: _model.headModel,
+                      updateCallback: () => setState(() {}),
+                      child: HeadWidget(
+                        displayName: currentUserDisplayName,
+                      ),
+                    ),
                   ),
-                  builder: (context, snapshot) {
-                    // Customize what your widget looks like when it's loading.
-                    if (!snapshot.hasData) {
-                      return Center(
-                        child: SizedBox(
-                          width: 2.0,
-                          height: 2.0,
-                          child: SpinKitRing(
-                            color: Colors.transparent,
-                            size: 2.0,
+                  wrapWithModel(
+                    model: _model.titleModel,
+                    updateCallback: () => setState(() {}),
+                    child: const TitleWidget(
+                      title: 'Tableau de bord',
+                    ),
+                  ),
+                  Container(
+                    width: 360.0,
+                    decoration: BoxDecoration(
+                      color: FlutterFlowTheme.of(context).primaryBackground,
+                    ),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        FlutterFlowChoiceChips(
+                          options: [
+                            ChipData(FFLocalizations.of(context).getText(
+                              'fn0v3p5y' /* Journée */,
+                            )),
+                            ChipData(FFLocalizations.of(context).getText(
+                              'rxuh8t51' /* Semaine */,
+                            )),
+                            ChipData(FFLocalizations.of(context).getText(
+                              '5w9uwt6p' /* Mois */,
+                            ))
+                          ],
+                          onChanged: (val) => setState(
+                              () => _model.choiceChipsValue = val?.first),
+                          selectedChipStyle: ChipStyle(
+                            backgroundColor:
+                                FlutterFlowTheme.of(context).secondary,
+                            textStyle: FlutterFlowTheme.of(context)
+                                .bodyMedium
+                                .override(
+                                  fontFamily: 'Montserrat',
+                                  color:
+                                      FlutterFlowTheme.of(context).primaryText,
+                                ),
+                            iconColor: FlutterFlowTheme.of(context).primaryText,
+                            iconSize: 18.0,
+                            elevation: 4.0,
+                            borderRadius: BorderRadius.circular(16.0),
                           ),
+                          unselectedChipStyle: ChipStyle(
+                            backgroundColor:
+                                FlutterFlowTheme.of(context).alternate,
+                            textStyle: FlutterFlowTheme.of(context)
+                                .bodyMedium
+                                .override(
+                                  fontFamily: 'Montserrat',
+                                  color: FlutterFlowTheme.of(context)
+                                      .secondaryText,
+                                ),
+                            iconColor:
+                                FlutterFlowTheme.of(context).secondaryText,
+                            iconSize: 18.0,
+                            elevation: 0.0,
+                            borderRadius: BorderRadius.circular(16.0),
+                          ),
+                          chipSpacing: 12.0,
+                          rowSpacing: 12.0,
+                          multiselect: false,
+                          initialized: _model.choiceChipsValue != null,
+                          alignment: WrapAlignment.start,
+                          controller: _model.choiceChipsValueController ??=
+                              FormFieldController<List<String>>(
+                            [
+                              FFLocalizations.of(context).getText(
+                                'm7r6h8h7' /* Journée */,
+                              )
+                            ],
+                          ),
+                          wrapped: true,
                         ),
-                      );
-                    }
-                    List<UsersStatsRecord> containerUsersStatsRecordList =
-                        snapshot.data!;
-                    final containerUsersStatsRecord =
-                        containerUsersStatsRecordList.isNotEmpty
-                            ? containerUsersStatsRecordList.first
-                            : null;
-                    return Container(
-                      width: MediaQuery.sizeOf(context).width * 1.0,
-                      height: MediaQuery.sizeOf(context).height * 1.0,
-                      constraints: BoxConstraints(
-                        maxWidth: MediaQuery.sizeOf(context).width * 1.0,
-                        maxHeight: MediaQuery.sizeOf(context).height * 1.0,
-                      ),
-                      decoration: BoxDecoration(
-                        color: Color(0xFFEEEEEE),
-                        image: DecorationImage(
-                          fit: BoxFit.cover,
-                          image: Image.asset(
-                            'assets/images/Final_Concept_flou.jpg',
-                          ).image,
-                        ),
-                      ),
-                      child: SingleChildScrollView(
-                        child: Column(
+                        Row(
                           mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Container(
-                              width: MediaQuery.sizeOf(context).width * 1.0,
-                              height: 100.0,
-                              decoration: BoxDecoration(),
-                              alignment: AlignmentDirectional(0.00, 1.00),
-                              child: Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    20.0, 0.0, 20.0, 0.0),
-                                child: Row(
+                            Stack(
+                              alignment: const AlignmentDirectional(0.0, 0.0),
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                      0.0, 10.0, 0.0, 10.0),
+                                  child: AuthUserStreamWidget(
+                                    builder: (context) =>
+                                        CircularPercentIndicator(
+                                      percent: functions.pRatio(
+                                          homeStatsRecord!.dayTotal,
+                                          valueOrDefault(
+                                              currentUserDocument?.target,
+                                              0.0))!,
+                                      radius: 40.0,
+                                      lineWidth: 10.0,
+                                      animation: true,
+                                      animateFromLastPercent: true,
+                                      progressColor:
+                                          FlutterFlowTheme.of(context)
+                                              .secondary,
+                                      backgroundColor:
+                                          FlutterFlowTheme.of(context)
+                                              .alternate,
+                                      startAngle: 270.0,
+                                    ),
+                                  ),
+                                ),
+                                Column(
                                   mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
+                                    Text(
+                                      valueOrDefault<String>(
+                                        functions.pS(homeStatsRecord?.dayTotal),
+                                        '0',
+                                      ),
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodySmall,
+                                    ),
                                     Row(
                                       mainAxisSize: MainAxisSize.max,
                                       children: [
+                                        Text(
+                                          FFLocalizations.of(context).getText(
+                                            'fb5tanar' /* co2e  */,
+                                          ),
+                                          style: FlutterFlowTheme.of(context)
+                                              .labelSmall,
+                                        ),
                                         InkWell(
                                           splashColor: Colors.transparent,
                                           focusColor: Colors.transparent,
                                           hoverColor: Colors.transparent,
                                           highlightColor: Colors.transparent,
                                           onTap: () async {
-                                            logFirebaseEvent(
-                                                'HOME_PAGE_Container_605qgwvv_ON_TAP');
-                                            logFirebaseEvent(
-                                                'Container_navigate_to');
-
-                                            context.pushNamed(
-                                              'Drawer',
-                                              extra: <String, dynamic>{
-                                                kTransitionInfoKey:
-                                                    TransitionInfo(
-                                                  hasTransition: true,
-                                                  transitionType:
-                                                      PageTransitionType
-                                                          .leftToRight,
-                                                ),
+                                            await showDialog(
+                                              context: context,
+                                              builder: (alertDialogContext) {
+                                                return AlertDialog(
+                                                  title: const Text('co2e ?'),
+                                                  content: const Text(
+                                                      'L’équivalent CO2, appelé aussi CO2e ou COeq, est une unité créée par le GIEC (groupe intergouvernemental d’experts sur l’évolution du climat). Il désigne les gaz à effet de serre (ou GES). Les principaux GES présents dans l\'atmosphère de la Terre sont la vapeur d\'eau, le dioxyde de carbone (CO2), le méthane (CH4), l\'oxyde nitreux (N2O) et l\'ozone.'),
+                                                  actions: [
+                                                    TextButton(
+                                                      onPressed: () =>
+                                                          Navigator.pop(
+                                                              alertDialogContext),
+                                                      child: const Text('Ok'),
+                                                    ),
+                                                  ],
+                                                );
                                               },
                                             );
                                           },
-                                          child: Container(
-                                            width: 50.0,
-                                            height: 50.0,
-                                            decoration: BoxDecoration(),
-                                            alignment: AlignmentDirectional(
-                                                0.00, 0.00),
-                                            child: SvgPicture.asset(
-                                              'assets/images/menu.svg',
-                                              width: 24.0,
-                                              height: 24.0,
-                                              fit: BoxFit.fitHeight,
-                                            ),
+                                          child: Icon(
+                                            Icons.info_outline,
+                                            color: FlutterFlowTheme.of(context)
+                                                .secondaryText,
+                                            size: 12.0,
                                           ),
-                                        ),
-                                        Image.asset(
-                                          'assets/images/logo_light.png',
-                                          width: 100.0,
-                                          height: 40.0,
-                                          fit: BoxFit.fitHeight,
                                         ),
                                       ],
                                     ),
-                                    Expanded(
-                                      child: Row(
-                                        mainAxisSize: MainAxisSize.max,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceEvenly,
-                                        children: [
-                                          InkWell(
-                                            splashColor: Colors.transparent,
-                                            focusColor: Colors.transparent,
-                                            hoverColor: Colors.transparent,
-                                            highlightColor: Colors.transparent,
-                                            onTap: () async {
-                                              logFirebaseEvent(
-                                                  'HOME_PAGE_Actions_ON_TAP');
-                                              logFirebaseEvent(
-                                                  'Actions_navigate_to');
-
-                                              context.pushNamed('Statistiques');
-                                            },
-                                            child: Container(
-                                              width: 40.0,
-                                              height: 40.0,
-                                              decoration: BoxDecoration(
-                                                color: Color(0x4DFFFFFF),
-                                                boxShadow: [
-                                                  BoxShadow(
-                                                    blurRadius: 10.0,
-                                                    color: Color(0x2C000000),
-                                                    offset: Offset(0.0, 4.0),
-                                                  )
-                                                ],
-                                                shape: BoxShape.circle,
-                                                border: Border.all(
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .grayLight,
-                                                  width: 1.0,
-                                                ),
-                                              ),
-                                              child: InkWell(
-                                                splashColor: Colors.transparent,
-                                                focusColor: Colors.transparent,
-                                                hoverColor: Colors.transparent,
-                                                highlightColor:
-                                                    Colors.transparent,
-                                                onTap: () async {
-                                                  logFirebaseEvent(
-                                                      'HOME_PAGE_Icon_20s4at3u_ON_TAP');
-                                                  logFirebaseEvent(
-                                                      'Icon_navigate_to');
-
-                                                  context.pushNamed('Home');
-                                                },
-                                                child: Icon(
-                                                  Icons.add,
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .tertiary,
-                                                  size: 24.0,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                          InkWell(
-                                            splashColor: Colors.transparent,
-                                            focusColor: Colors.transparent,
-                                            hoverColor: Colors.transparent,
-                                            highlightColor: Colors.transparent,
-                                            onTap: () async {
-                                              logFirebaseEvent(
-                                                  'HOME_PAGE_Stats_ON_TAP');
-                                              logFirebaseEvent(
-                                                  'Stats_navigate_to');
-
-                                              context.pushNamed('Statistiques');
-                                            },
-                                            child: Container(
-                                              width: 40.0,
-                                              height: 40.0,
-                                              decoration: BoxDecoration(
-                                                color: Color(0x4DFFFFFF),
-                                                boxShadow: [
-                                                  BoxShadow(
-                                                    blurRadius: 10.0,
-                                                    color: Color(0x2C000000),
-                                                    offset: Offset(0.0, 4.0),
-                                                  )
-                                                ],
-                                                shape: BoxShape.circle,
-                                                border: Border.all(
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .grayLight,
-                                                  width: 1.0,
-                                                ),
-                                              ),
-                                              child: Icon(
-                                                Icons.stacked_bar_chart,
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .tertiary,
-                                                size: 24.0,
-                                              ),
-                                            ),
-                                          ),
-                                          InkWell(
-                                            splashColor: Colors.transparent,
-                                            focusColor: Colors.transparent,
-                                            hoverColor: Colors.transparent,
-                                            highlightColor: Colors.transparent,
-                                            onTap: () async {
-                                              logFirebaseEvent(
-                                                  'HOME_PAGE_Profil_ON_TAP');
-                                              logFirebaseEvent(
-                                                  'Profil_navigate_to');
-
-                                              context.pushNamed('Profile');
-                                            },
-                                            child: Container(
-                                              width: 40.0,
-                                              height: 40.0,
-                                              decoration: BoxDecoration(
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .tertiary,
-                                                boxShadow: [
-                                                  BoxShadow(
-                                                    blurRadius: 10.0,
-                                                    color: Color(0x2C000000),
-                                                    offset: Offset(0.0, 4.0),
-                                                  )
-                                                ],
-                                                shape: BoxShape.circle,
-                                                border: Border.all(
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .grayLight,
-                                                  width: 1.0,
-                                                ),
-                                              ),
-                                              child: ClipRRect(
-                                                borderRadius:
-                                                    BorderRadius.circular(
-                                                        100.0),
-                                                child: Image.network(
-                                                  valueOrDefault<String>(
-                                                    homeUsersRecord.photoUrl,
-                                                    'https://storage.googleapis.com/carbonfight-89af6.appspot.com/default_photo_url.png',
-                                                  ),
-                                                  width: 50.0,
-                                                  height: 50.0,
-                                                  fit: BoxFit.cover,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
                                   ],
                                 ),
-                              ),
+                              ],
                             ),
                             Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 10.0, 0.0, 0.0),
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  30.0, 0.0, 0.0, 0.0),
                               child: Container(
-                                width: MediaQuery.sizeOf(context).width * 1.0,
-                                height: 800.0,
-                                decoration: BoxDecoration(),
-                                child: SingleChildScrollView(
-                                  child: Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      Container(
-                                        width: double.infinity,
-                                        height: 180.0,
-                                        decoration: BoxDecoration(
-                                          boxShadow: [
-                                            BoxShadow(
-                                              blurRadius: 35.0,
-                                              color: Color(0x0E000000),
-                                              offset: Offset(0.0, 10.0),
-                                            )
-                                          ],
-                                          shape: BoxShape.rectangle,
+                                width: 180.0,
+                                decoration: BoxDecoration(
+                                  color: FlutterFlowTheme.of(context)
+                                      .primaryBackground,
+                                  boxShadow: const [
+                                    BoxShadow(
+                                      blurRadius: 2.0,
+                                      color: Color(0x33000000),
+                                      offset: Offset(0.0, 2.0),
+                                    )
+                                  ],
+                                  borderRadius: BorderRadius.circular(8.0),
+                                  border: Border.all(
+                                    color:
+                                        FlutterFlowTheme.of(context).secondary,
+                                  ),
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(10.0),
+                                  child: RichText(
+                                    textScaleFactor:
+                                        MediaQuery.of(context).textScaleFactor,
+                                    text: TextSpan(
+                                      children: [
+                                        TextSpan(
+                                          text: FFLocalizations.of(context)
+                                              .getText(
+                                            '9dw9wfe9' /* Objectif :  */,
+                                          ),
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodySmall
+                                              .override(
+                                                fontFamily: 'Montserrat',
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .primary,
+                                              ),
                                         ),
-                                        child: Stack(
-                                          alignment:
-                                              AlignmentDirectional(0.0, 0.0),
-                                          children: [
-                                            CircularPercentIndicator(
-                                              percent: functions.ratioScoreTotal(
-                                                  functions.getActiveScore(
-                                                      containerUsersStatsRecord
-                                                          ?.days
-                                                          ?.toList(),
-                                                      FFAppState()
-                                                          .activeDateRelative),
-                                                  containerUsersStatsRecord
-                                                      ?.co2target),
-                                              radius: 85.0,
-                                              lineWidth: 18.0,
-                                              animation: true,
-                                              progressColor:
-                                                  functions.progressBarColor(
-                                                      functions.getActiveScore(
-                                                          containerUsersStatsRecord
-                                                              ?.days
-                                                              ?.toList(),
-                                                          FFAppState()
-                                                              .activeDateRelative),
-                                                      containerUsersStatsRecord
-                                                          ?.co2target),
-                                              backgroundColor:
-                                                  Color(0x98FFFFFF),
-                                              center: Text(
-                                                functions.printScore(
-                                                    functions.getActiveScore(
-                                                        containerUsersStatsRecord
-                                                            ?.days
-                                                            ?.toList(),
-                                                        FFAppState()
-                                                            .activeDateRelative)),
-                                                textAlign: TextAlign.start,
-                                                style: FlutterFlowTheme.of(
-                                                        context)
-                                                    .headlineMedium
-                                                    .override(
-                                                      fontFamily: 'Montserrat',
-                                                      color:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .tertiary,
-                                                      fontSize: 25.0,
-                                                    ),
-                                              ),
-                                              startAngle: 0.0,
-                                            ),
-                                            Align(
-                                              alignment: AlignmentDirectional(
-                                                  0.00, 0.30),
-                                              child: Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(
-                                                        45.0, 0.0, 45.0, 0.0),
-                                                child: Row(
-                                                  mainAxisSize:
-                                                      MainAxisSize.max,
-                                                  children: [
-                                                    Expanded(
-                                                      child: Text(
-                                                        'Objectif : ${valueOrDefault<String>(
-                                                          functions.printScore(
-                                                              containerUsersStatsRecord
-                                                                  ?.co2target),
-                                                          '0',
-                                                        )}',
-                                                        textAlign:
-                                                            TextAlign.center,
-                                                        style:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .bodyMedium
-                                                                .override(
-                                                                  fontFamily:
-                                                                      'Montserrat',
-                                                                  color: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .tertiary,
-                                                                  fontSize:
-                                                                      10.0,
-                                                                ),
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                            ),
-                                            Align(
-                                              alignment: AlignmentDirectional(
-                                                  0.00, -0.35),
-                                              child: Row(
-                                                mainAxisSize: MainAxisSize.max,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                children: [
-                                                  Stack(
-                                                    children: [
-                                                      if (FFAppState()
-                                                              .activeDateRelative >=
-                                                          6)
-                                                        FlutterFlowIconButton(
-                                                          borderColor: Colors
-                                                              .transparent,
-                                                          borderRadius: 30.0,
-                                                          buttonSize: 30.0,
-                                                          icon: Icon(
-                                                            Icons.skip_previous,
-                                                            color: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .gray,
-                                                            size: 15.0,
-                                                          ),
-                                                          onPressed: () {
-                                                            print(
-                                                                'previousDisabled pressed ...');
-                                                          },
-                                                        ),
-                                                      if (FFAppState()
-                                                              .activeDateRelative <
-                                                          6)
-                                                        FlutterFlowIconButton(
-                                                          borderColor: Colors
-                                                              .transparent,
-                                                          borderRadius: 30.0,
-                                                          buttonSize: 30.0,
-                                                          icon: Icon(
-                                                            Icons.skip_previous,
-                                                            color: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .tertiary,
-                                                            size: 15.0,
-                                                          ),
-                                                          onPressed: () async {
-                                                            logFirebaseEvent(
-                                                                'HOME_PAGE_previous_ON_TAP');
-                                                            logFirebaseEvent(
-                                                                'previous_update_app_state');
-                                                            FFAppState()
-                                                                .update(() {
-                                                              FFAppState()
-                                                                      .activeDate =
-                                                                  functions.setOneDayBefore(
-                                                                      FFAppState()
-                                                                          .activeDate);
-                                                              FFAppState()
-                                                                      .activeDateRelative =
-                                                                  FFAppState()
-                                                                          .activeDateRelative +
-                                                                      1;
-                                                            });
-                                                          },
-                                                        ),
-                                                    ],
-                                                  ),
-                                                  Text(
-                                                    FFAppState().activeDate,
-                                                    style: FlutterFlowTheme.of(
-                                                            context)
-                                                        .bodyMedium
-                                                        .override(
-                                                          fontFamily:
-                                                              'Montserrat',
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .tertiary,
-                                                          fontSize: 10.0,
-                                                        ),
-                                                  ),
-                                                  Stack(
-                                                    children: [
-                                                      if (FFAppState()
-                                                              .activeDateRelative >
-                                                          0)
-                                                        FlutterFlowIconButton(
-                                                          borderColor: Colors
-                                                              .transparent,
-                                                          borderRadius: 30.0,
-                                                          buttonSize: 30.0,
-                                                          icon: Icon(
-                                                            Icons.skip_next,
-                                                            color: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .tertiary,
-                                                            size: 15.0,
-                                                          ),
-                                                          onPressed: () async {
-                                                            logFirebaseEvent(
-                                                                'HOME_PAGE_next_ON_TAP');
-                                                            logFirebaseEvent(
-                                                                'next_update_app_state');
-                                                            FFAppState()
-                                                                .update(() {
-                                                              FFAppState()
-                                                                      .activeDate =
-                                                                  functions.setOneDayAfter(
-                                                                      FFAppState()
-                                                                          .activeDate);
-                                                              FFAppState()
-                                                                      .activeDateRelative =
-                                                                  FFAppState()
-                                                                          .activeDateRelative +
-                                                                      -1;
-                                                            });
-                                                          },
-                                                        ),
-                                                      if (FFAppState()
-                                                              .activeDateRelative <=
-                                                          0)
-                                                        FlutterFlowIconButton(
-                                                          borderColor: Colors
-                                                              .transparent,
-                                                          borderRadius: 30.0,
-                                                          buttonSize: 30.0,
-                                                          icon: Icon(
-                                                            Icons.skip_next,
-                                                            color: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .gray,
-                                                            size: 15.0,
-                                                          ),
-                                                          onPressed: () {
-                                                            print(
-                                                                'nextDisabled pressed ...');
-                                                          },
-                                                        ),
-                                                    ],
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ],
+                                        TextSpan(
+                                          text: valueOrDefault<String>(
+                                            functions.pTargetDay(valueOrDefault(
+                                                currentUserDocument?.target,
+                                                0.0)),
+                                            '5.5',
+                                          ),
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodySmall,
                                         ),
-                                      ),
-                                      Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            16.0, 8.0, 16.0, 12.0),
-                                        child: Container(
-                                          width: double.infinity,
-                                          decoration: BoxDecoration(
-                                            color: Color(0xB3FFFFFF),
-                                            boxShadow: [
-                                              BoxShadow(
-                                                blurRadius: 4.0,
-                                                color: Color(0x2B202529),
-                                                offset: Offset(0.0, 2.0),
-                                              )
-                                            ],
-                                            borderRadius:
-                                                BorderRadius.circular(12.0),
+                                        TextSpan(
+                                          text: FFLocalizations.of(context)
+                                              .getText(
+                                            '5q1t5ybu' /* 
+Actions :  */
+                                            ,
                                           ),
-                                          child: Column(
-                                            mainAxisSize: MainAxisSize.max,
-                                            children: [
-                                              Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(
-                                                        8.0, 0.0, 0.0, 0.0),
-                                                child: Row(
-                                                  mainAxisSize:
-                                                      MainAxisSize.max,
-                                                  children: [
-                                                    Expanded(
-                                                      child: Stack(
-                                                        children: [
-                                                          if (FFAppState()
-                                                              .displayFoodActions)
-                                                            Padding(
-                                                              padding:
-                                                                  EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          8.0,
-                                                                          4.0,
-                                                                          0.0,
-                                                                          4.0),
-                                                              child: Column(
-                                                                mainAxisSize:
-                                                                    MainAxisSize
-                                                                        .max,
-                                                                mainAxisAlignment:
-                                                                    MainAxisAlignment
-                                                                        .center,
-                                                                crossAxisAlignment:
-                                                                    CrossAxisAlignment
-                                                                        .start,
-                                                                children: [
-                                                                  Padding(
-                                                                    padding: EdgeInsetsDirectional
-                                                                        .fromSTEB(
-                                                                            0.0,
-                                                                            4.0,
-                                                                            0.0,
-                                                                            0.0),
-                                                                    child: Text(
-                                                                      'Repas',
-                                                                      style: FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .titleMedium
-                                                                          .override(
-                                                                            fontFamily:
-                                                                                'Outfit',
-                                                                            color:
-                                                                                Color(0xFF101213),
-                                                                            fontSize:
-                                                                                18.0,
-                                                                            fontWeight:
-                                                                                FontWeight.w500,
-                                                                          ),
-                                                                    ),
-                                                                  ),
-                                                                  Text(
-                                                                    functions.printScore(functions.getActiveScore(
-                                                                        containerUsersStatsRecord
-                                                                            ?.foodActionsDayCO2e
-                                                                            ?.toList(),
-                                                                        FFAppState()
-                                                                            .activeDateRelative)),
-                                                                    style: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .bodyMedium
-                                                                        .override(
-                                                                          fontFamily:
-                                                                              'Outfit',
-                                                                          color:
-                                                                              Color(0xFF101213),
-                                                                          fontSize:
-                                                                              14.0,
-                                                                          fontWeight:
-                                                                              FontWeight.normal,
-                                                                        ),
-                                                                  ),
-                                                                  Text(
-                                                                    '${functions.printRatioScoreTotal(functions.getActiveScore(containerUsersStatsRecord?.foodActionsDayCO2e?.toList(), FFAppState().activeDateRelative), functions.getActiveScore(containerUsersStatsRecord?.days?.toList(), FFAppState().activeDateRelative))} de votre journée',
-                                                                    style: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .bodySmall
-                                                                        .override(
-                                                                          fontFamily:
-                                                                              'Outfit',
-                                                                          color:
-                                                                              Color(0xFF57636C),
-                                                                          fontSize:
-                                                                              12.0,
-                                                                          fontWeight:
-                                                                              FontWeight.normal,
-                                                                        ),
-                                                                  ),
-                                                                ],
-                                                              ),
-                                                            ),
-                                                          if (!FFAppState()
-                                                              .displayFoodActions)
-                                                            Padding(
-                                                              padding:
-                                                                  EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          8.0,
-                                                                          4.0,
-                                                                          0.0,
-                                                                          4.0),
-                                                              child: Column(
-                                                                mainAxisSize:
-                                                                    MainAxisSize
-                                                                        .max,
-                                                                mainAxisAlignment:
-                                                                    MainAxisAlignment
-                                                                        .center,
-                                                                crossAxisAlignment:
-                                                                    CrossAxisAlignment
-                                                                        .start,
-                                                                children: [
-                                                                  Padding(
-                                                                    padding: EdgeInsetsDirectional
-                                                                        .fromSTEB(
-                                                                            0.0,
-                                                                            4.0,
-                                                                            0.0,
-                                                                            0.0),
-                                                                    child: Text(
-                                                                      'Repas récurrent',
-                                                                      style: FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .titleMedium
-                                                                          .override(
-                                                                            fontFamily:
-                                                                                'Outfit',
-                                                                            color:
-                                                                                Color(0xFF101213),
-                                                                            fontSize:
-                                                                                18.0,
-                                                                            fontWeight:
-                                                                                FontWeight.w500,
-                                                                          ),
-                                                                    ),
-                                                                  ),
-                                                                  Text(
-                                                                    functions.printScore(
-                                                                        containerUsersStatsRecord
-                                                                            ?.foodPeriodicsCO2e),
-                                                                    style: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .bodyMedium
-                                                                        .override(
-                                                                          fontFamily:
-                                                                              'Outfit',
-                                                                          color:
-                                                                              Color(0xFF101213),
-                                                                          fontSize:
-                                                                              14.0,
-                                                                          fontWeight:
-                                                                              FontWeight.normal,
-                                                                        ),
-                                                                  ),
-                                                                  Text(
-                                                                    '${functions.printRatioScoreTotal(containerUsersStatsRecord?.foodPeriodicsCO2e, containerUsersStatsRecord?.allPeriodicsCO2e)} de vos émissions récurrentes',
-                                                                    style: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .bodySmall
-                                                                        .override(
-                                                                          fontFamily:
-                                                                              'Outfit',
-                                                                          color:
-                                                                              Color(0xFF57636C),
-                                                                          fontSize:
-                                                                              12.0,
-                                                                          fontWeight:
-                                                                              FontWeight.normal,
-                                                                        ),
-                                                                  ),
-                                                                ],
-                                                              ),
-                                                            ),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                    Padding(
-                                                      padding:
-                                                          EdgeInsetsDirectional
-                                                              .fromSTEB(
-                                                                  0.0,
-                                                                  2.0,
-                                                                  2.0,
-                                                                  0.0),
-                                                      child: ClipRRect(
-                                                        borderRadius:
-                                                            BorderRadius.only(
-                                                          bottomLeft:
-                                                              Radius.circular(
-                                                                  0.0),
-                                                          bottomRight:
-                                                              Radius.circular(
-                                                                  12.0),
-                                                          topLeft:
-                                                              Radius.circular(
-                                                                  0.0),
-                                                          topRight:
-                                                              Radius.circular(
-                                                                  12.0),
-                                                        ),
-                                                        child: Image.asset(
-                                                          'assets/images/hot-pot.png',
-                                                          width: 110.0,
-                                                          height: 100.0,
-                                                          fit: BoxFit.contain,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodySmall
+                                              .override(
+                                                fontFamily: 'Montserrat',
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .primary,
                                               ),
-                                              Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(
-                                                        12.0, 0.0, 7.0, 8.0),
-                                                child: Row(
-                                                  mainAxisSize:
-                                                      MainAxisSize.max,
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  children: [
-                                                    Row(
-                                                      mainAxisSize:
-                                                          MainAxisSize.max,
-                                                      children: [
-                                                        InkWell(
-                                                          splashColor: Colors
-                                                              .transparent,
-                                                          focusColor: Colors
-                                                              .transparent,
-                                                          hoverColor: Colors
-                                                              .transparent,
-                                                          highlightColor: Colors
-                                                              .transparent,
-                                                          onTap: () async {
-                                                            logFirebaseEvent(
-                                                                'HOME_PAGE_Card_pbhld83j_ON_TAP');
-                                                            logFirebaseEvent(
-                                                                'Card_bottom_sheet');
-                                                            await showModalBottomSheet(
-                                                              isScrollControlled:
-                                                                  true,
-                                                              backgroundColor:
-                                                                  Colors
-                                                                      .transparent,
-                                                              barrierColor: Color(
-                                                                  0xBF000000),
-                                                              context: context,
-                                                              builder:
-                                                                  (context) {
-                                                                return Padding(
-                                                                  padding: MediaQuery
-                                                                      .viewInsetsOf(
-                                                                          context),
-                                                                  child:
-                                                                      Container(
-                                                                    height:
-                                                                        600.0,
-                                                                    child:
-                                                                        FoodListWidget(),
-                                                                  ),
-                                                                );
-                                                              },
-                                                            ).then((value) =>
-                                                                safeSetState(
-                                                                    () {}));
-                                                          },
-                                                          child: Card(
-                                                            clipBehavior: Clip
-                                                                .antiAliasWithSaveLayer,
-                                                            color: Color(
-                                                                0xFFF1F4F8),
-                                                            shape:
-                                                                RoundedRectangleBorder(
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          40.0),
-                                                            ),
-                                                            child: Padding(
-                                                              padding:
-                                                                  EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          8.0,
-                                                                          8.0,
-                                                                          8.0,
-                                                                          8.0),
-                                                              child: Icon(
-                                                                Icons.add,
-                                                                color: Color(
-                                                                    0xFF57636C),
-                                                                size: 20.0,
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        ),
-                                                        Stack(
-                                                          children: [
-                                                            if (FFAppState()
-                                                                .displayFoodActions)
-                                                              StreamBuilder<
-                                                                  List<
-                                                                      FoodActionsRecord>>(
-                                                                stream:
-                                                                    queryFoodActionsRecord(
-                                                                  queryBuilder: (foodActionsRecord) => foodActionsRecord
-                                                                      .where(
-                                                                          'userId',
-                                                                          isEqualTo:
-                                                                              currentUserUid)
-                                                                      .where(
-                                                                          'day',
-                                                                          isEqualTo: FFAppState()
-                                                                              .activeDate)
-                                                                      .where(
-                                                                          'isPeriodic',
-                                                                          isEqualTo:
-                                                                              false)
-                                                                      .orderBy(
-                                                                          'created_time'),
-                                                                ),
-                                                                builder: (context,
-                                                                    snapshot) {
-                                                                  // Customize what your widget looks like when it's loading.
-                                                                  if (!snapshot
-                                                                      .hasData) {
-                                                                    return Center(
-                                                                      child:
-                                                                          SizedBox(
-                                                                        width:
-                                                                            2.0,
-                                                                        height:
-                                                                            2.0,
-                                                                        child:
-                                                                            SpinKitRing(
-                                                                          color:
-                                                                              Colors.transparent,
-                                                                          size:
-                                                                              2.0,
-                                                                        ),
-                                                                      ),
-                                                                    );
-                                                                  }
-                                                                  List<FoodActionsRecord>
-                                                                      foodsFoodActionsRecordList =
-                                                                      snapshot
-                                                                          .data!;
-                                                                  return SingleChildScrollView(
-                                                                    scrollDirection:
-                                                                        Axis.horizontal,
-                                                                    child: Row(
-                                                                      mainAxisSize:
-                                                                          MainAxisSize
-                                                                              .max,
-                                                                      mainAxisAlignment:
-                                                                          MainAxisAlignment
-                                                                              .center,
-                                                                      children: List.generate(
-                                                                          foodsFoodActionsRecordList
-                                                                              .length,
-                                                                          (foodsIndex) {
-                                                                        final foodsFoodActionsRecord =
-                                                                            foodsFoodActionsRecordList[foodsIndex];
-                                                                        return Container(
-                                                                          width:
-                                                                              40.0,
-                                                                          height:
-                                                                              40.0,
-                                                                          child:
-                                                                              Stack(
-                                                                            alignment:
-                                                                                AlignmentDirectional(0.0, 0.0),
-                                                                            children: [
-                                                                              if (foodsFoodActionsRecord.food == 'starter')
-                                                                                InkWell(
-                                                                                  splashColor: Colors.transparent,
-                                                                                  focusColor: Colors.transparent,
-                                                                                  hoverColor: Colors.transparent,
-                                                                                  highlightColor: Colors.transparent,
-                                                                                  onTap: () async {
-                                                                                    logFirebaseEvent('HOME_PAGE_starterAction_ON_TAP');
-                                                                                    logFirebaseEvent('starterAction_navigate_to');
-
-                                                                                    context.pushNamed(
-                                                                                      'Food',
-                                                                                      queryParameters: {
-                                                                                        'actionRef': serializeParam(
-                                                                                          foodsFoodActionsRecord.reference,
-                                                                                          ParamType.DocumentReference,
-                                                                                        ),
-                                                                                        'category': serializeParam(
-                                                                                          'food',
-                                                                                          ParamType.String,
-                                                                                        ),
-                                                                                        'action': serializeParam(
-                                                                                          'starter',
-                                                                                          ParamType.String,
-                                                                                        ),
-                                                                                      }.withoutNulls,
-                                                                                    );
-                                                                                  },
-                                                                                  child: Container(
-                                                                                    clipBehavior: Clip.antiAlias,
-                                                                                    decoration: BoxDecoration(
-                                                                                      shape: BoxShape.circle,
-                                                                                    ),
-                                                                                    child: Image.asset(
-                                                                                      'assets/images/canape_(1).png',
-                                                                                      fit: BoxFit.cover,
-                                                                                    ),
-                                                                                  ),
-                                                                                ),
-                                                                              if (foodsFoodActionsRecord.food == 'main')
-                                                                                InkWell(
-                                                                                  splashColor: Colors.transparent,
-                                                                                  focusColor: Colors.transparent,
-                                                                                  hoverColor: Colors.transparent,
-                                                                                  highlightColor: Colors.transparent,
-                                                                                  onTap: () async {
-                                                                                    logFirebaseEvent('HOME_PAGE_mainAction_ON_TAP');
-                                                                                    logFirebaseEvent('mainAction_navigate_to');
-
-                                                                                    context.pushNamed(
-                                                                                      'Food',
-                                                                                      queryParameters: {
-                                                                                        'actionRef': serializeParam(
-                                                                                          foodsFoodActionsRecord.reference,
-                                                                                          ParamType.DocumentReference,
-                                                                                        ),
-                                                                                        'category': serializeParam(
-                                                                                          'food',
-                                                                                          ParamType.String,
-                                                                                        ),
-                                                                                        'action': serializeParam(
-                                                                                          'main',
-                                                                                          ParamType.String,
-                                                                                        ),
-                                                                                      }.withoutNulls,
-                                                                                    );
-                                                                                  },
-                                                                                  child: Container(
-                                                                                    clipBehavior: Clip.antiAlias,
-                                                                                    decoration: BoxDecoration(
-                                                                                      shape: BoxShape.circle,
-                                                                                    ),
-                                                                                    child: Image.asset(
-                                                                                      'assets/images/steak.png',
-                                                                                      fit: BoxFit.cover,
-                                                                                    ),
-                                                                                  ),
-                                                                                ),
-                                                                              if (foodsFoodActionsRecord.food == 'desert')
-                                                                                InkWell(
-                                                                                  splashColor: Colors.transparent,
-                                                                                  focusColor: Colors.transparent,
-                                                                                  hoverColor: Colors.transparent,
-                                                                                  highlightColor: Colors.transparent,
-                                                                                  onTap: () async {
-                                                                                    logFirebaseEvent('HOME_PAGE_desertAction_ON_TAP');
-                                                                                    logFirebaseEvent('desertAction_navigate_to');
-
-                                                                                    context.pushNamed(
-                                                                                      'Food',
-                                                                                      queryParameters: {
-                                                                                        'actionRef': serializeParam(
-                                                                                          foodsFoodActionsRecord.reference,
-                                                                                          ParamType.DocumentReference,
-                                                                                        ),
-                                                                                        'category': serializeParam(
-                                                                                          'food',
-                                                                                          ParamType.String,
-                                                                                        ),
-                                                                                        'action': serializeParam(
-                                                                                          'desert',
-                                                                                          ParamType.String,
-                                                                                        ),
-                                                                                      }.withoutNulls,
-                                                                                    );
-                                                                                  },
-                                                                                  child: Container(
-                                                                                    clipBehavior: Clip.antiAlias,
-                                                                                    decoration: BoxDecoration(
-                                                                                      shape: BoxShape.circle,
-                                                                                    ),
-                                                                                    child: Image.asset(
-                                                                                      'assets/images/ice-cream.png',
-                                                                                      fit: BoxFit.cover,
-                                                                                    ),
-                                                                                  ),
-                                                                                ),
-                                                                              if (foodsFoodActionsRecord.food == 'drinks')
-                                                                                InkWell(
-                                                                                  splashColor: Colors.transparent,
-                                                                                  focusColor: Colors.transparent,
-                                                                                  hoverColor: Colors.transparent,
-                                                                                  highlightColor: Colors.transparent,
-                                                                                  onTap: () async {
-                                                                                    logFirebaseEvent('HOME_PAGE_drinksAction_ON_TAP');
-                                                                                    logFirebaseEvent('drinksAction_navigate_to');
-
-                                                                                    context.pushNamed(
-                                                                                      'Food',
-                                                                                      queryParameters: {
-                                                                                        'actionRef': serializeParam(
-                                                                                          foodsFoodActionsRecord.reference,
-                                                                                          ParamType.DocumentReference,
-                                                                                        ),
-                                                                                        'category': serializeParam(
-                                                                                          'food',
-                                                                                          ParamType.String,
-                                                                                        ),
-                                                                                        'action': serializeParam(
-                                                                                          'drinks',
-                                                                                          ParamType.String,
-                                                                                        ),
-                                                                                      }.withoutNulls,
-                                                                                    );
-                                                                                  },
-                                                                                  child: Container(
-                                                                                    clipBehavior: Clip.antiAlias,
-                                                                                    decoration: BoxDecoration(
-                                                                                      shape: BoxShape.circle,
-                                                                                    ),
-                                                                                    child: Image.asset(
-                                                                                      'assets/images/soft-drink.png',
-                                                                                      fit: BoxFit.cover,
-                                                                                    ),
-                                                                                  ),
-                                                                                ),
-                                                                              if (foodsFoodActionsRecord.food == 'cheese')
-                                                                                InkWell(
-                                                                                  splashColor: Colors.transparent,
-                                                                                  focusColor: Colors.transparent,
-                                                                                  hoverColor: Colors.transparent,
-                                                                                  highlightColor: Colors.transparent,
-                                                                                  onTap: () async {
-                                                                                    logFirebaseEvent('HOME_PAGE_cheeseAction_ON_TAP');
-                                                                                    logFirebaseEvent('cheeseAction_navigate_to');
-
-                                                                                    context.pushNamed(
-                                                                                      'Food',
-                                                                                      queryParameters: {
-                                                                                        'actionRef': serializeParam(
-                                                                                          foodsFoodActionsRecord.reference,
-                                                                                          ParamType.DocumentReference,
-                                                                                        ),
-                                                                                        'category': serializeParam(
-                                                                                          'food',
-                                                                                          ParamType.String,
-                                                                                        ),
-                                                                                        'action': serializeParam(
-                                                                                          'cheese',
-                                                                                          ParamType.String,
-                                                                                        ),
-                                                                                      }.withoutNulls,
-                                                                                    );
-                                                                                  },
-                                                                                  child: Container(
-                                                                                    clipBehavior: Clip.antiAlias,
-                                                                                    decoration: BoxDecoration(
-                                                                                      shape: BoxShape.circle,
-                                                                                    ),
-                                                                                    child: Image.asset(
-                                                                                      'assets/images/cheeses.png',
-                                                                                      fit: BoxFit.cover,
-                                                                                    ),
-                                                                                  ),
-                                                                                ),
-                                                                              if (foodsFoodActionsRecord.food == 'bread')
-                                                                                InkWell(
-                                                                                  splashColor: Colors.transparent,
-                                                                                  focusColor: Colors.transparent,
-                                                                                  hoverColor: Colors.transparent,
-                                                                                  highlightColor: Colors.transparent,
-                                                                                  onTap: () async {
-                                                                                    logFirebaseEvent('HOME_PAGE_breadAction_ON_TAP');
-                                                                                    logFirebaseEvent('breadAction_navigate_to');
-
-                                                                                    context.pushNamed(
-                                                                                      'Food',
-                                                                                      queryParameters: {
-                                                                                        'actionRef': serializeParam(
-                                                                                          foodsFoodActionsRecord.reference,
-                                                                                          ParamType.DocumentReference,
-                                                                                        ),
-                                                                                        'category': serializeParam(
-                                                                                          'food',
-                                                                                          ParamType.String,
-                                                                                        ),
-                                                                                        'action': serializeParam(
-                                                                                          'bread',
-                                                                                          ParamType.String,
-                                                                                        ),
-                                                                                      }.withoutNulls,
-                                                                                    );
-                                                                                  },
-                                                                                  child: Container(
-                                                                                    clipBehavior: Clip.antiAlias,
-                                                                                    decoration: BoxDecoration(
-                                                                                      shape: BoxShape.circle,
-                                                                                    ),
-                                                                                    child: Image.asset(
-                                                                                      'assets/images/bread.png',
-                                                                                      fit: BoxFit.cover,
-                                                                                    ),
-                                                                                  ),
-                                                                                ),
-                                                                              if (foodsFoodActionsRecord.food == 'coffee')
-                                                                                InkWell(
-                                                                                  splashColor: Colors.transparent,
-                                                                                  focusColor: Colors.transparent,
-                                                                                  hoverColor: Colors.transparent,
-                                                                                  highlightColor: Colors.transparent,
-                                                                                  onTap: () async {
-                                                                                    logFirebaseEvent('HOME_PAGE_coffeeAction_ON_TAP');
-                                                                                    logFirebaseEvent('coffeeAction_navigate_to');
-
-                                                                                    context.pushNamed(
-                                                                                      'Food',
-                                                                                      queryParameters: {
-                                                                                        'actionRef': serializeParam(
-                                                                                          foodsFoodActionsRecord.reference,
-                                                                                          ParamType.DocumentReference,
-                                                                                        ),
-                                                                                        'category': serializeParam(
-                                                                                          'food',
-                                                                                          ParamType.String,
-                                                                                        ),
-                                                                                        'action': serializeParam(
-                                                                                          'coffee',
-                                                                                          ParamType.String,
-                                                                                        ),
-                                                                                      }.withoutNulls,
-                                                                                    );
-                                                                                  },
-                                                                                  child: Container(
-                                                                                    clipBehavior: Clip.antiAlias,
-                                                                                    decoration: BoxDecoration(
-                                                                                      shape: BoxShape.circle,
-                                                                                    ),
-                                                                                    child: Image.asset(
-                                                                                      'assets/images/coffee.png',
-                                                                                      fit: BoxFit.cover,
-                                                                                    ),
-                                                                                  ),
-                                                                                ),
-                                                                            ],
-                                                                          ),
-                                                                        );
-                                                                      }),
-                                                                    ),
-                                                                  );
-                                                                },
-                                                              ),
-                                                            if (!FFAppState()
-                                                                .displayFoodActions)
-                                                              Align(
-                                                                alignment:
-                                                                    AlignmentDirectional(
-                                                                        0.00,
-                                                                        0.00),
-                                                                child: StreamBuilder<
-                                                                    List<
-                                                                        FoodActionsRecord>>(
-                                                                  stream:
-                                                                      queryFoodActionsRecord(
-                                                                    queryBuilder: (foodActionsRecord) => foodActionsRecord
-                                                                        .where(
-                                                                            'userId',
-                                                                            isEqualTo:
-                                                                                currentUserUid)
-                                                                        .where(
-                                                                            'isPeriodic',
-                                                                            isEqualTo:
-                                                                                true),
-                                                                  ),
-                                                                  builder: (context,
-                                                                      snapshot) {
-                                                                    // Customize what your widget looks like when it's loading.
-                                                                    if (!snapshot
-                                                                        .hasData) {
-                                                                      return Center(
-                                                                        child:
-                                                                            SizedBox(
-                                                                          width:
-                                                                              2.0,
-                                                                          height:
-                                                                              2.0,
-                                                                          child:
-                                                                              SpinKitRing(
-                                                                            color:
-                                                                                Colors.transparent,
-                                                                            size:
-                                                                                2.0,
-                                                                          ),
-                                                                        ),
-                                                                      );
-                                                                    }
-                                                                    List<FoodActionsRecord>
-                                                                        foodPeriodicsFoodActionsRecordList =
-                                                                        snapshot
-                                                                            .data!;
-                                                                    return SingleChildScrollView(
-                                                                      scrollDirection:
-                                                                          Axis.horizontal,
-                                                                      child:
-                                                                          Row(
-                                                                        mainAxisSize:
-                                                                            MainAxisSize.max,
-                                                                        mainAxisAlignment:
-                                                                            MainAxisAlignment.center,
-                                                                        children: List.generate(
-                                                                            foodPeriodicsFoodActionsRecordList.length,
-                                                                            (foodPeriodicsIndex) {
-                                                                          final foodPeriodicsFoodActionsRecord =
-                                                                              foodPeriodicsFoodActionsRecordList[foodPeriodicsIndex];
-                                                                          return Container(
-                                                                            width:
-                                                                                40.0,
-                                                                            height:
-                                                                                40.0,
-                                                                            child:
-                                                                                Stack(
-                                                                              alignment: AlignmentDirectional(0.0, 0.0),
-                                                                              children: [
-                                                                                if (foodPeriodicsFoodActionsRecord.food == 'starter')
-                                                                                  InkWell(
-                                                                                    splashColor: Colors.transparent,
-                                                                                    focusColor: Colors.transparent,
-                                                                                    hoverColor: Colors.transparent,
-                                                                                    highlightColor: Colors.transparent,
-                                                                                    onTap: () async {
-                                                                                      logFirebaseEvent('HOME_PAGE_starterPeriodics_ON_TAP');
-                                                                                      logFirebaseEvent('starterPeriodics_navigate_to');
-
-                                                                                      context.pushNamed(
-                                                                                        'Food',
-                                                                                        queryParameters: {
-                                                                                          'actionRef': serializeParam(
-                                                                                            foodPeriodicsFoodActionsRecord.reference,
-                                                                                            ParamType.DocumentReference,
-                                                                                          ),
-                                                                                          'category': serializeParam(
-                                                                                            'food',
-                                                                                            ParamType.String,
-                                                                                          ),
-                                                                                          'action': serializeParam(
-                                                                                            'starter',
-                                                                                            ParamType.String,
-                                                                                          ),
-                                                                                        }.withoutNulls,
-                                                                                      );
-                                                                                    },
-                                                                                    child: Container(
-                                                                                      clipBehavior: Clip.antiAlias,
-                                                                                      decoration: BoxDecoration(
-                                                                                        shape: BoxShape.circle,
-                                                                                      ),
-                                                                                      child: Image.asset(
-                                                                                        'assets/images/canape_(1).png',
-                                                                                        fit: BoxFit.cover,
-                                                                                      ),
-                                                                                    ),
-                                                                                  ),
-                                                                                if (foodPeriodicsFoodActionsRecord.food == 'main')
-                                                                                  InkWell(
-                                                                                    splashColor: Colors.transparent,
-                                                                                    focusColor: Colors.transparent,
-                                                                                    hoverColor: Colors.transparent,
-                                                                                    highlightColor: Colors.transparent,
-                                                                                    onTap: () async {
-                                                                                      logFirebaseEvent('HOME_PAGE_mainPeriodics_ON_TAP');
-                                                                                      logFirebaseEvent('mainPeriodics_navigate_to');
-
-                                                                                      context.pushNamed(
-                                                                                        'Food',
-                                                                                        queryParameters: {
-                                                                                          'actionRef': serializeParam(
-                                                                                            foodPeriodicsFoodActionsRecord.reference,
-                                                                                            ParamType.DocumentReference,
-                                                                                          ),
-                                                                                          'category': serializeParam(
-                                                                                            'food',
-                                                                                            ParamType.String,
-                                                                                          ),
-                                                                                          'action': serializeParam(
-                                                                                            'main',
-                                                                                            ParamType.String,
-                                                                                          ),
-                                                                                        }.withoutNulls,
-                                                                                      );
-                                                                                    },
-                                                                                    child: Container(
-                                                                                      clipBehavior: Clip.antiAlias,
-                                                                                      decoration: BoxDecoration(
-                                                                                        shape: BoxShape.circle,
-                                                                                      ),
-                                                                                      child: Image.asset(
-                                                                                        'assets/images/steak.png',
-                                                                                        fit: BoxFit.cover,
-                                                                                      ),
-                                                                                    ),
-                                                                                  ),
-                                                                                if (foodPeriodicsFoodActionsRecord.food == 'desert')
-                                                                                  InkWell(
-                                                                                    splashColor: Colors.transparent,
-                                                                                    focusColor: Colors.transparent,
-                                                                                    hoverColor: Colors.transparent,
-                                                                                    highlightColor: Colors.transparent,
-                                                                                    onTap: () async {
-                                                                                      logFirebaseEvent('HOME_PAGE_desertPeriodics_ON_TAP');
-                                                                                      logFirebaseEvent('desertPeriodics_navigate_to');
-
-                                                                                      context.pushNamed(
-                                                                                        'Food',
-                                                                                        queryParameters: {
-                                                                                          'actionRef': serializeParam(
-                                                                                            foodPeriodicsFoodActionsRecord.reference,
-                                                                                            ParamType.DocumentReference,
-                                                                                          ),
-                                                                                          'category': serializeParam(
-                                                                                            'food',
-                                                                                            ParamType.String,
-                                                                                          ),
-                                                                                          'action': serializeParam(
-                                                                                            'desert',
-                                                                                            ParamType.String,
-                                                                                          ),
-                                                                                        }.withoutNulls,
-                                                                                      );
-                                                                                    },
-                                                                                    child: Container(
-                                                                                      clipBehavior: Clip.antiAlias,
-                                                                                      decoration: BoxDecoration(
-                                                                                        shape: BoxShape.circle,
-                                                                                      ),
-                                                                                      child: Image.asset(
-                                                                                        'assets/images/ice-cream.png',
-                                                                                        fit: BoxFit.cover,
-                                                                                      ),
-                                                                                    ),
-                                                                                  ),
-                                                                                if (foodPeriodicsFoodActionsRecord.food == 'drinks')
-                                                                                  InkWell(
-                                                                                    splashColor: Colors.transparent,
-                                                                                    focusColor: Colors.transparent,
-                                                                                    hoverColor: Colors.transparent,
-                                                                                    highlightColor: Colors.transparent,
-                                                                                    onTap: () async {
-                                                                                      logFirebaseEvent('HOME_PAGE_drinksPeriodics_ON_TAP');
-                                                                                      logFirebaseEvent('drinksPeriodics_navigate_to');
-
-                                                                                      context.pushNamed(
-                                                                                        'Food',
-                                                                                        queryParameters: {
-                                                                                          'actionRef': serializeParam(
-                                                                                            foodPeriodicsFoodActionsRecord.reference,
-                                                                                            ParamType.DocumentReference,
-                                                                                          ),
-                                                                                          'category': serializeParam(
-                                                                                            'food',
-                                                                                            ParamType.String,
-                                                                                          ),
-                                                                                          'action': serializeParam(
-                                                                                            'drinks',
-                                                                                            ParamType.String,
-                                                                                          ),
-                                                                                        }.withoutNulls,
-                                                                                      );
-                                                                                    },
-                                                                                    child: Container(
-                                                                                      clipBehavior: Clip.antiAlias,
-                                                                                      decoration: BoxDecoration(
-                                                                                        shape: BoxShape.circle,
-                                                                                      ),
-                                                                                      child: Image.asset(
-                                                                                        'assets/images/soft-drink.png',
-                                                                                        fit: BoxFit.cover,
-                                                                                      ),
-                                                                                    ),
-                                                                                  ),
-                                                                                if (foodPeriodicsFoodActionsRecord.food == 'cheese')
-                                                                                  InkWell(
-                                                                                    splashColor: Colors.transparent,
-                                                                                    focusColor: Colors.transparent,
-                                                                                    hoverColor: Colors.transparent,
-                                                                                    highlightColor: Colors.transparent,
-                                                                                    onTap: () async {
-                                                                                      logFirebaseEvent('HOME_PAGE_cheesePeriodics_ON_TAP');
-                                                                                      logFirebaseEvent('cheesePeriodics_navigate_to');
-
-                                                                                      context.pushNamed(
-                                                                                        'Food',
-                                                                                        queryParameters: {
-                                                                                          'actionRef': serializeParam(
-                                                                                            foodPeriodicsFoodActionsRecord.reference,
-                                                                                            ParamType.DocumentReference,
-                                                                                          ),
-                                                                                          'category': serializeParam(
-                                                                                            'food',
-                                                                                            ParamType.String,
-                                                                                          ),
-                                                                                          'action': serializeParam(
-                                                                                            'cheese',
-                                                                                            ParamType.String,
-                                                                                          ),
-                                                                                        }.withoutNulls,
-                                                                                      );
-                                                                                    },
-                                                                                    child: Container(
-                                                                                      clipBehavior: Clip.antiAlias,
-                                                                                      decoration: BoxDecoration(
-                                                                                        shape: BoxShape.circle,
-                                                                                      ),
-                                                                                      child: Image.asset(
-                                                                                        'assets/images/cheeses.png',
-                                                                                        fit: BoxFit.cover,
-                                                                                      ),
-                                                                                    ),
-                                                                                  ),
-                                                                                if (foodPeriodicsFoodActionsRecord.food == 'bread')
-                                                                                  InkWell(
-                                                                                    splashColor: Colors.transparent,
-                                                                                    focusColor: Colors.transparent,
-                                                                                    hoverColor: Colors.transparent,
-                                                                                    highlightColor: Colors.transparent,
-                                                                                    onTap: () async {
-                                                                                      logFirebaseEvent('HOME_PAGE_breadPeriodics_ON_TAP');
-                                                                                      logFirebaseEvent('breadPeriodics_navigate_to');
-
-                                                                                      context.pushNamed(
-                                                                                        'Food',
-                                                                                        queryParameters: {
-                                                                                          'actionRef': serializeParam(
-                                                                                            foodPeriodicsFoodActionsRecord.reference,
-                                                                                            ParamType.DocumentReference,
-                                                                                          ),
-                                                                                          'category': serializeParam(
-                                                                                            'food',
-                                                                                            ParamType.String,
-                                                                                          ),
-                                                                                          'action': serializeParam(
-                                                                                            'bread',
-                                                                                            ParamType.String,
-                                                                                          ),
-                                                                                        }.withoutNulls,
-                                                                                      );
-                                                                                    },
-                                                                                    child: Container(
-                                                                                      clipBehavior: Clip.antiAlias,
-                                                                                      decoration: BoxDecoration(
-                                                                                        shape: BoxShape.circle,
-                                                                                      ),
-                                                                                      child: Image.asset(
-                                                                                        'assets/images/bread.png',
-                                                                                        fit: BoxFit.cover,
-                                                                                      ),
-                                                                                    ),
-                                                                                  ),
-                                                                                if (foodPeriodicsFoodActionsRecord.food == 'coffee')
-                                                                                  InkWell(
-                                                                                    splashColor: Colors.transparent,
-                                                                                    focusColor: Colors.transparent,
-                                                                                    hoverColor: Colors.transparent,
-                                                                                    highlightColor: Colors.transparent,
-                                                                                    onTap: () async {
-                                                                                      logFirebaseEvent('HOME_PAGE_coffeePeriodics_ON_TAP');
-                                                                                      logFirebaseEvent('coffeePeriodics_navigate_to');
-
-                                                                                      context.pushNamed(
-                                                                                        'Food',
-                                                                                        queryParameters: {
-                                                                                          'actionRef': serializeParam(
-                                                                                            foodPeriodicsFoodActionsRecord.reference,
-                                                                                            ParamType.DocumentReference,
-                                                                                          ),
-                                                                                          'category': serializeParam(
-                                                                                            'food',
-                                                                                            ParamType.String,
-                                                                                          ),
-                                                                                          'action': serializeParam(
-                                                                                            'coffee',
-                                                                                            ParamType.String,
-                                                                                          ),
-                                                                                        }.withoutNulls,
-                                                                                      );
-                                                                                    },
-                                                                                    child: Container(
-                                                                                      clipBehavior: Clip.antiAlias,
-                                                                                      decoration: BoxDecoration(
-                                                                                        shape: BoxShape.circle,
-                                                                                      ),
-                                                                                      child: Image.asset(
-                                                                                        'assets/images/coffee.png',
-                                                                                        fit: BoxFit.cover,
-                                                                                      ),
-                                                                                    ),
-                                                                                  ),
-                                                                              ],
-                                                                            ),
-                                                                          );
-                                                                        }),
-                                                                      ),
-                                                                    );
-                                                                  },
-                                                                ),
-                                                              ),
-                                                          ],
-                                                        ),
-                                                      ],
-                                                    ),
-                                                    Row(
-                                                      mainAxisSize:
-                                                          MainAxisSize.max,
-                                                      children: [
-                                                        Card(
-                                                          clipBehavior: Clip
-                                                              .antiAliasWithSaveLayer,
-                                                          color:
-                                                              Color(0xFFF1F4F8),
-                                                          shape:
-                                                              RoundedRectangleBorder(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        40.0),
-                                                          ),
-                                                          child: ToggleIcon(
-                                                            onPressed:
-                                                                () async {
-                                                              setState(() => FFAppState()
-                                                                      .displayFoodActions =
-                                                                  !FFAppState()
-                                                                      .displayFoodActions);
-                                                            },
-                                                            value: FFAppState()
-                                                                .displayFoodActions,
-                                                            onIcon: Icon(
-                                                              Icons.threesixty,
-                                                              color: Color(
-                                                                  0x9857636C),
-                                                              size: 20.0,
-                                                            ),
-                                                            offIcon: Icon(
-                                                              Icons.threesixty,
-                                                              color: Color(
-                                                                  0xFF57636C),
-                                                              size: 20.0,
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                            ],
+                                        ),
+                                        TextSpan(
+                                          text: FFLocalizations.of(context)
+                                              .getText(
+                                            '2q5mvw1p' /* 8 */,
                                           ),
-                                        ).animateOnPageLoad(animationsMap[
-                                            'containerOnPageLoadAnimation1']!),
-                                      ),
-                                      Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            16.0, 8.0, 16.0, 12.0),
-                                        child: Container(
-                                          width: double.infinity,
-                                          decoration: BoxDecoration(
-                                            color: Color(0xB3FFFFFF),
-                                            boxShadow: [
-                                              BoxShadow(
-                                                blurRadius: 4.0,
-                                                color: Color(0x2B202529),
-                                                offset: Offset(0.0, 2.0),
-                                              )
-                                            ],
-                                            borderRadius:
-                                                BorderRadius.circular(12.0),
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodySmall,
+                                        ),
+                                        TextSpan(
+                                          text: FFLocalizations.of(context)
+                                              .getText(
+                                            'egwarsii' /* 
+Restant :  */
+                                            ,
                                           ),
-                                          child: Column(
-                                            mainAxisSize: MainAxisSize.max,
-                                            children: [
-                                              Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(
-                                                        8.0, 0.0, 0.0, 0.0),
-                                                child: Row(
-                                                  mainAxisSize:
-                                                      MainAxisSize.max,
-                                                  children: [
-                                                    Expanded(
-                                                      child: Stack(
-                                                        children: [
-                                                          if (FFAppState()
-                                                              .displayTransportActions)
-                                                            Padding(
-                                                              padding:
-                                                                  EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          8.0,
-                                                                          4.0,
-                                                                          0.0,
-                                                                          4.0),
-                                                              child: Column(
-                                                                mainAxisSize:
-                                                                    MainAxisSize
-                                                                        .max,
-                                                                mainAxisAlignment:
-                                                                    MainAxisAlignment
-                                                                        .center,
-                                                                crossAxisAlignment:
-                                                                    CrossAxisAlignment
-                                                                        .start,
-                                                                children: [
-                                                                  Padding(
-                                                                    padding: EdgeInsetsDirectional
-                                                                        .fromSTEB(
-                                                                            0.0,
-                                                                            4.0,
-                                                                            0.0,
-                                                                            0.0),
-                                                                    child: Text(
-                                                                      'Transports',
-                                                                      style: FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .titleMedium
-                                                                          .override(
-                                                                            fontFamily:
-                                                                                'Outfit',
-                                                                            color:
-                                                                                Color(0xFF101213),
-                                                                            fontSize:
-                                                                                18.0,
-                                                                            fontWeight:
-                                                                                FontWeight.w500,
-                                                                          ),
-                                                                    ),
-                                                                  ),
-                                                                  Text(
-                                                                    functions.printScore(functions.getActiveScore(
-                                                                        containerUsersStatsRecord
-                                                                            ?.transportActionsDayCO2e
-                                                                            ?.toList(),
-                                                                        FFAppState()
-                                                                            .activeDateRelative)),
-                                                                    style: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .bodyMedium
-                                                                        .override(
-                                                                          fontFamily:
-                                                                              'Outfit',
-                                                                          color:
-                                                                              Color(0xFF101213),
-                                                                          fontSize:
-                                                                              14.0,
-                                                                          fontWeight:
-                                                                              FontWeight.normal,
-                                                                        ),
-                                                                  ),
-                                                                  Text(
-                                                                    '${functions.printRatioScoreTotal(functions.getActiveScore(containerUsersStatsRecord?.transportActionsDayCO2e?.toList(), FFAppState().activeDateRelative), functions.getActiveScore(containerUsersStatsRecord?.days?.toList(), FFAppState().activeDateRelative))} de votre journée',
-                                                                    style: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .bodySmall
-                                                                        .override(
-                                                                          fontFamily:
-                                                                              'Outfit',
-                                                                          color:
-                                                                              Color(0xFF57636C),
-                                                                          fontSize:
-                                                                              12.0,
-                                                                          fontWeight:
-                                                                              FontWeight.normal,
-                                                                        ),
-                                                                  ),
-                                                                ],
-                                                              ),
-                                                            ),
-                                                          if (!FFAppState()
-                                                              .displayTransportActions)
-                                                            Padding(
-                                                              padding:
-                                                                  EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          8.0,
-                                                                          4.0,
-                                                                          0.0,
-                                                                          4.0),
-                                                              child: Column(
-                                                                mainAxisSize:
-                                                                    MainAxisSize
-                                                                        .max,
-                                                                mainAxisAlignment:
-                                                                    MainAxisAlignment
-                                                                        .center,
-                                                                crossAxisAlignment:
-                                                                    CrossAxisAlignment
-                                                                        .start,
-                                                                children: [
-                                                                  Padding(
-                                                                    padding: EdgeInsetsDirectional
-                                                                        .fromSTEB(
-                                                                            0.0,
-                                                                            4.0,
-                                                                            0.0,
-                                                                            0.0),
-                                                                    child: Text(
-                                                                      'Transports récurrent',
-                                                                      style: FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .titleMedium
-                                                                          .override(
-                                                                            fontFamily:
-                                                                                'Outfit',
-                                                                            color:
-                                                                                Color(0xFF101213),
-                                                                            fontSize:
-                                                                                18.0,
-                                                                            fontWeight:
-                                                                                FontWeight.w500,
-                                                                          ),
-                                                                    ),
-                                                                  ),
-                                                                  Text(
-                                                                    functions.printScore(
-                                                                        containerUsersStatsRecord
-                                                                            ?.transportPeriodicsCO2e),
-                                                                    style: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .bodyMedium
-                                                                        .override(
-                                                                          fontFamily:
-                                                                              'Outfit',
-                                                                          color:
-                                                                              Color(0xFF101213),
-                                                                          fontSize:
-                                                                              14.0,
-                                                                          fontWeight:
-                                                                              FontWeight.normal,
-                                                                        ),
-                                                                  ),
-                                                                  Text(
-                                                                    '${functions.printRatioScoreTotal(containerUsersStatsRecord?.transportPeriodicsCO2e, containerUsersStatsRecord?.allPeriodicsCO2e)} de vos émissions récurrentes',
-                                                                    style: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .bodySmall
-                                                                        .override(
-                                                                          fontFamily:
-                                                                              'Outfit',
-                                                                          color:
-                                                                              Color(0xFF57636C),
-                                                                          fontSize:
-                                                                              12.0,
-                                                                          fontWeight:
-                                                                              FontWeight.normal,
-                                                                        ),
-                                                                  ),
-                                                                ],
-                                                              ),
-                                                            ),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                    Padding(
-                                                      padding:
-                                                          EdgeInsetsDirectional
-                                                              .fromSTEB(
-                                                                  0.0,
-                                                                  2.0,
-                                                                  2.0,
-                                                                  0.0),
-                                                      child: ClipRRect(
-                                                        borderRadius:
-                                                            BorderRadius.only(
-                                                          bottomLeft:
-                                                              Radius.circular(
-                                                                  0.0),
-                                                          bottomRight:
-                                                              Radius.circular(
-                                                                  12.0),
-                                                          topLeft:
-                                                              Radius.circular(
-                                                                  0.0),
-                                                          topRight:
-                                                              Radius.circular(
-                                                                  12.0),
-                                                        ),
-                                                        child: Image.asset(
-                                                          'assets/images/sport-car_(1).png',
-                                                          width: 110.0,
-                                                          height: 100.0,
-                                                          fit: BoxFit.contain,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodySmall
+                                              .override(
+                                                fontFamily: 'Montserrat',
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .primary,
                                               ),
-                                              Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(
-                                                        12.0, 0.0, 7.0, 8.0),
-                                                child: Row(
-                                                  mainAxisSize:
-                                                      MainAxisSize.max,
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  children: [
-                                                    Row(
-                                                      mainAxisSize:
-                                                          MainAxisSize.max,
-                                                      children: [
-                                                        InkWell(
-                                                          splashColor: Colors
-                                                              .transparent,
-                                                          focusColor: Colors
-                                                              .transparent,
-                                                          hoverColor: Colors
-                                                              .transparent,
-                                                          highlightColor: Colors
-                                                              .transparent,
-                                                          onTap: () async {
-                                                            logFirebaseEvent(
-                                                                'HOME_PAGE_Card_sk6gbsww_ON_TAP');
-                                                            logFirebaseEvent(
-                                                                'Card_bottom_sheet');
-                                                            await showModalBottomSheet(
-                                                              isScrollControlled:
-                                                                  true,
-                                                              backgroundColor:
-                                                                  Colors
-                                                                      .transparent,
-                                                              barrierColor: Color(
-                                                                  0xBF000000),
-                                                              context: context,
-                                                              builder:
-                                                                  (context) {
-                                                                return Padding(
-                                                                  padding: MediaQuery
-                                                                      .viewInsetsOf(
-                                                                          context),
-                                                                  child:
-                                                                      Container(
-                                                                    height:
-                                                                        600.0,
-                                                                    child:
-                                                                        TransportListWidget(),
-                                                                  ),
-                                                                );
-                                                              },
-                                                            ).then((value) =>
-                                                                safeSetState(
-                                                                    () {}));
-                                                          },
-                                                          child: Card(
-                                                            clipBehavior: Clip
-                                                                .antiAliasWithSaveLayer,
-                                                            color: Color(
-                                                                0xFFF1F4F8),
-                                                            shape:
-                                                                RoundedRectangleBorder(
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          40.0),
-                                                            ),
-                                                            child: Padding(
-                                                              padding:
-                                                                  EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          8.0,
-                                                                          8.0,
-                                                                          8.0,
-                                                                          8.0),
-                                                              child: Icon(
-                                                                Icons.add,
-                                                                color: Color(
-                                                                    0xFF57636C),
-                                                                size: 20.0,
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        ),
-                                                        Stack(
-                                                          children: [
-                                                            if (FFAppState()
-                                                                .displayTransportActions)
-                                                              StreamBuilder<
-                                                                  List<
-                                                                      TransportActionsRecord>>(
-                                                                stream:
-                                                                    queryTransportActionsRecord(
-                                                                  queryBuilder: (transportActionsRecord) => transportActionsRecord
-                                                                      .where(
-                                                                          'userId',
-                                                                          isEqualTo:
-                                                                              currentUserUid)
-                                                                      .where(
-                                                                          'day',
-                                                                          isEqualTo: FFAppState()
-                                                                              .activeDate)
-                                                                      .where(
-                                                                          'isPeriodic',
-                                                                          isEqualTo:
-                                                                              false)
-                                                                      .orderBy(
-                                                                          'created_time'),
-                                                                ),
-                                                                builder: (context,
-                                                                    snapshot) {
-                                                                  // Customize what your widget looks like when it's loading.
-                                                                  if (!snapshot
-                                                                      .hasData) {
-                                                                    return Center(
-                                                                      child:
-                                                                          SizedBox(
-                                                                        width:
-                                                                            2.0,
-                                                                        height:
-                                                                            2.0,
-                                                                        child:
-                                                                            SpinKitRing(
-                                                                          color:
-                                                                              Colors.transparent,
-                                                                          size:
-                                                                              2.0,
-                                                                        ),
-                                                                      ),
-                                                                    );
-                                                                  }
-                                                                  List<TransportActionsRecord>
-                                                                      transportsTransportActionsRecordList =
-                                                                      snapshot
-                                                                          .data!;
-                                                                  return SingleChildScrollView(
-                                                                    scrollDirection:
-                                                                        Axis.horizontal,
-                                                                    child: Row(
-                                                                      mainAxisSize:
-                                                                          MainAxisSize
-                                                                              .max,
-                                                                      mainAxisAlignment:
-                                                                          MainAxisAlignment
-                                                                              .center,
-                                                                      children: List.generate(
-                                                                          transportsTransportActionsRecordList
-                                                                              .length,
-                                                                          (transportsIndex) {
-                                                                        final transportsTransportActionsRecord =
-                                                                            transportsTransportActionsRecordList[transportsIndex];
-                                                                        return Container(
-                                                                          width:
-                                                                              40.0,
-                                                                          height:
-                                                                              40.0,
-                                                                          child:
-                                                                              Stack(
-                                                                            alignment:
-                                                                                AlignmentDirectional(0.0, 0.0),
-                                                                            children: [
-                                                                              if (transportsTransportActionsRecord.transport == 'car')
-                                                                                InkWell(
-                                                                                  splashColor: Colors.transparent,
-                                                                                  focusColor: Colors.transparent,
-                                                                                  hoverColor: Colors.transparent,
-                                                                                  highlightColor: Colors.transparent,
-                                                                                  onTap: () async {
-                                                                                    logFirebaseEvent('HOME_PAGE_carAction_ON_TAP');
-                                                                                    logFirebaseEvent('carAction_update_app_state');
-                                                                                    FFAppState().update(() {
-                                                                                      FFAppState().displayOptions = false;
-                                                                                      FFAppState().displayDates = false;
-                                                                                    });
-                                                                                    logFirebaseEvent('carAction_update_app_state');
-                                                                                    FFAppState().update(() {
-                                                                                      FFAppState().displayDays = false;
-                                                                                    });
-                                                                                    logFirebaseEvent('carAction_navigate_to');
-
-                                                                                    context.pushNamed(
-                                                                                      'Transport',
-                                                                                      queryParameters: {
-                                                                                        'actionRef': serializeParam(
-                                                                                          transportsTransportActionsRecord.reference,
-                                                                                          ParamType.DocumentReference,
-                                                                                        ),
-                                                                                        'category': serializeParam(
-                                                                                          'transport',
-                                                                                          ParamType.String,
-                                                                                        ),
-                                                                                        'action': serializeParam(
-                                                                                          'car',
-                                                                                          ParamType.String,
-                                                                                        ),
-                                                                                      }.withoutNulls,
-                                                                                    );
-                                                                                  },
-                                                                                  child: Container(
-                                                                                    clipBehavior: Clip.antiAlias,
-                                                                                    decoration: BoxDecoration(
-                                                                                      shape: BoxShape.circle,
-                                                                                    ),
-                                                                                    child: SvgPicture.asset(
-                                                                                      'assets/images/trans-car-01.svg',
-                                                                                      fit: BoxFit.cover,
-                                                                                    ),
-                                                                                  ),
-                                                                                ),
-                                                                              if (transportsTransportActionsRecord.transport == 'bus')
-                                                                                InkWell(
-                                                                                  splashColor: Colors.transparent,
-                                                                                  focusColor: Colors.transparent,
-                                                                                  hoverColor: Colors.transparent,
-                                                                                  highlightColor: Colors.transparent,
-                                                                                  onTap: () async {
-                                                                                    logFirebaseEvent('HOME_PAGE_busAction_ON_TAP');
-                                                                                    logFirebaseEvent('busAction_update_app_state');
-                                                                                    FFAppState().update(() {
-                                                                                      FFAppState().displayOptions = false;
-                                                                                      FFAppState().displayDates = false;
-                                                                                    });
-                                                                                    logFirebaseEvent('busAction_update_app_state');
-                                                                                    FFAppState().update(() {
-                                                                                      FFAppState().displayDays = false;
-                                                                                    });
-                                                                                    logFirebaseEvent('busAction_navigate_to');
-
-                                                                                    context.pushNamed(
-                                                                                      'Transport',
-                                                                                      queryParameters: {
-                                                                                        'actionRef': serializeParam(
-                                                                                          transportsTransportActionsRecord.reference,
-                                                                                          ParamType.DocumentReference,
-                                                                                        ),
-                                                                                        'category': serializeParam(
-                                                                                          'transport',
-                                                                                          ParamType.String,
-                                                                                        ),
-                                                                                        'action': serializeParam(
-                                                                                          'bus',
-                                                                                          ParamType.String,
-                                                                                        ),
-                                                                                      }.withoutNulls,
-                                                                                    );
-                                                                                  },
-                                                                                  child: Container(
-                                                                                    clipBehavior: Clip.antiAlias,
-                                                                                    decoration: BoxDecoration(
-                                                                                      shape: BoxShape.circle,
-                                                                                    ),
-                                                                                    child: SvgPicture.asset(
-                                                                                      'assets/images/trans-bus-02.svg',
-                                                                                      fit: BoxFit.cover,
-                                                                                    ),
-                                                                                  ),
-                                                                                ),
-                                                                              if (transportsTransportActionsRecord.transport == 'scooter')
-                                                                                InkWell(
-                                                                                  splashColor: Colors.transparent,
-                                                                                  focusColor: Colors.transparent,
-                                                                                  hoverColor: Colors.transparent,
-                                                                                  highlightColor: Colors.transparent,
-                                                                                  onTap: () async {
-                                                                                    logFirebaseEvent('HOME_PAGE_scooterAction_ON_TAP');
-                                                                                    logFirebaseEvent('scooterAction_update_app_state');
-                                                                                    FFAppState().update(() {
-                                                                                      FFAppState().displayOptions = false;
-                                                                                      FFAppState().displayDates = false;
-                                                                                    });
-                                                                                    logFirebaseEvent('scooterAction_update_app_state');
-                                                                                    FFAppState().update(() {
-                                                                                      FFAppState().displayDays = false;
-                                                                                    });
-                                                                                    logFirebaseEvent('scooterAction_navigate_to');
-
-                                                                                    context.pushNamed(
-                                                                                      'Transport',
-                                                                                      queryParameters: {
-                                                                                        'actionRef': serializeParam(
-                                                                                          transportsTransportActionsRecord.reference,
-                                                                                          ParamType.DocumentReference,
-                                                                                        ),
-                                                                                        'category': serializeParam(
-                                                                                          'transport',
-                                                                                          ParamType.String,
-                                                                                        ),
-                                                                                        'action': serializeParam(
-                                                                                          'scooter',
-                                                                                          ParamType.String,
-                                                                                        ),
-                                                                                      }.withoutNulls,
-                                                                                    );
-                                                                                  },
-                                                                                  child: Container(
-                                                                                    clipBehavior: Clip.antiAlias,
-                                                                                    decoration: BoxDecoration(
-                                                                                      shape: BoxShape.circle,
-                                                                                    ),
-                                                                                    child: SvgPicture.asset(
-                                                                                      'assets/images/trans-motor-03.svg',
-                                                                                      fit: BoxFit.cover,
-                                                                                    ),
-                                                                                  ),
-                                                                                ),
-                                                                              if (transportsTransportActionsRecord.transport == 'moto')
-                                                                                InkWell(
-                                                                                  splashColor: Colors.transparent,
-                                                                                  focusColor: Colors.transparent,
-                                                                                  hoverColor: Colors.transparent,
-                                                                                  highlightColor: Colors.transparent,
-                                                                                  onTap: () async {
-                                                                                    logFirebaseEvent('HOME_PAGE_motoAction_ON_TAP');
-                                                                                    logFirebaseEvent('motoAction_update_app_state');
-                                                                                    FFAppState().update(() {
-                                                                                      FFAppState().displayOptions = false;
-                                                                                      FFAppState().displayDates = false;
-                                                                                    });
-                                                                                    logFirebaseEvent('motoAction_update_app_state');
-                                                                                    FFAppState().update(() {
-                                                                                      FFAppState().displayDays = false;
-                                                                                    });
-                                                                                    logFirebaseEvent('motoAction_navigate_to');
-
-                                                                                    context.pushNamed(
-                                                                                      'Transport',
-                                                                                      queryParameters: {
-                                                                                        'actionRef': serializeParam(
-                                                                                          transportsTransportActionsRecord.reference,
-                                                                                          ParamType.DocumentReference,
-                                                                                        ),
-                                                                                        'category': serializeParam(
-                                                                                          'transport',
-                                                                                          ParamType.String,
-                                                                                        ),
-                                                                                        'action': serializeParam(
-                                                                                          'moto',
-                                                                                          ParamType.String,
-                                                                                        ),
-                                                                                      }.withoutNulls,
-                                                                                    );
-                                                                                  },
-                                                                                  child: Container(
-                                                                                    clipBehavior: Clip.antiAlias,
-                                                                                    decoration: BoxDecoration(
-                                                                                      shape: BoxShape.circle,
-                                                                                    ),
-                                                                                    child: Image.asset(
-                                                                                      'assets/images/motorcycle.png',
-                                                                                      fit: BoxFit.cover,
-                                                                                    ),
-                                                                                  ),
-                                                                                ),
-                                                                              if (transportsTransportActionsRecord.transport == 'train')
-                                                                                InkWell(
-                                                                                  splashColor: Colors.transparent,
-                                                                                  focusColor: Colors.transparent,
-                                                                                  hoverColor: Colors.transparent,
-                                                                                  highlightColor: Colors.transparent,
-                                                                                  onTap: () async {
-                                                                                    logFirebaseEvent('HOME_PAGE_trainAction_ON_TAP');
-                                                                                    logFirebaseEvent('trainAction_update_app_state');
-                                                                                    FFAppState().update(() {
-                                                                                      FFAppState().displayOptions = false;
-                                                                                      FFAppState().displayDates = false;
-                                                                                    });
-                                                                                    logFirebaseEvent('trainAction_update_app_state');
-                                                                                    FFAppState().update(() {
-                                                                                      FFAppState().displayDays = false;
-                                                                                    });
-                                                                                    logFirebaseEvent('trainAction_navigate_to');
-
-                                                                                    context.pushNamed(
-                                                                                      'Transport',
-                                                                                      queryParameters: {
-                                                                                        'actionRef': serializeParam(
-                                                                                          transportsTransportActionsRecord.reference,
-                                                                                          ParamType.DocumentReference,
-                                                                                        ),
-                                                                                        'category': serializeParam(
-                                                                                          'transport',
-                                                                                          ParamType.String,
-                                                                                        ),
-                                                                                        'action': serializeParam(
-                                                                                          'train',
-                                                                                          ParamType.String,
-                                                                                        ),
-                                                                                      }.withoutNulls,
-                                                                                    );
-                                                                                  },
-                                                                                  child: Container(
-                                                                                    clipBehavior: Clip.antiAlias,
-                                                                                    decoration: BoxDecoration(
-                                                                                      shape: BoxShape.circle,
-                                                                                    ),
-                                                                                    child: SvgPicture.asset(
-                                                                                      'assets/images/trans-train-04.svg',
-                                                                                      fit: BoxFit.cover,
-                                                                                    ),
-                                                                                  ),
-                                                                                ),
-                                                                              if (transportsTransportActionsRecord.transport == 'metro')
-                                                                                InkWell(
-                                                                                  splashColor: Colors.transparent,
-                                                                                  focusColor: Colors.transparent,
-                                                                                  hoverColor: Colors.transparent,
-                                                                                  highlightColor: Colors.transparent,
-                                                                                  onTap: () async {
-                                                                                    logFirebaseEvent('HOME_PAGE_metroAction_ON_TAP');
-                                                                                    logFirebaseEvent('metroAction_update_app_state');
-                                                                                    FFAppState().update(() {
-                                                                                      FFAppState().displayOptions = false;
-                                                                                      FFAppState().displayDates = false;
-                                                                                    });
-                                                                                    logFirebaseEvent('metroAction_update_app_state');
-                                                                                    FFAppState().update(() {
-                                                                                      FFAppState().displayDays = false;
-                                                                                    });
-                                                                                    logFirebaseEvent('metroAction_navigate_to');
-
-                                                                                    context.pushNamed(
-                                                                                      'Transport',
-                                                                                      queryParameters: {
-                                                                                        'actionRef': serializeParam(
-                                                                                          transportsTransportActionsRecord.reference,
-                                                                                          ParamType.DocumentReference,
-                                                                                        ),
-                                                                                        'category': serializeParam(
-                                                                                          'transport',
-                                                                                          ParamType.String,
-                                                                                        ),
-                                                                                        'action': serializeParam(
-                                                                                          'metro',
-                                                                                          ParamType.String,
-                                                                                        ),
-                                                                                      }.withoutNulls,
-                                                                                    );
-                                                                                  },
-                                                                                  child: Container(
-                                                                                    clipBehavior: Clip.antiAlias,
-                                                                                    decoration: BoxDecoration(
-                                                                                      shape: BoxShape.circle,
-                                                                                    ),
-                                                                                    child: SvgPicture.asset(
-                                                                                      'assets/images/trans-metro-06.svg',
-                                                                                      fit: BoxFit.cover,
-                                                                                    ),
-                                                                                  ),
-                                                                                ),
-                                                                              if (transportsTransportActionsRecord.transport == 'flight')
-                                                                                InkWell(
-                                                                                  splashColor: Colors.transparent,
-                                                                                  focusColor: Colors.transparent,
-                                                                                  hoverColor: Colors.transparent,
-                                                                                  highlightColor: Colors.transparent,
-                                                                                  onTap: () async {
-                                                                                    logFirebaseEvent('HOME_PAGE_flightAction_ON_TAP');
-                                                                                    logFirebaseEvent('flightAction_update_app_state');
-                                                                                    FFAppState().update(() {
-                                                                                      FFAppState().displayOptions = false;
-                                                                                      FFAppState().displayDates = false;
-                                                                                    });
-                                                                                    logFirebaseEvent('flightAction_update_app_state');
-                                                                                    FFAppState().update(() {
-                                                                                      FFAppState().displayDays = false;
-                                                                                    });
-                                                                                    logFirebaseEvent('flightAction_navigate_to');
-
-                                                                                    context.pushNamed(
-                                                                                      'Transport',
-                                                                                      queryParameters: {
-                                                                                        'actionRef': serializeParam(
-                                                                                          transportsTransportActionsRecord.reference,
-                                                                                          ParamType.DocumentReference,
-                                                                                        ),
-                                                                                        'category': serializeParam(
-                                                                                          'transport',
-                                                                                          ParamType.String,
-                                                                                        ),
-                                                                                        'action': serializeParam(
-                                                                                          'flight',
-                                                                                          ParamType.String,
-                                                                                        ),
-                                                                                      }.withoutNulls,
-                                                                                    );
-                                                                                  },
-                                                                                  child: Container(
-                                                                                    clipBehavior: Clip.antiAlias,
-                                                                                    decoration: BoxDecoration(
-                                                                                      shape: BoxShape.circle,
-                                                                                    ),
-                                                                                    child: Image.asset(
-                                                                                      'assets/images/aircraft.png',
-                                                                                      fit: BoxFit.cover,
-                                                                                    ),
-                                                                                  ),
-                                                                                ),
-                                                                              if (transportsTransportActionsRecord.transport == 'bike')
-                                                                                InkWell(
-                                                                                  splashColor: Colors.transparent,
-                                                                                  focusColor: Colors.transparent,
-                                                                                  hoverColor: Colors.transparent,
-                                                                                  highlightColor: Colors.transparent,
-                                                                                  onTap: () async {
-                                                                                    logFirebaseEvent('HOME_PAGE_bikeAction_ON_TAP');
-                                                                                    logFirebaseEvent('bikeAction_update_app_state');
-                                                                                    FFAppState().update(() {
-                                                                                      FFAppState().displayOptions = false;
-                                                                                      FFAppState().displayDates = false;
-                                                                                    });
-                                                                                    logFirebaseEvent('bikeAction_update_app_state');
-                                                                                    FFAppState().update(() {
-                                                                                      FFAppState().displayDays = false;
-                                                                                    });
-                                                                                    logFirebaseEvent('bikeAction_navigate_to');
-
-                                                                                    context.pushNamed(
-                                                                                      'Transport',
-                                                                                      queryParameters: {
-                                                                                        'actionRef': serializeParam(
-                                                                                          transportsTransportActionsRecord.reference,
-                                                                                          ParamType.DocumentReference,
-                                                                                        ),
-                                                                                        'category': serializeParam(
-                                                                                          'transport',
-                                                                                          ParamType.String,
-                                                                                        ),
-                                                                                        'action': serializeParam(
-                                                                                          'bike',
-                                                                                          ParamType.String,
-                                                                                        ),
-                                                                                      }.withoutNulls,
-                                                                                    );
-                                                                                  },
-                                                                                  child: Container(
-                                                                                    clipBehavior: Clip.antiAlias,
-                                                                                    decoration: BoxDecoration(
-                                                                                      shape: BoxShape.circle,
-                                                                                    ),
-                                                                                    child: SvgPicture.asset(
-                                                                                      'assets/images/trans-cycle-08.svg',
-                                                                                      fit: BoxFit.cover,
-                                                                                    ),
-                                                                                  ),
-                                                                                ),
-                                                                            ],
-                                                                          ),
-                                                                        );
-                                                                      }),
-                                                                    ),
-                                                                  );
-                                                                },
-                                                              ),
-                                                            if (!FFAppState()
-                                                                .displayTransportActions)
-                                                              StreamBuilder<
-                                                                  List<
-                                                                      TransportActionsRecord>>(
-                                                                stream:
-                                                                    queryTransportActionsRecord(
-                                                                  queryBuilder: (transportActionsRecord) => transportActionsRecord
-                                                                      .where(
-                                                                          'userId',
-                                                                          isEqualTo:
-                                                                              currentUserUid)
-                                                                      .where(
-                                                                          'isPeriodic',
-                                                                          isEqualTo:
-                                                                              true),
-                                                                ),
-                                                                builder: (context,
-                                                                    snapshot) {
-                                                                  // Customize what your widget looks like when it's loading.
-                                                                  if (!snapshot
-                                                                      .hasData) {
-                                                                    return Center(
-                                                                      child:
-                                                                          SizedBox(
-                                                                        width:
-                                                                            2.0,
-                                                                        height:
-                                                                            2.0,
-                                                                        child:
-                                                                            SpinKitRing(
-                                                                          color:
-                                                                              Colors.transparent,
-                                                                          size:
-                                                                              2.0,
-                                                                        ),
-                                                                      ),
-                                                                    );
-                                                                  }
-                                                                  List<TransportActionsRecord>
-                                                                      transportPeriodicsTransportActionsRecordList =
-                                                                      snapshot
-                                                                          .data!;
-                                                                  return Row(
-                                                                    mainAxisSize:
-                                                                        MainAxisSize
-                                                                            .max,
-                                                                    mainAxisAlignment:
-                                                                        MainAxisAlignment
-                                                                            .center,
-                                                                    children: List.generate(
-                                                                        transportPeriodicsTransportActionsRecordList
-                                                                            .length,
-                                                                        (transportPeriodicsIndex) {
-                                                                      final transportPeriodicsTransportActionsRecord =
-                                                                          transportPeriodicsTransportActionsRecordList[
-                                                                              transportPeriodicsIndex];
-                                                                      return Container(
-                                                                        width:
-                                                                            40.0,
-                                                                        height:
-                                                                            40.0,
-                                                                        child:
-                                                                            Stack(
-                                                                          children: [
-                                                                            if (transportPeriodicsTransportActionsRecord.transport ==
-                                                                                'car')
-                                                                              Align(
-                                                                                alignment: AlignmentDirectional(0.00, 0.00),
-                                                                                child: InkWell(
-                                                                                  splashColor: Colors.transparent,
-                                                                                  focusColor: Colors.transparent,
-                                                                                  hoverColor: Colors.transparent,
-                                                                                  highlightColor: Colors.transparent,
-                                                                                  onTap: () async {
-                                                                                    logFirebaseEvent('HOME_PAGE_carPeriodics_ON_TAP');
-                                                                                    logFirebaseEvent('carPeriodics_update_app_state');
-                                                                                    FFAppState().update(() {
-                                                                                      FFAppState().displayOptions = false;
-                                                                                      FFAppState().displayDates = false;
-                                                                                    });
-                                                                                    logFirebaseEvent('carPeriodics_update_app_state');
-                                                                                    FFAppState().update(() {
-                                                                                      FFAppState().displayDays = true;
-                                                                                    });
-                                                                                    logFirebaseEvent('carPeriodics_navigate_to');
-
-                                                                                    context.pushNamed(
-                                                                                      'Transport',
-                                                                                      queryParameters: {
-                                                                                        'actionRef': serializeParam(
-                                                                                          transportPeriodicsTransportActionsRecord.reference,
-                                                                                          ParamType.DocumentReference,
-                                                                                        ),
-                                                                                        'category': serializeParam(
-                                                                                          'transport',
-                                                                                          ParamType.String,
-                                                                                        ),
-                                                                                        'action': serializeParam(
-                                                                                          'car',
-                                                                                          ParamType.String,
-                                                                                        ),
-                                                                                      }.withoutNulls,
-                                                                                    );
-                                                                                  },
-                                                                                  child: Container(
-                                                                                    clipBehavior: Clip.antiAlias,
-                                                                                    decoration: BoxDecoration(
-                                                                                      shape: BoxShape.circle,
-                                                                                    ),
-                                                                                    child: SvgPicture.asset(
-                                                                                      'assets/images/trans-car-01.svg',
-                                                                                      fit: BoxFit.cover,
-                                                                                    ),
-                                                                                  ),
-                                                                                ),
-                                                                              ),
-                                                                            if (transportPeriodicsTransportActionsRecord.transport ==
-                                                                                'bus')
-                                                                              Align(
-                                                                                alignment: AlignmentDirectional(0.00, 0.00),
-                                                                                child: InkWell(
-                                                                                  splashColor: Colors.transparent,
-                                                                                  focusColor: Colors.transparent,
-                                                                                  hoverColor: Colors.transparent,
-                                                                                  highlightColor: Colors.transparent,
-                                                                                  onTap: () async {
-                                                                                    logFirebaseEvent('HOME_PAGE_busPeriodics_ON_TAP');
-                                                                                    logFirebaseEvent('busPeriodics_update_app_state');
-                                                                                    FFAppState().update(() {
-                                                                                      FFAppState().displayOptions = false;
-                                                                                      FFAppState().displayDates = false;
-                                                                                    });
-                                                                                    logFirebaseEvent('busPeriodics_update_app_state');
-                                                                                    FFAppState().update(() {
-                                                                                      FFAppState().displayDays = true;
-                                                                                    });
-                                                                                    logFirebaseEvent('busPeriodics_navigate_to');
-
-                                                                                    context.pushNamed(
-                                                                                      'Transport',
-                                                                                      queryParameters: {
-                                                                                        'actionRef': serializeParam(
-                                                                                          transportPeriodicsTransportActionsRecord.reference,
-                                                                                          ParamType.DocumentReference,
-                                                                                        ),
-                                                                                        'category': serializeParam(
-                                                                                          'transport',
-                                                                                          ParamType.String,
-                                                                                        ),
-                                                                                        'action': serializeParam(
-                                                                                          'bus',
-                                                                                          ParamType.String,
-                                                                                        ),
-                                                                                      }.withoutNulls,
-                                                                                    );
-                                                                                  },
-                                                                                  child: Container(
-                                                                                    clipBehavior: Clip.antiAlias,
-                                                                                    decoration: BoxDecoration(
-                                                                                      shape: BoxShape.circle,
-                                                                                    ),
-                                                                                    child: SvgPicture.asset(
-                                                                                      'assets/images/trans-bus-02.svg',
-                                                                                      fit: BoxFit.cover,
-                                                                                    ),
-                                                                                  ),
-                                                                                ),
-                                                                              ),
-                                                                            if (transportPeriodicsTransportActionsRecord.transport ==
-                                                                                'scooter')
-                                                                              Align(
-                                                                                alignment: AlignmentDirectional(0.00, 0.00),
-                                                                                child: InkWell(
-                                                                                  splashColor: Colors.transparent,
-                                                                                  focusColor: Colors.transparent,
-                                                                                  hoverColor: Colors.transparent,
-                                                                                  highlightColor: Colors.transparent,
-                                                                                  onTap: () async {
-                                                                                    logFirebaseEvent('HOME_PAGE_scooterPeriodics_ON_TAP');
-                                                                                    logFirebaseEvent('scooterPeriodics_update_app_state');
-                                                                                    FFAppState().update(() {
-                                                                                      FFAppState().displayOptions = false;
-                                                                                      FFAppState().displayDates = false;
-                                                                                    });
-                                                                                    logFirebaseEvent('scooterPeriodics_update_app_state');
-                                                                                    FFAppState().update(() {
-                                                                                      FFAppState().displayDays = true;
-                                                                                    });
-                                                                                    logFirebaseEvent('scooterPeriodics_navigate_to');
-
-                                                                                    context.pushNamed(
-                                                                                      'Transport',
-                                                                                      queryParameters: {
-                                                                                        'actionRef': serializeParam(
-                                                                                          transportPeriodicsTransportActionsRecord.reference,
-                                                                                          ParamType.DocumentReference,
-                                                                                        ),
-                                                                                        'category': serializeParam(
-                                                                                          'transport',
-                                                                                          ParamType.String,
-                                                                                        ),
-                                                                                        'action': serializeParam(
-                                                                                          'scooter',
-                                                                                          ParamType.String,
-                                                                                        ),
-                                                                                      }.withoutNulls,
-                                                                                    );
-                                                                                  },
-                                                                                  child: Container(
-                                                                                    clipBehavior: Clip.antiAlias,
-                                                                                    decoration: BoxDecoration(
-                                                                                      shape: BoxShape.circle,
-                                                                                    ),
-                                                                                    child: SvgPicture.asset(
-                                                                                      'assets/images/trans-motor-03.svg',
-                                                                                      fit: BoxFit.cover,
-                                                                                    ),
-                                                                                  ),
-                                                                                ),
-                                                                              ),
-                                                                            if (transportPeriodicsTransportActionsRecord.transport ==
-                                                                                'moto')
-                                                                              Align(
-                                                                                alignment: AlignmentDirectional(0.00, 0.00),
-                                                                                child: InkWell(
-                                                                                  splashColor: Colors.transparent,
-                                                                                  focusColor: Colors.transparent,
-                                                                                  hoverColor: Colors.transparent,
-                                                                                  highlightColor: Colors.transparent,
-                                                                                  onTap: () async {
-                                                                                    logFirebaseEvent('HOME_PAGE_motoPeriodics_ON_TAP');
-                                                                                    logFirebaseEvent('motoPeriodics_update_app_state');
-                                                                                    FFAppState().update(() {
-                                                                                      FFAppState().displayOptions = false;
-                                                                                      FFAppState().displayDates = false;
-                                                                                    });
-                                                                                    logFirebaseEvent('motoPeriodics_update_app_state');
-                                                                                    FFAppState().update(() {
-                                                                                      FFAppState().displayDays = true;
-                                                                                    });
-                                                                                    logFirebaseEvent('motoPeriodics_navigate_to');
-
-                                                                                    context.pushNamed(
-                                                                                      'Transport',
-                                                                                      queryParameters: {
-                                                                                        'actionRef': serializeParam(
-                                                                                          transportPeriodicsTransportActionsRecord.reference,
-                                                                                          ParamType.DocumentReference,
-                                                                                        ),
-                                                                                        'category': serializeParam(
-                                                                                          'transport',
-                                                                                          ParamType.String,
-                                                                                        ),
-                                                                                        'action': serializeParam(
-                                                                                          'moto',
-                                                                                          ParamType.String,
-                                                                                        ),
-                                                                                      }.withoutNulls,
-                                                                                    );
-                                                                                  },
-                                                                                  child: Container(
-                                                                                    clipBehavior: Clip.antiAlias,
-                                                                                    decoration: BoxDecoration(
-                                                                                      shape: BoxShape.circle,
-                                                                                    ),
-                                                                                    child: Image.asset(
-                                                                                      'assets/images/motorcycle.png',
-                                                                                      fit: BoxFit.cover,
-                                                                                    ),
-                                                                                  ),
-                                                                                ),
-                                                                              ),
-                                                                            if (transportPeriodicsTransportActionsRecord.transport ==
-                                                                                'train')
-                                                                              Align(
-                                                                                alignment: AlignmentDirectional(0.00, 0.00),
-                                                                                child: InkWell(
-                                                                                  splashColor: Colors.transparent,
-                                                                                  focusColor: Colors.transparent,
-                                                                                  hoverColor: Colors.transparent,
-                                                                                  highlightColor: Colors.transparent,
-                                                                                  onTap: () async {
-                                                                                    logFirebaseEvent('HOME_PAGE_trainPeriodics_ON_TAP');
-                                                                                    logFirebaseEvent('trainPeriodics_update_app_state');
-                                                                                    FFAppState().update(() {
-                                                                                      FFAppState().displayOptions = false;
-                                                                                      FFAppState().displayDates = false;
-                                                                                    });
-                                                                                    logFirebaseEvent('trainPeriodics_update_app_state');
-                                                                                    FFAppState().update(() {
-                                                                                      FFAppState().displayDays = true;
-                                                                                    });
-                                                                                    logFirebaseEvent('trainPeriodics_navigate_to');
-
-                                                                                    context.pushNamed(
-                                                                                      'Transport',
-                                                                                      queryParameters: {
-                                                                                        'actionRef': serializeParam(
-                                                                                          transportPeriodicsTransportActionsRecord.reference,
-                                                                                          ParamType.DocumentReference,
-                                                                                        ),
-                                                                                        'category': serializeParam(
-                                                                                          'transport',
-                                                                                          ParamType.String,
-                                                                                        ),
-                                                                                        'action': serializeParam(
-                                                                                          'train',
-                                                                                          ParamType.String,
-                                                                                        ),
-                                                                                      }.withoutNulls,
-                                                                                    );
-                                                                                  },
-                                                                                  child: Container(
-                                                                                    clipBehavior: Clip.antiAlias,
-                                                                                    decoration: BoxDecoration(
-                                                                                      shape: BoxShape.circle,
-                                                                                    ),
-                                                                                    child: SvgPicture.asset(
-                                                                                      'assets/images/trans-train-04.svg',
-                                                                                      fit: BoxFit.cover,
-                                                                                    ),
-                                                                                  ),
-                                                                                ),
-                                                                              ),
-                                                                            if (transportPeriodicsTransportActionsRecord.transport ==
-                                                                                'metro')
-                                                                              Align(
-                                                                                alignment: AlignmentDirectional(0.00, 0.00),
-                                                                                child: InkWell(
-                                                                                  splashColor: Colors.transparent,
-                                                                                  focusColor: Colors.transparent,
-                                                                                  hoverColor: Colors.transparent,
-                                                                                  highlightColor: Colors.transparent,
-                                                                                  onTap: () async {
-                                                                                    logFirebaseEvent('HOME_PAGE_metroPeriodics_ON_TAP');
-                                                                                    logFirebaseEvent('metroPeriodics_update_app_state');
-                                                                                    FFAppState().update(() {
-                                                                                      FFAppState().displayOptions = false;
-                                                                                      FFAppState().displayDates = false;
-                                                                                    });
-                                                                                    logFirebaseEvent('metroPeriodics_update_app_state');
-                                                                                    FFAppState().update(() {
-                                                                                      FFAppState().displayDays = true;
-                                                                                    });
-                                                                                    logFirebaseEvent('metroPeriodics_navigate_to');
-
-                                                                                    context.pushNamed(
-                                                                                      'Transport',
-                                                                                      queryParameters: {
-                                                                                        'actionRef': serializeParam(
-                                                                                          transportPeriodicsTransportActionsRecord.reference,
-                                                                                          ParamType.DocumentReference,
-                                                                                        ),
-                                                                                        'category': serializeParam(
-                                                                                          'transport',
-                                                                                          ParamType.String,
-                                                                                        ),
-                                                                                        'action': serializeParam(
-                                                                                          'metro',
-                                                                                          ParamType.String,
-                                                                                        ),
-                                                                                      }.withoutNulls,
-                                                                                    );
-                                                                                  },
-                                                                                  child: Container(
-                                                                                    clipBehavior: Clip.antiAlias,
-                                                                                    decoration: BoxDecoration(
-                                                                                      shape: BoxShape.circle,
-                                                                                    ),
-                                                                                    child: SvgPicture.asset(
-                                                                                      'assets/images/trans-metro-06.svg',
-                                                                                      fit: BoxFit.cover,
-                                                                                    ),
-                                                                                  ),
-                                                                                ),
-                                                                              ),
-                                                                            if (transportPeriodicsTransportActionsRecord.transport ==
-                                                                                'flight')
-                                                                              Align(
-                                                                                alignment: AlignmentDirectional(0.00, 0.00),
-                                                                                child: InkWell(
-                                                                                  splashColor: Colors.transparent,
-                                                                                  focusColor: Colors.transparent,
-                                                                                  hoverColor: Colors.transparent,
-                                                                                  highlightColor: Colors.transparent,
-                                                                                  onTap: () async {
-                                                                                    logFirebaseEvent('HOME_PAGE_flightPeriodics_ON_TAP');
-                                                                                    logFirebaseEvent('flightPeriodics_update_app_state');
-                                                                                    FFAppState().update(() {
-                                                                                      FFAppState().displayOptions = false;
-                                                                                      FFAppState().displayDates = false;
-                                                                                    });
-                                                                                    logFirebaseEvent('flightPeriodics_update_app_state');
-                                                                                    FFAppState().update(() {
-                                                                                      FFAppState().displayDays = true;
-                                                                                    });
-                                                                                    logFirebaseEvent('flightPeriodics_navigate_to');
-
-                                                                                    context.pushNamed(
-                                                                                      'Transport',
-                                                                                      queryParameters: {
-                                                                                        'actionRef': serializeParam(
-                                                                                          transportPeriodicsTransportActionsRecord.reference,
-                                                                                          ParamType.DocumentReference,
-                                                                                        ),
-                                                                                        'category': serializeParam(
-                                                                                          'transport',
-                                                                                          ParamType.String,
-                                                                                        ),
-                                                                                        'action': serializeParam(
-                                                                                          'flight',
-                                                                                          ParamType.String,
-                                                                                        ),
-                                                                                      }.withoutNulls,
-                                                                                    );
-                                                                                  },
-                                                                                  child: Container(
-                                                                                    clipBehavior: Clip.antiAlias,
-                                                                                    decoration: BoxDecoration(
-                                                                                      shape: BoxShape.circle,
-                                                                                    ),
-                                                                                    child: Image.asset(
-                                                                                      'assets/images/aircraft.png',
-                                                                                      fit: BoxFit.cover,
-                                                                                    ),
-                                                                                  ),
-                                                                                ),
-                                                                              ),
-                                                                            if (transportPeriodicsTransportActionsRecord.transport ==
-                                                                                'bike')
-                                                                              Align(
-                                                                                alignment: AlignmentDirectional(0.00, 0.00),
-                                                                                child: InkWell(
-                                                                                  splashColor: Colors.transparent,
-                                                                                  focusColor: Colors.transparent,
-                                                                                  hoverColor: Colors.transparent,
-                                                                                  highlightColor: Colors.transparent,
-                                                                                  onTap: () async {
-                                                                                    logFirebaseEvent('HOME_PAGE_bikePeriodics_ON_TAP');
-                                                                                    logFirebaseEvent('bikePeriodics_update_app_state');
-                                                                                    FFAppState().update(() {
-                                                                                      FFAppState().displayOptions = false;
-                                                                                      FFAppState().displayDates = false;
-                                                                                    });
-                                                                                    logFirebaseEvent('bikePeriodics_update_app_state');
-                                                                                    FFAppState().update(() {
-                                                                                      FFAppState().displayDays = true;
-                                                                                    });
-                                                                                    logFirebaseEvent('bikePeriodics_navigate_to');
-
-                                                                                    context.pushNamed(
-                                                                                      'Transport',
-                                                                                      queryParameters: {
-                                                                                        'actionRef': serializeParam(
-                                                                                          transportPeriodicsTransportActionsRecord.reference,
-                                                                                          ParamType.DocumentReference,
-                                                                                        ),
-                                                                                        'category': serializeParam(
-                                                                                          'transport',
-                                                                                          ParamType.String,
-                                                                                        ),
-                                                                                        'action': serializeParam(
-                                                                                          'bike',
-                                                                                          ParamType.String,
-                                                                                        ),
-                                                                                      }.withoutNulls,
-                                                                                    );
-                                                                                  },
-                                                                                  child: Container(
-                                                                                    clipBehavior: Clip.antiAlias,
-                                                                                    decoration: BoxDecoration(
-                                                                                      shape: BoxShape.circle,
-                                                                                    ),
-                                                                                    child: SvgPicture.asset(
-                                                                                      'assets/images/trans-cycle-08.svg',
-                                                                                      fit: BoxFit.cover,
-                                                                                    ),
-                                                                                  ),
-                                                                                ),
-                                                                              ),
-                                                                          ],
-                                                                        ),
-                                                                      );
-                                                                    }),
-                                                                  );
-                                                                },
-                                                              ),
-                                                          ],
-                                                        ),
-                                                      ],
-                                                    ),
-                                                    Row(
-                                                      mainAxisSize:
-                                                          MainAxisSize.max,
-                                                      children: [
-                                                        Card(
-                                                          clipBehavior: Clip
-                                                              .antiAliasWithSaveLayer,
-                                                          color:
-                                                              Color(0xFFF1F4F8),
-                                                          shape:
-                                                              RoundedRectangleBorder(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        40.0),
-                                                          ),
-                                                          child: ToggleIcon(
-                                                            onPressed:
-                                                                () async {
-                                                              setState(() => FFAppState()
-                                                                      .displayTransportActions =
-                                                                  !FFAppState()
-                                                                      .displayTransportActions);
-                                                            },
-                                                            value: FFAppState()
-                                                                .displayTransportActions,
-                                                            onIcon: Icon(
-                                                              Icons.threesixty,
-                                                              color: Color(
-                                                                  0x9857636C),
-                                                              size: 20.0,
-                                                            ),
-                                                            offIcon: Icon(
-                                                              Icons.threesixty,
-                                                              color: Color(
-                                                                  0xFF57636C),
-                                                              size: 20.0,
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                            ],
+                                        ),
+                                        TextSpan(
+                                          text: FFLocalizations.of(context)
+                                              .getText(
+                                            'eb60dfzq' /* 4.2 kg */,
                                           ),
-                                        ).animateOnPageLoad(animationsMap[
-                                            'containerOnPageLoadAnimation2']!),
-                                      ),
-                                      Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            16.0, 8.0, 16.0, 12.0),
-                                        child: Container(
-                                          width: double.infinity,
-                                          decoration: BoxDecoration(
-                                            color: Color(0xB3FFFFFF),
-                                            boxShadow: [
-                                              BoxShadow(
-                                                blurRadius: 4.0,
-                                                color: Color(0x2B202529),
-                                                offset: Offset(0.0, 2.0),
-                                              )
-                                            ],
-                                            borderRadius:
-                                                BorderRadius.circular(12.0),
-                                          ),
-                                          child: Column(
-                                            mainAxisSize: MainAxisSize.max,
-                                            children: [
-                                              Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(
-                                                        8.0, 0.0, 0.0, 0.0),
-                                                child: Row(
-                                                  mainAxisSize:
-                                                      MainAxisSize.max,
-                                                  children: [
-                                                    Expanded(
-                                                      child: Stack(
-                                                        children: [
-                                                          if (FFAppState()
-                                                              .displayEnergyActions)
-                                                            Padding(
-                                                              padding:
-                                                                  EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          8.0,
-                                                                          4.0,
-                                                                          0.0,
-                                                                          4.0),
-                                                              child: Column(
-                                                                mainAxisSize:
-                                                                    MainAxisSize
-                                                                        .max,
-                                                                mainAxisAlignment:
-                                                                    MainAxisAlignment
-                                                                        .center,
-                                                                crossAxisAlignment:
-                                                                    CrossAxisAlignment
-                                                                        .start,
-                                                                children: [
-                                                                  Padding(
-                                                                    padding: EdgeInsetsDirectional
-                                                                        .fromSTEB(
-                                                                            0.0,
-                                                                            4.0,
-                                                                            0.0,
-                                                                            0.0),
-                                                                    child: Text(
-                                                                      'Énergie',
-                                                                      style: FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .titleMedium
-                                                                          .override(
-                                                                            fontFamily:
-                                                                                'Outfit',
-                                                                            color:
-                                                                                Color(0xFF101213),
-                                                                            fontSize:
-                                                                                18.0,
-                                                                            fontWeight:
-                                                                                FontWeight.w500,
-                                                                          ),
-                                                                    ),
-                                                                  ),
-                                                                  Text(
-                                                                    functions.printScore(functions.getActiveScore(
-                                                                        containerUsersStatsRecord
-                                                                            ?.energyActionsDayCO2e
-                                                                            ?.toList(),
-                                                                        FFAppState()
-                                                                            .activeDateRelative)),
-                                                                    style: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .bodyMedium
-                                                                        .override(
-                                                                          fontFamily:
-                                                                              'Outfit',
-                                                                          color:
-                                                                              Color(0xFF101213),
-                                                                          fontSize:
-                                                                              14.0,
-                                                                          fontWeight:
-                                                                              FontWeight.normal,
-                                                                        ),
-                                                                  ),
-                                                                  Text(
-                                                                    '${functions.printRatioScoreTotal(functions.getActiveScore(containerUsersStatsRecord?.energyActionsDayCO2e?.toList(), FFAppState().activeDateRelative), functions.getActiveScore(containerUsersStatsRecord?.days?.toList(), FFAppState().activeDateRelative))} de votre journée',
-                                                                    style: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .bodySmall
-                                                                        .override(
-                                                                          fontFamily:
-                                                                              'Outfit',
-                                                                          color:
-                                                                              Color(0xFF57636C),
-                                                                          fontSize:
-                                                                              12.0,
-                                                                          fontWeight:
-                                                                              FontWeight.normal,
-                                                                        ),
-                                                                  ),
-                                                                ],
-                                                              ),
-                                                            ),
-                                                          if (!FFAppState()
-                                                              .displayEnergyActions)
-                                                            Padding(
-                                                              padding:
-                                                                  EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          8.0,
-                                                                          4.0,
-                                                                          0.0,
-                                                                          4.0),
-                                                              child: Column(
-                                                                mainAxisSize:
-                                                                    MainAxisSize
-                                                                        .max,
-                                                                mainAxisAlignment:
-                                                                    MainAxisAlignment
-                                                                        .center,
-                                                                crossAxisAlignment:
-                                                                    CrossAxisAlignment
-                                                                        .start,
-                                                                children: [
-                                                                  Padding(
-                                                                    padding: EdgeInsetsDirectional
-                                                                        .fromSTEB(
-                                                                            0.0,
-                                                                            4.0,
-                                                                            0.0,
-                                                                            0.0),
-                                                                    child: Text(
-                                                                      'Énergie récurrentes',
-                                                                      style: FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .titleMedium
-                                                                          .override(
-                                                                            fontFamily:
-                                                                                'Outfit',
-                                                                            color:
-                                                                                Color(0xFF101213),
-                                                                            fontSize:
-                                                                                18.0,
-                                                                            fontWeight:
-                                                                                FontWeight.w500,
-                                                                          ),
-                                                                    ),
-                                                                  ),
-                                                                  Text(
-                                                                    functions.printScore(
-                                                                        containerUsersStatsRecord
-                                                                            ?.energyPeriodicsCO2e),
-                                                                    style: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .bodyMedium
-                                                                        .override(
-                                                                          fontFamily:
-                                                                              'Outfit',
-                                                                          color:
-                                                                              Color(0xFF101213),
-                                                                          fontSize:
-                                                                              14.0,
-                                                                          fontWeight:
-                                                                              FontWeight.normal,
-                                                                        ),
-                                                                  ),
-                                                                  Text(
-                                                                    '${functions.printRatioScoreTotal(containerUsersStatsRecord?.energyPeriodicsCO2e, containerUsersStatsRecord?.allPeriodicsCO2e)} de vos émissions récurrentes',
-                                                                    style: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .bodySmall
-                                                                        .override(
-                                                                          fontFamily:
-                                                                              'Outfit',
-                                                                          color:
-                                                                              Color(0xFF57636C),
-                                                                          fontSize:
-                                                                              12.0,
-                                                                          fontWeight:
-                                                                              FontWeight.normal,
-                                                                        ),
-                                                                  ),
-                                                                ],
-                                                              ),
-                                                            ),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                    Padding(
-                                                      padding:
-                                                          EdgeInsetsDirectional
-                                                              .fromSTEB(
-                                                                  0.0,
-                                                                  2.0,
-                                                                  2.0,
-                                                                  0.0),
-                                                      child: ClipRRect(
-                                                        borderRadius:
-                                                            BorderRadius.only(
-                                                          bottomLeft:
-                                                              Radius.circular(
-                                                                  0.0),
-                                                          bottomRight:
-                                                              Radius.circular(
-                                                                  12.0),
-                                                          topLeft:
-                                                              Radius.circular(
-                                                                  0.0),
-                                                          topRight:
-                                                              Radius.circular(
-                                                                  12.0),
-                                                        ),
-                                                        child: Image.asset(
-                                                          'assets/images/green-energy.png',
-                                                          width: 110.0,
-                                                          height: 100.0,
-                                                          fit: BoxFit.contain,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                              Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(
-                                                        12.0, 0.0, 7.0, 8.0),
-                                                child: Row(
-                                                  mainAxisSize:
-                                                      MainAxisSize.max,
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  children: [
-                                                    Row(
-                                                      mainAxisSize:
-                                                          MainAxisSize.max,
-                                                      children: [
-                                                        InkWell(
-                                                          splashColor: Colors
-                                                              .transparent,
-                                                          focusColor: Colors
-                                                              .transparent,
-                                                          hoverColor: Colors
-                                                              .transparent,
-                                                          highlightColor: Colors
-                                                              .transparent,
-                                                          onTap: () async {
-                                                            logFirebaseEvent(
-                                                                'HOME_PAGE_Card_nhwa43an_ON_TAP');
-                                                            logFirebaseEvent(
-                                                                'Card_bottom_sheet');
-                                                            await showModalBottomSheet(
-                                                              isScrollControlled:
-                                                                  true,
-                                                              backgroundColor:
-                                                                  Colors
-                                                                      .transparent,
-                                                              barrierColor: Color(
-                                                                  0xBF000000),
-                                                              context: context,
-                                                              builder:
-                                                                  (context) {
-                                                                return Padding(
-                                                                  padding: MediaQuery
-                                                                      .viewInsetsOf(
-                                                                          context),
-                                                                  child:
-                                                                      Container(
-                                                                    height:
-                                                                        362.0,
-                                                                    child:
-                                                                        EnergyListWidget(),
-                                                                  ),
-                                                                );
-                                                              },
-                                                            ).then((value) =>
-                                                                safeSetState(
-                                                                    () {}));
-                                                          },
-                                                          child: Card(
-                                                            clipBehavior: Clip
-                                                                .antiAliasWithSaveLayer,
-                                                            color: Color(
-                                                                0xFFF1F4F8),
-                                                            shape:
-                                                                RoundedRectangleBorder(
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          40.0),
-                                                            ),
-                                                            child: Padding(
-                                                              padding:
-                                                                  EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          8.0,
-                                                                          8.0,
-                                                                          8.0,
-                                                                          8.0),
-                                                              child: Icon(
-                                                                Icons.add,
-                                                                color: Color(
-                                                                    0xFF57636C),
-                                                                size: 20.0,
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        ),
-                                                        Stack(
-                                                          children: [
-                                                            if (FFAppState()
-                                                                .displayEnergyActions)
-                                                              StreamBuilder<
-                                                                  List<
-                                                                      EnergyActionsRecord>>(
-                                                                stream:
-                                                                    queryEnergyActionsRecord(
-                                                                  queryBuilder: (energyActionsRecord) => energyActionsRecord
-                                                                      .where(
-                                                                          'userId',
-                                                                          isEqualTo:
-                                                                              currentUserUid)
-                                                                      .where(
-                                                                          'day',
-                                                                          isEqualTo: FFAppState()
-                                                                              .activeDate)
-                                                                      .where(
-                                                                          'isPeriodic',
-                                                                          isEqualTo:
-                                                                              false)
-                                                                      .orderBy(
-                                                                          'created_time'),
-                                                                ),
-                                                                builder: (context,
-                                                                    snapshot) {
-                                                                  // Customize what your widget looks like when it's loading.
-                                                                  if (!snapshot
-                                                                      .hasData) {
-                                                                    return Center(
-                                                                      child:
-                                                                          SizedBox(
-                                                                        width:
-                                                                            2.0,
-                                                                        height:
-                                                                            2.0,
-                                                                        child:
-                                                                            SpinKitRing(
-                                                                          color:
-                                                                              Colors.transparent,
-                                                                          size:
-                                                                              2.0,
-                                                                        ),
-                                                                      ),
-                                                                    );
-                                                                  }
-                                                                  List<EnergyActionsRecord>
-                                                                      energyEnergyActionsRecordList =
-                                                                      snapshot
-                                                                          .data!;
-                                                                  return Row(
-                                                                    mainAxisSize:
-                                                                        MainAxisSize
-                                                                            .max,
-                                                                    mainAxisAlignment:
-                                                                        MainAxisAlignment
-                                                                            .center,
-                                                                    children: List.generate(
-                                                                        energyEnergyActionsRecordList
-                                                                            .length,
-                                                                        (energyIndex) {
-                                                                      final energyEnergyActionsRecord =
-                                                                          energyEnergyActionsRecordList[
-                                                                              energyIndex];
-                                                                      return Container(
-                                                                        width:
-                                                                            40.0,
-                                                                        height:
-                                                                            40.0,
-                                                                        child:
-                                                                            Stack(
-                                                                          alignment: AlignmentDirectional(
-                                                                              0.0,
-                                                                              0.0),
-                                                                          children: [
-                                                                            if (energyEnergyActionsRecord.energy ==
-                                                                                'electricity')
-                                                                              InkWell(
-                                                                                splashColor: Colors.transparent,
-                                                                                focusColor: Colors.transparent,
-                                                                                hoverColor: Colors.transparent,
-                                                                                highlightColor: Colors.transparent,
-                                                                                onTap: () async {
-                                                                                  logFirebaseEvent('HOME_PAGE_electricityAction_ON_TAP');
-                                                                                  logFirebaseEvent('electricityAction_navigate_to');
-
-                                                                                  context.pushNamed(
-                                                                                    'Energies',
-                                                                                    queryParameters: {
-                                                                                      'actionRef': serializeParam(
-                                                                                        energyEnergyActionsRecord.reference,
-                                                                                        ParamType.DocumentReference,
-                                                                                      ),
-                                                                                      'category': serializeParam(
-                                                                                        'energy',
-                                                                                        ParamType.String,
-                                                                                      ),
-                                                                                      'action': serializeParam(
-                                                                                        'electricity',
-                                                                                        ParamType.String,
-                                                                                      ),
-                                                                                    }.withoutNulls,
-                                                                                  );
-                                                                                },
-                                                                                child: Container(
-                                                                                  clipBehavior: Clip.antiAlias,
-                                                                                  decoration: BoxDecoration(
-                                                                                    shape: BoxShape.circle,
-                                                                                  ),
-                                                                                  child: Image.asset(
-                                                                                    'assets/images/energy.png',
-                                                                                    fit: BoxFit.cover,
-                                                                                  ),
-                                                                                ),
-                                                                              ),
-                                                                            if (energyEnergyActionsRecord.energy ==
-                                                                                'gas')
-                                                                              InkWell(
-                                                                                splashColor: Colors.transparent,
-                                                                                focusColor: Colors.transparent,
-                                                                                hoverColor: Colors.transparent,
-                                                                                highlightColor: Colors.transparent,
-                                                                                onTap: () async {
-                                                                                  logFirebaseEvent('HOME_PAGE_gasAction_ON_TAP');
-                                                                                  logFirebaseEvent('gasAction_navigate_to');
-
-                                                                                  context.pushNamed(
-                                                                                    'Energies',
-                                                                                    queryParameters: {
-                                                                                      'actionRef': serializeParam(
-                                                                                        energyEnergyActionsRecord.reference,
-                                                                                        ParamType.DocumentReference,
-                                                                                      ),
-                                                                                      'category': serializeParam(
-                                                                                        'energy',
-                                                                                        ParamType.String,
-                                                                                      ),
-                                                                                      'action': serializeParam(
-                                                                                        'gas',
-                                                                                        ParamType.String,
-                                                                                      ),
-                                                                                    }.withoutNulls,
-                                                                                  );
-                                                                                },
-                                                                                child: Container(
-                                                                                  clipBehavior: Clip.antiAlias,
-                                                                                  decoration: BoxDecoration(
-                                                                                    shape: BoxShape.circle,
-                                                                                  ),
-                                                                                  child: Image.asset(
-                                                                                    'assets/images/gas.png',
-                                                                                    fit: BoxFit.cover,
-                                                                                  ),
-                                                                                ),
-                                                                              ),
-                                                                            if (energyEnergyActionsRecord.energy ==
-                                                                                'water')
-                                                                              InkWell(
-                                                                                splashColor: Colors.transparent,
-                                                                                focusColor: Colors.transparent,
-                                                                                hoverColor: Colors.transparent,
-                                                                                highlightColor: Colors.transparent,
-                                                                                onTap: () async {
-                                                                                  logFirebaseEvent('HOME_PAGE_waterAction_ON_TAP');
-                                                                                  logFirebaseEvent('waterAction_navigate_to');
-
-                                                                                  context.pushNamed(
-                                                                                    'Energies',
-                                                                                    queryParameters: {
-                                                                                      'actionRef': serializeParam(
-                                                                                        energyEnergyActionsRecord.reference,
-                                                                                        ParamType.DocumentReference,
-                                                                                      ),
-                                                                                      'category': serializeParam(
-                                                                                        'energy',
-                                                                                        ParamType.String,
-                                                                                      ),
-                                                                                      'action': serializeParam(
-                                                                                        'water',
-                                                                                        ParamType.String,
-                                                                                      ),
-                                                                                    }.withoutNulls,
-                                                                                  );
-                                                                                },
-                                                                                child: Container(
-                                                                                  clipBehavior: Clip.antiAlias,
-                                                                                  decoration: BoxDecoration(
-                                                                                    shape: BoxShape.circle,
-                                                                                  ),
-                                                                                  child: Image.asset(
-                                                                                    'assets/images/water-drop.png',
-                                                                                    fit: BoxFit.cover,
-                                                                                  ),
-                                                                                ),
-                                                                              ),
-                                                                          ],
-                                                                        ),
-                                                                      );
-                                                                    }),
-                                                                  );
-                                                                },
-                                                              ),
-                                                            if (!FFAppState()
-                                                                .displayEnergyActions)
-                                                              StreamBuilder<
-                                                                  List<
-                                                                      EnergyActionsRecord>>(
-                                                                stream:
-                                                                    queryEnergyActionsRecord(
-                                                                  queryBuilder: (energyActionsRecord) => energyActionsRecord
-                                                                      .where(
-                                                                          'userId',
-                                                                          isEqualTo:
-                                                                              currentUserUid)
-                                                                      .where(
-                                                                          'isPeriodic',
-                                                                          isEqualTo:
-                                                                              true),
-                                                                ),
-                                                                builder: (context,
-                                                                    snapshot) {
-                                                                  // Customize what your widget looks like when it's loading.
-                                                                  if (!snapshot
-                                                                      .hasData) {
-                                                                    return Center(
-                                                                      child:
-                                                                          SizedBox(
-                                                                        width:
-                                                                            2.0,
-                                                                        height:
-                                                                            2.0,
-                                                                        child:
-                                                                            SpinKitRing(
-                                                                          color:
-                                                                              Colors.transparent,
-                                                                          size:
-                                                                              2.0,
-                                                                        ),
-                                                                      ),
-                                                                    );
-                                                                  }
-                                                                  List<EnergyActionsRecord>
-                                                                      energyPeriodicsEnergyActionsRecordList =
-                                                                      snapshot
-                                                                          .data!;
-                                                                  return Row(
-                                                                    mainAxisSize:
-                                                                        MainAxisSize
-                                                                            .max,
-                                                                    mainAxisAlignment:
-                                                                        MainAxisAlignment
-                                                                            .center,
-                                                                    children: List.generate(
-                                                                        energyPeriodicsEnergyActionsRecordList
-                                                                            .length,
-                                                                        (energyPeriodicsIndex) {
-                                                                      final energyPeriodicsEnergyActionsRecord =
-                                                                          energyPeriodicsEnergyActionsRecordList[
-                                                                              energyPeriodicsIndex];
-                                                                      return Container(
-                                                                        width:
-                                                                            40.0,
-                                                                        height:
-                                                                            40.0,
-                                                                        child:
-                                                                            Stack(
-                                                                          children: [
-                                                                            if (energyPeriodicsEnergyActionsRecord.energy ==
-                                                                                'electricity')
-                                                                              Align(
-                                                                                alignment: AlignmentDirectional(0.00, 0.00),
-                                                                                child: InkWell(
-                                                                                  splashColor: Colors.transparent,
-                                                                                  focusColor: Colors.transparent,
-                                                                                  hoverColor: Colors.transparent,
-                                                                                  highlightColor: Colors.transparent,
-                                                                                  onTap: () async {
-                                                                                    logFirebaseEvent('HOME_PAGE_electricityPeriodics_ON_TAP');
-                                                                                    logFirebaseEvent('electricityPeriodics_navigate_to');
-
-                                                                                    context.pushNamed(
-                                                                                      'Energies',
-                                                                                      queryParameters: {
-                                                                                        'actionRef': serializeParam(
-                                                                                          energyPeriodicsEnergyActionsRecord.reference,
-                                                                                          ParamType.DocumentReference,
-                                                                                        ),
-                                                                                        'category': serializeParam(
-                                                                                          'energy',
-                                                                                          ParamType.String,
-                                                                                        ),
-                                                                                        'action': serializeParam(
-                                                                                          'electricity',
-                                                                                          ParamType.String,
-                                                                                        ),
-                                                                                      }.withoutNulls,
-                                                                                    );
-                                                                                  },
-                                                                                  child: Container(
-                                                                                    clipBehavior: Clip.antiAlias,
-                                                                                    decoration: BoxDecoration(
-                                                                                      shape: BoxShape.circle,
-                                                                                    ),
-                                                                                    child: Image.asset(
-                                                                                      'assets/images/energy.png',
-                                                                                      fit: BoxFit.cover,
-                                                                                    ),
-                                                                                  ),
-                                                                                ),
-                                                                              ),
-                                                                            if (energyPeriodicsEnergyActionsRecord.energy ==
-                                                                                'gas')
-                                                                              Align(
-                                                                                alignment: AlignmentDirectional(0.00, 0.00),
-                                                                                child: InkWell(
-                                                                                  splashColor: Colors.transparent,
-                                                                                  focusColor: Colors.transparent,
-                                                                                  hoverColor: Colors.transparent,
-                                                                                  highlightColor: Colors.transparent,
-                                                                                  onTap: () async {
-                                                                                    logFirebaseEvent('HOME_PAGE_gasPeriodics_ON_TAP');
-                                                                                    logFirebaseEvent('gasPeriodics_navigate_to');
-
-                                                                                    context.pushNamed(
-                                                                                      'Energies',
-                                                                                      queryParameters: {
-                                                                                        'actionRef': serializeParam(
-                                                                                          energyPeriodicsEnergyActionsRecord.reference,
-                                                                                          ParamType.DocumentReference,
-                                                                                        ),
-                                                                                        'category': serializeParam(
-                                                                                          'energy',
-                                                                                          ParamType.String,
-                                                                                        ),
-                                                                                        'action': serializeParam(
-                                                                                          'gas',
-                                                                                          ParamType.String,
-                                                                                        ),
-                                                                                      }.withoutNulls,
-                                                                                    );
-                                                                                  },
-                                                                                  child: Container(
-                                                                                    clipBehavior: Clip.antiAlias,
-                                                                                    decoration: BoxDecoration(
-                                                                                      shape: BoxShape.circle,
-                                                                                    ),
-                                                                                    child: Image.asset(
-                                                                                      'assets/images/gas.png',
-                                                                                      fit: BoxFit.cover,
-                                                                                    ),
-                                                                                  ),
-                                                                                ),
-                                                                              ),
-                                                                            if (energyPeriodicsEnergyActionsRecord.energy ==
-                                                                                'water')
-                                                                              Align(
-                                                                                alignment: AlignmentDirectional(0.00, 0.00),
-                                                                                child: InkWell(
-                                                                                  splashColor: Colors.transparent,
-                                                                                  focusColor: Colors.transparent,
-                                                                                  hoverColor: Colors.transparent,
-                                                                                  highlightColor: Colors.transparent,
-                                                                                  onTap: () async {
-                                                                                    logFirebaseEvent('HOME_PAGE_waterPeriodics_ON_TAP');
-                                                                                    logFirebaseEvent('waterPeriodics_navigate_to');
-
-                                                                                    context.pushNamed(
-                                                                                      'Energies',
-                                                                                      queryParameters: {
-                                                                                        'actionRef': serializeParam(
-                                                                                          energyPeriodicsEnergyActionsRecord.reference,
-                                                                                          ParamType.DocumentReference,
-                                                                                        ),
-                                                                                        'category': serializeParam(
-                                                                                          'energy',
-                                                                                          ParamType.String,
-                                                                                        ),
-                                                                                        'action': serializeParam(
-                                                                                          'water',
-                                                                                          ParamType.String,
-                                                                                        ),
-                                                                                      }.withoutNulls,
-                                                                                    );
-                                                                                  },
-                                                                                  child: Container(
-                                                                                    clipBehavior: Clip.antiAlias,
-                                                                                    decoration: BoxDecoration(
-                                                                                      shape: BoxShape.circle,
-                                                                                    ),
-                                                                                    child: Image.asset(
-                                                                                      'assets/images/water-drop.png',
-                                                                                      fit: BoxFit.cover,
-                                                                                    ),
-                                                                                  ),
-                                                                                ),
-                                                                              ),
-                                                                          ],
-                                                                        ),
-                                                                      );
-                                                                    }),
-                                                                  );
-                                                                },
-                                                              ),
-                                                          ],
-                                                        ),
-                                                      ],
-                                                    ),
-                                                    Row(
-                                                      mainAxisSize:
-                                                          MainAxisSize.max,
-                                                      children: [
-                                                        Card(
-                                                          clipBehavior: Clip
-                                                              .antiAliasWithSaveLayer,
-                                                          color:
-                                                              Color(0xFFF1F4F8),
-                                                          shape:
-                                                              RoundedRectangleBorder(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        40.0),
-                                                          ),
-                                                          child: ToggleIcon(
-                                                            onPressed:
-                                                                () async {
-                                                              setState(() => FFAppState()
-                                                                      .displayEnergyActions =
-                                                                  !FFAppState()
-                                                                      .displayEnergyActions);
-                                                            },
-                                                            value: FFAppState()
-                                                                .displayEnergyActions,
-                                                            onIcon: Icon(
-                                                              Icons.threesixty,
-                                                              color: Color(
-                                                                  0x9857636C),
-                                                              size: 20.0,
-                                                            ),
-                                                            offIcon: Icon(
-                                                              Icons.threesixty,
-                                                              color: Color(
-                                                                  0xFF57636C),
-                                                              size: 20.0,
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ).animateOnPageLoad(animationsMap[
-                                            'containerOnPageLoadAnimation3']!),
-                                      ),
-                                    ],
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodySmall,
+                                        )
+                                      ],
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyMedium,
+                                    ),
                                   ),
                                 ),
                               ),
                             ),
                           ],
                         ),
-                      ),
-                    );
-                  },
-                ),
-              ],
+                        Row(
+                          mainAxisSize: MainAxisSize.min,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Align(
+                              alignment: const AlignmentDirectional(0.0, 0.0),
+                              child: wrapWithModel(
+                                model: _model.transportModel,
+                                updateCallback: () => setState(() {}),
+                                child: HomeCategoryWidget(
+                                  icon: Icon(
+                                    Icons.directions_walk,
+                                    color: FlutterFlowTheme.of(context).primary,
+                                    size: 24.0,
+                                  ),
+                                  co2e: homeStatsRecord!.dayTransport,
+                                  category: 'Trajets',
+                                ),
+                              ),
+                            ),
+                            wrapWithModel(
+                              model: _model.lodgingModel,
+                              updateCallback: () => setState(() {}),
+                              child: HomeCategoryWidget(
+                                icon: Icon(
+                                  Icons.home_rounded,
+                                  color: FlutterFlowTheme.of(context).primary,
+                                  size: 24.0,
+                                ),
+                                co2e: homeStatsRecord.dayLodging,
+                                category: 'Logement',
+                              ),
+                            ),
+                            wrapWithModel(
+                              model: _model.foodModel,
+                              updateCallback: () => setState(() {}),
+                              child: HomeCategoryWidget(
+                                icon: Icon(
+                                  Icons.fastfood_outlined,
+                                  color: FlutterFlowTheme.of(context).primary,
+                                  size: 24.0,
+                                ),
+                                co2e: homeStatsRecord.dayFood,
+                                category: 'Repas',
+                              ),
+                            ),
+                          ].divide(const SizedBox(width: 20.0)),
+                        ),
+                        Padding(
+                          padding: const EdgeInsetsDirectional.fromSTEB(
+                              0.0, 10.0, 0.0, 0.0),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              wrapWithModel(
+                                model: _model.clothesModel,
+                                updateCallback: () => setState(() {}),
+                                child: HomeCategoryWidget(
+                                  icon: FaIcon(
+                                    FontAwesomeIcons.tshirt,
+                                    color: FlutterFlowTheme.of(context).primary,
+                                  ),
+                                  co2e: homeStatsRecord.dayClothes,
+                                  category: 'Habits',
+                                ),
+                              ),
+                              wrapWithModel(
+                                model: _model.furnitureModel,
+                                updateCallback: () => setState(() {}),
+                                child: HomeCategoryWidget(
+                                  icon: FaIcon(
+                                    FontAwesomeIcons.couch,
+                                    color: FlutterFlowTheme.of(context).primary,
+                                    size: 24.0,
+                                  ),
+                                  co2e: homeStatsRecord.dayFurniture,
+                                  category: 'Mobilier',
+                                ),
+                              ),
+                              wrapWithModel(
+                                model: _model.digitalModel,
+                                updateCallback: () => setState(() {}),
+                                child: HomeCategoryWidget(
+                                  icon: Icon(
+                                    Icons.phone_android,
+                                    color: FlutterFlowTheme.of(context).primary,
+                                    size: 24.0,
+                                  ),
+                                  co2e: homeStatsRecord.dayDigital,
+                                  category: 'Numérique',
+                                ),
+                              ),
+                            ].divide(const SizedBox(width: 20.0)),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsetsDirectional.fromSTEB(
+                              0.0, 10.0, 0.0, 0.0),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              wrapWithModel(
+                                model: _model.electroModel,
+                                updateCallback: () => setState(() {}),
+                                child: HomeCategoryWidget(
+                                  icon: Icon(
+                                    Icons.kitchen_outlined,
+                                    color: FlutterFlowTheme.of(context).primary,
+                                    size: 24.0,
+                                  ),
+                                  co2e: homeStatsRecord.dayAppliance,
+                                  category: 'Electroménager',
+                                ),
+                              ),
+                              wrapWithModel(
+                                model: _model.objectsModel1,
+                                updateCallback: () => setState(() {}),
+                                child: HomeCategoryWidget(
+                                  icon: Icon(
+                                    Icons.label,
+                                    color: FlutterFlowTheme.of(context).primary,
+                                    size: 24.0,
+                                  ),
+                                  co2e: homeStatsRecord.dayObjects,
+                                  category: 'Objets',
+                                ),
+                              ),
+                              Align(
+                                alignment: const AlignmentDirectional(0.0, 0.0),
+                                child: wrapWithModel(
+                                  model: _model.objectsModel2,
+                                  updateCallback: () => setState(() {}),
+                                  child: HomeCategoryWidget(
+                                    icon: FaIcon(
+                                      FontAwesomeIcons.hospitalAlt,
+                                      color:
+                                          FlutterFlowTheme.of(context).primary,
+                                      size: 24.0,
+                                    ),
+                                    co2e: homeStatsRecord.dayServices,
+                                    category: 'Services',
+                                  ),
+                                ),
+                              ),
+                            ].divide(const SizedBox(width: 20.0)),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsetsDirectional.fromSTEB(
+                              0.0, 10.0, 0.0, 0.0),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    0.0, 10.0, 0.0, 0.0),
+                                child: FFButtonWidget(
+                                  onPressed: () async {
+                                    context.pushNamed('categories');
+                                  },
+                                  text: FFLocalizations.of(context).getText(
+                                    'psa1l9a5' /* Ajouter */,
+                                  ),
+                                  icon: const Icon(
+                                    Icons.add_circle_outline,
+                                    size: 25.0,
+                                  ),
+                                  options: FFButtonOptions(
+                                    width: 290.0,
+                                    height: 50.0,
+                                    padding: const EdgeInsets.all(0.0),
+                                    iconPadding: const EdgeInsetsDirectional.fromSTEB(
+                                        0.0, 0.0, 0.0, 0.0),
+                                    color:
+                                        FlutterFlowTheme.of(context).secondary,
+                                    textStyle:
+                                        FlutterFlowTheme.of(context).titleSmall,
+                                    elevation: 3.0,
+                                    borderSide: const BorderSide(
+                                      color: Colors.transparent,
+                                      width: 1.0,
+                                    ),
+                                    borderRadius: BorderRadius.circular(50.0),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ].divide(const SizedBox(height: 10.0)),
+                    ),
+                  ),
+                  Container(
+                    width: 300.0,
+                    height: 70.0,
+                    decoration: const BoxDecoration(),
+                  ),
+                ].divide(const SizedBox(height: 10.0)),
+              ),
             ),
           ),
         );

@@ -1,53 +1,57 @@
-import '/auth/firebase_auth/auth_util.dart';
-import '/backend/backend.dart';
-import '/components/icon_button_widget.dart';
-import '/flutter_flow/flutter_flow_icon_button.dart';
-import '/flutter_flow/flutter_flow_theme.dart';
+import '/components/title_return_widget.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import '/flutter_flow/flutter_flow_widgets.dart';
-import 'package:auto_size_text/auto_size_text.dart';
+import 'signup_widget.dart' show SignupWidget;
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
 
-class SignupModel extends FlutterFlowModel {
+class SignupModel extends FlutterFlowModel<SignupWidget> {
   ///  State fields for stateful widgets in this page.
 
   final unfocusNode = FocusNode();
-  // State field(s) for Name widget.
-  TextEditingController? nameController;
-  String? Function(BuildContext, String?)? nameControllerValidator;
-  // State field(s) for emailAddress widget.
-  TextEditingController? emailAddressController;
-  String? Function(BuildContext, String?)? emailAddressControllerValidator;
+  // Model for Title_return component.
+  late TitleReturnModel titleReturnModel;
+  // State field(s) for lastname widget.
+  FocusNode? lastnameFocusNode;
+  TextEditingController? lastnameController;
+  String? Function(BuildContext, String?)? lastnameControllerValidator;
+  // State field(s) for firstname widget.
+  FocusNode? firstnameFocusNode;
+  TextEditingController? firstnameController;
+  String? Function(BuildContext, String?)? firstnameControllerValidator;
+  // State field(s) for email widget.
+  FocusNode? emailFocusNode;
+  TextEditingController? emailController;
+  String? Function(BuildContext, String?)? emailControllerValidator;
   // State field(s) for password widget.
+  FocusNode? passwordFocusNode;
   TextEditingController? passwordController;
   late bool passwordVisibility;
   String? Function(BuildContext, String?)? passwordControllerValidator;
-  // State field(s) for retypepassword widget.
-  TextEditingController? retypepasswordController;
-  late bool retypepasswordVisibility;
-  String? Function(BuildContext, String?)? retypepasswordControllerValidator;
-  // Model for iconButton component.
-  late IconButtonModel iconButtonModel;
+  // State field(s) for optin widget.
+  bool? optinValue;
 
   /// Initialization and disposal methods.
 
+  @override
   void initState(BuildContext context) {
+    titleReturnModel = createModel(context, () => TitleReturnModel());
     passwordVisibility = false;
-    retypepasswordVisibility = false;
-    iconButtonModel = createModel(context, () => IconButtonModel());
   }
 
+  @override
   void dispose() {
     unfocusNode.dispose();
-    nameController?.dispose();
-    emailAddressController?.dispose();
+    titleReturnModel.dispose();
+    lastnameFocusNode?.dispose();
+    lastnameController?.dispose();
+
+    firstnameFocusNode?.dispose();
+    firstnameController?.dispose();
+
+    emailFocusNode?.dispose();
+    emailController?.dispose();
+
+    passwordFocusNode?.dispose();
     passwordController?.dispose();
-    retypepasswordController?.dispose();
-    iconButtonModel.dispose();
   }
 
   /// Action blocks are added here.

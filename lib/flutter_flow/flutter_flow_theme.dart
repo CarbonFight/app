@@ -3,9 +3,31 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import 'package:shared_preferences/shared_preferences.dart';
+
+const kThemeModeKey = '__theme_mode__';
+SharedPreferences? _prefs;
+
 abstract class FlutterFlowTheme {
+  static Future initialize() async =>
+      _prefs = await SharedPreferences.getInstance();
+  static ThemeMode get themeMode {
+    final darkMode = _prefs?.getBool(kThemeModeKey);
+    return darkMode == null
+        ? ThemeMode.system
+        : darkMode
+            ? ThemeMode.dark
+            : ThemeMode.light;
+  }
+
+  static void saveThemeMode(ThemeMode mode) => mode == ThemeMode.system
+      ? _prefs?.remove(kThemeModeKey)
+      : _prefs?.setBool(kThemeModeKey, mode == ThemeMode.dark);
+
   static FlutterFlowTheme of(BuildContext context) {
-    return LightModeTheme();
+    return Theme.of(context).brightness == Brightness.dark
+        ? DarkModeTheme()
+        : LightModeTheme();
   }
 
   @Deprecated('Use primary instead')
@@ -31,15 +53,6 @@ abstract class FlutterFlowTheme {
   late Color warning;
   late Color error;
   late Color info;
-
-  late Color gronyLight;
-  late Color gronyLighter;
-  late Color green;
-  late Color blue;
-  late Color redi;
-  late Color grayLight;
-  late Color gray;
-  late Color orange;
 
   @Deprecated('Use displaySmallFamily instead')
   String get title1Family => displaySmallFamily;
@@ -112,31 +125,22 @@ class LightModeTheme extends FlutterFlowTheme {
   @Deprecated('Use tertiary instead')
   Color get tertiaryColor => tertiary;
 
-  late Color primary = const Color(0xFF0B1E1B);
-  late Color secondary = const Color(0xFF00A193);
-  late Color tertiary = const Color(0xFFFFFFFF);
-  late Color alternate = const Color(0x00000000);
-  late Color primaryText = const Color(0x00000000);
-  late Color secondaryText = const Color(0x00000000);
-  late Color primaryBackground = const Color(0x00000000);
-  late Color secondaryBackground = const Color(0x00000000);
-  late Color accent1 = const Color(0xFF616161);
-  late Color accent2 = const Color(0xFF757575);
-  late Color accent3 = const Color(0xFFE0E0E0);
-  late Color accent4 = const Color(0xFFEEEEEE);
-  late Color success = const Color(0xFF04A24C);
-  late Color warning = const Color(0xFFFCDC0C);
-  late Color error = const Color(0xFFE21C3D);
-  late Color info = const Color(0xFF1C4494);
-
-  late Color gronyLight = Color(0xFF23D0C1);
-  late Color gronyLighter = Color(0xFFACF1EC);
-  late Color green = Color(0xFF5EC913);
-  late Color blue = Color(0xFF0F9CFF);
-  late Color redi = Color(0xFFE25606);
-  late Color grayLight = Color(0xFFEEF1F0);
-  late Color gray = Color(0xFFA5A5A5);
-  late Color orange = Color(0xFFF77303);
+  late Color primary = const Color(0xFF41C941);
+  late Color secondary = const Color(0xFF41C941);
+  late Color tertiary = const Color(0xFFEE8B60);
+  late Color alternate = const Color(0xFFE3E3E3);
+  late Color primaryText = const Color(0xFF191919);
+  late Color secondaryText = const Color(0xFF57636C);
+  late Color primaryBackground = const Color(0xFFF4F9FF);
+  late Color secondaryBackground = const Color(0xFFFFFFFF);
+  late Color accent1 = const Color(0x4C4B39EF);
+  late Color accent2 = const Color(0x4D39D2C0);
+  late Color accent3 = const Color(0x4DEE8B60);
+  late Color accent4 = const Color(0xCCFFFFFF);
+  late Color success = const Color(0xFF249689);
+  late Color warning = const Color(0xFFF9CF58);
+  late Color error = const Color(0xFFFF5963);
+  late Color info = const Color(0xFFFFFFFF);
 }
 
 abstract class Typography {
@@ -182,106 +186,132 @@ class ThemeTypography extends Typography {
         'Poppins',
         color: theme.primaryText,
         fontWeight: FontWeight.normal,
-        fontSize: 57.0,
+        fontSize: 64.0,
       );
   String get displayMediumFamily => 'Poppins';
   TextStyle get displayMedium => GoogleFonts.getFont(
         'Poppins',
         color: theme.primaryText,
         fontWeight: FontWeight.normal,
-        fontSize: 45.0,
+        fontSize: 44.0,
       );
-  String get displaySmallFamily => 'Montserrat';
+  String get displaySmallFamily => 'Poppins';
   TextStyle get displaySmall => GoogleFonts.getFont(
-        'Montserrat',
-        color: theme.primary,
-        fontWeight: FontWeight.w800,
-        fontSize: 26.0,
+        'Poppins',
+        color: theme.primaryText,
+        fontWeight: FontWeight.w600,
+        fontSize: 36.0,
       );
   String get headlineLargeFamily => 'Poppins';
   TextStyle get headlineLarge => GoogleFonts.getFont(
         'Poppins',
         color: theme.primaryText,
-        fontWeight: FontWeight.normal,
-        fontSize: 32.0,
-      );
-  String get headlineMediumFamily => 'Montserrat';
-  TextStyle get headlineMedium => GoogleFonts.getFont(
-        'Montserrat',
-        color: theme.primary,
         fontWeight: FontWeight.bold,
-        fontSize: 23.0,
-      );
-  String get headlineSmallFamily => 'Montserrat';
-  TextStyle get headlineSmall => GoogleFonts.getFont(
-        'Montserrat',
-        color: theme.primary,
-        fontWeight: FontWeight.w600,
         fontSize: 20.0,
       );
-  String get titleLargeFamily => 'Poppins';
-  TextStyle get titleLarge => GoogleFonts.getFont(
+  String get headlineMediumFamily => 'Poppins';
+  TextStyle get headlineMedium => GoogleFonts.getFont(
         'Poppins',
         color: theme.primaryText,
-        fontWeight: FontWeight.w500,
-        fontSize: 22.0,
+        fontWeight: FontWeight.bold,
+        fontSize: 18.0,
+      );
+  String get headlineSmallFamily => 'Poppins';
+  TextStyle get headlineSmall => GoogleFonts.getFont(
+        'Poppins',
+        color: theme.primaryText,
+        fontWeight: FontWeight.bold,
+        fontSize: 16.0,
+      );
+  String get titleLargeFamily => 'Montserrat';
+  TextStyle get titleLarge => GoogleFonts.getFont(
+        'Montserrat',
+        color: theme.primaryText,
+        fontWeight: FontWeight.bold,
+        fontSize: 30.0,
       );
   String get titleMediumFamily => 'Montserrat';
   TextStyle get titleMedium => GoogleFonts.getFont(
         'Montserrat',
-        color: theme.primary,
+        color: theme.primaryText,
         fontWeight: FontWeight.bold,
-        fontSize: 18.0,
+        fontSize: 25.0,
       );
   String get titleSmallFamily => 'Montserrat';
   TextStyle get titleSmall => GoogleFonts.getFont(
         'Montserrat',
-        color: theme.primary,
-        fontWeight: FontWeight.w600,
+        color: theme.primaryText,
+        fontWeight: FontWeight.bold,
         fontSize: 16.0,
       );
-  String get labelLargeFamily => 'Poppins';
+  String get labelLargeFamily => 'Montserrat';
   TextStyle get labelLarge => GoogleFonts.getFont(
-        'Poppins',
-        color: theme.primaryText,
-        fontWeight: FontWeight.w500,
+        'Montserrat',
+        color: theme.secondaryText,
+        fontWeight: FontWeight.normal,
+        fontSize: 16.0,
+      );
+  String get labelMediumFamily => 'Montserrat';
+  TextStyle get labelMedium => GoogleFonts.getFont(
+        'Montserrat',
+        color: theme.secondaryText,
+        fontWeight: FontWeight.normal,
         fontSize: 14.0,
       );
-  String get labelMediumFamily => 'Poppins';
-  TextStyle get labelMedium => GoogleFonts.getFont(
-        'Poppins',
-        color: theme.primaryText,
-        fontWeight: FontWeight.w500,
+  String get labelSmallFamily => 'Montserrat';
+  TextStyle get labelSmall => GoogleFonts.getFont(
+        'Montserrat',
+        color: theme.secondaryText,
+        fontWeight: FontWeight.normal,
         fontSize: 12.0,
       );
-  String get labelSmallFamily => 'Poppins';
-  TextStyle get labelSmall => GoogleFonts.getFont(
-        'Poppins',
-        color: theme.primaryText,
-        fontWeight: FontWeight.w500,
-        fontSize: 11.0,
-      );
-  String get bodyLargeFamily => 'Poppins';
+  String get bodyLargeFamily => 'Montserrat';
   TextStyle get bodyLarge => GoogleFonts.getFont(
-        'Poppins',
+        'Montserrat',
         color: theme.primaryText,
-        fontWeight: FontWeight.normal,
+        fontWeight: FontWeight.w600,
         fontSize: 16.0,
       );
   String get bodyMediumFamily => 'Montserrat';
   TextStyle get bodyMedium => GoogleFonts.getFont(
         'Montserrat',
-        color: theme.primary,
-        fontWeight: FontWeight.w500,
+        color: theme.primaryText,
+        fontWeight: FontWeight.w600,
         fontSize: 14.0,
       );
   String get bodySmallFamily => 'Montserrat';
   TextStyle get bodySmall => GoogleFonts.getFont(
         'Montserrat',
-        color: theme.primary,
-        fontWeight: FontWeight.normal,
-        fontSize: 13.0,
+        color: theme.primaryText,
+        fontWeight: FontWeight.w600,
+        fontSize: 12.0,
       );
+}
+
+class DarkModeTheme extends FlutterFlowTheme {
+  @Deprecated('Use primary instead')
+  Color get primaryColor => primary;
+  @Deprecated('Use secondary instead')
+  Color get secondaryColor => secondary;
+  @Deprecated('Use tertiary instead')
+  Color get tertiaryColor => tertiary;
+
+  late Color primary = const Color(0xFF41C941);
+  late Color secondary = const Color(0xFF41C941);
+  late Color tertiary = const Color(0xFFEE8B60);
+  late Color alternate = const Color(0xFF262D34);
+  late Color primaryText = const Color(0xFFFFFFFF);
+  late Color secondaryText = const Color(0xFF95A1AC);
+  late Color primaryBackground = const Color(0xFF1D2428);
+  late Color secondaryBackground = const Color(0xFF14181B);
+  late Color accent1 = const Color(0x4C4B39EF);
+  late Color accent2 = const Color(0x4D39D2C0);
+  late Color accent3 = const Color(0x4DEE8B60);
+  late Color accent4 = const Color(0xB2262D34);
+  late Color success = const Color(0xFF249689);
+  late Color warning = const Color(0xFFF9CF58);
+  late Color error = const Color(0xFFFF5963);
+  late Color info = const Color(0xFFFFFFFF);
 }
 
 extension TextStyleHelper on TextStyle {
