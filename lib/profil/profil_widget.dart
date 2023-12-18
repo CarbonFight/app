@@ -447,6 +447,7 @@ class _ProfilWidgetState extends State<ProfilWidget> {
                             context.pushNamedAuth('signin', context.mounted);
                           },
                           child: Text(
+                            key: const ValueKey('Text_86al'),
                             'Se déconnecter',
                             style: FlutterFlowTheme.of(context).labelSmall,
                           ),

@@ -47,6 +47,19 @@ void main() async {
         find.byKey(ValueKey('password_ds89')), 'FFTestPassword');
     await tester.tap(find.byKey(ValueKey('optin_v7sj')));
     await tester.tap(find.byKey(ValueKey('Button_3aqs')));
+    await tester.pumpAndSettle(
+      Duration(milliseconds: 5000),
+      EnginePhase.sendSemanticsUpdate,
+      Duration(milliseconds: 20000),
+    );
+    await tester.tap(find.text('Profil'));
+    await tester.tap(find.byKey(ValueKey('Text_86al')));
+    await tester.pumpAndSettle(
+      Duration(milliseconds: 2000),
+      EnginePhase.sendSemanticsUpdate,
+      Duration(milliseconds: 5000),
+    );
+    expect(find.byKey(ValueKey('Button_v5rg')), findsWidgets);
   });
 }
 

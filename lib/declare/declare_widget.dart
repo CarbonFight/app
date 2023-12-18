@@ -1186,6 +1186,45 @@ class _DeclareWidgetState extends State<DeclareWidget> {
                                     children: [
                                       TextSpan(
                                         text:
+                                            'Sur une année, cette action émet  ',
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodySmall,
+                                      ),
+                                      TextSpan(
+                                        text: valueOrDefault<String>(
+                                          functions.pS(
+                                              functions.calculateActionCO2e(
+                                                  int.tryParse(_model
+                                                      .volumeController.text),
+                                                  1,
+                                                  1,
+                                                  _model.sharingHomeValue
+                                                      ?.toString(),
+                                                  FFAppState().actionFE)),
+                                          '0',
+                                        ),
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodySmall
+                                            .override(
+                                              fontFamily: 'Montserrat',
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .primary,
+                                            ),
+                                      ),
+                                      TextSpan(
+                                        text: ' de co2e.\n\n',
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodySmall
+                                            .override(
+                                              fontFamily: 'Montserrat',
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .primary,
+                                            ),
+                                      ),
+                                      TextSpan(
+                                        text:
                                             'Vous allez ajouter une émission hebodmadaire de ',
                                         style: FlutterFlowTheme.of(context)
                                             .bodySmall,
@@ -1205,7 +1244,7 @@ class _DeclareWidgetState extends State<DeclareWidget> {
                                             ),
                                       ),
                                       TextSpan(
-                                        text: ' de co2e par jour.',
+                                        text: ' de co2e.',
                                         style: FlutterFlowTheme.of(context)
                                             .bodySmall
                                             .override(

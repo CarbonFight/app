@@ -468,6 +468,7 @@ class _SigninWidgetState extends State<SigninWidget> {
                       padding:
                           const EdgeInsetsDirectional.fromSTEB(0.0, 20.0, 0.0, 0.0),
                       child: FFButtonWidget(
+                        key: const ValueKey('Button_v5rg'),
                         onPressed: () async {
                           GoRouter.of(context).prepareAuthEvent();
 
