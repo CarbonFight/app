@@ -25,7 +25,12 @@ void main() async {
       child: MyApp(),
     ));
 
-    await tester.tap(find.byKey(ValueKey('Text_c72v')));
+    await tester.pumpAndSettle(
+      Duration(milliseconds: 5000),
+      EnginePhase.sendSemanticsUpdate,
+      Duration(milliseconds: 10000),
+    );
+    await tester.tap(find.byKey(ValueKey('createAccountLink')));
     await tester.pumpAndSettle(
       Duration(milliseconds: 2000),
       EnginePhase.sendSemanticsUpdate,

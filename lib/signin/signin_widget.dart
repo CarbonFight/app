@@ -552,7 +552,7 @@ class _SigninWidgetState extends State<SigninWidget> {
                             );
                           },
                           child: Text(
-                            key: const ValueKey('Text_c72v'),
+                            key: const ValueKey('createAccountLink'),
                             'Ouvrez un compte',
                             style: FlutterFlowTheme.of(context)
                                 .bodyMedium
