@@ -28,8 +28,8 @@ class DeclareModel extends FlutterFlowModel<DeclareWidget> {
   TextEditingController? distanceController;
   String? Function(BuildContext, String?)? distanceControllerValidator;
   // State field(s) for option widget.
-  String? optionValue;
-  FormFieldController<String>? optionValueController;
+  String? optionValue1;
+  FormFieldController<String>? optionValueController1;
   // State field(s) for passengers widget.
   int? passengersValue;
   // State field(s) for roundtrip widget.
@@ -41,6 +41,17 @@ class DeclareModel extends FlutterFlowModel<DeclareWidget> {
   FormFieldController<List<String>>? periodicityValueController;
   // Stores action output result for [Backend Call - Create Document] action in Button widget.
   ActionsRecord? addAction;
+  // State field(s) for volume widget.
+  FocusNode? volumeFocusNode;
+  TextEditingController? volumeController;
+  String? Function(BuildContext, String?)? volumeControllerValidator;
+  // State field(s) for option widget.
+  String? optionValue2;
+  FormFieldController<String>? optionValueController2;
+  // State field(s) for sharingHome widget.
+  int? sharingHomeValue;
+  // Stores action output result for [Backend Call - Create Document] action in Button widget.
+  ActionsRecord? addActionEnergy;
   // State field(s) for optionItem widget.
   String? optionItemValue;
   FormFieldController<String>? optionItemValueController;
@@ -70,6 +81,9 @@ class DeclareModel extends FlutterFlowModel<DeclareWidget> {
     headModel.dispose();
     distanceFocusNode?.dispose();
     distanceController?.dispose();
+
+    volumeFocusNode?.dispose();
+    volumeController?.dispose();
   }
 
   /// Action blocks are added here.

@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "141330271572-f03q6spafpa66j1tsr2mo2i9n78jspup.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "app.carbonfight",
+            "certificate_hash": "2ce791ff70311bd8e0fbcae0945511d142313ed2"
+          }
+        },
+        {
           "client_id": "141330271572-inm04bncmq5bpfjspnp2669o4q6pr22u.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
@@ -22,11 +30,19 @@
           }
         },
         {
-          "client_id": "141330271572-qs6ibmbv6hrjgm32hfudcbhu3rt2qq5q.apps.googleusercontent.com",
+          "client_id": "141330271572-n35ivobc44a9jfu8vjijpf22idos68o8.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "app.carbonfight",
             "certificate_hash": "0f56cd821b5dca29a32a6dacd1149ac62dd61580"
+          }
+        },
+        {
+          "client_id": "141330271572-ukg9dsipqd8ofjjpma806asulkk4skjh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "app.carbonfight",
+            "certificate_hash": "9bbb3186b2189ef16d8f272bdab59362c395cbb4"
           }
         },
         {

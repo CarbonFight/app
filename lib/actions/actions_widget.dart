@@ -1,6 +1,9 @@
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
+import '/components/empty_list_periodics_widget.dart';
+import '/components/empty_list_widget.dart';
 import '/components/head_widget.dart';
+import '/components/title_return_widget.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -32,7 +35,26 @@ class _ActionsWidgetState extends State<ActionsWidget>
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   final animationsMap = {
-    'containerOnPageLoadAnimation': AnimationInfo(
+    'containerOnPageLoadAnimation1': AnimationInfo(
+      trigger: AnimationTrigger.onPageLoad,
+      effects: [
+        FadeEffect(
+          curve: Curves.easeInOut,
+          delay: 0.ms,
+          duration: 600.ms,
+          begin: 0.0,
+          end: 1.0,
+        ),
+        MoveEffect(
+          curve: Curves.easeInOut,
+          delay: 0.ms,
+          duration: 600.ms,
+          begin: const Offset(0.0, 70.0),
+          end: const Offset(0.0, 0.0),
+        ),
+      ],
+    ),
+    'containerOnPageLoadAnimation2': AnimationInfo(
       trigger: AnimationTrigger.onPageLoad,
       effects: [
         FadeEffect(
@@ -142,6 +164,14 @@ class _ActionsWidgetState extends State<ActionsWidget>
                       ),
                     ),
                   ),
+                  wrapWithModel(
+                    model: _model.titleReturnModel,
+                    updateCallback: () => setState(() {}),
+                    child: TitleReturnWidget(
+                      title: widget.category!,
+                      subtitle: 'Vos émissions du jour.',
+                    ),
+                  ),
                   Container(
                     width: 360.0,
                     decoration: BoxDecoration(
@@ -150,100 +180,11 @@ class _ActionsWidgetState extends State<ActionsWidget>
                     child: Column(
                       mainAxisSize: MainAxisSize.max,
                       children: [
-                        Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(
-                              0.0, 20.0, 0.0, 0.0),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Align(
-                                alignment: const AlignmentDirectional(0.0, 0.0),
-                                child: Padding(
-                                  padding: const EdgeInsetsDirectional.fromSTEB(
-                                      0.0, 0.0, 10.0, 0.0),
-                                  child: Container(
-                                    width: 40.0,
-                                    height: 30.0,
-                                    decoration: const BoxDecoration(
-                                      color: Color(0x00FFFFFF),
-                                    ),
-                                    child: InkWell(
-                                      splashColor: Colors.transparent,
-                                      focusColor: Colors.transparent,
-                                      hoverColor: Colors.transparent,
-                                      highlightColor: Colors.transparent,
-                                      onTap: () async {
-                                        context.safePop();
-                                      },
-                                      child: Icon(
-                                        Icons.navigate_before_sharp,
-                                        color: FlutterFlowTheme.of(context)
-                                            .secondary,
-                                        size: 30.0,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              Text(
-                                valueOrDefault<String>(
-                                  widget.category,
-                                  'Catégorie',
-                                ),
-                                style: FlutterFlowTheme.of(context).titleLarge,
-                              ),
-                              Align(
-                                alignment: const AlignmentDirectional(0.0, 0.0),
-                                child: Padding(
-                                  padding: const EdgeInsetsDirectional.fromSTEB(
-                                      0.0, 0.0, 10.0, 0.0),
-                                  child: Container(
-                                    width: 40.0,
-                                    height: 30.0,
-                                    decoration: const BoxDecoration(
-                                      color: Color(0x00FFFFFF),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Row(
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Row(
-                              mainAxisSize: MainAxisSize.max,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  'Total de la journée: ',
-                                  style:
-                                      FlutterFlowTheme.of(context).bodyMedium,
-                                ),
-                                Text(
-                                  valueOrDefault<String>(
-                                    functions.pS(valueOrDefault<int>(
-                                      actionsStatsRecord?.dayTransport,
-                                      0,
-                                    )),
-                                    '-',
-                                  ),
-                                  style:
-                                      FlutterFlowTheme.of(context).bodyMedium,
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
                         Align(
                           alignment: const AlignmentDirectional(0.0, 0.0),
                           child: Padding(
                             padding: const EdgeInsetsDirectional.fromSTEB(
-                                30.0, 0.0, 30.0, 0.0),
+                                30.0, 20.0, 30.0, 0.0),
                             child: StreamBuilder<List<ActionsRecord>>(
                               stream: queryActionsRecord(
                                 queryBuilder: (actionsRecord) => actionsRecord
@@ -259,7 +200,12 @@ class _ActionsWidgetState extends State<ActionsWidget>
                                     .where(
                                       'category',
                                       isEqualTo: widget.category,
+                                    )
+                                    .where(
+                                      'isPeriodic',
+                                      isEqualTo: false,
                                     ),
+                                limit: 10,
                               ),
                               builder: (context, snapshot) {
                                 // Customize what your widget looks like when it's loading.
@@ -278,20 +224,24 @@ class _ActionsWidgetState extends State<ActionsWidget>
                                     ),
                                   );
                                 }
-                                List<ActionsRecord> listViewActionsRecordList =
+                                List<ActionsRecord> actionActionsRecordList =
                                     snapshot.data!;
+                                if (actionActionsRecordList.isEmpty) {
+                                  return EmptyListWidget(
+                                    category: widget.category!,
+                                  );
+                                }
                                 return ListView.separated(
                                   padding: EdgeInsets.zero,
                                   reverse: true,
                                   shrinkWrap: true,
                                   scrollDirection: Axis.vertical,
-                                  itemCount: listViewActionsRecordList.length,
+                                  itemCount: actionActionsRecordList.length,
                                   separatorBuilder: (_, __) =>
                                       const SizedBox(height: 10.0),
-                                  itemBuilder: (context, listViewIndex) {
-                                    final listViewActionsRecord =
-                                        listViewActionsRecordList[
-                                            listViewIndex];
+                                  itemBuilder: (context, actionIndex) {
+                                    final actionActionsRecord =
+                                        actionActionsRecordList[actionIndex];
                                     return Container(
                                       width: 300.0,
                                       decoration: BoxDecoration(
@@ -300,12 +250,12 @@ class _ActionsWidgetState extends State<ActionsWidget>
                                         boxShadow: const [
                                           BoxShadow(
                                             blurRadius: 4.0,
-                                            color: Color(0x2B202529),
+                                            color: Color(0x33000000),
                                             offset: Offset(0.0, 2.0),
                                           )
                                         ],
                                         borderRadius:
-                                            BorderRadius.circular(12.0),
+                                            BorderRadius.circular(25.0),
                                       ),
                                       child: InkWell(
                                         splashColor: Colors.transparent,
@@ -317,11 +267,11 @@ class _ActionsWidgetState extends State<ActionsWidget>
                                             'declare',
                                             queryParameters: {
                                               'category': serializeParam(
-                                                listViewActionsRecord.category,
+                                                actionActionsRecord.category,
                                                 ParamType.String,
                                               ),
                                               'actionRef': serializeParam(
-                                                listViewActionsRecord.reference,
+                                                actionActionsRecord.reference,
                                                 ParamType.DocumentReference,
                                               ),
                                             }.withoutNulls,
@@ -355,25 +305,6 @@ class _ActionsWidgetState extends State<ActionsWidget>
                                                             CrossAxisAlignment
                                                                 .start,
                                                         children: [
-                                                          Text(
-                                                            listViewActionsRecord
-                                                                .category,
-                                                            style: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .labelMedium
-                                                                .override(
-                                                                  fontFamily:
-                                                                      'Plus Jakarta Sans',
-                                                                  color: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .secondaryText,
-                                                                  fontSize:
-                                                                      14.0,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w500,
-                                                                ),
-                                                          ),
                                                           Padding(
                                                             padding:
                                                                 const EdgeInsetsDirectional
@@ -383,7 +314,7 @@ class _ActionsWidgetState extends State<ActionsWidget>
                                                                         0.0,
                                                                         0.0),
                                                             child: Text(
-                                                              listViewActionsRecord
+                                                              actionActionsRecord
                                                                   .action,
                                                               style: FlutterFlowTheme
                                                                       .of(context)
@@ -411,7 +342,7 @@ class _ActionsWidgetState extends State<ActionsWidget>
                                                                         0.0,
                                                                         0.0),
                                                             child: Text(
-                                                              listViewActionsRecord
+                                                              actionActionsRecord
                                                                   .option,
                                                               style: FlutterFlowTheme
                                                                       .of(context)
@@ -434,25 +365,6 @@ class _ActionsWidgetState extends State<ActionsWidget>
                                                       ),
                                                     ),
                                                   ),
-                                                  ClipRRect(
-                                                    borderRadius:
-                                                        const BorderRadius.only(
-                                                      bottomLeft:
-                                                          Radius.circular(0.0),
-                                                      bottomRight:
-                                                          Radius.circular(12.0),
-                                                      topLeft:
-                                                          Radius.circular(0.0),
-                                                      topRight:
-                                                          Radius.circular(12.0),
-                                                    ),
-                                                    child: Image.network(
-                                                      'https://firebasestorage.googleapis.com/v0/b/actions-dd2b5-assets/o/${listViewActionsRecord.action}.webp?alt=media',
-                                                      width: 160.0,
-                                                      height: 100.0,
-                                                      fit: BoxFit.cover,
-                                                    ),
-                                                  ),
                                                 ],
                                               ),
                                             ),
@@ -463,9 +375,175 @@ class _ActionsWidgetState extends State<ActionsWidget>
                                               child: Row(
                                                 mainAxisSize: MainAxisSize.max,
                                                 mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
+                                                    MainAxisAlignment.start,
                                                 children: [
+                                                  InkWell(
+                                                    splashColor:
+                                                        Colors.transparent,
+                                                    focusColor:
+                                                        Colors.transparent,
+                                                    hoverColor:
+                                                        Colors.transparent,
+                                                    highlightColor:
+                                                        Colors.transparent,
+                                                    onTap: () async {
+                                                      var confirmDialogResponse =
+                                                          await showDialog<
+                                                                  bool>(
+                                                                context:
+                                                                    context,
+                                                                builder:
+                                                                    (alertDialogContext) {
+                                                                  return AlertDialog(
+                                                                    title: const Text(
+                                                                        'Supprimer l\'action'),
+                                                                    content: const Text(
+                                                                        'Êtes-vous sûr de vouloir supprimer cette action ?'),
+                                                                    actions: [
+                                                                      TextButton(
+                                                                        onPressed: () => Navigator.pop(
+                                                                            alertDialogContext,
+                                                                            false),
+                                                                        child: const Text(
+                                                                            'Annuler'),
+                                                                      ),
+                                                                      TextButton(
+                                                                        onPressed: () => Navigator.pop(
+                                                                            alertDialogContext,
+                                                                            true),
+                                                                        child: const Text(
+                                                                            'Supprimer'),
+                                                                      ),
+                                                                    ],
+                                                                  );
+                                                                },
+                                                              ) ??
+                                                              false;
+                                                      if (confirmDialogResponse) {
+                                                        await actionActionsRecord
+                                                            .reference
+                                                            .delete();
+                                                      }
+                                                    },
+                                                    child: Card(
+                                                      clipBehavior: Clip
+                                                          .antiAliasWithSaveLayer,
+                                                      color: const Color(0xFFF1F4F8),
+                                                      shape:
+                                                          RoundedRectangleBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(40.0),
+                                                      ),
+                                                      child: Padding(
+                                                        padding:
+                                                            const EdgeInsets.all(8.0),
+                                                        child: Icon(
+                                                          Icons.delete_forever,
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .error,
+                                                          size: 20.0,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  InkWell(
+                                                    splashColor:
+                                                        Colors.transparent,
+                                                    focusColor:
+                                                        Colors.transparent,
+                                                    hoverColor:
+                                                        Colors.transparent,
+                                                    highlightColor:
+                                                        Colors.transparent,
+                                                    onTap: () async {
+                                                      var confirmDialogResponse =
+                                                          await showDialog<
+                                                                  bool>(
+                                                                context:
+                                                                    context,
+                                                                builder:
+                                                                    (alertDialogContext) {
+                                                                  return AlertDialog(
+                                                                    title: const Text(
+                                                                        'Supprimer l\'action'),
+                                                                    content: const Text(
+                                                                        'Êtes-vous sûr de vouloir supprimer cette action ?'),
+                                                                    actions: [
+                                                                      TextButton(
+                                                                        onPressed: () => Navigator.pop(
+                                                                            alertDialogContext,
+                                                                            false),
+                                                                        child: const Text(
+                                                                            'Annuler'),
+                                                                      ),
+                                                                      TextButton(
+                                                                        onPressed: () => Navigator.pop(
+                                                                            alertDialogContext,
+                                                                            true),
+                                                                        child: const Text(
+                                                                            'Supprimer'),
+                                                                      ),
+                                                                    ],
+                                                                  );
+                                                                },
+                                                              ) ??
+                                                              false;
+                                                      if (confirmDialogResponse) {
+                                                        await actionActionsRecord
+                                                            .reference
+                                                            .delete();
+                                                      }
+                                                    },
+                                                    child: Card(
+                                                      clipBehavior: Clip
+                                                          .antiAliasWithSaveLayer,
+                                                      color: const Color(0xFFF1F4F8),
+                                                      shape:
+                                                          RoundedRectangleBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(40.0),
+                                                      ),
+                                                      child: Padding(
+                                                        padding:
+                                                            const EdgeInsets.all(8.0),
+                                                        child: Icon(
+                                                          Icons.edit_outlined,
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .primaryText,
+                                                          size: 20.0,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  if (actionActionsRecord
+                                                      .isPeriodic)
+                                                    Card(
+                                                      clipBehavior: Clip
+                                                          .antiAliasWithSaveLayer,
+                                                      color: const Color(0xFFF1F4F8),
+                                                      shape:
+                                                          RoundedRectangleBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(40.0),
+                                                      ),
+                                                      child: Padding(
+                                                        padding:
+                                                            const EdgeInsets.all(8.0),
+                                                        child: Icon(
+                                                          Icons
+                                                              .event_repeat_outlined,
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .primaryText,
+                                                          size: 20.0,
+                                                        ),
+                                                      ),
+                                                    ),
                                                   Container(
                                                     width: 150.0,
                                                     decoration: BoxDecoration(
@@ -517,7 +595,7 @@ class _ActionsWidgetState extends State<ActionsWidget>
                                                             valueOrDefault<
                                                                 String>(
                                                               functions.pS(
-                                                                  listViewActionsRecord
+                                                                  actionActionsRecord
                                                                       .co2e),
                                                               '0',
                                                             ),
@@ -534,6 +612,313 @@ class _ActionsWidgetState extends State<ActionsWidget>
                                                           ),
                                                         ),
                                                       ],
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ).animateOnPageLoad(animationsMap[
+                                        'containerOnPageLoadAnimation1']!);
+                                  },
+                                );
+                              },
+                            ),
+                          ),
+                        ),
+                        Align(
+                          alignment: const AlignmentDirectional(0.0, 0.0),
+                          child: Padding(
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                0.0, 20.0, 0.0, 0.0),
+                            child: Container(
+                              width: 300.0,
+                              height: 2.0,
+                              decoration: BoxDecoration(
+                                color:
+                                    FlutterFlowTheme.of(context).secondaryText,
+                                boxShadow: const [
+                                  BoxShadow(
+                                    blurRadius: 4.0,
+                                    color: Color(0x33000000),
+                                    offset: Offset(0.0, 2.0),
+                                  )
+                                ],
+                                shape: BoxShape.rectangle,
+                              ),
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsetsDirectional.fromSTEB(
+                              0.0, 10.0, 0.0, 0.0),
+                          child: Text(
+                            'Vos émission récurrentes',
+                            style: FlutterFlowTheme.of(context).labelMedium,
+                          ),
+                        ),
+                        Align(
+                          alignment: const AlignmentDirectional(0.0, 0.0),
+                          child: Padding(
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                30.0, 0.0, 30.0, 0.0),
+                            child: StreamBuilder<List<ActionsRecord>>(
+                              stream: queryActionsRecord(
+                                queryBuilder: (actionsRecord) => actionsRecord
+                                    .where(
+                                      'uid',
+                                      isEqualTo: currentUserUid,
+                                    )
+                                    .where(
+                                      'category',
+                                      isEqualTo: widget.category,
+                                    )
+                                    .where(
+                                      'isPeriodic',
+                                      isEqualTo: true,
+                                    ),
+                              ),
+                              builder: (context, snapshot) {
+                                // Customize what your widget looks like when it's loading.
+                                if (!snapshot.hasData) {
+                                  return Center(
+                                    child: SizedBox(
+                                      width: 50.0,
+                                      height: 50.0,
+                                      child: CircularProgressIndicator(
+                                        valueColor:
+                                            AlwaysStoppedAnimation<Color>(
+                                          FlutterFlowTheme.of(context)
+                                              .secondary,
+                                        ),
+                                      ),
+                                    ),
+                                  );
+                                }
+                                List<ActionsRecord> periodicsActionsRecordList =
+                                    snapshot.data!;
+                                if (periodicsActionsRecordList.isEmpty) {
+                                  return const EmptyListPeriodicsWidget();
+                                }
+                                return ListView.separated(
+                                  padding: EdgeInsets.zero,
+                                  reverse: true,
+                                  shrinkWrap: true,
+                                  scrollDirection: Axis.vertical,
+                                  itemCount: periodicsActionsRecordList.length,
+                                  separatorBuilder: (_, __) =>
+                                      const SizedBox(height: 10.0),
+                                  itemBuilder: (context, periodicsIndex) {
+                                    final periodicsActionsRecord =
+                                        periodicsActionsRecordList[
+                                            periodicsIndex];
+                                    return Container(
+                                      width: 300.0,
+                                      decoration: BoxDecoration(
+                                        color: FlutterFlowTheme.of(context)
+                                            .secondaryBackground,
+                                        boxShadow: const [
+                                          BoxShadow(
+                                            blurRadius: 4.0,
+                                            color: Color(0x33000000),
+                                            offset: Offset(0.0, 2.0),
+                                          )
+                                        ],
+                                        borderRadius:
+                                            BorderRadius.circular(25.0),
+                                      ),
+                                      child: InkWell(
+                                        splashColor: Colors.transparent,
+                                        focusColor: Colors.transparent,
+                                        hoverColor: Colors.transparent,
+                                        highlightColor: Colors.transparent,
+                                        onTap: () async {
+                                          context.pushNamed(
+                                            'declare',
+                                            queryParameters: {
+                                              'category': serializeParam(
+                                                periodicsActionsRecord.category,
+                                                ParamType.String,
+                                              ),
+                                              'actionRef': serializeParam(
+                                                periodicsActionsRecord
+                                                    .reference,
+                                                ParamType.DocumentReference,
+                                              ),
+                                            }.withoutNulls,
+                                          );
+                                        },
+                                        child: Column(
+                                          mainAxisSize: MainAxisSize.max,
+                                          children: [
+                                            Padding(
+                                              padding: const EdgeInsetsDirectional
+                                                  .fromSTEB(8.0, 0.0, 0.0, 0.0),
+                                              child: Row(
+                                                mainAxisSize: MainAxisSize.max,
+                                                children: [
+                                                  Expanded(
+                                                    child: Padding(
+                                                      padding:
+                                                          const EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                                  8.0,
+                                                                  4.0,
+                                                                  0.0,
+                                                                  4.0),
+                                                      child: Column(
+                                                        mainAxisSize:
+                                                            MainAxisSize.max,
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .center,
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        children: [
+                                                          Padding(
+                                                            padding:
+                                                                const EdgeInsetsDirectional
+                                                                    .fromSTEB(
+                                                                        0.0,
+                                                                        4.0,
+                                                                        0.0,
+                                                                        0.0),
+                                                            child: Text(
+                                                              periodicsActionsRecord
+                                                                  .action,
+                                                              style: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .headlineSmall
+                                                                  .override(
+                                                                    fontFamily:
+                                                                        'Outfit',
+                                                                    color: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .primaryText,
+                                                                    fontSize:
+                                                                        24.0,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w500,
+                                                                  ),
+                                                            ),
+                                                          ),
+                                                          Padding(
+                                                            padding:
+                                                                const EdgeInsetsDirectional
+                                                                    .fromSTEB(
+                                                                        0.0,
+                                                                        4.0,
+                                                                        0.0,
+                                                                        0.0),
+                                                            child: Text(
+                                                              periodicsActionsRecord
+                                                                  .option,
+                                                              style: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .labelSmall
+                                                                  .override(
+                                                                    fontFamily:
+                                                                        'Plus Jakarta Sans',
+                                                                    color: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .secondaryText,
+                                                                    fontSize:
+                                                                        12.0,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w500,
+                                                                  ),
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                            Padding(
+                                              padding: const EdgeInsetsDirectional
+                                                  .fromSTEB(
+                                                      12.0, 0.0, 16.0, 8.0),
+                                              child: Row(
+                                                mainAxisSize: MainAxisSize.max,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.start,
+                                                children: [
+                                                  InkWell(
+                                                    splashColor:
+                                                        Colors.transparent,
+                                                    focusColor:
+                                                        Colors.transparent,
+                                                    hoverColor:
+                                                        Colors.transparent,
+                                                    highlightColor:
+                                                        Colors.transparent,
+                                                    onTap: () async {
+                                                      var confirmDialogResponse =
+                                                          await showDialog<
+                                                                  bool>(
+                                                                context:
+                                                                    context,
+                                                                builder:
+                                                                    (alertDialogContext) {
+                                                                  return AlertDialog(
+                                                                    title: const Text(
+                                                                        'Supprimer l\'action'),
+                                                                    content: const Text(
+                                                                        'Êtes-vous sûr de vouloir supprimer cette action ?'),
+                                                                    actions: [
+                                                                      TextButton(
+                                                                        onPressed: () => Navigator.pop(
+                                                                            alertDialogContext,
+                                                                            false),
+                                                                        child: const Text(
+                                                                            'Annuler'),
+                                                                      ),
+                                                                      TextButton(
+                                                                        onPressed: () => Navigator.pop(
+                                                                            alertDialogContext,
+                                                                            true),
+                                                                        child: const Text(
+                                                                            'Supprimer'),
+                                                                      ),
+                                                                    ],
+                                                                  );
+                                                                },
+                                                              ) ??
+                                                              false;
+                                                      if (confirmDialogResponse) {
+                                                        await periodicsActionsRecord
+                                                            .reference
+                                                            .delete();
+                                                      }
+                                                    },
+                                                    child: Card(
+                                                      clipBehavior: Clip
+                                                          .antiAliasWithSaveLayer,
+                                                      color: const Color(0xFFF1F4F8),
+                                                      shape:
+                                                          RoundedRectangleBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(40.0),
+                                                      ),
+                                                      child: Padding(
+                                                        padding:
+                                                            const EdgeInsets.all(8.0),
+                                                        child: Icon(
+                                                          Icons.delete_forever,
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .error,
+                                                          size: 20.0,
+                                                        ),
+                                                      ),
                                                     ),
                                                   ),
                                                   InkWell(
@@ -579,7 +964,7 @@ class _ActionsWidgetState extends State<ActionsWidget>
                                                               ) ??
                                                               false;
                                                       if (confirmDialogResponse) {
-                                                        await listViewActionsRecord
+                                                        await periodicsActionsRecord
                                                             .reference
                                                             .delete();
                                                       }
@@ -598,13 +983,108 @@ class _ActionsWidgetState extends State<ActionsWidget>
                                                         padding:
                                                             const EdgeInsets.all(8.0),
                                                         child: Icon(
-                                                          Icons.delete_forever,
+                                                          Icons.edit_outlined,
                                                           color: FlutterFlowTheme
                                                                   .of(context)
-                                                              .error,
+                                                              .primaryText,
                                                           size: 20.0,
                                                         ),
                                                       ),
+                                                    ),
+                                                  ),
+                                                  if (periodicsActionsRecord
+                                                      .isPeriodic)
+                                                    Card(
+                                                      clipBehavior: Clip
+                                                          .antiAliasWithSaveLayer,
+                                                      color: const Color(0xFFF1F4F8),
+                                                      shape:
+                                                          RoundedRectangleBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(40.0),
+                                                      ),
+                                                      child: Padding(
+                                                        padding:
+                                                            const EdgeInsets.all(8.0),
+                                                        child: Icon(
+                                                          Icons
+                                                              .event_repeat_outlined,
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .primaryText,
+                                                          size: 20.0,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  Container(
+                                                    width: 150.0,
+                                                    decoration: BoxDecoration(
+                                                      color: FlutterFlowTheme
+                                                              .of(context)
+                                                          .secondaryBackground,
+                                                    ),
+                                                    child: Row(
+                                                      mainAxisSize:
+                                                          MainAxisSize.max,
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .start,
+                                                      children: [
+                                                        Card(
+                                                          clipBehavior: Clip
+                                                              .antiAliasWithSaveLayer,
+                                                          color:
+                                                              const Color(0xFFF1F4F8),
+                                                          shape:
+                                                              RoundedRectangleBorder(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        40.0),
+                                                          ),
+                                                          child: Padding(
+                                                            padding:
+                                                                const EdgeInsets.all(
+                                                                    8.0),
+                                                            child: Icon(
+                                                              Icons.co2,
+                                                              color: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .secondary,
+                                                              size: 20.0,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        Padding(
+                                                          padding:
+                                                              const EdgeInsetsDirectional
+                                                                  .fromSTEB(
+                                                                      10.0,
+                                                                      0.0,
+                                                                      0.0,
+                                                                      0.0),
+                                                          child: Text(
+                                                            valueOrDefault<
+                                                                String>(
+                                                              functions.pS(
+                                                                  periodicsActionsRecord
+                                                                      .co2e),
+                                                              '0',
+                                                            ),
+                                                            style: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .bodyMedium
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Montserrat',
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .secondary,
+                                                                ),
+                                                          ),
+                                                        ),
+                                                      ],
                                                     ),
                                                   ),
                                                 ],
@@ -614,7 +1094,7 @@ class _ActionsWidgetState extends State<ActionsWidget>
                                         ),
                                       ),
                                     ).animateOnPageLoad(animationsMap[
-                                        'containerOnPageLoadAnimation']!);
+                                        'containerOnPageLoadAnimation2']!);
                                   },
                                 );
                               },

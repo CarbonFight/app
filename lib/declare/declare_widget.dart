@@ -99,7 +99,7 @@ class _DeclareWidgetState extends State<DeclareWidget> {
           action: _model.actionFields?.action,
         );
         setState(() {
-          _model.optionValueController?.value = _model.actionFields!.option;
+          _model.optionValueController1?.value = _model.actionFields!.option;
         });
         // ItemOption
         setState(() {
@@ -134,6 +134,9 @@ class _DeclareWidgetState extends State<DeclareWidget> {
 
     _model.distanceController ??= TextEditingController();
     _model.distanceFocusNode ??= FocusNode();
+
+    _model.volumeController ??= TextEditingController();
+    _model.volumeFocusNode ??= FocusNode();
 
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
@@ -468,8 +471,9 @@ class _DeclareWidgetState extends State<DeclareWidget> {
                                   padding: const EdgeInsetsDirectional.fromSTEB(
                                       0.0, 5.0, 0.0, 5.0),
                                   child: FlutterFlowDropDown<String>(
-                                    controller: _model.optionValueController ??=
-                                        FormFieldController<String>(null),
+                                    controller:
+                                        _model.optionValueController1 ??=
+                                            FormFieldController<String>(null),
                                     options: widget.actionRef != null
                                         ? (GetOptionsCall.options(
                                             (_model.loadAction?.jsonBody ?? ''),
@@ -483,12 +487,12 @@ class _DeclareWidgetState extends State<DeclareWidget> {
                                             .map<String>((s) => s.toString())
                                             .toList(),
                                     onChanged: (val) async {
-                                      setState(() => _model.optionValue = val);
+                                      setState(() => _model.optionValue1 = val);
                                       await action_blocks.updateFEandCOE(
                                         context,
                                         category: widget.category,
                                         action: _model.actionValue,
-                                        option: _model.optionValue,
+                                        option: _model.optionValue1,
                                         count: int.tryParse(
                                             _model.distanceController.text),
                                         multiplicator:
@@ -746,7 +750,7 @@ class _DeclareWidgetState extends State<DeclareWidget> {
                                           await widget.actionRef!.update({
                                             ...createActionsRecordData(
                                               action: _model.actionValue,
-                                              option: _model.optionValue,
+                                              option: _model.optionValue1,
                                               co2e: FFAppState().actionCo2e,
                                               count: int.tryParse(_model
                                                   .distanceController.text),
@@ -778,7 +782,7 @@ class _DeclareWidgetState extends State<DeclareWidget> {
                                               country: 'FR',
                                               category: widget.category,
                                               action: _model.actionValue,
-                                              option: _model.optionValue,
+                                              option: _model.optionValue1,
                                               co2e: FFAppState().actionCo2e,
                                               count: int.tryParse(_model
                                                   .distanceController.text),
@@ -808,7 +812,7 @@ class _DeclareWidgetState extends State<DeclareWidget> {
                                               country: 'FR',
                                               category: widget.category,
                                               action: _model.actionValue,
-                                              option: _model.optionValue,
+                                              option: _model.optionValue1,
                                               co2e: FFAppState().actionCo2e,
                                               count: int.tryParse(_model
                                                   .distanceController.text),
@@ -827,6 +831,465 @@ class _DeclareWidgetState extends State<DeclareWidget> {
                                               },
                                             ),
                                           }, actionsRecordReference);
+                                        }
+
+                                        context.pushNamed(
+                                          'actions',
+                                          queryParameters: {
+                                            'category': serializeParam(
+                                              widget.category,
+                                              ParamType.String,
+                                            ),
+                                          }.withoutNulls,
+                                        );
+
+                                        setState(() {});
+                                      },
+                                text: 'Ajouter ${valueOrDefault<String>(
+                                  functions.pS(FFAppState().actionCo2e),
+                                  '0',
+                                )}',
+                                options: FFButtonOptions(
+                                  width: 290.0,
+                                  height: 40.0,
+                                  padding: const EdgeInsets.all(0.0),
+                                  iconPadding: const EdgeInsetsDirectional.fromSTEB(
+                                      0.0, 0.0, 0.0, 0.0),
+                                  color: FlutterFlowTheme.of(context).secondary,
+                                  textStyle:
+                                      FlutterFlowTheme.of(context).titleSmall,
+                                  elevation: 3.0,
+                                  borderSide: const BorderSide(
+                                    color: Colors.transparent,
+                                    width: 1.0,
+                                  ),
+                                  borderRadius: BorderRadius.circular(50.0),
+                                  disabledColor: FlutterFlowTheme.of(context)
+                                      .secondaryText,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    if ((_model.actionValue != null &&
+                            _model.actionValue != '') &&
+                        (widget.category == 'Logement'))
+                      Container(
+                        width: 300.0,
+                        decoration: const BoxDecoration(),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Row(
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Text(
+                                  'Volume',
+                                  style:
+                                      FlutterFlowTheme.of(context).labelSmall,
+                                ),
+                                Padding(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                      8.0, 0.0, 0.0, 0.0),
+                                  child: SizedBox(
+                                    width: 100.0,
+                                    child: TextFormField(
+                                      controller: _model.volumeController,
+                                      focusNode: _model.volumeFocusNode,
+                                      onChanged: (_) => EasyDebounce.debounce(
+                                        '_model.volumeController',
+                                        const Duration(milliseconds: 2000),
+                                        () async {
+                                          setState(() {
+                                            FFAppState().actionCo2e =
+                                                functions.calculateActionCO2e(
+                                                    int.tryParse(_model
+                                                        .volumeController.text),
+                                                    1,
+                                                    365,
+                                                    _model.sharingHomeValue
+                                                        ?.toString(),
+                                                    FFAppState().actionFE);
+                                          });
+                                        },
+                                      ),
+                                      autofocus: true,
+                                      obscureText: false,
+                                      decoration: const InputDecoration(
+                                        hintText: 'Ajouter ',
+                                        enabledBorder: InputBorder.none,
+                                        focusedBorder: InputBorder.none,
+                                        errorBorder: InputBorder.none,
+                                        focusedErrorBorder: InputBorder.none,
+                                      ),
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodySmall,
+                                      textAlign: TextAlign.end,
+                                      keyboardType: TextInputType.number,
+                                      cursorColor: FlutterFlowTheme.of(context)
+                                          .secondary,
+                                      validator: _model
+                                          .volumeControllerValidator
+                                          .asValidator(context),
+                                    ),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                      3.0, 0.0, 3.0, 0.0),
+                                  child: Text(
+                                    'KWH / an',
+                                    style:
+                                        FlutterFlowTheme.of(context).labelSmall,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Padding(
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 10.0, 0.0, 10.0),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Align(
+                                    alignment: const AlignmentDirectional(0.0, 0.0),
+                                    child: Container(
+                                      width: 100.0,
+                                      height: 2.0,
+                                      decoration: BoxDecoration(
+                                        color: FlutterFlowTheme.of(context)
+                                            .secondaryText,
+                                        boxShadow: const [
+                                          BoxShadow(
+                                            blurRadius: 4.0,
+                                            color: Color(0x33000000),
+                                            offset: Offset(0.0, 2.0),
+                                          )
+                                        ],
+                                        shape: BoxShape.rectangle,
+                                      ),
+                                    ),
+                                  ),
+                                  Align(
+                                    alignment: const AlignmentDirectional(0.0, 0.0),
+                                    child: Text(
+                                      'Options',
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .override(
+                                            fontFamily: 'Montserrat',
+                                            color: FlutterFlowTheme.of(context)
+                                                .primaryText,
+                                          ),
+                                    ),
+                                  ),
+                                  Align(
+                                    alignment: const AlignmentDirectional(0.0, 0.0),
+                                    child: Container(
+                                      width: 100.0,
+                                      height: 2.0,
+                                      decoration: BoxDecoration(
+                                        color: FlutterFlowTheme.of(context)
+                                            .secondaryText,
+                                        boxShadow: const [
+                                          BoxShadow(
+                                            blurRadius: 4.0,
+                                            color: Color(0x33000000),
+                                            offset: Offset(0.0, 2.0),
+                                          )
+                                        ],
+                                        shape: BoxShape.rectangle,
+                                      ),
+                                    ),
+                                  ),
+                                ].divide(const SizedBox(width: 25.0)),
+                              ),
+                            ),
+                            Row(
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  'Type d\'énergie',
+                                  style:
+                                      FlutterFlowTheme.of(context).labelSmall,
+                                ),
+                                Padding(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                      0.0, 5.0, 0.0, 5.0),
+                                  child: FlutterFlowDropDown<String>(
+                                    controller:
+                                        _model.optionValueController2 ??=
+                                            FormFieldController<String>(null),
+                                    options: widget.actionRef != null
+                                        ? (GetOptionsCall.options(
+                                            (_model.loadAction?.jsonBody ?? ''),
+                                          ) as List)
+                                            .map<String>((s) => s.toString())
+                                            .toList(): (GetOptionsCall.options(
+                                            (_model.actionChangeOptions
+                                                    ?.jsonBody ??
+                                                ''),
+                                          ) as List)
+                                            .map<String>((s) => s.toString())
+                                            .toList(),
+                                    onChanged: (val) async {
+                                      setState(() => _model.optionValue2 = val);
+                                      await action_blocks.updateFEandCOE(
+                                        context,
+                                        category: widget.category,
+                                        action: _model.actionValue,
+                                        option: _model.optionValue2,
+                                        count: int.tryParse(
+                                            _model.volumeController.text),
+                                        multiplicator: 1,
+                                        divider: 365,
+                                        shared:
+                                            _model.sharingHomeValue?.toString(),
+                                      );
+                                    },
+                                    width: 180.0,
+                                    height: 40.0,
+                                    textStyle:
+                                        FlutterFlowTheme.of(context).bodySmall,
+                                    hintText: 'Sélectionnez',
+                                    icon: Icon(
+                                      Icons.keyboard_arrow_down_rounded,
+                                      color: FlutterFlowTheme.of(context)
+                                          .secondaryText,
+                                      size: 24.0,
+                                    ),
+                                    fillColor: FlutterFlowTheme.of(context)
+                                        .secondaryBackground,
+                                    elevation: 0.0,
+                                    borderColor:
+                                        FlutterFlowTheme.of(context).alternate,
+                                    borderWidth: 0.0,
+                                    borderRadius: 8.0,
+                                    margin: const EdgeInsets.all(10.0),
+                                    hidesUnderline: true,
+                                    isSearchable: false,
+                                    isMultiSelect: false,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Row(
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Text(
+                                  'Taille du foyer',
+                                  style:
+                                      FlutterFlowTheme.of(context).labelSmall,
+                                ),
+                                Align(
+                                  alignment: const AlignmentDirectional(-1.0, -1.0),
+                                  child: Padding(
+                                    padding: const EdgeInsetsDirectional.fromSTEB(
+                                        0.0, 5.0, 0.0, 5.0),
+                                    child: Container(
+                                      width: 130.0,
+                                      height: 40.0,
+                                      decoration: BoxDecoration(
+                                        color: FlutterFlowTheme.of(context)
+                                            .secondaryBackground,
+                                        borderRadius:
+                                            BorderRadius.circular(8.0),
+                                        shape: BoxShape.rectangle,
+                                        border: Border.all(
+                                          color: FlutterFlowTheme.of(context)
+                                              .alternate,
+                                          width: 2.0,
+                                        ),
+                                      ),
+                                      child: FlutterFlowCountController(
+                                        decrementIconBuilder: (enabled) =>
+                                            FaIcon(
+                                          FontAwesomeIcons.minus,
+                                          color: enabled
+                                              ? FlutterFlowTheme.of(context)
+                                                  .secondaryText
+                                              : FlutterFlowTheme.of(context)
+                                                  .alternate,
+                                          size: 16.0,
+                                        ),
+                                        incrementIconBuilder: (enabled) =>
+                                            FaIcon(
+                                          FontAwesomeIcons.plus,
+                                          color: enabled
+                                              ? FlutterFlowTheme.of(context)
+                                                  .primary
+                                              : FlutterFlowTheme.of(context)
+                                                  .alternate,
+                                          size: 16.0,
+                                        ),
+                                        countBuilder: (count) => Text(
+                                          count.toString(),
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodySmall,
+                                        ),
+                                        count: _model.sharingHomeValue ??= 1,
+                                        updateCount: (count) async {
+                                          setState(() =>
+                                              _model.sharingHomeValue = count);
+                                          setState(() {
+                                            FFAppState().actionCo2e =
+                                                functions.calculateActionCO2e(
+                                                    int.tryParse(_model
+                                                        .volumeController.text),
+                                                    1,
+                                                    365,
+                                                    _model.sharingHomeValue
+                                                        ?.toString(),
+                                                    FFAppState().actionFE);
+                                          });
+                                        },
+                                        stepSize: 1,
+                                        minimum: 1,
+                                        maximum: 10,
+                                        contentPadding: const EdgeInsets.all(10.0),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Container(
+                              width: 300.0,
+                              decoration: BoxDecoration(
+                                color: FlutterFlowTheme.of(context)
+                                    .primaryBackground,
+                                boxShadow: const [
+                                  BoxShadow(
+                                    blurRadius: 2.0,
+                                    color: Color(0x33000000),
+                                    offset: Offset(0.0, 2.0),
+                                  )
+                                ],
+                                borderRadius: BorderRadius.circular(8.0),
+                                border: Border.all(
+                                  color: FlutterFlowTheme.of(context).secondary,
+                                ),
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.all(15.0),
+                                child: RichText(
+                                  textScaleFactor:
+                                      MediaQuery.of(context).textScaleFactor,
+                                  text: TextSpan(
+                                    children: [
+                                      TextSpan(
+                                        text:
+                                            'Vous allez ajouter une émission hebodmadaire de ',
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodySmall,
+                                      ),
+                                      TextSpan(
+                                        text: valueOrDefault<String>(
+                                          functions.pS(FFAppState().actionCo2e),
+                                          '0',
+                                        ),
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodySmall
+                                            .override(
+                                              fontFamily: 'Montserrat',
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .primary,
+                                            ),
+                                      ),
+                                      TextSpan(
+                                        text: ' de co2e par jour.',
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodySmall
+                                            .override(
+                                              fontFamily: 'Montserrat',
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .primary,
+                                            ),
+                                      )
+                                    ],
+                                    style:
+                                        FlutterFlowTheme.of(context).bodyMedium,
+                                  ),
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 20.0, 0.0, 0.0),
+                              child: FFButtonWidget(
+                                onPressed: FFAppState().actionCo2e == 0
+                                    ? null
+                                    : () async {
+                                        if (widget.actionRef != null) {
+                                          await widget.actionRef!
+                                              .update(createActionsRecordData(
+                                            action: _model.actionValue,
+                                            option: _model.optionValue2,
+                                            co2e: FFAppState().actionCo2e,
+                                            count: int.tryParse(
+                                                _model.volumeController.text),
+                                            emissionFactor:
+                                                FFAppState().actionFE,
+                                            peopleSharing:
+                                                _model.sharingHomeValue,
+                                            isPeriodic: true,
+                                          ));
+                                        } else {
+                                          var actionsRecordReference =
+                                              ActionsRecord.collection.doc();
+                                          await actionsRecordReference
+                                              .set(createActionsRecordData(
+                                            uid: currentUserUid,
+                                            createdTime:
+                                                dateTimeFromSecondsSinceEpoch(
+                                                    getCurrentTimestamp
+                                                        .secondsSinceEpoch),
+                                            country: 'FR',
+                                            category: widget.category,
+                                            action: _model.actionValue,
+                                            option: _model.optionValue2,
+                                            co2e: FFAppState().actionCo2e,
+                                            count: int.tryParse(
+                                                _model.volumeController.text),
+                                            emissionFactor:
+                                                FFAppState().actionFE,
+                                            peopleSharing:
+                                                _model.sharingHomeValue,
+                                            isPeriodic: true,
+                                          ));
+                                          _model.addActionEnergy =
+                                              ActionsRecord.getDocumentFromData(
+                                                  createActionsRecordData(
+                                                    uid: currentUserUid,
+                                                    createdTime:
+                                                        dateTimeFromSecondsSinceEpoch(
+                                                            getCurrentTimestamp
+                                                                .secondsSinceEpoch),
+                                                    country: 'FR',
+                                                    category: widget.category,
+                                                    action: _model.actionValue,
+                                                    option: _model.optionValue2,
+                                                    co2e:
+                                                        FFAppState().actionCo2e,
+                                                    count: int.tryParse(_model
+                                                        .volumeController.text),
+                                                    emissionFactor:
+                                                        FFAppState().actionFE,
+                                                    peopleSharing:
+                                                        _model.sharingHomeValue,
+                                                    isPeriodic: true,
+                                                  ),
+                                                  actionsRecordReference);
                                         }
 
                                         context.pushNamed(

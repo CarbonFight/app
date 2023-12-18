@@ -17,8 +17,8 @@ String? pS(int? co2e) {
   String unit = "g";
 
   if (co2e! == 0) {
-    quantity = "-";
-    unit = "";
+    quantity = "0";
+    unit = " g";
   } else if (co2e! < 1000) {
     quantity = co2e.toStringAsFixed(0);
     unit = " g";

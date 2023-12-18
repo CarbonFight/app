@@ -105,7 +105,7 @@ class _HomeCategoryWidgetState extends State<HomeCategoryWidget> {
                   ),
                   style: FlutterFlowTheme.of(context).bodySmall,
                 ),
-              ],
+              ].divide(const SizedBox(height: 1.0)),
             ),
           ),
         ),

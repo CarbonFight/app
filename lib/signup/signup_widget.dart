@@ -136,6 +136,7 @@ class _SignupWidgetState extends State<SignupWidget> {
                                 child: SizedBox(
                                   width: 300.0,
                                   child: TextFormField(
+                                    key: const ValueKey('lastname_9toe'),
                                     controller: _model.lastnameController,
                                     focusNode: _model.lastnameFocusNode,
                                     obscureText: false,
@@ -210,6 +211,7 @@ class _SignupWidgetState extends State<SignupWidget> {
                               child: SizedBox(
                                 width: 300.0,
                                 child: TextFormField(
+                                  key: const ValueKey('firstname_fcye'),
                                   controller: _model.firstnameController,
                                   focusNode: _model.firstnameFocusNode,
                                   obscureText: false,
@@ -278,6 +280,7 @@ class _SignupWidgetState extends State<SignupWidget> {
                               child: SizedBox(
                                 width: 300.0,
                                 child: TextFormField(
+                                  key: const ValueKey('email_9a72'),
                                   controller: _model.emailController,
                                   focusNode: _model.emailFocusNode,
                                   obscureText: false,
@@ -346,6 +349,7 @@ class _SignupWidgetState extends State<SignupWidget> {
                               child: SizedBox(
                                 width: 300.0,
                                 child: TextFormField(
+                                  key: const ValueKey('password_ds89'),
                                   controller: _model.passwordController,
                                   focusNode: _model.passwordFocusNode,
                                   obscureText: !_model.passwordVisibility,
@@ -435,6 +439,7 @@ class _SignupWidgetState extends State<SignupWidget> {
                                   FlutterFlowTheme.of(context).secondaryText,
                             ),
                             child: Checkbox(
+                              key: const ValueKey('optin_v7sj'),
                               value: _model.optinValue ??= false,
                               onChanged: (newValue) async {
                                 setState(() => _model.optinValue = newValue!);
@@ -529,6 +534,7 @@ class _SignupWidgetState extends State<SignupWidget> {
                             padding: const EdgeInsetsDirectional.fromSTEB(
                                 0.0, 15.0, 0.0, 15.0),
                             child: FFButtonWidget(
+                              key: const ValueKey('Button_3aqs'),
                               onPressed: () async {
                                 if (_model.optinValue == true) {
                                   GoRouter.of(context).prepareAuthEvent();

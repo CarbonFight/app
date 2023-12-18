@@ -198,6 +198,11 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
             initialPage: '',
             page: BadgesWidget(),
           ),
+        ),
+        FFRoute(
+          name: 'Onboarding',
+          path: '/onboarding',
+          builder: (context, params) => const OnboardingWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );

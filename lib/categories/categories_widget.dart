@@ -5,7 +5,6 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'categories_model.dart';
 export 'categories_model.dart';
@@ -141,8 +140,8 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
                                           ),
                                           alignment:
                                               const AlignmentDirectional(0.0, 0.0),
-                                          child: FaIcon(
-                                            FontAwesomeIcons.car,
+                                          child: Icon(
+                                            FFIcons.kcar,
                                             color: FlutterFlowTheme.of(context)
                                                 .secondary,
                                             size: 24.0,
@@ -229,7 +228,7 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
                                           alignment:
                                               const AlignmentDirectional(0.0, 0.0),
                                           child: Icon(
-                                            Icons.home,
+                                            FFIcons.khome,
                                             color: FlutterFlowTheme.of(context)
                                                 .secondary,
                                             size: 24.0,
@@ -318,7 +317,7 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
                                           alignment:
                                               const AlignmentDirectional(0.0, 0.0),
                                           child: Icon(
-                                            Icons.fastfood_outlined,
+                                            FFIcons.ktoolsKitchen,
                                             color: FlutterFlowTheme.of(context)
                                                 .secondary,
                                             size: 24.0,
@@ -407,7 +406,7 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
                                           alignment:
                                               const AlignmentDirectional(0.0, 0.0),
                                           child: Icon(
-                                            Icons.tv,
+                                            FFIcons.kdeviceTv,
                                             color: FlutterFlowTheme.of(context)
                                                 .secondary,
                                             size: 24.0,
@@ -495,8 +494,8 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
                                           ),
                                           alignment:
                                               const AlignmentDirectional(0.0, 0.0),
-                                          child: FaIcon(
-                                            FontAwesomeIcons.couch,
+                                          child: Icon(
+                                            FFIcons.karmchair2,
                                             color: FlutterFlowTheme.of(context)
                                                 .secondary,
                                             size: 24.0,
@@ -584,8 +583,8 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
                                           ),
                                           alignment:
                                               const AlignmentDirectional(0.0, 0.0),
-                                          child: FaIcon(
-                                            FontAwesomeIcons.tshirt,
+                                          child: Icon(
+                                            FFIcons.khanger,
                                             color: FlutterFlowTheme.of(context)
                                                 .secondary,
                                             size: 24.0,
@@ -674,7 +673,7 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
                                           alignment:
                                               const AlignmentDirectional(0.0, 0.0),
                                           child: Icon(
-                                            Icons.kitchen_sharp,
+                                            FFIcons.kwashMachine,
                                             color: FlutterFlowTheme.of(context)
                                                 .secondary,
                                             size: 24.0,
@@ -762,8 +761,8 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
                                           ),
                                           alignment:
                                               const AlignmentDirectional(0.0, 0.0),
-                                          child: FaIcon(
-                                            FontAwesomeIcons.tag,
+                                          child: Icon(
+                                            FFIcons.kboxSeam,
                                             color: FlutterFlowTheme.of(context)
                                                 .secondary,
                                             size: 24.0,
@@ -851,8 +850,8 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
                                           ),
                                           alignment:
                                               const AlignmentDirectional(0.0, 0.0),
-                                          child: FaIcon(
-                                            FontAwesomeIcons.hospitalAlt,
+                                          child: Icon(
+                                            FFIcons.kbuilding,
                                             color: FlutterFlowTheme.of(context)
                                                 .secondary,
                                             size: 24.0,

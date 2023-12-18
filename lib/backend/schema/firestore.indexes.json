@@ -13,6 +13,10 @@
           "order": "ASCENDING"
         },
         {
+          "fieldPath": "isPeriodic",
+          "order": "ASCENDING"
+        },
+        {
           "fieldPath": "created_time",
           "order": "ASCENDING"
         }
@@ -27,8 +31,12 @@
           "order": "ASCENDING"
         },
         {
-          "fieldPath": "created_time",
+          "fieldPath": "isPeriodic",
           "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "created_time",
+          "order": "DESCENDING"
         }
       ]
     }

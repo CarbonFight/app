@@ -14,3 +14,4 @@ export '/account/account_widget.dart' show AccountWidget;
 export '/journal/journal_widget.dart' show JournalWidget;
 export '/success/success_widget.dart' show SuccessWidget;
 export '/badges/badges_widget.dart' show BadgesWidget;
+export '/onboarding/onboarding_widget.dart' show OnboardingWidget;

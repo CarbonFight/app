@@ -6,7 +6,12 @@ import 'empty_list_model.dart';
 export 'empty_list_model.dart';
 
 class EmptyListWidget extends StatefulWidget {
-  const EmptyListWidget({super.key});
+  const EmptyListWidget({
+    super.key,
+    required this.category,
+  });
+
+  final String? category;
 
   @override
   _EmptyListWidgetState createState() => _EmptyListWidgetState();
@@ -40,49 +45,66 @@ class _EmptyListWidgetState extends State<EmptyListWidget> {
   Widget build(BuildContext context) {
     context.watch<FFAppState>();
 
-    return Column(
-      mainAxisSize: MainAxisSize.max,
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Icon(
-          Icons.rocket_launch_outlined,
-          color: FlutterFlowTheme.of(context).secondary,
-          size: 90.0,
-        ),
-        Padding(
-          padding: const EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 0.0),
-          child: Row(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                'C\'est tout vide !',
-                textAlign: TextAlign.center,
-                style: FlutterFlowTheme.of(context).headlineSmall.override(
-                      fontFamily: 'Poppins',
-                      color: FlutterFlowTheme.of(context).primaryText,
-                    ),
-              ),
-            ],
+    return InkWell(
+      splashColor: Colors.transparent,
+      focusColor: Colors.transparent,
+      hoverColor: Colors.transparent,
+      highlightColor: Colors.transparent,
+      onTap: () async {
+        context.pushNamed(
+          'declare',
+          queryParameters: {
+            'category': serializeParam(
+              widget.category,
+              ParamType.String,
+            ),
+          }.withoutNulls,
+        );
+      },
+      child: Column(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(
+            FFIcons.khandClick,
+            color: FlutterFlowTheme.of(context).secondary,
+            size: 90.0,
           ),
-        ),
-        Padding(
-          padding: const EdgeInsetsDirectional.fromSTEB(12.0, 4.0, 12.0, 0.0),
-          child: Row(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Expanded(
-                child: Text(
-                  'Ajoutez votre première action de la journée !',
+          Padding(
+            padding: const EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 0.0),
+            child: Row(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  'C\'est tout vide !',
                   textAlign: TextAlign.center,
-                  style: FlutterFlowTheme.of(context).bodySmall,
+                  style: FlutterFlowTheme.of(context).headlineSmall.override(
+                        fontFamily: 'Poppins',
+                        color: FlutterFlowTheme.of(context).primaryText,
+                      ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
-      ],
+          Padding(
+            padding: const EdgeInsetsDirectional.fromSTEB(12.0, 4.0, 12.0, 0.0),
+            child: Row(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Expanded(
+                  child: Text(
+                    'Ajoutez votre première action de la journée !',
+                    textAlign: TextAlign.center,
+                    style: FlutterFlowTheme.of(context).bodySmall,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

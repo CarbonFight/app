@@ -146,7 +146,7 @@ class _SigninWidgetState extends State<SigninWidget> {
                             ),
                           });
 
-                          context.goNamedAuth('home', context.mounted);
+                          context.pushNamedAuth('Onboarding', context.mounted);
                         },
                         text: 'Continuer avec Google',
                         icon: FaIcon(
@@ -197,7 +197,7 @@ class _SigninWidgetState extends State<SigninWidget> {
                             email: currentUserEmail,
                           ));
 
-                          context.goNamedAuth('home', context.mounted);
+                          context.pushNamedAuth('Onboarding', context.mounted);
                         },
                         text: 'Continuer avec Facebook',
                         icon: FaIcon(
@@ -224,9 +224,11 @@ class _SigninWidgetState extends State<SigninWidget> {
                       ),
                     ),
                     FFButtonWidget(
-                      onPressed: () {
-                        print('Button pressed ...');
-                      },
+                      onPressed: true
+                          ? null
+                          : () {
+                              print('Button pressed ...');
+                            },
                       text: 'Continuer avec Apple',
                       icon: const FaIcon(
                         FontAwesomeIcons.apple,
@@ -550,6 +552,7 @@ class _SigninWidgetState extends State<SigninWidget> {
                             );
                           },
                           child: Text(
+                            key: const ValueKey('Text_c72v'),
                             'Ouvrez un compte',
                             style: FlutterFlowTheme.of(context)
                                 .bodyMedium

@@ -12,7 +12,6 @@ import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:provider/provider.dart';
 import 'home_model.dart';
@@ -396,7 +395,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                 updateCallback: () => setState(() {}),
                                 child: HomeCategoryWidget(
                                   icon: Icon(
-                                    Icons.directions_walk,
+                                    FFIcons.kwalk,
                                     color: FlutterFlowTheme.of(context).primary,
                                     size: 24.0,
                                   ),
@@ -410,7 +409,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                               updateCallback: () => setState(() {}),
                               child: HomeCategoryWidget(
                                 icon: Icon(
-                                  Icons.home_rounded,
+                                  FFIcons.khome,
                                   color: FlutterFlowTheme.of(context).primary,
                                   size: 24.0,
                                 ),
@@ -423,7 +422,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                               updateCallback: () => setState(() {}),
                               child: HomeCategoryWidget(
                                 icon: Icon(
-                                  Icons.fastfood_outlined,
+                                  FFIcons.ktoolsKitchen,
                                   color: FlutterFlowTheme.of(context).primary,
                                   size: 24.0,
                                 ),
@@ -444,8 +443,8 @@ class _HomeWidgetState extends State<HomeWidget> {
                                 model: _model.clothesModel,
                                 updateCallback: () => setState(() {}),
                                 child: HomeCategoryWidget(
-                                  icon: FaIcon(
-                                    FontAwesomeIcons.tshirt,
+                                  icon: Icon(
+                                    FFIcons.khanger,
                                     color: FlutterFlowTheme.of(context).primary,
                                   ),
                                   co2e: homeStatsRecord.dayClothes,
@@ -456,8 +455,8 @@ class _HomeWidgetState extends State<HomeWidget> {
                                 model: _model.furnitureModel,
                                 updateCallback: () => setState(() {}),
                                 child: HomeCategoryWidget(
-                                  icon: FaIcon(
-                                    FontAwesomeIcons.couch,
+                                  icon: Icon(
+                                    FFIcons.karmchair2,
                                     color: FlutterFlowTheme.of(context).primary,
                                     size: 24.0,
                                   ),
@@ -470,7 +469,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                 updateCallback: () => setState(() {}),
                                 child: HomeCategoryWidget(
                                   icon: Icon(
-                                    Icons.phone_android,
+                                    FFIcons.kdeviceTv,
                                     color: FlutterFlowTheme.of(context).primary,
                                     size: 24.0,
                                   ),
@@ -493,7 +492,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                 updateCallback: () => setState(() {}),
                                 child: HomeCategoryWidget(
                                   icon: Icon(
-                                    Icons.kitchen_outlined,
+                                    FFIcons.kwashMachine,
                                     color: FlutterFlowTheme.of(context).primary,
                                     size: 24.0,
                                   ),
@@ -506,7 +505,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                 updateCallback: () => setState(() {}),
                                 child: HomeCategoryWidget(
                                   icon: Icon(
-                                    Icons.label,
+                                    FFIcons.kboxSeam,
                                     color: FlutterFlowTheme.of(context).primary,
                                     size: 24.0,
                                   ),
@@ -520,8 +519,8 @@ class _HomeWidgetState extends State<HomeWidget> {
                                   model: _model.objectsModel2,
                                   updateCallback: () => setState(() {}),
                                   child: HomeCategoryWidget(
-                                    icon: FaIcon(
-                                      FontAwesomeIcons.hospitalAlt,
+                                    icon: Icon(
+                                      FFIcons.kbuilding,
                                       color:
                                           FlutterFlowTheme.of(context).primary,
                                       size: 24.0,
