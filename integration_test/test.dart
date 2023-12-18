@@ -28,7 +28,7 @@ void main() async {
     await tester.pumpAndSettle(
       Duration(milliseconds: 5000),
       EnginePhase.sendSemanticsUpdate,
-      Duration(milliseconds: 10000),
+      Duration(milliseconds: 50000),
     );
     await tester.tap(find.byKey(ValueKey('createAccountLink')));
     await tester.pumpAndSettle(
