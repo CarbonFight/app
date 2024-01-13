@@ -20,6 +20,8 @@ SELECT option FROM calculation WHERE action="Entrée"
 
 class GetOptionsRow extends SqliteRow {
   GetOptionsRow(super.data);
+
+  List<String>? get option => data['option'] as List<String>?;
 }
 
 /// END GETOPTIONS

@@ -2040,89 +2040,91 @@ class _DeclareWidgetState extends State<DeclareWidget> {
                             Padding(
                               padding: const EdgeInsetsDirectional.fromSTEB(
                                   0.0, 10.0, 0.0, 0.0),
-                              child: FutureBuilder<List<GetOptionsRow>>(
-                                future: SQLiteManager.instance.getOptions(),
-                                builder: (context, snapshot) {
-                                  // Customize what your widget looks like when it's loading.
-                                  if (!snapshot.hasData) {
-                                    return Center(
-                                      child: SizedBox(
-                                        width: 50.0,
-                                        height: 50.0,
-                                        child: CircularProgressIndicator(
-                                          valueColor:
-                                              AlwaysStoppedAnimation<Color>(
-                                            FlutterFlowTheme.of(context)
-                                                .secondary,
+                              child: Container(
+                                width: 300.0,
+                                decoration: BoxDecoration(
+                                  color: FlutterFlowTheme.of(context)
+                                      .primaryBackground,
+                                  boxShadow: const [
+                                    BoxShadow(
+                                      blurRadius: 2.0,
+                                      color: Color(0x33000000),
+                                      offset: Offset(0.0, 2.0),
+                                    )
+                                  ],
+                                  borderRadius: BorderRadius.circular(8.0),
+                                  border: Border.all(
+                                    color: FlutterFlowTheme.of(context).info,
+                                  ),
+                                ),
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.max,
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsetsDirectional.fromSTEB(
+                                          10.0, 5.0, 10.0, 5.0),
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        children: [
+                                          Padding(
+                                            padding:
+                                                const EdgeInsetsDirectional.fromSTEB(
+                                                    0.0, 0.0, 10.0, 0.0),
+                                            child: Icon(
+                                              FFIcons.ktoolsKitchen,
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .info,
+                                              size: 24.0,
+                                            ),
                                           ),
-                                        ),
-                                      ),
-                                    );
-                                  }
-                                  final starterGetOptionsRowList =
-                                      snapshot.data!;
-                                  return Container(
-                                    width: 300.0,
-                                    decoration: BoxDecoration(
-                                      color: FlutterFlowTheme.of(context)
-                                          .primaryBackground,
-                                      boxShadow: const [
-                                        BoxShadow(
-                                          blurRadius: 2.0,
-                                          color: Color(0x33000000),
-                                          offset: Offset(0.0, 2.0),
-                                        )
-                                      ],
-                                      borderRadius: BorderRadius.circular(8.0),
-                                      border: Border.all(
-                                        color:
-                                            FlutterFlowTheme.of(context).info,
+                                          Text(
+                                            'Entrée',
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodySmall,
+                                          ),
+                                        ],
                                       ),
                                     ),
-                                    child: Column(
+                                    Row(
                                       mainAxisSize: MainAxisSize.max,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
                                       children: [
-                                        Padding(
-                                          padding:
-                                              const EdgeInsetsDirectional.fromSTEB(
-                                                  10.0, 5.0, 10.0, 5.0),
-                                          child: Row(
-                                            mainAxisSize: MainAxisSize.max,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.start,
-                                            children: [
-                                              Padding(
-                                                padding: const EdgeInsetsDirectional
-                                                    .fromSTEB(
-                                                        0.0, 0.0, 10.0, 0.0),
-                                                child: Icon(
-                                                  FFIcons.ktoolsKitchen,
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .info,
-                                                  size: 24.0,
-                                                ),
-                                              ),
-                                              Text(
-                                                'Entrée',
-                                                style:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodySmall,
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                        Row(
-                                          mainAxisSize: MainAxisSize.max,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          children: [
-                                            Expanded(
-                                              child: Padding(
-                                                padding: const EdgeInsets.all(10.0),
-                                                child: FlutterFlowChoiceChips(
+                                        Expanded(
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(10.0),
+                                            child: FutureBuilder<
+                                                List<GetOptionsRow>>(
+                                              future: SQLiteManager.instance
+                                                  .getOptions(),
+                                              builder: (context, snapshot) {
+                                                // Customize what your widget looks like when it's loading.
+                                                if (!snapshot.hasData) {
+                                                  return Center(
+                                                    child: SizedBox(
+                                                      width: 50.0,
+                                                      height: 50.0,
+                                                      child:
+                                                          CircularProgressIndicator(
+                                                        valueColor:
+                                                            AlwaysStoppedAnimation<
+                                                                Color>(
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .secondary,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  );
+                                                }
+                                                final starterchipsGetOptionsRowList =
+                                                    snapshot.data!;
+                                                return FlutterFlowChoiceChips(
                                                   options: const [
                                                     ChipData('Test',
                                                         Icons.train_outlined),
@@ -2183,19 +2185,19 @@ class _DeclareWidgetState extends State<DeclareWidget> {
                                                     [],
                                                   ),
                                                   wrapped: true,
-                                                ),
-                                              ),
+                                                );
+                                              },
                                             ),
-                                          ],
-                                        ),
-                                        Container(
-                                          width: 250.0,
-                                          decoration: const BoxDecoration(),
+                                          ),
                                         ),
                                       ],
                                     ),
-                                  );
-                                },
+                                    Container(
+                                      width: 250.0,
+                                      decoration: const BoxDecoration(),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                           ].divide(const SizedBox(height: 10.0)),
