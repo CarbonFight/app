@@ -103,9 +103,7 @@ class _StatsWidgetState extends State<StatsWidget> {
                     builder: (context) => wrapWithModel(
                       model: _model.headModel,
                       updateCallback: () => setState(() {}),
-                      child: HeadWidget(
-                        displayName: currentUserDisplayName,
-                      ),
+                      child: const HeadWidget(),
                     ),
                   ),
                   wrapWithModel(

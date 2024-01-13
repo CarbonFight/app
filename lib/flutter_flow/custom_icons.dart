@@ -5,6 +5,7 @@ class FFIcons {
 
   static const String _myFlutterAppFamily = 'MyFlutterApp';
   static const String _carbonFightCustomIconsFamily = 'CarbonFightCustomIcons';
+  static const String _vuesaxCustomIconsFamily = 'VuesaxCustomIcons';
 
   // MyFlutterApp
   static const IconData kleaf =
@@ -83,4 +84,34 @@ class FFIcons {
       IconData(0xe922, fontFamily: _carbonFightCustomIconsFamily);
   static const IconData kwashMachine =
       IconData(0xe923, fontFamily: _carbonFightCustomIconsFamily);
+
+  // Vuesax-custom-icons
+  static const IconData karchive1 =
+      IconData(0xe90d, fontFamily: _vuesaxCustomIconsFamily);
+  static const IconData kadd =
+      IconData(0xe900, fontFamily: _vuesaxCustomIconsFamily);
+  static const IconData karrowDown2 =
+      IconData(0xe901, fontFamily: _vuesaxCustomIconsFamily);
+  static const IconData karrowLeft2 =
+      IconData(0xe902, fontFamily: _vuesaxCustomIconsFamily);
+  static const IconData karrowRight3 =
+      IconData(0xe903, fontFamily: _vuesaxCustomIconsFamily);
+  static const IconData karrowUp3 =
+      IconData(0xe904, fontFamily: _vuesaxCustomIconsFamily);
+  static const IconData kcalendar2 =
+      IconData(0xe905, fontFamily: _vuesaxCustomIconsFamily);
+  static const IconData kdrop =
+      IconData(0xe906, fontFamily: _vuesaxCustomIconsFamily);
+  static const IconData kflash1 =
+      IconData(0xe907, fontFamily: _vuesaxCustomIconsFamily);
+  static const IconData kframe5 =
+      IconData(0xe908, fontFamily: _vuesaxCustomIconsFamily);
+  static const IconData khome1 =
+      IconData(0xe909, fontFamily: _vuesaxCustomIconsFamily);
+  static const IconData kminus =
+      IconData(0xe90a, fontFamily: _vuesaxCustomIconsFamily);
+  static const IconData knotification1 =
+      IconData(0xe90b, fontFamily: _vuesaxCustomIconsFamily);
+  static const IconData kuser =
+      IconData(0xe90c, fontFamily: _vuesaxCustomIconsFamily);
 }

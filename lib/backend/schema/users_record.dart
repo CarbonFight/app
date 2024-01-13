@@ -6,6 +6,7 @@ import '/backend/schema/util/firestore_util.dart';
 import '/backend/schema/util/schema_util.dart';
 
 import 'index.dart';
+import '/flutter_flow/flutter_flow_util.dart';
 
 class UsersRecord extends FirestoreRecord {
   UsersRecord._(
@@ -85,6 +86,11 @@ class UsersRecord extends FirestoreRecord {
   double get target => _target ?? 0.0;
   bool hasTarget() => _target != null;
 
+  // "badge" field.
+  String? _badge;
+  String get badge => _badge ?? '';
+  bool hasBadge() => _badge != null;
+
   void _initializeFields() {
     _email = snapshotData['email'] as String?;
     _displayName = snapshotData['display_name'] as String?;
@@ -100,6 +106,7 @@ class UsersRecord extends FirestoreRecord {
     _skipHowto = snapshotData['skipHowto'] as bool?;
     _connectionHistory = getDataList(snapshotData['connection_history']);
     _target = castToType<double>(snapshotData['target']);
+    _badge = snapshotData['badge'] as String?;
   }
 
   static CollectionReference get collection =>
@@ -149,6 +156,7 @@ Map<String, dynamic> createUsersRecordData({
   String? team,
   bool? skipHowto,
   double? target,
+  String? badge,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -165,6 +173,7 @@ Map<String, dynamic> createUsersRecordData({
       'team': team,
       'skipHowto': skipHowto,
       'target': target,
+      'badge': badge,
     }.withoutNulls,
   );
 
@@ -190,7 +199,8 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
         e1?.team == e2?.team &&
         e1?.skipHowto == e2?.skipHowto &&
         listEquality.equals(e1?.connectionHistory, e2?.connectionHistory) &&
-        e1?.target == e2?.target;
+        e1?.target == e2?.target &&
+        e1?.badge == e2?.badge;
   }
 
   @override
@@ -208,7 +218,8 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
         e?.team,
         e?.skipHowto,
         e?.connectionHistory,
-        e?.target
+        e?.target,
+        e?.badge
       ]);
 
   @override

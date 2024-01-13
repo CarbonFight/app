@@ -54,6 +54,10 @@ abstract class FlutterFlowTheme {
   late Color error;
   late Color info;
 
+  late Color primaryBtnText;
+  late Color lineColor;
+  late Color backgroundComponents;
+
   @Deprecated('Use displaySmallFamily instead')
   String get title1Family => displaySmallFamily;
   @Deprecated('Use displaySmall instead')
@@ -127,7 +131,7 @@ class LightModeTheme extends FlutterFlowTheme {
 
   late Color primary = const Color(0xFF41C941);
   late Color secondary = const Color(0xFF41C941);
-  late Color tertiary = const Color(0xFFEE8B60);
+  late Color tertiary = const Color(0xFF41C941);
   late Color alternate = const Color(0xFFE3E3E3);
   late Color primaryText = const Color(0xFF191919);
   late Color secondaryText = const Color(0xFF57636C);
@@ -137,10 +141,14 @@ class LightModeTheme extends FlutterFlowTheme {
   late Color accent2 = const Color(0x4D39D2C0);
   late Color accent3 = const Color(0x4DEE8B60);
   late Color accent4 = const Color(0xCCFFFFFF);
-  late Color success = const Color(0xFF249689);
+  late Color success = const Color(0xFF41C941);
   late Color warning = const Color(0xFFF9CF58);
   late Color error = const Color(0xFFFF5963);
-  late Color info = const Color(0xFFFFFFFF);
+  late Color info = const Color(0xFF14181B);
+
+  late Color primaryBtnText = const Color(0xFFFFFFFF);
+  late Color lineColor = const Color(0xFFE0E3E7);
+  late Color backgroundComponents = const Color(0xFF1D2428);
 }
 
 abstract class Typography {
@@ -298,7 +306,7 @@ class DarkModeTheme extends FlutterFlowTheme {
 
   late Color primary = const Color(0xFF41C941);
   late Color secondary = const Color(0xFF41C941);
-  late Color tertiary = const Color(0xFFEE8B60);
+  late Color tertiary = const Color(0xFF41C941);
   late Color alternate = const Color(0xFF262D34);
   late Color primaryText = const Color(0xFFFFFFFF);
   late Color secondaryText = const Color(0xFF95A1AC);
@@ -308,10 +316,14 @@ class DarkModeTheme extends FlutterFlowTheme {
   late Color accent2 = const Color(0x4D39D2C0);
   late Color accent3 = const Color(0x4DEE8B60);
   late Color accent4 = const Color(0xB2262D34);
-  late Color success = const Color(0xFF249689);
+  late Color success = const Color(0xFF41C941);
   late Color warning = const Color(0xFFF9CF58);
   late Color error = const Color(0xFFFF5963);
   late Color info = const Color(0xFFFFFFFF);
+
+  late Color primaryBtnText = const Color(0xFFFFFFFF);
+  late Color lineColor = const Color(0xFF22282F);
+  late Color backgroundComponents = const Color(0xFF1D2428);
 }
 
 extension TextStyleHelper on TextStyle {

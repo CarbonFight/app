@@ -1,6 +1,6 @@
 import '/auth/firebase_auth/auth_util.dart';
 import '/components/head_widget.dart';
-import '/components/title_return_widget.dart';
+import '/components/title_back_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -66,17 +66,14 @@ class _AssociationWidgetState extends State<AssociationWidget> {
                 builder: (context) => wrapWithModel(
                   model: _model.headModel,
                   updateCallback: () => setState(() {}),
-                  child: HeadWidget(
-                    displayName: currentUserDisplayName,
-                  ),
+                  child: const HeadWidget(),
                 ),
               ),
               wrapWithModel(
-                model: _model.titleReturnModel,
+                model: _model.titleBackModel,
                 updateCallback: () => setState(() {}),
-                child: const TitleReturnWidget(
+                child: const TitleBackWidget(
                   title: 'L\'association',
-                  subtitle: 'reconnue d\'intérêt généal',
                 ),
               ),
               Container(

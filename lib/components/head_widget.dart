@@ -1,3 +1,4 @@
+import '/auth/firebase_auth/auth_util.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
@@ -7,12 +8,7 @@ import 'head_model.dart';
 export 'head_model.dart';
 
 class HeadWidget extends StatefulWidget {
-  const HeadWidget({
-    super.key,
-    required this.displayName,
-  });
-
-  final String? displayName;
+  const HeadWidget({super.key});
 
   @override
   _HeadWidgetState createState() => _HeadWidgetState();
@@ -53,7 +49,7 @@ class _HeadWidgetState extends State<HeadWidget> {
         image: DecorationImage(
           fit: BoxFit.cover,
           image: Image.asset(
-            'assets/images/fond.png',
+            'assets/images/testfond1.png',
           ).image,
         ),
       ),
@@ -65,10 +61,10 @@ class _HeadWidgetState extends State<HeadWidget> {
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
             Container(
-              width: 200.0,
-              height: 40.0,
+              width: 220.0,
+              height: 50.0,
               decoration: BoxDecoration(
-                color: const Color(0xBEFFFFFF),
+                color: FlutterFlowTheme.of(context).primaryBackground,
                 borderRadius: BorderRadius.circular(50.0),
               ),
               child: Row(
@@ -79,32 +75,76 @@ class _HeadWidgetState extends State<HeadWidget> {
                   Padding(
                     padding:
                         const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 20.0, 0.0),
-                    child: FaIcon(
-                      FontAwesomeIcons.medal,
-                      color: FlutterFlowTheme.of(context).primaryText,
-                      size: 30.0,
+                    child: Stack(
+                      children: [
+                        if (valueOrDefault(currentUserDocument?.badge, '') ==
+                            'onboardingAllChallenges')
+                          AuthUserStreamWidget(
+                            builder: (context) => FaIcon(
+                              FontAwesomeIcons.seedling,
+                              color: FlutterFlowTheme.of(context).primary,
+                              size: 30.0,
+                            ),
+                          ),
+                        if (valueOrDefault(currentUserDocument?.badge, '') ==
+                            'onboardingHowtoFinished')
+                          AuthUserStreamWidget(
+                            builder: (context) => FaIcon(
+                              FontAwesomeIcons.medal,
+                              color: FlutterFlowTheme.of(context).primary,
+                              size: 30.0,
+                            ),
+                          ),
+                      ],
                     ),
                   ),
                   Column(
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(
-                        'Recrue',
-                        style: FlutterFlowTheme.of(context).bodySmall.override(
-                              fontFamily: 'Montserrat',
-                              color: FlutterFlowTheme.of(context).primaryText,
+                      Stack(
+                        children: [
+                          if (valueOrDefault(currentUserDocument?.badge, '') ==
+                              'onboardingAllChallenges')
+                            AuthUserStreamWidget(
+                              builder: (context) => Text(
+                                'Graine de Conscience',
+                                style: FlutterFlowTheme.of(context)
+                                    .bodySmall
+                                    .override(
+                                      fontFamily: 'Montserrat',
+                                      color: FlutterFlowTheme.of(context)
+                                          .primaryText,
+                                    ),
+                              ),
                             ),
+                          if (valueOrDefault(currentUserDocument?.badge, '') ==
+                              'onboardingHowtoFinished')
+                            AuthUserStreamWidget(
+                              builder: (context) => Text(
+                                'Recrue',
+                                textAlign: TextAlign.center,
+                                style: FlutterFlowTheme.of(context)
+                                    .bodySmall
+                                    .override(
+                                      fontFamily: 'Montserrat',
+                                      color: FlutterFlowTheme.of(context)
+                                          .primaryText,
+                                    ),
+                              ),
+                            ),
+                        ],
                       ),
-                      Text(
-                        valueOrDefault<String>(
-                          widget.displayName,
-                          'unknown',
+                      AuthUserStreamWidget(
+                        builder: (context) => Text(
+                          currentUserDisplayName,
+                          style: FlutterFlowTheme.of(context)
+                              .bodyMedium
+                              .override(
+                                fontFamily: 'Montserrat',
+                                color: FlutterFlowTheme.of(context).primaryText,
+                              ),
                         ),
-                        style: FlutterFlowTheme.of(context).bodyMedium.override(
-                              fontFamily: 'Montserrat',
-                              color: FlutterFlowTheme.of(context).primaryText,
-                            ),
                       ),
                     ],
                   ),

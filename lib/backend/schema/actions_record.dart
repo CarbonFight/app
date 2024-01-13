@@ -6,6 +6,7 @@ import '/backend/schema/util/firestore_util.dart';
 import '/backend/schema/util/schema_util.dart';
 
 import 'index.dart';
+import '/flutter_flow/flutter_flow_util.dart';
 
 class ActionsRecord extends FirestoreRecord {
   ActionsRecord._(
@@ -90,20 +91,15 @@ class ActionsRecord extends FirestoreRecord {
   String get yearPurchase => _yearPurchase ?? '';
   bool hasYearPurchase() => _yearPurchase != null;
 
-  // "yearPreviousPurchase" field.
-  String? _yearPreviousPurchase;
-  String get yearPreviousPurchase => _yearPreviousPurchase ?? '';
-  bool hasYearPreviousPurchase() => _yearPreviousPurchase != null;
-
-  // "yearEndPurchase" field.
-  String? _yearEndPurchase;
-  String get yearEndPurchase => _yearEndPurchase ?? '';
-  bool hasYearEndPurchase() => _yearEndPurchase != null;
-
   // "emission_factor" field.
   int? _emissionFactor;
   int get emissionFactor => _emissionFactor ?? 0;
   bool hasEmissionFactor() => _emissionFactor != null;
+
+  // "yearEndPuchase" field.
+  int? _yearEndPuchase;
+  int get yearEndPuchase => _yearEndPuchase ?? 0;
+  bool hasYearEndPuchase() => _yearEndPuchase != null;
 
   void _initializeFields() {
     _uid = snapshotData['uid'] as String?;
@@ -121,9 +117,8 @@ class ActionsRecord extends FirestoreRecord {
     _side = getDataList(snapshotData['side']);
     _newPurchase = snapshotData['newPurchase'] as bool?;
     _yearPurchase = snapshotData['yearPurchase'] as String?;
-    _yearPreviousPurchase = snapshotData['yearPreviousPurchase'] as String?;
-    _yearEndPurchase = snapshotData['yearEndPurchase'] as String?;
     _emissionFactor = castToType<int>(snapshotData['emission_factor']);
+    _yearEndPuchase = castToType<int>(snapshotData['yearEndPuchase']);
   }
 
   static CollectionReference get collection =>
@@ -174,9 +169,8 @@ Map<String, dynamic> createActionsRecordData({
   bool? isPeriodic,
   bool? newPurchase,
   String? yearPurchase,
-  String? yearPreviousPurchase,
-  String? yearEndPurchase,
   int? emissionFactor,
+  int? yearEndPuchase,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -193,9 +187,8 @@ Map<String, dynamic> createActionsRecordData({
       'isPeriodic': isPeriodic,
       'newPurchase': newPurchase,
       'yearPurchase': yearPurchase,
-      'yearPreviousPurchase': yearPreviousPurchase,
-      'yearEndPurchase': yearEndPurchase,
       'emission_factor': emissionFactor,
+      'yearEndPuchase': yearEndPuchase,
     }.withoutNulls,
   );
 
@@ -223,9 +216,8 @@ class ActionsRecordDocumentEquality implements Equality<ActionsRecord> {
         listEquality.equals(e1?.side, e2?.side) &&
         e1?.newPurchase == e2?.newPurchase &&
         e1?.yearPurchase == e2?.yearPurchase &&
-        e1?.yearPreviousPurchase == e2?.yearPreviousPurchase &&
-        e1?.yearEndPurchase == e2?.yearEndPurchase &&
-        e1?.emissionFactor == e2?.emissionFactor;
+        e1?.emissionFactor == e2?.emissionFactor &&
+        e1?.yearEndPuchase == e2?.yearEndPuchase;
   }
 
   @override
@@ -245,9 +237,8 @@ class ActionsRecordDocumentEquality implements Equality<ActionsRecord> {
         e?.side,
         e?.newPurchase,
         e?.yearPurchase,
-        e?.yearPreviousPurchase,
-        e?.yearEndPurchase,
-        e?.emissionFactor
+        e?.emissionFactor,
+        e?.yearEndPuchase
       ]);
 
   @override

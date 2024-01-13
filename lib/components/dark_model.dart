@@ -1,8 +1,8 @@
 import '/flutter_flow/flutter_flow_util.dart';
-import 'title_return_widget.dart' show TitleReturnWidget;
+import 'dark_widget.dart' show DarkWidget;
 import 'package:flutter/material.dart';
 
-class TitleReturnModel extends FlutterFlowModel<TitleReturnWidget> {
+class DarkModel extends FlutterFlowModel<DarkWidget> {
   /// Initialization and disposal methods.
 
   @override

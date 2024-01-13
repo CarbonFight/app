@@ -37,7 +37,9 @@ class GetOptionsCall {
         true,
       ) as List?)
           ?.withoutNulls
-          .cast<String>();
+          .map((x) => castToType<String>(x))
+          .withoutNulls
+          .toList();
 }
 
 class GetEmissionFactorCall {
@@ -69,14 +71,34 @@ class GetEmissionFactorCall {
     );
   }
 
-  static dynamic co2e(dynamic response) => getJsonField(
+  static int? co2e(dynamic response) => castToType<int>(getJsonField(
         response,
         r'''$.co2e''',
-      );
-  static dynamic hint(dynamic response) => getJsonField(
+      ));
+  static String? hint(dynamic response) => castToType<String>(getJsonField(
         response,
         r'''$.hint''',
+      ));
+  static String? option(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.option''',
+      ));
+  static dynamic amortization(dynamic response) => getJsonField(
+        response,
+        r'''$.amortization''',
       );
+  static dynamic unit(dynamic response) => getJsonField(
+        response,
+        r'''$.unit''',
+      );
+  static String? category(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.category''',
+      ));
+  static String? action(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.action''',
+      ));
 }
 
 class GetActionsCall {

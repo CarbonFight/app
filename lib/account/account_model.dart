@@ -1,5 +1,6 @@
+import '/components/dark_widget.dart';
 import '/components/head_widget.dart';
-import '/components/title_return_widget.dart';
+import '/components/title_back_widget.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'account_widget.dart' show AccountWidget;
 import 'package:flutter/material.dart';
@@ -10,8 +11,8 @@ class AccountModel extends FlutterFlowModel<AccountWidget> {
   final unfocusNode = FocusNode();
   // Model for head component.
   late HeadModel headModel;
-  // Model for Title_return component.
-  late TitleReturnModel titleReturnModel;
+  // Model for TitleBack component.
+  late TitleBackModel titleBackModel;
   // State field(s) for displayName widget.
   FocusNode? displayNameFocusNode;
   TextEditingController? displayNameController;
@@ -32,20 +33,23 @@ class AccountModel extends FlutterFlowModel<AccountWidget> {
   FocusNode? sponsorFocusNode;
   TextEditingController? sponsorController;
   String? Function(BuildContext, String?)? sponsorControllerValidator;
+  // Model for dark component.
+  late DarkModel darkModel;
 
   /// Initialization and disposal methods.
 
   @override
   void initState(BuildContext context) {
     headModel = createModel(context, () => HeadModel());
-    titleReturnModel = createModel(context, () => TitleReturnModel());
+    titleBackModel = createModel(context, () => TitleBackModel());
+    darkModel = createModel(context, () => DarkModel());
   }
 
   @override
   void dispose() {
     unfocusNode.dispose();
     headModel.dispose();
-    titleReturnModel.dispose();
+    titleBackModel.dispose();
     displayNameFocusNode?.dispose();
     displayNameController?.dispose();
 
@@ -60,6 +64,8 @@ class AccountModel extends FlutterFlowModel<AccountWidget> {
 
     sponsorFocusNode?.dispose();
     sponsorController?.dispose();
+
+    darkModel.dispose();
   }
 
   /// Action blocks are added here.

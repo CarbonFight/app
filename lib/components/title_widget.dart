@@ -48,6 +48,7 @@ class _TitleWidgetState extends State<TitleWidget> {
     return Padding(
       padding: const EdgeInsets.all(10.0),
       child: Container(
+        width: 360.0,
         decoration: const BoxDecoration(),
         child: Column(
           mainAxisSize: MainAxisSize.max,

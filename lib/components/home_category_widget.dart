@@ -96,14 +96,22 @@ class _HomeCategoryWidgetState extends State<HomeCategoryWidget> {
                     functions.pS(widget.co2e),
                     '-',
                   ),
-                  style: FlutterFlowTheme.of(context).bodyMedium,
+                  style: FlutterFlowTheme.of(context).bodyMedium.override(
+                        fontFamily: 'Montserrat',
+                        fontSize: 18.0,
+                      ),
                 ),
                 Text(
                   valueOrDefault<String>(
-                    widget.category,
-                    'Trajet',
+                    widget.category == 'Electroménager'
+                        ? 'Electro'
+                        : widget.category,
+                    'Trajets',
                   ),
-                  style: FlutterFlowTheme.of(context).bodySmall,
+                  style: FlutterFlowTheme.of(context).bodySmall.override(
+                        fontFamily: 'Montserrat',
+                        fontSize: 10.0,
+                      ),
                 ),
               ].divide(const SizedBox(height: 1.0)),
             ),

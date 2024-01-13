@@ -6,6 +6,7 @@ import '/backend/schema/util/firestore_util.dart';
 import '/backend/schema/util/schema_util.dart';
 
 import 'index.dart';
+import '/flutter_flow/flutter_flow_util.dart';
 
 class StatsRecord extends FirestoreRecord {
   StatsRecord._(
@@ -330,6 +331,11 @@ class StatsRecord extends FirestoreRecord {
   List<double> get graphTotal => _graphTotal ?? const [];
   bool hasGraphTotal() => _graphTotal != null;
 
+  // "connectionStreak" field.
+  int? _connectionStreak;
+  int get connectionStreak => _connectionStreak ?? 0;
+  bool hasConnectionStreak() => _connectionStreak != null;
+
   void _initializeFields() {
     _uid = snapshotData['uid'] as String?;
     _score = castToType<int>(snapshotData['score']);
@@ -402,6 +408,7 @@ class StatsRecord extends FirestoreRecord {
     _dayAppliance = castToType<int>(snapshotData['dayAppliance']);
     _days = getDataList(snapshotData['days']);
     _graphTotal = getDataList(snapshotData['graphTotal']);
+    _connectionStreak = castToType<int>(snapshotData['connectionStreak']);
   }
 
   static CollectionReference get collection =>
@@ -496,6 +503,7 @@ Map<String, dynamic> createStatsRecordData({
   int? dayDigital,
   int? dayClothes,
   int? dayAppliance,
+  int? connectionStreak,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -557,6 +565,7 @@ Map<String, dynamic> createStatsRecordData({
       'dayDigital': dayDigital,
       'dayClothes': dayClothes,
       'dayAppliance': dayAppliance,
+      'connectionStreak': connectionStreak,
     }.withoutNulls,
   );
 
@@ -631,7 +640,8 @@ class StatsRecordDocumentEquality implements Equality<StatsRecord> {
         e1?.dayClothes == e2?.dayClothes &&
         e1?.dayAppliance == e2?.dayAppliance &&
         listEquality.equals(e1?.days, e2?.days) &&
-        listEquality.equals(e1?.graphTotal, e2?.graphTotal);
+        listEquality.equals(e1?.graphTotal, e2?.graphTotal) &&
+        e1?.connectionStreak == e2?.connectionStreak;
   }
 
   @override
@@ -698,7 +708,8 @@ class StatsRecordDocumentEquality implements Equality<StatsRecord> {
         e?.dayClothes,
         e?.dayAppliance,
         e?.days,
-        e?.graphTotal
+        e?.graphTotal,
+        e?.connectionStreak
       ]);
 
   @override

@@ -1,4 +1,5 @@
-import '/components/title_return_widget.dart';
+import '/components/head_signin_widget.dart';
+import '/components/title_back_widget.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'signup_widget.dart' show SignupWidget;
 import 'package:flutter/material.dart';
@@ -7,8 +8,10 @@ class SignupModel extends FlutterFlowModel<SignupWidget> {
   ///  State fields for stateful widgets in this page.
 
   final unfocusNode = FocusNode();
-  // Model for Title_return component.
-  late TitleReturnModel titleReturnModel;
+  // Model for headSignin component.
+  late HeadSigninModel headSigninModel;
+  // Model for TitleBack component.
+  late TitleBackModel titleBackModel;
   // State field(s) for lastname widget.
   FocusNode? lastnameFocusNode;
   TextEditingController? lastnameController;
@@ -33,14 +36,16 @@ class SignupModel extends FlutterFlowModel<SignupWidget> {
 
   @override
   void initState(BuildContext context) {
-    titleReturnModel = createModel(context, () => TitleReturnModel());
+    headSigninModel = createModel(context, () => HeadSigninModel());
+    titleBackModel = createModel(context, () => TitleBackModel());
     passwordVisibility = false;
   }
 
   @override
   void dispose() {
     unfocusNode.dispose();
-    titleReturnModel.dispose();
+    headSigninModel.dispose();
+    titleBackModel.dispose();
     lastnameFocusNode?.dispose();
     lastnameController?.dispose();
 

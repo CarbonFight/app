@@ -6,6 +6,7 @@ import 'package:flutter_web_plugins/url_strategy.dart';
 import 'auth/firebase_auth/firebase_user_provider.dart';
 import 'auth/firebase_auth/auth_util.dart';
 
+import '/backend/sqlite/sqlite_manager.dart';
 import 'backend/firebase/firebase_config.dart';
 import 'flutter_flow/flutter_flow_theme.dart';
 import 'flutter_flow/flutter_flow_util.dart';
@@ -20,6 +21,7 @@ void main() async {
   usePathUrlStrategy();
   await initFirebase();
 
+  await SQLiteManager.initialize();
   await FlutterFlowTheme.initialize();
 
   final appState = FFAppState(); // Initialize FFAppState
@@ -180,7 +182,7 @@ class _NavBarPageState extends State<NavBarPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Icon(
-                  Icons.home_outlined,
+                  FFIcons.khome1,
                   color: currentIndex == 0
                       ? FlutterFlowTheme.of(context).secondary
                       : FlutterFlowTheme.of(context).secondaryText,
@@ -204,7 +206,7 @@ class _NavBarPageState extends State<NavBarPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Icon(
-                  Icons.flash_on,
+                  FFIcons.kflash1,
                   color: currentIndex == 1
                       ? FlutterFlowTheme.of(context).secondary
                       : FlutterFlowTheme.of(context).secondaryText,
@@ -228,7 +230,7 @@ class _NavBarPageState extends State<NavBarPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Icon(
-                  Icons.add_circle_outline,
+                  FFIcons.kadd,
                   color: currentIndex == 2
                       ? FlutterFlowTheme.of(context).secondary
                       : FlutterFlowTheme.of(context).secondaryText,
@@ -252,7 +254,7 @@ class _NavBarPageState extends State<NavBarPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Icon(
-                  Icons.checklist_rtl,
+                  FFIcons.karchive1,
                   color: currentIndex == 3
                       ? FlutterFlowTheme.of(context).secondary
                       : FlutterFlowTheme.of(context).secondaryText,
@@ -276,7 +278,7 @@ class _NavBarPageState extends State<NavBarPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Icon(
-                  Icons.person_outlined,
+                  FFIcons.kuser,
                   color: currentIndex == 4
                       ? FlutterFlowTheme.of(context).secondary
                       : FlutterFlowTheme.of(context).secondaryText,

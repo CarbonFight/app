@@ -10,7 +10,7 @@ Future updateFEandCOE(
   String? option,
   int? count,
   int? multiplicator,
-  int? divider,
+  int? amortization,
   String? shared,
 }) async {
   ApiCallResponse? getEmissionFactor;
@@ -25,12 +25,24 @@ Future updateFEandCOE(
       FFAppState().actionCo2e = functions.calculateActionCO2e(
           count,
           multiplicator,
-          divider,
+          amortization,
           shared,
           GetEmissionFactorCall.co2e(
             (getEmissionFactor?.jsonBody ?? ''),
           ));
       FFAppState().actionFE = GetEmissionFactorCall.co2e(
+        (getEmissionFactor?.jsonBody ?? ''),
+      )!;
+      FFAppState().actionHint = GetEmissionFactorCall.hint(
+        (getEmissionFactor?.jsonBody ?? ''),
+      )!;
+      FFAppState().actionAmortization = GetEmissionFactorCall.amortization(
+        (getEmissionFactor?.jsonBody ?? ''),
+      );
+      FFAppState().actionUnit = GetEmissionFactorCall.unit(
+        (getEmissionFactor?.jsonBody ?? ''),
+      ).toString();
+      FFAppState().actionAmortizationLeft = GetEmissionFactorCall.amortization(
         (getEmissionFactor?.jsonBody ?? ''),
       );
     });

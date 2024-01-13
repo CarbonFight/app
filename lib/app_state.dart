@@ -35,6 +35,20 @@ class FFAppState extends ChangeNotifier {
     _safeInit(() {
       _actionFE = prefs.getInt('ff_actionFE') ?? _actionFE;
     });
+    _safeInit(() {
+      _actionHint = prefs.getString('ff_actionHint') ?? _actionHint;
+    });
+    _safeInit(() {
+      _actionAmortization =
+          prefs.getInt('ff_actionAmortization') ?? _actionAmortization;
+    });
+    _safeInit(() {
+      _actionUnit = prefs.getString('ff_actionUnit') ?? _actionUnit;
+    });
+    _safeInit(() {
+      _actionAmortizationLeft =
+          prefs.getInt('ff_actionAmortizationLeft') ?? _actionAmortizationLeft;
+    });
   }
 
   void update(VoidCallback callback) {
@@ -139,6 +153,34 @@ class FFAppState extends ChangeNotifier {
   set actionFE(int value) {
     _actionFE = value;
     prefs.setInt('ff_actionFE', value);
+  }
+
+  String _actionHint = '';
+  String get actionHint => _actionHint;
+  set actionHint(String value) {
+    _actionHint = value;
+    prefs.setString('ff_actionHint', value);
+  }
+
+  int _actionAmortization = 0;
+  int get actionAmortization => _actionAmortization;
+  set actionAmortization(int value) {
+    _actionAmortization = value;
+    prefs.setInt('ff_actionAmortization', value);
+  }
+
+  String _actionUnit = '';
+  String get actionUnit => _actionUnit;
+  set actionUnit(String value) {
+    _actionUnit = value;
+    prefs.setString('ff_actionUnit', value);
+  }
+
+  int _actionAmortizationLeft = 0;
+  int get actionAmortizationLeft => _actionAmortizationLeft;
+  set actionAmortizationLeft(int value) {
+    _actionAmortizationLeft = value;
+    prefs.setInt('ff_actionAmortizationLeft', value);
   }
 }
 

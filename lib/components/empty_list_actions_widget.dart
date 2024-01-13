@@ -2,18 +2,18 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'emptyjournal_model.dart';
-export 'emptyjournal_model.dart';
+import 'empty_list_actions_model.dart';
+export 'empty_list_actions_model.dart';
 
-class EmptyjournalWidget extends StatefulWidget {
-  const EmptyjournalWidget({super.key});
+class EmptyListActionsWidget extends StatefulWidget {
+  const EmptyListActionsWidget({super.key});
 
   @override
-  _EmptyjournalWidgetState createState() => _EmptyjournalWidgetState();
+  _EmptyListActionsWidgetState createState() => _EmptyListActionsWidgetState();
 }
 
-class _EmptyjournalWidgetState extends State<EmptyjournalWidget> {
-  late EmptyjournalModel _model;
+class _EmptyListActionsWidgetState extends State<EmptyListActionsWidget> {
+  late EmptyListActionsModel _model;
 
   @override
   void setState(VoidCallback callback) {
@@ -24,7 +24,7 @@ class _EmptyjournalWidgetState extends State<EmptyjournalWidget> {
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => EmptyjournalModel());
+    _model = createModel(context, () => EmptyListActionsModel());
 
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
@@ -44,37 +44,20 @@ class _EmptyjournalWidgetState extends State<EmptyjournalWidget> {
       mainAxisSize: MainAxisSize.max,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Icon(
-          FFIcons.kbulb,
-          color: FlutterFlowTheme.of(context).secondary,
-          size: 90.0,
-        ),
-        Padding(
-          padding: const EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 0.0),
-          child: Row(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                'C\'est tout vide !',
-                textAlign: TextAlign.center,
-                style: FlutterFlowTheme.of(context).headlineSmall.override(
-                      fontFamily: 'Poppins',
-                      color: FlutterFlowTheme.of(context).primaryText,
-                    ),
-              ),
-            ],
-          ),
-        ),
         Padding(
           padding: const EdgeInsetsDirectional.fromSTEB(12.0, 4.0, 12.0, 0.0),
           child: Row(
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              Icon(
+                FFIcons.kbulb,
+                color: FlutterFlowTheme.of(context).secondaryText,
+                size: 25.0,
+              ),
               Expanded(
                 child: Text(
-                  'Ajoutez votre premières actions',
+                  'Vous n\'avez pas d\'actions dans cette catégorie',
                   textAlign: TextAlign.center,
                   style: FlutterFlowTheme.of(context).bodySmall,
                 ),

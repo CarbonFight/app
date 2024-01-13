@@ -1,5 +1,5 @@
 import '/components/head_widget.dart';
-import '/components/title_return_widget.dart';
+import '/components/title_back_widget.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'association_widget.dart' show AssociationWidget;
 import 'package:flutter/material.dart';
@@ -10,22 +10,22 @@ class AssociationModel extends FlutterFlowModel<AssociationWidget> {
   final unfocusNode = FocusNode();
   // Model for head component.
   late HeadModel headModel;
-  // Model for Title_return component.
-  late TitleReturnModel titleReturnModel;
+  // Model for TitleBack component.
+  late TitleBackModel titleBackModel;
 
   /// Initialization and disposal methods.
 
   @override
   void initState(BuildContext context) {
     headModel = createModel(context, () => HeadModel());
-    titleReturnModel = createModel(context, () => TitleReturnModel());
+    titleBackModel = createModel(context, () => TitleBackModel());
   }
 
   @override
   void dispose() {
     unfocusNode.dispose();
     headModel.dispose();
-    titleReturnModel.dispose();
+    titleBackModel.dispose();
   }
 
   /// Action blocks are added here.

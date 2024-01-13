@@ -64,9 +64,7 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
                 builder: (context) => wrapWithModel(
                   model: _model.headModel,
                   updateCallback: () => setState(() {}),
-                  child: HeadWidget(
-                    displayName: currentUserDisplayName,
-                  ),
+                  child: const HeadWidget(),
                 ),
               ),
               wrapWithModel(
@@ -166,10 +164,10 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
                                             color: Color(0x00FFFFFF),
                                           ),
                                           child: Icon(
-                                            Icons.navigate_next,
+                                            FFIcons.karrowRight3,
                                             color: FlutterFlowTheme.of(context)
                                                 .secondary,
-                                            size: 30.0,
+                                            size: 24.0,
                                           ),
                                         ),
                                       ),
@@ -255,10 +253,10 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
                                           alignment:
                                               const AlignmentDirectional(0.0, 0.0),
                                           child: Icon(
-                                            Icons.navigate_next,
+                                            FFIcons.karrowRight3,
                                             color: FlutterFlowTheme.of(context)
                                                 .secondary,
-                                            size: 30.0,
+                                            size: 24.0,
                                           ),
                                         ),
                                       ),
@@ -344,10 +342,10 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
                                           alignment:
                                               const AlignmentDirectional(0.0, 0.0),
                                           child: Icon(
-                                            Icons.navigate_next,
+                                            FFIcons.karrowRight3,
                                             color: FlutterFlowTheme.of(context)
                                                 .secondary,
-                                            size: 30.0,
+                                            size: 24.0,
                                           ),
                                         ),
                                       ),
@@ -433,10 +431,10 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
                                           alignment:
                                               const AlignmentDirectional(0.0, 0.0),
                                           child: Icon(
-                                            Icons.navigate_next,
+                                            FFIcons.karrowRight3,
                                             color: FlutterFlowTheme.of(context)
                                                 .secondary,
-                                            size: 30.0,
+                                            size: 24.0,
                                           ),
                                         ),
                                       ),
@@ -522,10 +520,10 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
                                           alignment:
                                               const AlignmentDirectional(0.0, 0.0),
                                           child: Icon(
-                                            Icons.navigate_next,
+                                            FFIcons.karrowRight3,
                                             color: FlutterFlowTheme.of(context)
                                                 .secondary,
-                                            size: 30.0,
+                                            size: 24.0,
                                           ),
                                         ),
                                       ),
@@ -611,10 +609,10 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
                                           alignment:
                                               const AlignmentDirectional(0.0, 0.0),
                                           child: Icon(
-                                            Icons.navigate_next,
+                                            FFIcons.karrowRight3,
                                             color: FlutterFlowTheme.of(context)
                                                 .secondary,
-                                            size: 30.0,
+                                            size: 24.0,
                                           ),
                                         ),
                                       ),
@@ -700,10 +698,10 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
                                           alignment:
                                               const AlignmentDirectional(0.0, 0.0),
                                           child: Icon(
-                                            Icons.navigate_next,
+                                            FFIcons.karrowRight3,
                                             color: FlutterFlowTheme.of(context)
                                                 .secondary,
-                                            size: 30.0,
+                                            size: 24.0,
                                           ),
                                         ),
                                       ),
@@ -789,10 +787,10 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
                                           alignment:
                                               const AlignmentDirectional(0.0, 0.0),
                                           child: Icon(
-                                            Icons.navigate_next,
+                                            FFIcons.karrowRight3,
                                             color: FlutterFlowTheme.of(context)
                                                 .secondary,
-                                            size: 30.0,
+                                            size: 24.0,
                                           ),
                                         ),
                                       ),
@@ -878,10 +876,10 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
                                           alignment:
                                               const AlignmentDirectional(0.0, 0.0),
                                           child: Icon(
-                                            Icons.navigate_next,
+                                            FFIcons.karrowRight3,
                                             color: FlutterFlowTheme.of(context)
                                                 .secondary,
-                                            size: 30.0,
+                                            size: 24.0,
                                           ),
                                         ),
                                       ),

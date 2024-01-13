@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 
 import '/backend/backend.dart';
 
+import '/backend/sqlite/queries/sqlite_row.dart';
+import '/backend/sqlite/queries/read.dart';
 import '../../flutter_flow/place.dart';
 import '../../flutter_flow/uploaded_file.dart';
 
@@ -86,6 +88,9 @@ String? serializeParam(
       case ParamType.Document:
         final reference = (param as FirestoreRecord).reference;
         return _serializeDocumentReference(reference);
+
+      case ParamType.SqliteRow:
+        return json.encode((param as SqliteRow).data);
 
       default:
         return null;
@@ -175,6 +180,8 @@ enum ParamType {
   JSON,
   Document,
   DocumentReference,
+
+  SqliteRow,
 }
 
 dynamic deserializeParam<T>(
@@ -229,6 +236,15 @@ dynamic deserializeParam<T>(
         return json.decode(param);
       case ParamType.DocumentReference:
         return _deserializeDocumentReference(param, collectionNamePath ?? []);
+
+      case ParamType.SqliteRow:
+        final data = json.decode(param) as Map<String, dynamic>;
+        switch (T) {
+          case GetOptionsRow:
+            return GetOptionsRow(data);
+          default:
+            return null;
+        }
 
       default:
         return null;

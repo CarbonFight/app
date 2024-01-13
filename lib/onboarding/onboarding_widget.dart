@@ -801,7 +801,6 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
           : FocusScope.of(context).unfocus(),
       child: Scaffold(
         key: scaffoldKey,
-        backgroundColor: FlutterFlowTheme.of(context).secondaryBackground,
         body: Column(
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -955,111 +954,144 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
                                           ),
                                         ),
                                       ),
+                                      Padding(
+                                        padding: const EdgeInsetsDirectional.fromSTEB(
+                                            16.0, 30.0, 16.0, 0.0),
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.max,
+                                          children: [
+                                            Expanded(
+                                              child: Align(
+                                                alignment: const AlignmentDirectional(
+                                                    0.0, 0.0),
+                                                child: Padding(
+                                                  padding: const EdgeInsetsDirectional
+                                                      .fromSTEB(
+                                                          0.0, 0.0, 8.0, 16.0),
+                                                  child: FFButtonWidget(
+                                                    onPressed: () async {
+                                                      await currentUserReference!
+                                                          .update(
+                                                              createUsersRecordData(
+                                                        skipHowto: true,
+                                                      ));
+
+                                                      context.goNamed('home');
+                                                    },
+                                                    text: 'Passer',
+                                                    options: FFButtonOptions(
+                                                      width: 230.0,
+                                                      height: 52.0,
+                                                      padding:
+                                                          const EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                                  0.0,
+                                                                  0.0,
+                                                                  0.0,
+                                                                  0.0),
+                                                      iconPadding:
+                                                          const EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                                  0.0,
+                                                                  0.0,
+                                                                  0.0,
+                                                                  0.0),
+                                                      color: FlutterFlowTheme
+                                                              .of(context)
+                                                          .secondaryBackground,
+                                                      textStyle:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .bodyLarge,
+                                                      elevation: 0.0,
+                                                      borderSide: BorderSide(
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .alternate,
+                                                        width: 2.0,
+                                                      ),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              12.0),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                            Expanded(
+                                              child: Align(
+                                                alignment: const AlignmentDirectional(
+                                                    0.0, 0.0),
+                                                child: Padding(
+                                                  padding: const EdgeInsetsDirectional
+                                                      .fromSTEB(
+                                                          8.0, 0.0, 0.0, 16.0),
+                                                  child: FFButtonWidget(
+                                                    onPressed: () async {
+                                                      await _model
+                                                          .pageViewController
+                                                          ?.nextPage(
+                                                        duration: const Duration(
+                                                            milliseconds: 300),
+                                                        curve: Curves.ease,
+                                                      );
+                                                    },
+                                                    text: 'Commencer',
+                                                    options: FFButtonOptions(
+                                                      width: 230.0,
+                                                      height: 52.0,
+                                                      padding:
+                                                          const EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                                  0.0,
+                                                                  0.0,
+                                                                  0.0,
+                                                                  0.0),
+                                                      iconPadding:
+                                                          const EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                                  0.0,
+                                                                  0.0,
+                                                                  0.0,
+                                                                  0.0),
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .primary,
+                                                      textStyle:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .titleSmall
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Montserrat',
+                                                                color: Colors
+                                                                    .white,
+                                                              ),
+                                                      elevation: 3.0,
+                                                      borderSide: const BorderSide(
+                                                        color:
+                                                            Colors.transparent,
+                                                        width: 1.0,
+                                                      ),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              12.0),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ).animateOnPageLoad(animationsMap[
+                                            'rowOnPageLoadAnimation1']!),
+                                      ),
                                     ],
                                   ),
                                 ),
                               ).animateOnPageLoad(animationsMap[
                                   'containerOnPageLoadAnimation1']!),
-                            ),
-                            Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                  16.0, 24.0, 16.0, 44.0),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.max,
-                                children: [
-                                  Expanded(
-                                    child: Align(
-                                      alignment: const AlignmentDirectional(0.0, 0.0),
-                                      child: Padding(
-                                        padding: const EdgeInsetsDirectional.fromSTEB(
-                                            0.0, 0.0, 8.0, 16.0),
-                                        child: FFButtonWidget(
-                                          onPressed: () async {
-                                            await currentUserReference!
-                                                .update(createUsersRecordData(
-                                              skipHowto: true,
-                                            ));
-
-                                            context.goNamed('home');
-                                          },
-                                          text: 'Passer',
-                                          options: FFButtonOptions(
-                                            width: 230.0,
-                                            height: 52.0,
-                                            padding:
-                                                const EdgeInsetsDirectional.fromSTEB(
-                                                    0.0, 0.0, 0.0, 0.0),
-                                            iconPadding:
-                                                const EdgeInsetsDirectional.fromSTEB(
-                                                    0.0, 0.0, 0.0, 0.0),
-                                            color: FlutterFlowTheme.of(context)
-                                                .secondaryBackground,
-                                            textStyle:
-                                                FlutterFlowTheme.of(context)
-                                                    .bodyLarge,
-                                            elevation: 0.0,
-                                            borderSide: BorderSide(
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .alternate,
-                                              width: 2.0,
-                                            ),
-                                            borderRadius:
-                                                BorderRadius.circular(12.0),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: Align(
-                                      alignment: const AlignmentDirectional(0.0, 0.0),
-                                      child: Padding(
-                                        padding: const EdgeInsetsDirectional.fromSTEB(
-                                            8.0, 0.0, 0.0, 16.0),
-                                        child: FFButtonWidget(
-                                          onPressed: () async {
-                                            await _model.pageViewController
-                                                ?.nextPage(
-                                              duration:
-                                                  const Duration(milliseconds: 300),
-                                              curve: Curves.ease,
-                                            );
-                                          },
-                                          text: 'Commencer',
-                                          options: FFButtonOptions(
-                                            width: 230.0,
-                                            height: 52.0,
-                                            padding:
-                                                const EdgeInsetsDirectional.fromSTEB(
-                                                    0.0, 0.0, 0.0, 0.0),
-                                            iconPadding:
-                                                const EdgeInsetsDirectional.fromSTEB(
-                                                    0.0, 0.0, 0.0, 0.0),
-                                            color: FlutterFlowTheme.of(context)
-                                                .primary,
-                                            textStyle:
-                                                FlutterFlowTheme.of(context)
-                                                    .titleSmall
-                                                    .override(
-                                                      fontFamily: 'Montserrat',
-                                                      color: Colors.white,
-                                                    ),
-                                            elevation: 3.0,
-                                            borderSide: const BorderSide(
-                                              color: Colors.transparent,
-                                              width: 1.0,
-                                            ),
-                                            borderRadius:
-                                                BorderRadius.circular(12.0),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ).animateOnPageLoad(
-                                  animationsMap['rowOnPageLoadAnimation1']!),
                             ),
                           ],
                         ),
@@ -1184,12 +1216,26 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
                                                     ),
                                                     const TextSpan(
                                                       text:
-                                                          ' de la vie courante. CarbonFight est un bon outil pour y parvenir.',
+                                                          ' de la vie courante. \n\nCarbonFight est un bon outil pour y parvenir.',
                                                       style: TextStyle(),
                                                     ),
                                                     const TextSpan(
                                                       text:
-                                                          '\n\nNous avons fixé votre objectif d\'émission CO2 annuel. Vous pourrez le personnaliser plus tard. Il s\'élève à :',
+                                                          '\n\nNous avons fixé votre ',
+                                                      style: TextStyle(),
+                                                    ),
+                                                    TextSpan(
+                                                      text: 'objectif annuel ',
+                                                      style: TextStyle(
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .primary,
+                                                      ),
+                                                    ),
+                                                    const TextSpan(
+                                                      text:
+                                                          'd\'émission CO2. Vous pourrez le personnaliser plus tard. Il s\'élève à :',
                                                       style: TextStyle(),
                                                     )
                                                   ],
@@ -1222,111 +1268,144 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
                                           ),
                                         ),
                                       ),
+                                      Padding(
+                                        padding: const EdgeInsetsDirectional.fromSTEB(
+                                            16.0, 30.0, 16.0, 0.0),
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.max,
+                                          children: [
+                                            Expanded(
+                                              child: Align(
+                                                alignment: const AlignmentDirectional(
+                                                    0.0, 0.0),
+                                                child: Padding(
+                                                  padding: const EdgeInsetsDirectional
+                                                      .fromSTEB(
+                                                          0.0, 0.0, 8.0, 16.0),
+                                                  child: FFButtonWidget(
+                                                    onPressed: () async {
+                                                      await currentUserReference!
+                                                          .update(
+                                                              createUsersRecordData(
+                                                        skipHowto: true,
+                                                      ));
+
+                                                      context.goNamed('home');
+                                                    },
+                                                    text: 'Passer',
+                                                    options: FFButtonOptions(
+                                                      width: 230.0,
+                                                      height: 52.0,
+                                                      padding:
+                                                          const EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                                  0.0,
+                                                                  0.0,
+                                                                  0.0,
+                                                                  0.0),
+                                                      iconPadding:
+                                                          const EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                                  0.0,
+                                                                  0.0,
+                                                                  0.0,
+                                                                  0.0),
+                                                      color: FlutterFlowTheme
+                                                              .of(context)
+                                                          .secondaryBackground,
+                                                      textStyle:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .bodyLarge,
+                                                      elevation: 0.0,
+                                                      borderSide: BorderSide(
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .alternate,
+                                                        width: 2.0,
+                                                      ),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              12.0),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                            Expanded(
+                                              child: Align(
+                                                alignment: const AlignmentDirectional(
+                                                    0.0, 0.0),
+                                                child: Padding(
+                                                  padding: const EdgeInsetsDirectional
+                                                      .fromSTEB(
+                                                          8.0, 0.0, 0.0, 16.0),
+                                                  child: FFButtonWidget(
+                                                    onPressed: () async {
+                                                      await _model
+                                                          .pageViewController
+                                                          ?.nextPage(
+                                                        duration: const Duration(
+                                                            milliseconds: 300),
+                                                        curve: Curves.ease,
+                                                      );
+                                                    },
+                                                    text: 'Suivant',
+                                                    options: FFButtonOptions(
+                                                      width: 230.0,
+                                                      height: 52.0,
+                                                      padding:
+                                                          const EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                                  0.0,
+                                                                  0.0,
+                                                                  0.0,
+                                                                  0.0),
+                                                      iconPadding:
+                                                          const EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                                  0.0,
+                                                                  0.0,
+                                                                  0.0,
+                                                                  0.0),
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .primary,
+                                                      textStyle:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .titleSmall
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Montserrat',
+                                                                color: Colors
+                                                                    .white,
+                                                              ),
+                                                      elevation: 3.0,
+                                                      borderSide: const BorderSide(
+                                                        color:
+                                                            Colors.transparent,
+                                                        width: 1.0,
+                                                      ),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              12.0),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ).animateOnPageLoad(animationsMap[
+                                            'rowOnPageLoadAnimation2']!),
+                                      ),
                                     ],
                                   ),
                                 ),
                               ).animateOnPageLoad(animationsMap[
                                   'containerOnPageLoadAnimation3']!),
-                            ),
-                            Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                  16.0, 24.0, 16.0, 44.0),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.max,
-                                children: [
-                                  Expanded(
-                                    child: Align(
-                                      alignment: const AlignmentDirectional(0.0, 0.0),
-                                      child: Padding(
-                                        padding: const EdgeInsetsDirectional.fromSTEB(
-                                            0.0, 0.0, 8.0, 16.0),
-                                        child: FFButtonWidget(
-                                          onPressed: () async {
-                                            await currentUserReference!
-                                                .update(createUsersRecordData(
-                                              skipHowto: true,
-                                            ));
-
-                                            context.goNamed('home');
-                                          },
-                                          text: 'Passer',
-                                          options: FFButtonOptions(
-                                            width: 230.0,
-                                            height: 52.0,
-                                            padding:
-                                                const EdgeInsetsDirectional.fromSTEB(
-                                                    0.0, 0.0, 0.0, 0.0),
-                                            iconPadding:
-                                                const EdgeInsetsDirectional.fromSTEB(
-                                                    0.0, 0.0, 0.0, 0.0),
-                                            color: FlutterFlowTheme.of(context)
-                                                .secondaryBackground,
-                                            textStyle:
-                                                FlutterFlowTheme.of(context)
-                                                    .bodyLarge,
-                                            elevation: 0.0,
-                                            borderSide: BorderSide(
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .alternate,
-                                              width: 2.0,
-                                            ),
-                                            borderRadius:
-                                                BorderRadius.circular(12.0),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: Align(
-                                      alignment: const AlignmentDirectional(0.0, 0.0),
-                                      child: Padding(
-                                        padding: const EdgeInsetsDirectional.fromSTEB(
-                                            8.0, 0.0, 0.0, 16.0),
-                                        child: FFButtonWidget(
-                                          onPressed: () async {
-                                            await _model.pageViewController
-                                                ?.nextPage(
-                                              duration:
-                                                  const Duration(milliseconds: 300),
-                                              curve: Curves.ease,
-                                            );
-                                          },
-                                          text: 'Suivant',
-                                          options: FFButtonOptions(
-                                            width: 230.0,
-                                            height: 52.0,
-                                            padding:
-                                                const EdgeInsetsDirectional.fromSTEB(
-                                                    0.0, 0.0, 0.0, 0.0),
-                                            iconPadding:
-                                                const EdgeInsetsDirectional.fromSTEB(
-                                                    0.0, 0.0, 0.0, 0.0),
-                                            color: FlutterFlowTheme.of(context)
-                                                .primary,
-                                            textStyle:
-                                                FlutterFlowTheme.of(context)
-                                                    .titleSmall
-                                                    .override(
-                                                      fontFamily: 'Montserrat',
-                                                      color: Colors.white,
-                                                    ),
-                                            elevation: 3.0,
-                                            borderSide: const BorderSide(
-                                              color: Colors.transparent,
-                                              width: 1.0,
-                                            ),
-                                            borderRadius:
-                                                BorderRadius.circular(12.0),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ).animateOnPageLoad(
-                                  animationsMap['rowOnPageLoadAnimation2']!),
                             ),
                           ],
                         ),
@@ -1379,7 +1458,7 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
                                           shape: BoxShape.circle,
                                         ),
                                         child: Icon(
-                                          Icons.add_circle_outline,
+                                          FFIcons.kadd,
                                           color: FlutterFlowTheme.of(context)
                                               .primary,
                                           size: 55.0,
@@ -1457,10 +1536,6 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
                                             );
                                           },
                                           text: 'Ajouter',
-                                          icon: const Icon(
-                                            Icons.add_circle_outline,
-                                            size: 25.0,
-                                          ),
                                           options: FFButtonOptions(
                                             width: 290.0,
                                             height: 50.0,
@@ -1483,111 +1558,144 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
                                           ),
                                         ),
                                       ),
+                                      Padding(
+                                        padding: const EdgeInsetsDirectional.fromSTEB(
+                                            16.0, 30.0, 16.0, 44.0),
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.max,
+                                          children: [
+                                            Expanded(
+                                              child: Align(
+                                                alignment: const AlignmentDirectional(
+                                                    0.0, 0.0),
+                                                child: Padding(
+                                                  padding: const EdgeInsetsDirectional
+                                                      .fromSTEB(
+                                                          0.0, 0.0, 8.0, 16.0),
+                                                  child: FFButtonWidget(
+                                                    onPressed: () async {
+                                                      await currentUserReference!
+                                                          .update(
+                                                              createUsersRecordData(
+                                                        skipHowto: true,
+                                                      ));
+
+                                                      context.goNamed('home');
+                                                    },
+                                                    text: 'Passer',
+                                                    options: FFButtonOptions(
+                                                      width: 230.0,
+                                                      height: 52.0,
+                                                      padding:
+                                                          const EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                                  0.0,
+                                                                  0.0,
+                                                                  0.0,
+                                                                  0.0),
+                                                      iconPadding:
+                                                          const EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                                  0.0,
+                                                                  0.0,
+                                                                  0.0,
+                                                                  0.0),
+                                                      color: FlutterFlowTheme
+                                                              .of(context)
+                                                          .secondaryBackground,
+                                                      textStyle:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .bodyLarge,
+                                                      elevation: 0.0,
+                                                      borderSide: BorderSide(
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .alternate,
+                                                        width: 2.0,
+                                                      ),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              12.0),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                            Expanded(
+                                              child: Align(
+                                                alignment: const AlignmentDirectional(
+                                                    0.0, 0.0),
+                                                child: Padding(
+                                                  padding: const EdgeInsetsDirectional
+                                                      .fromSTEB(
+                                                          8.0, 0.0, 0.0, 16.0),
+                                                  child: FFButtonWidget(
+                                                    onPressed: () async {
+                                                      await _model
+                                                          .pageViewController
+                                                          ?.nextPage(
+                                                        duration: const Duration(
+                                                            milliseconds: 300),
+                                                        curve: Curves.ease,
+                                                      );
+                                                    },
+                                                    text: 'Suivant',
+                                                    options: FFButtonOptions(
+                                                      width: 230.0,
+                                                      height: 52.0,
+                                                      padding:
+                                                          const EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                                  0.0,
+                                                                  0.0,
+                                                                  0.0,
+                                                                  0.0),
+                                                      iconPadding:
+                                                          const EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                                  0.0,
+                                                                  0.0,
+                                                                  0.0,
+                                                                  0.0),
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .primary,
+                                                      textStyle:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .titleSmall
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Montserrat',
+                                                                color: Colors
+                                                                    .white,
+                                                              ),
+                                                      elevation: 3.0,
+                                                      borderSide: const BorderSide(
+                                                        color:
+                                                            Colors.transparent,
+                                                        width: 1.0,
+                                                      ),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              12.0),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ).animateOnPageLoad(animationsMap[
+                                            'rowOnPageLoadAnimation3']!),
+                                      ),
                                     ],
                                   ),
                                 ),
                               ).animateOnPageLoad(animationsMap[
                                   'containerOnPageLoadAnimation5']!),
-                            ),
-                            Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                  16.0, 24.0, 16.0, 44.0),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.max,
-                                children: [
-                                  Expanded(
-                                    child: Align(
-                                      alignment: const AlignmentDirectional(0.0, 0.0),
-                                      child: Padding(
-                                        padding: const EdgeInsetsDirectional.fromSTEB(
-                                            0.0, 0.0, 8.0, 16.0),
-                                        child: FFButtonWidget(
-                                          onPressed: () async {
-                                            await currentUserReference!
-                                                .update(createUsersRecordData(
-                                              skipHowto: true,
-                                            ));
-
-                                            context.goNamed('home');
-                                          },
-                                          text: 'Passer',
-                                          options: FFButtonOptions(
-                                            width: 230.0,
-                                            height: 52.0,
-                                            padding:
-                                                const EdgeInsetsDirectional.fromSTEB(
-                                                    0.0, 0.0, 0.0, 0.0),
-                                            iconPadding:
-                                                const EdgeInsetsDirectional.fromSTEB(
-                                                    0.0, 0.0, 0.0, 0.0),
-                                            color: FlutterFlowTheme.of(context)
-                                                .secondaryBackground,
-                                            textStyle:
-                                                FlutterFlowTheme.of(context)
-                                                    .bodyLarge,
-                                            elevation: 0.0,
-                                            borderSide: BorderSide(
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .alternate,
-                                              width: 2.0,
-                                            ),
-                                            borderRadius:
-                                                BorderRadius.circular(12.0),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: Align(
-                                      alignment: const AlignmentDirectional(0.0, 0.0),
-                                      child: Padding(
-                                        padding: const EdgeInsetsDirectional.fromSTEB(
-                                            8.0, 0.0, 0.0, 16.0),
-                                        child: FFButtonWidget(
-                                          onPressed: () async {
-                                            await _model.pageViewController
-                                                ?.nextPage(
-                                              duration:
-                                                  const Duration(milliseconds: 300),
-                                              curve: Curves.ease,
-                                            );
-                                          },
-                                          text: 'Suivant',
-                                          options: FFButtonOptions(
-                                            width: 230.0,
-                                            height: 52.0,
-                                            padding:
-                                                const EdgeInsetsDirectional.fromSTEB(
-                                                    0.0, 0.0, 0.0, 0.0),
-                                            iconPadding:
-                                                const EdgeInsetsDirectional.fromSTEB(
-                                                    0.0, 0.0, 0.0, 0.0),
-                                            color: FlutterFlowTheme.of(context)
-                                                .primary,
-                                            textStyle:
-                                                FlutterFlowTheme.of(context)
-                                                    .titleSmall
-                                                    .override(
-                                                      fontFamily: 'Montserrat',
-                                                      color: Colors.white,
-                                                    ),
-                                            elevation: 3.0,
-                                            borderSide: const BorderSide(
-                                              color: Colors.transparent,
-                                              width: 1.0,
-                                            ),
-                                            borderRadius:
-                                                BorderRadius.circular(12.0),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ).animateOnPageLoad(
-                                  animationsMap['rowOnPageLoadAnimation3']!),
                             ),
                           ],
                         ),
@@ -1640,7 +1748,7 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
                                           shape: BoxShape.circle,
                                         ),
                                         child: Icon(
-                                          Icons.add_circle_outline,
+                                          FFIcons.kadd,
                                           color: FlutterFlowTheme.of(context)
                                               .primary,
                                           size: 55.0,
@@ -1813,111 +1921,144 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
                                           ),
                                         ),
                                       ),
+                                      Padding(
+                                        padding: const EdgeInsetsDirectional.fromSTEB(
+                                            16.0, 24.0, 16.0, 44.0),
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.max,
+                                          children: [
+                                            Expanded(
+                                              child: Align(
+                                                alignment: const AlignmentDirectional(
+                                                    0.0, 0.0),
+                                                child: Padding(
+                                                  padding: const EdgeInsetsDirectional
+                                                      .fromSTEB(
+                                                          0.0, 0.0, 8.0, 16.0),
+                                                  child: FFButtonWidget(
+                                                    onPressed: () async {
+                                                      await currentUserReference!
+                                                          .update(
+                                                              createUsersRecordData(
+                                                        skipHowto: true,
+                                                      ));
+
+                                                      context.goNamed('home');
+                                                    },
+                                                    text: 'Passer',
+                                                    options: FFButtonOptions(
+                                                      width: 230.0,
+                                                      height: 52.0,
+                                                      padding:
+                                                          const EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                                  0.0,
+                                                                  0.0,
+                                                                  0.0,
+                                                                  0.0),
+                                                      iconPadding:
+                                                          const EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                                  0.0,
+                                                                  0.0,
+                                                                  0.0,
+                                                                  0.0),
+                                                      color: FlutterFlowTheme
+                                                              .of(context)
+                                                          .secondaryBackground,
+                                                      textStyle:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .bodyLarge,
+                                                      elevation: 0.0,
+                                                      borderSide: BorderSide(
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .alternate,
+                                                        width: 2.0,
+                                                      ),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              12.0),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                            Expanded(
+                                              child: Align(
+                                                alignment: const AlignmentDirectional(
+                                                    0.0, 0.0),
+                                                child: Padding(
+                                                  padding: const EdgeInsetsDirectional
+                                                      .fromSTEB(
+                                                          8.0, 0.0, 0.0, 16.0),
+                                                  child: FFButtonWidget(
+                                                    onPressed: () async {
+                                                      await _model
+                                                          .pageViewController
+                                                          ?.nextPage(
+                                                        duration: const Duration(
+                                                            milliseconds: 300),
+                                                        curve: Curves.ease,
+                                                      );
+                                                    },
+                                                    text: 'Suivant',
+                                                    options: FFButtonOptions(
+                                                      width: 230.0,
+                                                      height: 52.0,
+                                                      padding:
+                                                          const EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                                  0.0,
+                                                                  0.0,
+                                                                  0.0,
+                                                                  0.0),
+                                                      iconPadding:
+                                                          const EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                                  0.0,
+                                                                  0.0,
+                                                                  0.0,
+                                                                  0.0),
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .primary,
+                                                      textStyle:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .titleSmall
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Montserrat',
+                                                                color: Colors
+                                                                    .white,
+                                                              ),
+                                                      elevation: 3.0,
+                                                      borderSide: const BorderSide(
+                                                        color:
+                                                            Colors.transparent,
+                                                        width: 1.0,
+                                                      ),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              12.0),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ).animateOnPageLoad(animationsMap[
+                                            'rowOnPageLoadAnimation4']!),
+                                      ),
                                     ],
                                   ),
                                 ),
                               ).animateOnPageLoad(animationsMap[
                                   'containerOnPageLoadAnimation7']!),
-                            ),
-                            Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                  16.0, 24.0, 16.0, 44.0),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.max,
-                                children: [
-                                  Expanded(
-                                    child: Align(
-                                      alignment: const AlignmentDirectional(0.0, 0.0),
-                                      child: Padding(
-                                        padding: const EdgeInsetsDirectional.fromSTEB(
-                                            0.0, 0.0, 8.0, 16.0),
-                                        child: FFButtonWidget(
-                                          onPressed: () async {
-                                            await currentUserReference!
-                                                .update(createUsersRecordData(
-                                              skipHowto: true,
-                                            ));
-
-                                            context.goNamed('home');
-                                          },
-                                          text: 'Passer',
-                                          options: FFButtonOptions(
-                                            width: 230.0,
-                                            height: 52.0,
-                                            padding:
-                                                const EdgeInsetsDirectional.fromSTEB(
-                                                    0.0, 0.0, 0.0, 0.0),
-                                            iconPadding:
-                                                const EdgeInsetsDirectional.fromSTEB(
-                                                    0.0, 0.0, 0.0, 0.0),
-                                            color: FlutterFlowTheme.of(context)
-                                                .secondaryBackground,
-                                            textStyle:
-                                                FlutterFlowTheme.of(context)
-                                                    .bodyLarge,
-                                            elevation: 0.0,
-                                            borderSide: BorderSide(
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .alternate,
-                                              width: 2.0,
-                                            ),
-                                            borderRadius:
-                                                BorderRadius.circular(12.0),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: Align(
-                                      alignment: const AlignmentDirectional(0.0, 0.0),
-                                      child: Padding(
-                                        padding: const EdgeInsetsDirectional.fromSTEB(
-                                            8.0, 0.0, 0.0, 16.0),
-                                        child: FFButtonWidget(
-                                          onPressed: () async {
-                                            await _model.pageViewController
-                                                ?.nextPage(
-                                              duration:
-                                                  const Duration(milliseconds: 300),
-                                              curve: Curves.ease,
-                                            );
-                                          },
-                                          text: 'Suivant',
-                                          options: FFButtonOptions(
-                                            width: 230.0,
-                                            height: 52.0,
-                                            padding:
-                                                const EdgeInsetsDirectional.fromSTEB(
-                                                    0.0, 0.0, 0.0, 0.0),
-                                            iconPadding:
-                                                const EdgeInsetsDirectional.fromSTEB(
-                                                    0.0, 0.0, 0.0, 0.0),
-                                            color: FlutterFlowTheme.of(context)
-                                                .primary,
-                                            textStyle:
-                                                FlutterFlowTheme.of(context)
-                                                    .titleSmall
-                                                    .override(
-                                                      fontFamily: 'Montserrat',
-                                                      color: Colors.white,
-                                                    ),
-                                            elevation: 3.0,
-                                            borderSide: const BorderSide(
-                                              color: Colors.transparent,
-                                              width: 1.0,
-                                            ),
-                                            borderRadius:
-                                                BorderRadius.circular(12.0),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ).animateOnPageLoad(
-                                  animationsMap['rowOnPageLoadAnimation4']!),
                             ),
                           ],
                         ),
@@ -1969,7 +2110,7 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
                                           shape: BoxShape.circle,
                                         ),
                                         child: Icon(
-                                          Icons.add_circle_outline,
+                                          FFIcons.kadd,
                                           color: FlutterFlowTheme.of(context)
                                               .primary,
                                           size: 55.0,
@@ -2056,11 +2197,24 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
                                       ),
                                       Container(
                                         width: 300.0,
-                                        decoration: const BoxDecoration(),
+                                        height: 50.0,
+                                        decoration: BoxDecoration(
+                                          color: FlutterFlowTheme.of(context)
+                                              .secondaryBackground,
+                                          boxShadow: const [
+                                            BoxShadow(
+                                              blurRadius: 4.0,
+                                              color: Color(0x33000000),
+                                              offset: Offset(0.0, 2.0),
+                                            )
+                                          ],
+                                          borderRadius:
+                                              BorderRadius.circular(25.0),
+                                        ),
                                         child: Row(
                                           mainAxisSize: MainAxisSize.max,
                                           mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
+                                              MainAxisAlignment.spaceEvenly,
                                           crossAxisAlignment:
                                               CrossAxisAlignment.center,
                                           children: [
@@ -2126,8 +2280,8 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
                                             0.0, 20.0, 0.0, 0.0),
                                         child: FFButtonWidget(
                                           onPressed:
-                                              _model.distanceController.text !=
-                                                      '10'
+                                              (_model.distanceController.text !=
+                                                      '10')
                                                   ? null
                                                   : () async {
                                                       await _model
@@ -2164,123 +2318,160 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
                                           ),
                                         ),
                                       ),
+                                      if (!(isWeb
+                                          ? MediaQuery.viewInsetsOf(context)
+                                                  .bottom >
+                                              0
+                                          : _isKeyboardVisible))
+                                        Padding(
+                                          padding:
+                                              const EdgeInsetsDirectional.fromSTEB(
+                                                  16.0, 40.0, 16.0, 0.0),
+                                          child: Row(
+                                            mainAxisSize: MainAxisSize.max,
+                                            children: [
+                                              Expanded(
+                                                child: Align(
+                                                  alignment:
+                                                      const AlignmentDirectional(
+                                                          0.0, 0.0),
+                                                  child: Padding(
+                                                    padding:
+                                                        const EdgeInsetsDirectional
+                                                            .fromSTEB(0.0, 0.0,
+                                                                8.0, 16.0),
+                                                    child: FFButtonWidget(
+                                                      onPressed: () async {
+                                                        await currentUserReference!
+                                                            .update(
+                                                                createUsersRecordData(
+                                                          skipHowto: true,
+                                                        ));
+
+                                                        context.goNamed('home');
+                                                      },
+                                                      text: 'Passer',
+                                                      options: FFButtonOptions(
+                                                        width: 230.0,
+                                                        height: 52.0,
+                                                        padding:
+                                                            const EdgeInsetsDirectional
+                                                                .fromSTEB(
+                                                                    0.0,
+                                                                    0.0,
+                                                                    0.0,
+                                                                    0.0),
+                                                        iconPadding:
+                                                            const EdgeInsetsDirectional
+                                                                .fromSTEB(
+                                                                    0.0,
+                                                                    0.0,
+                                                                    0.0,
+                                                                    0.0),
+                                                        color: FlutterFlowTheme
+                                                                .of(context)
+                                                            .secondaryBackground,
+                                                        textStyle:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .bodyLarge,
+                                                        elevation: 0.0,
+                                                        borderSide: BorderSide(
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .alternate,
+                                                          width: 2.0,
+                                                        ),
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(12.0),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                              Expanded(
+                                                child: Align(
+                                                  alignment:
+                                                      const AlignmentDirectional(
+                                                          0.0, 0.0),
+                                                  child: Padding(
+                                                    padding:
+                                                        const EdgeInsetsDirectional
+                                                            .fromSTEB(8.0, 0.0,
+                                                                0.0, 16.0),
+                                                    child: FFButtonWidget(
+                                                      onPressed: () async {
+                                                        await _model
+                                                            .pageViewController
+                                                            ?.nextPage(
+                                                          duration: const Duration(
+                                                              milliseconds:
+                                                                  300),
+                                                          curve: Curves.ease,
+                                                        );
+                                                      },
+                                                      text: 'Suivant',
+                                                      options: FFButtonOptions(
+                                                        width: 230.0,
+                                                        height: 52.0,
+                                                        padding:
+                                                            const EdgeInsetsDirectional
+                                                                .fromSTEB(
+                                                                    0.0,
+                                                                    0.0,
+                                                                    0.0,
+                                                                    0.0),
+                                                        iconPadding:
+                                                            const EdgeInsetsDirectional
+                                                                .fromSTEB(
+                                                                    0.0,
+                                                                    0.0,
+                                                                    0.0,
+                                                                    0.0),
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .primary,
+                                                        textStyle:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .titleSmall
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Montserrat',
+                                                                  color: Colors
+                                                                      .white,
+                                                                ),
+                                                        elevation: 3.0,
+                                                        borderSide: const BorderSide(
+                                                          color: Colors
+                                                              .transparent,
+                                                          width: 1.0,
+                                                        ),
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(12.0),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ).animateOnPageLoad(animationsMap[
+                                              'rowOnPageLoadAnimation5']!),
+                                        ),
                                     ],
                                   ),
                                 ),
                               ).animateOnPageLoad(animationsMap[
                                   'containerOnPageLoadAnimation9']!),
                             ),
-                            if (!(isWeb
-                                ? MediaQuery.viewInsetsOf(context).bottom > 0
-                                : _isKeyboardVisible))
-                              Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    16.0, 24.0, 16.0, 44.0),
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  crossAxisAlignment: CrossAxisAlignment.end,
-                                  children: [
-                                    Expanded(
-                                      child: Align(
-                                        alignment:
-                                            const AlignmentDirectional(0.0, 0.0),
-                                        child: Padding(
-                                          padding:
-                                              const EdgeInsetsDirectional.fromSTEB(
-                                                  0.0, 0.0, 8.0, 16.0),
-                                          child: FFButtonWidget(
-                                            onPressed: () async {
-                                              await currentUserReference!
-                                                  .update(createUsersRecordData(
-                                                skipHowto: true,
-                                              ));
-
-                                              context.goNamed('home');
-                                            },
-                                            text: 'Passer',
-                                            options: FFButtonOptions(
-                                              width: 230.0,
-                                              height: 52.0,
-                                              padding: const EdgeInsetsDirectional
-                                                  .fromSTEB(0.0, 0.0, 0.0, 0.0),
-                                              iconPadding: const EdgeInsetsDirectional
-                                                  .fromSTEB(0.0, 0.0, 0.0, 0.0),
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .secondaryBackground,
-                                              textStyle:
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyLarge,
-                                              elevation: 0.0,
-                                              borderSide: BorderSide(
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .alternate,
-                                                width: 2.0,
-                                              ),
-                                              borderRadius:
-                                                  BorderRadius.circular(12.0),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    Expanded(
-                                      child: Align(
-                                        alignment:
-                                            const AlignmentDirectional(0.0, 0.0),
-                                        child: Padding(
-                                          padding:
-                                              const EdgeInsetsDirectional.fromSTEB(
-                                                  8.0, 0.0, 0.0, 16.0),
-                                          child: FFButtonWidget(
-                                            onPressed: () async {
-                                              await _model.pageViewController
-                                                  ?.nextPage(
-                                                duration:
-                                                    const Duration(milliseconds: 300),
-                                                curve: Curves.ease,
-                                              );
-                                            },
-                                            text: 'Suivant',
-                                            options: FFButtonOptions(
-                                              width: 230.0,
-                                              height: 52.0,
-                                              padding: const EdgeInsetsDirectional
-                                                  .fromSTEB(0.0, 0.0, 0.0, 0.0),
-                                              iconPadding: const EdgeInsetsDirectional
-                                                  .fromSTEB(0.0, 0.0, 0.0, 0.0),
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .primary,
-                                              textStyle:
-                                                  FlutterFlowTheme.of(context)
-                                                      .titleSmall
-                                                      .override(
-                                                        fontFamily:
-                                                            'Montserrat',
-                                                        color: Colors.white,
-                                                      ),
-                                              elevation: 3.0,
-                                              borderSide: const BorderSide(
-                                                color: Colors.transparent,
-                                                width: 1.0,
-                                              ),
-                                              borderRadius:
-                                                  BorderRadius.circular(12.0),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ).animateOnPageLoad(
-                                    animationsMap['rowOnPageLoadAnimation5']!),
-                              ),
                           ],
                         ),
                         Column(
                           mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Expanded(
                               child: Container(
@@ -2459,111 +2650,144 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
                                           ),
                                         ].divide(const SizedBox(width: 5.0)),
                                       ),
+                                      Padding(
+                                        padding: const EdgeInsetsDirectional.fromSTEB(
+                                            16.0, 30.0, 16.0, 0.0),
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.max,
+                                          children: [
+                                            Expanded(
+                                              child: Align(
+                                                alignment: const AlignmentDirectional(
+                                                    0.0, 0.0),
+                                                child: Padding(
+                                                  padding: const EdgeInsetsDirectional
+                                                      .fromSTEB(
+                                                          0.0, 0.0, 8.0, 16.0),
+                                                  child: FFButtonWidget(
+                                                    onPressed: () async {
+                                                      await currentUserReference!
+                                                          .update(
+                                                              createUsersRecordData(
+                                                        skipHowto: true,
+                                                      ));
+
+                                                      context.goNamed('home');
+                                                    },
+                                                    text: 'Passer',
+                                                    options: FFButtonOptions(
+                                                      width: 230.0,
+                                                      height: 52.0,
+                                                      padding:
+                                                          const EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                                  0.0,
+                                                                  0.0,
+                                                                  0.0,
+                                                                  0.0),
+                                                      iconPadding:
+                                                          const EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                                  0.0,
+                                                                  0.0,
+                                                                  0.0,
+                                                                  0.0),
+                                                      color: FlutterFlowTheme
+                                                              .of(context)
+                                                          .secondaryBackground,
+                                                      textStyle:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .bodyLarge,
+                                                      elevation: 0.0,
+                                                      borderSide: BorderSide(
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .alternate,
+                                                        width: 2.0,
+                                                      ),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              12.0),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                            Expanded(
+                                              child: Align(
+                                                alignment: const AlignmentDirectional(
+                                                    0.0, 0.0),
+                                                child: Padding(
+                                                  padding: const EdgeInsetsDirectional
+                                                      .fromSTEB(
+                                                          8.0, 0.0, 0.0, 16.0),
+                                                  child: FFButtonWidget(
+                                                    onPressed: () async {
+                                                      await _model
+                                                          .pageViewController
+                                                          ?.nextPage(
+                                                        duration: const Duration(
+                                                            milliseconds: 300),
+                                                        curve: Curves.ease,
+                                                      );
+                                                    },
+                                                    text: 'Suivant',
+                                                    options: FFButtonOptions(
+                                                      width: 230.0,
+                                                      height: 52.0,
+                                                      padding:
+                                                          const EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                                  0.0,
+                                                                  0.0,
+                                                                  0.0,
+                                                                  0.0),
+                                                      iconPadding:
+                                                          const EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                                  0.0,
+                                                                  0.0,
+                                                                  0.0,
+                                                                  0.0),
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .primary,
+                                                      textStyle:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .titleSmall
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Montserrat',
+                                                                color: Colors
+                                                                    .white,
+                                                              ),
+                                                      elevation: 3.0,
+                                                      borderSide: const BorderSide(
+                                                        color:
+                                                            Colors.transparent,
+                                                        width: 1.0,
+                                                      ),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              12.0),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ).animateOnPageLoad(animationsMap[
+                                            'rowOnPageLoadAnimation6']!),
+                                      ),
                                     ],
                                   ),
                                 ),
                               ).animateOnPageLoad(animationsMap[
                                   'containerOnPageLoadAnimation11']!),
-                            ),
-                            Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                  16.0, 24.0, 16.0, 44.0),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.max,
-                                children: [
-                                  Expanded(
-                                    child: Align(
-                                      alignment: const AlignmentDirectional(0.0, 0.0),
-                                      child: Padding(
-                                        padding: const EdgeInsetsDirectional.fromSTEB(
-                                            0.0, 0.0, 8.0, 16.0),
-                                        child: FFButtonWidget(
-                                          onPressed: () async {
-                                            await currentUserReference!
-                                                .update(createUsersRecordData(
-                                              skipHowto: true,
-                                            ));
-
-                                            context.goNamed('home');
-                                          },
-                                          text: 'Passer',
-                                          options: FFButtonOptions(
-                                            width: 230.0,
-                                            height: 52.0,
-                                            padding:
-                                                const EdgeInsetsDirectional.fromSTEB(
-                                                    0.0, 0.0, 0.0, 0.0),
-                                            iconPadding:
-                                                const EdgeInsetsDirectional.fromSTEB(
-                                                    0.0, 0.0, 0.0, 0.0),
-                                            color: FlutterFlowTheme.of(context)
-                                                .secondaryBackground,
-                                            textStyle:
-                                                FlutterFlowTheme.of(context)
-                                                    .bodyLarge,
-                                            elevation: 0.0,
-                                            borderSide: BorderSide(
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .alternate,
-                                              width: 2.0,
-                                            ),
-                                            borderRadius:
-                                                BorderRadius.circular(12.0),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: Align(
-                                      alignment: const AlignmentDirectional(0.0, 0.0),
-                                      child: Padding(
-                                        padding: const EdgeInsetsDirectional.fromSTEB(
-                                            8.0, 0.0, 0.0, 16.0),
-                                        child: FFButtonWidget(
-                                          onPressed: () async {
-                                            await _model.pageViewController
-                                                ?.nextPage(
-                                              duration:
-                                                  const Duration(milliseconds: 300),
-                                              curve: Curves.ease,
-                                            );
-                                          },
-                                          text: 'Suivant',
-                                          options: FFButtonOptions(
-                                            width: 230.0,
-                                            height: 52.0,
-                                            padding:
-                                                const EdgeInsetsDirectional.fromSTEB(
-                                                    0.0, 0.0, 0.0, 0.0),
-                                            iconPadding:
-                                                const EdgeInsetsDirectional.fromSTEB(
-                                                    0.0, 0.0, 0.0, 0.0),
-                                            color: FlutterFlowTheme.of(context)
-                                                .primary,
-                                            textStyle:
-                                                FlutterFlowTheme.of(context)
-                                                    .titleSmall
-                                                    .override(
-                                                      fontFamily: 'Montserrat',
-                                                      color: Colors.white,
-                                                    ),
-                                            elevation: 3.0,
-                                            borderSide: const BorderSide(
-                                              color: Colors.transparent,
-                                              width: 1.0,
-                                            ),
-                                            borderRadius:
-                                                BorderRadius.circular(12.0),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ).animateOnPageLoad(
-                                  animationsMap['rowOnPageLoadAnimation6']!),
                             ),
                           ],
                         ),
@@ -2616,7 +2840,7 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
                                           shape: BoxShape.circle,
                                         ),
                                         child: Icon(
-                                          Icons.flash_on_sharp,
+                                          FFIcons.kflash1,
                                           color: FlutterFlowTheme.of(context)
                                               .primary,
                                           size: 55.0,
@@ -2646,15 +2870,13 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
                                             text: TextSpan(
                                               children: [
                                                 TextSpan(
-                                                  text:
-                                                      'On ne va pas se mentir. Mesurez ses émissions CO2 n\'est pas le top du "fun". ',
+                                                  text: 'Relevez de ',
                                                   style: FlutterFlowTheme.of(
                                                           context)
                                                       .bodyMedium,
                                                 ),
                                                 TextSpan(
-                                                  text:
-                                                      'Mais on a pensé à vous !',
+                                                  text: 'nombreux défis',
                                                   style: TextStyle(
                                                     color: FlutterFlowTheme.of(
                                                             context)
@@ -2663,7 +2885,7 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
                                                 ),
                                                 const TextSpan(
                                                   text:
-                                                      '\n\nRelevez de nombreux défis, gagnez tous les points et obtenez les meilleurs badges.\n\nPour le moment, vous avez un score d\'environ 0 points.',
+                                                      ', gagnez tous les points et obtenez les meilleurs badges.\n\nPour le moment, vous avez un score d\'environ 0 points.',
                                                   style: TextStyle(),
                                                 ),
                                                 TextSpan(
@@ -2722,7 +2944,7 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
                                                       .spaceBetween,
                                               children: [
                                                 Icon(
-                                                  FFIcons.kleaf,
+                                                  FFIcons.kflash1,
                                                   color: FlutterFlowTheme.of(
                                                           context)
                                                       .tertiary,
@@ -2741,58 +2963,26 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
                                                           text: 'Score Défis\n',
                                                           style: FlutterFlowTheme
                                                                   .of(context)
-                                                              .titleLarge
+                                                              .bodyLarge
                                                               .override(
                                                                 fontFamily:
                                                                     'Montserrat',
                                                                 color: FlutterFlowTheme.of(
                                                                         context)
-                                                                    .tertiary,
+                                                                    .primary,
                                                               ),
                                                         ),
                                                         TextSpan(
-                                                          text: '0',
+                                                          text: '0 / 250',
                                                           style: FlutterFlowTheme
                                                                   .of(context)
-                                                              .titleLarge
+                                                              .bodyLarge
                                                               .override(
                                                                 fontFamily:
                                                                     'Montserrat',
                                                                 color: FlutterFlowTheme.of(
                                                                         context)
-                                                                    .tertiary,
-                                                              ),
-                                                        ),
-                                                        TextSpan(
-                                                          text: ' / ',
-                                                          style: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .titleLarge
-                                                              .override(
-                                                                fontFamily:
-                                                                    'Montserrat',
-                                                                color: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .tertiary,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w300,
-                                                              ),
-                                                        ),
-                                                        TextSpan(
-                                                          text: '250',
-                                                          style: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .titleLarge
-                                                              .override(
-                                                                fontFamily:
-                                                                    'Montserrat',
-                                                                color: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .tertiary,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w300,
+                                                                    .primary,
                                                               ),
                                                         )
                                                       ],
@@ -2821,111 +3011,144 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
                                           ),
                                         ),
                                       ),
+                                      Padding(
+                                        padding: const EdgeInsetsDirectional.fromSTEB(
+                                            16.0, 24.0, 16.0, 44.0),
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.max,
+                                          children: [
+                                            Expanded(
+                                              child: Align(
+                                                alignment: const AlignmentDirectional(
+                                                    0.0, 0.0),
+                                                child: Padding(
+                                                  padding: const EdgeInsetsDirectional
+                                                      .fromSTEB(
+                                                          0.0, 0.0, 8.0, 16.0),
+                                                  child: FFButtonWidget(
+                                                    onPressed: () async {
+                                                      await currentUserReference!
+                                                          .update(
+                                                              createUsersRecordData(
+                                                        skipHowto: true,
+                                                      ));
+
+                                                      context.goNamed('home');
+                                                    },
+                                                    text: 'Passer',
+                                                    options: FFButtonOptions(
+                                                      width: 230.0,
+                                                      height: 52.0,
+                                                      padding:
+                                                          const EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                                  0.0,
+                                                                  0.0,
+                                                                  0.0,
+                                                                  0.0),
+                                                      iconPadding:
+                                                          const EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                                  0.0,
+                                                                  0.0,
+                                                                  0.0,
+                                                                  0.0),
+                                                      color: FlutterFlowTheme
+                                                              .of(context)
+                                                          .secondaryBackground,
+                                                      textStyle:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .bodyLarge,
+                                                      elevation: 0.0,
+                                                      borderSide: BorderSide(
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .alternate,
+                                                        width: 2.0,
+                                                      ),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              12.0),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                            Expanded(
+                                              child: Align(
+                                                alignment: const AlignmentDirectional(
+                                                    0.0, 0.0),
+                                                child: Padding(
+                                                  padding: const EdgeInsetsDirectional
+                                                      .fromSTEB(
+                                                          8.0, 0.0, 0.0, 16.0),
+                                                  child: FFButtonWidget(
+                                                    onPressed: () async {
+                                                      await _model
+                                                          .pageViewController
+                                                          ?.nextPage(
+                                                        duration: const Duration(
+                                                            milliseconds: 300),
+                                                        curve: Curves.ease,
+                                                      );
+                                                    },
+                                                    text: 'Suivant',
+                                                    options: FFButtonOptions(
+                                                      width: 230.0,
+                                                      height: 52.0,
+                                                      padding:
+                                                          const EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                                  0.0,
+                                                                  0.0,
+                                                                  0.0,
+                                                                  0.0),
+                                                      iconPadding:
+                                                          const EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                                  0.0,
+                                                                  0.0,
+                                                                  0.0,
+                                                                  0.0),
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .primary,
+                                                      textStyle:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .titleSmall
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Montserrat',
+                                                                color: Colors
+                                                                    .white,
+                                                              ),
+                                                      elevation: 3.0,
+                                                      borderSide: const BorderSide(
+                                                        color:
+                                                            Colors.transparent,
+                                                        width: 1.0,
+                                                      ),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              12.0),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ).animateOnPageLoad(animationsMap[
+                                            'rowOnPageLoadAnimation7']!),
+                                      ),
                                     ],
                                   ),
                                 ),
                               ).animateOnPageLoad(animationsMap[
                                   'containerOnPageLoadAnimation13']!),
-                            ),
-                            Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                  16.0, 24.0, 16.0, 44.0),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.max,
-                                children: [
-                                  Expanded(
-                                    child: Align(
-                                      alignment: const AlignmentDirectional(0.0, 0.0),
-                                      child: Padding(
-                                        padding: const EdgeInsetsDirectional.fromSTEB(
-                                            0.0, 0.0, 8.0, 16.0),
-                                        child: FFButtonWidget(
-                                          onPressed: () async {
-                                            await currentUserReference!
-                                                .update(createUsersRecordData(
-                                              skipHowto: true,
-                                            ));
-
-                                            context.goNamed('home');
-                                          },
-                                          text: 'Passer',
-                                          options: FFButtonOptions(
-                                            width: 230.0,
-                                            height: 52.0,
-                                            padding:
-                                                const EdgeInsetsDirectional.fromSTEB(
-                                                    0.0, 0.0, 0.0, 0.0),
-                                            iconPadding:
-                                                const EdgeInsetsDirectional.fromSTEB(
-                                                    0.0, 0.0, 0.0, 0.0),
-                                            color: FlutterFlowTheme.of(context)
-                                                .secondaryBackground,
-                                            textStyle:
-                                                FlutterFlowTheme.of(context)
-                                                    .bodyLarge,
-                                            elevation: 0.0,
-                                            borderSide: BorderSide(
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .alternate,
-                                              width: 2.0,
-                                            ),
-                                            borderRadius:
-                                                BorderRadius.circular(12.0),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: Align(
-                                      alignment: const AlignmentDirectional(0.0, 0.0),
-                                      child: Padding(
-                                        padding: const EdgeInsetsDirectional.fromSTEB(
-                                            8.0, 0.0, 0.0, 16.0),
-                                        child: FFButtonWidget(
-                                          onPressed: () async {
-                                            await _model.pageViewController
-                                                ?.nextPage(
-                                              duration:
-                                                  const Duration(milliseconds: 300),
-                                              curve: Curves.ease,
-                                            );
-                                          },
-                                          text: 'Suivant',
-                                          options: FFButtonOptions(
-                                            width: 230.0,
-                                            height: 52.0,
-                                            padding:
-                                                const EdgeInsetsDirectional.fromSTEB(
-                                                    0.0, 0.0, 0.0, 0.0),
-                                            iconPadding:
-                                                const EdgeInsetsDirectional.fromSTEB(
-                                                    0.0, 0.0, 0.0, 0.0),
-                                            color: FlutterFlowTheme.of(context)
-                                                .primary,
-                                            textStyle:
-                                                FlutterFlowTheme.of(context)
-                                                    .titleSmall
-                                                    .override(
-                                                      fontFamily: 'Montserrat',
-                                                      color: Colors.white,
-                                                    ),
-                                            elevation: 3.0,
-                                            borderSide: const BorderSide(
-                                              color: Colors.transparent,
-                                              width: 1.0,
-                                            ),
-                                            borderRadius:
-                                                BorderRadius.circular(12.0),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ).animateOnPageLoad(
-                                  animationsMap['rowOnPageLoadAnimation7']!),
                             ),
                           ],
                         ),
@@ -2978,7 +3201,7 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
                                           shape: BoxShape.circle,
                                         ),
                                         child: Icon(
-                                          Icons.checklist_rtl_sharp,
+                                          FFIcons.karchive1,
                                           color: FlutterFlowTheme.of(context)
                                               .primary,
                                           size: 55.0,
@@ -3074,7 +3297,7 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
                                                       .spaceBetween,
                                               children: [
                                                 Icon(
-                                                  FFIcons.kleaf,
+                                                  FFIcons.karchive1,
                                                   color: FlutterFlowTheme.of(
                                                           context)
                                                       .tertiary,
@@ -3094,58 +3317,26 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
                                                               'Score Succès\n',
                                                           style: FlutterFlowTheme
                                                                   .of(context)
-                                                              .titleLarge
+                                                              .bodyLarge
                                                               .override(
                                                                 fontFamily:
                                                                     'Montserrat',
                                                                 color: FlutterFlowTheme.of(
                                                                         context)
-                                                                    .tertiary,
+                                                                    .primary,
                                                               ),
                                                         ),
                                                         TextSpan(
-                                                          text: '0',
+                                                          text: '0 / 330',
                                                           style: FlutterFlowTheme
                                                                   .of(context)
-                                                              .titleLarge
+                                                              .bodyLarge
                                                               .override(
                                                                 fontFamily:
                                                                     'Montserrat',
                                                                 color: FlutterFlowTheme.of(
                                                                         context)
-                                                                    .tertiary,
-                                                              ),
-                                                        ),
-                                                        TextSpan(
-                                                          text: ' / ',
-                                                          style: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .titleLarge
-                                                              .override(
-                                                                fontFamily:
-                                                                    'Montserrat',
-                                                                color: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .tertiary,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w300,
-                                                              ),
-                                                        ),
-                                                        TextSpan(
-                                                          text: '330',
-                                                          style: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .titleLarge
-                                                              .override(
-                                                                fontFamily:
-                                                                    'Montserrat',
-                                                                color: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .tertiary,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w300,
+                                                                    .primary,
                                                               ),
                                                         )
                                                       ],
@@ -3169,111 +3360,144 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
                                           ),
                                         ),
                                       ),
+                                      Padding(
+                                        padding: const EdgeInsetsDirectional.fromSTEB(
+                                            16.0, 24.0, 16.0, 44.0),
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.max,
+                                          children: [
+                                            Expanded(
+                                              child: Align(
+                                                alignment: const AlignmentDirectional(
+                                                    0.0, 0.0),
+                                                child: Padding(
+                                                  padding: const EdgeInsetsDirectional
+                                                      .fromSTEB(
+                                                          0.0, 0.0, 8.0, 16.0),
+                                                  child: FFButtonWidget(
+                                                    onPressed: () async {
+                                                      await currentUserReference!
+                                                          .update(
+                                                              createUsersRecordData(
+                                                        skipHowto: true,
+                                                      ));
+
+                                                      context.goNamed('home');
+                                                    },
+                                                    text: 'Passer',
+                                                    options: FFButtonOptions(
+                                                      width: 230.0,
+                                                      height: 52.0,
+                                                      padding:
+                                                          const EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                                  0.0,
+                                                                  0.0,
+                                                                  0.0,
+                                                                  0.0),
+                                                      iconPadding:
+                                                          const EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                                  0.0,
+                                                                  0.0,
+                                                                  0.0,
+                                                                  0.0),
+                                                      color: FlutterFlowTheme
+                                                              .of(context)
+                                                          .secondaryBackground,
+                                                      textStyle:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .bodyLarge,
+                                                      elevation: 0.0,
+                                                      borderSide: BorderSide(
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .alternate,
+                                                        width: 2.0,
+                                                      ),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              12.0),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                            Expanded(
+                                              child: Align(
+                                                alignment: const AlignmentDirectional(
+                                                    0.0, 0.0),
+                                                child: Padding(
+                                                  padding: const EdgeInsetsDirectional
+                                                      .fromSTEB(
+                                                          8.0, 0.0, 0.0, 16.0),
+                                                  child: FFButtonWidget(
+                                                    onPressed: () async {
+                                                      await _model
+                                                          .pageViewController
+                                                          ?.nextPage(
+                                                        duration: const Duration(
+                                                            milliseconds: 300),
+                                                        curve: Curves.ease,
+                                                      );
+                                                    },
+                                                    text: 'Suivant',
+                                                    options: FFButtonOptions(
+                                                      width: 230.0,
+                                                      height: 52.0,
+                                                      padding:
+                                                          const EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                                  0.0,
+                                                                  0.0,
+                                                                  0.0,
+                                                                  0.0),
+                                                      iconPadding:
+                                                          const EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                                  0.0,
+                                                                  0.0,
+                                                                  0.0,
+                                                                  0.0),
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .primary,
+                                                      textStyle:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .titleSmall
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Montserrat',
+                                                                color: Colors
+                                                                    .white,
+                                                              ),
+                                                      elevation: 3.0,
+                                                      borderSide: const BorderSide(
+                                                        color:
+                                                            Colors.transparent,
+                                                        width: 1.0,
+                                                      ),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              12.0),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ).animateOnPageLoad(animationsMap[
+                                            'rowOnPageLoadAnimation8']!),
+                                      ),
                                     ],
                                   ),
                                 ),
                               ).animateOnPageLoad(animationsMap[
                                   'containerOnPageLoadAnimation15']!),
-                            ),
-                            Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                  16.0, 24.0, 16.0, 44.0),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.max,
-                                children: [
-                                  Expanded(
-                                    child: Align(
-                                      alignment: const AlignmentDirectional(0.0, 0.0),
-                                      child: Padding(
-                                        padding: const EdgeInsetsDirectional.fromSTEB(
-                                            0.0, 0.0, 8.0, 16.0),
-                                        child: FFButtonWidget(
-                                          onPressed: () async {
-                                            await currentUserReference!
-                                                .update(createUsersRecordData(
-                                              skipHowto: true,
-                                            ));
-
-                                            context.goNamed('home');
-                                          },
-                                          text: 'Passer',
-                                          options: FFButtonOptions(
-                                            width: 230.0,
-                                            height: 52.0,
-                                            padding:
-                                                const EdgeInsetsDirectional.fromSTEB(
-                                                    0.0, 0.0, 0.0, 0.0),
-                                            iconPadding:
-                                                const EdgeInsetsDirectional.fromSTEB(
-                                                    0.0, 0.0, 0.0, 0.0),
-                                            color: FlutterFlowTheme.of(context)
-                                                .secondaryBackground,
-                                            textStyle:
-                                                FlutterFlowTheme.of(context)
-                                                    .bodyLarge,
-                                            elevation: 0.0,
-                                            borderSide: BorderSide(
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .alternate,
-                                              width: 2.0,
-                                            ),
-                                            borderRadius:
-                                                BorderRadius.circular(12.0),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: Align(
-                                      alignment: const AlignmentDirectional(0.0, 0.0),
-                                      child: Padding(
-                                        padding: const EdgeInsetsDirectional.fromSTEB(
-                                            8.0, 0.0, 0.0, 16.0),
-                                        child: FFButtonWidget(
-                                          onPressed: () async {
-                                            await _model.pageViewController
-                                                ?.nextPage(
-                                              duration:
-                                                  const Duration(milliseconds: 300),
-                                              curve: Curves.ease,
-                                            );
-                                          },
-                                          text: 'Suivant',
-                                          options: FFButtonOptions(
-                                            width: 230.0,
-                                            height: 52.0,
-                                            padding:
-                                                const EdgeInsetsDirectional.fromSTEB(
-                                                    0.0, 0.0, 0.0, 0.0),
-                                            iconPadding:
-                                                const EdgeInsetsDirectional.fromSTEB(
-                                                    0.0, 0.0, 0.0, 0.0),
-                                            color: FlutterFlowTheme.of(context)
-                                                .primary,
-                                            textStyle:
-                                                FlutterFlowTheme.of(context)
-                                                    .titleSmall
-                                                    .override(
-                                                      fontFamily: 'Montserrat',
-                                                      color: Colors.white,
-                                                    ),
-                                            elevation: 3.0,
-                                            borderSide: const BorderSide(
-                                              color: Colors.transparent,
-                                              width: 1.0,
-                                            ),
-                                            borderRadius:
-                                                BorderRadius.circular(12.0),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ).animateOnPageLoad(
-                                  animationsMap['rowOnPageLoadAnimation8']!),
                             ),
                           ],
                         ),
@@ -3326,7 +3550,7 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
                                           shape: BoxShape.circle,
                                         ),
                                         child: Icon(
-                                          Icons.mood,
+                                          FFIcons.khandClick,
                                           color: FlutterFlowTheme.of(context)
                                               .primary,
                                           size: 55.0,
@@ -3357,13 +3581,14 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
                                               children: [
                                                 TextSpan(
                                                   text:
-                                                      'Trève de blabla. Il est temps de passer aux choses sérieuses.\n\nLes points ne vont pas se gagner tous seuls. ',
+                                                      'Trève de blabla. Il est temps de passer aux choses sérieuses.\n',
                                                   style: FlutterFlowTheme.of(
                                                           context)
                                                       .bodyMedium,
                                                 ),
                                                 TextSpan(
-                                                  text: '\n\nAu boulot !',
+                                                  text:
+                                                      '\nLa planète ne se sauvera pas toute seule.',
                                                   style: FlutterFlowTheme.of(
                                                           context)
                                                       .bodyMedium
@@ -3385,121 +3610,95 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
                                           ),
                                         ),
                                       ),
+                                      Padding(
+                                        padding: const EdgeInsetsDirectional.fromSTEB(
+                                            16.0, 24.0, 16.0, 44.0),
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.max,
+                                          children: [
+                                            Expanded(
+                                              child: Align(
+                                                alignment: const AlignmentDirectional(
+                                                    0.0, 0.0),
+                                                child: Padding(
+                                                  padding: const EdgeInsetsDirectional
+                                                      .fromSTEB(
+                                                          8.0, 0.0, 0.0, 16.0),
+                                                  child: FFButtonWidget(
+                                                    onPressed: () async {
+                                                      await currentUserReference!
+                                                          .update(
+                                                              createUsersRecordData(
+                                                        skipHowto: true,
+                                                      ));
+
+                                                      context.pushNamed('home');
+                                                    },
+                                                    text: 'Terminer',
+                                                    options: FFButtonOptions(
+                                                      width: 230.0,
+                                                      height: 52.0,
+                                                      padding:
+                                                          const EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                                  0.0,
+                                                                  0.0,
+                                                                  0.0,
+                                                                  0.0),
+                                                      iconPadding:
+                                                          const EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                                  0.0,
+                                                                  0.0,
+                                                                  0.0,
+                                                                  0.0),
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .primary,
+                                                      textStyle:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .titleSmall
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Montserrat',
+                                                                color: Colors
+                                                                    .white,
+                                                              ),
+                                                      elevation: 3.0,
+                                                      borderSide: const BorderSide(
+                                                        color:
+                                                            Colors.transparent,
+                                                        width: 1.0,
+                                                      ),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              12.0),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ).animateOnPageLoad(animationsMap[
+                                            'rowOnPageLoadAnimation9']!),
+                                      ),
                                     ],
                                   ),
                                 ),
                               ).animateOnPageLoad(animationsMap[
                                   'containerOnPageLoadAnimation17']!),
                             ),
-                            Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                  16.0, 24.0, 16.0, 44.0),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.max,
-                                children: [
-                                  Expanded(
-                                    child: Align(
-                                      alignment: const AlignmentDirectional(0.0, 0.0),
-                                      child: Padding(
-                                        padding: const EdgeInsetsDirectional.fromSTEB(
-                                            0.0, 0.0, 8.0, 16.0),
-                                        child: FFButtonWidget(
-                                          onPressed: () async {
-                                            await currentUserReference!
-                                                .update(createUsersRecordData(
-                                              skipHowto: true,
-                                            ));
-
-                                            context.goNamed('home');
-                                          },
-                                          text: 'Passer',
-                                          options: FFButtonOptions(
-                                            width: 230.0,
-                                            height: 52.0,
-                                            padding:
-                                                const EdgeInsetsDirectional.fromSTEB(
-                                                    0.0, 0.0, 0.0, 0.0),
-                                            iconPadding:
-                                                const EdgeInsetsDirectional.fromSTEB(
-                                                    0.0, 0.0, 0.0, 0.0),
-                                            color: FlutterFlowTheme.of(context)
-                                                .secondaryBackground,
-                                            textStyle:
-                                                FlutterFlowTheme.of(context)
-                                                    .bodyLarge,
-                                            elevation: 0.0,
-                                            borderSide: BorderSide(
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .alternate,
-                                              width: 2.0,
-                                            ),
-                                            borderRadius:
-                                                BorderRadius.circular(12.0),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: Align(
-                                      alignment: const AlignmentDirectional(0.0, 0.0),
-                                      child: Padding(
-                                        padding: const EdgeInsetsDirectional.fromSTEB(
-                                            8.0, 0.0, 0.0, 16.0),
-                                        child: FFButtonWidget(
-                                          onPressed: () async {
-                                            await currentUserReference!
-                                                .update(createUsersRecordData(
-                                              skipHowto: true,
-                                            ));
-
-                                            context.pushNamed('home');
-                                          },
-                                          text: 'Terminer',
-                                          options: FFButtonOptions(
-                                            width: 230.0,
-                                            height: 52.0,
-                                            padding:
-                                                const EdgeInsetsDirectional.fromSTEB(
-                                                    0.0, 0.0, 0.0, 0.0),
-                                            iconPadding:
-                                                const EdgeInsetsDirectional.fromSTEB(
-                                                    0.0, 0.0, 0.0, 0.0),
-                                            color: FlutterFlowTheme.of(context)
-                                                .primary,
-                                            textStyle:
-                                                FlutterFlowTheme.of(context)
-                                                    .titleSmall
-                                                    .override(
-                                                      fontFamily: 'Montserrat',
-                                                      color: Colors.white,
-                                                    ),
-                                            elevation: 3.0,
-                                            borderSide: const BorderSide(
-                                              color: Colors.transparent,
-                                              width: 1.0,
-                                            ),
-                                            borderRadius:
-                                                BorderRadius.circular(12.0),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ).animateOnPageLoad(
-                                  animationsMap['rowOnPageLoadAnimation9']!),
-                            ),
                           ],
                         ),
                       ],
                     ),
                     Align(
-                      alignment: const AlignmentDirectional(-0.85, 0.85),
+                      alignment: const AlignmentDirectional(0.0, 1.0),
                       child: Padding(
-                        padding: const EdgeInsetsDirectional.fromSTEB(
-                            0.0, 0.0, 0.0, 100.0),
+                        padding:
+                            const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 20.0),
                         child: smooth_page_indicator.SmoothPageIndicator(
                           controller: _model.pageViewController ??=
                               PageController(initialPage: 0),

@@ -112,9 +112,7 @@ class _ChallengesWidgetState extends State<ChallengesWidget> {
                     builder: (context) => wrapWithModel(
                       model: _model.headModel,
                       updateCallback: () => setState(() {}),
-                      child: HeadWidget(
-                        displayName: currentUserDisplayName,
-                      ),
+                      child: const HeadWidget(),
                     ),
                   ),
                   wrapWithModel(
@@ -184,110 +182,178 @@ class _ChallengesWidgetState extends State<ChallengesWidget> {
                                         FlutterFlowTheme.of(context).tertiary,
                                   ),
                                 ),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(10.0),
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.max,
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Icon(
-                                        FFIcons.kleaf,
-                                        color: FlutterFlowTheme.of(context)
-                                            .tertiary,
-                                        size: 40.0,
-                                      ),
-                                      Container(
-                                        width: 180.0,
-                                        decoration: const BoxDecoration(),
-                                        child: RichText(
-                                          textScaleFactor:
-                                              MediaQuery.of(context)
-                                                  .textScaleFactor,
-                                          text: TextSpan(
-                                            children: [
-                                              TextSpan(
-                                                text: 'Score \n',
-                                                style: FlutterFlowTheme.of(
-                                                        context)
-                                                    .titleLarge
-                                                    .override(
-                                                      fontFamily: 'Montserrat',
-                                                      color:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .tertiary,
-                                                    ),
-                                              ),
-                                              TextSpan(
-                                                text: functions
-                                                    .challengesStats(
-                                                        challengesChallengesRecord!)[0]
-                                                    .toString(),
-                                                style: FlutterFlowTheme.of(
-                                                        context)
-                                                    .titleLarge
-                                                    .override(
-                                                      fontFamily: 'Montserrat',
-                                                      color:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .tertiary,
-                                                    ),
-                                              ),
-                                              TextSpan(
-                                                text: ' / ',
-                                                style: FlutterFlowTheme.of(
-                                                        context)
-                                                    .titleLarge
-                                                    .override(
-                                                      fontFamily: 'Montserrat',
-                                                      color:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .tertiary,
-                                                      fontWeight:
-                                                          FontWeight.w300,
-                                                    ),
-                                              ),
-                                              TextSpan(
-                                                text: functions
-                                                    .challengesStats(
-                                                        challengesChallengesRecord)[1]
-                                                    .toString(),
-                                                style: FlutterFlowTheme.of(
-                                                        context)
-                                                    .titleLarge
-                                                    .override(
-                                                      fontFamily: 'Montserrat',
-                                                      color:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .tertiary,
-                                                      fontWeight:
-                                                          FontWeight.w300,
-                                                    ),
-                                              )
-                                            ],
-                                            style: FlutterFlowTheme.of(context)
-                                                .titleMedium
-                                                .override(
-                                                  fontFamily: 'Montserrat',
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .tertiary,
-                                                ),
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.max,
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.all(10.0),
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
+                                        children: [
+                                          Icon(
+                                            FFIcons.kflash1,
+                                            color: FlutterFlowTheme.of(context)
+                                                .tertiary,
+                                            size: 40.0,
                                           ),
-                                          textAlign: TextAlign.center,
-                                        ),
+                                          Container(
+                                            width: 180.0,
+                                            decoration: const BoxDecoration(),
+                                            child: RichText(
+                                              textScaleFactor:
+                                                  MediaQuery.of(context)
+                                                      .textScaleFactor,
+                                              text: TextSpan(
+                                                children: [
+                                                  TextSpan(
+                                                    text: 'Votre score défis\n',
+                                                    style: FlutterFlowTheme.of(
+                                                            context)
+                                                        .bodyLarge,
+                                                  ),
+                                                  TextSpan(
+                                                    text: functions
+                                                        .challengesStats(
+                                                            challengesChallengesRecord!)[0]
+                                                        .toString(),
+                                                    style: FlutterFlowTheme.of(
+                                                            context)
+                                                        .bodyLarge
+                                                        .override(
+                                                          fontFamily:
+                                                              'Montserrat',
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .tertiary,
+                                                        ),
+                                                  ),
+                                                  TextSpan(
+                                                    text: ' / ',
+                                                    style: FlutterFlowTheme.of(
+                                                            context)
+                                                        .bodyLarge,
+                                                  ),
+                                                  TextSpan(
+                                                    text: functions
+                                                        .challengesStats(
+                                                            challengesChallengesRecord)[1]
+                                                        .toString(),
+                                                    style: FlutterFlowTheme.of(
+                                                            context)
+                                                        .bodyLarge
+                                                        .override(
+                                                          fontFamily:
+                                                              'Montserrat',
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .tertiary,
+                                                        ),
+                                                  )
+                                                ],
+                                                style: FlutterFlowTheme.of(
+                                                        context)
+                                                    .titleMedium
+                                                    .override(
+                                                      fontFamily: 'Montserrat',
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .tertiary,
+                                                    ),
+                                              ),
+                                              textAlign: TextAlign.center,
+                                            ),
+                                          ),
+                                        ],
                                       ),
-                                      Container(
-                                        width: 40.0,
-                                        height: 40.0,
-                                        decoration: const BoxDecoration(),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(10.0),
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Container(
+                                            width: 250.0,
+                                            decoration: const BoxDecoration(),
+                                            child: RichText(
+                                              textScaleFactor:
+                                                  MediaQuery.of(context)
+                                                      .textScaleFactor,
+                                              text: TextSpan(
+                                                children: [
+                                                  TextSpan(
+                                                    text: 'Vous avez remporté ',
+                                                    style: FlutterFlowTheme.of(
+                                                            context)
+                                                        .bodySmall,
+                                                  ),
+                                                  TextSpan(
+                                                    text: functions
+                                                        .challengesStats(
+                                                            challengesChallengesRecord)[2]
+                                                        .toString(),
+                                                    style: FlutterFlowTheme.of(
+                                                            context)
+                                                        .bodySmall
+                                                        .override(
+                                                          fontFamily:
+                                                              'Montserrat',
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .tertiary,
+                                                        ),
+                                                  ),
+                                                  TextSpan(
+                                                    text: ' défis sur ',
+                                                    style: FlutterFlowTheme.of(
+                                                            context)
+                                                        .bodySmall,
+                                                  ),
+                                                  TextSpan(
+                                                    text: functions
+                                                        .challengesStats(
+                                                            challengesChallengesRecord)[3]
+                                                        .toString(),
+                                                    style: FlutterFlowTheme.of(
+                                                            context)
+                                                        .bodySmall
+                                                        .override(
+                                                          fontFamily:
+                                                              'Montserrat',
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .tertiary,
+                                                        ),
+                                                  ),
+                                                  TextSpan(
+                                                    text: '.',
+                                                    style: FlutterFlowTheme.of(
+                                                            context)
+                                                        .bodySmall,
+                                                  )
+                                                ],
+                                                style: FlutterFlowTheme.of(
+                                                        context)
+                                                    .titleMedium
+                                                    .override(
+                                                      fontFamily: 'Montserrat',
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .tertiary,
+                                                    ),
+                                              ),
+                                              textAlign: TextAlign.center,
+                                            ),
+                                          ),
+                                        ],
                                       ),
-                                    ],
-                                  ),
+                                    ),
+                                  ],
                                 ),
                               ),
                             ),
@@ -371,7 +437,7 @@ class _ChallengesWidgetState extends State<ChallengesWidget> {
                                                       .spaceBetween,
                                               children: [
                                                 Icon(
-                                                  Icons.rocket_launch_rounded,
+                                                  FFIcons.kbulb,
                                                   color: FlutterFlowTheme.of(
                                                           context)
                                                       .secondaryText,
@@ -398,7 +464,7 @@ class _ChallengesWidgetState extends State<ChallengesWidget> {
                                                         TextSpan(
                                                           text: functions
                                                               .challengesStats(
-                                                                  challengesChallengesRecord)[2]
+                                                                  challengesChallengesRecord)[22]
                                                               .toString(),
                                                           style: FlutterFlowTheme
                                                                   .of(context)
@@ -413,7 +479,7 @@ class _ChallengesWidgetState extends State<ChallengesWidget> {
                                                         TextSpan(
                                                           text: functions
                                                               .challengesStats(
-                                                                  challengesChallengesRecord)[3]
+                                                                  challengesChallengesRecord)[23]
                                                               .toString(),
                                                           style: FlutterFlowTheme
                                                                   .of(context)
@@ -537,9 +603,8 @@ class _ChallengesWidgetState extends State<ChallengesWidget> {
                                                                   const AlignmentDirectional(
                                                                       0.0,
                                                                       -1.0),
-                                                              child: FaIcon(
-                                                                FontAwesomeIcons
-                                                                    .car,
+                                                              child: Icon(
+                                                                FFIcons.kcar,
                                                                 color: FlutterFlowTheme.of(
                                                                         context)
                                                                     .secondary,
@@ -682,9 +747,8 @@ class _ChallengesWidgetState extends State<ChallengesWidget> {
                                                                   const AlignmentDirectional(
                                                                       0.0,
                                                                       -1.0),
-                                                              child: FaIcon(
-                                                                FontAwesomeIcons
-                                                                    .tshirt,
+                                                              child: Icon(
+                                                                FFIcons.khanger,
                                                                 color: FlutterFlowTheme.of(
                                                                         context)
                                                                     .secondary,
@@ -697,7 +761,7 @@ class _ChallengesWidgetState extends State<ChallengesWidget> {
                                                           percent: functions
                                                               .pRatioChallenges(
                                                                   bodyStatsRecord
-                                                                      ?.actionsCountFood,
+                                                                      ?.actionsCountClothes,
                                                                   1)!,
                                                           width: 280.0,
                                                           lineHeight: 20.0,
@@ -828,7 +892,8 @@ class _ChallengesWidgetState extends State<ChallengesWidget> {
                                                                       0.0,
                                                                       -1.0),
                                                               child: Icon(
-                                                                Icons.tv,
+                                                                FFIcons
+                                                                    .kdeviceTv,
                                                                 color: FlutterFlowTheme.of(
                                                                         context)
                                                                     .secondary,
@@ -841,7 +906,7 @@ class _ChallengesWidgetState extends State<ChallengesWidget> {
                                                           percent: functions
                                                               .pRatioChallenges(
                                                                   bodyStatsRecord
-                                                                      ?.actionsCountFood,
+                                                                      ?.actionsCountDigital,
                                                                   1)!,
                                                           width: 280.0,
                                                           lineHeight: 20.0,
@@ -972,8 +1037,8 @@ class _ChallengesWidgetState extends State<ChallengesWidget> {
                                                                       0.0,
                                                                       -1.0),
                                                               child: Icon(
-                                                                Icons
-                                                                    .kitchen_rounded,
+                                                                FFIcons
+                                                                    .kwashMachine,
                                                                 color: FlutterFlowTheme.of(
                                                                         context)
                                                                     .secondary,
@@ -986,7 +1051,7 @@ class _ChallengesWidgetState extends State<ChallengesWidget> {
                                                           percent: functions
                                                               .pRatioChallenges(
                                                                   bodyStatsRecord
-                                                                      ?.actionsCountFood,
+                                                                      ?.actionsCountAppliance,
                                                                   1)!,
                                                           width: 280.0,
                                                           lineHeight: 20.0,
@@ -1116,9 +1181,9 @@ class _ChallengesWidgetState extends State<ChallengesWidget> {
                                                                   const AlignmentDirectional(
                                                                       0.0,
                                                                       -1.0),
-                                                              child: FaIcon(
-                                                                FontAwesomeIcons
-                                                                    .couch,
+                                                              child: Icon(
+                                                                FFIcons
+                                                                    .karmchair2,
                                                                 color: FlutterFlowTheme.of(
                                                                         context)
                                                                     .secondary,
@@ -1131,7 +1196,7 @@ class _ChallengesWidgetState extends State<ChallengesWidget> {
                                                           percent: functions
                                                               .pRatioChallenges(
                                                                   bodyStatsRecord
-                                                                      ?.actionsCountFood,
+                                                                      ?.actionsCountFurniture,
                                                                   1)!,
                                                           width: 280.0,
                                                           lineHeight: 20.0,
@@ -1261,9 +1326,9 @@ class _ChallengesWidgetState extends State<ChallengesWidget> {
                                                                   const AlignmentDirectional(
                                                                       0.0,
                                                                       -1.0),
-                                                              child: FaIcon(
-                                                                FontAwesomeIcons
-                                                                    .tag,
+                                                              child: Icon(
+                                                                FFIcons
+                                                                    .kboxSeam,
                                                                 color: FlutterFlowTheme.of(
                                                                         context)
                                                                     .secondary,
@@ -1276,7 +1341,7 @@ class _ChallengesWidgetState extends State<ChallengesWidget> {
                                                           percent: functions
                                                               .pRatioChallenges(
                                                                   bodyStatsRecord
-                                                                      ?.actionsCountFood,
+                                                                      ?.actionsCountObjects,
                                                                   1)!,
                                                           width: 280.0,
                                                           lineHeight: 20.0,
@@ -1407,8 +1472,7 @@ class _ChallengesWidgetState extends State<ChallengesWidget> {
                                                                       0.0,
                                                                       -1.0),
                                                               child: Icon(
-                                                                Icons
-                                                                    .home_sharp,
+                                                                FFIcons.khome,
                                                                 color: FlutterFlowTheme.of(
                                                                         context)
                                                                     .secondary,
@@ -1421,7 +1485,7 @@ class _ChallengesWidgetState extends State<ChallengesWidget> {
                                                           percent: functions
                                                               .pRatioChallenges(
                                                                   bodyStatsRecord
-                                                                      ?.actionsCountFood,
+                                                                      ?.actionsCountLodging,
                                                                   1)!,
                                                           width: 280.0,
                                                           lineHeight: 20.0,
@@ -1552,8 +1616,8 @@ class _ChallengesWidgetState extends State<ChallengesWidget> {
                                                                       0.0,
                                                                       -1.0),
                                                               child: Icon(
-                                                                Icons
-                                                                    .fastfood_sharp,
+                                                                FFIcons
+                                                                    .ktoolsKitchen,
                                                                 color: FlutterFlowTheme.of(
                                                                         context)
                                                                     .secondary,
@@ -1605,11 +1669,9 @@ class _ChallengesWidgetState extends State<ChallengesWidget> {
                                                 ExpandablePanelHeaderAlignment
                                                     .center,
                                             hasIcon: true,
-                                            expandIcon:
-                                                FontAwesomeIcons.angleDown,
-                                            collapseIcon:
-                                                FontAwesomeIcons.angleUp,
-                                            iconSize: 25.0,
+                                            expandIcon: FFIcons.karrowDown2,
+                                            collapseIcon: FFIcons.karrowUp3,
+                                            iconSize: 24.0,
                                             iconColor:
                                                 FlutterFlowTheme.of(context)
                                                     .primaryText,
@@ -1638,7 +1700,7 @@ class _ChallengesWidgetState extends State<ChallengesWidget> {
                                                       .spaceBetween,
                                               children: [
                                                 Icon(
-                                                  Icons.favorite_sharp,
+                                                  FFIcons.kstar,
                                                   color: FlutterFlowTheme.of(
                                                           context)
                                                       .secondaryText,
@@ -1657,6 +1719,213 @@ class _ChallengesWidgetState extends State<ChallengesWidget> {
                                                       children: [
                                                         TextSpan(
                                                           text: 'Fidélisation ',
+                                                          style: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .bodyMedium,
+                                                        ),
+                                                        TextSpan(
+                                                          text: functions
+                                                              .challengesStats(
+                                                                  challengesChallengesRecord)[24]
+                                                              .toString(),
+                                                          style: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .bodyMedium,
+                                                        ),
+                                                        TextSpan(
+                                                          text: ' / ',
+                                                          style: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .bodyMedium,
+                                                        ),
+                                                        TextSpan(
+                                                          text: functions
+                                                              .challengesStats(
+                                                                  challengesChallengesRecord)[25]
+                                                              .toString(),
+                                                          style: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .bodyMedium,
+                                                        )
+                                                      ],
+                                                      style:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .bodyMedium,
+                                                    ),
+                                                    textAlign: TextAlign.center,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          collapsed: Container(),
+                                          expanded: Column(
+                                            mainAxisSize: MainAxisSize.max,
+                                            children: [
+                                              Container(
+                                                width: 300.0,
+                                                height: 100.0,
+                                                decoration: BoxDecoration(
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .primaryBackground,
+                                                  boxShadow: const [
+                                                    BoxShadow(
+                                                      blurRadius: 2.0,
+                                                      color: Color(0x33000000),
+                                                      offset: Offset(0.0, 2.0),
+                                                    )
+                                                  ],
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          8.0),
+                                                  border: Border.all(
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
+                                                        .secondary,
+                                                  ),
+                                                ),
+                                                child: Padding(
+                                                  padding: const EdgeInsets.all(10.0),
+                                                  child: Column(
+                                                    mainAxisSize:
+                                                        MainAxisSize.max,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment.start,
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      Row(
+                                                        mainAxisSize:
+                                                            MainAxisSize.max,
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceBetween,
+                                                        children: [
+                                                          Container(
+                                                            width: 220.0,
+                                                            height: 50.0,
+                                                            decoration:
+                                                                const BoxDecoration(),
+                                                            child: RichText(
+                                                              textScaleFactor:
+                                                                  MediaQuery.of(
+                                                                          context)
+                                                                      .textScaleFactor,
+                                                              text: TextSpan(
+                                                                children: [
+                                                                  TextSpan(
+                                                                    text:
+                                                                        'Travaux en cours\n',
+                                                                    style: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .bodyMedium
+                                                                        .override(
+                                                                          fontFamily:
+                                                                              'Montserrat',
+                                                                          color:
+                                                                              FlutterFlowTheme.of(context).secondary,
+                                                                        ),
+                                                                  ),
+                                                                  TextSpan(
+                                                                    text:
+                                                                        'Les succes seront bientôt implémentés',
+                                                                    style: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .labelSmall,
+                                                                  )
+                                                                ],
+                                                                style: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .bodyMedium,
+                                                              ),
+                                                            ),
+                                                          ),
+                                                          Container(
+                                                            width: 50.0,
+                                                            height: 30.0,
+                                                            decoration:
+                                                                const BoxDecoration(),
+                                                            alignment:
+                                                                const AlignmentDirectional(
+                                                                    0.0, -1.0),
+                                                            child: FaIcon(
+                                                              FontAwesomeIcons
+                                                                  .wrench,
+                                                              color: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .secondary,
+                                                              size: 30.0,
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ].divide(
+                                                        const SizedBox(height: 5.0)),
+                                                  ),
+                                                ),
+                                              ),
+                                            ].divide(const SizedBox(height: 10.0)),
+                                          ),
+                                          theme: ExpandableThemeData(
+                                            tapHeaderToExpand: true,
+                                            tapBodyToExpand: false,
+                                            tapBodyToCollapse: false,
+                                            headerAlignment:
+                                                ExpandablePanelHeaderAlignment
+                                                    .center,
+                                            hasIcon: true,
+                                            expandIcon: FFIcons.karrowDown2,
+                                            collapseIcon: FFIcons.karrowUp3,
+                                            iconSize: 24.0,
+                                            iconColor:
+                                                FlutterFlowTheme.of(context)
+                                                    .primaryText,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Align(
+                                    alignment: const AlignmentDirectional(0.0, 0.0),
+                                    child: Container(
+                                      width: 300.0,
+                                      color: const Color(0x00000000),
+                                      child: ExpandableNotifier(
+                                        controller: _model.trajetsController,
+                                        child: ExpandablePanel(
+                                          header: Padding(
+                                            padding:
+                                                const EdgeInsetsDirectional.fromSTEB(
+                                                    10.0, 0.0, 0.0, 0.0),
+                                            child: Row(
+                                              mainAxisSize: MainAxisSize.max,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Icon(
+                                                  FFIcons.kcar,
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .secondaryText,
+                                                  size: 24.0,
+                                                ),
+                                                Container(
+                                                  width: 220.0,
+                                                  decoration: const BoxDecoration(
+                                                    color: Color(0x00FFFFFF),
+                                                  ),
+                                                  child: RichText(
+                                                    textScaleFactor:
+                                                        MediaQuery.of(context)
+                                                            .textScaleFactor,
+                                                    text: TextSpan(
+                                                      children: [
+                                                        TextSpan(
+                                                          text: 'Trajets ',
                                                           style: FlutterFlowTheme
                                                                   .of(context)
                                                               .bodyMedium,
@@ -1815,220 +2084,9 @@ class _ChallengesWidgetState extends State<ChallengesWidget> {
                                                 ExpandablePanelHeaderAlignment
                                                     .center,
                                             hasIcon: true,
-                                            expandIcon:
-                                                FontAwesomeIcons.angleDown,
-                                            collapseIcon:
-                                                FontAwesomeIcons.angleUp,
-                                            iconSize: 25.0,
-                                            iconColor:
-                                                FlutterFlowTheme.of(context)
-                                                    .primaryText,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  Align(
-                                    alignment: const AlignmentDirectional(0.0, 0.0),
-                                    child: Container(
-                                      width: 300.0,
-                                      color: const Color(0x00000000),
-                                      child: ExpandableNotifier(
-                                        controller: _model.trajetsController,
-                                        child: ExpandablePanel(
-                                          header: Padding(
-                                            padding:
-                                                const EdgeInsetsDirectional.fromSTEB(
-                                                    10.0, 0.0, 0.0, 0.0),
-                                            child: Row(
-                                              mainAxisSize: MainAxisSize.max,
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                FaIcon(
-                                                  FontAwesomeIcons.car,
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .secondaryText,
-                                                  size: 24.0,
-                                                ),
-                                                Container(
-                                                  width: 220.0,
-                                                  decoration: const BoxDecoration(
-                                                    color: Color(0x00FFFFFF),
-                                                  ),
-                                                  child: RichText(
-                                                    textScaleFactor:
-                                                        MediaQuery.of(context)
-                                                            .textScaleFactor,
-                                                    text: TextSpan(
-                                                      children: [
-                                                        TextSpan(
-                                                          text: 'Trajets ',
-                                                          style: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .bodyMedium,
-                                                        ),
-                                                        TextSpan(
-                                                          text: functions
-                                                              .challengesStats(
-                                                                  challengesChallengesRecord)[6]
-                                                              .toString(),
-                                                          style: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .bodyMedium,
-                                                        ),
-                                                        TextSpan(
-                                                          text: ' / ',
-                                                          style: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .bodyMedium,
-                                                        ),
-                                                        TextSpan(
-                                                          text: functions
-                                                              .challengesStats(
-                                                                  challengesChallengesRecord)[7]
-                                                              .toString(),
-                                                          style: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .bodyMedium,
-                                                        )
-                                                      ],
-                                                      style:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .bodyMedium,
-                                                    ),
-                                                    textAlign: TextAlign.center,
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                          collapsed: Container(),
-                                          expanded: Column(
-                                            mainAxisSize: MainAxisSize.max,
-                                            children: [
-                                              Container(
-                                                width: 300.0,
-                                                height: 100.0,
-                                                decoration: BoxDecoration(
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .primaryBackground,
-                                                  boxShadow: const [
-                                                    BoxShadow(
-                                                      blurRadius: 2.0,
-                                                      color: Color(0x33000000),
-                                                      offset: Offset(0.0, 2.0),
-                                                    )
-                                                  ],
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          8.0),
-                                                  border: Border.all(
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .secondary,
-                                                  ),
-                                                ),
-                                                child: Padding(
-                                                  padding: const EdgeInsets.all(10.0),
-                                                  child: Column(
-                                                    mainAxisSize:
-                                                        MainAxisSize.max,
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment.start,
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .center,
-                                                    children: [
-                                                      Row(
-                                                        mainAxisSize:
-                                                            MainAxisSize.max,
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .spaceBetween,
-                                                        children: [
-                                                          Container(
-                                                            width: 220.0,
-                                                            height: 50.0,
-                                                            decoration:
-                                                                const BoxDecoration(),
-                                                            child: RichText(
-                                                              textScaleFactor:
-                                                                  MediaQuery.of(
-                                                                          context)
-                                                                      .textScaleFactor,
-                                                              text: TextSpan(
-                                                                children: [
-                                                                  TextSpan(
-                                                                    text:
-                                                                        'Travaux en cours\n',
-                                                                    style: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .bodyMedium
-                                                                        .override(
-                                                                          fontFamily:
-                                                                              'Montserrat',
-                                                                          color:
-                                                                              FlutterFlowTheme.of(context).secondary,
-                                                                        ),
-                                                                  ),
-                                                                  TextSpan(
-                                                                    text:
-                                                                        'Les succes seront bientôt implémentés',
-                                                                    style: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .labelSmall,
-                                                                  )
-                                                                ],
-                                                                style: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .bodyMedium,
-                                                              ),
-                                                            ),
-                                                          ),
-                                                          Container(
-                                                            width: 50.0,
-                                                            height: 30.0,
-                                                            decoration:
-                                                                const BoxDecoration(),
-                                                            alignment:
-                                                                const AlignmentDirectional(
-                                                                    0.0, -1.0),
-                                                            child: FaIcon(
-                                                              FontAwesomeIcons
-                                                                  .wrench,
-                                                              color: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .secondary,
-                                                              size: 30.0,
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ].divide(
-                                                        const SizedBox(height: 5.0)),
-                                                  ),
-                                                ),
-                                              ),
-                                            ].divide(const SizedBox(height: 10.0)),
-                                          ),
-                                          theme: ExpandableThemeData(
-                                            tapHeaderToExpand: true,
-                                            tapBodyToExpand: false,
-                                            tapBodyToCollapse: false,
-                                            headerAlignment:
-                                                ExpandablePanelHeaderAlignment
-                                                    .center,
-                                            hasIcon: true,
-                                            expandIcon:
-                                                FontAwesomeIcons.angleDown,
-                                            collapseIcon:
-                                                FontAwesomeIcons.angleUp,
-                                            iconSize: 25.0,
+                                            expandIcon: FFIcons.karrowDown2,
+                                            collapseIcon: FFIcons.karrowUp3,
+                                            iconSize: 24.0,
                                             iconColor:
                                                 FlutterFlowTheme.of(context)
                                                     .primaryText,
@@ -2056,7 +2114,7 @@ class _ChallengesWidgetState extends State<ChallengesWidget> {
                                                       .spaceBetween,
                                               children: [
                                                 Icon(
-                                                  Icons.fastfood_sharp,
+                                                  FFIcons.ktoolsKitchen,
                                                   color: FlutterFlowTheme.of(
                                                           context)
                                                       .secondaryText,
@@ -2082,7 +2140,7 @@ class _ChallengesWidgetState extends State<ChallengesWidget> {
                                                         TextSpan(
                                                           text: functions
                                                               .challengesStats(
-                                                                  challengesChallengesRecord)[8]
+                                                                  challengesChallengesRecord)[14]
                                                               .toString(),
                                                           style: FlutterFlowTheme
                                                                   .of(context)
@@ -2097,7 +2155,7 @@ class _ChallengesWidgetState extends State<ChallengesWidget> {
                                                         TextSpan(
                                                           text: functions
                                                               .challengesStats(
-                                                                  challengesChallengesRecord)[9]
+                                                                  challengesChallengesRecord)[15]
                                                               .toString(),
                                                           style: FlutterFlowTheme
                                                                   .of(context)
@@ -2233,11 +2291,9 @@ class _ChallengesWidgetState extends State<ChallengesWidget> {
                                                 ExpandablePanelHeaderAlignment
                                                     .center,
                                             hasIcon: true,
-                                            expandIcon:
-                                                FontAwesomeIcons.angleDown,
-                                            collapseIcon:
-                                                FontAwesomeIcons.angleUp,
-                                            iconSize: 25.0,
+                                            expandIcon: FFIcons.karrowDown2,
+                                            collapseIcon: FFIcons.karrowUp3,
+                                            iconSize: 24.0,
                                             iconColor:
                                                 FlutterFlowTheme.of(context)
                                                     .primaryText,
@@ -2264,8 +2320,8 @@ class _ChallengesWidgetState extends State<ChallengesWidget> {
                                                   MainAxisAlignment
                                                       .spaceBetween,
                                               children: [
-                                                FaIcon(
-                                                  FontAwesomeIcons.userFriends,
+                                                Icon(
+                                                  FFIcons.kusers,
                                                   color: FlutterFlowTheme.of(
                                                           context)
                                                       .secondaryText,
@@ -2291,7 +2347,7 @@ class _ChallengesWidgetState extends State<ChallengesWidget> {
                                                         TextSpan(
                                                           text: functions
                                                               .challengesStats(
-                                                                  challengesChallengesRecord)[10]
+                                                                  challengesChallengesRecord)[26]
                                                               .toString(),
                                                           style: FlutterFlowTheme
                                                                   .of(context)
@@ -2306,7 +2362,7 @@ class _ChallengesWidgetState extends State<ChallengesWidget> {
                                                         TextSpan(
                                                           text: functions
                                                               .challengesStats(
-                                                                  challengesChallengesRecord)[11]
+                                                                  challengesChallengesRecord)[27]
                                                               .toString(),
                                                           style: FlutterFlowTheme
                                                                   .of(context)
@@ -2442,11 +2498,9 @@ class _ChallengesWidgetState extends State<ChallengesWidget> {
                                                 ExpandablePanelHeaderAlignment
                                                     .center,
                                             hasIcon: true,
-                                            expandIcon:
-                                                FontAwesomeIcons.angleDown,
-                                            collapseIcon:
-                                                FontAwesomeIcons.angleUp,
-                                            iconSize: 25.0,
+                                            expandIcon: FFIcons.karrowDown2,
+                                            collapseIcon: FFIcons.karrowUp3,
+                                            iconSize: 24.0,
                                             iconColor:
                                                 FlutterFlowTheme.of(context)
                                                     .primaryText,

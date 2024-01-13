@@ -15,3 +15,4 @@ export '/journal/journal_widget.dart' show JournalWidget;
 export '/success/success_widget.dart' show SuccessWidget;
 export '/badges/badges_widget.dart' show BadgesWidget;
 export '/onboarding/onboarding_widget.dart' show OnboardingWidget;
+export '/forgot_password/forgot_password_widget.dart' show ForgotPasswordWidget;
